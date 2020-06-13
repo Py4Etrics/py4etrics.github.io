@@ -1,0 +1,658 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Matplotlib &#8212; Pythonで学ぶ入門計量経済学</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/mystnb.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="canonical" href="https://spring-book.github.io/book_etrics/4_Matplotlib.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="SciPy.stats" href="5_SciPy_stats.html" />
+    <link rel="prev" title="Pandas" href="3_Pandas.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="https://spring-book.github.io/book_etrics/4_Matplotlib.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Matplotlib" />
+<meta property="og:description" content="Matplotlib  Matplotlib（マットプロットリブ）は図を描くためのパッケージである。どこまで手の込んだ図を書くかによってコードが違ってくるが，ここではpyplotというサブパッケージを使い，一番シンプルなコードになるものを紹介する。ここで説明することができない多くの機能が備わっているが，このリンクが参考" />
+
+
+<meta name="twitter:card" content="summary">
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Pythonで学ぶ入門計量経済学</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="active">
+    <a href="part_1.html">１. Pythonの基礎</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="0_Preparations.html">ツールのインストールと説明</a>
+    </li>
+    <li class="">
+      <a href="1_Python_Basics.html">Pythonの基礎</a>
+    </li>
+    <li class="">
+      <a href="2_NumPy.html">NumPy</a>
+    </li>
+    <li class="">
+      <a href="3_Pandas.html">Pandas</a>
+    </li>
+    <li class="active">
+      <a href="">Matplotlib</a>
+    </li>
+    <li class="">
+      <a href="5_SciPy_stats.html">SciPy.stats</a>
+    </li>
+    <li class="">
+      <a href="6_things_to_note.html">Tipsと注意点</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="part_2.html">２. Pythonを使った計量経済分析</a>
+  </li>
+  <li class="">
+    <a href="part_3.html">３. 番外編</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  <a  href="https://github.com/spring-book/py4etrics">&#128200;&#127891;&#128202;</a><!-- Default Statcounter code for Py4etrics https://spring-book.github.io/py4etrics/ --> <script type="text/javascript"> var sc_project=12339954; var sc_invisible=1; var sc_security="45ab8946"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12339954/0/45ab8946/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code -->
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="_sources/4_Matplotlib.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Source interaction buttons -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/spring-book/py4etrics/master?urlpath=tree/4_Matplotlib.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                
+            </div>
+        </div>
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id1" class="nav-link">図の作成</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id2" class="nav-link">複数の図を並べて表示</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id3" class="nav-link">図の保存方法</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="matplotlib">
+<h1>Matplotlib<a class="headerlink" href="#matplotlib" title="Permalink to this headline">¶</a></h1>
+<p>Matplotlib（マットプロットリブ）は図を描くためのパッケージである。どこまで手の込んだ図を書くかによってコードが違ってくるが，ここでは<code class="docutils literal notranslate"><span class="pre">pyplot</span></code>というサブパッケージを使い，一番シンプルなコードになるものを紹介する。ここで説明することができない多くの機能が備わっているが，この<a class="reference external" href="https://nbviewer.jupyter.org/github/jrjohansson/scientific-python-lectures/blob/master/Lecture-4-Matplotlib.ipynb">リンク</a>が参考になるだろう。</p>
+<p>通常，<code class="docutils literal notranslate"><span class="pre">plt</span></code>として読み込む。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>図の作成<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">df</span></code>を再度読み直す。今回は<code class="docutils literal notranslate"><span class="pre">year</span></code>を行ラベルにせず，インデックス番号をそのまま使う。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/Haruyama-KobeU/Haruyama-KobeU.github.io/master/data/data1.csv&#39;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2000</td>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2001</td>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2002</td>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">gdp</span></code>を縦軸にした図を描く。<strong>Jupyter Notebook</strong>を使うと最小限必要なコードは１行となる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4_Matplotlib_7_0.png" src="_images/4_Matplotlib_7_0.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">()</span></code>内の最初の変数は縦軸の変数，次はデータの指定</p></li>
+<li><p>デフォルトは線グラフ</p></li>
+<li><p>行の最後に<code class="docutils literal notranslate"><span class="pre">;</span></code>があることに注意。これは「以降の出力をストップ」といいう意味である。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">;</span></code>は省略可能。省略すると特に必要でないものが示される（試そう！）</p></li>
+</ul>
+</li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">;</span></code>を使う代わりに</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+<p>もしくは</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>としても同じ結果となる。<code class="docutils literal notranslate"><span class="pre">pass</span></code>は文字通り「パスする」のパスであり。<code class="docutils literal notranslate"><span class="pre">_</span></code>を単独で使う場合，必要でない値を代入する変数によく使われる記号である。</p>
+<p>上の図の不満な点は，横軸が不明なこと（単に<code class="docutils literal notranslate"><span class="pre">gdp</span></code>のデータ数に従って1,2,..と番号が振られている）。横軸の変数を指定するには，<code class="docutils literal notranslate"><span class="pre">()</span></code>内に追加するだけである。ただ順番に気をつけること。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4_Matplotlib_10_0.png" src="_images/4_Matplotlib_10_0.png" />
+</div>
+</div>
+<p>コードをみて分かるように</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">()</span></code>内の最初の変数は横軸の変数，２番目の変数は縦軸の変数，３番目はデータの指定</p></li>
+</ul>
+<p>３番目のデータ指定は「このデータの中にある<code class="docutils literal notranslate"><span class="pre">year</span></code>と<code class="docutils literal notranslate"><span class="pre">gdp</span></code>を使う」ということを意味しており，データ指定がなければ<code class="docutils literal notranslate"><span class="pre">Python</span></code>はどの<code class="docutils literal notranslate"><span class="pre">year</span></code>と<code class="docutils literal notranslate"><span class="pre">gdp</span></code>か分からずにエラーとなる。一方で，データ指定をせずに，直接横軸・縦軸の変数を指定することも可能である。以下がその例：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4_Matplotlib_12_0.png" src="_images/4_Matplotlib_12_0.png" />
+</div>
+</div>
+<p>上の図で何をプロットしているかを分かっている場合はこれで十分だが，論文などに使う場合は不十分である。以下では「飾り付け」をする。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;gdp&#39;</span><span class="p">,</span>        <span class="c1"># 横軸の変数，　　縦軸の変数</span>
+         <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span>         <span class="c1"># 色 ：　赤</span>
+         <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span>  <span class="c1"># 線のタイプ：点線</span>
+         <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span>          <span class="c1"># マーカー：点</span>
+         <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>             <span class="c1"># データの指定</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)</span>            <span class="c1"># 横軸のラベル</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;GDP&#39;</span><span class="p">)</span>             <span class="c1"># 縦軸のラベル</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gross Domestic Product&#39;</span><span class="p">)</span>  <span class="c1"># 図のタイトル</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>                    <span class="c1"># グリッドの表示</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4_Matplotlib_14_0.png" src="_images/4_Matplotlib_14_0.png" />
+</div>
+</div>
+<p>様々なオプションが用意されている</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:left head"><p>色</p></th>
+<th class="text-align:center head"><p>省略形</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:left"><p>blue</p></td>
+<td class="text-align:center"><p>b</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>green</p></td>
+<td class="text-align:center"><p>g</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>red</p></td>
+<td class="text-align:center"><p>r</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>cyan</p></td>
+<td class="text-align:center"><p>c</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>magenta</p></td>
+<td class="text-align:center"><p>m</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>yellow</p></td>
+<td class="text-align:center"><p>y</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>black</p></td>
+<td class="text-align:center"><p>k</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>white</p></td>
+<td class="text-align:center"><p>w</p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>線のスタイル</p></th>
+<th class="text-align:left head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p>-</p></td>
+<td class="text-align:left"><p>solid line style</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>–</p></td>
+<td class="text-align:left"><p>dashed line style</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>-.</p></td>
+<td class="text-align:left"><p>dash-dot line style</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>:</p></td>
+<td class="text-align:left"><p>dotted line style</p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>マーカー</p></th>
+<th class="text-align:left head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p>.</p></td>
+<td class="text-align:left"><p>point marker</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>,</p></td>
+<td class="text-align:left"><p>pixel marker</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>o</p></td>
+<td class="text-align:left"><p>circle marker</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>v</p></td>
+<td class="text-align:left"><p>triangle_down marker</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>*</p></td>
+<td class="text-align:left"><p>star marker</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>+</p></td>
+<td class="text-align:left"><p>plus marker</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>x</p></td>
+<td class="text-align:left"><p>x marker</p></td>
+</tr>
+</tbody>
+</table>
+<p>数多くのオプションがある。<a class="reference external" href="https://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.plot">ここを参照</a>。</p>
+<p>このようなオプションも簡略化して書くこともできる。例えば，上のコードで</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span>
+<span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span>
+<span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>の３行を以下の一行にまとめることも可能である。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;r--o&#39;</span><span class="p">,</span>
+</pre></div>
+</div>
+<p><strong>複数の図</strong></p>
+<p>単に<code class="docutils literal notranslate"><span class="pre">plt.plot()</span></code>を付け加えるだけ。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;con&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;inv&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>   <span class="c1"># 凡例</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4_Matplotlib_18_0.png" src="_images/4_Matplotlib_18_0.png" />
+</div>
+</div>
+<p><strong>散布図の描画</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="s1">&#39;con&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;GDP&#39;</span><span class="p">)</span>  <span class="c1">#　横軸のラベル （省略可）</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Consumption&#39;</span><span class="p">);</span>  <span class="c1"># 縦軸のラベル（省略可）</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4_Matplotlib_20_0.png" src="_images/4_Matplotlib_20_0.png" />
+</div>
+</div>
+<p><strong>ヒストグラム</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;GDP&#39;</span><span class="p">)</span>   <span class="c1"># 省略可</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4_Matplotlib_22_0.png" src="_images/4_Matplotlib_22_0.png" />
+</div>
+</div>
+<p><strong>パイチャート</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lab</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Investment&#39;</span><span class="p">,</span> <span class="s1">&#39;Consumption&#39;</span><span class="p">]</span>  <span class="c1"># ラベルの作成</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">,[</span><span class="s1">&#39;inv&#39;</span><span class="p">,</span><span class="s1">&#39;con&#39;</span><span class="p">]]</span>  <span class="c1"># 2001年のデータを取り出す</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span>    <span class="c1"># データの指定</span>
+        <span class="n">labels</span><span class="o">=</span><span class="n">lab</span><span class="p">,</span>  <span class="c1"># ラベルの指定 （省略可だが，ある方がわかりやすい）</span>
+        <span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.2f</span><span class="s1">&#39;</span><span class="p">)</span>   <span class="c1"># ％表示  （省略可）</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;GDP Share in 2001&#39;</span><span class="p">)</span>   <span class="c1"># タイトル （省略可）</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4_Matplotlib_24_0.png" src="_images/4_Matplotlib_24_0.png" />
+</div>
+</div>
+<p><strong>ボックスプロット</strong></p>
+<p>解釈については<a class="reference external" href="https://towardsdatascience.com/understanding-boxplots-5e2df7bcbd51">このサイト</a>を参照。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;GDP&#39;</span><span class="p">)</span>   <span class="c1"># 省略可</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4_Matplotlib_26_0.png" src="_images/4_Matplotlib_26_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>複数の図を並べて表示<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>複数の図を「１つの図」として描画するために<code class="docutils literal notranslate"><span class="pre">subplot(a,b,c)</span></code>を使い，行と列を指定してそれぞれの図の位置を設定する。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>：行の数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>：列の数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">c</span></code>：行・列を使って位置を指定</p></li>
+</ul>
+<p>＜例：２×２の場合＞</p>
+<p><code class="docutils literal notranslate"><span class="pre">subplot(2,2,1)</span></code>: 左上の位置を指定</p>
+<p><code class="docutils literal notranslate"><span class="pre">subplot(2,2,2)</span></code>: 右上の位置を指定</p>
+<p><code class="docutils literal notranslate"><span class="pre">subplot(2,2,3)</span></code>: 左下の位置を指定</p>
+<p><code class="docutils literal notranslate"><span class="pre">subplot(2,2,4)</span></code>: 右下の位置を指定</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>  <span class="c1"># 図の大きさを設定（省略可）</span>
+
+<span class="c1"># n = 5</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;A Positive Slope&#39;</span><span class="p">)</span>
+
+<span class="c1"># n = 10</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;A Negative Slope&#39;</span><span class="p">)</span>
+
+<span class="c1"># n = 100</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;A U Shape&#39;</span><span class="p">)</span>
+
+<span class="c1"># n = 1000</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;An Inverted U Shape&#39;</span><span class="p">)</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4_Matplotlib_30_0.png" src="_images/4_Matplotlib_30_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>図の保存方法<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>例として，図を<code class="docutils literal notranslate"><span class="pre">png</span></code>ファイルで保存する場合を考えよう。</p>
+<p>＜開いている<code class="docutils literal notranslate"><span class="pre">Jupyter</span> <span class="pre">Notebook</span></code>のファイルと同じフォルダーに保存する場合＞</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;&lt;ファイル名.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>を使う。この場合<code class="docutils literal notranslate"><span class="pre">;</span></code>や<code class="docutils literal notranslate"><span class="pre">pass</span></code>を使を必要はない。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;gdp.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4_Matplotlib_33_0.png" src="_images/4_Matplotlib_33_0.png" />
+</div>
+</div>
+<p>保存できる画像ファイルの種類には以下がある。</p>
+<p><code class="docutils literal notranslate"><span class="pre">png</span></code>，<code class="docutils literal notranslate"><span class="pre">jpg</span></code>，<code class="docutils literal notranslate"><span class="pre">pdf</span></code>，<code class="docutils literal notranslate"><span class="pre">ps</span></code>，<code class="docutils literal notranslate"><span class="pre">eps</span></code>，<code class="docutils literal notranslate"><span class="pre">svg</span></code></p>
+<p>これらのフォーマットで保存する場合は，上のコードの<code class="docutils literal notranslate"><span class="pre">png</span></code>を<code class="docutils literal notranslate"><span class="pre">pdf</span></code>等に入れ替える。</p>
+<hr class="docutils" />
+<p>＜Mac: 開いている<code class="docutils literal notranslate"><span class="pre">Jupyter</span> <span class="pre">Notebook</span></code>のファイルのサブフォルダーフォルダーに保存する場合＞</p>
+<p>例えば，サブフォルダー<code class="docutils literal notranslate"><span class="pre">temp</span></code>に画像を保存したい場合は</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;./temp/&lt;ファイル名.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>とする。ここで<code class="docutils literal notranslate"><span class="pre">.</span></code>が開いている<code class="docutils literal notranslate"><span class="pre">Jupyter</span> <span class="pre">Notebook</span></code>のファイルがあるフォルダーを表している。</p>
+</div>
+</div>
+
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="3_Pandas.html" title="previous page">Pandas</a>
+    <a class='right-next' id="next-link" href="5_SciPy_stats.html" title="next page">SciPy.stats</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By 春山 鉄源<br/>
+        
+            &copy; Copyright 2020 Tetsugen Haruyama.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-165998213-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>

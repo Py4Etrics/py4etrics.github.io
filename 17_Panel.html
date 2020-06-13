@@ -1,0 +1,2356 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>パネル・データ分析 &#8212; Pythonで学ぶ入門計量経済学</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/mystnb.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="canonical" href="https://spring-book.github.io/book_etrics/17_Panel.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="GM仮定４が満たされない場合" href="18_Zero_Conditional_Mean.html" />
+    <link rel="prev" title="linearmodels" href="16_linearmodels.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="https://spring-book.github.io/book_etrics/17_Panel.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="パネル・データ分析" />
+<meta property="og:description" content="パネル・データ分析  import numpy as np from scipy.stats import norm, gaussian_kde import matplotlib.pyplot as plt import pandas as pd from linearmodels.panel.data import" />
+
+
+<meta name="twitter:card" content="summary">
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Pythonで学ぶ入門計量経済学</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="part_1.html">１. Pythonの基礎</a>
+  </li>
+  <li class="active">
+    <a href="part_2.html">２. Pythonを使った計量経済分析</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="7_Review_of_Statistics.html">統計学の簡単な復習</a>
+    </li>
+    <li class="">
+      <a href="8_Simple_Regression.html">単回帰分析</a>
+    </li>
+    <li class="">
+      <a href="9_Multiple_Regression.html">重回帰分析</a>
+    </li>
+    <li class="">
+      <a href="10_Residuals.html">残差診断</a>
+    </li>
+    <li class="">
+      <a href="11_Inference.html">推論</a>
+    </li>
+    <li class="">
+      <a href="12_Asymptotics.html">大標本特性</a>
+    </li>
+    <li class="">
+      <a href="13_Dummies.html">質的変数と回帰分析</a>
+    </li>
+    <li class="">
+      <a href="14_Heteroskedasticity.html">不均一分散</a>
+    </li>
+    <li class="">
+      <a href="15_Pooling.html">プーリング・データとパネル・データ</a>
+    </li>
+    <li class="">
+      <a href="16_linearmodels.html">linearmodels</a>
+    </li>
+    <li class="active">
+      <a href="">パネル・データ分析</a>
+    </li>
+    <li class="">
+      <a href="18_Zero_Conditional_Mean.html">GM仮定４が満たされない場合</a>
+    </li>
+    <li class="">
+      <a href="19_IV2SLS.html">操作変数法と２段階OLS</a>
+    </li>
+    <li class="">
+      <a href="20_LogitProbit.html">離散選択モデル</a>
+    </li>
+    <li class="">
+      <a href="21_TruncregTobitHeckit.html">制限従属変数モデル</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="part_3.html">３. 番外編</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  <a  href="https://github.com/spring-book/py4etrics">&#128200;&#127891;&#128202;</a><!-- Default Statcounter code for Py4etrics https://spring-book.github.io/py4etrics/ --> <script type="text/javascript"> var sc_project=12339954; var sc_invisible=1; var sc_security="45ab8946"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12339954/0/45ab8946/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code -->
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="_sources/17_Panel.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Source interaction buttons -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/spring-book/py4etrics/master?urlpath=tree/17_Panel.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                
+            </div>
+        </div>
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id2" class="nav-link">固定効果モデル</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id3" class="nav-link">説明</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id4" class="nav-link">「手計算」による推定</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#linearmodels" class="nav-link">linearmodelsを使う計算</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#entityeffects" class="nav-link">EntityEffects</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#timeeffects" class="nav-link">TimeEffects</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id5" class="nav-link">ダミー変数モデルとしての固定効果モデル</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id6" class="nav-link">ランダム効果モデル</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id7" class="nav-link">説明</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id8" class="nav-link">推定</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id9" class="nav-link">相関ランダム効果モデル</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id10" class="nav-link">説明</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id11" class="nav-link">推定</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id12" class="nav-link">２つの利点</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#fere" class="nav-link">FE対RE検定</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id13" class="nav-link">一定な変数を含める</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id14" class="nav-link">モデルの比較</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#ols" class="nav-link">OLS</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id15" class="nav-link">比較表の作成</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#fd-vs-fe" class="nav-link">FD vs. FE</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#fe-vs-re" class="nav-link">FE vs. RE</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id16" class="nav-link">シミュレーション</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id17" class="nav-link">推定値の計算</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id18" class="nav-link">推定値の分布</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id19" class="nav-link">標準誤差の問題</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id20" class="nav-link">分散の確認</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id21" class="nav-link">対処方法</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="id1">
+<h1>パネル・データ分析<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">gaussian_kde</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">linearmodels.panel.data</span> <span class="kn">import</span> <span class="n">PanelData</span>
+<span class="kn">from</span> <span class="nn">linearmodels.panel</span> <span class="kn">import</span> <span class="n">PanelOLS</span><span class="p">,</span> <span class="n">PooledOLS</span><span class="p">,</span> <span class="n">RandomEffects</span><span class="p">,</span> <span class="n">compare</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>パネル・データを使った次のモデルについて説明する。</p>
+<ul class="simple">
+<li><p>固定効果モデル（Fixed Effects Model）</p></li>
+<li><p>ランダム効果モデル（Random Effects Model）</p></li>
+<li><p>相関ランダム効果モデル（Correlated Random Effects Model）</p></li>
+</ul>
+<div class="section" id="id2">
+<h2>固定効果モデル<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3>説明<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>パネル・データを使う場合の問題は観察単位の異質性を捉える変数 <span class="math notranslate nohighlight">\(a_i\)</span> が説明変数 <span class="math notranslate nohighlight">\(x_{it}\)</span> と相関することにより，単純なOLS推定量に異質性バイアスが発生することである。その対処方法として，回帰式から<span class="math notranslate nohighlight">\(a_i\)</span>をなくす１階差分推定について説明した。この章では，同じように<span class="math notranslate nohighlight">\(a_i\)</span>をなくす代替推定法として固定効果推定（Fixed Effects Estimator）について考える。まず，その基礎となる固定効果モデル（Fixed Effects Model; FEモデル）について解説する。</p>
+<p>次式を考えよう。</p>
+<div class="math notranslate nohighlight">
+\[y_{it}= \beta_0 + a_i + \beta_1x_{it}+u_{it}\qquad i=1,2,..,n\quad t=0,1,...,T\qquad\qquad\left(\text{式１}\right)\]</div>
+<p>両辺のそれぞれの変数の時間に対しての平均を計算すると次式となる。</p>
+<div class="math notranslate nohighlight">
+\[\bar{y}_i= \beta_0 + a_i + \beta_1\bar{x}_i+\bar{u}_i\qquad\qquad\left(\text{式２}\right)\]</div>
+<p>（注意）<span class="math notranslate nohighlight">\(a_i\)</span>は時間に対して不変なため，<span class="math notranslate nohighlight">\(a_i\)</span>はそのままの値を取る。</p>
+<p>(式１)と(式２)の差を取ると次の固定効果推定式が導出できる。</p>
+<div class="math notranslate nohighlight">
+\[\ddot{y}_i = \beta_1\ddot{x}_i+\ddot{u}_i\qquad\qquad\left(\text{式３}\right)\]</div>
+<p>ここで</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\ddot{y}_i=y_i-\bar{y}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\ddot{x}_i=x_i-\bar{x}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\ddot{u}_i=u_i-\bar{u}\)</span></p></li>
+</ul>
+<p>は平均からの乖離（demeaned values）。</p>
+<p>＜良い点＞</p>
+<ul class="simple">
+<li><p>（式３）には <span class="math notranslate nohighlight">\(a_i\)</span> がない。</p></li>
+<li><p><span class="math notranslate nohighlight">\(a_i\)</span> と <span class="math notranslate nohighlight">\(x_{it}\)</span>, <span class="math notranslate nohighlight">\(t=1,2,..,T\)</span> を所与として <span class="math notranslate nohighlight">\(u_{it}\)</span> の平均は0の仮定の下で，OLS推定量 <span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span> は</p>
+<ul>
+<li><p>不偏性を満たす。</p></li>
+<li><p><span class="math notranslate nohighlight">\(T\)</span>を一定として標本の大きさが十分に大きい場合，一致性を満たす。</p></li>
+<li><p>固定効果推定量（Fixed Effects Estimator or FE Estimator）もしくは Between Estimatorと呼ばれる。</p></li>
+</ul>
+</li>
+</ul>
+<p>＜悪い点＞</p>
+<ul class="simple">
+<li><p>時間に対して一定の説明変数は，<span class="math notranslate nohighlight">\(a_i\)</span>と同じように，（式３）に残らない。従って，時間不変の変数の効果を推定することはできない。</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>「手計算」による推定<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">wagepan</span></code>というデータセットを使い，賃金に対する労働組合などの変数の効果を推定する。</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wagepan&#39;</span><span class="p">)</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wagepan&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>name of dataset: wagepan
+no of variables: 44
+no of observations: 4360
+
++----------+------------------------+
+| variable | label                  |
++----------+------------------------+
+| nr       | person identifier      |
+| year     | 1980 to 1987           |
+| agric    | =1 if in agriculture   |
+| black    | =1 if black            |
+| bus      |                        |
+| construc | =1 if in construction  |
+| ent      |                        |
+| exper    | labor mkt experience   |
+| fin      |                        |
+| hisp     | =1 if Hispanic         |
+| poorhlth | =1 if in poor health   |
+| hours    | annual hours worked    |
+| manuf    | =1 if in manufacturing |
+| married  | =1 if married          |
+| min      |                        |
+| nrthcen  | =1 if north central    |
+| nrtheast | =1 if north east       |
+| occ1     |                        |
+| occ2     |                        |
+| occ3     |                        |
+| occ4     |                        |
+| occ5     |                        |
+| occ6     |                        |
+| occ7     |                        |
+| occ8     |                        |
+| occ9     |                        |
+| per      |                        |
+| pro      |                        |
+| pub      |                        |
+| rur      |                        |
+| south    | =1 if south            |
+| educ     | years of schooling     |
+| tra      |                        |
+| trad     |                        |
+| union    | =1 if in union         |
+| lwage    | log(wage)              |
+| d81      | =1 if year == 1981     |
+| d82      |                        |
+| d83      |                        |
+| d84      |                        |
+| d85      |                        |
+| d86      |                        |
+| d87      |                        |
+| expersq  | exper^2                |
++----------+------------------------+
+
+F. Vella and M. Verbeek (1998), “Whose Wages Do Unions Raise? A
+Dynamic Model of Unionism and Wage Rate Determination for Young Men,”
+Journal of Applied Econometrics 13, 163-183. I obtained the data from
+the Journal of Applied Econometrics data archive at
+http://qed.econ.queensu.ca/jae/. This is generally a nice resource for
+undergraduates looking to replicate or extend a published study.
+</pre></div>
+</div>
+</div>
+</div>
+<p>被説明変数</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">lwage</span></code>：賃金（対数）</p></li>
+</ul>
+<p>説明変数</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">union</span></code>：労働組合参加（ダミー変数）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">married</span></code>：未・既婚（ダミー変数）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">exper</span></code>：労働市場参加年数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">d81</span></code>：1981年のダミー変数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">d82</span></code>：1982年のダミー変数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">d83</span></code>：1983年のダミー変数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">d84</span></code>：1984年のダミー変数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">d85</span></code>：1985年のダミー変数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">d86</span></code>：1986年のダミー変数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">d87</span></code>：1987年のダミー変数</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の<code class="docutils literal notranslate"><span class="pre">groupby</span></code>を使って変数をグループ化する際に使う変数</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nr</span></code>：労働者のID</p></li>
+</ul>
+<div class="tip admonition">
+<p class="admonition-title">コメント</p>
+<p>時間に対して変化しない変数使えない。例えば，</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">educ</span></code>（説明変数に入れば教育の収益率が推定可能である。）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">black</span></code>，<code class="docutils literal notranslate"><span class="pre">hisp</span></code>（を使うと人種間の賃金格差も推定できる。）</p></li>
+</ul>
+<p>は固定効果モデル回帰式には入れることができない。</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 説明変数のリスト</span>
+<span class="n">exog</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;married&#39;</span><span class="p">,</span><span class="s1">&#39;union&#39;</span><span class="p">,</span><span class="s1">&#39;expersq&#39;</span><span class="p">,</span><span class="s1">&#39;d81&#39;</span><span class="p">,</span><span class="s1">&#39;d82&#39;</span><span class="p">,</span><span class="s1">&#39;d83&#39;</span><span class="p">,</span><span class="s1">&#39;d84&#39;</span><span class="p">,</span><span class="s1">&#39;d85&#39;</span><span class="p">,</span><span class="s1">&#39;d86&#39;</span><span class="p">,</span><span class="s1">&#39;d87&#39;</span><span class="p">]</span>
+
+<span class="c1"># 全ての変数のリスト</span>
+<span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;lwage&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">exog</span>
+
+<span class="c1"># 使う変数だけで構成されるDataFrame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">wagepan</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;nr&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">var</span><span class="p">]</span>
+
+<span class="c1"># varの平均からの乖離を計算（下の説明（１）を参照）</span>
+<span class="n">df_g</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;nr&#39;</span><span class="p">)</span>
+<span class="n">df_mean</span> <span class="o">=</span> <span class="n">df_g</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+<span class="n">df_md</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">var</span><span class="p">]</span><span class="o">-</span><span class="n">df_mean</span>
+
+<span class="c1"># 説明変数の行列（下の説明（２）を参照）</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df_md</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">exog</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># 被説明変数のベクトル</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">df_md</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;lwage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># OLSの計算</span>
+<span class="n">params</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@X</span><span class="p">)</span><span class="o">@</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@Y</span>
+
+<span class="c1"># 結果の表示（下の説明（３）を参照）</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">exog</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">params</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">:</span><span class="s1">.4</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>married: 0.04668
+union: 0.08
+expersq: -0.005185
+d81: 0.1512
+d82: 0.253
+d83: 0.3544
+d84: 0.4901
+d85: 0.6175
+d86: 0.7655
+d87: 0.925
+</pre></div>
+</div>
+</div>
+</div>
+<p>説明（１）</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">df.groupby('nr')</span></code>：<code class="docutils literal notranslate"><span class="pre">nr</span></code>でグループ化したオブジェクトを作成する（番外編のGapminderを参照）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df_g[var].transform('mean')</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">df_g[var]</span></code>：グループ化計算のために<code class="docutils literal notranslate"><span class="pre">var</span></code>の変数だけを使うことを指定する。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.transform('mean')</span></code>：指定された変数（<code class="docutils literal notranslate"><span class="pre">var</span></code>）のグループ内平均（それぞれの<code class="docutils literal notranslate"><span class="pre">nr</span></code>内での平均）を計算し，その平均で構成される<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作成する。作成された<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の行数は<code class="docutils literal notranslate"><span class="pre">df</span></code>と同じになり，グループ内平均が同じ列内でリピートされることになる。</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df.loc[:,var]-df_mean</span></code>：<code class="docutils literal notranslate"><span class="pre">var</span></code>のそれぞれの変数の平均からの乖離を計算する。</p></li>
+</ul>
+<p>説明（２）</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">.values</span></code>は<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の<code class="docutils literal notranslate"><span class="pre">array</span></code>として返す。</p></li>
+</ul>
+<p>説明（３）</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">enumerate(exog)</span></code>は<code class="docutils literal notranslate"><span class="pre">exog</span></code>の変数のインデックスと変数名の両方をタプルとして返す。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">for</span></code>ループで<code class="docutils literal notranslate"><span class="pre">enumerate()</span></code>は，引数にリストや<code class="docutils literal notranslate"><span class="pre">array</span></code>を入れると2つの値を返す。</p></li>
+<li><p>1つ目の返り値：要素のインデックス</p></li>
+<li><p>2つ目の返り値：要素自体</p></li>
+<li><p>例えば，<code class="docutils literal notranslate"><span class="pre">enumerate(['A','B','C'])</span></code>であれば，返り値は<code class="docutils literal notranslate"><span class="pre">(0,'A')</span></code>，<code class="docutils literal notranslate"><span class="pre">(1,'B')</span></code>，<code class="docutils literal notranslate"><span class="pre">(2,'C')</span></code>となる。</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">f'{name}:</span> <span class="pre">{params[idx]:.4}'</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code>：以前説明したf-string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{name}</span></code>：<code class="docutils literal notranslate"><span class="pre">exog</span></code>の変数名を代入する。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{params[idx]:.4}</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">params[idx]</span></code>：<code class="docutils literal notranslate"><span class="pre">idx</span></code>番目の<code class="docutils literal notranslate"><span class="pre">params</span></code>を代入する。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:.4</span></code>：小数点第4位までを表示する。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<p>「手計算」の結果は<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>を使う結果と同じになることを下で確認する。</p>
+</div>
+<div class="section" id="linearmodels">
+<h3><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>を使う計算<a class="headerlink" href="#linearmodels" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="entityeffects">
+<h4>EntityEffects<a class="headerlink" href="#entityeffects" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>には<code class="docutils literal notranslate"><span class="pre">PanelOLS</span></code>モジュールがあり，その関数<code class="docutils literal notranslate"><span class="pre">from_formula()</span></code>を使うことにより，<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>同様，回帰式を<code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">~</span> <span class="pre">x</span></code>の文字列で書くことが可能となる。その際，次の点に注意すること。</p>
+<ul class="simple">
+<li><p>固定効果推定をする場合，回帰式に<code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">EntityEffect</span></code>を含める。</p>
+<ul>
+<li><p>このオプションにより変数の平均からの乖離は自動で計算されることになる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">EntityEffect</span></code>を含めないと<code class="docutils literal notranslate"><span class="pre">PooledOLS</span></code>（通常のOLS）と等しくなる。</p></li>
+</ul>
+</li>
+</ul>
+<p>まず<code class="docutils literal notranslate"><span class="pre">wagepan</span></code>を<code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>化する。これにより<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>を使いFD推定可能となる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span> <span class="o">=</span> <span class="n">wagepan</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;nr&#39;</span><span class="p">,</span><span class="s1">&#39;year&#39;</span><span class="p">],</span><span class="n">drop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>nr</th>
+      <th>year</th>
+      <th>agric</th>
+      <th>black</th>
+      <th>bus</th>
+      <th>construc</th>
+      <th>ent</th>
+      <th>exper</th>
+      <th>fin</th>
+      <th>hisp</th>
+      <th>...</th>
+      <th>union</th>
+      <th>lwage</th>
+      <th>d81</th>
+      <th>d82</th>
+      <th>d83</th>
+      <th>d84</th>
+      <th>d85</th>
+      <th>d86</th>
+      <th>d87</th>
+      <th>expersq</th>
+    </tr>
+    <tr>
+      <th>nr</th>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="5" valign="top">13</th>
+      <th>1980</th>
+      <td>13</td>
+      <td>1980</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>1.197540</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1981</th>
+      <td>13</td>
+      <td>1981</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>1.853060</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>1982</th>
+      <td>13</td>
+      <td>1982</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>1.344462</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>1983</th>
+      <td>13</td>
+      <td>1983</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>1.433213</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>1984</th>
+      <td>13</td>
+      <td>1984</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>1.568125</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>25</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 44 columns</p>
+</div></div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+MultiIndex: 4360 entries, (13, 1980) to (12548, 1987)
+Data columns (total 44 columns):
+ #   Column    Non-Null Count  Dtype  
+---  ------    --------------  -----  
+ 0   nr        4360 non-null   int64  
+ 1   year      4360 non-null   int64  
+ 2   agric     4360 non-null   int64  
+ 3   black     4360 non-null   int64  
+ 4   bus       4360 non-null   int64  
+ 5   construc  4360 non-null   int64  
+ 6   ent       4360 non-null   int64  
+ 7   exper     4360 non-null   int64  
+ 8   fin       4360 non-null   int64  
+ 9   hisp      4360 non-null   int64  
+ 10  poorhlth  4360 non-null   int64  
+ 11  hours     4360 non-null   int64  
+ 12  manuf     4360 non-null   int64  
+ 13  married   4360 non-null   int64  
+ 14  min       4360 non-null   int64  
+ 15  nrthcen   4360 non-null   int64  
+ 16  nrtheast  4360 non-null   int64  
+ 17  occ1      4360 non-null   int64  
+ 18  occ2      4360 non-null   int64  
+ 19  occ3      4360 non-null   int64  
+ 20  occ4      4360 non-null   int64  
+ 21  occ5      4360 non-null   int64  
+ 22  occ6      4360 non-null   int64  
+ 23  occ7      4360 non-null   int64  
+ 24  occ8      4360 non-null   int64  
+ 25  occ9      4360 non-null   int64  
+ 26  per       4360 non-null   int64  
+ 27  pro       4360 non-null   int64  
+ 28  pub       4360 non-null   int64  
+ 29  rur       4360 non-null   int64  
+ 30  south     4360 non-null   int64  
+ 31  educ      4360 non-null   int64  
+ 32  tra       4360 non-null   int64  
+ 33  trad      4360 non-null   int64  
+ 34  union     4360 non-null   int64  
+ 35  lwage     4360 non-null   float64
+ 36  d81       4360 non-null   int64  
+ 37  d82       4360 non-null   int64  
+ 38  d83       4360 non-null   int64  
+ 39  d84       4360 non-null   int64  
+ 40  d85       4360 non-null   int64  
+ 41  d86       4360 non-null   int64  
+ 42  d87       4360 non-null   int64  
+ 43  expersq   4360 non-null   int64  
+dtypes: float64(1), int64(43)
+memory usage: 1.5 MB
+</pre></div>
+</div>
+</div>
+</div>
+<p>次に<code class="docutils literal notranslate"><span class="pre">PanelData</span></code>オブジェクトに変換しデータの特徴を調べる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wagepanp</span> <span class="o">=</span> <span class="n">PanelData</span><span class="p">(</span><span class="n">wagepan</span><span class="p">)</span>
+<span class="n">wagepanp</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(44, 8, 545)
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>44: 変数の数</p></li>
+<li><p>8: 期間数（年）</p></li>
+<li><p>545：観察単位の数（人数）</p></li>
+</ul>
+<p>次に，balanced もしくは unbalanced data set かを確認する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">wagepanp</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">==</span><span class="n">wagepanp</span><span class="o">.</span><span class="n">nobs</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>このデータ・セットはbalancedだが，unbalanced だったとしても，固定効果モデルの考え方や以下で説明するコードは変わらない。</p>
+<hr class="docutils" />
+<p>実際に回帰式を書くことにする。使い方は<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>と似ている。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PanelOLS</span></code>モジュールの関数<code class="docutils literal notranslate"><span class="pre">.from_formula</span></code>を使い次のように引数を指定する。</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\text{.from_formula}(\text{回帰式}, \text{データ})\]</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">EntityEffects</span></code>を加える。</p></li>
+<li><p>定数項を入れたい場合は，<code class="docutils literal notranslate"><span class="pre">1</span></code>を回帰式に追加する。入れなければ定数項なしの推定となる。</p></li>
+<li><p>以下では時間ダミー<code class="docutils literal notranslate"><span class="pre">C(year)</span></code>が入るので入れない。</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_fe</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ married + union + expersq </span><span class="se">\</span>
+<span class="s1">                      +d81+d82+d83+d84+d85+d86+d87 + EntityEffects&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>固定効果モデルのインスタンスの作成</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mod_fe</span> <span class="o">=</span> <span class="n">PanelOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_fe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>と同じように，そこから得た結果にメソッド<code class="docutils literal notranslate"><span class="pre">.fit()</span></code>を使い計算し結果が返される。</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result_fe</span> <span class="o">=</span> <span class="n">mod_fe</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>＜結果の表示方法＞</p>
+<ol class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">res_fe</span></code>を実行。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">res_fe</span></code>に関数<code class="docutils literal notranslate"><span class="pre">print()</span></code>を使うと見やすい。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">res_fe</span></code>には属性<code class="docutils literal notranslate"><span class="pre">summary</span></code>が用意されているが，表示方法1と同じ。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">summary</span></code>には属性<code class="docutils literal notranslate"><span class="pre">tables</span></code>があり，２つの表がリストとして格納されている。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tables[0]</span></code>：検定統計量の表（<code class="docutils literal notranslate"><span class="pre">print()</span></code>を使うと見やすくなる）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tables[1]</span></code>：係数の推定値やp値などの表（<code class="docutils literal notranslate"><span class="pre">print()</span></code>を使うと見やすくなる）</p></li>
+</ul>
+</li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result_fe</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+married        0.0467     0.0183     2.5494     0.0108      0.0108      0.0826
+union          0.0800     0.0193     4.1430     0.0000      0.0421      0.1179
+expersq       -0.0052     0.0007    -7.3612     0.0000     -0.0066     -0.0038
+d81            0.1512     0.0219     6.8883     0.0000      0.1082      0.1942
+d82            0.2530     0.0244     10.360     0.0000      0.2051      0.3008
+d83            0.3544     0.0292     12.121     0.0000      0.2971      0.4118
+d84            0.4901     0.0362     13.529     0.0000      0.4191      0.5611
+d85            0.6175     0.0452     13.648     0.0000      0.5288      0.7062
+d86            0.7655     0.0561     13.638     0.0000      0.6555      0.8755
+d87            0.9250     0.0688     13.450     0.0000      0.7902      1.0599
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p>（結果）</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">exper**2</span></code>の係数が負で統計的有意性が高いのは，賃金に対して経験の効果は低減することを示している。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">married</span></code>の係数は正であり，優位性が全くないわけではない。賃金の既婚プレミアムと呼ばれるものである。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">union</span></code>は労働組合の影響を示しているが，予測通りである。</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(R^2\)</span>を表示してみる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result_fe</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                          PanelOLS Estimation Summary                           
+================================================================================
+Dep. Variable:                  lwage   R-squared:                        0.1806
+Estimator:                   PanelOLS   R-squared (Between):              0.2386
+No. Observations:                4360   R-squared (Within):               0.1806
+Date:                Sat, Jun 13 2020   R-squared (Overall):              0.2361
+Time:                        10:44:28   Log-likelihood                   -1324.8
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      83.851
+Entities:                         545   P-value                           0.0000
+Avg Obs:                       8.0000   Distribution:                 F(10,3805)
+Min Obs:                       8.0000                                           
+Max Obs:                       8.0000   F-statistic (robust):             83.851
+                                        P-value                           0.0000
+Time periods:                       8   Distribution:                 F(10,3805)
+Avg Obs:                       545.00                                           
+Min Obs:                       545.00                                           
+Max Obs:                       545.00                                           
+                                                                                
+================================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p>この表にある<span class="math notranslate nohighlight">\(R^2\)</span>について説明する。</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(R^2\)</span>＝<span class="math notranslate nohighlight">\(R^2(\text{Within})\)</span>：(式３)を推定した際の<span class="math notranslate nohighlight">\(R^2\)</span>である（<span class="math notranslate nohighlight">\(\ddot{y}_i\)</span>が<span class="math notranslate nohighlight">\(\ddot{x}_i\)</span>によってどれだけ説明されたかを示す）。</p></li>
+<li><p><span class="math notranslate nohighlight">\(R^2(\text{Between})\)</span>：(式２)を推定した際の<span class="math notranslate nohighlight">\(R^2\)</span>である（<span class="math notranslate nohighlight">\(\hat{y}_i\)</span>が<span class="math notranslate nohighlight">\(\hat{x}_i\)</span>によってどれだけ説明されたかを示す）。</p></li>
+<li><p><span class="math notranslate nohighlight">\(R^2(\text{Overall})\)</span>：(式１)を推定した際の<span class="math notranslate nohighlight">\(R^2\)</span>である（<span class="math notranslate nohighlight">\({y}_i\)</span>が<span class="math notranslate nohighlight">\({x}_i\)</span>によってどれだけ説明されたかを示す）。</p></li>
+</ul>
+</div>
+<div class="section" id="timeeffects">
+<h4>TimeEffects<a class="headerlink" href="#timeeffects" title="Permalink to this headline">¶</a></h4>
+<p>上の推定式では時間ダミー変数として使い，観察単位全てに共通な時間的な影響を捉えた。具体的には，インフレにより賃金は変化するが，その変化は全ての労働者には対して同じであり，その効果を時間ダミー変数が捉えている。それを<strong>時間効果</strong>と呼ぶ。このような時間ダミー変数を加えた理由は，時間効果が他の変数（例えば，<code class="docutils literal notranslate"><span class="pre">married</span></code>）の係数を「汚さない」ようにするためであり，よりピュアの効果を推定するためである。一方，<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>では，わざわざ時間ダミー変数を作らずとも<code class="docutils literal notranslate"><span class="pre">TimeEffects</span></code>を回帰式に追加することにより，時間効果を自動的に「排除」することができる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_fe2</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ married + union + expersq + TimeEffects + EntityEffects&#39;</span>
+<span class="n">result_fe2</span> <span class="o">=</span> <span class="n">PanelOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_fe2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result_fe2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                          PanelOLS Estimation Summary                           
+================================================================================
+Dep. Variable:                  lwage   R-squared:                        0.0216
+Estimator:                   PanelOLS   R-squared (Between):             -0.2717
+No. Observations:                4360   R-squared (Within):              -0.4809
+Date:                Sat, Jun 13 2020   R-squared (Overall):             -0.2808
+Time:                        10:44:29   Log-likelihood                   -1324.8
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      27.959
+Entities:                         545   P-value                           0.0000
+Avg Obs:                       8.0000   Distribution:                  F(3,3805)
+Min Obs:                       8.0000                                           
+Max Obs:                       8.0000   F-statistic (robust):             27.959
+                                        P-value                           0.0000
+Time periods:                       8   Distribution:                  F(3,3805)
+Avg Obs:                       545.00                                           
+Min Obs:                       545.00                                           
+Max Obs:                       545.00                                           
+                                                                                
+                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+married        0.0467     0.0183     2.5494     0.0108      0.0108      0.0826
+union          0.0800     0.0193     4.1430     0.0000      0.0421      0.1179
+expersq       -0.0052     0.0007    -7.3612     0.0000     -0.0066     -0.0038
+==============================================================================
+
+F-test for Poolability: 10.067
+P-value: 0.0000
+Distribution: F(551,3805)
+
+Included effects: Entity, Time
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">result_fe</span></code>と同じ結果を確認できる。<span class="math notranslate nohighlight">\(R^2\)</span>の値は少し変わっているが，これは時間ダミーを入れて計算している訳ではないためである。</p>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>ダミー変数モデルとしての固定効果モデル<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>固定効果推定量は，他の推定方法でも計算することができる。その１つがダミー変数推定である。アイデアは簡単で，観察単位のダミー変数を使い異質性を捉えるのである。推定方法も簡単で，（式１）に観察単位のダミー変数を加えて通常のOLS推定をおこなうだけである。</p>
+<p>上で使った<code class="docutils literal notranslate"><span class="pre">wagepan</span></code>を使い推定する。まず，観察単位のダミー変数として推定式に<code class="docutils literal notranslate"><span class="pre">C(nr)</span></code>を追加する</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_dum</span> <span class="o">=</span> <span class="s1">&#39;lwage ~  1 + married + union + expersq </span><span class="se">\</span>
+<span class="s1">                        +d81+d82+d83+d84+d85+d86+d87 + C(nr)&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">PooledOLS</span></code>モジュールの関数<code class="docutils literal notranslate"><span class="pre">from_formula</span></code>を使って推定式を定義する。ここで<code class="docutils literal notranslate"><span class="pre">PooledOLS</span></code>とは，<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>で使う通常のOLS推定と同じである。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result_dum</span> <span class="o">=</span> <span class="n">PooledOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_dum</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">nr</span></code>のダミー変数が544あるため，そのまま結果を表示せずに，以下のセルにあるフィルターを使いメインの変数だけを表示する。下のコードの<code class="docutils literal notranslate"><span class="pre">filter</span></code>で使う（<code class="docutils literal notranslate"><span class="pre">result_dum</span></code>に続く）属性・メソッドについて：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">params</span></code>：パラメーターを取得する属性</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">index</span></code>：<code class="docutils literal notranslate"><span class="pre">params</span></code>のインデックスを取得する属性</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">str</span></code>：<code class="docutils literal notranslate"><span class="pre">index</span></code>にある文字列を操作可能なオブジェクトとして取得する属性</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">contains()</span></code>：引数の文字列が文字列の中にある場合<code class="docutils literal notranslate"><span class="pre">True</span></code>を返すメソッド</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(</span> <span class="pre">)</span></code>：括弧の中を先に評価するという意味</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tolist()</span></code>：リストに変換するメソッド</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">filter</span> <span class="o">=</span> <span class="p">(</span><span class="n">result_dum</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;nr&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">result_dum</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.933291
+married      0.046680
+union        0.080002
+expersq     -0.005185
+d81          0.151191
+d82          0.252971
+d83          0.354444
+d84          0.490115
+d85          0.617482
+d86          0.765497
+d87          0.925025
+Name: parameter, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>３つの変数<code class="docutils literal notranslate"><span class="pre">I(exper**2)</span></code>，<code class="docutils literal notranslate"><span class="pre">married</span></code>，<code class="docutils literal notranslate"><span class="pre">union</span></code>の係数は固定効果モデルと等しいことが確認できる。</p>
+<p>t値とp値の表示には次のコードを使う。</p>
+<ul class="simple">
+<li><p>t値：<code class="docutils literal notranslate"><span class="pre">result_dum.tstats[filter]</span></code></p></li>
+<li><p>p値：<code class="docutils literal notranslate"><span class="pre">result_dum.pvalues[filter]</span></code></p></li>
+</ul>
+<p>この場合，<code class="docutils literal notranslate"><span class="pre">educ</span></code>等の時間に対して不変の変数も推定式に加えることが可能である。一方，この方法はパラメーターの数は544+11=555あり，自由度が非常に低くなるのが欠点である。</p>
+<p>（注意）</p>
+<p>この推定式に時間に対して不変の変数（例えば，<code class="docutils literal notranslate"><span class="pre">educ</span></code>，<code class="docutils literal notranslate"><span class="pre">blac</span></code>，<code class="docutils literal notranslate"><span class="pre">hisp</span></code>，<code class="docutils literal notranslate"><span class="pre">exper</span></code>）を追加すると推定できない（エラーが発生する）。理由は，それらの変数は<code class="docutils literal notranslate"><span class="pre">nr</span></code>ダミー変数と完全に同じ動きをするためである。</p>
+</div>
+<div class="section" id="id6">
+<h2>ランダム効果モデル<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h3>説明<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>ここでは，パネル・データを使い推定するランダム効果モデル（Random Effects Model; RE Model）を解説する。もう一度（式１）を考えよう。</p>
+<p>（仮定） <span class="math notranslate nohighlight">\(a_i\)</span>は観察単位 <span class="math notranslate nohighlight">\(i\)</span> に対して一定であるが，<span class="math notranslate nohighlight">\(i\)</span>によってその値は異なる。</p>
+<p>＜固定効果モデルの仮定＞</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\text{Cov}\left(a_ix_{it}\right)\neq 0,\quad t=1,2,...,T\)</span></p></li>
+</ul>
+<p>＜ランダム効果モデルの仮定＞</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\text{Cov}\left(a_ix_{it}\right)=0,\quad t=1,2,...,T\)</span></p></li>
+</ul>
+<hr class="docutils" />
+<p>この違いを念頭に（式１）を次式に書き換える。</p>
+<div class="math notranslate nohighlight">
+\[y_{it}= \beta_0 + \beta_1x_{it}+e_{it}\qquad\qquad\left(\text{式４}\right)\]</div>
+<p>ここで，</p>
+<div class="math notranslate nohighlight">
+\[e_{it}=a_i+u_{it}\]</div>
+<p>しかし，</p>
+<div class="math notranslate nohighlight">
+\[\text{Corr}\left(e_{it},e_{is}\right)\neq 0,\quad t\neq s\]</div>
+<p>となることが示せる。即ち，誤差項が自己相関することになる。</p>
+<p>＜含意＞</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(a_i\)</span>と<span class="math notranslate nohighlight">\(x_{it}\)</span>に相関がないため次の推定方法で一致性を満たす推定量を計算できる。</p>
+<ul>
+<li><p>１つの時点でお横断面データを使いOLS推定（でも他のデータはどうする？）</p></li>
+<li><p>全てのデータを使い何の区別もなくプールするPooled OLS推定（しかしパネル・データの特性を有効利用していない）。</p></li>
+</ul>
+</li>
+<li><p>時系列データを扱う場合，自己相関によりOLS推定量は効率性が低くなる。これは横断面データを扱う際の不均一分散が引き起こす問題と似ている。</p></li>
+<li><p>１階差分推定や固定効果推定を使う必要はなく，使うと効率性が低い推定量となる。</p></li>
+<li><p>従って，問題は次の点：</p>
+<ul>
+<li><p>より効率性が高い推定方法はどのようなものか。</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<p>その方法がランダム効果推定と言われるもので，固定効果のように，変数を平均からの<strong>部分的</strong>な乖離に変換することにより可能となる。具体的には，次式が推定式となる。</p>
+<div class="math notranslate nohighlight">
+\[\overset{\circ}{y}_{it}=\beta_0(1-\theta)+\beta_1\overset{\circ}{y}_{it}+\overset{\circ}{e}_{it}\qquad\qquad\left(\text{式５}\right)\]</div>
+<p>ここで</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\overset{\circ}{y}_{it}=y_{it}-\theta\bar{y}_i\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\overset{\circ}{x}_{it}=x_{it}-\theta\bar{x}_i\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\overset{\circ}{e}_{it}=e_{it}-\theta\bar{e}_i\)</span></p></li>
+</ul>
+<p>は変数の平均からの部分的な乖離であり，乖離の度合いを決める変数<span class="math notranslate nohighlight">\(\theta\)</span>は</p>
+<div class="math notranslate nohighlight">
+\[\theta = 1-\sqrt{\frac{\sigma_u^2}{\sigma_u^2+T\sigma_a^2}}\]</div>
+<p>と定義される。<span class="math notranslate nohighlight">\(\sigma_u^2\)</span>は<span class="math notranslate nohighlight">\(u_{it}\)</span>の分散，<span class="math notranslate nohighlight">\(\sigma_a^2\)</span>は<span class="math notranslate nohighlight">\(a_{i}\)</span>の分散である。</p>
+<p>（直感）</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\sigma_a^2=0\)</span>の場合<span class="math notranslate nohighlight">\(\theta=0\)</span>となり，<span class="math notranslate nohighlight">\(a_i\)</span>は<span class="math notranslate nohighlight">\(i\)</span>に対して一定であり観察単位の異質性はないということである。その場合は，通常のOLSで推定することがベストとなる。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma_a^2\)</span>が増加すると<span class="math notranslate nohighlight">\(\theta\)</span>は大きくなり，より大きな平均からの乖離が必要となる。極端な場合，<span class="math notranslate nohighlight">\(\sigma_a^2\)</span>が無限大に近づくと，<span class="math notranslate nohighlight">\(\theta=1\)</span>となり<span class="math notranslate nohighlight">\(\overset{\circ}{y}=\ddot{y}\)</span>となる。即ち，固定効果モデルはランダム効果モデルの極端な場合と解釈できる。</p></li>
+</ul>
+<p>（注意）</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\theta\)</span>は事前にはわからないため推定する必要がある（<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>が自動的に計算する）。</p></li>
+</ul>
+<p>（良い点）</p>
+<ul class="simple">
+<li><p>時間に対して不変の説明変数があってもその係数を推定できる。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{Cov}\left(a_ix_{it}\right)= 0\)</span>が正しければ，推定量は一致性を満たす。しかし，不偏性は満たさない。</p></li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h3>推定<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">exper</span></code>，<code class="docutils literal notranslate"><span class="pre">educ</span></code>，<code class="docutils literal notranslate"><span class="pre">black</span></code>，<code class="docutils literal notranslate"><span class="pre">hisp</span></code>を加えて回帰式を定義する。</p>
+<p>（注意）</p>
+<p>時間ダミー変数の代わりに<code class="docutils literal notranslate"><span class="pre">TimeEffects</span></code>を使わないように。入れることができますが，そのような仕様になっていません。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_re</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
+<span class="s1">                        + exper + educ + black + hisp </span><span class="se">\</span>
+<span class="s1">                        +d81+d82+d83+d84+d85+d86+d87&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">RandomEffects</span></code>のモジュールにある関数<code class="docutils literal notranslate"><span class="pre">from_formula</span></code>を使い計算する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result_re</span> <span class="o">=</span> <span class="n">RandomEffects</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_re</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>結果の表示。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result_re</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+Intercept      0.0234     0.1514     0.1546     0.8771     -0.2735      0.3203
+married        0.0638     0.0168     3.8035     0.0001      0.0309      0.0967
+union          0.1059     0.0179     5.9289     0.0000      0.0709      0.1409
+expersq       -0.0047     0.0007    -6.8623     0.0000     -0.0061     -0.0034
+exper          0.1058     0.0154     6.8706     0.0000      0.0756      0.1361
+educ           0.0919     0.0107     8.5744     0.0000      0.0709      0.1129
+black         -0.1394     0.0480    -2.9054     0.0037     -0.2334     -0.0453
+hisp           0.0217     0.0428     0.5078     0.6116     -0.0622      0.1057
+d81            0.0404     0.0247     1.6362     0.1019     -0.0080      0.0889
+d82            0.0309     0.0324     0.9519     0.3412     -0.0327      0.0944
+d83            0.0202     0.0417     0.4840     0.6284     -0.0616      0.1020
+d84            0.0430     0.0515     0.8350     0.4037     -0.0580      0.1440
+d85            0.0577     0.0615     0.9383     0.3482     -0.0629      0.1782
+d86            0.0918     0.0716     1.2834     0.1994     -0.0485      0.2321
+d87            0.1348     0.0817     1.6504     0.0989     -0.0253      0.2950
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p>結果の解釈は下でする。</p>
+<p>RE推定では<span class="math notranslate nohighlight">\(\theta\)</span>が重要な役目を果たすが，その値は<code class="docutils literal notranslate"><span class="pre">result_re</span></code>の属性<code class="docutils literal notranslate"><span class="pre">theta</span></code>を使うことにより<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の形で表示できる。</p>
+<ul class="simple">
+<li><p>balanced panel dataの場合，<code class="docutils literal notranslate"><span class="pre">theta</span></code>の値は一意で決まる。</p></li>
+<li><p>unbalanced panel dataの場合，<code class="docutils literal notranslate"><span class="pre">theta</span></code>は観察単位毎に計算される。</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result_re</span><span class="o">.</span><span class="n">theta</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>theta    0.645059
+Name: 13, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>上で説明したが<span class="math notranslate nohighlight">\(\theta\)</span>は<span class="math notranslate nohighlight">\(u_a\)</span>と<span class="math notranslate nohighlight">\(u_it\)</span>の分散である<span class="math notranslate nohighlight">\(\sigma_a^2\)</span>と<span class="math notranslate nohighlight">\(\sigma_u^2\)</span>に依存する。それらの値は，属性<code class="docutils literal notranslate"><span class="pre">variance_decomposition</span></code>を表示できる。以下の返り値の内容：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Effects</span></code>：<span class="math notranslate nohighlight">\(\sigma_a^2\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Residual</span></code>：<span class="math notranslate nohighlight">\(\sigma_u^2\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Percept</span> <span class="pre">due</span> <span class="pre">to</span> <span class="pre">Effects</span></code>：<span class="math notranslate nohighlight">\(\dfrac{\sigma_a^2}{\sigma_a^2+\sigma_u^2}\)</span></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result_re</span><span class="o">.</span><span class="n">variance_decomposition</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Effects                   0.106946
+Residual                  0.123324
+Percent due to Effects    0.464438
+Name: Variance Decomposition, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id9">
+<h2>相関ランダム効果モデル<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id10">
+<h3>説明<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>相関ランダム効果モデル（CREモデル）は，固定効果モデルとランダム効果モデルの中間的な位置にあり，両方を包含している。（式１）を考えよう。更に，観察不可能な固定効果<span class="math notranslate nohighlight">\(a_i\)</span>は説明変数と次の関係にあると仮定する。</p>
+<div class="math notranslate nohighlight">
+\[a_i = \alpha + \gamma\bar{x}_{it} + r_i\qquad\text{(式５)}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\bar{x}_i=\dfrac{1}{T}\sum_{t=1}^Tx_{it}\)</span>は説明変数の平均</p></li>
+<li><p><span class="math notranslate nohighlight">\(\gamma\)</span>は<span class="math notranslate nohighlight">\(a_i\)</span>と<span class="math notranslate nohighlight">\(x_{it}\)</span>の相関関係を捉える係数</p></li>
+<li><p><span class="math notranslate nohighlight">\(r_i\)</span>は説明変数<span class="math notranslate nohighlight">\(x_{it}\)</span>と相関しないと仮定，即ち，<span class="math notranslate nohighlight">\(\text{Cov}\left(r_i\bar{x}_{it}\right)\)</span></p></li>
+</ul>
+<p>（式５）を（式１）に代入すると次式を得る。</p>
+<div class="math notranslate nohighlight">
+\[y_{it}=\alpha+\beta x_{it} + \gamma\bar{x}_i + v_{it}\qquad\text{(式６)}\]</div>
+<p>ここで</p>
+<div class="math notranslate nohighlight">
+\[v_{it}=r_i + u_{it}\]</div>
+<p>（含意）</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\text{Cov}\left(r_i,\bar{x}_{it}\right)\;\Rightarrow\;\text{Cov}\left(v_i,\bar{x}_{it}\right)\)</span></p></li>
+<li><p>REモデルと同じ構造となっており，違いは<span class="math notranslate nohighlight">\(\bar{x}_i\)</span>が追加されている。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">RandomEffects</span></code>モジュールが使える。</p></li>
+</ul>
+</li>
+<li><p>次の結果が成立する。</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta}_{FE}=\hat{\beta}_{CRE}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{\beta}_{FE}\)</span>：固定効果推定量</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{\beta}_{CRE}\)</span>：相関ランダム効果推定量</p></li>
+<li><p>この結果は，時間に対して不変な変数（例えば，<code class="docutils literal notranslate"><span class="pre">black</span></code>）を<strong>含めても</strong>成立する</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id11">
+<h3>推定<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>まず <span class="math notranslate nohighlight">\(\bar{x}_i\)</span> を計算し，それを<code class="docutils literal notranslate"><span class="pre">wagepan</span></code>に追加する。そのために次の関数を定義する。</p>
+<p>（解説）</p>
+<ul class="simple">
+<li><p>(1)：関数の引数</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">dframe</span></code>：データフレーム</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ori_col</span></code>：平均を計算したい列</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">new_col</span></code>：計算した平均を入れる列</p></li>
+</ul>
+</li>
+<li><p>(2)：<code class="docutils literal notranslate"><span class="pre">ori_col</span></code>をグループ化し，グループ名とグループ平均からなる辞書の作成</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">groupby(level=0)</span></code>：行の第１インデックスに従ってグループ化</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mean()</span></code>：グループ平均の計算</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code>：行の第１インデックスにあるグループ名を<code class="docutils literal notranslate"><span class="pre">key</span></code>，グループ平均を<code class="docutils literal notranslate"><span class="pre">value</span></code>にする辞書の作成</p></li>
+</ul>
+</li>
+<li><p>(3)：行の第１インデックスに該当するグループ平均が並ぶリストの作成</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">index.get_level_values(0)</span></code>：行の第１インデックスの値を取得</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">to_series()</span></code>：<code class="docutils literal notranslate"><span class="pre">series</span></code>に変換</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">map(dict)</span></code>：<code class="docutils literal notranslate"><span class="pre">dict</span></code>の内容に従って上の<code class="docutils literal notranslate"><span class="pre">series</span></code>の値をグループ平均に入れ替える</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tolist()</span></code>：リストに変換</p></li>
+</ul>
+</li>
+<li><p>(4)：<code class="docutils literal notranslate"><span class="pre">dframe</span></code>にグループ平均が並ぶ新しい列が追加し，そのラベルを<code class="docutils literal notranslate"><span class="pre">new_col</span></code>とする</p></li>
+<li><p>(5)：<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を返す</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_col_mean</span><span class="p">(</span><span class="n">dframe</span><span class="p">,</span> <span class="n">ori_col</span><span class="p">,</span> <span class="n">new_col</span><span class="p">):</span>  <span class="c1"># (1)</span>
+    
+    <span class="nb">dict</span> <span class="o">=</span> <span class="n">dframe</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="n">ori_col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>  <span class="c1"># (2)</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">dframe</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">to_series</span><span class="p">()</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  <span class="c1"># (3)</span>
+    <span class="n">dframe</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">new_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean</span>  <span class="c1"># (4)</span>
+    
+    <span class="k">return</span> <span class="n">dframe</span>   <span class="c1"># (5)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>この関数を使い，<code class="docutils literal notranslate"><span class="pre">married</span></code>，<code class="docutils literal notranslate"><span class="pre">union</span></code>，<code class="docutils literal notranslate"><span class="pre">expersq</span></code>の平均を計算し<code class="docutils literal notranslate"><span class="pre">wagepan</span></code>に追加する。</p>
+<p>（コメント）<code class="docutils literal notranslate"><span class="pre">exper</span></code>は含めない。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span> <span class="o">=</span> <span class="n">add_col_mean</span><span class="p">(</span><span class="n">wagepan</span><span class="p">,</span> <span class="s1">&#39;married&#39;</span><span class="p">,</span> <span class="s1">&#39;married_mean&#39;</span><span class="p">)</span>
+<span class="n">wagepan</span> <span class="o">=</span> <span class="n">add_col_mean</span><span class="p">(</span><span class="n">wagepan</span><span class="p">,</span> <span class="s1">&#39;union&#39;</span><span class="p">,</span> <span class="s1">&#39;union_mean&#39;</span><span class="p">)</span>
+<span class="n">wagepan</span> <span class="o">=</span> <span class="n">add_col_mean</span><span class="p">(</span><span class="n">wagepan</span><span class="p">,</span> <span class="s1">&#39;expersq&#39;</span><span class="p">,</span> <span class="s1">&#39;expersq_mean&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>CRE推定と結果の表示</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_cre</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
+<span class="s1">                         + married_mean + union_mean + expersq_mean </span><span class="se">\</span>
+<span class="s1">                         +d81+d82+d83+d84+d85+d86+d87&#39;</span>
+
+<span class="n">result_cre</span> <span class="o">=</span> <span class="n">RandomEffects</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_cre</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result_cre</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                        RandomEffects Estimation Summary                        
+================================================================================
+Dep. Variable:                  lwage   R-squared:                        0.1711
+Estimator:              RandomEffects   R-squared (Between):              0.0967
+No. Observations:                4360   R-squared (Within):               0.1806
+Date:                Sat, Jun 13 2020   R-squared (Overall):              0.1355
+Time:                        10:44:30   Log-likelihood                   -1609.8
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      69.027
+Entities:                         545   P-value                           0.0000
+Avg Obs:                       8.0000   Distribution:                 F(13,4346)
+Min Obs:                       8.0000                                           
+Max Obs:                       8.0000   F-statistic (robust):             69.027
+                                        P-value                           0.0000
+Time periods:                       8   Distribution:                 F(13,4346)
+Avg Obs:                       545.00                                           
+Min Obs:                       545.00                                           
+Max Obs:                       545.00                                           
+                                                                                
+                              Parameter Estimates                               
+================================================================================
+              Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+--------------------------------------------------------------------------------
+Intercept        1.1537     0.0502     22.979     0.0000      1.0552      1.2521
+married          0.0467     0.0183     2.5522     0.0107      0.0108      0.0825
+union            0.0800     0.0193     4.1475     0.0000      0.0422      0.1178
+expersq         -0.0052     0.0007    -7.3693     0.0000     -0.0066     -0.0038
+married_mean     0.1618     0.0469     3.4518     0.0006      0.0699      0.2536
+union_mean       0.1612     0.0526     3.0653     0.0022      0.0581      0.2644
+expersq_mean     0.0032     0.0009     3.4362     0.0006      0.0014      0.0050
+d81              0.1512     0.0219     6.8959     0.0000      0.1082      0.1942
+d82              0.2530     0.0244     10.371     0.0000      0.2052      0.3008
+d83              0.3544     0.0292     12.134     0.0000      0.2972      0.4117
+d84              0.4901     0.0362     13.544     0.0000      0.4192      0.5611
+d85              0.6175     0.0452     13.663     0.0000      0.5289      0.7061
+d86              0.7655     0.0561     13.654     0.0000      0.6556      0.8754
+d87              0.9250     0.0687     13.465     0.0000      0.7903      1.0597
+================================================================================
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id12">
+<h3>２つの利点<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>CREモデルの２つの利点を解説する。</p>
+<div class="section" id="fere">
+<h4>FE対RE検定<a class="headerlink" href="#fere" title="Permalink to this headline">¶</a></h4>
+<p>FEモデルとREモデルのどちらが適しているかを調べることができるHausman検定というものがある。CREモデルを使うことにより，同様の検定が簡単に行える。（式６）を考えよう。</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\gamma=0\)</span>の場合，REモデルの（式５）と同じになり，REモデルが妥当ということになる。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\gamma\neq 0\)</span>の場合，<span class="math notranslate nohighlight">\(a_i\)</span>と<span class="math notranslate nohighlight">\(\bar{x}_{i}\)</span>は相関することになり，これは<span class="math notranslate nohighlight">\(\text{Cov}\left(a_i,{x}_{it}\right)\neq 0\)</span>を意味し，REモデルが妥当な推定方法となる。</p></li>
+</ul>
+<p>この考えを利用して，次の帰無仮説と対立仮説のもとで<span class="math notranslate nohighlight">\(\gamma\)</span>の優位性を調べる。</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\text{H}_0:\;\text{Cov}\left(a_i,x_{it}\right)=0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{H}_a:\;\text{Cov}\left(a_i,x_{it}\right)\neq 0\)</span></p></li>
+</ul>
+<p>（コメント）</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\gamma=0\)</span>を棄却できれば上の<span class="math notranslate nohighlight">\(\text{H}_0\)</span>を棄却できる。</p></li>
+<li><p>平均の変数が<span class="math notranslate nohighlight">\(k\)</span>ある場合は，<span class="math notranslate nohighlight">\(\gamma_1=\gamma_2=\cdots=\gamma_k=0\)</span>を検定する。</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">result_cre</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">wald_test()</span></code>を使う。引数には文字列で指定する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 検定する係数の値を設定する</span>
+<span class="n">restriction</span> <span class="o">=</span> <span class="s1">&#39;married_mean = union_mean = expersq_mean = 0&#39;</span>
+
+<span class="c1"># 検定結果を表示する</span>
+<span class="n">result_cre</span><span class="o">.</span><span class="n">wald_test</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="n">restriction</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Linear Equality Hypothesis Test
+H0: Linear equality constraint is valid
+Statistic: 35.6454
+P-value: 0.0000
+Distributed: chi2(3)
+WaldTestStatistic, id: 0x7fe5b5c46a60
+</pre></div>
+</div>
+</div>
+</div>
+<p>p値が非常に小さいので，帰無仮説は棄却できる。従って，FEモデルが妥当だと結論づけることができる。</p>
+</div>
+<div class="section" id="id13">
+<h4>一定な変数を含める<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<p>（式６）に時間に対して一定は変数（<span class="math notranslate nohighlight">\(z_{i}\)</span>）を含めて</p>
+<div class="math notranslate nohighlight">
+\[y_{it}=\alpha+\beta x_{it}+\gamma\bar{x}_i+\delta z_{i} +v_{it}\qquad\text{(式６)}\]</div>
+<p>をRE推定しても次の結果は成立する。</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta}_{FE}=\hat{\beta}_{CRE}\]</div>
+<hr class="docutils" />
+<p>この結果を利用して，以下では次の変数を加えて回帰式を設定する。</p>
+<ul class="simple">
+<li><p>時間に対して一定な変数</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">educ</span></code>, <code class="docutils literal notranslate"><span class="pre">black</span></code>，<code class="docutils literal notranslate"><span class="pre">hisp</span></code></p></li>
+</ul>
+</li>
+<li><p>一定ではないが，FEにいれると推定できなかった変数</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">exper</span></code></p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_cre2</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
+<span class="s1">                          + exper + educ + black + hisp </span><span class="se">\</span>
+<span class="s1">                          + married_mean + union_mean + expersq_mean </span><span class="se">\</span>
+<span class="s1">                          +d81+d82+d83+d84+d85+d86+d87&#39;</span>
+
+<span class="n">result_cre2</span> <span class="o">=</span> <span class="n">RandomEffects</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_cre2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result_cre2</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                              Parameter Estimates                               
+================================================================================
+              Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+--------------------------------------------------------------------------------
+Intercept       -0.1288     0.1583    -0.8140     0.4157     -0.4391      0.1814
+married          0.0467     0.0183     2.5520     0.0107      0.0108      0.0825
+union            0.0800     0.0193     4.1473     0.0000      0.0422      0.1178
+expersq         -0.0052     0.0007    -7.3689     0.0000     -0.0066     -0.0038
+exper           -0.0504     0.0507    -0.9947     0.3200     -0.1499      0.0490
+educ             0.0946     0.0110     8.6115     0.0000      0.0731      0.1161
+black           -0.1388     0.0492    -2.8193     0.0048     -0.2353     -0.0423
+hisp             0.0048     0.0430     0.1110     0.9116     -0.0795      0.0891
+married_mean     0.0970     0.0454     2.1382     0.0326      0.0081      0.1859
+union_mean       0.1907     0.0507     3.7591     0.0002      0.0912      0.2901
+expersq_mean     0.0103     0.0033     3.1135     0.0019      0.0038      0.0168
+d81              0.2016     0.0552     3.6497     0.0003      0.0933      0.3099
+d82              0.3538     0.1043     3.3923     0.0007      0.1493      0.5583
+d83              0.5058     0.1549     3.2650     0.0011      0.2021      0.8094
+d84              0.6919     0.2060     3.3580     0.0008      0.2879      1.0958
+d85              0.8697     0.2575     3.3768     0.0007      0.3648      1.3746
+d86              1.0681     0.3094     3.4525     0.0006      0.4616      1.6746
+d87              1.2781     0.3615     3.5351     0.0004      0.5693      1.9869
+================================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p>もう一度，FE対RE検定を行ってみよう。検定統計量（Statistics）は減少したが，以前帰無仮説は高い優位性で棄却できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result_cre2</span><span class="o">.</span><span class="n">wald_test</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="n">restriction</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Linear Equality Hypothesis Test
+H0: Linear equality constraint is valid
+Statistic: 26.0233
+P-value: 0.0000
+Distributed: chi2(3)
+WaldTestStatistic, id: 0x7fe5b5d71670
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id14">
+<h2>モデルの比較<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<p>パネル・データを扱う場合の通常のアプローチは，使える推定法を使いその結果を比べることから始める。以下では以下のモデルを比べる。</p>
+<ul class="simple">
+<li><p>通常のOLS</p></li>
+<li><p>固定効果モデル</p></li>
+<li><p>ランダム効果モデル</p></li>
+<li><p>相関ランダムモデル</p></li>
+</ul>
+<div class="section" id="ols">
+<h3>OLS<a class="headerlink" href="#ols" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>のモジュール<code class="docutils literal notranslate"><span class="pre">PooledOLS</span></code>では，観察単位や時間の区別なく全てのデータをプールしてOLS推定する。これは通常のOLSと同じ推定法と等しい。<code class="docutils literal notranslate"><span class="pre">PooledOLS</span></code>の関数<code class="docutils literal notranslate"><span class="pre">from_formula</span></code>を使い，以下のように推定する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_pool</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
+<span class="s1">                        + exper + educ + black + hisp </span><span class="se">\</span>
+<span class="s1">                        +d81+d82+d83+d84+d85+d86+d87&#39;</span>
+
+<span class="n">result_pool</span> <span class="o">=</span> <span class="n">PooledOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_pool</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result_pool</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+Intercept      0.0921     0.0783     1.1761     0.2396     -0.0614      0.2455
+married        0.1083     0.0157     6.8997     0.0000      0.0775      0.1390
+union          0.1825     0.0172     10.635     0.0000      0.1488      0.2161
+expersq       -0.0024     0.0008    -2.9413     0.0033     -0.0040     -0.0008
+exper          0.0672     0.0137     4.9095     0.0000      0.0404      0.0941
+educ           0.0913     0.0052     17.442     0.0000      0.0811      0.1016
+black         -0.1392     0.0236    -5.9049     0.0000     -0.1855     -0.0930
+hisp           0.0160     0.0208     0.7703     0.4412     -0.0248      0.0568
+d81            0.0583     0.0304     1.9214     0.0548     -0.0012      0.1178
+d82            0.0628     0.0332     1.8900     0.0588     -0.0023      0.1279
+d83            0.0620     0.0367     1.6915     0.0908     -0.0099      0.1339
+d84            0.0905     0.0401     2.2566     0.0241      0.0119      0.1691
+d85            0.1092     0.0434     2.5200     0.0118      0.0243      0.1942
+d86            0.1420     0.0464     3.0580     0.0022      0.0509      0.2330
+d87            0.1738     0.0494     3.5165     0.0004      0.0769      0.2707
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id15">
+<h3>比較表の作成<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>今までの推定結果を表にまとめるために，<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>の関数<code class="docutils literal notranslate"><span class="pre">compare</span></code>を使う。</p>
+<p>表作成の順番：</p>
+<ol class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code>が表示したい推定方法の名前，<code class="docutils literal notranslate"><span class="pre">value</span></code>がその上で得た推定結果となる辞書を作る</p></li>
+<li><p>その辞書を<code class="docutils literal notranslate"><span class="pre">compare</span></code>の引数としてつかう。</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Pooled OLS&#39;</span><span class="p">:</span><span class="n">result_pool</span><span class="p">,</span>
+       <span class="s1">&#39;FE&#39;</span><span class="p">:</span> <span class="n">result_fe</span><span class="p">,</span>
+       <span class="s1">&#39;RE&#39;</span><span class="p">:</span> <span class="n">result_re</span><span class="p">,</span>
+       <span class="s1">&#39;CRE&#39;</span><span class="p">:</span> <span class="n">result_cre2</span>
+      <span class="p">}</span>
+
+<span class="c1"># compare(res)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>このままでも良いか，この方法では推定結果を表示する順番を指定できない。例えば，<code class="docutils literal notranslate"><span class="pre">OLS</span></code>，<code class="docutils literal notranslate"><span class="pre">FE</span></code>，<code class="docutils literal notranslate"><span class="pre">RE</span></code>，<code class="docutils literal notranslate"><span class="pre">CRE</span></code>の順番で左から並べたいとしよう。その場合，<code class="docutils literal notranslate"><span class="pre">collections</span></code>パッケージにある関数<code class="docutils literal notranslate"><span class="pre">OrderedDict</span></code>をつかう。<code class="docutils literal notranslate"><span class="pre">{}</span></code>の中で並べた順番をそのまま維持してくれる関数である。</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_ordered</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">compare</span><span class="p">(</span><span class="n">res_ordered</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                                     Model Comparison                                    
+=========================================================================================
+                            Pooled OLS             FE                RE               CRE
+-----------------------------------------------------------------------------------------
+Dep. Variable                    lwage          lwage             lwage             lwage
+Estimator                    PooledOLS       PanelOLS     RandomEffects     RandomEffects
+No. Observations                  4360           4360              4360              4360
+Cov. Est.                   Unadjusted     Unadjusted        Unadjusted        Unadjusted
+R-squared                       0.1893         0.1806            0.1806            0.1855
+R-Squared (Within)              0.1692         0.1806            0.1799            0.1806
+R-Squared (Between)             0.2066         0.2386            0.1853            0.2192
+R-Squared (Overall)             0.1893         0.2361            0.1828            0.2013
+F-statistic                     72.459         83.851            68.409            58.165
+P-value (F-stat)                0.0000         0.0000            0.0000            0.0000
+=====================     ============   ============   ===============   ===============
+Intercept                       0.0921                           0.0234           -0.1288
+                              (1.1761)                         (0.1546)         (-0.8140)
+married                         0.1083         0.0467            0.0638            0.0467
+                              (6.8997)       (2.5494)          (3.8035)          (2.5520)
+union                           0.1825         0.0800            0.1059            0.0800
+                              (10.635)       (4.1430)          (5.9289)          (4.1473)
+expersq                        -0.0024        -0.0052           -0.0047           -0.0052
+                             (-2.9413)      (-7.3612)         (-6.8623)         (-7.3689)
+exper                           0.0672                           0.1058           -0.0504
+                              (4.9095)                         (6.8706)         (-0.9947)
+educ                            0.0913                           0.0919            0.0946
+                              (17.442)                         (8.5744)          (8.6115)
+black                          -0.1392                          -0.1394           -0.1388
+                             (-5.9049)                        (-2.9054)         (-2.8193)
+hisp                            0.0160                           0.0217            0.0048
+                              (0.7703)                         (0.5078)          (0.1110)
+d81                             0.0583         0.1512            0.0404            0.2016
+                              (1.9214)       (6.8883)          (1.6362)          (3.6497)
+d82                             0.0628         0.2530            0.0309            0.3538
+                              (1.8900)       (10.360)          (0.9519)          (3.3923)
+d83                             0.0620         0.3544            0.0202            0.5058
+                              (1.6915)       (12.121)          (0.4840)          (3.2650)
+d84                             0.0905         0.4901            0.0430            0.6919
+                              (2.2566)       (13.529)          (0.8350)          (3.3580)
+d85                             0.1092         0.6175            0.0577            0.8697
+                              (2.5200)       (13.648)          (0.9383)          (3.3768)
+d86                             0.1420         0.7655            0.0918            1.0681
+                              (3.0580)       (13.638)          (1.2834)          (3.4525)
+d87                             0.1738         0.9250            0.1348            1.2781
+                              (3.5165)       (13.450)          (1.6504)          (3.5351)
+married_mean                                                                       0.0970
+                                                                                 (2.1382)
+union_mean                                                                         0.1907
+                                                                                 (3.7591)
+expersq_mean                                                                       0.0103
+                                                                                 (3.1135)
+======================= ============== ============== ================= =================
+Effects                                        Entity                                    
+-----------------------------------------------------------------------------------------
+
+T-stats reported in parentheses
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">married</span></code></p>
+<ul>
+<li><p>OLSでの結婚プレミアムは10％以上あるが，FEでは半減している。これは観察単位の異質性<span class="math notranslate nohighlight">\(a_i\)</span>に生産性が含まれており，「生産性が高い人（高い<span class="math notranslate nohighlight">\(a_i\)</span>）は，結婚している可能性が高い」という考えと一貫性がある。即ち，<span class="math notranslate nohighlight">\(\text{Cov}\left(a_i,x_{it}\right)&gt;0\)</span>となり，これによりOLSでは以下のようなバイアスが発生すると解釈できる。</p>
+<ul>
+<li><p>既婚 <span class="math notranslate nohighlight">\(\Rightarrow\)</span> 生産性（<span class="math notranslate nohighlight">\(a_i\)</span>）が高い <span class="math notranslate nohighlight">\(\Rightarrow\)</span> 賃金が上振れしやすい</p></li>
+<li><p>未婚 <span class="math notranslate nohighlight">\(\Rightarrow\)</span> 生産性（<span class="math notranslate nohighlight">\(a_i\)</span>）が低い <span class="math notranslate nohighlight">\(\Rightarrow\)</span> 賃金が下振れしやすい</p></li>
+</ul>
+</li>
+<li><p>FE推定法が示しているのは，そのようなバイアスを取り除いても，結婚プレミアムは存在する。考えられる理由は：</p>
+<ul>
+<li><p>結婚は生産性を上昇させる</p></li>
+<li><p>結婚は安定した生活を意味し，それに対して企業はより高い賃金を払う</p></li>
+</ul>
+</li>
+<li><p>REは推定値はFEに比較的に近い。これは<span class="math notranslate nohighlight">\(\hat{\theta}&gt;0.5\)</span>の値にも現れている。</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">union</span></code></p>
+<ul>
+<li><p>FEの値は労働組合の賃金に対する影響力を示している。</p></li>
+<li><p>OLSとFEの推定値を比較すると，約0.1減少している。OLSは労働組合の影響力を過大評価しており，観察単位の異質性が大きく働いていることがわかる。</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">educ</span></code>，<code class="docutils literal notranslate"><span class="pre">black</span></code>，<code class="docutils literal notranslate"><span class="pre">hisp</span></code></p>
+<ul>
+<li><p>OLSもREも推定値は似ている。</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="fd-vs-fe">
+<h3>FD vs. FE<a class="headerlink" href="#fd-vs-fe" title="Permalink to this headline">¶</a></h3>
+<p>1階差分モデルと固定効果モデルを比較する。</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(T=2\)</span>の場合，FDとFEは同じ（if there is intercept in FE）</p></li>
+<li><p><span class="math notranslate nohighlight">\(T\geq 3\)</span>の場合：</p>
+<ul>
+<li><p>GM仮定に対応する仮定の下ではFDもFEも不偏性・一致性を満たす。</p></li>
+<li><p>誤差項に系列相関がない場合，FEの方が効率性が高い</p></li>
+<li><p>誤差項の系列相関がある場合，FDの方が良い。</p>
+<ul>
+<li><p>例えば，誤差項がランダム・ウォークの場合<span class="math notranslate nohighlight">\(\Delta u_{it}\)</span>は系列相関はない。</p></li>
+<li><p>FD推定をして<span class="math notranslate nohighlight">\(\Delta u_{it}\)</span>を検定する。</p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(N\)</span>が少なく<span class="math notranslate nohighlight">\(T\)</span>が大きい場合（例：<span class="math notranslate nohighlight">\(N=20\)</span>と<span class="math notranslate nohighlight">\(T=30\)</span>），時系列の特性が強くなるので，FDの方が良い</p></li>
+</ul>
+</li>
+<li><p>実証研究では，FDとFEの結果の両方を報告すること。</p></li>
+</ul>
+</div>
+<div class="section" id="fe-vs-re">
+<h3>FE vs. RE<a class="headerlink" href="#fe-vs-re" title="Permalink to this headline">¶</a></h3>
+<p>固定効果モデルとランダム効果モデルを比較する。</p>
+<ol class="simple">
+<li><p><span class="math notranslate nohighlight">\(a_i\)</span>はランダムか？</p>
+<ul class="simple">
+<li><p>経済学の場合，説明変数は何らかの選択の結果の場合が多い。さらに，その選択が観察単位の特徴に依存する場合，<span class="math notranslate nohighlight">\(\text{Cov}\left(a_ix_{it}\right)\neq 0\)</span>となり，FEモデルの方が適切となる。</p></li>
+<li><p>都道府県データのような場合，「大きな」母集団からランダムに抽出された説明変数とはならないかも知れない。むしろ，都道府県の切片がランダムではなく，単に異なると仮定する方が自然かも知れない。</p></li>
+</ul>
+</li>
+<li><p>Hausman検定であれ他の検定であれ，間違う確率は存在する。以下では間違った場合どうなるかを考えた。</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\text{Cov}\left(a_ix_{it}\right)= 0\)</span>，即ち，REモデルが正しい場合：</p>
+<ul>
+<li><p>誤差項の自己相関があるが，FE推定量は不偏性を満たす</p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(\text{Cov}\left(a_ix_{it}\right)\neq 0\)</span>，即ち，FEモデルが正しい場合：</p>
+<ul>
+<li><p>GM仮定４が満たされないため，RE推定量は不偏性を満たさない</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>Pros for RE</p>
+<ol class="simple">
+<li><p>FEの場合，時間に対して変化しない変数の係数を推定できない</p></li>
+<li><p>回帰式が非線形の場合（例えば，Probit），FEでは対応できない。</p></li>
+</ol>
+<p>（結論）一般的にFEの方が適切な場合が多いのではないか。</p>
+</div>
+</div>
+<div class="section" id="id16">
+<h2>シミュレーション<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
+<p>（目的）真のモデルでは観察単位の固定効果がある場合を考え，FE推定量とRE推定量を比較する。</p>
+<p>単回帰を想定する。以下を真の値として設定する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 定数項</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># スロープ係数</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id17">
+<h3>推定値の計算<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>シミュレーションの基本パラメータ等の設定</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># 観察単位の数</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># 時間数</span>
+<span class="n">ai</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># 観察単位の異質性</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">for</span></code>ループによる<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の作成。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_sim</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>  <span class="c1"># 空のDataFrame</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span><span class="n">a</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ai</span><span class="p">):</span>
+    
+    <span class="n">x</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>  <span class="c1"># T個のaが平均となるランダムな数</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>  <span class="c1"># 誤差項</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># 被説明変数</span>
+    <span class="n">df_idx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:[</span><span class="n">idx</span><span class="p">]</span><span class="o">*</span><span class="n">T</span><span class="p">,</span>    <span class="c1"># 観察個体のID</span>
+                         <span class="s1">&#39;time&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">))</span><span class="o">+</span><span class="mi">2000</span><span class="p">,</span>
+                         <span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span>
+                         <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">,</span>
+                         <span class="s1">&#39;ai&#39;</span><span class="p">:[</span><span class="n">a</span><span class="p">]</span><span class="o">*</span><span class="n">T</span><span class="p">})</span>
+    <span class="n">df_sim</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_sim</span><span class="p">,</span><span class="n">df_idx</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の微調整。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># id と time の列を 整数型に変換（省いても問題ない）</span>
+<span class="n">df_sim</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_sim</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">df_sim</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_sim</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="c1"># MultiIndex化</span>
+<span class="n">df_sim</span> <span class="o">=</span> <span class="n">df_sim</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;time&#39;</span><span class="p">])</span>
+
+<span class="n">df_sim</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>Y</th>
+      <th>X</th>
+      <th>ai</th>
+    </tr>
+    <tr>
+      <th>id</th>
+      <th>time</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="5" valign="top">0</th>
+      <th>2000</th>
+      <td>-3.054100</td>
+      <td>-1.570346</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>2.548860</td>
+      <td>0.474278</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>0.886605</td>
+      <td>0.168303</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>1.894288</td>
+      <td>0.207877</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>-1.377642</td>
+      <td>-1.207620</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>固定効果モデルによる推定。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_sim_fe</span> <span class="o">=</span> <span class="s1">&#39;Y ~ X + EntityEffects&#39;</span>
+
+<span class="n">sim_fe</span> <span class="o">=</span> <span class="n">PanelOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_sim_fe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sim_fe</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+X              1.9237     0.0467     41.202     0.0000      1.8319      2.0155
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p>ランダム効果モデルによる推定。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_sim_re</span> <span class="o">=</span> <span class="s1">&#39;Y ~ 1 + X&#39;</span>
+
+<span class="n">sim_re</span> <span class="o">=</span> <span class="n">RandomEffects</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_sim_re</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sim_re</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;theta:&#39;</span><span class="p">,</span> <span class="n">sim_re</span><span class="o">.</span><span class="n">theta</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+Intercept      1.9198     0.1611     11.919     0.0000      1.6033      2.2363
+X              2.8082     0.0270     103.87     0.0000      2.7551      2.8614
+==============================================================================
+theta: [0.34738624]
+</pre></div>
+</div>
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(\text{Cov}\left(a_i,x_{it}\right)&gt;0\)</span>により上方バイアスが発生している。</p>
+<p>相関ランダム効果モデルによる推定。</p>
+<p>まず，観察単位の<code class="docutils literal notranslate"><span class="pre">X</span></code>の平均の列を追加する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_sim</span> <span class="o">=</span> <span class="n">add_col_mean</span><span class="p">(</span><span class="n">df_sim</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;X_mean&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_sim_cre</span> <span class="o">=</span> <span class="s1">&#39;Y ~ 1 + X + X_mean&#39;</span>
+
+<span class="n">sim_cre</span> <span class="o">=</span> <span class="n">RandomEffects</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_sim_cre</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sim_cre</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+Intercept      0.9529     0.1268     7.5166     0.0000      0.7038      1.2020
+X              1.9237     0.0467     41.233     0.0000      1.8320      2.0153
+X_mean         1.0771     0.0515     20.908     0.0000      0.9759      1.1784
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p>通常のOLS（Pooled OLS）による推定はバイアスが発生する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_sim_pool</span> <span class="o">=</span> <span class="s1">&#39;Y ~ 1 + X&#39;</span>
+
+<span class="n">sim_pool</span> <span class="o">=</span> <span class="n">PooledOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_sim_pool</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sim_pool</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+Intercept      1.4118     0.1195     11.816     0.0000      1.1771      1.6466
+X              2.9094     0.0204     142.89     0.0000      2.8694      2.9494
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id18">
+<h3>推定値の分布<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>基本的に上のシミュレーションのコードを応用する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># 観察単位数</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># 年数</span>
+<span class="n">R</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># シミュレーションの回数</span>
+<span class="n">ai</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># 観察単位の異質性</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>（下のコードについて）</p>
+<ul class="simple">
+<li><p>ランダム効果モデルの推定には<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>を使っている。固定効果モデルと通常のOLS推定にも<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>を使うと必要がない統計量も計算するため計算に時間が掛かる。少しでも計算時間を縮めるために「手計算」をする。</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bhat_fe_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># FE推定値を入れるための空のリスト</span>
+<span class="n">bhat_re_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># RE推定値を入れるための空のリスト</span>
+<span class="n">bhat_pool_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Pooled OLS推定値を入れるための空のリスト</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>  <span class="c1"># Rの値は下のコードで使わないので&quot;_&quot;に設定する</span>
+    
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>  <span class="c1"># 空のDataFrame</span>
+
+    <span class="c1"># データの生成</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span><span class="n">a</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ai</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>  <span class="c1"># T個のaが平均となるランダムな数</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>  <span class="c1"># T個の誤差項</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># T個の被説明変数</span>
+        <span class="n">df_idx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:[</span><span class="n">idx</span><span class="p">]</span><span class="o">*</span><span class="n">T</span><span class="p">,</span>      <span class="c1"># DataFrameへ表の追加</span>
+                             <span class="s1">&#39;time&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">))</span><span class="o">+</span><span class="mi">2000</span><span class="p">,</span>
+                             <span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span>
+                             <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">,</span>
+                             <span class="s1">&#39;ai&#39;</span><span class="p">:[</span><span class="n">a</span><span class="p">]</span><span class="o">*</span><span class="n">T</span><span class="p">})</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span><span class="n">df_idx</span><span class="p">])</span>
+        
+    <span class="c1"># RE推定</span>
+    <span class="n">df_re</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;time&#39;</span><span class="p">])</span>  <span class="c1"># MultiIndex化</span>
+    <span class="n">form_sim_re</span> <span class="o">=</span> <span class="s1">&#39;Y ~ 1 + X&#39;</span>
+    <span class="n">sim_re</span> <span class="o">=</span> <span class="n">RandomEffects</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_sim_re</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_re</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+    <span class="n">bhat_re_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sim_re</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="c1"># FE推定</span>
+    <span class="n">df_fe</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span><span class="s1">&#39;X&#39;</span><span class="p">]]</span> <span class="o">-</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)[[</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span><span class="s1">&#39;X&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+    <span class="n">Yfe</span> <span class="o">=</span> <span class="n">df_fe</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">Xfe</span> <span class="o">=</span> <span class="n">df_fe</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;X&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span>  <span class="c1"># [:,None]は(N*T,1)の行列に変換</span>
+    <span class="n">bhat_fe</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">Xfe</span><span class="o">.</span><span class="n">T</span><span class="nd">@Xfe</span><span class="p">)</span><span class="nd">@Xfe</span><span class="o">.</span><span class="n">T</span><span class="nd">@Yfe</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">bhat_fe_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bhat_fe</span><span class="p">)</span>
+    
+    <span class="c1"># Pooled OLS推定</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">Xpool</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">c</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;X&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">Ypool</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">bhat_pool</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">Xpool</span><span class="o">.</span><span class="n">T</span><span class="nd">@Xpool</span><span class="p">)</span><span class="nd">@Xpool</span><span class="o">.</span><span class="n">T</span><span class="nd">@Ypool</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">bhat_pool_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bhat_pool</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>分布の図示</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1.6</span><span class="p">,</span><span class="mf">3.1</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
+
+<span class="n">kde_model_fe</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">bhat_fe_list</span><span class="p">)</span>  <span class="c1"># FE推定量のカーネル密度関数を計算</span>
+
+<span class="n">kde_model_re</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">bhat_re_list</span><span class="p">)</span>  <span class="c1"># RE推定量のカーネル密度関数を計算</span>
+
+<span class="n">kde_model_pool</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">bhat_pool_list</span><span class="p">)</span>  <span class="c1"># Pooled OLS推定量のカーネル密度関数を計算</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_fe</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="s1">&#39;g-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;FE&#39;</span><span class="p">)</span>  <span class="c1"># FE推定量の分布プロット</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_re</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span><span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;RE&#39;</span><span class="p">)</span>  <span class="c1"># RE推定量の分布プロット</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_pool</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span><span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Pooled OLS&#39;</span><span class="p">)</span>  <span class="c1"># RE推定量の分布プロット</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">b1</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>  <span class="c1"># 真の値での垂直線</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Kernel Density&#39;</span><span class="p">)</span>  <span class="c1"># 縦軸のラベル</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>  <span class="c1"># 凡例</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/17_Panel_133_0.png" src="_images/17_Panel_133_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id19">
+<h2>標準誤差の問題<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
+<p>(式３)の固定効果モデルを考えよう。パネル・データの場合，次の2つの問題が発生する場合がある。</p>
+<ul class="simple">
+<li><p>残差の不均一分散</p></li>
+<li><p>残差の自己相関</p></li>
+</ul>
+<p>これらの問題が発生しても，基本的な仮定のもとでFE推定量は不偏性と一致性を満たす。しかし，係数の標準誤差は有効ではなくなり検定が無効となる。その対処方法として<strong>クラスター頑健的推定</strong>を使う。これは不均一分散の章で説明した不均一分散頑健的推定を自己相関に拡張し，パネル・データ用に考案された推定と理解すれば十分である。以下では，その使い方を説明する。</p>
+<div class="section" id="id20">
+<h3>分散の確認<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>には残差の均一分散を調べるBreusch-Pagan検定やWhite検定をおこなうメソッドは用意されていない。ここでは<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使いWooldridge (2016,p.253)で説明されているWhite検定に基づく検定をおこなう。次に必要な変数を作成する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 残差</span>
+<span class="n">u_hat</span> <span class="o">=</span> <span class="n">result_fe</span><span class="o">.</span><span class="n">resids</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="c1"># 被説明変数の予測値</span>
+<span class="n">y_hat</span> <span class="o">=</span> <span class="n">result_fe</span><span class="o">.</span><span class="n">fitted_values</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="c1"># DataFrameの作成</span>
+<span class="n">df_white</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;u_hat&#39;</span><span class="p">:</span><span class="n">u_hat</span><span class="p">,</span><span class="s1">&#39;y_hat&#39;</span><span class="p">:</span><span class="n">y_hat</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>（上のコードの説明）</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">resids</span></code>は残差を<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>として取得する属性</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fitted_values</span></code>は予測値を<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>として取得する属性</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">values</span></code>は<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を<code class="docutils literal notranslate"><span class="pre">array</span></code>として返す属性</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">flatten()</span></code>は<code class="docutils literal notranslate"><span class="pre">array</span></code>が2次元になっているのを1次元に変換するメソッド</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">array([[..],[..],...[...]])</span></code>を<code class="docutils literal notranslate"><span class="pre">array([....])</span></code>に変換する。</p></li>
+</ul>
+</li>
+</ul>
+<p>検定に使う式</p>
+<div class="math notranslate nohighlight">
+\[\hat{u}^2=\beta_0+\beta_1\hat{y}+\beta_2\hat{y}^2+e\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\text{H}_0：\beta_1=\beta_2=0\)</span>（均一分散）</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{H}_A：\)</span>帰無仮説は成立しない</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_white</span> <span class="o">=</span> <span class="s1">&#39;I(u_hat**2) ~ y_hat + I(y_hat**2)&#39;</span>
+
+<span class="n">res_white</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_white</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_white</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">res_white</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;F検定のp値：&#39;</span><span class="p">,</span><span class="n">res_white</span><span class="o">.</span><span class="n">f_pvalue</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>=================================================================================
+                    coef    std err          t      P&gt;|t|      [0.025      0.975]
+---------------------------------------------------------------------------------
+Intercept         0.1172      0.010     11.249      0.000       0.097       0.138
+y_hat            -0.0205      0.048     -0.428      0.668      -0.114       0.073
+I(y_hat ** 2)    -0.0550      0.099     -0.557      0.577      -0.248       0.138
+=================================================================================
+F検定のp値： 0.4354339447413128
+</pre></div>
+</div>
+</div>
+</div>
+<p>帰無仮説は棄却できない。</p>
+<p>次に図を使い確認する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="n">res_white</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># beta0</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="n">res_white</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># beta1</span>
+<span class="n">b2</span> <span class="o">=</span> <span class="n">res_white</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="c1"># beta2</span>
+
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">y_hat</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">y_hat</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span> <span class="c1"># x軸の値</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">xx</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">xx</span><span class="o">**</span><span class="mi">2</span>  <span class="c1"># 検定に使った式</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">u_hat</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># u_hat, y_hatの散布図</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># 検定の式の曲線</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;y_hat&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;u_hat^2&#39;</span><span class="p">)</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/17_Panel_143_0.png" src="_images/17_Panel_143_0.png" />
+</div>
+</div>
+<p>（解説）</p>
+<ul class="simple">
+<li><p>上の検定で推定した式は赤い線である。殆ど平行になっているため帰無仮説を棄却できなかった。</p></li>
+<li><p>図の中で<code class="docutils literal notranslate"><span class="pre">y_hat</span></code>の値が<code class="docutils literal notranslate"><span class="pre">-0.2</span></code>を境に<code class="docutils literal notranslate"><span class="pre">u_hat</span></code>の変動はより大きくなっており，不均一分散の疑いが高い。</p></li>
+</ul>
+</div>
+<div class="section" id="id21">
+<h3>対処方法<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<p>＜使い方＞</p>
+<ul class="simple">
+<li><p>メソッド<code class="docutils literal notranslate"><span class="pre">fit()</span></code>に以下の引数を指定する。</p>
+<ul>
+<li><p>不均一分散だけの場合：<code class="docutils literal notranslate"><span class="pre">cov_type='clustered',</span> <span class="pre">cluster_entity=True</span></code></p></li>
+<li><p>不均一分散と系列相関の場合：<code class="docutils literal notranslate"><span class="pre">cov_type='clustered',</span> <span class="pre">cluster_entity=True,</span> <span class="pre">cluster_time=True</span></code></p></li>
+</ul>
+</li>
+</ul>
+<p>（注意）</p>
+<ul class="simple">
+<li><p>係数の推定値は変わらない。</p></li>
+<li><p>係数の標準誤差だけが修正され，有効な検定ができるようになる。</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">wagepan</span></code>を使って上で推定した式にクラスター頑健的推定を使う。</p>
+<p>＜不均一分散かだけの場合＞</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mod_fe_clus1</span> <span class="o">=</span> <span class="n">PanelOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_fe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span>
+
+<span class="n">res_fe_clus1</span> <span class="o">=</span> <span class="n">mod_fe_clus1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;clustered&#39;</span><span class="p">,</span> <span class="n">cluster_entity</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">res_fe_clus1</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+married        0.0467     0.0210     2.2245     0.0262      0.0055      0.0878
+union          0.0800     0.0227     3.5209     0.0004      0.0355      0.1246
+expersq       -0.0052     0.0008    -6.4058     0.0000     -0.0068     -0.0036
+d81            0.1512     0.0255     5.9195     0.0000      0.1011      0.2013
+d82            0.2530     0.0286     8.8340     0.0000      0.1968      0.3091
+d83            0.3544     0.0348     10.177     0.0000      0.2862      0.4227
+d84            0.4901     0.0454     10.792     0.0000      0.4011      0.5792
+d85            0.6175     0.0568     10.879     0.0000      0.5062      0.7288
+d86            0.7655     0.0712     10.755     0.0000      0.6259      0.9050
+d87            0.9250     0.0840     11.015     0.0000      0.7604      1.0897
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p>＜不均一分散と系列相関の場合＞</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mod_fe_clus2</span> <span class="o">=</span> <span class="n">PanelOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_fe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span>
+
+<span class="n">res_fe_clus2</span> <span class="o">=</span> <span class="n">mod_fe_clus2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;clustered&#39;</span><span class="p">,</span> <span class="n">cluster_entity</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cluster_time</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">res_fe_clus2</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+married        0.0467     0.0165     2.8312     0.0047      0.0144      0.0790
+union          0.0800     0.0234     3.4242     0.0006      0.0342      0.1258
+expersq       -0.0052     0.0008    -6.6189     0.0000     -0.0067     -0.0036
+d81            0.1512     0.0066     23.020     0.0000      0.1383      0.1641
+d82            0.2530     0.0168     15.027     0.0000      0.2200      0.2860
+d83            0.3544     0.0255     13.886     0.0000      0.3044      0.4045
+d84            0.4901     0.0374     13.113     0.0000      0.4168      0.5634
+d85            0.6175     0.0499     12.366     0.0000      0.5196      0.7154
+d86            0.7655     0.0646     11.858     0.0000      0.6389      0.8921
+d87            0.9250     0.0776     11.913     0.0000      0.7728      1.0773
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="16_linearmodels.html" title="previous page"><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code></a>
+    <a class='right-next' id="next-link" href="18_Zero_Conditional_Mean.html" title="next page">GM仮定４が満たされない場合</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By 春山 鉄源<br/>
+        
+            &copy; Copyright 2020 Tetsugen Haruyama.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-165998213-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>

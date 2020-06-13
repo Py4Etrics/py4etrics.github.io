@@ -1,0 +1,632 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>統計学の簡単な復習 &#8212; Pythonで学ぶ入門計量経済学</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/mystnb.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="canonical" href="https://spring-book.github.io/book_etrics/7_Review_of_Statistics.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="単回帰分析" href="8_Simple_Regression.html" />
+    <link rel="prev" title="２. Pythonを使った計量経済分析" href="part_2.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="https://spring-book.github.io/book_etrics/7_Review_of_Statistics.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="統計学の簡単な復習" />
+<meta property="og:description" content="統計学の簡単な復習  確率変数  定義  確率変数（random variables）とは，無作為のプロセスの結果として実数をとる変数であり，実現し観察されるまで値が未知の変数である。実現した値を実現値もしくは観察値と呼ぶ。次の記号を使って例を考える。  X：確率変数自体を示す記号  x：実現値  例１（離散型確率変数" />
+
+
+<meta name="twitter:card" content="summary">
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Pythonで学ぶ入門計量経済学</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="part_1.html">１. Pythonの基礎</a>
+  </li>
+  <li class="active">
+    <a href="part_2.html">２. Pythonを使った計量経済分析</a>
+  <ul class="nav sidenav_l2">
+    <li class="active">
+      <a href="">統計学の簡単な復習</a>
+    </li>
+    <li class="">
+      <a href="8_Simple_Regression.html">単回帰分析</a>
+    </li>
+    <li class="">
+      <a href="9_Multiple_Regression.html">重回帰分析</a>
+    </li>
+    <li class="">
+      <a href="10_Residuals.html">残差診断</a>
+    </li>
+    <li class="">
+      <a href="11_Inference.html">推論</a>
+    </li>
+    <li class="">
+      <a href="12_Asymptotics.html">大標本特性</a>
+    </li>
+    <li class="">
+      <a href="13_Dummies.html">質的変数と回帰分析</a>
+    </li>
+    <li class="">
+      <a href="14_Heteroskedasticity.html">不均一分散</a>
+    </li>
+    <li class="">
+      <a href="15_Pooling.html">プーリング・データとパネル・データ</a>
+    </li>
+    <li class="">
+      <a href="16_linearmodels.html">linearmodels</a>
+    </li>
+    <li class="">
+      <a href="17_Panel.html">パネル・データ分析</a>
+    </li>
+    <li class="">
+      <a href="18_Zero_Conditional_Mean.html">GM仮定４が満たされない場合</a>
+    </li>
+    <li class="">
+      <a href="19_IV2SLS.html">操作変数法と２段階OLS</a>
+    </li>
+    <li class="">
+      <a href="20_LogitProbit.html">離散選択モデル</a>
+    </li>
+    <li class="">
+      <a href="21_TruncregTobitHeckit.html">制限従属変数モデル</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="part_3.html">３. 番外編</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  <a  href="https://github.com/spring-book/py4etrics">&#128200;&#127891;&#128202;</a><!-- Default Statcounter code for Py4etrics https://spring-book.github.io/py4etrics/ --> <script type="text/javascript"> var sc_project=12339954; var sc_invisible=1; var sc_security="45ab8946"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12339954/0/45ab8946/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code -->
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="_sources/7_Review_of_Statistics.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Source interaction buttons -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/spring-book/py4etrics/master?urlpath=tree/7_Review_of_Statistics.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                
+            </div>
+        </div>
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id2" class="nav-link">確率変数</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id3" class="nav-link">確率変数の特徴を示す尺度</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#normal-distribution" class="nav-link">正規分布（Normal Distribution）</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id4" class="nav-link">確率密度関数と累積分布関数</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id5" class="nav-link">標準正規分布</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id6" class="nav-link">多変量正規分布</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id7" class="nav-link">標本の特徴を示す数値的尺度</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="id1">
+<h1>統計学の簡単な復習<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2>確率変数<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p><strong>定義</strong></p>
+<p>確率変数（random variables）とは，無作為のプロセスの結果として実数をとる変数であり，実現し観察されるまで値が未知の変数である。実現した値を実現値もしくは観察値と呼ぶ。次の記号を使って例を考える。</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(X\)</span>：確率変数自体を示す記号</p></li>
+<li><p><span class="math notranslate nohighlight">\(x\)</span>：実現値</p></li>
+</ul>
+<p>例１（離散型確率変数）</p>
+<ul class="simple">
+<li><p>サイコロの目：<span class="math notranslate nohighlight">\(X\)</span></p></li>
+<li><p>実現可能な値の集合：<span class="math notranslate nohighlight">\(x\in\{1, 2, 3, 4, 5, 6\}\)</span></p></li>
+<li><p>実現値：<span class="math notranslate nohighlight">\(x=3\)</span></p></li>
+</ul>
+<p>例２（連続型確率変数）</p>
+<ul class="simple">
+<li><p>ランダムに選んだ経済学部の学生の身長：<span class="math notranslate nohighlight">\(X\)</span></p></li>
+<li><p>実現可能な値の集合：<span class="math notranslate nohighlight">\(\{x\;|\;0&lt; x&lt;\infty\}\)</span></p></li>
+<li><p>実現値：175.920483…..cm</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>確率変数のある値が発生する確率</strong></p>
+<ul class="simple">
+<li><p>例１：サイコロ</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(X=3\)</span>の確率は確率質量関数 <span class="math notranslate nohighlight">\(f(3)=1/6\)</span>で表される。</p></li>
+<li><p>実現可能な値の確率の合計＝１，即ち <span class="math notranslate nohighlight">\(\displaystyle\sum_{x=1}^6f(x)=1\)</span></p></li>
+</ul>
+</li>
+<li><p>例２：ランダムに選んだ経済学部の学生の身長</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(X=175.92\)</span>の確率は確率密度関数 <span class="math notranslate nohighlight">\(f(175.92)=0.0204\)</span>で表される。</p></li>
+<li><p>実現可能な値の確率の合計＝１，即ち <span class="math notranslate nohighlight">\(\displaystyle\int_0^{\infty}f(x)dx=1\)</span></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>確率変数の特徴を示す尺度<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>（以下で使う記号）</p>
+<p><span class="math notranslate nohighlight">\(X,Y\)</span>：確率変数</p>
+<p><span class="math notranslate nohighlight">\(x,y\)</span>：確率変数の実現値</p>
+<hr class="docutils" />
+<p><strong>期待値（expected value）＝ 平均（average or mean）</strong></p>
+<p><span class="math notranslate nohighlight">\(\text{E}(X)=\mu_X\)</span></p>
+<p>（性質）</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\text{E}(X)\gtreqqless 0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{E}(aX)=a\text{E}(X)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{E}(X+Y)=\text{E}(X)+\text{E}(Y)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{E}(XY)=\text{E}(X)\cdot\text{E}(Y)+\text{Cov}(X,Y)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(X\)</span>の単位に依存</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>分散（variance）</strong></p>
+<p><span class="math notranslate nohighlight">\(\sigma_X^2\equiv\text{Var}(X)\equiv\text{E}\left[(X-\mu_X)^2\right]=\text{E}\left[X^2\right]-\mu_X^2\)</span></p>
+<p>（性質）</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\text{Var}(X)\geq 0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{Var}(X+a)=\text{Var}(X)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{Var}(aX)=a^2\text{Var}(X)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{Var}(aX+bY)=a^2\text{Var}(X)+b^2\text{Var}(Y)+2ab\cdot\text{Cov}(X,Y)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{Var}(aX-bY)=a^2\text{Var}(X)+b^2\text{Var}(Y)-2ab\cdot\text{Cov}(X,Y)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(X\)</span>の単位に依存</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>標準偏差（standard deviation）</strong></p>
+<p><span class="math notranslate nohighlight">\(\sigma_X\equiv\sqrt{\text{Var}(X)}\)</span></p>
+<p>（性質）</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(X\)</span>の単位に依存</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>共分散（covariance）</strong></p>
+<p><span class="math notranslate nohighlight">\(\sigma_{XY}\equiv\text{Cov}(X,Y)=\text{E}\left[(X-\mu_X)(Y-\mu_Y)\right]\)</span></p>
+<p>（性質）</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\text{Cov}(X,Y)\lesseqqgtr 0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{Cov}(X,X)=\text{Var}(X)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(X\)</span>と<span class="math notranslate nohighlight">\(Y\)</span>の単位に依存</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>相関係数（correlation coefficient）</strong></p>
+<p><span class="math notranslate nohighlight">\(\rho_{XY}\equiv\text{Corr}(X,Y)=\dfrac{\sigma_{XY}}{\sigma_X\cdot\sigma_Y}
+=\dfrac{\text{Cov}(X,Y)}{\sqrt{\text{Var}(X)\cdot\text{Var}(Y)}}\)</span></p>
+<p>（性質）</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(-1\leq\rho_{XY}\leq 1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(X\)</span>と<span class="math notranslate nohighlight">\(Y\)</span>の単位に依存しない</p></li>
+</ul>
+</div>
+<div class="section" id="normal-distribution">
+<h2>正規分布（Normal Distribution）<a class="headerlink" href="#normal-distribution" title="Permalink to this headline">¶</a></h2>
+<p>別名：ガウス分布（Gausian Distribution）</p>
+<div class="section" id="id4">
+<h3>確率密度関数と累積分布関数<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p><strong>確率密度関数</strong></p>
+<div class="math notranslate nohighlight">
+\[
+\phi(x)=\dfrac{1}{\sqrt{2\pi\sigma_X}}e^{-\frac{1}{2}\left(\frac{x-\mu_X}{\sigma_X}\right)^2}
+\]</div>
+<ul class="simple">
+<li><p>２つのパラメータ：平均（<span class="math notranslate nohighlight">\(\mu_X\)</span>）と分散（<span class="math notranslate nohighlight">\(\sigma_X^2\)</span>）</p></li>
+<li><p>左右対称</p></li>
+<li><p>「<span class="math notranslate nohighlight">\(X\)</span>は平均<span class="math notranslate nohighlight">\(\mu_X\)</span>，分散<span class="math notranslate nohighlight">\(\sigma_X^2\)</span>の正規分布に従う」を記号で表現</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[X\sim N\left(\mu_X,\sigma_X^2\right)\]</div>
+<p><strong>確率分布関数</strong></p>
+<div class="math notranslate nohighlight">
+\[F(x)=\int_{-\infty}^x\phi(s)ds\]</div>
+</div>
+<div class="section" id="id5">
+<h3>標準正規分布<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>正規分布の変数<span class="math notranslate nohighlight">\(X\)</span>を次式</p>
+<div class="math notranslate nohighlight">
+\[
+Z=\dfrac{X-\mu_X}{\sigma_X}
+\]</div>
+<p>で変換すると，<span class="math notranslate nohighlight">\(Z\)</span>の分布は標準正規分布に従う。</p>
+<div class="math notranslate nohighlight">
+\[Z\sim N(0,1)\]</div>
+</div>
+<div class="section" id="id6">
+<h3>多変量正規分布<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>２つの確率変数<span class="math notranslate nohighlight">\(X_1\)</span>と<span class="math notranslate nohighlight">\(X_2\)</span>を考えよう。</p>
+<div class="math notranslate nohighlight">
+\[
+    X_1\sim N\left(\mu_1,\sigma_1^2\right),\qquad\qquad
+    X_2\sim N\left(\mu_2,\sigma_2^2\right)
+    \]</div>
+<ul class="simple">
+<li><p>この表記からは２つの確率変数に何らかの関係性が存在するかどうか不明であるが，通常この場合，<span class="math notranslate nohighlight">\(X_1\)</span>と<span class="math notranslate nohighlight">\(X_2\)</span>は「独立」と受け取られる。</p></li>
+</ul>
+</li>
+<li><p>この２つの変数に「何らかの関係性」を明確にするために，次のようにまとめて書く：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{bmatrix}
+        X_1\\X_2
+    \end{bmatrix}
+    \sim
+    N\left(
+    \begin{bmatrix}
+        \mu_1\\ \mu_2
+    \end{bmatrix}
+    ,
+    \begin{bmatrix}
+        \sigma_1^2,&amp;\sigma_{12}\\
+        \sigma_{21},&amp; \sigma_2^2    
+    \end{bmatrix}
+    \right)
+    \end{split}\]</div>
+<p>もしくは</p>
+<div class="math notranslate nohighlight">
+\[
+    X\sim N\left(\mu_X,\Sigma_X\right)
+    \]</div>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(X\)</span>：確率変数のベクトル <span class="math notranslate nohighlight">\(\left(X_1,X_2\right)^T\)</span>（<span class="math notranslate nohighlight">\(T\)</span>は「置換する」という意味で，列ベクトルにしている）</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mu_X\)</span>：平均のベクトル <span class="math notranslate nohighlight">\(\left(\mu_1,\mu_2\right)^T\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\Sigma_X\)</span>：分散共分散行列</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+        \Sigma_X=
+        \begin{pmatrix}
+            \sigma_1^2,&amp;\sigma_{12}\\
+            \sigma_{21},&amp; \sigma_2^2
+        \end{pmatrix}
+        \end{split}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\sigma_{12}=\sigma_{21}\)</span>は<span class="math notranslate nohighlight">\(X_1\)</span>と<span class="math notranslate nohighlight">\(X_2\)</span>の共分散</p></li>
+<li><p>上で「何らかの関連性」と書いたが，それを<span class="math notranslate nohighlight">\(\sigma_{12}\)</span>が捉えている。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>（共分散の解釈）</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\sigma_{12}=0\)</span>：<span class="math notranslate nohighlight">\(X_1\)</span>と<span class="math notranslate nohighlight">\(X_2\)</span>は独立であり何の関係もない。即ち，
+<span class="math notranslate nohighlight">\(X_1\sim N\left(\mu_1,\sigma_1^2\right),\;X_2\sim N\left(\mu_2,\sigma_2^2\right)\)</span>
+と別々に書いて何の問題もない。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma_{12}&gt;0\)</span>：<span class="math notranslate nohighlight">\(X_1\)</span>と<span class="math notranslate nohighlight">\(X_2\)</span>は「同じ方向」の値が抽出される傾向にある。例えば，両辺数ともプラスの値，もしくはマイナスの値。<span class="math notranslate nohighlight">\(\sigma_{12}\)</span>が大きくなれば，その傾向はより強くなる。（注意：これは傾向であり，必ずそうはならない）</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma_{12}&lt;0\)</span>：<span class="math notranslate nohighlight">\(X_1\)</span>と<span class="math notranslate nohighlight">\(X_2\)</span>は「逆方向」の値が抽出される傾向にある。例えば，<span class="math notranslate nohighlight">\(X_1\)</span>はプラスの値で<span class="math notranslate nohighlight">\(X_2\)</span>はマイナスの値，もしくはその反対。<span class="math notranslate nohighlight">\(\sigma_{12}\)</span>の絶対値が大きくなれば，その傾向はより強くなる。（注意：これは傾向であり，必ずそうはならない）</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>標本の特徴を示す数値的尺度<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>母集団から標本を無作為に１つデータを抽出するとしよう。その場合，</p>
+<ul class="simple">
+<li><p>母集団 ＝ 実現可能な値の集合</p></li>
+<li><p>抽出するデータ ＝ 確率変数</p></li>
+<li><p>抽出後の値 ＝ 実現値</p></li>
+</ul>
+<p>この場合，標本の大きさは母集団より小さい（母集団の大きさが2以上と仮定）。</p>
+<p>上では１つのデータだけを抽出を考えたが，通常実証分析では複数のデータを扱い，データの種類によって母集団の大きさと標本の大きさを以下のように解釈することが可能である。</p>
+<ul class="simple">
+<li><p>時系列データ</p>
+<ul>
+<li><p>時間は無限に続くため，無限の母集団からの標本抽出 <span class="math notranslate nohighlight">\(\Rightarrow\)</span> 標本の大きさは母集団より小さい。</p></li>
+</ul>
+</li>
+<li><p>横断面データ</p>
+<ul>
+<li><p>多くの場合，費用対効果から母集団から一部を標本を収集する <span class="math notranslate nohighlight">\(\Rightarrow\)</span> 標本の大きさは母集団より小さい。</p></li>
+<li><p>母集団の大きさが小さい場合，標本の大きさは母集団の大きさと「等しい」ケースがある。</p>
+<ul>
+<li><p>例えば，2018年神戸大学経済学部の中級マクロ経済学I定期試験の点数の場合，約300のデータ。</p></li>
+<li><p>この場合でも，標本の大きさは母集団より小さいと考えることができる。</p>
+<ul>
+<li><p>ある学生<span class="math notranslate nohighlight">\(i\)</span>さんの点数は確率変数と解釈できる。その場合，実現可能な値の集合（小数点は無視）は
+<span class="math notranslate nohighlight">\(\left\{0,1,2,3,....,97,98,99,100\right\}\)</span>であり，点数の種類は101ある。この中なら１つの値だけが実現値として観察されている。更に，約300名の学生が試験を受けたので，母集団の大きさは約<span class="math notranslate nohighlight">\(101\times 300=20200\)</span>となる。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>（「標本の大きさは母集団より小さい」の含意）</p>
+<ul class="simple">
+<li><p>母集団のパラメータを推定するための標本の統計量には必ず<strong>誤差</strong>が存在する。</p></li>
+</ul>
+<p>（コメント）</p>
+<p>標本のそれぞれの観測値が，同じ母集団から独立に（他の観測値との何の関連性もなく）抽出された場合，それらは
+**独立同一分布（idependently identically distributed;　略して IID）**に従うと呼ぶ。</p>
+<hr class="docutils" />
+<p>（以下で使う記号）</p>
+<ul class="simple">
+<li><p>標本の大きさ：<span class="math notranslate nohighlight">\(n\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(i\)</span>番目の確率変数：<span class="math notranslate nohighlight">\(X_i\)</span></p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>標本平均（sample mean）</strong></p>
+<ul class="simple">
+<li><p>確率変数の標本平均：<span class="math notranslate nohighlight">\(\bar{X}=\dfrac{1}{n}\displaystyle\sum_{i=1}^nX_i\)</span></p></li>
+<li><p>標本平均の実現値：<span class="math notranslate nohighlight">\(\bar{x}=\dfrac{1}{n}\displaystyle\sum_{i=1}^nx_i\)</span></p></li>
+</ul>
+<p>（特徴）</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\bar{X}\)</span>は母集団平均の不偏推定量</p>
+<div class="math notranslate nohighlight">
+\[\text{E}(\bar{X})=\mu_X\]</div>
+</li>
+<li><p><span class="math notranslate nohighlight">\(\bar{x}\)</span>はその推定値。</p></li>
+<li><p><span class="math notranslate nohighlight">\(X_i\)</span>がIIDの場合の<span class="math notranslate nohighlight">\(\bar{X}\)</span>の分散</p>
+<div class="math notranslate nohighlight">
+\[
+    \text{Var}(\bar{X})=\dfrac{1}{n}\sigma_{X}^2
+    \]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(n\rightarrow\infty\;\Rightarrow\;\text{Var}(\bar{X})=0\)</span></p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<p><strong>標本分散（sample variance）</strong></p>
+<ul class="simple">
+<li><p>確率変数の標本分散：<span class="math notranslate nohighlight">\(\hat{\sigma}_X^2=\dfrac{1}{n-1}\displaystyle\sum_{i=1}^n\left(X_i-\bar{X}\right)^2\)</span></p></li>
+<li><p>標本分散の実現値：<span class="math notranslate nohighlight">\(\hat{\sigma}_x^2=\dfrac{1}{n-1}\displaystyle\sum_{i=1}^n\left(x_i-\bar{x}\right)^2\)</span></p></li>
+</ul>
+<p>（特徴）</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{\sigma}_X^2\)</span>は母集団分散の不偏推定量</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{\sigma}_x^2\)</span>はその推定値</p></li>
+</ul>
+<p>（注意）</p>
+<ul class="simple">
+<li><p>分母は <span class="math notranslate nohighlight">\(n-1\)</span>であり，これにより<span class="math notranslate nohighlight">\(\hat{\sigma}_X\)</span>は母集団分散の不偏推定量となる。</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>標本平均の分散</strong></p>
+<ul>
+<li><p>確率変数の標本平均の分散<span class="math notranslate nohighlight">\(\text{Var}(\bar{X})=\dfrac{1}{n}\sigma_X^2\)</span>にある<span class="math notranslate nohighlight">\(\sigma_X^2\)</span>は母集団の分散であり観測不可能。従って，推定する必要がある。その推定量として<span class="math notranslate nohighlight">\(\hat{\sigma}_X\)</span>を使う。</p>
+<div class="math notranslate nohighlight">
+\[
+    \widehat{\text{Var}(\bar{X})}=\frac{1}{n}\hat{\sigma}_X^2
+    \]</div>
+</li>
+<li><p>以下を標準誤差と呼ぶ</p>
+<div class="math notranslate nohighlight">
+\[
+    \text{SE}(\bar{X})=\sqrt{\widehat{\text{Var}(\bar{X})}}=\frac{\hat{\sigma}_X}{\sqrt{n}}
+    \]</div>
+<ul class="simple">
+<li><p>母集団平均の推定量<span class="math notranslate nohighlight">\(\bar{X}\)</span>には誤差があり，その正確性を示す。</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<p><strong>標本標準偏差</strong></p>
+<ul class="simple">
+<li><p>確率変数の標本標準偏差：<span class="math notranslate nohighlight">\(\hat{\sigma}_X\)</span></p></li>
+<li><p>標本標準偏差の実現値：<span class="math notranslate nohighlight">\(\hat{\sigma}_x\)</span></p></li>
+</ul>
+<p>（注意）</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{\sigma}_X\)</span>は母集団標準偏差の不偏推定量では<strong>ない</strong></p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>標本共分散</strong></p>
+<ul>
+<li><p>確率変数の共分散</p>
+<div class="math notranslate nohighlight">
+\[
+    \hat{\sigma}_{XY}=\frac{1}{n-1}\sum_{i=1}^{n}\left(X_i-\bar{X}\right)\left(Y_i-\bar{Y}\right)
+    \]</div>
+</li>
+<li><p>共分散の実現値</p>
+<div class="math notranslate nohighlight">
+\[
+    \hat{\sigma}_{xy}=\frac{1}{n-1}\sum_{i=1}^{n}\left(x_i-\bar{x}\right)\left(y_i-\bar{y}\right)
+    \]</div>
+</li>
+</ul>
+<p>（注意）</p>
+<ul class="simple">
+<li><p>分母は <span class="math notranslate nohighlight">\(n-1\)</span>であり，これにより<span class="math notranslate nohighlight">\(\hat{\sigma}_X\)</span>は母集団共分散の不偏推定量となる。</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>標本相関係数</strong></p>
+<ul class="simple">
+<li><p>確率変数の相関係数</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[r_{XY}=\dfrac{\hat{\sigma}_{XY}}{\hat{\sigma}_X\cdot\hat{\sigma}_Y}\]</div>
+<ul class="simple">
+<li><p>相関係数の実現値</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[r_{xy}=\dfrac{\hat{\sigma}_{xy}}{\hat{\sigma}_x\cdot\hat{\sigma}_y}\]</div>
+<p>（注意）</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(r_{XY}\)</span>は母集団相関係数の不偏推定量では<strong>ない</strong></p></li>
+</ul>
+</div>
+</div>
+
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="part_2.html" title="previous page">２. <code class="docutils literal notranslate"><span class="pre">Python</span></code>を使った計量経済分析</a>
+    <a class='right-next' id="next-link" href="8_Simple_Regression.html" title="next page">単回帰分析</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By 春山 鉄源<br/>
+        
+            &copy; Copyright 2020 Tetsugen Haruyama.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-165998213-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>

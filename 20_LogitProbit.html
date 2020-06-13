@@ -1,0 +1,1281 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>離散選択モデル &#8212; Pythonで学ぶ入門計量経済学</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/mystnb.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="canonical" href="https://spring-book.github.io/book_etrics/20_LogitProbit.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="制限従属変数モデル" href="21_TruncregTobitHeckit.html" />
+    <link rel="prev" title="操作変数法と２段階OLS" href="19_IV2SLS.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="https://spring-book.github.io/book_etrics/20_LogitProbit.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="離散選択モデル" />
+<meta property="og:description" content="離散選択モデル  from scipy.stats import logistic, norm, chi2 import numpy as np import matplotlib.pyplot as plt from see import * import pandas as pd from statsmodels." />
+
+
+<meta name="twitter:card" content="summary">
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Pythonで学ぶ入門計量経済学</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="part_1.html">１. Pythonの基礎</a>
+  </li>
+  <li class="active">
+    <a href="part_2.html">２. Pythonを使った計量経済分析</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="7_Review_of_Statistics.html">統計学の簡単な復習</a>
+    </li>
+    <li class="">
+      <a href="8_Simple_Regression.html">単回帰分析</a>
+    </li>
+    <li class="">
+      <a href="9_Multiple_Regression.html">重回帰分析</a>
+    </li>
+    <li class="">
+      <a href="10_Residuals.html">残差診断</a>
+    </li>
+    <li class="">
+      <a href="11_Inference.html">推論</a>
+    </li>
+    <li class="">
+      <a href="12_Asymptotics.html">大標本特性</a>
+    </li>
+    <li class="">
+      <a href="13_Dummies.html">質的変数と回帰分析</a>
+    </li>
+    <li class="">
+      <a href="14_Heteroskedasticity.html">不均一分散</a>
+    </li>
+    <li class="">
+      <a href="15_Pooling.html">プーリング・データとパネル・データ</a>
+    </li>
+    <li class="">
+      <a href="16_linearmodels.html">linearmodels</a>
+    </li>
+    <li class="">
+      <a href="17_Panel.html">パネル・データ分析</a>
+    </li>
+    <li class="">
+      <a href="18_Zero_Conditional_Mean.html">GM仮定４が満たされない場合</a>
+    </li>
+    <li class="">
+      <a href="19_IV2SLS.html">操作変数法と２段階OLS</a>
+    </li>
+    <li class="active">
+      <a href="">離散選択モデル</a>
+    </li>
+    <li class="">
+      <a href="21_TruncregTobitHeckit.html">制限従属変数モデル</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="part_3.html">３. 番外編</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  <a  href="https://github.com/spring-book/py4etrics">&#128200;&#127891;&#128202;</a><!-- Default Statcounter code for Py4etrics https://spring-book.github.io/py4etrics/ --> <script type="text/javascript"> var sc_project=12339954; var sc_invisible=1; var sc_security="45ab8946"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12339954/0/45ab8946/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code -->
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="_sources/20_LogitProbit.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Source interaction buttons -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/spring-book/py4etrics/master?urlpath=tree/20_LogitProbit.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                
+            </div>
+        </div>
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id2" class="nav-link">説明</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id3" class="nav-link">推定</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id4" class="nav-link">データ</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#logit" class="nav-link">Logitモデル</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#probit" class="nav-link">Probitモデル</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id5" class="nav-link">係数の推定値の解釈</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id6" class="nav-link">推定結果の表（上段右）</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id7" class="nav-link">尤度比検定</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id8" class="nav-link">例１</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id9" class="nav-link">例２</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id10" class="nav-link">線形確率モデル</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id11" class="nav-link">３つのモデルの比較</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="id1">
+<h1>離散選択モデル<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">logistic</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="n">chi2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">logit</span><span class="p">,</span> <span class="n">probit</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
+<span class="kn">from</span> <span class="nn">py4etrics.hetero_test</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>説明<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>次の２つのモデルを考える。</p>
+<ul class="simple">
+<li><p>Logitモデル</p></li>
+<li><p>Probitモデル</p></li>
+</ul>
+<p>例として，労働市場参加の決定要因を考えよう。就業する場合は<span class="math notranslate nohighlight">\(y=1\)</span>，しない場合は<span class="math notranslate nohighlight">\(y=0\)</span>となる２値反応モデルと考えることができる。</p>
+<p>＜考え方＞</p>
+<ul>
+<li><p>潜在変数（効用とも解釈可能） <span class="math notranslate nohighlight">\(y^{*}\)</span> が <span class="math notranslate nohighlight">\(y^{*}&gt;0\)</span> の場合は労働市場に参加し，<span class="math notranslate nohighlight">\(y^{*}\leq0\)</span> の場合は参加しないとする。</p></li>
+<li><p><span class="math notranslate nohighlight">\(y^{*}\)</span>は要因<span class="math notranslate nohighlight">\(x\)</span>と誤差項に依存する。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    y=
+    \begin{cases}
+        1\quad\text{ if}&amp;y^{*}=\beta_0+\beta_1x+e &gt; 0\\
+        0\quad\text{ if}&amp;y^{*}=\beta_0+\beta_1x+e \leq 0\\
+    \end{cases}
+    \qquad (式０)
+    \end{split}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\beta_0\)</span>：定数項</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta_1\)</span>：要因<span class="math notranslate nohighlight">\(x\)</span>の影響を捉える係数</p></li>
+<li><p><span class="math notranslate nohighlight">\(e\)</span>：誤差項</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(x\)</span>（例えば，教育水準）が同じであっても，<span class="math notranslate nohighlight">\(e\)</span>（例えば，嗜好）によって労働市場参加の決定が異なる。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(x\)</span>を所与として労働市場に参加する確率：<span class="math notranslate nohighlight">\(P(y=1|x)\)</span>を考えよう。</p>
+<div class="math notranslate nohighlight">
+\[ P(y=1|x)=P(y^{*}&gt;0|x)=P(e&gt;-(\beta_0+\beta_1x)|x)=1-G(-(\beta_0+\beta_1x))\]</div>
+<p>ここでG(.)はeの累積分布関数である。対称分布関数を仮定すると</p>
+<div class="math notranslate nohighlight">
+\[ 1-G(-z)=G(z)\qquad\; z=\beta_0+\beta_1x\]</div>
+<p>となる。またG(.)にどの分布を仮定するかによって，LogitモデルとProbitモデルに分けることができる。</p>
+<ul>
+<li><p>Logitモデル：eはLogistic分布に従うと仮定</p>
+<div class="math notranslate nohighlight">
+\[G(z)=L(z)=\dfrac{\exp(z)}{1+\exp(z)}:\quad\text{(Logistic累積確率分布)}\]</div>
+</li>
+<li><p>Probitモデル：eは標準正規分布に従うと仮定</p>
+<div class="math notranslate nohighlight">
+\[G(z)=\Phi(z)=\text{標準正規分布の累積確率分布}\]</div>
+</li>
+</ul>
+</li>
+<li><p>LogitモデルとProbitモデルは次式で表される。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    P(y=1|x)=G(\beta_0+\beta_1x)=
+    \begin{cases}
+        L(\beta_0+\beta_1x)&amp;\;\text{Logitモデル}\\
+        \Phi(\beta_0+\beta_1x)&amp;\;\text{Probitモデル}
+    \end{cases}
+    \qquad\text{(式１)}
+    \end{split}\]</div>
+</li>
+</ul>
+<hr class="docutils" />
+<p>下の図はロジスティクス分布と標準正規分布の累積密度関数を表している。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">y_logistic</span> <span class="o">=</span> <span class="n">logistic</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y_norm</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_logistic</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Logistic&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_norm</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Normal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">xmin</span><span class="o">=-</span><span class="mi">4</span><span class="p">,</span><span class="n">xmax</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Cumulative Distribution Functions: $G(z)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/20_LogitProbit_6_0.png" src="_images/20_LogitProbit_6_0.png" />
+</div>
+</div>
+<hr class="docutils" />
+<p>（コメント）</p>
+<ul class="simple">
+<li><p>被説明変数（<span class="math notranslate nohighlight">\(y\)</span>）のデータ：<span class="math notranslate nohighlight">\((0,1)\)</span></p></li>
+<li><p>(式１)を最尤法（Maximum Likelihood Estimate; MLE）を使って非線形推定</p>
+<ul>
+<li><p>推定には<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使う。</p></li>
+<li><p>(式１)の推計に基づく予測値 ＝ <span class="math notranslate nohighlight">\(x\)</span>を所与とする労働市場に参加する確率</p></li>
+</ul>
+</li>
+<li><p>OLS推定では検定に<span class="math notranslate nohighlight">\(t\)</span>・<span class="math notranslate nohighlight">\(F\)</span>検定を使ったが，その代わりに最尤法のもとでの検定には３つある</p>
+<ul>
+<li><p>Wald検定</p></li>
+<li><p>尤度比検定（Likelihood Ratio Test）</p></li>
+<li><p>LM（Lagrange Multiperlier）検定（Score検定とも呼ばれる）</p></li>
+<li><p>（大標本のもとで同じとなる; 使いやすいものを選択）</p></li>
+</ul>
+</li>
+</ul>
+<p>（注意１）</p>
+<ul class="simple">
+<li><p>「理想的な」仮定のもとで，最尤推定量は</p>
+<ul>
+<li><p>一致性を満たす</p></li>
+<li><p>漸近的に（大標本）<strong>正規分布</strong>に従う</p></li>
+<li><p>漸近的に（大標本）効率的である</p></li>
+</ul>
+</li>
+<li><p>最尤推定量が一致性を満たさない要因に以下を含む（Green, 5th ed, p.679）</p>
+<ul>
+<li><p>誤差項のの不均一分散</p></li>
+<li><p>内生的説明変数</p></li>
+<li><p>欠落変数（右辺にある説明変数と相関しなくてもバイアスが発生する）</p></li>
+</ul>
+</li>
+</ul>
+<p>＜＜不均一分散が疑われる場合の問題＞＞</p>
+<ul class="simple">
+<li><p>OLS推定</p>
+<ul>
+<li><p>推定量は不偏性・一致性を満たす</p></li>
+<li><p>標準誤差は一致性を失う</p>
+<ul>
+<li><p>不均一分散頑健標準誤差を使うことにより，有効な検定を行うことが可能</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>ML推定</p>
+<ul>
+<li><p>推定量は一致性を満たさない</p></li>
+<li><p>標準誤差も一致性を満たさない</p>
+<ul>
+<li><p>不均一分散頑健標準誤差を使うことが推奨されることがあるが（研究論文でもそうする研究者も多い），もともと係数の推定量が一致性を満たさないため，不均一分散頑健標準誤差の有用性に疑問が残る！（<a class="reference external" href="https://davegiles.blogspot.com/2013/05/robust-standard-errors-for-nonlinear.html">参照</a>）<strong>このことは次章の制限従属変数モデルに当てはまるので注意すること。</strong></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>不均一分散に関しての対処方法</p>
+<ul>
+<li><p>均一分散の下での標準誤差と不均一分散頑健標準誤差に大きな差がなければ，不均一分散の問題は「大きくない」と考える。ただし目安。</p></li>
+<li><p>不均一分散の検定をおこなう。</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>推定<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h3>データ<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>以下では，<code class="docutils literal notranslate"><span class="pre">mroz</span></code>のデータを使って女性の労働市場参加について考える。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mroz</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mroz&#39;</span><span class="p">)</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mroz&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>name of dataset: mroz
+no of variables: 22
+no of observations: 753
+
++----------+---------------------------------+
+| variable | label                           |
++----------+---------------------------------+
+| inlf     | =1 if in lab frce, 1975         |
+| hours    | hours worked, 1975              |
+| kidslt6  | # kids &lt; 6 years                |
+| kidsge6  | # kids 6-18                     |
+| age      | woman&#39;s age in yrs              |
+| educ     | years of schooling              |
+| wage     | est. wage from earn, hrs        |
+| repwage  | rep. wage at interview in 1976  |
+| hushrs   | hours worked by husband, 1975   |
+| husage   | husband&#39;s age                   |
+| huseduc  | husband&#39;s years of schooling    |
+| huswage  | husband&#39;s hourly wage, 1975     |
+| faminc   | family income, 1975             |
+| mtr      | fed. marg. tax rte facing woman |
+| motheduc | mother&#39;s years of schooling     |
+| fatheduc | father&#39;s years of schooling     |
+| unem     | unem. rate in county of resid.  |
+| city     | =1 if live in SMSA              |
+| exper    | actual labor mkt exper          |
+| nwifeinc | (faminc - wage*hours)/1000      |
+| lwage    | log(wage)                       |
+| expersq  | exper^2                         |
++----------+---------------------------------+
+
+T.A. Mroz (1987), “The Sensitivity of an Empirical Model of Married
+Women’s Hours of Work to Economic and Statistical Assumptions,”
+Econometrica 55, 765-799. Professor Ernst R. Berndt, of MIT, kindly
+provided the data, which he obtained from Professor Mroz.
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>被説明変数</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">inlf</span></code>：1975年に労働市場に参加した場合１，しない場合は０</p></li>
+</ul>
+</li>
+<li><p>説明変数</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">nwifeinc</span></code>：(faminc - wage*hours)/1000</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">faminc</span></code>：1975年の世帯所得</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">wage</span></code>：賃金</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hours</span></code>：就業時間</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">educ</span></code>：教育年数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">exper</span></code>：労働市場参加期間</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">expersq</span></code>：<code class="docutils literal notranslate"><span class="pre">exper</span></code>の２乗</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">age</span></code>：女性の年齢</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kidslt6</span></code>：6歳未満の子供の数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kidsge6</span></code>：6〜18さいの子供の数</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="logit">
+<h3>Logitモデル<a class="headerlink" href="#logit" title="Permalink to this headline">¶</a></h3>
+<p>回帰式の設定</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;inlf ~ nwifeinc + educ + exper + expersq + age + kidslt6 + kidsge6&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>推定の計算には<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">logit</span></code>関数を使う。使い方は<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">ols</span></code>と同じである。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_logit</span> <span class="o">=</span> <span class="n">logit</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.533553
+         Iterations 6
+</pre></div>
+</div>
+</div>
+</div>
+<p>結果の表示</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_logit</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                           Logit Regression Results                           
+==============================================================================
+Dep. Variable:                   inlf   No. Observations:                  753
+Model:                          Logit   Df Residuals:                      745
+Method:                           MLE   Df Model:                            7
+Date:                Sat, 13 Jun 2020   Pseudo R-squ.:                  0.2197
+Time:                        10:46:59   Log-Likelihood:                -401.77
+converged:                       True   LL-Null:                       -514.87
+Covariance Type:            nonrobust   LLR p-value:                 3.159e-45
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      0.4255      0.860      0.494      0.621      -1.261       2.112
+nwifeinc      -0.0213      0.008     -2.535      0.011      -0.038      -0.005
+educ           0.2212      0.043      5.091      0.000       0.136       0.306
+exper          0.2059      0.032      6.422      0.000       0.143       0.269
+expersq       -0.0032      0.001     -3.104      0.002      -0.005      -0.001
+age           -0.0880      0.015     -6.040      0.000      -0.117      -0.059
+kidslt6       -1.4434      0.204     -7.090      0.000      -1.842      -1.044
+kidsge6        0.0601      0.075      0.804      0.422      -0.086       0.207
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">dir()</span></code>や<code class="docutils literal notranslate"><span class="pre">see()</span></code>を使うと，推定結果の属性やメソッドを確認できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">res_logit</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>    &lt;                  &lt;=                 ==                 !=
+    &gt;                  &gt;=                 dir()              hash()
+    help()             repr()             str()              .aic
+    .bic               .bse               .conf_int()        .cov_kwds
+    .cov_params()      .cov_type          .df_model          .df_resid
+    .f_test()          .fittedvalues      .get_margeff()     .initialize()
+    .k_constant        .llf               .llnull            .llr
+    .llr_pvalue        .load()            .mle_retvals       .mle_settings
+    .model             .nobs              .normalized_cov_params
+    .params            .pred_table()      .predict()         .prsquared
+    .pvalues           .remove_data()     .resid_dev
+    .resid_generalized                    .resid_pearson     .resid_response
+    .save()            .scale             .set_null_options()
+    .summary()         .summary2()        .t_test()
+    .t_test_pairwise()                    .tvalues           .use_t
+    .wald_test()       .wald_test_terms()
+</pre></div>
+</div>
+</div>
+</div>
+<p>例えば，<code class="docutils literal notranslate"><span class="pre">bse</span></code>は係数の標準誤差の属性である。</p>
+<hr class="docutils" />
+<p>不均一分散について考察する。誤差項の分散が均一か不均一かを考える上で，２つの方法を説明する。</p>
+<ol class="simple">
+<li><p>不均一分散頑健標準誤差を使う場合と使わない場合の標準誤差を比べる。</p>
+<ul class="simple">
+<li><p>違いが小さければ，均一分散の可能性が高い。</p></li>
+<li><p>しかし，これは１つの目安である。</p></li>
+</ul>
+</li>
+<li><p>検定を用いる</p>
+<ul class="simple">
+<li><p>考え方：不均一分散の仮定の下で最尤推定し，均一分散と比較する。</p></li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+<p>方法１を考えよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 上で推定した係数の標準誤差。</span>
+<span class="n">l0</span><span class="o">=</span><span class="n">res_logit</span><span class="o">.</span><span class="n">bse</span>
+
+<span class="c1"># 不均一分散頑健標準誤差</span>
+<span class="n">l1</span><span class="o">=</span><span class="n">logit</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC1&#39;</span><span class="p">,</span><span class="n">disp</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">bse</span>
+
+<span class="c1"># `HC1`を使うことによる標準誤差の変化率（％）</span>
+<span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="n">l1</span><span class="o">-</span><span class="n">l0</span><span class="p">)</span><span class="o">/</span><span class="n">l0</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept   -0.140629
+nwifeinc     7.726361
+educ         2.259971
+exper        0.664423
+expersq     -0.427766
+age         -0.983628
+kidslt6     -0.274232
+kidsge6      6.738482
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>大きく違っているようにもみえない。</p>
+<p>次に方法２である検定をおこなう。まず<code class="docutils literal notranslate"><span class="pre">haru-py</span></code>パッケージにある<code class="docutils literal notranslate"><span class="pre">hetero_test</span></code>モジュールを読み込み，その中に<code class="docutils literal notranslate"><span class="pre">het_test_logit()</span></code>という関数をつかう。引数に推定結果のインスタンスを指定することにより，不均一分散のWald検定をおこなうことができる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">het_test_logit</span><span class="p">(</span><span class="n">res_logit</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>H0: homoscedasticity
+HA: heteroscedasticity
+ 
+Wald test: 9.547 
+p-value:   0.216 
+df freedom:  7.
+</pre></div>
+</div>
+</div>
+</div>
+<p>10%の有意水準でも均一分散の帰無仮説を棄却できない。</p>
+</div>
+<div class="section" id="probit">
+<h3>Probitモデル<a class="headerlink" href="#probit" title="Permalink to this headline">¶</a></h3>
+<p>推定の計算には<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">probit</span></code>関数を使う。使い方は<code class="docutils literal notranslate"><span class="pre">logit</span></code>と同じである。上と同じデータと同じ<code class="docutils literal notranslate"><span class="pre">formula</span></code>を使う。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_probit</span> <span class="o">=</span> <span class="n">probit</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.532938
+         Iterations 5
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_probit</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                          Probit Regression Results                           
+==============================================================================
+Dep. Variable:                   inlf   No. Observations:                  753
+Model:                         Probit   Df Residuals:                      745
+Method:                           MLE   Df Model:                            7
+Date:                Sat, 13 Jun 2020   Pseudo R-squ.:                  0.2206
+Time:                        10:47:00   Log-Likelihood:                -401.30
+converged:                       True   LL-Null:                       -514.87
+Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      0.2701      0.509      0.531      0.595      -0.727       1.267
+nwifeinc      -0.0120      0.005     -2.484      0.013      -0.022      -0.003
+educ           0.1309      0.025      5.183      0.000       0.081       0.180
+exper          0.1233      0.019      6.590      0.000       0.087       0.160
+expersq       -0.0019      0.001     -3.145      0.002      -0.003      -0.001
+age           -0.0529      0.008     -6.235      0.000      -0.069      -0.036
+kidslt6       -0.8683      0.119     -7.326      0.000      -1.101      -0.636
+kidsge6        0.0360      0.043      0.828      0.408      -0.049       0.121
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">dir()</span></code>や<code class="docutils literal notranslate"><span class="pre">see()</span></code>を使うと，推定結果の属性やメソッドを確認できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">res_probit</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>    &lt;                  &lt;=                 ==                 !=
+    &gt;                  &gt;=                 dir()              hash()
+    help()             repr()             str()              .aic
+    .bic               .bse               .conf_int()        .cov_kwds
+    .cov_params()      .cov_type          .df_model          .df_resid
+    .f_test()          .fittedvalues      .get_margeff()     .initialize()
+    .k_constant        .llf               .llnull            .llr
+    .llr_pvalue        .load()            .mle_retvals       .mle_settings
+    .model             .nobs              .normalized_cov_params
+    .params            .pred_table()      .predict()         .prsquared
+    .pvalues           .remove_data()     .resid_dev
+    .resid_generalized                    .resid_pearson     .resid_response
+    .save()            .scale             .set_null_options()
+    .summary()         .summary2()        .t_test()
+    .t_test_pairwise()                    .tvalues           .use_t
+    .wald_test()       .wald_test_terms()
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p>不均一分散について考察する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 上で推定した係数の標準誤差。</span>
+<span class="n">p0</span><span class="o">=</span><span class="n">res_probit</span><span class="o">.</span><span class="n">bse</span>
+
+<span class="c1"># 不均一分散頑健標準誤差</span>
+<span class="n">p1</span><span class="o">=</span><span class="n">probit</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC1&#39;</span><span class="p">,</span><span class="n">disp</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">bse</span>
+
+<span class="c1"># `HC1`を使うことによる標準誤差の変化率（％）</span>
+<span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="n">p1</span><span class="o">-</span><span class="n">p0</span><span class="p">)</span><span class="o">/</span><span class="n">p0</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept   -0.738030
+nwifeinc     9.653354
+educ         2.169440
+exper        0.666688
+expersq      0.055315
+age         -1.528876
+kidslt6     -2.021420
+kidsge6      4.114557
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>大きく違っているようにはみえない。</p>
+<p>次に検定をおこなう。<code class="docutils literal notranslate"><span class="pre">haru-py</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">hetero_test</span></code>モジュールにある<code class="docutils literal notranslate"><span class="pre">het_test_probit()</span></code>という関数を使う。使い方は<code class="docutils literal notranslate"><span class="pre">het_test_probit()</span></code>とおなじである。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">het_test_probit</span><span class="p">(</span><span class="n">res_probit</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>H0: homoscedasticity
+HA: heteroscedasticity
+ 
+Wald test: 8.665 
+p-value:   0.278 
+df freedom:  7.
+</pre></div>
+</div>
+</div>
+</div>
+<p>10%の有意水準でも均一分散の帰無仮説を棄却できない。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>係数の推定値の解釈<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>まず，<code class="docutils literal notranslate"><span class="pre">logit</span></code>と<code class="docutils literal notranslate"><span class="pre">probit</span></code>の結果を比べてわかるのは，係数の推定値は非常に似ているという点である。では，係数をどのように解釈できるのか考える。</p>
+<p>＜通常のOLSの場合＞</p>
+<p>推定式が</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{y}=\hat{\beta}_0+\hat{\beta}_1x
+\]</div>
+<p>の場合，<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の解釈は簡単である。<span class="math notranslate nohighlight">\(\dfrac{\partial\hat{y}}{\partial x}=\hat{\beta}_1\)</span>となるので，（他の変数を一定にしたまま）<span class="math notranslate nohighlight">\(x\)</span>を一単位変化させた場合の<span class="math notranslate nohighlight">\(\hat{y}\)</span>に対する限界効果である。その限界効果は<span class="math notranslate nohighlight">\(x\)</span>に依存せず一定である。</p>
+<hr class="docutils" />
+<p>＜Logit・Probitモデルの場合＞</p>
+<p><span class="math notranslate nohighlight">\(G(.)\)</span>の関数があるため，少し違ってくる。(式１)を微分すると次の結果を得る。</p>
+<div class="math notranslate nohighlight">
+\[
+\dfrac{\partial\hat{y}}{\partial x}=
+\hat{\beta}_1\cdot g\left(\hat{\beta}_0+\hat{\beta}_1x\right), \qquad g(z)=\frac{dG(z)}{dz}
+\]</div>
+<p>重要な点は，<span class="math notranslate nohighlight">\(g\left(\hat{\beta}_0+\hat{\beta}_1 x\right)\)</span>は<span class="math notranslate nohighlight">\(x\)</span>に依存しているため，<span class="math notranslate nohighlight">\(x\)</span>が一単位変化した場合の限界効果は<span class="math notranslate nohighlight">\(x\)</span>の値に依存しているということである。限界効果を評価したい場合，<span class="math notranslate nohighlight">\(x\)</span>に何かの値を代入することにより評価する。ではどの値を使えば良いのか。２つの方法考える。</p>
+<ul>
+<li><p>Partial Effects at Average（平均での限界効果）：平均である<span class="math notranslate nohighlight">\(\bar{x}\)</span>で評価する。</p>
+<div class="math notranslate nohighlight">
+\[
+    \text{PEA}=
+    \hat{\beta}_1\cdot g\left(\hat{\beta}_0+\hat{\beta}_1\bar{x}\right)
+    \]</div>
+</li>
+<li><p>Average Partial Effects（平均限界効果）：全ての<span class="math notranslate nohighlight">\(x\)</span>値で評価した限界効果の平均</p>
+<div class="math notranslate nohighlight">
+\[
+    \text{APE}=\dfrac{1}{n}\sum_{i=1}^n
+    \hat{\beta}_1\cdot g\left(\hat{\beta}_0+\hat{\beta}_1\hat{x}\right)
+    \]</div>
+</li>
+</ul>
+<p>（解釈）</p>
+<p><span class="math notranslate nohighlight">\(x\)</span>が１単位増加すると労働市場参加の確率（<span class="math notranslate nohighlight">\(P(y=1|x)=G(\beta_0+\beta_1x)\)</span>）はどれだけ変化するかを示す。</p>
+<hr class="docutils" />
+<p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>では，推定結果（上の例では，<code class="docutils literal notranslate"><span class="pre">res_logit</span></code>と<code class="docutils literal notranslate"><span class="pre">res_probit</span></code>）のメソッド<code class="docutils literal notranslate"><span class="pre">get_margeff()</span></code>を使うことにより自動的に計算してくれる。デフォルトではAPEを返す。PEAには次の引数を使う。</p>
+<ul class="simple">
+<li><p>PEA：<code class="docutils literal notranslate"><span class="pre">at='mean'</span></code></p></li>
+<li><p>APE：<code class="docutils literal notranslate"><span class="pre">at='overall'</span></code>（デフォルト）</p></li>
+</ul>
+<p>また，<code class="docutils literal notranslate"><span class="pre">get_margeff()</span></code>は計算するだけなので，メソッド<code class="docutils literal notranslate"><span class="pre">summary()</span></code>を使って結果を表示する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_logit</span><span class="o">.</span><span class="n">get_margeff</span><span class="p">()</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res_logit</span><span class="o">.</span><span class="n">get_margeff</span><span class="p">(</span><span class="n">at</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>        Logit Marginal Effects       
+=====================================
+Dep. Variable:                   inlf
+Method:                          dydx
+At:                           overall
+==============================================================================
+                dy/dx    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+nwifeinc      -0.0038      0.001     -2.571      0.010      -0.007      -0.001
+educ           0.0395      0.007      5.414      0.000       0.025       0.054
+exper          0.0368      0.005      7.139      0.000       0.027       0.047
+expersq       -0.0006      0.000     -3.176      0.001      -0.001      -0.000
+age           -0.0157      0.002     -6.603      0.000      -0.020      -0.011
+kidslt6       -0.2578      0.032     -8.070      0.000      -0.320      -0.195
+kidsge6        0.0107      0.013      0.805      0.421      -0.015       0.037
+==============================================================================
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>        Logit Marginal Effects       
+=====================================
+Dep. Variable:                   inlf
+Method:                          dydx
+At:                              mean
+==============================================================================
+                dy/dx    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+nwifeinc      -0.0052      0.002     -2.534      0.011      -0.009      -0.001
+educ           0.0538      0.011      5.092      0.000       0.033       0.074
+exper          0.0501      0.008      6.397      0.000       0.035       0.065
+expersq       -0.0008      0.000     -3.096      0.002      -0.001      -0.000
+age           -0.0214      0.004     -6.046      0.000      -0.028      -0.014
+kidslt6       -0.3509      0.050     -7.070      0.000      -0.448      -0.254
+kidsge6        0.0146      0.018      0.804      0.422      -0.021       0.050
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_probit</span><span class="o">.</span><span class="n">get_margeff</span><span class="p">()</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res_probit</span><span class="o">.</span><span class="n">get_margeff</span><span class="p">(</span><span class="n">at</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>       Probit Marginal Effects       
+=====================================
+Dep. Variable:                   inlf
+Method:                          dydx
+At:                           overall
+==============================================================================
+                dy/dx    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+nwifeinc      -0.0036      0.001     -2.509      0.012      -0.006      -0.001
+educ           0.0394      0.007      5.452      0.000       0.025       0.054
+exper          0.0371      0.005      7.200      0.000       0.027       0.047
+expersq       -0.0006      0.000     -3.205      0.001      -0.001      -0.000
+age           -0.0159      0.002     -6.739      0.000      -0.021      -0.011
+kidslt6       -0.2612      0.032     -8.197      0.000      -0.324      -0.199
+kidsge6        0.0108      0.013      0.829      0.407      -0.015       0.036
+==============================================================================
+       Probit Marginal Effects       
+=====================================
+Dep. Variable:                   inlf
+Method:                          dydx
+At:                              mean
+==============================================================================
+                dy/dx    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+nwifeinc      -0.0047      0.002     -2.484      0.013      -0.008      -0.001
+educ           0.0511      0.010      5.186      0.000       0.032       0.070
+exper          0.0482      0.007      6.575      0.000       0.034       0.063
+expersq       -0.0007      0.000     -3.141      0.002      -0.001      -0.000
+age           -0.0206      0.003     -6.241      0.000      -0.027      -0.014
+kidslt6       -0.3392      0.046     -7.316      0.000      -0.430      -0.248
+kidsge6        0.0141      0.017      0.828      0.408      -0.019       0.047
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p>APEとPEAの値だけを取り題したい場合は，属性<code class="docutils literal notranslate"><span class="pre">margeff</span></code>を使うと良いだろう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_probit</span><span class="o">.</span><span class="n">get_margeff</span><span class="p">(</span><span class="n">at</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">margeff</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([-0.00469623,  0.05112871,  0.04817705, -0.00073705, -0.02064317,
+       -0.33915138,  0.0140628 ])
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>推定結果の表（上段右）<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>推定結果の表を説明するために<code class="docutils literal notranslate"><span class="pre">logit</span></code>の結果を再度表示する。（<code class="docutils literal notranslate"><span class="pre">probit</span></code>も同じ項目が表示されている）</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_logit</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                           Logit Regression Results                           
+==============================================================================
+Dep. Variable:                   inlf   No. Observations:                  753
+Model:                          Logit   Df Residuals:                      745
+Method:                           MLE   Df Model:                            7
+Date:                Sat, 13 Jun 2020   Pseudo R-squ.:                  0.2197
+Time:                        10:47:00   Log-Likelihood:                -401.77
+converged:                       True   LL-Null:                       -514.87
+Covariance Type:            nonrobust   LLR p-value:                 3.159e-45
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">No.</span> <span class="pre">Observations</span></code>：観測値の数（データの大きさ）</p>
+<ul>
+<li><p>属性<code class="docutils literal notranslate"><span class="pre">nobs</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DF</span> <span class="pre">Residuals</span></code>：定数以外の係数の数</p>
+<ul>
+<li><p>属性<code class="docutils literal notranslate"><span class="pre">df_resid</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DF</span> <span class="pre">Model</span></code>：定数以外の係数の数</p>
+<ul>
+<li><p>属性<code class="docutils literal notranslate"><span class="pre">df_model</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Pseudo</span> <span class="pre">R-squ</span></code>（疑似決定係数）：</p>
+<ul>
+<li><p>MLEはOLSではないため<span class="math notranslate nohighlight">\(R^2\)</span>はない。その代わりになる指標がPseudo <span class="math notranslate nohighlight">\(R^2\)</span>（疑似決定係数）といわれるものであり，その１つが表にあるMcFaddenが考案した Pseudo <span class="math notranslate nohighlight">\(R^2\)</span>。</p></li>
+<li><p>属性<code class="docutils literal notranslate"><span class="pre">prsquared</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Log-Likelihood</span></code>（残差の対数尤度）</p>
+<ul>
+<li><p>大きいほど当てはまり良い</p></li>
+<li><p>属性<code class="docutils literal notranslate"><span class="pre">llf</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LL-Null</span></code>（定数以外の係数を０に制限した場合の残差の対数尤度）</p>
+<ul>
+<li><p>属性<code class="docutils literal notranslate"><span class="pre">llnull</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LLR</span> <span class="pre">p-value</span></code>：</p>
+<ul>
+<li><p>定数項（Intercept）以外の係数が全て０であるという帰無仮説のもとでのp値。ここでは非常に小さな数字であり，帰無仮説を棄却できる。</p></li>
+<li><p>属性<code class="docutils literal notranslate"><span class="pre">llr_pvalue</span></code></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h2>尤度比検定<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>尤度比検定（Likelihood Ratio Test）について説明する。検定量は，次式に従って制限を課さない場合と課さない場合の残差の対数尤度を使って計算する。</p>
+<div class="math notranslate nohighlight">
+\[LR=2\left(\cal{L}_{ur}-\cal{L}_{r}\right)\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\cal{L}_{ur}\)</span>：制限がない場合の対数尤度</p></li>
+<li><p><span class="math notranslate nohighlight">\(\cal{L}_{r}\)</span>：制限がある場合の対数尤度</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(LR\)</span>は漸近的にカイ二乗分布に従う。</p>
+<div class="math notranslate nohighlight">
+\[LR\sim \chi_q^2,\qquad q=\text{制限される係数の数}\]</div>
+<div class="section" id="id8">
+<h3>例１<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>例として，Probit推定を考える。</p>
+<p><span class="math notranslate nohighlight">\(\text{H}_0\)</span>：定数項以外の係数は全て０</p>
+<p><span class="math notranslate nohighlight">\(\text{H}_A\)</span>：<span class="math notranslate nohighlight">\(\text{H}_0\)</span>は成立しない</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ll_ur</span> <span class="o">=</span> <span class="n">res_probit</span><span class="o">.</span><span class="n">llf</span>  <span class="c1"># 制限を課さない場合の対数尤度</span>
+
+<span class="n">ll_r</span> <span class="o">=</span> <span class="n">res_probit</span><span class="o">.</span><span class="n">llnull</span>  <span class="c1"># 制限を課す場合の対数尤度</span>
+
+<span class="n">LR</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">ll_ur</span><span class="o">-</span><span class="n">ll_r</span><span class="p">)</span>  <span class="c1"># LR統計量</span>
+
+<span class="n">dof</span> <span class="o">=</span> <span class="n">res_probit</span><span class="o">.</span><span class="n">df_model</span>  <span class="c1">#  自由度＝制限を課すパラメータの数</span>
+
+<span class="mi">1</span><span class="o">-</span> <span class="n">chi2</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">LR</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>1%水準で帰無仮説は棄却できる。</p>
+<p>この結果は推定結果の表にある<code class="docutils literal notranslate"><span class="pre">LLR</span> <span class="pre">p-value</span></code>と同じであり，<code class="docutils literal notranslate"><span class="pre">res_probit</span></code>の属性<code class="docutils literal notranslate"><span class="pre">.llr_pvalue</span></code>を使って直接表示することも可能である。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_probit</span><span class="o">.</span><span class="n">llr_pvalue</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>2.0086732957627125e-45
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3>例２<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>次に，Probit推定を考える。</p>
+<p><span class="math notranslate nohighlight">\(\text{H}_0\)</span>：<code class="docutils literal notranslate"><span class="pre">exper</span></code>，<code class="docutils literal notranslate"><span class="pre">expersq</span></code>，<code class="docutils literal notranslate"><span class="pre">age</span></code>の係数は０</p>
+<p><span class="math notranslate nohighlight">\(\text{H}_A\)</span>：<span class="math notranslate nohighlight">\(\text{H}_0\)</span>は成立しない</p>
+<p>帰無仮説の下での推定をおこなう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_0</span> <span class="o">=</span> <span class="s1">&#39;inlf ~ nwifeinc + educ + kidslt6 + kidsge6&#39;</span>
+
+<span class="n">res_probit_0</span> <span class="o">=</span> <span class="n">probit</span><span class="p">(</span><span class="n">formula_0</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.617290
+         Iterations 5
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ll_ur</span> <span class="o">=</span> <span class="n">res_probit</span><span class="o">.</span><span class="n">llf</span>  <span class="c1"># 制限を課さない場合の対数尤度</span>
+
+<span class="n">ll_r</span> <span class="o">=</span> <span class="n">res_probit_0</span><span class="o">.</span><span class="n">llnull</span>  <span class="c1"># 制限を課す場合の対数尤度</span>
+
+<span class="n">LR</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">ll_ur</span><span class="o">-</span><span class="n">ll_r</span><span class="p">)</span>  <span class="c1"># LR統計量</span>
+
+<span class="n">dof</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1">#  自由度＝制限を課すパラメータの数</span>
+
+<span class="mi">1</span><span class="o">-</span> <span class="n">chi2</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">LR</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>1%水準で帰無仮説は棄却できる。</p>
+</div>
+</div>
+<div class="section" id="id10">
+<h2>線形確率モデル<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<p>線形確率モデル（Linear Probability Model）を考えるために，関数<span class="math notranslate nohighlight">\(G(.)\)</span>に関して以下を仮定する。</p>
+<div class="math notranslate nohighlight">
+\[
+G(z) = z
+\]</div>
+<p>線形確率モデルの利点は，通常のOLS推定が可能だということである。しかし，誤差項は不均一分散となるため以下では不均一分散頑健標準誤差を使う。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_lin</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC1&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">res_lin</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                   inlf   R-squared:                       0.264
+Model:                            OLS   Adj. R-squared:                  0.257
+Method:                 Least Squares   F-statistic:                     62.48
+Date:                Sat, 13 Jun 2020   Prob (F-statistic):           1.30e-70
+Time:                        10:47:00   Log-Likelihood:                -423.89
+No. Observations:                 753   AIC:                             863.8
+Df Residuals:                     745   BIC:                             900.8
+Df Model:                           7                                         
+Covariance Type:                  HC1                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      0.5855      0.152      3.846      0.000       0.287       0.884
+nwifeinc      -0.0034      0.002     -2.233      0.026      -0.006      -0.000
+educ           0.0380      0.007      5.229      0.000       0.024       0.052
+exper          0.0395      0.006      6.797      0.000       0.028       0.051
+expersq       -0.0006      0.000     -3.138      0.002      -0.001      -0.000
+age           -0.0161      0.002     -6.707      0.000      -0.021      -0.011
+kidslt6       -0.2618      0.032     -8.237      0.000      -0.324      -0.200
+kidsge6        0.0130      0.014      0.962      0.336      -0.014       0.040
+==============================================================================
+Omnibus:                      169.137   Durbin-Watson:                   0.494
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               36.741
+Skew:                          -0.196   Prob(JB):                     1.05e-08
+Kurtosis:                       1.991   Cond. No.                     3.06e+03
+==============================================================================
+
+Warnings:
+[1] Standard Errors are heteroscedasticity robust (HC1)
+[2] The condition number is large, 3.06e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.
+</pre></div>
+</div>
+</div>
+</div>
+<p>この推定法の問題は，確率の予測値が<span class="math notranslate nohighlight">\([0,1]\)</span>に収まらない場合があることである。この点については以下で確認する。</p>
+</div>
+<div class="section" id="id11">
+<h2>３つのモデルの比較<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<p>上述の３つのモデルの推定結果のメソッド<code class="docutils literal notranslate"><span class="pre">predict()</span></code>は</p>
+<p>労働参加の確率<span class="math notranslate nohighlight">\(P(y=1|x)\)</span>の予測値</p>
+<p>を返す。</p>
+<hr class="docutils" />
+<p>＜＜注意＞＞</p>
+<p>推定結果には属性<code class="docutils literal notranslate"><span class="pre">fittedvalues</span></code>があるが，３つのモデルでは以下が返される。</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta}_0+\hat{\beta}_1x\]</div>
+<p>（解釈）</p>
+<ul class="simple">
+<li><p>線形確率モデル：労働参加の確率<span class="math notranslate nohighlight">\(P(y=1|x)\)</span>の予測値（<code class="docutils literal notranslate"><span class="pre">predict()</span></code>と同じ）</p></li>
+<li><p>Logit・Probitモデル：潜在変数（または効用）<span class="math notranslate nohighlight">\(y^*\)</span>の予測値</p></li>
+</ul>
+<hr class="docutils" />
+<p>線形確率モデルでは，労働参加の確率は１以上もしくは０以下になり得る。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">no_1</span> <span class="o">=</span> <span class="p">(</span><span class="n">res_lin</span><span class="o">.</span><span class="n">fittedvalues</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="n">no_0</span> <span class="o">=</span> <span class="p">(</span><span class="n">res_lin</span><span class="o">.</span><span class="n">fittedvalues</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;1を上回る予測値の数：&#39;</span><span class="p">,</span><span class="n">no_1</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">0を下回る予測値の数：&#39;</span><span class="p">,</span><span class="n">no_0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>1を上回る予測値の数： 17 
+0を下回る予測値の数： 16
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p>LogitモデルとProbitモデルの予測値を図を使って比べてみる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">y_logit</span> <span class="o">=</span> <span class="n">res_logit</span><span class="o">.</span><span class="n">predict</span><span class="p">()</span>
+<span class="n">y_probit</span> <span class="o">=</span> <span class="n">res_probit</span><span class="o">.</span><span class="n">predict</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>  <span class="c1"># 図のサイズ</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y_logit</span><span class="p">,</span><span class="n">y_probit</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;comparison&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;45 degree line&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted Probability of Logistic Model&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Predicted Probability of Probit Model&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/20_LogitProbit_76_0.png" src="_images/20_LogitProbit_76_0.png" />
+</div>
+</div>
+<p>LogitモデルとProbitモデルの予測確率は殆ど変わらない。ではLogitとProbitのどちらをどのような基準で選ぶべきか。<em>Microeconometrics Using Stata</em> (2009)は次を推奨している。</p>
+<ul class="simple">
+<li><p>対数尤度（log likelihood）が高い方を選ぶ。</p></li>
+</ul>
+<p>確認するために，それぞれの結果の属性<code class="docutils literal notranslate"><span class="pre">.llf</span></code>を比べる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_logit</span><span class="o">.</span><span class="n">llf</span><span class="p">,</span> <span class="n">res_probit</span><span class="o">.</span><span class="n">llf</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(-401.76515113438165, -401.30219317389515)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Probitの多数尤度が高いが，殆ど変わらない。この結果は上の図にも反映されている。</p>
+</div>
+</div>
+
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="19_IV2SLS.html" title="previous page">操作変数法と２段階OLS</a>
+    <a class='right-next' id="next-link" href="21_TruncregTobitHeckit.html" title="next page">制限従属変数モデル</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By 春山 鉄源<br/>
+        
+            &copy; Copyright 2020 Tetsugen Haruyama.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-165998213-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>

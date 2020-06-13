@@ -1,0 +1,1565 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Tipsと注意点 &#8212; Pythonで学ぶ入門計量経済学</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/mystnb.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="canonical" href="https://spring-book.github.io/book_etrics/6_things_to_note.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="２. Pythonを使った計量経済分析" href="part_2.html" />
+    <link rel="prev" title="SciPy.stats" href="5_SciPy_stats.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="https://spring-book.github.io/book_etrics/6_things_to_note.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Tipsと注意点" />
+<meta property="og:description" content="Tipsと注意点  書式について  コードを書くときに以下を注意すること。  分かりやすい変数名を使う。  具体的な内容を示す変数名は可読性を高める。例えば、インフレ率をinflation、インフレ率の変化をinf_change。また、単位を含めるとより分かりやすくなる。例えば、kgやpercent。var1やvar2" />
+
+
+<meta name="twitter:card" content="summary">
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Pythonで学ぶ入門計量経済学</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="active">
+    <a href="part_1.html">１. Pythonの基礎</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="0_Preparations.html">ツールのインストールと説明</a>
+    </li>
+    <li class="">
+      <a href="1_Python_Basics.html">Pythonの基礎</a>
+    </li>
+    <li class="">
+      <a href="2_NumPy.html">NumPy</a>
+    </li>
+    <li class="">
+      <a href="3_Pandas.html">Pandas</a>
+    </li>
+    <li class="">
+      <a href="4_Matplotlib.html">Matplotlib</a>
+    </li>
+    <li class="">
+      <a href="5_SciPy_stats.html">SciPy.stats</a>
+    </li>
+    <li class="active">
+      <a href="">Tipsと注意点</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="part_2.html">２. Pythonを使った計量経済分析</a>
+  </li>
+  <li class="">
+    <a href="part_3.html">３. 番外編</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  <a  href="https://github.com/spring-book/py4etrics">&#128200;&#127891;&#128202;</a><!-- Default Statcounter code for Py4etrics https://spring-book.github.io/py4etrics/ --> <script type="text/javascript"> var sc_project=12339954; var sc_invisible=1; var sc_security="45ab8946"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12339954/0/45ab8946/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code -->
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="_sources/6_things_to_note.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Source interaction buttons -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/spring-book/py4etrics/master?urlpath=tree/6_things_to_note.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                
+            </div>
+        </div>
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id1" class="nav-link">書式について</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#scope" class="nav-link">スコープ（Scope）</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id2" class="nav-link">例１</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id3" class="nav-link">例２</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id4" class="nav-link">教訓</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id5" class="nav-link">浮動小数点型について</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id6" class="nav-link">表記</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id7" class="nav-link">精度</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id8" class="nav-link">変数とオブジェクト</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id9" class="nav-link">変数とオブジェクトの関係</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id10" class="nav-link">オブジェクトとメモリー・アドレス</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id11" class="nav-link">「浅いコピー」と「深いコピー」</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#numpy-views-copy" class="nav-link">NumPy：ビュー（views）とコピー（copy）</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#pandas-views-copy" class="nav-link">Pandas：ビュー（views）とコピー（copy）</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="tips">
+<h1>Tipsと注意点<a class="headerlink" href="#tips" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>書式について<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>コードを書くときに以下を注意すること。</p>
+<ol>
+<li><p>分かりやすい変数名を使う。</p>
+<ul class="simple">
+<li><p>具体的な内容を示す変数名は可読性を高める。例えば、インフレ率を<code class="docutils literal notranslate"><span class="pre">inflation</span></code>、インフレ率の変化を<code class="docutils literal notranslate"><span class="pre">inf_change</span></code>。また、単位を含めるとより分かりやすくなる。例えば、<code class="docutils literal notranslate"><span class="pre">kg</span></code>や<code class="docutils literal notranslate"><span class="pre">percent</span></code>。<code class="docutils literal notranslate"><span class="pre">var1</span></code>や<code class="docutils literal notranslate"><span class="pre">var2</span></code>と書くと、短くて書きやすいが、他の人や数ヶ月後の自分自身が読み返す時に非常に読み難いコードとなる。</p></li>
+</ul>
+</li>
+<li><p>変数や関数の命名規則</p>
+<ul class="simple">
+<li><p>名は小文字とアンダースコア<code class="docutils literal notranslate"><span class="pre">_</span></code>を使う（スネーク・スケール）。</p></li>
+<li><p>例えば、<code class="docutils literal notranslate"><span class="pre">inflation_rate</span></code>と書き、<code class="docutils literal notranslate"><span class="pre">Inflation</span></code>や<code class="docutils literal notranslate"><span class="pre">InflationRate</span></code>は避ける。大文字で始まる変数は、慣例としてクラスと呼ばれるオブジェクトに使う。</p></li>
+</ul>
+</li>
+<li><p>エディット・モードのセルでコメントを入れる。</p>
+<ul class="simple">
+<li><p>例えば、<code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">これはコメントです。</span></code></p></li>
+<li><p>目的：可読性を高める。何を書いているかを確認しながらコードを書くことができる。</p></li>
+<li><p>行頭にに<code class="docutils literal notranslate"><span class="pre">#</span></code>を挿入することをコメント・アウト（commet out）という。</p></li>
+<li><p>（Tip）行頭に<code class="docutils literal notranslate"><span class="pre">#</span></code>を挿入または削除するトグルのショートカット。</p>
+<ul>
+<li><p>Macの場合、トグルしたい行にカーソルを置き<code class="docutils literal notranslate"><span class="pre">Command</span></code>を押したまま<code class="docutils literal notranslate"><span class="pre">/</span></code>を押下する（<code class="docutils literal notranslate"><span class="pre">Cmd+/</span></code>）。複数行をトグルしたい場合は、それらをハイライトし<code class="docutils literal notranslate"><span class="pre">Cmd+/</span></code>。</p></li>
+<li><p>Windowsの場合、トグルしたい行にカーソルを置き<code class="docutils literal notranslate"><span class="pre">Control</span></code>を押したまま<code class="docutils literal notranslate"><span class="pre">/</span></code>を押下する（<code class="docutils literal notranslate"><span class="pre">Ctrl+/</span></code>）。複数行をトグルしたい場合は、それらをハイライトし<code class="docutils literal notranslate"><span class="pre">Ctrl+/</span></code>。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>インデントを駆使して可読性を高める。（以下の例で改行は必要ないかもしれないが、１行が長い場合に役立つ）</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">(</span></code>と<code class="docutils literal notranslate"><span class="pre">)</span></code>の間は改行してもエラーにならない。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_func</span><span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>改行したい箇所に<code class="docutils literal notranslate"><span class="pre">\</span></code>を入れる。（Jupyter Notebookでは<code class="docutils literal notranslate"><span class="pre">{}</span></code>の間に改行を入れてもエラーにならない）</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> \
+           <span class="n">b</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span>  \
+           <span class="n">c</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>スペースや行間を開け読みやすくする。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 悪い例</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="mi">100</span><span class="o">+</span><span class="n">y</span>
+
+<span class="c1"># 良い例</span>
+<span class="k">def</span> <span class="nf">meter_and_centimeter_to_centimer</span><span class="p">(</span><span class="n">meter</span><span class="p">,</span> <span class="n">centimeter</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">meter</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="n">centimeter</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="scope">
+<h2>スコープ（Scope）<a class="headerlink" href="#scope" title="Permalink to this headline">¶</a></h2>
+<p>スコープとは、変数が所属し直接アクセスできるコードの中の「領域」を示す。類似する概念に名前空間（Namespace）もあるが、スコープの情報を記す「表」のことであり、スコープ（Scope）と同義と理解すれば良い。</p>
+<p>ここでは基本的に以下のように理解すれば良いであろう。</p>
+<ol class="simple">
+<li><p>Jupyter Notebookを開始した時点から<code class="docutils literal notranslate"><span class="pre">globalスコープ</span></code>が始まる。</p></li>
+<li><p>関数を定義すると、その関数の範囲内で<code class="docutils literal notranslate"><span class="pre">localスコープ</span></code>が生成される。</p></li>
+<li><p>関数の中で入れ子の関数を定義すると、その入れ子関数の範囲内でより狭い<code class="docutils literal notranslate"><span class="pre">localスコープ</span></code>が生成される。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">globalスコープ</span></code>で定義された変数は、<code class="docutils literal notranslate"><span class="pre">localスコープ</span></code>（入れ子関数のより狭い<code class="docutils literal notranslate"><span class="pre">localスコープ</span></code>も含む）からアクセスできるが、<code class="docutils literal notranslate"><span class="pre">globalスコープ</span></code>から<code class="docutils literal notranslate"><span class="pre">localスコープ</span></code>（入れ子関数のより狭い<code class="docutils literal notranslate"><span class="pre">localスコープ</span></code>も含む）の変数にはアクセスできない。</p></li>
+<li><p>関数内の<code class="docutils literal notranslate"><span class="pre">localスコープ</span></code>で定義された変数は、入れ子関数のより狭い<code class="docutils literal notranslate"><span class="pre">localスコープ</span></code>からアクセスできるが、親関数のスコープから入れ子関数の変数にはアクセスできない。</p></li>
+</ol>
+<div class="section" id="id2">
+<h3>例１<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Kobe University&quot;</span>  <span class="c1"># globalスコープ</span>
+
+<span class="k">def</span> <span class="nf">func_1</span><span class="p">():</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;神戸大学&quot;</span>  <span class="c1"># localスコープ</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Kobe University
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_1</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>神戸大学
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>例２<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_2</span><span class="p">():</span>
+    <span class="n">a_local</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a_local</span><span class="p">)</span>
+
+<span class="n">func_2</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>3
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">globalスコープ</span></code>から<code class="docutils literal notranslate"><span class="pre">a_local</span></code>をアクセスすると次のエラーが発生する。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span>                                 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">9</span><span class="n">efd68c7fc6a</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">a_local</span>
+
+<span class="ne">NameError</span><span class="p">:</span> <span class="n">name</span> <span class="s1">&#39;a_local&#39;</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>教訓<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>関数内で使う変数は関数内で定義する方が意図しない結果につながるリスクを軽減できる。</p>
+<p>次の例を考えよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="k">def</span> <span class="nf">func_3</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">x</span>
+
+<span class="n">func_3</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>12
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>知らずに</strong>以下を設定していたとしよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">1000</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_3</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>1002
+</pre></div>
+</div>
+</div>
+</div>
+<p>このような間違いは関数内で変数を定義することで回避できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_4</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">x</span>
+
+<span class="n">func_4</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>12
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>浮動小数点型について<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h3>表記<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Python</span></code>では指数表現がよく使われる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">5.123e2</span></code><span class="math notranslate nohighlight">\(= 5.123\times 10^{2}\)</span></p>
+<p><code class="docutils literal notranslate"><span class="pre">5.123e-2</span></code><span class="math notranslate nohighlight">\(= 5.123\times 10^{-2}\)</span></p>
+<p>この例で<code class="docutils literal notranslate"><span class="pre">5.123</span></code>の部分は「仮数」（mantissa もしくは significand）と呼ばれる。</p>
+</div>
+<div class="section" id="id7">
+<h3>精度<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p><span class="math notranslate nohighlight">\(1/3\)</span>を考えよう。</p>
+<p><span class="math notranslate nohighlight">\(\dfrac{1}{3}=0.333333333333333333333333333333333333\cdots\cdots\cdots\)</span></p>
+<p>となり永遠に3が続く。コンピュータのメモリの容量は有限であるため、無限に続く3をメモリに保存しすることは不可能である。従って、どこかで切断して<span class="math notranslate nohighlight">\(1/3\)</span>の近似値を保存する必要がある。これと同じようなことをPythonは行っている。10進法の数字を2進法に変換し、計算結果を10進法に変換し表示する。その際、多くの数字は<span class="math notranslate nohighlight">\(1/3\)</span>と同じように近似値となる。その結果、誰でもおかしいと思う結果が発生することになる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">0.3</span> <span class="o">==</span> <span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">0.3</span></code>と<code class="docutils literal notranslate"><span class="pre">0.1</span></code>と表示されているが、実際には近似値で計算している。その近似値を表示すると</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">format</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="s1">&#39;.55f&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;0.2999999999999999888977697537484345957636833190917968750&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>ここで<code class="docutils literal notranslate"><span class="pre">'.55f'</span></code>は小数点以下55桁を表示させる引数。同様に、</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">format</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;.55f&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;0.1000000000000000055511151231257827021181583404541015625&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>また、この問題は値が小さな場合だけではなく、大きい値の場合にも類似する問題がある。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">2.0</span><span class="o">**</span><span class="mi">52</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>4503599627370496.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">2.0</span><span class="o">**</span><span class="mi">52</span> <span class="o">==</span> <span class="mf">2.0</span><span class="o">**</span><span class="mi">52</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<p>この結果は期待どおりであるが、次の例はそうではない。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">2.0</span><span class="o">**</span><span class="mi">53</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>9007199254740992.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">2.0</span><span class="o">**</span><span class="mi">53</span> <span class="o">==</span> <span class="mf">2.0</span><span class="o">**</span><span class="mi">53</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>これは浮動小数点型で正確に表示できる最大の10進数桁が15であるために発生する。従って、浮動小数点型に<code class="docutils literal notranslate"><span class="pre">==</span></code>を使い真偽を確かめるのは<strong>危険</strong>である。</p>
+<p>解決策として<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の<code class="docutils literal notranslate"><span class="pre">isclose()</span></code>関数を使うことができる。この関数は２つの値が十分に近い場合は<code class="docutils literal notranslate"><span class="pre">True</span></code>を返す。では、どれだけ近い場合に<code class="docutils literal notranslate"><span class="pre">True</span></code>を返すのか？詳細は<a class="reference external" href="https://docs.scipy.org/doc/numpy-1.15.0/reference/generated/numpy.isclose.html">マニュアル</a>を参照。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="o">+</span><span class="mf">0.1</span><span class="o">+</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>一方、<code class="docutils literal notranslate"><span class="pre">2.0**53</span></code>の例は桁の制限に達しているため対応不可能である。</p>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>変数とオブジェクト<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h3>変数とオブジェクトの関係<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Python</span></code>では「全てがオブジェクト」と言われるが、ここでのオブジェクトとは<strong>属性</strong>（<strong>データ</strong>（値や性質など）と<strong>メソッド</strong>（変数特有の関数））から構成される集合体（「塊り」）を指す。例えば、数値<code class="docutils literal notranslate"><span class="pre">0.1</span></code>のオブジェクトを考えよう。<code class="docutils literal notranslate"><span class="pre">dir()</span></code>を使うとどのような属性から構成されているか表示される。</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">dir</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;__abs__&#39;,
+ &#39;__add__&#39;,
+ &#39;__bool__&#39;,
+ &#39;__class__&#39;,
+ &#39;__delattr__&#39;,
+ &#39;__dir__&#39;,
+ &#39;__divmod__&#39;,
+ &#39;__doc__&#39;,
+ &#39;__eq__&#39;,
+ &#39;__float__&#39;,
+ &#39;__floordiv__&#39;,
+ &#39;__format__&#39;,
+ &#39;__ge__&#39;,
+ &#39;__getattribute__&#39;,
+ &#39;__getformat__&#39;,
+ &#39;__getnewargs__&#39;,
+ &#39;__gt__&#39;,
+ &#39;__hash__&#39;,
+ &#39;__init__&#39;,
+ &#39;__init_subclass__&#39;,
+ &#39;__int__&#39;,
+ &#39;__le__&#39;,
+ &#39;__lt__&#39;,
+ &#39;__mod__&#39;,
+ &#39;__mul__&#39;,
+ &#39;__ne__&#39;,
+ &#39;__neg__&#39;,
+ &#39;__new__&#39;,
+ &#39;__pos__&#39;,
+ &#39;__pow__&#39;,
+ &#39;__radd__&#39;,
+ &#39;__rdivmod__&#39;,
+ &#39;__reduce__&#39;,
+ &#39;__reduce_ex__&#39;,
+ &#39;__repr__&#39;,
+ &#39;__rfloordiv__&#39;,
+ &#39;__rmod__&#39;,
+ &#39;__rmul__&#39;,
+ &#39;__round__&#39;,
+ &#39;__rpow__&#39;,
+ &#39;__rsub__&#39;,
+ &#39;__rtruediv__&#39;,
+ &#39;__set_format__&#39;,
+ &#39;__setattr__&#39;,
+ &#39;__sizeof__&#39;,
+ &#39;__str__&#39;,
+ &#39;__sub__&#39;,
+ &#39;__subclasshook__&#39;,
+ &#39;__truediv__&#39;,
+ &#39;__trunc__&#39;,
+ &#39;as_integer_ratio&#39;,
+ &#39;conjugate&#39;,
+ &#39;fromhex&#39;,
+ &#39;hex&#39;,
+ &#39;imag&#39;,
+ &#39;is_integer&#39;,
+ &#39;real&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>例えば、</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">real</span></code>は、数値の実数部を示す属性であり、<code class="docutils literal notranslate"><span class="pre">0.1</span></code>の実数数値データである。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as_integer_ratio</span></code>は有理数として表すメソッドであり、<code class="docutils literal notranslate"><span class="pre">（分子、分母）</span></code>のタプルとして返す。</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span><span class="o">.</span><span class="n">as_integer_ratio</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(3602879701896397, 36028797018963968)
+</pre></div>
+</div>
+</div>
+</div>
+<p>上の例では、<code class="docutils literal notranslate"><span class="pre">=</span></code>を使い<code class="docutils literal notranslate"><span class="pre">a</span></code>や<code class="docutils literal notranslate"><span class="pre">x</span></code>などの変数に「代入」していないことに注意しよう。これは変数がなくても<code class="docutils literal notranslate"><span class="pre">0.1</span></code>はオブジェクトとして存在していることを示している。では、変数とオブジェクトにはどのような関係があるのだろう。変数<code class="docutils literal notranslate"><span class="pre">a</span></code>を導入するために次のように書いてみよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">a</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">as_integer_ratio</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.1, (3602879701896397, 36028797018963968))
+</pre></div>
+</div>
+</div>
+</div>
+<p>以前、次の説明をした。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>多くの品物が保管されている大きな倉庫を考えてみよう。管理者はどの品物がどこに保管されているかを記録するための在庫リスト（記録帳やコンピューター・ファイル）を作成し、そこに品物が保管されている棚を示す記号（や番号）を記入しているとしよう。この例では、
+* オブジェクト　→　倉庫の棚に保管されている品物
+* 変数　→　在庫リストに記載されている棚の記号
+
+となる。即ち、変数は品物の実態とは異なる単なる「参照記号」なのである。
+</pre></div>
+</div>
+<p>実は、この考え方は関数の名前とオブジェクトとしての関数の関係にも当てはまるのである。変数とオブジェクトのこのような関係により、関数がメソッドや関数の引数になることが可能となり、関数の返り値にもなり得るのである。</p>
+</div>
+<div class="section" id="id10">
+<h3>オブジェクトとメモリー・アドレス<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>Pythonのオブジェクトをもう少し考えてみよう。オブジェクトはコンピューター内のメモリに保存され、直ぐに計算などに使えるように準備されている。例えば、<code class="docutils literal notranslate"><span class="pre">0.1</span></code>というオブジェクトを生成してみる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">0.1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>コンピューター・メモリーには住所のようにロケーションを示すメモリー・アドレス（以下では「アドレス」と呼ぶ）があり、<code class="docutils literal notranslate"><span class="pre">id()</span></code>関数を使うとそれを表示することができる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>140604742988336
+</pre></div>
+</div>
+</div>
+</div>
+<p>２つのオブジェクトが同一のものかどうかを確認するには、このアドレスを比べれば良いのである。例えば、<code class="docutils literal notranslate"><span class="pre">a</span></code>と同じオブジェクトを示す別の参照記号<code class="docutils literal notranslate"><span class="pre">b</span></code>を生成しよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>140604742988336
+</pre></div>
+</div>
+</div>
+</div>
+<p>アドレスが同じなので同じオブジェクトであることが確認できる。また、アドレスが等しいかどうかは<code class="docutils literal notranslate"><span class="pre">is</span></code>を使って確認することもできる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="ow">is</span> <span class="n">b</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">==</span></code>ではないことに注意しよう。<code class="docutils literal notranslate"><span class="pre">==</span></code>は<code class="docutils literal notranslate"><span class="pre">10</span></code>という値が同じかどうかを確認するだけで、アドレスとは無関係である。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="nb">id</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>140604742988752
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="ow">is</span> <span class="n">a</span><span class="p">,</span> <span class="n">c</span> <span class="o">==</span> <span class="n">a</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(False, True)
+</pre></div>
+</div>
+</div>
+</div>
+<p>整数では<span class="math notranslate nohighlight">\([-5,256]\)</span>以外この結果が成り立つ。<span class="math notranslate nohighlight">\([-5,256]\)</span>は処理速度を最適化するために、Pythonのセッションが始まると同時に自動でメモリーにキャッシュ（保存）されるためアドレスは同じになる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">e</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">d</span> <span class="ow">is</span> <span class="n">e</span><span class="p">,</span> <span class="n">d</span> <span class="o">==</span> <span class="n">e</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(True, True)
+</pre></div>
+</div>
+</div>
+</div>
+<p>次に関数を考えてみよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">func</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>4
+</pre></div>
+</div>
+</div>
+</div>
+<p>この関数のアドレスも<code class="docutils literal notranslate"><span class="pre">id()</span></code>を使い確認できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>140604743049568
+</pre></div>
+</div>
+</div>
+</div>
+<p>＜注意＞</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">id(func())</span></code>とするとエラーが発生する。<code class="docutils literal notranslate"><span class="pre">()</span></code>を付けると「関数を評価する」ためである。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">id(func(2))</span></code>とするとエラーは発生しないが、<code class="docutils literal notranslate"><span class="pre">func(2)</span></code>を評価した結果（即ち、<code class="docutils literal notranslate"><span class="pre">4</span></code>）のアドレスを表示することになる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">func</span></code>は関数の「参照記号」であり、それを引数とすることにより関数のアドレスが表示される。</p></li>
+</ul>
+</div>
+<div class="section" id="id11">
+<h3>「浅いコピー」と「深いコピー」<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>変数とオブジェクトの関係において、オブジェクトは倉庫に保管されている商品、変数は在庫リスト表にある参照番号に対応すると説明した。このような関係により、次のような問題が発生する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">f</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[1, 2, 3]
+</pre></div>
+</div>
+</div>
+</div>
+<p>リスト<code class="docutils literal notranslate"><span class="pre">f</span></code>のコピーである<code class="docutils literal notranslate"><span class="pre">g</span></code>を作成する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">f</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">g</span></code>と<code class="docutils literal notranslate"><span class="pre">f</span></code>は同じオブジェクトであり、<code class="docutils literal notranslate"><span class="pre">is</span></code>で確認できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="ow">is</span> <span class="n">f</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">g</span><span class="p">),</span> <span class="nb">id</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(True, 140604746881536, 140604746881536)
+</pre></div>
+</div>
+</div>
+</div>
+<p>即ち、<code class="docutils literal notranslate"><span class="pre">g</span></code>と<code class="docutils literal notranslate"><span class="pre">f</span></code>は別の参照記号ではあるが同じ品物を指している。ここで、<code class="docutils literal notranslate"><span class="pre">f</span></code>にメソッド<code class="docutils literal notranslate"><span class="pre">append()</span></code>を使って<code class="docutils literal notranslate"><span class="pre">100</span></code>を追加しよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">f</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[1, 2, 3, 100]
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">g</span></code>はどうなっているかというと</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[1, 2, 3, 100]
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">f</span></code>と<code class="docutils literal notranslate"><span class="pre">g</span></code>は同じ品物を指している参照番号なので、このような結果となる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">100</span></code>が追加された後のアドレスを表示してみよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="ow">is</span> <span class="n">g</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">100</span></code>が追加される前のアドレスと同じである。即ち、<code class="docutils literal notranslate"><span class="pre">append()</span></code>は元のオブジェクトを変化させている。このようなことが発生することを念頭に置いて<code class="docutils literal notranslate"><span class="pre">f=g</span></code>のようなコードを書くべきであり、このことを忘れると意図しない結果につながる。このようなリスクを回避するためには、同じ数値のコピーを異なるオブジェクトとして生成する必要がある。そのためにはメソッド<code class="docutils literal notranslate"><span class="pre">.copy()</span></code>を使う。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f_copy</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">f_copy</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[1, 2, 3, 100]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f_copy</span> <span class="ow">is</span> <span class="n">f</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">.copy()</span></code>で生成したコピーは**「浅いコピー」<strong>（shallow copy）と呼ばれる。しかし、浅いコピーの場合でも、リストが二重配列（入れ子）になっている場合は上で説明した同じ問題が発生する。その場合には、標準ライブラリ<code class="docutils literal notranslate"><span class="pre">copy</span></code>の<code class="docutils literal notranslate"><span class="pre">deepcopy</span></code>関数を使い独立したコピーを作ることが可能となる。これを</strong>「深いコピー」**（deep copy）呼ぶ。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="n">f_deep</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">f_deep</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[1, 2, 3, 100]
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>＜以下の場合にリストの浅いコピーが生成される＞</strong></p>
+<ol class="simple">
+<li><p>メソッド<code class="docutils literal notranslate"><span class="pre">.copy()</span></code>によるコピー</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">list()</span></code>関数によるコピー</p></li>
+<li><p>リストのインデクシング（indexing）およびスライシング（slicing）によるコピー</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># list()による浅いコピー</span>
+<span class="n">ff1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">ff1</span><span class="p">,</span> <span class="n">ff1</span> <span class="ow">is</span> <span class="n">f</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>([1, 2, 3, 100], False)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># インデクシング</span>
+<span class="n">ff2</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ff2</span><span class="p">,</span> <span class="n">ff2</span> <span class="ow">is</span> <span class="n">f</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(2, False)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># スライシング</span>
+<span class="n">ff3</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">ff3</span><span class="p">,</span> <span class="n">ff3</span> <span class="ow">is</span> <span class="n">f</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>([2, 3], False)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="numpy-views-copy">
+<h2>NumPy：ビュー（views）とコピー（copy）<a class="headerlink" href="#numpy-views-copy" title="Permalink to this headline">¶</a></h2>
+<p>リストの「浅いコピー」と「深いコピー」の問題は<code class="docutils literal notranslate"><span class="pre">numpy</span></code>にも存在する。しかし、これも<code class="docutils literal notranslate"><span class="pre">np.copy()</span></code>関数や<code class="docutils literal notranslate"><span class="pre">array</span></code>型のメソッド<code class="docutils literal notranslate"><span class="pre">.copy()</span></code>で回避することができる。また類似する問題としてコピー（copy）とビュー（views）の違いがある。以下ではこの問題を説明する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">arr</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([1, 2, 3, 4, 5])
+</pre></div>
+</div>
+</div>
+</div>
+<p>これをスライスして異なる変数を参照記号として使う。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">arr_slice</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">arr_slice</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([2, 3])
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">arr_slice</span></code>の<code class="docutils literal notranslate"><span class="pre">2</span></code>を<code class="docutils literal notranslate"><span class="pre">200</span></code>に入れ替える。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">arr_slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">arr_slice</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([200,   3])
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">arr</span></code>を表示しよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([  1, 200,   3,   4,   5])
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">arr_slice</span></code>を変更したにも関わらず、<code class="docutils literal notranslate"><span class="pre">arr</span></code>も影響を受けている。これは<code class="docutils literal notranslate"><span class="pre">arr_slice</span></code>と<code class="docutils literal notranslate"><span class="pre">arr</span></code>が参照している元のデータが同じために発生する。即ち、<code class="docutils literal notranslate"><span class="pre">arr</span></code>は元のデータ全てを表示し、<code class="docutils literal notranslate"><span class="pre">arr_slice</span></code>は同じデータの一部を表示しているのである。<code class="docutils literal notranslate"><span class="pre">arr_slice</span></code>を<code class="docutils literal notranslate"><span class="pre">arr</span></code>のビュー（views）と呼ぶ。</p>
+<p>＜注意＞</p>
+<p><code class="docutils literal notranslate"><span class="pre">arr[0]</span> <span class="pre">is</span> <span class="pre">arr_slice[1]</span></code>としても<code class="docutils literal notranslate"><span class="pre">False</span></code>となる。リストと異なり、<code class="docutils literal notranslate"><span class="pre">np.array</span></code>ではそれぞれの要素がメモリーに配置されていないため、<code class="docutils literal notranslate"><span class="pre">indexing</span></code>でアクセスする度に結果をメモリーに配置することになる。したがって<code class="docutils literal notranslate"><span class="pre">arr[0]</span></code>でアクセスするとその結果があるアドレスに配置され、続く<code class="docutils literal notranslate"><span class="pre">arr_slice[1]</span></code>は別のアドレスに保存されることになり<code class="docutils literal notranslate"><span class="pre">False</span></code>が返される。</p>
+<hr class="docutils" />
+<p>ではどのような場合に<code class="docutils literal notranslate"><span class="pre">views</span></code>になるのか。残念ながら、複雑な場合わけが必要になり、それを覚え使いこなすにはある程度の慣れが必要だる。従って、<code class="docutils literal notranslate"><span class="pre">views</span></code>をどうしても使わなくてはならない状況を除いては、以下のようにメソッド<code class="docutils literal notranslate"><span class="pre">.copy()</span></code>を使い、コピーを生成して作業することを強く推奨する。<code class="docutils literal notranslate"><span class="pre">.copy()</span></code>は「深いコピー」を生成する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">arr_copy</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">arr_copy</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([200,   3])
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">arr_copy</span></code>の<code class="docutils literal notranslate"><span class="pre">3</span></code>を<code class="docutils literal notranslate"><span class="pre">300</span></code>に入れ替える。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">arr_copy</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">300</span>
+<span class="n">arr_copy</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([200, 300])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([  1, 200,   3,   4,   5])
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">arr</span></code>は影響を受けていない。</p>
+<p>＜コメント＞</p>
+<p><code class="docutils literal notranslate"><span class="pre">views</span></code>の役目はなんなのか、という疑問が生じる。<code class="docutils literal notranslate"><span class="pre">.copy()</span></code>は新たにオブジェクトを生成するが、<code class="docutils literal notranslate"><span class="pre">views</span></code>であれば新たなオブジェクトを生成する必要がない。その分、処理速度を早くすることが可能となるのである。しかし、実証分析で行う「通常」のデータ処理であれば<code class="docutils literal notranslate"><span class="pre">.copy()</span></code>で十分であろう。</p>
+</div>
+<div class="section" id="pandas-views-copy">
+<h2>Pandas：ビュー（views）とコピー（copy）<a class="headerlink" href="#pandas-views-copy" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">numpy</span></code>と同じように<code class="docutils literal notranslate"><span class="pre">pandas</span></code>もビュー（views）とコピー（copy）の問題が存在する。確認するために、次のコードを考えよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">)})</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>a</th>
+      <th>b</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_slice</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,:]</span>
+<span class="n">df_slice</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>a</th>
+      <th>b</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">.iloc[]</span></code>により<code class="docutils literal notranslate"><span class="pre">view</span></code>が生成されている。</p>
+<p>それを確認するために元の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>である<code class="docutils literal notranslate"><span class="pre">df</span></code>の要素を変更する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>a</th>
+      <th>b</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_slice</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>a</th>
+      <th>b</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>ここではスライシングで生成した場合を考えたが、他の場合でも<code class="docutils literal notranslate"><span class="pre">view</span></code>になったり<code class="docutils literal notranslate"><span class="pre">copy</span></code>になったりする。実は、<code class="docutils literal notranslate"><span class="pre">numpy</span></code>と同様に場合わけが複雑だが、<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の場合よりも<code class="docutils literal notranslate"><span class="pre">view</span></code>なのか<code class="docutils literal notranslate"><span class="pre">copy</span></code>なのかの判別が非常に難しい。しかし、<code class="docutils literal notranslate"><span class="pre">pandas</span></code>は<code class="docutils literal notranslate"><span class="pre">views</span></code><strong>かもしれない</strong><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>や<code class="docutils literal notranslate"><span class="pre">Series</span></code>に変更を加えると警告を出す仕組みになっている。<code class="docutils literal notranslate"><span class="pre">df_slice</span></code>を使って説明する。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_slice</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">200</span>
+</pre></div>
+</div>
+<p>とすると次のような警告が出る。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">my_name</span><span class="o">/</span><span class="n">anaconda3</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">py4etrics</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">7</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">ipykernel_launcher</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span> <span class="n">SettingWithCopyWarning</span><span class="p">:</span> 
+<span class="n">A</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">trying</span> <span class="n">to</span> <span class="n">be</span> <span class="nb">set</span> <span class="n">on</span> <span class="n">a</span> <span class="n">copy</span> <span class="n">of</span> <span class="n">a</span> <span class="nb">slice</span> <span class="kn">from</span> <span class="nn">a</span> <span class="n">DataFrame</span>
+
+<span class="n">See</span> <span class="n">the</span> <span class="n">caveats</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">documentation</span><span class="p">:</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">pandas</span><span class="o">.</span><span class="n">pydata</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">pandas</span><span class="o">-</span><span class="n">docs</span><span class="o">/</span><span class="n">stable</span><span class="o">/</span><span class="n">user_guide</span><span class="o">/</span><span class="n">indexing</span><span class="o">.</span><span class="n">html</span><span class="c1">#returning-a-view-versus-a-copy</span>
+  <span class="s2">&quot;&quot;&quot;Entry point for launching an IPython kernel.</span>
+</pre></div>
+</div>
+<p>この警告が出る場合は、<code class="docutils literal notranslate"><span class="pre">views</span></code>の疑いが高い（確定ではない）ので、<code class="docutils literal notranslate"><span class="pre">df</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">.copy()</span></code>を使って「深いコピー」を生成することを薦める。以下の例を考えよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_copy</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,:]</span>
+<span class="n">df_copy</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>a</th>
+      <th>b</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2000</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>a</th>
+      <th>b</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>2000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_copy</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>a</th>
+      <th>b</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_slice</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>a</th>
+      <th>b</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>2000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">df_copy</span></code>は影響を受けていないが、<code class="docutils literal notranslate"><span class="pre">df_slice</span></code>の値は元のデータの変化を反映している。</p>
+</div>
+</div>
+
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="5_SciPy_stats.html" title="previous page">SciPy.stats</a>
+    <a class='right-next' id="next-link" href="part_2.html" title="next page">２. <code class="docutils literal notranslate"><span class="pre">Python</span></code>を使った計量経済分析</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By 春山 鉄源<br/>
+        
+            &copy; Copyright 2020 Tetsugen Haruyama.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-165998213-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>

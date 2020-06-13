@@ -1,0 +1,1598 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# 推論"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from scipy.stats import t, f\n",
+    "import numpy as np\n",
+    "import pandas as pd\n",
+    "from statsmodels.formula.api import ols\n",
+    "import matplotlib.pyplot as plt\n",
+    "import wooldridge"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## 説明：仮説検定"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "仮説検定は以下の手順でおこなう。\n",
+    "1. 母集団のパラメータについて帰無仮説（Null Hypothesis）と対立仮説（Alternative Hypothesis）を設定する。\n",
+    "    * 帰無仮説は棄却するかどうかの判断の対象となる仮説（例えば，$\\hat{\\beta}_1=0$）\n",
+    "    * 対立仮説は帰無仮説に相反する仮説（例えば，$\\hat{\\beta}_1\\neq 0$）\n",
+    "1. 適切な検定統計量を決め，判定するための有意水準を予め決める。\n",
+    "    * 有意水準 ＝ 下で説明する**第一種過誤の確率**\n",
+    "1. 計算した検定統計量の値と有意水準に対応する値を比較することにより，帰無仮説を棄却するかしないかを判断する。２つの可能性しかない。\n",
+    "    * 帰無仮説を棄却する（対立仮説を採択する）。\n",
+    "    * 帰無仮説を棄却できない（対立仮説を採択できない）。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "検定をおこなう際には間違いが発生する。それをまとめたのが次の表である。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "|                        | 帰無仮説は真 | 帰無仮説は偽 |   |\n",
+    "|------------------------|--------------|--------------|---|\n",
+    "| 帰無仮説を棄却できない | 正しい結論   | 第２種過誤   |   |\n",
+    "| 帰無仮説を棄却         | 第１種過誤   | 正しい結論   |   |"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "検定を警察の行動に例えて次のように考えることもできる。\n",
+    "* 帰無仮説 $\\Rightarrow$ 「無罪」\n",
+    "* 帰無仮説の棄却 $\\Rightarrow$ 「逮捕」\n",
+    "* 帰無仮説を棄却しない $\\Rightarrow$ 「逮捕しない」\n",
+    "* 第１種過誤 $\\Rightarrow$「冤罪で逮捕」\n",
+    "* 第２種過誤 $\\Rightarrow$「真犯人を取り逃がす」"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "|                        | 無実は真 | 無実は偽 |\n",
+    "|------------------------|:------------:|:------------:|\n",
+    "| 逮捕しない | 正しい結論  | 取り逃す   |\n",
+    "| 逮捕         | 冤罪  | 正しい結論   |"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "* 統計的優位性とは，帰無仮説が正しい場合，帰無仮説の内容が発生した確率が非常に低い場合を指す。即ち，発生イベントが非常に起こりにくく，偶然のの可能性が非常に高い場合を指す。\n",
+    "* 第一種過誤は，帰無仮説が正しい場合に棄却する場合に発生する。慣例でその確率を$\\alpha$で表す。$\\alpha=0.05$がよく使われるが，これを使う場合，間違って正しい帰無仮説を棄却する確率は最大5%まで許容するという意味になる。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## $t$検定"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "### 説明：$t$値と$p$値"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "新たな仮定を導入する。\n",
+    "\n",
+    "* 仮定６：誤差項は説明変数は独立であり正規分布に従う（誤差項の正規性）\n",
+    "\n",
+    "$$u\\sim N\\left(0,\\sigma^2\\right)$$\n",
+    "\n",
+    "仮定１〜６を**Classical Linear Model (CLM) Assumptions**（CLM仮定）と呼ぶ。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "CLM仮定の下では：\n",
+    "* OLS推定量は正規分布に従う。\n",
+    "\n",
+    "    $$\n",
+    "    \\hat{\\beta}_j\\sim N\\left(\\beta_j,\\text{Var}\\left(\\hat{\\beta}_j\\right)\\right)\n",
+    "    $$\n",
+    "    \n",
+    "* OLS推定量の標準誤差を使い標準化すると以下が成立する。\n",
+    "\n",
+    "    $$\n",
+    "    \\frac{\\hat{\\beta}_j-\\beta_j}{\\text{se}\\left(\\hat{\\beta}_j\\right)}\\sim t_{n-k-1}\n",
+    "    $$\n",
+    "    \n",
+    "    ここで$n-k-1$は自由度であり，$n$は標本の大きさ，$k$は定数項以外の説明変数の数である（定数項がある場合）。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "この関係を使うことによりOLS推定量の検定が可能となる。\n",
+    "\n",
+    "* 帰無仮説：$H_0:\\hat{\\beta}_j=0$\n",
+    "    * $H_0$が正しい場合，$t$統計量は次の分布に従う。\n",
+    "    \n",
+    "        $$\n",
+    "        t_{\\hat{\\beta}_j}\\equiv\\frac{\\hat{\\beta}_j}{\\text{se}\\left(\\hat{\\beta}_j\\right)}\\sim t_{n-k-1}\n",
+    "        $$\n",
+    "        \n",
+    "* 対立仮説と棄却ルール（$\\alpha=$有意水準）：\n",
+    "    * 片側検定１：$H_A:\\hat{\\beta}_j>0$\n",
+    "    \n",
+    "        $$\n",
+    "        t_{\\hat{\\beta}_j}>t_c(\\alpha)>0\\quad\\Rightarrow\\quad H_0\\text{を棄却する}\n",
+    "        $$\n",
+    "        \n",
+    "    * 片側検定２：$H_A:\\hat{\\beta}_j<0$\n",
+    "    \n",
+    "        $$\n",
+    "        t_{\\hat{\\beta}_j}<t_c(\\alpha)<0\\quad\\Rightarrow\\quad H_0\\text{を棄却する}\n",
+    "        $$\n",
+    "        \n",
+    "    * 両側検定：$H_A:\\hat{\\beta}_j\\neq 0$\n",
+    "    \n",
+    "        $$\n",
+    "        \\left|t_{\\hat{\\beta}_j}\\right|>t_c(\\alpha)>0\\quad\\Rightarrow\\quad H_0\\text{を棄却する}\n",
+    "        $$\n",
+    "\n",
+    "\n",
+    "ここで，棄却臨界値$t_c(\\alpha)$は有意水準$\\alpha$に対応する$t$値。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "**＜$p$値＞**\n",
+    "\n",
+    "$p$値は，帰無仮説が正しい場合に帰無仮説を棄却するために必要な最小有意水準である。\n",
+    "\n",
+    "\n",
+    "$p$値を使う場合の検定手順\n",
+    "* 棄却するための有意水準 $\\alpha$を決める（例えば，0.05）\n",
+    "* $p値\\leq \\alpha$の場合，$\\text{H}_0$を棄却"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### $t$値と$p$値の例"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "定数項があり\n",
+    "* 有意水準：$\\alpha=0.05$\n",
+    "* 標本の大きさ：$n=30$\n",
+    "* 説明変数の数（定数項以外）：$k=5$\n",
+    "\n",
+    "の場合を考えよう。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "#### $t$値"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "片側検定１の場合の$t_c(0.05)$は次の値となる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "1.7108820799094275"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "a = 0.05\n",
+    "dof = 30-5-1\n",
+    "t.ppf(1-a, dof)  # t.ppfについてはscipy.statsを参照"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "片側検定２の場合の$t_c(0.05)$は次の値となる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "-1.7108820799094282"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "t.ppf(a, dof)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "両側検定の場合の$t_c(0.05)$は次の値となる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "2.0638985616280205"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "t.ppf(1-a/2, dof)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "#### $p$値"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "片側検定１で$t_{\\hat{\\beta}_j}=1.3$の場合，$p$値は次の値になる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.10297414905105884"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "1-t.cdf(1.3, dof)   # t.cdfについてはscipy.statsを参照"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "片側検定２で$t_{\\hat{\\beta}_j}=-2.1$の場合，$p$値は次の値になる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.02321075109161751"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "t.cdf(-2.1, dof)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "両側検定で$\\left|t_{\\hat{\\beta}_j}\\right|=2.1$の場合，$p$値は次の値になる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.02321075109161752"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "1-t.cdf(2.1, dof)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 回帰分析と$t$検定"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`gpa1`のデータを使った回帰分析を考えよう。 "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {
+    "hidden": true,
+    "tags": [
+     "output_scroll"
+    ]
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "name of dataset: gpa1\n",
+      "no of variables: 29\n",
+      "no of observations: 141\n",
+      "\n",
+      "+----------+--------------------------------+\n",
+      "| variable | label                          |\n",
+      "+----------+--------------------------------+\n",
+      "| age      | in years                       |\n",
+      "| soph     | =1 if sophomore                |\n",
+      "| junior   | =1 if junior                   |\n",
+      "| senior   | =1 if senior                   |\n",
+      "| senior5  | =1 if fifth year senior        |\n",
+      "| male     | =1 if male                     |\n",
+      "| campus   | =1 if live on campus           |\n",
+      "| business | =1 if business major           |\n",
+      "| engineer | =1 if engineering major        |\n",
+      "| colGPA   | MSU GPA                        |\n",
+      "| hsGPA    | high school GPA                |\n",
+      "| ACT      | 'achievement' score            |\n",
+      "| job19    | =1 if job <= 19 hours          |\n",
+      "| job20    | =1 if job >= 20 hours          |\n",
+      "| drive    | =1 if drive to campus          |\n",
+      "| bike     | =1 if bicycle to campus        |\n",
+      "| walk     | =1 if walk to campus           |\n",
+      "| voluntr  | =1 if do volunteer work        |\n",
+      "| PC       | =1 of pers computer at sch     |\n",
+      "| greek    | =1 if fraternity or sorority   |\n",
+      "| car      | =1 if own car                  |\n",
+      "| siblings | =1 if have siblings            |\n",
+      "| bgfriend | =1 if boy- or girlfriend       |\n",
+      "| clubs    | =1 if belong to MSU club       |\n",
+      "| skipped  | avg lectures missed per week   |\n",
+      "| alcohol  | avg # days per week drink alc. |\n",
+      "| gradMI   | =1 if Michigan high school     |\n",
+      "| fathcoll | =1 if father college grad      |\n",
+      "| mothcoll | =1 if mother college grad      |\n",
+      "+----------+--------------------------------+\n",
+      "\n",
+      "Christopher Lemmon, a former MSU undergraduate, collected these data\n",
+      "from a survey he took of MSU students in Fall 1994.\n"
+     ]
+    }
+   ],
+   "source": [
+    "gpa = wooldridge.data('gpa1')\n",
+    "wooldridge.data('gpa1',description=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "このデータセットを使い，次の問題を考える。ミシガン州立大学で学生のGPA（`colGDP`）は以下の変数とどのような関係にあるのか。\n",
+    "* 高校のGPA（`hsGPA`）\n",
+    "* 米国大学進学適性試験（`ACT`）\n",
+    "* 週平均の講義欠席回数（`skipped`）"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "formula_gpa = 'colGPA ~ hsGPA + ACT + skipped'\n",
+    "res_gpa = ols(formula_gpa, data=gpa).fit()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`res_gpa`の属性から$t$値を表示"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Intercept    4.191039\n",
+       "hsGPA        4.396260\n",
+       "ACT          1.393319\n",
+       "skipped     -3.196840\n",
+       "dtype: float64"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "res_gpa.tvalues"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "この$t$値の属性`.values`を使い`array`に変換し絶対値を取り、任意の棄却臨界値と比較することにより両側検定を行う関数を作る。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Intercept     True\n",
+       "hsGPA         True\n",
+       "ACT          False\n",
+       "skipped       True\n",
+       "dtype: bool"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "def significance_check(res, a):\n",
+    "    \"\"\"\n",
+    "    res = statsmodelsによるOLS推定結果\n",
+    "    a = 有意水準\n",
+    "    H0棄却の場合はTrueを返す\n",
+    "    （注意）定数項あり\n",
+    "    \"\"\"\n",
+    "    dof = res.nobs-res.df_model-1\n",
+    "    result = abs(res.tvalues.values) > t.ppf(1-a/2, dof)\n",
+    "    return pd.Series(result, index=res.tvalues.index)\n",
+    "\n",
+    "significance_check(res_gpa, 0.05)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`res_gpa`の属性`pvalues`から$p$値を表示"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Intercept    0.000050\n",
+       "hsGPA        0.000022\n",
+       "ACT          0.165780\n",
+       "skipped      0.001725\n",
+       "dtype: float64"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "res_gpa.pvalues"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "表にまとめたもの。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "==============================================================================\n",
+      "                 coef    std err          t      P>|t|      [0.025      0.975]\n",
+      "------------------------------------------------------------------------------\n",
+      "Intercept      1.3896      0.332      4.191      0.000       0.734       2.045\n",
+      "hsGPA          0.4118      0.094      4.396      0.000       0.227       0.597\n",
+      "ACT            0.0147      0.011      1.393      0.166      -0.006       0.036\n",
+      "skipped       -0.0831      0.026     -3.197      0.002      -0.135      -0.032\n",
+      "==============================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(res_gpa.summary().tables[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "* `coef`: OLS推定量（$\\hat{\\beta}_j$）\n",
+    "* `std err`: OLS推定量の標準誤差（$\\text{se}(\\hat{\\beta}_j)$）\n",
+    "* `t`: $t$値\n",
+    "* `p`: $p$値\n",
+    "* `[0.025 0.975]`: 信頼区間（次の節を参照） \n",
+    "\n",
+    "OLS推定量の標準誤差は属性`.bse`として取得できる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Intercept    0.331554\n",
+       "hsGPA        0.093674\n",
+       "ACT          0.010565\n",
+       "skipped      0.025999\n",
+       "dtype: float64"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "res_gpa.bse"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## 信頼区間"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 信頼区間の計算"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "信頼区間は以下のように定義される。\n",
+    "\n",
+    "$$\n",
+    "\\hat{\\beta}_j\\pm t_c(a)\\cdot se\\left(\\hat{\\beta}_j\\right)\n",
+    "$$\n",
+    "\n",
+    "ここで，$a$は有意水準である。\n",
+    "\n",
+    "**（解釈）**\n",
+    "\n",
+    "標本を取りOLS推定量を計算するというプロセスを100回繰り返した場合（それが可能な場合、それぞれの標本は異なり$\\hat{\\beta}_j$も異なることになる），その内，母集団の（真の）$\\beta_j$の値が信頼区間に入るのは$(1-a)\\times 100$回である（$a=0.05$の場合，95回）。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`gpa`の例を考える。`res_gpa`の属性から信頼区間を所得できる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                  0         1\n",
+      "Intercept  0.733930  2.045178\n",
+      "hsGPA      0.226582  0.597050\n",
+      "ACT       -0.006171  0.035612\n",
+      "skipped   -0.134523 -0.031703\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(res_gpa.conf_int())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "有意水準のオプション`alpha=`を指定することもできる（デフォルトは`0.05`）。有意水準が1％の場合。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                  0         1\n",
+      "Intercept  0.523472  2.255635\n",
+      "hsGPA      0.167121  0.656511\n",
+      "ACT       -0.012877  0.042318\n",
+      "skipped   -0.151026 -0.015200\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(res_gpa.conf_int(alpha=0.01))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "**＜次の２点を留意＞**\n",
+    "* OLS推定値は1つの値を返す「点推定」だが，信頼区間は有意水準に基づく「区間推定」である。両方を確認することが大事である。\n",
+    "* `ACT`の信頼区間を考えよう。100回推定をした場合，母集団の$\\beta_{ACT}$の値は95回この区間に入ることになるが，有意水準が5%でも1%でも`0`が含まれていることに注意。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 信頼区間の図示"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`matplotlib`の`errorbar`を使い図示する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<Figure size 432x288 with 1 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "coef = res_gpa.params  #  推定値\n",
+    "varname = coef.index  # 変数名\n",
+    "ci = res_gpa.conf_int()  # 信頼区間を　ci　に入れる\n",
+    "error = ci.iloc[:,1]-coef  # 信頼区間の幅の半分\n",
+    "\n",
+    "plt.errorbar(x=coef[1:], y=varname[1:], xerr=error[1:], fmt='o',capsize=5)  # 切片以外のエラーバー\n",
+    "plt.axvline(0, color='red')  # 垂直線\n",
+    "pass"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`ACT`の信頼区間に`0`が含まれることが分かる。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## $F$検定"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 説明"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "回帰分析において複数のOLS推定量に何らかの制約が妥当かどうかを調べる際に使うのが$F$検定である。例えば，次の回帰式の場合\n",
+    "\n",
+    "$$\n",
+    "y=\\beta_0+\\beta_1x_1+\\beta_2x_2+\\beta_3x_3+u\n",
+    "$$\n",
+    "\n",
+    "制約式の例として以下が挙げられる。\n",
+    "\n",
+    "$\\beta_1=\\beta_2=\\beta_3=0$\n",
+    "\n",
+    "$\\beta_2=\\beta_3=0$\n",
+    "\n",
+    "$\\beta_2=2\\beta_3$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "* 帰無仮説：$\\text{H}_0$：制約が成立する\n",
+    "* 対立仮説：$\\text{H}_A$：制約は成立しない\n",
+    "\n",
+    "**検定手順**\n",
+    "1. 制約がない回帰式を推定する。\n",
+    "2. 制約がある回帰式を推定する。\n",
+    "3. 次の式に従い$F$値を計算する\n",
+    "\n",
+    "    $$\n",
+    "    F=\\frac{\\left(SSR_1-SSR_0\\right)/q}{SSR_0/(n-k-1)}\n",
+    "    =\\frac{\\left(R_0^2-R_1^2\\right)/q}{\\left(1-R_0^2\\right)/(n-k-1)}\n",
+    "    \\sim F_{n-k-1}^q\n",
+    "    $$\n",
+    "\n",
+    "4. 有意水準に基づく棄却臨界値と比べる（もしくは$p$値を有意水準と比べる）"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "上の式で\n",
+    "* $0$：制約がない変数の添え字\n",
+    "* $1$：制約がある変数の添え字\n",
+    "* $SSR$：残差変動の平方和（Residual Sum of Squares）\n",
+    "* $R^2$：決定係数\n",
+    "* $n$：標本の大きさ\n",
+    "* $k$：定数項以外の説明変数（制約がない回帰式）\n",
+    "* $q$：制約式の数\n",
+    "\n",
+    "名称：\n",
+    "* $q$を「分子の自由度」と呼ぶ\n",
+    "* $n-k-1$を「分母の自由度」と呼ぶ"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "**＜棄却ルール＞**\n",
+    "\n",
+    "$F>F_c(a)$　$\\Rightarrow$　$\\text{H}_0$を棄却\n",
+    "\n",
+    "* $F_c(a)$：棄却臨界値\n",
+    "* $a$：有意水準\n",
+    "\n",
+    "（注意）$F$値は必ず正の値をとる。従って，$t$検定の「片側検定１」のパターンしか存在しない。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "**＜$p$値を使う場合の手順＞**\n",
+    "\n",
+    "* 棄却するための有意水準 $a$を決める（例えば，0.05）\n",
+    "* $p値<a$の場合，$\\text{H}_0$を棄却"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 回帰分析"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "例として米国野球選手（メジャーリーグ）に関するデータ`mlb1`を使う。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {
+    "hidden": true,
+    "tags": [
+     "output_scroll"
+    ]
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "name of dataset: mlb1\n",
+      "no of variables: 47\n",
+      "no of observations: 353\n",
+      "\n",
+      "+----------+----------------------------+\n",
+      "| variable | label                      |\n",
+      "+----------+----------------------------+\n",
+      "| salary   | 1993 season salary         |\n",
+      "| teamsal  | team payroll               |\n",
+      "| nl       | =1 if national league      |\n",
+      "| years    | years in major leagues     |\n",
+      "| games    | career games played        |\n",
+      "| atbats   | career at bats             |\n",
+      "| runs     | career runs scored         |\n",
+      "| hits     | career hits                |\n",
+      "| doubles  | career doubles             |\n",
+      "| triples  | career triples             |\n",
+      "| hruns    | career home runs           |\n",
+      "| rbis     | career runs batted in      |\n",
+      "| bavg     | career batting average     |\n",
+      "| bb       | career walks               |\n",
+      "| so       | career strike outs         |\n",
+      "| sbases   | career stolen bases        |\n",
+      "| fldperc  | career fielding perc       |\n",
+      "| frstbase | = 1 if first base          |\n",
+      "| scndbase | =1 if second base          |\n",
+      "| shrtstop | =1 if shortstop            |\n",
+      "| thrdbase | =1 if third base           |\n",
+      "| outfield | =1 if outfield             |\n",
+      "| catcher  | =1 if catcher              |\n",
+      "| yrsallst | years as all-star          |\n",
+      "| hispan   | =1 if hispanic             |\n",
+      "| black    | =1 if black                |\n",
+      "| whitepop | white pop. in city         |\n",
+      "| blackpop | black pop. in city         |\n",
+      "| hisppop  | hispanic pop. in city      |\n",
+      "| pcinc    | city per capita income     |\n",
+      "| gamesyr  | games per year in league   |\n",
+      "| hrunsyr  | home runs per year         |\n",
+      "| atbatsyr | at bats per year           |\n",
+      "| allstar  | perc. of years an all-star |\n",
+      "| slugavg  | career slugging average    |\n",
+      "| rbisyr   | rbis per year              |\n",
+      "| sbasesyr | stolen bases per year      |\n",
+      "| runsyr   | runs scored per year       |\n",
+      "| percwhte | percent white in city      |\n",
+      "| percblck | percent black in city      |\n",
+      "| perchisp | percent hispanic in city   |\n",
+      "| blckpb   | black*percblck             |\n",
+      "| hispph   | hispan*perchisp            |\n",
+      "| whtepw   | white*percwhte             |\n",
+      "| blckph   | black*perchisp             |\n",
+      "| hisppb   | hispan*percblck            |\n",
+      "| lsalary  | log(salary)                |\n",
+      "+----------+----------------------------+\n",
+      "\n",
+      "Collected by G. Mark Holmes, a former MSU undergraduate, for a term\n",
+      "project. The salary data were obtained from the New York Times, April\n",
+      "11, 1993. The baseball statistics are from The Baseball Encyclopedia,\n",
+      "9th edition, and the city population figures are from the Statistical\n",
+      "Abstract of the United States.\n"
+     ]
+    }
+   ],
+   "source": [
+    "mlb1 = wooldridge.data('mlb1')\n",
+    "wooldridge.data('mlb1',description=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "このデータセットを使い，年俸（`salary`）が次の変数とどう関係するかを考える。\n",
+    "* メジャーリーグでプレイした期間（年）（`years`）\n",
+    "* 年間出場回数（`gamesyr`）\n",
+    "* 通算打率（`bavg`）\n",
+    "* １シーズンあたりホームラン数（`hrunsyr`）\n",
+    "* １シーズンあたり打点（`rbinsyr`）\n",
+    "\n",
+    "まず制約がない回帰分析をおこなう。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "formula_0 = 'np.log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr'\n",
+    "res_0 = ols(formula_0, data=mlb1).fit()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "#### 例１"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "**＜制約＞**\n",
+    "`bavg`, `hrunsyr`, `rbisyr`は`salary`に影響を与えない。\n",
+    "\n",
+    "$H_0:\\;\\beta_{\\text{bavg}}=\\beta_{\\text{hrunsyr}}=\\beta_{\\text{rbisyr}}=0$\n",
+    "\n",
+    "$H_A:\\;H_0は成立しない$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "制約がある場合の回帰分析"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "formula_1 = 'np.log(salary) ~ years + gamesyr'\n",
+    "res_1 = ols(formula_1, data=mlb1).fit()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "##### 手計算"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "$F$値の計算"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "9.55025352195195"
+      ]
+     },
+     "execution_count": 21,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# 決定係数\n",
+    "r2_0 = res_0.rsquared\n",
+    "r2_1 = res_1.rsquared\n",
+    "\n",
+    "n = res_0.nobs  # 標本の大きさ\n",
+    "k = res_0.df_model  # 定数項以外の説明変数の数\n",
+    "q = 3  # 制約式の数\n",
+    "\n",
+    "# F値:\n",
+    "F = (r2_0 - r2_1) / (1 - r2_0) * (n - k - 1) / q\n",
+    "F"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "$a=0.05$の場合の棄却臨界値"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "2.6306414891156504"
+      ]
+     },
+     "execution_count": 22,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "a = 0.05\n",
+    "f.ppf(1-a, dfn=q, dfd=n-k-1)   # f.ppfについてはscipy.statsを参照"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "従って$H_0$を棄却する。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "$p$値"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "4.473708139829391e-06"
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "1-f.cdf(F, dfn=q, dfd=n-k-1)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "##### メソッドを使う"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "制約式の定義"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "hypotheses = 'bavg = 0, hrunsyr = 0, rbisyr = 0'"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`res_0`のメソッド`f_test`を使い、引数に上のセルで定義した制約式`hypotheses`を使う。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "res_f_test = res_0.f_test(hypotheses)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`res_f_test`に`F`検定の結果を割り当てたが、そのメソッド`summary()`を使い結果を表示する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'<F test: F=array([[9.55025352]]), p=4.4737081398389455e-06, df_denom=347, df_num=3>'"
+      ]
+     },
+     "execution_count": 26,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "res_f_test.summary()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "上の結果にある記号の意味：\n",
+    "* `F`：$F$値\n",
+    "* `p`：$p$値\n",
+    "* `df_denom`：分母の自由度\n",
+    "* `df_num`：分子の自由度\n",
+    "\n",
+    "手計算と同じ結果である。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "#### 例２"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "**＜制約＞**\n",
+    "定数項以外の全ての説明変数は`salary`に影響を与えない。\n",
+    "\n",
+    "$H_0:\\;\\beta_{\\text{years}}=\\beta_{\\text{gamesyr}}=\\beta_{\\text{bavg}}=\\beta_{\\text{hrunsyr}}=\\beta_{\\text{rbisyr}}=0$\n",
+    "\n",
+    "$H_A:\\;H_0は成立しない$\n",
+    "\n",
+    "この場合，`res_0`の`fvalue`から$F$値，`f_pvalue`から$p$値を属性として取得できる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "117.0603200852145"
+      ]
+     },
+     "execution_count": 27,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "res_0.fvalue"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "2.9380422932206435e-72"
+      ]
+     },
+     "execution_count": 28,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "res_0.f_pvalue"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "例２の結果はOLS推定結果のメソッド`summary()`で表示される表にも`F-statistic`と`Prob(F-statistic)`として示されている。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                            OLS Regression Results                            \n",
+      "==============================================================================\n",
+      "Dep. Variable:         np.log(salary)   R-squared:                       0.628\n",
+      "Model:                            OLS   Adj. R-squared:                  0.622\n",
+      "Method:                 Least Squares   F-statistic:                     117.1\n",
+      "Date:                Thu, 04 Jun 2020   Prob (F-statistic):           2.94e-72\n",
+      "Time:                        21:54:10   Log-Likelihood:                -385.11\n",
+      "No. Observations:                 353   AIC:                             782.2\n",
+      "Df Residuals:                     347   BIC:                             805.4\n",
+      "Df Model:                           5                                         \n",
+      "Covariance Type:            nonrobust                                         \n",
+      "==============================================================================\n",
+      "                 coef    std err          t      P>|t|      [0.025      0.975]\n",
+      "------------------------------------------------------------------------------\n",
+      "Intercept     11.1924      0.289     38.752      0.000      10.624      11.760\n",
+      "years          0.0689      0.012      5.684      0.000       0.045       0.093\n",
+      "gamesyr        0.0126      0.003      4.742      0.000       0.007       0.018\n",
+      "bavg           0.0010      0.001      0.887      0.376      -0.001       0.003\n",
+      "hrunsyr        0.0144      0.016      0.899      0.369      -0.017       0.046\n",
+      "rbisyr         0.0108      0.007      1.500      0.134      -0.003       0.025\n",
+      "==============================================================================\n",
+      "Omnibus:                        6.816   Durbin-Watson:                   1.265\n",
+      "Prob(Omnibus):                  0.033   Jarque-Bera (JB):               10.197\n",
+      "Skew:                          -0.068   Prob(JB):                      0.00610\n",
+      "Kurtosis:                       3.821   Cond. No.                     2.09e+03\n",
+      "==============================================================================\n",
+      "\n",
+      "Warnings:\n",
+      "[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.\n",
+      "[2] The condition number is large, 2.09e+03. This might indicate that there are\n",
+      "strong multicollinearity or other numerical problems.\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(res_0.summary())"
+   ]
+  }
+ ],
+ "metadata": {
+  "celltoolbar": "Tags",
+  "kernel_info": {
+   "name": "py4etrics"
+  },
+  "kernelspec": {
+   "display_name": "latest",
+   "language": "python",
+   "name": "latest"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.2"
+  },
+  "nteract": {
+   "version": "0.15.0"
+  },
+  "toc": {
+   "base_numbering": 1,
+   "nav_menu": {},
+   "number_sections": true,
+   "sideBar": true,
+   "skip_h1_title": false,
+   "title_cell": "Table of Contents",
+   "title_sidebar": "Contents",
+   "toc_cell": false,
+   "toc_position": {},
+   "toc_section_display": true,
+   "toc_window_display": false
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

@@ -1,0 +1,6152 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pandas &#8212; Pythonで学ぶ入門計量経済学</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/mystnb.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="canonical" href="https://spring-book.github.io/book_etrics/3_Pandas.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Matplotlib" href="4_Matplotlib.html" />
+    <link rel="prev" title="NumPy" href="2_NumPy.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="https://spring-book.github.io/book_etrics/3_Pandas.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Pandas" />
+<meta property="og:description" content="Pandas  PandasはNumPyのarrayのようにデータを扱うパッケージだが，Pandas特有のデータ構造を提供し複雑なデータを扱いやすくしている。例えば，行列にはラベルを使うことにより，インデックス番号だけではなくラベル名（例えば，GDP）を使って操作することが可能となる。PandasにはDataFrame" />
+
+
+<meta name="twitter:card" content="summary">
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Pythonで学ぶ入門計量経済学</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="active">
+    <a href="part_1.html">１. Pythonの基礎</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="0_Preparations.html">ツールのインストールと説明</a>
+    </li>
+    <li class="">
+      <a href="1_Python_Basics.html">Pythonの基礎</a>
+    </li>
+    <li class="">
+      <a href="2_NumPy.html">NumPy</a>
+    </li>
+    <li class="active">
+      <a href="">Pandas</a>
+    </li>
+    <li class="">
+      <a href="4_Matplotlib.html">Matplotlib</a>
+    </li>
+    <li class="">
+      <a href="5_SciPy_stats.html">SciPy.stats</a>
+    </li>
+    <li class="">
+      <a href="6_things_to_note.html">Tipsと注意点</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="part_2.html">２. Pythonを使った計量経済分析</a>
+  </li>
+  <li class="">
+    <a href="part_3.html">３. 番外編</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  <a  href="https://github.com/spring-book/py4etrics">&#128200;&#127891;&#128202;</a><!-- Default Statcounter code for Py4etrics https://spring-book.github.io/py4etrics/ --> <script type="text/javascript"> var sc_project=12339954; var sc_invisible=1; var sc_security="45ab8946"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12339954/0/45ab8946/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code -->
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="_sources/3_Pandas.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Source interaction buttons -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/spring-book/py4etrics/master?urlpath=tree/3_Pandas.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                
+            </div>
+        </div>
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id1" class="nav-link">データの読み込みとデータのチェック</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#dataframe" class="nav-link">DataFrameの構成要素</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id2" class="nav-link">要素の抽出</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#loc" class="nav-link">.loc[,]（ラベル使用）</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#iloc" class="nav-link">.iloc[]（インデックス使用）</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id3" class="nav-link">[]で列の選択（ラベル使用）</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id4" class="nav-link">ある条件の下で行の抽出</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id5" class="nav-link">１つの条件の場合</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#gdp100" class="nav-link">例１：GDPが100未満の行の抽出</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#ida" class="nav-link">例２：idがaの行を抽出</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id6" class="nav-link">複数条件の場合</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id7" class="nav-link">例３</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id8" class="nav-link">例４</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id9" class="nav-link">例５</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#query" class="nav-link">query()</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id10" class="nav-link">例１の場合：</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id11" class="nav-link">例２の場合</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id12" class="nav-link">例３の場合</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id13" class="nav-link">例４の場合</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id14" class="nav-link">例５の場合</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id15" class="nav-link">列と行の追加と削除</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id16" class="nav-link">列の追加 [ ]</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id17" class="nav-link">列の追加 .loc[,]</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id18" class="nav-link">列の削除 [ ]</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#drop" class="nav-link">列の削除 drop()</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id19" class="nav-link">行の追加 .loc[,]</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id20" class="nav-link">行の削除 drop()</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id21" class="nav-link">欠損値の扱い</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id22" class="nav-link">欠損値の確認</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id23" class="nav-link">欠損値がある行の削除</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id24" class="nav-link">並び替え</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id25" class="nav-link">DataFrameの結合</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#merge" class="nav-link">横結合：merge()</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id26" class="nav-link">縦結合</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id27" class="nav-link">その他</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id28" class="nav-link">インデックスを振り直す</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id29" class="nav-link">列のラベルの変更</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id30" class="nav-link">列の並び替え</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id31" class="nav-link">アルファベット順</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id32" class="nav-link">順番を指定する</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h5">
+            <a href="#id33" class="nav-link">方法１</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h5">
+            <a href="#id34" class="nav-link">方法２</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h5">
+            <a href="#id35" class="nav-link">方法３</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h5">
+            <a href="#id36" class="nav-link">方法３の応用</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+            </ul>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="pandas">
+<h1>Pandas<a class="headerlink" href="#pandas" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">Pandas</span></code>は<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>の<code class="docutils literal notranslate"><span class="pre">array</span></code>のようにデータを扱うパッケージだが，Pandas特有のデータ構造を提供し複雑なデータを扱いやすくしている。例えば，行列にはラベルを使うことにより，インデックス番号だけではなくラベル名（例えば，GDP）を使って操作することが可能となる。Pandasには<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>（データフレーム）と<code class="docutils literal notranslate"><span class="pre">Series</span></code>（シリーズ）と呼ばれるオブジェクトがある。前者はエクセルのスプレッド・シートをイメージすれば良いだろう。後者は，スプレッド・シートから１つの行または列を取り出したようなデータと思えば良い。また，<code class="docutils literal notranslate"><span class="pre">Pandas</span></code>は<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>に基づいているため，ベクトル演算（ブロードキャスティング）の機能が使える。</p>
+<p>ここで説明できない他の使い方については<a class="reference external" href="https://github.com/ysdyt/pandas_tutorial">このサイト</a>と<a class="reference external" href="https://note.nkmk.me/python-pandas-post-summary/">このサイト</a>が参考になる。</p>
+<p>通常<code class="docutils literal notranslate"><span class="pre">pd</span></code>という名前で読み込む。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>データの読み込みとデータのチェック<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>様々なデータを読み込むことが可能だが，ここでは<code class="docutils literal notranslate"><span class="pre">read_csv()</span></code>関数を使ってインターネット上の<code class="docutils literal notranslate"><span class="pre">.csv</span></code>ファイルを読み込む。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># url の設定</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/Haruyama-KobeU/Haruyama-KobeU.github.io/master/data/data1.csv&#39;</span>
+
+<span class="c1"># 読み込み</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">df</span></code>全体を表示させる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2000</td>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2001</td>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2002</td>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2003</td>
+      <td>100</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2004</td>
+      <td>110</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2005</td>
+      <td>115</td>
+      <td>55.0</td>
+      <td>60.0</td>
+      <td>14</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2006</td>
+      <td>113</td>
+      <td>50.0</td>
+      <td>63.0</td>
+      <td>15</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2007</td>
+      <td>118</td>
+      <td>53.0</td>
+      <td>65.0</td>
+      <td>17</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2008</td>
+      <td>119</td>
+      <td>60.0</td>
+      <td>59.0</td>
+      <td>18</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2009</td>
+      <td>200</td>
+      <td>62.0</td>
+      <td>NaN</td>
+      <td>20</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2010</td>
+      <td>210</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>行ラベルがインデックス（番号）のままなので，列<code class="docutils literal notranslate"><span class="pre">year</span></code>を行ラベルに設定する。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">set_index()</span></code>：選択された列を行ラベルにするメソッド</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>100</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>110</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2005</th>
+      <td>115</td>
+      <td>55.0</td>
+      <td>60.0</td>
+      <td>14</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2006</th>
+      <td>113</td>
+      <td>50.0</td>
+      <td>63.0</td>
+      <td>15</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2007</th>
+      <td>118</td>
+      <td>53.0</td>
+      <td>65.0</td>
+      <td>17</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>119</td>
+      <td>60.0</td>
+      <td>59.0</td>
+      <td>18</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2009</th>
+      <td>200</td>
+      <td>62.0</td>
+      <td>NaN</td>
+      <td>20</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>210</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">df.set_index('year')</span></code>は直接<code class="docutils literal notranslate"><span class="pre">df</span></code>に影響を与えない。単に，書き換えるとどうなるかを表示している。ここでは<code class="docutils literal notranslate"><span class="pre">df</span></code>に再度割り当てることにより<code class="docutils literal notranslate"><span class="pre">df</span></code>自体を上書きしている。</p></li>
+<li><p>出力にある<code class="docutils literal notranslate"><span class="pre">NaN</span></code>（Not a Number）は欠損値を示す。</p></li>
+<li><p>行ラベルに<code class="docutils literal notranslate"><span class="pre">year</span></code>という列名が残るが，それを消すにはメソッド<code class="docutils literal notranslate"><span class="pre">.rename_axis('')</span></code>を使う。ここで<code class="docutils literal notranslate"><span class="pre">''</span></code>は空の文字列である。</p></li>
+</ul>
+</div>
+<p>行数が大きい場合（例えば，10000），全てを表示してもあまり意味がない。そこでよく使うメソッドに最初や最後の数行だけを表示すものがある。</p>
+<p><code class="docutils literal notranslate"><span class="pre">df</span></code>の最初の５行を表示させる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>100</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>110</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>引数に3を指定すると最初の3行のみ表示される。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>b</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>最後の5行を表示させる。引数に整数を入れて表示行数を指定することも可能。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2006</th>
+      <td>113</td>
+      <td>50.0</td>
+      <td>63.0</td>
+      <td>15</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2007</th>
+      <td>118</td>
+      <td>53.0</td>
+      <td>65.0</td>
+      <td>17</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>119</td>
+      <td>60.0</td>
+      <td>59.0</td>
+      <td>18</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2009</th>
+      <td>200</td>
+      <td>62.0</td>
+      <td>NaN</td>
+      <td>20</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>210</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">df</span></code>の情報を確認する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Int64Index: 11 entries, 2000 to 2010
+Data columns (total 5 columns):
+ #   Column  Non-Null Count  Dtype  
+---  ------  --------------  -----  
+ 0   gdp     11 non-null     int64  
+ 1   inv     10 non-null     float64
+ 2   con     9 non-null      float64
+ 3   pop     11 non-null     int64  
+ 4   id      11 non-null     object 
+dtypes: float64(2), int64(2), object(1)
+memory usage: 528.0+ bytes
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>説明</strong>：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;class</span> <span class="pre">'pandas.core.frame.DataFrame'&gt;</span></code></p>
+<ul>
+<li><p>クラス名</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type(1)</span></code>とすると<code class="docutils literal notranslate"><span class="pre">int</span></code>というデータ型が表示するが，これはクラス名でもある。<code class="docutils literal notranslate"><span class="pre">print(type(1))</span></code>とすると<code class="docutils literal notranslate"><span class="pre">&lt;class</span> <span class="pre">'int'&gt;</span></code>と表示される。</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Int64Index:</span> <span class="pre">11</span> <span class="pre">entries,</span> <span class="pre">2000</span> <span class="pre">to</span> <span class="pre">2010</span></code></p>
+<ul>
+<li><p>行のインデックスの情報</p></li>
+<li><p>データ型は<code class="docutils literal notranslate"><span class="pre">Int64</span></code>(整数）（データ型には<code class="docutils literal notranslate"><span class="pre">64</span></code>や<code class="docutils literal notranslate"><span class="pre">32</span></code>という数字がついている場合がある。それらは数字をコンピュータのメモリに記憶させる際，何ビット必要かを示している。より重要なのは<code class="docutils literal notranslate"><span class="pre">Int</span></code>（整数）の部分である。）</p></li>
+<li><p>11個のデータで2000から2010</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Data</span> <span class="pre">columns</span> <span class="pre">(total</span> <span class="pre">5</span> <span class="pre">columns):</span></code></p>
+<ul>
+<li><p>データ列の数（5つ）</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gdp</span>&#160; <span class="pre">11</span> <span class="pre">non-null</span> <span class="pre">int64</span></code></p>
+<ul>
+<li><p>データ型は<code class="docutils literal notranslate"><span class="pre">int64</span></code></p></li>
+<li><p>11のデータがあり，欠損値なし（<code class="docutils literal notranslate"><span class="pre">non-null</span></code>とは欠損値ではないデータ）</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">inv</span>&#160; <span class="pre">10</span> <span class="pre">non-null</span> <span class="pre">float64</span></code></p>
+<ul>
+<li><p>データ型は<code class="docutils literal notranslate"><span class="pre">float64</span></code></p></li>
+<li><p>10のデータがあり，欠損値数は1（＝11-10）</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">con</span>&#160; <span class="pre">9</span> <span class="pre">non-null</span> <span class="pre">float64</span></code></p>
+<ul>
+<li><p>データ型は<code class="docutils literal notranslate"><span class="pre">float64</span></code></p></li>
+<li><p>9のデータがあり，欠損値数は2（＝11-9）</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pop</span>&#160; <span class="pre">11</span> <span class="pre">non-null</span> <span class="pre">int64</span></code></p>
+<ul>
+<li><p>データ型は<code class="docutils literal notranslate"><span class="pre">int64</span></code></p></li>
+<li><p>11のデータがあり，欠損値数なし</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">id</span>&#160;&#160; <span class="pre">11</span> <span class="pre">non-null</span> <span class="pre">object</span></code></p>
+<ul>
+<li><p>データ型は<code class="docutils literal notranslate"><span class="pre">object</span></code>（文字列などの場合）</p></li>
+<li><p>11のデータがあり，欠損値数なし</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dtypes:</span> <span class="pre">float64(2),</span> <span class="pre">int64(2),</span> <span class="pre">object(1)</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">df</span></code>の列にどのようなのデータ型かを示す</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span></code>と<code class="docutils literal notranslate"><span class="pre">int64</span></code>が2列つずつ，文字列は１列</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">memory</span> <span class="pre">usage:</span> <span class="pre">528.0+</span> <span class="pre">bytes</span></code></p>
+<ul>
+<li><p>メモリー使用量は約528.0バイト</p></li>
+</ul>
+</li>
+</ul>
+<p>データを読み込んだら必ず<code class="docutils literal notranslate"><span class="pre">info()</span></code>を使って欠損値の数や列のデータ型を確認すること。</p>
+<p>また，データの統計的な特徴は次のメソッドでチェックできる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>11.000000</td>
+      <td>10.000000</td>
+      <td>9.000000</td>
+      <td>11.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>124.818182</td>
+      <td>41.500000</td>
+      <td>67.777778</td>
+      <td>14.090909</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>40.715644</td>
+      <td>16.473885</td>
+      <td>6.666667</td>
+      <td>4.482288</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>93.000000</td>
+      <td>20.000000</td>
+      <td>59.000000</td>
+      <td>8.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>100.000000</td>
+      <td>26.250000</td>
+      <td>63.000000</td>
+      <td>10.500000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>113.000000</td>
+      <td>44.500000</td>
+      <td>70.000000</td>
+      <td>14.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>118.500000</td>
+      <td>54.500000</td>
+      <td>71.000000</td>
+      <td>17.500000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>210.000000</td>
+      <td>62.000000</td>
+      <td>80.000000</td>
+      <td>21.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">count</span></code>：観測値の数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mean</span></code>：平均</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">std</span></code>：標準偏差</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min</span></code>：最小値</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max</span></code>：最大値</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">25%</span></code>：第１四分位数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">50%</span></code>：第２四分位数（中央値）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">75%</span></code>：第３四分位数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max</span></code>：最大値</p></li>
+</ul>
+<p>次のデータ属性を使って<code class="docutils literal notranslate"><span class="pre">df</span></code>の行と列の長さを確認することができる。返値はタプルで，<code class="docutils literal notranslate"><span class="pre">(行の数，列の数)</span></code>と解釈する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(11, 5)
+</pre></div>
+</div>
+</div>
+</div>
+<p>返値はタプルなので，行数は以下で取得できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>11
+</pre></div>
+</div>
+</div>
+</div>
+<p>以下でも行数を示すことができる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>11
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="dataframe">
+<h2>DataFrameの構成要素<a class="headerlink" href="#dataframe" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>には様々な属性があるが，ここでは以下の３点について説明する。</p>
+<ul class="simple">
+<li><p>データ（<code class="docutils literal notranslate"><span class="pre">df.values</span></code>）</p></li>
+<li><p>列ラベル（<code class="docutils literal notranslate"><span class="pre">df.columns</span></code>）</p></li>
+<li><p>行ラベル（<code class="docutils literal notranslate"><span class="pre">df.index</span></code>）</p></li>
+</ul>
+<p>まずデータ自体を抽出する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([[100, 20.0, 80.0, 8, &#39;a&#39;],
+       [95, 25.0, 70.0, 9, &#39;b&#39;],
+       [93, 21.0, 72.0, 10, &#39;a&#39;],
+       [100, 30.0, 70.0, 11, &#39;b&#39;],
+       [110, 39.0, 71.0, 12, &#39;a&#39;],
+       [115, 55.0, 60.0, 14, &#39;b&#39;],
+       [113, 50.0, 63.0, 15, &#39;a&#39;],
+       [118, 53.0, 65.0, 17, &#39;b&#39;],
+       [119, 60.0, 59.0, 18, &#39;a&#39;],
+       [200, 62.0, nan, 20, &#39;b&#39;],
+       [210, nan, nan, 21, &#39;a&#39;]], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>numpy.ndarray
+</pre></div>
+</div>
+</div>
+</div>
+<p>これで分かることは，メインのデータの部分は<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>の<code class="docutils literal notranslate"><span class="pre">ndarray</span></code>（<code class="docutils literal notranslate"><span class="pre">n</span></code>次元<code class="docutils literal notranslate"><span class="pre">array</span></code>）であることが分かる。即ち，<code class="docutils literal notranslate"><span class="pre">Pandas</span></code>は<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>に基づいて構築されており，データ値の計算などは<code class="docutils literal notranslate"><span class="pre">array</span></code>が裏で動いているということである。また行と列のラベルを追加し，より直感的に使えるように拡張しているのである。</p>
+<p>次に列ラベルを取り出してみる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Index([&#39;gdp&#39;, &#39;inv&#39;, &#39;con&#39;, &#39;pop&#39;, &#39;id&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">dtype='object'</span></code>から列ラベルに使われているデータ型（<code class="docutils literal notranslate"><span class="pre">dtype</span></code>）はオブジェクト型（<code class="docutils literal notranslate"><span class="pre">object</span></code>）だとわかる。</p>
+<ul class="simple">
+<li><p>オブジェクト型とは文字型を含む「その他」のデータ型と理解すれば良いだろう。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dtype='object'</span></code>と<code class="docutils literal notranslate"><span class="pre">dtype=object</span></code>は同じ意味。</p></li>
+</ul>
+<p>列ラベル自体のクラスは次のコードで調べることができる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>pandas.core.indexes.base.Index
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">dir()</span></code>もしくは<code class="docutils literal notranslate"><span class="pre">see()</span></code>で調べると多くのメソッドや属性が確認できるが，その中に<code class="docutils literal notranslate"><span class="pre">.tolist()</span></code>が含まれており，これを使うことにより列ラベルをリストに変換することができる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">df_columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;gdp&#39;, &#39;inv&#39;, &#39;con&#39;, &#39;pop&#39;, &#39;id&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>行ラベルについても同じことができる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Int64Index([2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010], dtype=&#39;int64&#39;, name=&#39;year&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>行ラベルのデータ型<code class="docutils literal notranslate"><span class="pre">dtype</span></code>は整数である<code class="docutils literal notranslate"><span class="pre">int64</span></code>。列<code class="docutils literal notranslate"><span class="pre">year</span></code>を行ラベルに指定したため，<code class="docutils literal notranslate"><span class="pre">name='year'</span></code>はその列ラベルを表示している。行ラベルのデータ型（クラス）は</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>pandas.core.indexes.numeric.Int64Index
+</pre></div>
+</div>
+</div>
+</div>
+<p>であり，ラベルをリストとして抽出することもできる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_index</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">df_index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>要素の抽出<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">NumPy</span></code>の<code class="docutils literal notranslate"><span class="pre">array</span></code>の場合，<code class="docutils literal notranslate"><span class="pre">[,]</span></code>を使い要素を抽出した。<code class="docutils literal notranslate"><span class="pre">Pandas</span></code>の場合，様々な抽出方法があるが，覚えやすく少しでも間違いの可能性を減らすために，そして可読性向上のために<code class="docutils literal notranslate"><span class="pre">array</span></code>に対応する以下の２つの方法を使うことにする。</p>
+<ul class="simple">
+<li><p>ラベルを使う方法：<code class="docutils literal notranslate"><span class="pre">.loc[,]</span></code></p></li>
+<li><p>インデックスを使う方法：<code class="docutils literal notranslate"><span class="pre">.iloc[,]</span></code>（これは<code class="docutils literal notranslate"><span class="pre">array</span></code>の<code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">]</span></code>と同じと考えて良い）</p></li>
+</ul>
+<p>１つ目の<code class="docutils literal notranslate"><span class="pre">loc</span></code>はラベルのlocationと覚えよう。２つ目はの<code class="docutils literal notranslate"><span class="pre">iloc</span></code>の<code class="docutils literal notranslate"><span class="pre">i</span></code>はインデックス（index）の<code class="docutils literal notranslate"><span class="pre">i</span></code>であり，index locationという意味である。使い方は<code class="docutils literal notranslate"><span class="pre">array</span></code>の場合と基本的に同じである。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">,</span></code>の左は行，右は列を表す。</p></li>
+<li><p>行または列を連続して選択する（slicing）場合は<code class="docutils literal notranslate"><span class="pre">:</span></code>を使う。（<code class="docutils literal notranslate"><span class="pre">start:end</span></code>）</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">:</span></code>の左右を省略する場合は，「全て」という意味になる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:</span></code>の左を省略すると「最初から」という意味になる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:</span></code>の右を省略すると「最後まで」という意味になる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.loc[,]</span></code>の場合，<code class="docutils literal notranslate"><span class="pre">end</span></code>を含む。（要注意！）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.iloc[,]</span></code>の場合，<code class="docutils literal notranslate"><span class="pre">end</span></code>は含まず，その１つ前のインデックスまでが含まれる。</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">,</span></code>の右に書く<code class="docutils literal notranslate"><span class="pre">:</span></code>は省略可能であるが省略しないことを推奨する。</p></li>
+</ul>
+<p>「特例」として<code class="docutils literal notranslate"><span class="pre">.loc[,]</span></code>と<code class="docutils literal notranslate"><span class="pre">.iloc[,]</span></code>以外に</p>
+<ul class="simple">
+<li><p>ラベルと<code class="docutils literal notranslate"><span class="pre">[]</span></code>だけを使い列を選択する方法</p></li>
+</ul>
+<p>も説明する。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">.loc[,]</span></code>の場合，<code class="docutils literal notranslate"><span class="pre">end</span></code>を含む。（要注意！）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.iloc[,]</span></code>の場合，<code class="docutils literal notranslate"><span class="pre">end</span></code>は含まず，その１つ前のインデックスまでが含まれる。</p></li>
+</ul>
+</div>
+<div class="section" id="loc">
+<h3><code class="docutils literal notranslate"><span class="pre">.loc[,]</span></code>（ラベル使用）<a class="headerlink" href="#loc" title="Permalink to this headline">¶</a></h3>
+<p><strong>１つの行を<code class="docutils literal notranslate"><span class="pre">Series</span></code>として抽出</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2005</span><span class="p">,:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>gdp    115
+inv     55
+con     60
+pop     14
+id       b
+Name: 2005, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>１つの行を<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>として抽出</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="mi">2005</span><span class="p">],:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2005</th>
+      <td>115</td>
+      <td>55.0</td>
+      <td>60.0</td>
+      <td>14</td>
+      <td>b</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>複数行を抽出</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="mi">2005</span><span class="p">,</span> <span class="mi">2010</span><span class="p">],:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2005</th>
+      <td>115</td>
+      <td>55.0</td>
+      <td>60.0</td>
+      <td>14</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>210</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>複数行を連続抽出（slicing）</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2005</span><span class="p">:</span><span class="mi">2008</span><span class="p">,:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2005</th>
+      <td>115</td>
+      <td>55.0</td>
+      <td>60.0</td>
+      <td>14</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2006</th>
+      <td>113</td>
+      <td>50.0</td>
+      <td>63.0</td>
+      <td>15</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2007</th>
+      <td>118</td>
+      <td>53.0</td>
+      <td>65.0</td>
+      <td>17</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>119</td>
+      <td>60.0</td>
+      <td>59.0</td>
+      <td>18</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>１つの列を<code class="docutils literal notranslate"><span class="pre">Series</span></code>として抽出</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;gdp&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>year
+2000    100
+2001     95
+2002     93
+2003    100
+2004    110
+2005    115
+2006    113
+2007    118
+2008    119
+2009    200
+2010    210
+Name: gdp, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>複数列を抽出</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span><span class="s1">&#39;pop&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>pop</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>100</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>95</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>93</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>100</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>110</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>2005</th>
+      <td>115</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>2006</th>
+      <td>113</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>2007</th>
+      <td>118</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>119</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>2009</th>
+      <td>200</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>210</td>
+      <td>21</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>複数列を連続抽出（slicing）</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;inv&#39;</span><span class="p">:</span><span class="s1">&#39;pop&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>2005</th>
+      <td>55.0</td>
+      <td>60.0</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>2006</th>
+      <td>50.0</td>
+      <td>63.0</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>2007</th>
+      <td>53.0</td>
+      <td>65.0</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>60.0</td>
+      <td>59.0</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>2009</th>
+      <td>62.0</td>
+      <td>NaN</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="iloc">
+<h3><code class="docutils literal notranslate"><span class="pre">.iloc[]</span></code>（インデックス使用）<a class="headerlink" href="#iloc" title="Permalink to this headline">¶</a></h3>
+<p><strong>１つの行を<code class="docutils literal notranslate"><span class="pre">Series</span></code>として抽出</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>gdp    95
+inv    25
+con    70
+pop     9
+id      b
+Name: 2001, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>複数行を抽出</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">],:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2001</th>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>110</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>複数行を連続抽出（slicing）</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">,:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2001</th>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>100</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11</td>
+      <td>b</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>１つの列を<code class="docutils literal notranslate"><span class="pre">Series</span></code>として抽出</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>year
+2000    20.0
+2001    25.0
+2002    21.0
+2003    30.0
+2004    39.0
+2005    55.0
+2006    50.0
+2007    53.0
+2008    60.0
+2009    62.0
+2010     NaN
+Name: inv, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>１つの列を<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>として抽出</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,[</span><span class="mi">1</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>inv</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>20.0</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>21.0</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>30.0</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>39.0</td>
+    </tr>
+    <tr>
+      <th>2005</th>
+      <td>55.0</td>
+    </tr>
+    <tr>
+      <th>2006</th>
+      <td>50.0</td>
+    </tr>
+    <tr>
+      <th>2007</th>
+      <td>53.0</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>60.0</td>
+    </tr>
+    <tr>
+      <th>2009</th>
+      <td>62.0</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>複数列を選択</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>inv</th>
+      <th>pop</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>20.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>25.0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>21.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>30.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>39.0</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>2005</th>
+      <td>55.0</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>2006</th>
+      <td>50.0</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>2007</th>
+      <td>53.0</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>60.0</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>2009</th>
+      <td>62.0</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>NaN</td>
+      <td>21</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>複数列を連続抽出（slicing）</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>inv</th>
+      <th>con</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>20.0</td>
+      <td>80.0</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>25.0</td>
+      <td>70.0</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>21.0</td>
+      <td>72.0</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>30.0</td>
+      <td>70.0</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>39.0</td>
+      <td>71.0</td>
+    </tr>
+    <tr>
+      <th>2005</th>
+      <td>55.0</td>
+      <td>60.0</td>
+    </tr>
+    <tr>
+      <th>2006</th>
+      <td>50.0</td>
+      <td>63.0</td>
+    </tr>
+    <tr>
+      <th>2007</th>
+      <td>53.0</td>
+      <td>65.0</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>60.0</td>
+      <td>59.0</td>
+    </tr>
+    <tr>
+      <th>2009</th>
+      <td>62.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3><code class="docutils literal notranslate"><span class="pre">[]</span></code>で列の選択（ラベル使用）<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p><strong>１つの列を<code class="docutils literal notranslate"><span class="pre">Series</span></code>として抽出</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>year
+2000    100
+2001     95
+2002     93
+2003    100
+2004    110
+2005    115
+2006    113
+2007    118
+2008    119
+2009    200
+2010    210
+Name: gdp, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>１つの列を<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>として抽出</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;gdp&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>95</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>93</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>110</td>
+    </tr>
+    <tr>
+      <th>2005</th>
+      <td>115</td>
+    </tr>
+    <tr>
+      <th>2006</th>
+      <td>113</td>
+    </tr>
+    <tr>
+      <th>2007</th>
+      <td>118</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>119</td>
+    </tr>
+    <tr>
+      <th>2009</th>
+      <td>200</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>210</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>複数列を選択</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span><span class="s1">&#39;pop&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>pop</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>100</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>95</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>93</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>100</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>110</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>2005</th>
+      <td>115</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>2006</th>
+      <td>113</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>2007</th>
+      <td>118</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>119</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>2009</th>
+      <td>200</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>210</td>
+      <td>21</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>ある条件の下で行の抽出<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h3>１つの条件の場合<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="gdp100">
+<h4>例１：GDPが100未満の行の抽出<a class="headerlink" href="#gdp100" title="Permalink to this headline">¶</a></h4>
+<p>まず条件を作る。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">100</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>year
+2000    False
+2001     True
+2002     True
+2003    False
+2004    False
+2005    False
+2006    False
+2007    False
+2008    False
+2009    False
+2010    False
+Name: gdp, dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<p>この条件では，GDPが100未満の行は<code class="docutils literal notranslate"><span class="pre">True</span></code>，以上の行は<code class="docutils literal notranslate"><span class="pre">False</span></code>となる。この条件を<code class="docutils literal notranslate"><span class="pre">cond</span></code>というの変数に割り当てる。<code class="docutils literal notranslate"><span class="pre">()</span></code>を省いても良いが，ある方が分かりやすいだろう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cond</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">cond</span></code>を<code class="docutils literal notranslate"><span class="pre">.loc[,]</span></code>の引数とすることにより，<code class="docutils literal notranslate"><span class="pre">True</span></code>の行だけを抽出できる。（注意：<code class="docutils literal notranslate"><span class="pre">cond</span></code>を使って<strong>行</strong>を抽出しようとしているので<code class="docutils literal notranslate"><span class="pre">,</span></code>の左側に書く。）</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cond</span><span class="p">,:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2001</th>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>この条件の下で<span class="math notranslate nohighlight">\(inv\)</span>だけを抽出したい場合</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">df.loc[cond,'inv']</span></code></p></li>
+</ul>
+<p>とする。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>以下のように抽出を連続ですることも可能だが，避けるように！</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">df.loc[cond,:]['inv']</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df.loc[cond,:].loc[:,'inv']</span></code></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="ida">
+<h4>例２：<code class="docutils literal notranslate"><span class="pre">id</span></code>が<code class="docutils literal notranslate"><span class="pre">a</span></code>の行を抽出<a class="headerlink" href="#ida" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cond</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cond</span><span class="p">,:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>110</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2006</th>
+      <td>113</td>
+      <td>50.0</td>
+      <td>63.0</td>
+      <td>15</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>119</td>
+      <td>60.0</td>
+      <td>59.0</td>
+      <td>18</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>210</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>複数条件の場合<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h4>例３<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<p>以下の条件の<strong>両方</strong>が満たされる場合：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gdp</span></code>が100以上</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">inv</span></code>が30以下</p></li>
+</ul>
+<p>それぞれの条件を作成する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cond1</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">cond2</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;inv&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>２つの条件が同時に満たされる条件を作成する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cond</span> <span class="o">=</span> <span class="p">(</span><span class="n">cond1</span> <span class="o">&amp;</span> <span class="n">cond2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">cond</span></code>を引数に使い行を抽出する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cond</span><span class="p">,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>100</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11</td>
+      <td>b</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h4>例４<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<p>以下の条件の<strong>どちらか</strong>が満たされる場合：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gdp</span></code>は200以上</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">con</span></code>は60以下</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cond1</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">cond2</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;con&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">cond</span> <span class="o">=</span> <span class="p">(</span><span class="n">cond1</span> <span class="o">|</span> <span class="n">cond2</span><span class="p">)</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cond</span><span class="p">,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2005</th>
+      <td>115</td>
+      <td>55.0</td>
+      <td>60.0</td>
+      <td>14</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>119</td>
+      <td>60.0</td>
+      <td>59.0</td>
+      <td>18</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2009</th>
+      <td>200</td>
+      <td>62.0</td>
+      <td>NaN</td>
+      <td>20</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>210</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h4>例５<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<p>以下の条件の<strong>どちらか</strong>が満たされ</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gdp</span></code>は200以上</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">con</span></code>は60以下</p></li>
+</ul>
+<p>かつ以下の条件も<strong>同時に</strong>満たされる場合：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">id</span></code>が<code class="docutils literal notranslate"><span class="pre">a</span></code>と等しい</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cond1</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">cond2</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;con&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">cond3</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">cond</span> <span class="o">=</span> <span class="p">((</span><span class="n">cond1</span> <span class="o">|</span> <span class="n">cond2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">cond3</span><span class="p">)</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cond</span><span class="p">,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2008</th>
+      <td>119</td>
+      <td>60.0</td>
+      <td>59.0</td>
+      <td>18</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>210</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="query">
+<h3><code class="docutils literal notranslate"><span class="pre">query()</span></code><a class="headerlink" href="#query" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">query()</span></code>というメソッドでは文字列を使い行の抽出コードを書くことができる。これにより直感的なコード書くことが可能である。</p>
+<div class="section" id="id10">
+<h4>例１の場合：<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;gdp &lt; 100&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2001</th>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id11">
+<h4>例２の場合<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;id == &quot;a&quot;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>110</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2006</th>
+      <td>113</td>
+      <td>50.0</td>
+      <td>63.0</td>
+      <td>15</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>119</td>
+      <td>60.0</td>
+      <td>59.0</td>
+      <td>18</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>210</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id12">
+<h4>例３の場合<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;(gdp &gt;= 100) &amp; (inv &lt;= 30)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>100</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11</td>
+      <td>b</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id13">
+<h4>例４の場合<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;(gdp &gt;= 200) | (con &lt;= 60)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2005</th>
+      <td>115</td>
+      <td>55.0</td>
+      <td>60.0</td>
+      <td>14</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>119</td>
+      <td>60.0</td>
+      <td>59.0</td>
+      <td>18</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2009</th>
+      <td>200</td>
+      <td>62.0</td>
+      <td>NaN</td>
+      <td>20</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>210</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id14">
+<h4>例５の場合<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;(gdp &gt;= 200 | con &lt;= 60) &amp; (id == &quot;a&quot;)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2008</th>
+      <td>119</td>
+      <td>60.0</td>
+      <td>59.0</td>
+      <td>18</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>210</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code class="docutils literal notranslate"><span class="pre">df</span></code>にない変数で条件を設定する場合<code class="docutils literal notranslate"><span class="pre">&#64;</span></code>が必要になる。例えば，変数<code class="docutils literal notranslate"><span class="pre">z</span></code>という変数があるとしよう。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="mi">100</span>
+</pre></div>
+</div>
+<p>変数<code class="docutils literal notranslate"><span class="pre">z</span></code>の値に基づいて行の抽出をする場合は次のようにする。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;gdp &lt; @z&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><span class="pasted-inline"><span class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2001</th>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></span></span></p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id15">
+<h2>列と行の追加と削除<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id16">
+<h3>列の追加 <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">]</span></code><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">[]</span></code>は列の抽出に使うことができるが，追加にも使える。定数を設定すると自動的に行数分作成することができる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Intercept&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+      <th>Intercept</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+      <td>a</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>b</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>既存の列から新たな列を作成する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># １人当たりGDPの計算</span>
+<span class="n">gdp_pc</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;pop&#39;</span><span class="p">]</span>
+
+<span class="c1"># GDPpc を追加</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;gdp_pc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdp_pc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+      <th>Intercept</th>
+      <th>gdp_pc</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+      <td>a</td>
+      <td>1</td>
+      <td>12.500000</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>b</td>
+      <td>1</td>
+      <td>10.555556</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id17">
+<h3>列の追加 <code class="docutils literal notranslate"><span class="pre">.loc[,]</span></code><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>行と列の抽出に使ったが，追加にも使える。定数を設定すると自動的に行数分作成することができる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;2pop&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;pop&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id18">
+<h3>列の削除 <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">]</span></code><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">del</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;2pop&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="drop">
+<h3>列の削除 <code class="docutils literal notranslate"><span class="pre">drop()</span></code><a class="headerlink" href="#drop" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>オプション<code class="docutils literal notranslate"><span class="pre">axis=</span></code>の値を<code class="docutils literal notranslate"><span class="pre">columns</span></code>の代わりに<code class="docutils literal notranslate"><span class="pre">１</span></code>でも可</p></li>
+<li><p>コピーを作るだけなので，元のdfを書き換えたい場合は以下のどちらかが必要</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">df</span></code>に代入する</p></li>
+<li><p>オプション<code class="docutils literal notranslate"><span class="pre">inplace=True</span></code>（デフォルトは<code class="docutils literal notranslate"><span class="pre">False</span></code>）を追加する。</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Intercept&#39;</span><span class="p">,</span><span class="s1">&#39;gdp_pc&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
+
+<span class="c1"># df.drop(&#39;Intercept&#39;, axis=&#39;columns&#39;, inplace=True)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id19">
+<h3>行の追加 <code class="docutils literal notranslate"><span class="pre">.loc[,]</span></code><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p>行と列の抽出に使ったが，行の追加にも使える。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2011</span><span class="p">,:]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">215</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2009</th>
+      <td>200.0</td>
+      <td>62.0</td>
+      <td>NaN</td>
+      <td>20.0</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>210.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21.0</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2011</th>
+      <td>215.0</td>
+      <td>100.0</td>
+      <td>115.0</td>
+      <td>22.0</td>
+      <td>b</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id20">
+<h3>行の削除 <code class="docutils literal notranslate"><span class="pre">drop()</span></code><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>オプション<code class="docutils literal notranslate"><span class="pre">axis=</span></code>の値を<code class="docutils literal notranslate"><span class="pre">rows</span></code>の代わりに<code class="docutils literal notranslate"><span class="pre">0</span></code>でも可</p></li>
+<li><p>コピーを作るだけなので，元のdfを書き換えたい場合は以下のどちらかが必要</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">df</span></code>に代入する</p></li>
+<li><p>オプション<code class="docutils literal notranslate"><span class="pre">inplace=True</span></code>（デフォルトは<code class="docutils literal notranslate"><span class="pre">False</span></code>）を追加する。</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="mi">2011</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;rows&#39;</span><span class="p">)</span>
+
+<span class="c1"># df.drop(2011, axis=0, inplace=True)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id21">
+<h2>欠損値の扱い<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Pandas</span></code>では欠損値は<code class="docutils literal notranslate"><span class="pre">NaN</span></code>と表示されるが，<code class="docutils literal notranslate"><span class="pre">na</span></code>もしくは<code class="docutils literal notranslate"><span class="pre">null</span></code>と呼んだりもする。</p>
+<div class="section" id="id22">
+<h3>欠損値の確認<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<p>欠損値があるかどうかの確認は，<code class="docutils literal notranslate"><span class="pre">df.info()</span></code>でもできるが，以下のメソッドを組み合わせることでも可能である。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">isna()</span></code>：それぞれの要素について<code class="docutils literal notranslate"><span class="pre">NaN</span></code>の場合<code class="docutils literal notranslate"><span class="pre">True</span></code>を，そうでない場合は<code class="docutils literal notranslate"><span class="pre">False</span></code>を返す。（<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の全ての要素が<code class="docutils literal notranslate"><span class="pre">True/False</span></code>となる。）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sum(axis='rows')</span></code>：<code class="docutils literal notranslate"><span class="pre">df</span></code>の上から下に<strong>行</strong>（rows）を縦断して，それぞれの列の中にある<code class="docutils literal notranslate"><span class="pre">True</span></code>数える。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">rows</span></code>は複数！（<code class="docutils literal notranslate"><span class="pre">0</span></code>でも可）</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sum(axis='columns')</span></code>：<code class="docutils literal notranslate"><span class="pre">df</span></code>の左から右に<strong>列</strong>（columns）を横断して，それぞれの行の中にある<code class="docutils literal notranslate"><span class="pre">True</span></code>を数える。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">columns</span></code>は複数！（<code class="docutils literal notranslate"><span class="pre">1</span></code>でも可）</p></li>
+</ul>
+</li>
+</ul>
+<p>（注意）<code class="docutils literal notranslate"><span class="pre">sum()</span></code>の<code class="docutils literal notranslate"><span class="pre">axis</span></code>は「行を縦断」か「列を横断」かを指定する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;rows&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>gdp    0
+inv    1
+con    2
+pop    0
+id     0
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">inv</span></code>と<code class="docutils literal notranslate"><span class="pre">con</span></code>に<code class="docutils literal notranslate"><span class="pre">NaN</span></code>があることがわかる。</p>
+<hr class="docutils" />
+<p><code class="docutils literal notranslate"><span class="pre">NaN</span></code>がある行を抽出する場合はメソッド<code class="docutils literal notranslate"><span class="pre">any()</span></code>が役に立つ。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">any(axis='rows')</span></code>：<code class="docutils literal notranslate"><span class="pre">df</span></code>の上から下に行（<code class="docutils literal notranslate"><span class="pre">rows</span></code>）を縦断して，それぞれの列の中で一つ以上<code class="docutils literal notranslate"><span class="pre">True</span></code>がある場合には<code class="docutils literal notranslate"><span class="pre">True</span></code>を，一つもない場合は<code class="docutils literal notranslate"><span class="pre">False</span></code>を返す。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">rows</span></code>は複数！（0でも可）</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">any(axis='columns')</span></code>：dfの左から右に列（<code class="docutils literal notranslate"><span class="pre">columns</span></code>）を横断して，それぞれの行の中で一つ以上<code class="docutils literal notranslate"><span class="pre">True</span></code>がある場合には<code class="docutils literal notranslate"><span class="pre">True</span></code>を，一つもない場合は<code class="docutils literal notranslate"><span class="pre">False</span></code>を返す。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">columns</span></code>は複数！（1でも可）</p></li>
+</ul>
+</li>
+</ul>
+<p>（注意）<code class="docutils literal notranslate"><span class="pre">any()</span></code>の<code class="docutils literal notranslate"><span class="pre">axis</span></code>は「行を縦断」か「列を横断」かを指定する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">filter</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">filter</span><span class="p">,:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2009</th>
+      <td>200.0</td>
+      <td>62.0</td>
+      <td>NaN</td>
+      <td>20.0</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>210.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21.0</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>これで<code class="docutils literal notranslate"><span class="pre">NaN</span></code>がある行を抽出することができる。</p>
+</div>
+<div class="section" id="id23">
+<h3>欠損値がある行の削除<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<p>欠損値がある全ての行を削除する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>100.0</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8.0</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>95.0</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9.0</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>93.0</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10.0</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>100.0</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11.0</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>110.0</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12.0</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2005</th>
+      <td>115.0</td>
+      <td>55.0</td>
+      <td>60.0</td>
+      <td>14.0</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2006</th>
+      <td>113.0</td>
+      <td>50.0</td>
+      <td>63.0</td>
+      <td>15.0</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2007</th>
+      <td>118.0</td>
+      <td>53.0</td>
+      <td>65.0</td>
+      <td>17.0</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>119.0</td>
+      <td>60.0</td>
+      <td>59.0</td>
+      <td>18.0</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>このメソッドは，欠損値を削除するとどうなるかを示すだけであり<code class="docutils literal notranslate"><span class="pre">df</span></code>自体は影響は受けない。<code class="docutils literal notranslate"><span class="pre">df</span></code>自体から<code class="docutils literal notranslate"><span class="pre">NaN</span></code>がある行を削除する場合は<code class="docutils literal notranslate"><span class="pre">inplace=True</span></code>のオプション（デフォルトでは<code class="docutils literal notranslate"><span class="pre">False</span></code>になっている）を加えて</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>とするか，削除後の<code class="docutils literal notranslate"><span class="pre">df</span></code>を<code class="docutils literal notranslate"><span class="pre">df</span></code>自体に代入する。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>ある列で<code class="docutils literal notranslate"><span class="pre">NaN</span></code>がある場合のみ行を削除する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;inv&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>100.0</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8.0</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>95.0</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9.0</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>93.0</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10.0</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>100.0</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11.0</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>110.0</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12.0</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2005</th>
+      <td>115.0</td>
+      <td>55.0</td>
+      <td>60.0</td>
+      <td>14.0</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2006</th>
+      <td>113.0</td>
+      <td>50.0</td>
+      <td>63.0</td>
+      <td>15.0</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2007</th>
+      <td>118.0</td>
+      <td>53.0</td>
+      <td>65.0</td>
+      <td>17.0</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>119.0</td>
+      <td>60.0</td>
+      <td>59.0</td>
+      <td>18.0</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2009</th>
+      <td>200.0</td>
+      <td>62.0</td>
+      <td>NaN</td>
+      <td>20.0</td>
+      <td>b</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>（注意）オプション<code class="docutils literal notranslate"><span class="pre">subset=</span></code>には削除する列が１つであってもリスト<code class="docutils literal notranslate"><span class="pre">[]</span></code>で指定する。</p>
+</div>
+</div>
+<div class="section" id="id24">
+<h2>並び替え<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">df</span></code>を<code class="docutils literal notranslate"><span class="pre">gdp</span></code>の昇順に並び替える。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;gdp&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2002</th>
+      <td>93.0</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10.0</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>95.0</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9.0</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2000</th>
+      <td>100.0</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8.0</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>100.0</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11.0</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>110.0</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12.0</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>降順の場合</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2010</th>
+      <td>210.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21.0</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2009</th>
+      <td>200.0</td>
+      <td>62.0</td>
+      <td>NaN</td>
+      <td>20.0</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>119.0</td>
+      <td>60.0</td>
+      <td>59.0</td>
+      <td>18.0</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2007</th>
+      <td>118.0</td>
+      <td>53.0</td>
+      <td>65.0</td>
+      <td>17.0</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2005</th>
+      <td>115.0</td>
+      <td>55.0</td>
+      <td>60.0</td>
+      <td>14.0</td>
+      <td>b</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>複数の列を指定する場合</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;gdp&#39;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;True&#39;</span><span class="p">,</span><span class="s1">&#39;False&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2002</th>
+      <td>93.0</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10.0</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2000</th>
+      <td>100.0</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8.0</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>110.0</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12.0</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2006</th>
+      <td>113.0</td>
+      <td>50.0</td>
+      <td>63.0</td>
+      <td>15.0</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>119.0</td>
+      <td>60.0</td>
+      <td>59.0</td>
+      <td>18.0</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>ここでは<code class="docutils literal notranslate"><span class="pre">id</span></code>に従って先に並び替えられ，その後に<code class="docutils literal notranslate"><span class="pre">gdp</span></code>に従って並び替えられている。<code class="docutils literal notranslate"><span class="pre">ascending</span></code>は昇順（<code class="docutils literal notranslate"><span class="pre">True</span></code>）か降順（<code class="docutils literal notranslate"><span class="pre">False</span></code>）かを指定する引数であり，<code class="docutils literal notranslate"><span class="pre">['id','gdp']</span></code>と<code class="docutils literal notranslate"><span class="pre">ascending=['True','False']</span></code>の順番が対応している。</p>
+</div>
+<div class="section" id="id25">
+<h2>DataFrameの結合<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/Haruyama-KobeU/Haruyama-KobeU.github.io/master/data/&#39;</span>
+<span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="s1">&#39;data1.csv&#39;</span><span class="p">)</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="s1">&#39;data2.csv&#39;</span><span class="p">)</span>
+<span class="n">df3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="s1">&#39;data3.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2000</td>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2001</td>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2002</td>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2003</td>
+      <td>100</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2004</td>
+      <td>110</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2005</td>
+      <td>115</td>
+      <td>55.0</td>
+      <td>60.0</td>
+      <td>14</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2006</td>
+      <td>113</td>
+      <td>50.0</td>
+      <td>63.0</td>
+      <td>15</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2007</td>
+      <td>118</td>
+      <td>53.0</td>
+      <td>65.0</td>
+      <td>17</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2008</td>
+      <td>119</td>
+      <td>60.0</td>
+      <td>59.0</td>
+      <td>18</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2009</td>
+      <td>200</td>
+      <td>62.0</td>
+      <td>NaN</td>
+      <td>20</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2010</td>
+      <td>210</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>gnp</th>
+      <th>id2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1995</td>
+      <td>101</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1996</td>
+      <td>97</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1997</td>
+      <td>96</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2000</td>
+      <td>103</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2001</td>
+      <td>103</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2002</td>
+      <td>102</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2003</td>
+      <td>105</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2004</td>
+      <td>110</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df3</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2011</td>
+      <td>212</td>
+      <td>70</td>
+      <td>142</td>
+      <td>22</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2012</td>
+      <td>215</td>
+      <td>72</td>
+      <td>143</td>
+      <td>23</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2015</td>
+      <td>220</td>
+      <td>80</td>
+      <td>140</td>
+      <td>24</td>
+      <td>b</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="section" id="merge">
+<h3>横結合：<code class="docutils literal notranslate"><span class="pre">merge()</span></code><a class="headerlink" href="#merge" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">merge()</span></code>以外にも結合に使える関数はあるが，ここでは<code class="docutils literal notranslate"><span class="pre">merge()</span></code>のみを考える。</p>
+<p><code class="docutils literal notranslate"><span class="pre">df1</span></code>を「左」，<code class="docutils literal notranslate"><span class="pre">df2</span></code>を「右」に横結合する。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">on</span></code>はどの列を基準にして結合するかを指定（ここでは「基準列」呼ぼう）</p>
+<ul>
+<li><p>例えば，<code class="docutils literal notranslate"><span class="pre">df1</span></code>と<code class="docutils literal notranslate"><span class="pre">df2</span></code>の両方に<code class="docutils literal notranslate"><span class="pre">year</span></code>の列がある場合，<code class="docutils literal notranslate"><span class="pre">on='year'</span></code>とすると列<code class="docutils literal notranslate"><span class="pre">year</span></code>が基準列となる。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">df1</span></code>と<code class="docutils literal notranslate"><span class="pre">df2</span></code>の別々の列を指定する場合は<code class="docutils literal notranslate"><span class="pre">left_index=</span></code>と<code class="docutils literal notranslate"><span class="pre">right_index=</span></code>を使う。</p></li>
+</ul>
+</li>
+<li><p>基準列に基づいて残す行を決める（<code class="docutils literal notranslate"><span class="pre">how</span></code>で説明する）</p></li>
+<li><p>基準列にある要素の順番が合ってなくても，自動でマッチさせる。</p></li>
+<li><p>複数指定も可</p></li>
+<li><p>デフォルトは<code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">how</span></code>は<code class="docutils literal notranslate"><span class="pre">on</span></code>で指定した基準列に基づいてどのように結合するかを指定</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">inner</span></code>：<code class="docutils literal notranslate"><span class="pre">df1</span></code>と<code class="docutils literal notranslate"><span class="pre">df2</span></code>の両方の基準列ある行だけを残す（デフォルト）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">left</span></code>：<code class="docutils literal notranslate"><span class="pre">df1</span></code>の行は全て残し，<code class="docutils literal notranslate"><span class="pre">df2</span></code>にマッチする行がない場合は<code class="docutils literal notranslate"><span class="pre">NaN</span></code>を入れる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">right</span></code>：<code class="docutils literal notranslate"><span class="pre">df2</span></code>の行は全て残し，<code class="docutils literal notranslate"><span class="pre">df1</span></code>にマッチする行がない場合は<code class="docutils literal notranslate"><span class="pre">NaN</span></code>を入れる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">outer</span></code>：<code class="docutils literal notranslate"><span class="pre">df1</span></code>と<code class="docutils literal notranslate"><span class="pre">df2</span></code>の両方の行を残し，マッチする行がない場合は<code class="docutils literal notranslate"><span class="pre">NaN</span></code>を入れる。</p></li>
+</ul>
+</li>
+</ul>
+<p>（コメント）
+この他に様々な引数があるので<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.merge.html">このサイト</a>を参照。例えば，場合によっては次の引数を使う必要があるかも知れないので確認しよう。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">left_index</span></code>と<code class="docutils literal notranslate"><span class="pre">right_index</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">suffixes</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+      <th>gnp</th>
+      <th>id2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2000</td>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+      <td>a</td>
+      <td>103</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2001</td>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>b</td>
+      <td>103</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2002</td>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+      <td>a</td>
+      <td>102</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2003</td>
+      <td>100</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11</td>
+      <td>b</td>
+      <td>105</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2004</td>
+      <td>110</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12</td>
+      <td>a</td>
+      <td>110</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+      <th>gnp</th>
+      <th>id2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2000</td>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+      <td>a</td>
+      <td>103.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2001</td>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>b</td>
+      <td>103.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2002</td>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+      <td>a</td>
+      <td>102.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2003</td>
+      <td>100</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11</td>
+      <td>b</td>
+      <td>105.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2004</td>
+      <td>110</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12</td>
+      <td>a</td>
+      <td>110.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2005</td>
+      <td>115</td>
+      <td>55.0</td>
+      <td>60.0</td>
+      <td>14</td>
+      <td>b</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2006</td>
+      <td>113</td>
+      <td>50.0</td>
+      <td>63.0</td>
+      <td>15</td>
+      <td>a</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2007</td>
+      <td>118</td>
+      <td>53.0</td>
+      <td>65.0</td>
+      <td>17</td>
+      <td>b</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2008</td>
+      <td>119</td>
+      <td>60.0</td>
+      <td>59.0</td>
+      <td>18</td>
+      <td>a</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2009</td>
+      <td>200</td>
+      <td>62.0</td>
+      <td>NaN</td>
+      <td>20</td>
+      <td>b</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2010</td>
+      <td>210</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21</td>
+      <td>a</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+      <th>gnp</th>
+      <th>id2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2000</td>
+      <td>100.0</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8.0</td>
+      <td>a</td>
+      <td>103</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2001</td>
+      <td>95.0</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9.0</td>
+      <td>b</td>
+      <td>103</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2002</td>
+      <td>93.0</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10.0</td>
+      <td>a</td>
+      <td>102</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2003</td>
+      <td>100.0</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11.0</td>
+      <td>b</td>
+      <td>105</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2004</td>
+      <td>110.0</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12.0</td>
+      <td>a</td>
+      <td>110</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1995</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>101</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1996</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>97</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1997</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>96</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+      <th>gnp</th>
+      <th>id2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2000</td>
+      <td>100.0</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8.0</td>
+      <td>a</td>
+      <td>103.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2001</td>
+      <td>95.0</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9.0</td>
+      <td>b</td>
+      <td>103.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2002</td>
+      <td>93.0</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10.0</td>
+      <td>a</td>
+      <td>102.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2003</td>
+      <td>100.0</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11.0</td>
+      <td>b</td>
+      <td>105.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2004</td>
+      <td>110.0</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12.0</td>
+      <td>a</td>
+      <td>110.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2005</td>
+      <td>115.0</td>
+      <td>55.0</td>
+      <td>60.0</td>
+      <td>14.0</td>
+      <td>b</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2006</td>
+      <td>113.0</td>
+      <td>50.0</td>
+      <td>63.0</td>
+      <td>15.0</td>
+      <td>a</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2007</td>
+      <td>118.0</td>
+      <td>53.0</td>
+      <td>65.0</td>
+      <td>17.0</td>
+      <td>b</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2008</td>
+      <td>119.0</td>
+      <td>60.0</td>
+      <td>59.0</td>
+      <td>18.0</td>
+      <td>a</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2009</td>
+      <td>200.0</td>
+      <td>62.0</td>
+      <td>NaN</td>
+      <td>20.0</td>
+      <td>b</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2010</td>
+      <td>210.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21.0</td>
+      <td>a</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1995</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>101.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>1996</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>97.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>1997</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>96.0</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id26">
+<h3>縦結合<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">concat()</span></code>は横結合にも使えるが，縦結合のみ考える。</p>
+<p>引数には複数の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>をリストとして書く。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df13</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df1</span><span class="p">,</span><span class="n">df3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df13</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>9</th>
+      <td>2009</td>
+      <td>200</td>
+      <td>62.0</td>
+      <td>NaN</td>
+      <td>20</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2010</td>
+      <td>210</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>2011</td>
+      <td>212</td>
+      <td>70.0</td>
+      <td>142.0</td>
+      <td>22</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2012</td>
+      <td>215</td>
+      <td>72.0</td>
+      <td>143.0</td>
+      <td>23</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2015</td>
+      <td>220</td>
+      <td>80.0</td>
+      <td>140.0</td>
+      <td>24</td>
+      <td>b</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="id27">
+<h2>その他<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id28">
+<h3>インデックスを振り直す<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
+<p>メソッド<code class="docutils literal notranslate"><span class="pre">.reset_index()</span></code>を使うと，行のインデックスを0,1,2,..と振り直すことができる。<code class="docutils literal notranslate"><span class="pre">df13</span></code>を使い説明する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df13</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>index</th>
+      <th>year</th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>2001</td>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>2002</td>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2003</td>
+      <td>100</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>2004</td>
+      <td>110</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>5</td>
+      <td>2005</td>
+      <td>115</td>
+      <td>55.0</td>
+      <td>60.0</td>
+      <td>14</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>6</td>
+      <td>2006</td>
+      <td>113</td>
+      <td>50.0</td>
+      <td>63.0</td>
+      <td>15</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>7</td>
+      <td>2007</td>
+      <td>118</td>
+      <td>53.0</td>
+      <td>65.0</td>
+      <td>17</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>8</td>
+      <td>2008</td>
+      <td>119</td>
+      <td>60.0</td>
+      <td>59.0</td>
+      <td>18</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>9</td>
+      <td>2009</td>
+      <td>200</td>
+      <td>62.0</td>
+      <td>NaN</td>
+      <td>20</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>10</td>
+      <td>2010</td>
+      <td>210</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0</td>
+      <td>2011</td>
+      <td>212</td>
+      <td>70.0</td>
+      <td>142.0</td>
+      <td>22</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>1</td>
+      <td>2012</td>
+      <td>215</td>
+      <td>72.0</td>
+      <td>143.0</td>
+      <td>23</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2</td>
+      <td>2015</td>
+      <td>220</td>
+      <td>80.0</td>
+      <td>140.0</td>
+      <td>24</td>
+      <td>b</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">reset_index()</span></code>に引数<code class="docutils literal notranslate"><span class="pre">drop=True</span></code>を加えると，列<code class="docutils literal notranslate"><span class="pre">index</span></code>が自動的に削除される。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df13</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2000</td>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2001</td>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2002</td>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2003</td>
+      <td>100</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2004</td>
+      <td>110</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id29">
+<h3>列のラベルの変更<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
+<p>メソッド<code class="docutils literal notranslate"><span class="pre">.rename()</span></code>を使い列のラベルを変更する。引数は次の形で設定する。</p>
+<div class="math notranslate nohighlight">
+\[\text{.rename}\left(\text{columns=}辞書\right)\]</div>
+<p>ここで「辞書」は次のルールで指定する。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">key</span></code>:元のラベル</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">value</span></code>：新しいラベル</p></li>
+</ul>
+<p>下のコードでは，<code class="docutils literal notranslate"><span class="pre">df13</span></code>を使い新しいラベルとして<code class="docutils literal notranslate"><span class="pre">pop_new</span></code>と<code class="docutils literal notranslate"><span class="pre">id_new</span></code>を使っている。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df13</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;pop&#39;</span><span class="p">:</span><span class="s1">&#39;pop_new&#39;</span><span class="p">,</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;id_new&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop_new</th>
+      <th>id_new</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2000</td>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2001</td>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2002</td>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2003</td>
+      <td>100</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2004</td>
+      <td>110</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12</td>
+      <td>a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id30">
+<h3>列の並び替え<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id31">
+<h4>アルファベット順<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h4>
+<p>メソッド<code class="docutils literal notranslate"><span class="pre">.sort_index()</span></code>を使い，引数には<code class="docutils literal notranslate"><span class="pre">axis='columns'</span></code>もしくは<code class="docutils literal notranslate"><span class="pre">axis=1</span></code>を指定する。</p>
+<p>（コメント）引数が<code class="docutils literal notranslate"><span class="pre">axis='rows'</span></code>もしくは<code class="docutils literal notranslate"><span class="pre">axis=0</span></code>の場合，行が並び替えられる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df13</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>con</th>
+      <th>gdp</th>
+      <th>id</th>
+      <th>inv</th>
+      <th>pop</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>80.0</td>
+      <td>100</td>
+      <td>a</td>
+      <td>20.0</td>
+      <td>8</td>
+      <td>2000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>70.0</td>
+      <td>95</td>
+      <td>b</td>
+      <td>25.0</td>
+      <td>9</td>
+      <td>2001</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>72.0</td>
+      <td>93</td>
+      <td>a</td>
+      <td>21.0</td>
+      <td>10</td>
+      <td>2002</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>70.0</td>
+      <td>100</td>
+      <td>b</td>
+      <td>30.0</td>
+      <td>11</td>
+      <td>2003</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>71.0</td>
+      <td>110</td>
+      <td>a</td>
+      <td>39.0</td>
+      <td>12</td>
+      <td>2004</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id32">
+<h4>順番を指定する<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id33">
+<h5>方法１<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h5>
+<p>列を選択する方法を使い並び替える。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;year&#39;</span><span class="p">,</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span><span class="s1">&#39;con&#39;</span><span class="p">,</span><span class="s1">&#39;inv&#39;</span><span class="p">,</span><span class="s1">&#39;pop&#39;</span><span class="p">]</span>
+
+<span class="n">df13</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>year</th>
+      <th>gdp</th>
+      <th>con</th>
+      <th>inv</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>a</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>80.0</td>
+      <td>20.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>b</td>
+      <td>2001</td>
+      <td>95</td>
+      <td>70.0</td>
+      <td>25.0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>a</td>
+      <td>2002</td>
+      <td>93</td>
+      <td>72.0</td>
+      <td>21.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>b</td>
+      <td>2003</td>
+      <td>100</td>
+      <td>70.0</td>
+      <td>30.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>a</td>
+      <td>2004</td>
+      <td>110</td>
+      <td>71.0</td>
+      <td>39.0</td>
+      <td>12</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id34">
+<h5>方法２<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h5>
+<p>もちろん次の方法も可。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df13</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>year</th>
+      <th>gdp</th>
+      <th>con</th>
+      <th>inv</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>a</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>80.0</td>
+      <td>20.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>b</td>
+      <td>2001</td>
+      <td>95</td>
+      <td>70.0</td>
+      <td>25.0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>a</td>
+      <td>2002</td>
+      <td>93</td>
+      <td>72.0</td>
+      <td>21.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>b</td>
+      <td>2003</td>
+      <td>100</td>
+      <td>70.0</td>
+      <td>30.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>a</td>
+      <td>2004</td>
+      <td>110</td>
+      <td>71.0</td>
+      <td>39.0</td>
+      <td>12</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id35">
+<h5>方法３<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h5>
+<p>メソッド<code class="docutils literal notranslate"><span class="pre">.reindex()</span></code>を使う。引数は<code class="docutils literal notranslate"><span class="pre">columns=[]</span></code>。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df13</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;year&#39;</span><span class="p">,</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span><span class="s1">&#39;con&#39;</span><span class="p">,</span><span class="s1">&#39;inv&#39;</span><span class="p">,</span><span class="s1">&#39;pop&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>year</th>
+      <th>gdp</th>
+      <th>con</th>
+      <th>inv</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>a</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>80.0</td>
+      <td>20.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>b</td>
+      <td>2001</td>
+      <td>95</td>
+      <td>70.0</td>
+      <td>25.0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>a</td>
+      <td>2002</td>
+      <td>93</td>
+      <td>72.0</td>
+      <td>21.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>b</td>
+      <td>2003</td>
+      <td>100</td>
+      <td>70.0</td>
+      <td>30.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>a</td>
+      <td>2004</td>
+      <td>110</td>
+      <td>71.0</td>
+      <td>39.0</td>
+      <td>12</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id36">
+<h5>方法３の応用<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h5>
+<p>最後の行を最初に移動する。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">.columns.tolist()</span></code>：コラムのラベルを取得し，それをリストに変換</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[col[-1]]+col[0:-2]</span></code>の分解</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">[col[-1]]</span></code>：<code class="docutils literal notranslate"><span class="pre">col</span></code>の最後の要素を抽出するが，文字列として返されるので（外側の）<code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">]</span></code>を使ってリストに変換</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">col[0:-2]</span></code>：<code class="docutils literal notranslate"><span class="pre">col</span></code>の最初から最後から二番目の要素をリストとして取得</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">+</span></code>：リストの結合</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">col</span> <span class="o">=</span> <span class="n">df13</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+<span class="n">new_col</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span><span class="o">+</span><span class="n">col</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">new_col</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>year</th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>a</td>
+      <td>NaN</td>
+      <td>100.0</td>
+      <td>20.0</td>
+      <td>80.0</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>b</td>
+      <td>NaN</td>
+      <td>95.0</td>
+      <td>25.0</td>
+      <td>70.0</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>a</td>
+      <td>NaN</td>
+      <td>93.0</td>
+      <td>21.0</td>
+      <td>72.0</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>b</td>
+      <td>NaN</td>
+      <td>100.0</td>
+      <td>30.0</td>
+      <td>70.0</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>a</td>
+      <td>NaN</td>
+      <td>110.0</td>
+      <td>39.0</td>
+      <td>71.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="2_NumPy.html" title="previous page">NumPy</a>
+    <a class='right-next' id="next-link" href="4_Matplotlib.html" title="next page">Matplotlib</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By 春山 鉄源<br/>
+        
+            &copy; Copyright 2020 Tetsugen Haruyama.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-165998213-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>

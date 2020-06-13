@@ -1,0 +1,3022 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# パネル・データ分析"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "from scipy.stats import norm, gaussian_kde\n",
+    "import matplotlib.pyplot as plt\n",
+    "import pandas as pd\n",
+    "from linearmodels.panel.data import PanelData\n",
+    "from linearmodels.panel import PanelOLS, PooledOLS, RandomEffects, compare\n",
+    "from collections import OrderedDict\n",
+    "import wooldridge\n",
+    "from statsmodels.formula.api import ols"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "パネル・データを使った次のモデルについて説明する。\n",
+    "* 固定効果モデル（Fixed Effects Model）\n",
+    "* ランダム効果モデル（Random Effects Model）\n",
+    "* 相関ランダム効果モデル（Correlated Random Effects Model） "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## 固定効果モデル"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 説明"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "パネル・データを使う場合の問題は観察単位の異質性を捉える変数 $a_i$ が説明変数 $x_{it}$ と相関することにより，単純なOLS推定量に異質性バイアスが発生することである。その対処方法として，回帰式から$a_i$をなくす１階差分推定について説明した。この章では，同じように$a_i$をなくす代替推定法として固定効果推定（Fixed Effects Estimator）について考える。まず，その基礎となる固定効果モデル（Fixed Effects Model; FEモデル）について解説する。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "次式を考えよう。\n",
+    "\n",
+    "$$y_{it}= \\beta_0 + a_i + \\beta_1x_{it}+u_{it}\\qquad i=1,2,..,n\\quad t=0,1,...,T\\qquad\\qquad\\left(\\text{式１}\\right)$$\n",
+    "\n",
+    "両辺のそれぞれの変数の時間に対しての平均を計算すると次式となる。\n",
+    "\n",
+    "$$\\bar{y}_i= \\beta_0 + a_i + \\beta_1\\bar{x}_i+\\bar{u}_i\\qquad\\qquad\\left(\\text{式２}\\right)$$\n",
+    "\n",
+    "（注意）$a_i$は時間に対して不変なため，$a_i$はそのままの値を取る。\n",
+    "\n",
+    "(式１)と(式２)の差を取ると次の固定効果推定式が導出できる。\n",
+    "\n",
+    "$$\\ddot{y}_i = \\beta_1\\ddot{x}_i+\\ddot{u}_i\\qquad\\qquad\\left(\\text{式３}\\right)$$\n",
+    "\n",
+    "ここで\n",
+    "* $\\ddot{y}_i=y_i-\\bar{y}$\n",
+    "* $\\ddot{x}_i=x_i-\\bar{x}$\n",
+    "* $\\ddot{u}_i=u_i-\\bar{u}$\n",
+    "\n",
+    "は平均からの乖離（demeaned values）。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "＜良い点＞\n",
+    "* （式３）には $a_i$ がない。\n",
+    "* $a_i$ と $x_{it}$, $t=1,2,..,T$ を所与として $u_{it}$ の平均は0の仮定の下で，OLS推定量 $\\hat{\\beta}_1$ は\n",
+    "    * 不偏性を満たす。\n",
+    "    * $T$を一定として標本の大きさが十分に大きい場合，一致性を満たす。\n",
+    "    * 固定効果推定量（Fixed Effects Estimator or FE Estimator）もしくは Between Estimatorと呼ばれる。\n",
+    "    \n",
+    "＜悪い点＞\n",
+    "* 時間に対して一定の説明変数は，$a_i$と同じように，（式３）に残らない。従って，時間不変の変数の効果を推定することはできない。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 「手計算」による推定"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`wagepan`というデータセットを使い，賃金に対する労働組合などの変数の効果を推定する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "hidden": true,
+    "tags": [
+     "output_scroll"
+    ]
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "name of dataset: wagepan\n",
+      "no of variables: 44\n",
+      "no of observations: 4360\n",
+      "\n",
+      "+----------+------------------------+\n",
+      "| variable | label                  |\n",
+      "+----------+------------------------+\n",
+      "| nr       | person identifier      |\n",
+      "| year     | 1980 to 1987           |\n",
+      "| agric    | =1 if in agriculture   |\n",
+      "| black    | =1 if black            |\n",
+      "| bus      |                        |\n",
+      "| construc | =1 if in construction  |\n",
+      "| ent      |                        |\n",
+      "| exper    | labor mkt experience   |\n",
+      "| fin      |                        |\n",
+      "| hisp     | =1 if Hispanic         |\n",
+      "| poorhlth | =1 if in poor health   |\n",
+      "| hours    | annual hours worked    |\n",
+      "| manuf    | =1 if in manufacturing |\n",
+      "| married  | =1 if married          |\n",
+      "| min      |                        |\n",
+      "| nrthcen  | =1 if north central    |\n",
+      "| nrtheast | =1 if north east       |\n",
+      "| occ1     |                        |\n",
+      "| occ2     |                        |\n",
+      "| occ3     |                        |\n",
+      "| occ4     |                        |\n",
+      "| occ5     |                        |\n",
+      "| occ6     |                        |\n",
+      "| occ7     |                        |\n",
+      "| occ8     |                        |\n",
+      "| occ9     |                        |\n",
+      "| per      |                        |\n",
+      "| pro      |                        |\n",
+      "| pub      |                        |\n",
+      "| rur      |                        |\n",
+      "| south    | =1 if south            |\n",
+      "| educ     | years of schooling     |\n",
+      "| tra      |                        |\n",
+      "| trad     |                        |\n",
+      "| union    | =1 if in union         |\n",
+      "| lwage    | log(wage)              |\n",
+      "| d81      | =1 if year == 1981     |\n",
+      "| d82      |                        |\n",
+      "| d83      |                        |\n",
+      "| d84      |                        |\n",
+      "| d85      |                        |\n",
+      "| d86      |                        |\n",
+      "| d87      |                        |\n",
+      "| expersq  | exper^2                |\n",
+      "+----------+------------------------+\n",
+      "\n",
+      "F. Vella and M. Verbeek (1998), “Whose Wages Do Unions Raise? A\n",
+      "Dynamic Model of Unionism and Wage Rate Determination for Young Men,”\n",
+      "Journal of Applied Econometrics 13, 163-183. I obtained the data from\n",
+      "the Journal of Applied Econometrics data archive at\n",
+      "http://qed.econ.queensu.ca/jae/. This is generally a nice resource for\n",
+      "undergraduates looking to replicate or extend a published study.\n"
+     ]
+    }
+   ],
+   "source": [
+    "wagepan = wooldridge.data('wagepan')\n",
+    "wooldridge.data('wagepan', description=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "被説明変数\n",
+    "* `lwage`：賃金（対数）\n",
+    "\n",
+    "説明変数\n",
+    "* `union`：労働組合参加（ダミー変数）\n",
+    "* `married`：未・既婚（ダミー変数）\n",
+    "* `exper`：労働市場参加年数\n",
+    "*  `d81`：1981年のダミー変数\n",
+    "*  `d82`：1982年のダミー変数\n",
+    "*  `d83`：1983年のダミー変数\n",
+    "*  `d84`：1984年のダミー変数\n",
+    "*  `d85`：1985年のダミー変数\n",
+    "*  `d86`：1986年のダミー変数\n",
+    "*  `d87`：1987年のダミー変数\n",
+    "\n",
+    "`DataFrame`の`groupby`を使って変数をグループ化する際に使う変数\n",
+    "* `nr`：労働者のID"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "```{admonition} コメント\n",
+    ":class: tip\n",
+    "時間に対して変化しない変数使えない。例えば，\n",
+    "* `educ`（説明変数に入れば教育の収益率が推定可能である。）\n",
+    "* `black`，`hisp`（を使うと人種間の賃金格差も推定できる。）\n",
+    "\n",
+    "は固定効果モデル回帰式には入れることができない。\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "married: 0.04668\n",
+      "union: 0.08\n",
+      "expersq: -0.005185\n",
+      "d81: 0.1512\n",
+      "d82: 0.253\n",
+      "d83: 0.3544\n",
+      "d84: 0.4901\n",
+      "d85: 0.6175\n",
+      "d86: 0.7655\n",
+      "d87: 0.925\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 説明変数のリスト\n",
+    "exog = ['married','union','expersq','d81','d82','d83','d84','d85','d86','d87']\n",
+    "\n",
+    "# 全ての変数のリスト\n",
+    "var = ['lwage']+exog\n",
+    "\n",
+    "# 使う変数だけで構成されるDataFrame\n",
+    "df = wagepan.loc[:,['nr']+var]\n",
+    "\n",
+    "# varの平均からの乖離を計算（下の説明（１）を参照）\n",
+    "df_g = df.groupby('nr')\n",
+    "df_mean = df_g[var].transform('mean')\n",
+    "df_md = df.loc[:,var]-df_mean\n",
+    "\n",
+    "# 説明変数の行列（下の説明（２）を参照）\n",
+    "X = df_md.loc[:,exog].values\n",
+    "\n",
+    "# 被説明変数のベクトル\n",
+    "Y = df_md.loc[:,'lwage'].values\n",
+    "\n",
+    "# OLSの計算\n",
+    "params = np.linalg.inv((X.T)@X)@(X.T)@Y\n",
+    "\n",
+    "# 結果の表示（下の説明（３）を参照）\n",
+    "for idx, name in enumerate(exog):\n",
+    "    print(f'{name}: {params[idx]:.4}')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "説明（１）\n",
+    "* `df.groupby('nr')`：`nr`でグループ化したオブジェクトを作成する（番外編のGapminderを参照）。\n",
+    "* `df_g[var].transform('mean')`\n",
+    "    * `df_g[var]`：グループ化計算のために`var`の変数だけを使うことを指定する。\n",
+    "    * `.transform('mean')`：指定された変数（`var`）のグループ内平均（それぞれの`nr`内での平均）を計算し，その平均で構成される`DataFrame`を作成する。作成された`DataFrame`の行数は`df`と同じになり，グループ内平均が同じ列内でリピートされることになる。\n",
+    "* `df.loc[:,var]-df_mean`：`var`のそれぞれの変数の平均からの乖離を計算する。\n",
+    "\n",
+    "説明（２）\n",
+    "* `.values`は`DataFrame`を`numpy`の`array`として返す。\n",
+    "\n",
+    "説明（３）\n",
+    "* `enumerate(exog)`は`exog`の変数のインデックスと変数名の両方をタプルとして返す。\n",
+    "    * `for`ループで`enumerate()`は，引数にリストや`array`を入れると2つの値を返す。\n",
+    "    * 1つ目の返り値：要素のインデックス\n",
+    "    * 2つ目の返り値：要素自体\n",
+    "    * 例えば，`enumerate(['A','B','C'])`であれば，返り値は`(0,'A')`，`(1,'B')`，`(2,'C')`となる。\n",
+    "* `f'{name}: {params[idx]:.4}'`\n",
+    "    * `f`：以前説明したf-string\n",
+    "    * `{name}`：`exog`の変数名を代入する。\n",
+    "    * `{params[idx]:.4}`\n",
+    "        * `params[idx]`：`idx`番目の`params`を代入する。\n",
+    "        * `:.4`：小数点第4位までを表示する。\n",
+    "\n",
+    "---\n",
+    "「手計算」の結果は`linearmodels`を使う結果と同じになることを下で確認する。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### `linearmodels`を使う計算"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "#### EntityEffects"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`linearmodels`には`PanelOLS`モジュールがあり，その関数`from_formula()`を使うことにより，`statsmodels`同様，回帰式を`y ~ x`の文字列で書くことが可能となる。その際，次の点に注意すること。\n",
+    "* 固定効果推定をする場合，回帰式に`+ EntityEffect`を含める。\n",
+    "    * このオプションにより変数の平均からの乖離は自動で計算されることになる。\n",
+    "    * `+ EntityEffect`を含めないと`PooledOLS`（通常のOLS）と等しくなる。\n",
+    "\n",
+    "\n",
+    "まず`wagepan`を`MultiIndex`化する。これにより`linearmodels`を使いFD推定可能となる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "wagepan = wagepan.set_index(['nr','year'],drop=False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {
+    "hidden": true,
+    "tags": [
+     "output_scroll"
+    ]
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th>nr</th>\n",
+       "      <th>year</th>\n",
+       "      <th>agric</th>\n",
+       "      <th>black</th>\n",
+       "      <th>bus</th>\n",
+       "      <th>construc</th>\n",
+       "      <th>ent</th>\n",
+       "      <th>exper</th>\n",
+       "      <th>fin</th>\n",
+       "      <th>hisp</th>\n",
+       "      <th>...</th>\n",
+       "      <th>union</th>\n",
+       "      <th>lwage</th>\n",
+       "      <th>d81</th>\n",
+       "      <th>d82</th>\n",
+       "      <th>d83</th>\n",
+       "      <th>d84</th>\n",
+       "      <th>d85</th>\n",
+       "      <th>d86</th>\n",
+       "      <th>d87</th>\n",
+       "      <th>expersq</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>nr</th>\n",
+       "      <th>year</th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th rowspan=\"5\" valign=\"top\">13</th>\n",
+       "      <th>1980</th>\n",
+       "      <td>13</td>\n",
+       "      <td>1980</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>...</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1.197540</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1981</th>\n",
+       "      <td>13</td>\n",
+       "      <td>1981</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>2</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>...</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1.853060</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1982</th>\n",
+       "      <td>13</td>\n",
+       "      <td>1982</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>3</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>...</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1.344462</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>9</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1983</th>\n",
+       "      <td>13</td>\n",
+       "      <td>1983</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>4</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>...</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1.433213</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>16</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1984</th>\n",
+       "      <td>13</td>\n",
+       "      <td>1984</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>5</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>...</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1.568125</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>25</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>5 rows × 44 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "         nr  year  agric  black  bus  construc  ent  exper  fin  hisp  ...  \\\n",
+       "nr year                                                                ...   \n",
+       "13 1980  13  1980      0      0    1         0    0      1    0     0  ...   \n",
+       "   1981  13  1981      0      0    0         0    0      2    0     0  ...   \n",
+       "   1982  13  1982      0      0    1         0    0      3    0     0  ...   \n",
+       "   1983  13  1983      0      0    1         0    0      4    0     0  ...   \n",
+       "   1984  13  1984      0      0    0         0    0      5    0     0  ...   \n",
+       "\n",
+       "         union     lwage  d81  d82  d83  d84  d85  d86  d87  expersq  \n",
+       "nr year                                                               \n",
+       "13 1980      0  1.197540    0    0    0    0    0    0    0        1  \n",
+       "   1981      1  1.853060    1    0    0    0    0    0    0        4  \n",
+       "   1982      0  1.344462    0    1    0    0    0    0    0        9  \n",
+       "   1983      0  1.433213    0    0    1    0    0    0    0       16  \n",
+       "   1984      0  1.568125    0    0    0    1    0    0    0       25  \n",
+       "\n",
+       "[5 rows x 44 columns]"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "wagepan.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "hidden": true,
+    "tags": [
+     "output_scroll"
+    ]
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<class 'pandas.core.frame.DataFrame'>\n",
+      "MultiIndex: 4360 entries, (13, 1980) to (12548, 1987)\n",
+      "Data columns (total 44 columns):\n",
+      " #   Column    Non-Null Count  Dtype  \n",
+      "---  ------    --------------  -----  \n",
+      " 0   nr        4360 non-null   int64  \n",
+      " 1   year      4360 non-null   int64  \n",
+      " 2   agric     4360 non-null   int64  \n",
+      " 3   black     4360 non-null   int64  \n",
+      " 4   bus       4360 non-null   int64  \n",
+      " 5   construc  4360 non-null   int64  \n",
+      " 6   ent       4360 non-null   int64  \n",
+      " 7   exper     4360 non-null   int64  \n",
+      " 8   fin       4360 non-null   int64  \n",
+      " 9   hisp      4360 non-null   int64  \n",
+      " 10  poorhlth  4360 non-null   int64  \n",
+      " 11  hours     4360 non-null   int64  \n",
+      " 12  manuf     4360 non-null   int64  \n",
+      " 13  married   4360 non-null   int64  \n",
+      " 14  min       4360 non-null   int64  \n",
+      " 15  nrthcen   4360 non-null   int64  \n",
+      " 16  nrtheast  4360 non-null   int64  \n",
+      " 17  occ1      4360 non-null   int64  \n",
+      " 18  occ2      4360 non-null   int64  \n",
+      " 19  occ3      4360 non-null   int64  \n",
+      " 20  occ4      4360 non-null   int64  \n",
+      " 21  occ5      4360 non-null   int64  \n",
+      " 22  occ6      4360 non-null   int64  \n",
+      " 23  occ7      4360 non-null   int64  \n",
+      " 24  occ8      4360 non-null   int64  \n",
+      " 25  occ9      4360 non-null   int64  \n",
+      " 26  per       4360 non-null   int64  \n",
+      " 27  pro       4360 non-null   int64  \n",
+      " 28  pub       4360 non-null   int64  \n",
+      " 29  rur       4360 non-null   int64  \n",
+      " 30  south     4360 non-null   int64  \n",
+      " 31  educ      4360 non-null   int64  \n",
+      " 32  tra       4360 non-null   int64  \n",
+      " 33  trad      4360 non-null   int64  \n",
+      " 34  union     4360 non-null   int64  \n",
+      " 35  lwage     4360 non-null   float64\n",
+      " 36  d81       4360 non-null   int64  \n",
+      " 37  d82       4360 non-null   int64  \n",
+      " 38  d83       4360 non-null   int64  \n",
+      " 39  d84       4360 non-null   int64  \n",
+      " 40  d85       4360 non-null   int64  \n",
+      " 41  d86       4360 non-null   int64  \n",
+      " 42  d87       4360 non-null   int64  \n",
+      " 43  expersq   4360 non-null   int64  \n",
+      "dtypes: float64(1), int64(43)\n",
+      "memory usage: 1.5 MB\n"
+     ]
+    }
+   ],
+   "source": [
+    "wagepan.info()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "次に`PanelData`オブジェクトに変換しデータの特徴を調べる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(44, 8, 545)"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "wagepanp = PanelData(wagepan)\n",
+    "wagepanp.shape"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "* 44: 変数の数\n",
+    "* 8: 期間数（年）\n",
+    "* 545：観察単位の数（人数）"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "次に，balanced もしくは unbalanced data set かを確認する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "(wagepanp.count()==wagepanp.nobs).all().all()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "このデータ・セットはbalancedだが，unbalanced だったとしても，固定効果モデルの考え方や以下で説明するコードは変わらない。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "実際に回帰式を書くことにする。使い方は`statsmodels`と似ている。\n",
+    "* `PanelOLS`モジュールの関数`.from_formula`を使い次のように引数を指定する。\n",
+    "\n",
+    "$$\\text{.from_formula}(\\text{回帰式}, \\text{データ})$$\n",
+    "\n",
+    "* `EntityEffects`を加える。\n",
+    "* 定数項を入れたい場合は，`1`を回帰式に追加する。入れなければ定数項なしの推定となる。\n",
+    "\n",
+    "* 以下では時間ダミー`C(year)`が入るので入れない。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "formula_fe = 'lwage ~ married + union + expersq \\\n",
+    "                      +d81+d82+d83+d84+d85+d86+d87 + EntityEffects'"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "* 固定効果モデルのインスタンスの作成"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "mod_fe = PanelOLS.from_formula(formula_fe, data=wagepan)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "* `statsmodels`と同じように，そこから得た結果にメソッド`.fit()`を使い計算し結果が返される。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "result_fe = mod_fe.fit()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "＜結果の表示方法＞\n",
+    "1. `res_fe`を実行。\n",
+    "1. `res_fe`に関数`print()`を使うと見やすい。\n",
+    "1. `res_fe`には属性`summary`が用意されているが，表示方法1と同じ。\n",
+    "1. `summary`には属性`tables`があり，２つの表がリストとして格納されている。\n",
+    "    * `tables[0]`：検定統計量の表（`print()`を使うと見やすくなる）\n",
+    "    * `tables[1]`：係数の推定値やp値などの表（`print()`を使うと見やすくなる）"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "married        0.0467     0.0183     2.5494     0.0108      0.0108      0.0826\n",
+      "union          0.0800     0.0193     4.1430     0.0000      0.0421      0.1179\n",
+      "expersq       -0.0052     0.0007    -7.3612     0.0000     -0.0066     -0.0038\n",
+      "d81            0.1512     0.0219     6.8883     0.0000      0.1082      0.1942\n",
+      "d82            0.2530     0.0244     10.360     0.0000      0.2051      0.3008\n",
+      "d83            0.3544     0.0292     12.121     0.0000      0.2971      0.4118\n",
+      "d84            0.4901     0.0362     13.529     0.0000      0.4191      0.5611\n",
+      "d85            0.6175     0.0452     13.648     0.0000      0.5288      0.7062\n",
+      "d86            0.7655     0.0561     13.638     0.0000      0.6555      0.8755\n",
+      "d87            0.9250     0.0688     13.450     0.0000      0.7902      1.0599\n",
+      "==============================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(result_fe.summary.tables[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "（結果）\n",
+    "* `exper**2`の係数が負で統計的有意性が高いのは，賃金に対して経験の効果は低減することを示している。\n",
+    "* `married`の係数は正であり，優位性が全くないわけではない。賃金の既婚プレミアムと呼ばれるものである。\n",
+    "* `union`は労働組合の影響を示しているが，予測通りである。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "$R^2$を表示してみる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                          PanelOLS Estimation Summary                           \n",
+      "================================================================================\n",
+      "Dep. Variable:                  lwage   R-squared:                        0.1806\n",
+      "Estimator:                   PanelOLS   R-squared (Between):              0.2386\n",
+      "No. Observations:                4360   R-squared (Within):               0.1806\n",
+      "Date:                Fri, Jun 05 2020   R-squared (Overall):              0.2361\n",
+      "Time:                        07:33:31   Log-likelihood                   -1324.8\n",
+      "Cov. Estimator:            Unadjusted                                           \n",
+      "                                        F-statistic:                      83.851\n",
+      "Entities:                         545   P-value                           0.0000\n",
+      "Avg Obs:                       8.0000   Distribution:                 F(10,3805)\n",
+      "Min Obs:                       8.0000                                           \n",
+      "Max Obs:                       8.0000   F-statistic (robust):             83.851\n",
+      "                                        P-value                           0.0000\n",
+      "Time periods:                       8   Distribution:                 F(10,3805)\n",
+      "Avg Obs:                       545.00                                           \n",
+      "Min Obs:                       545.00                                           \n",
+      "Max Obs:                       545.00                                           \n",
+      "                                                                                \n",
+      "================================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(result_fe.summary.tables[0])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "この表にある$R^2$について説明する。\n",
+    "* $R^2$＝$R^2(\\text{Within})$：(式３)を推定した際の$R^2$である（$\\ddot{y}_i$が$\\ddot{x}_i$によってどれだけ説明されたかを示す）。\n",
+    "* $R^2(\\text{Between})$：(式２)を推定した際の$R^2$である（$\\hat{y}_i$が$\\hat{x}_i$によってどれだけ説明されたかを示す）。\n",
+    "* $R^2(\\text{Overall})$：(式１)を推定した際の$R^2$である（${y}_i$が${x}_i$によってどれだけ説明されたかを示す）。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "#### TimeEffects"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "上の推定式では時間ダミー変数として使い，観察単位全てに共通な時間的な影響を捉えた。具体的には，インフレにより賃金は変化するが，その変化は全ての労働者には対して同じであり，その効果を時間ダミー変数が捉えている。それを**時間効果**と呼ぶ。このような時間ダミー変数を加えた理由は，時間効果が他の変数（例えば，`married`）の係数を「汚さない」ようにするためであり，よりピュアの効果を推定するためである。一方，`linearmodels`では，わざわざ時間ダミー変数を作らずとも`TimeEffects`を回帰式に追加することにより，時間効果を自動的に「排除」することができる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                          PanelOLS Estimation Summary                           \n",
+      "================================================================================\n",
+      "Dep. Variable:                  lwage   R-squared:                        0.0216\n",
+      "Estimator:                   PanelOLS   R-squared (Between):             -0.2717\n",
+      "No. Observations:                4360   R-squared (Within):              -0.4809\n",
+      "Date:                Fri, Jun 05 2020   R-squared (Overall):             -0.2808\n",
+      "Time:                        07:33:31   Log-likelihood                   -1324.8\n",
+      "Cov. Estimator:            Unadjusted                                           \n",
+      "                                        F-statistic:                      27.959\n",
+      "Entities:                         545   P-value                           0.0000\n",
+      "Avg Obs:                       8.0000   Distribution:                  F(3,3805)\n",
+      "Min Obs:                       8.0000                                           \n",
+      "Max Obs:                       8.0000   F-statistic (robust):             27.959\n",
+      "                                        P-value                           0.0000\n",
+      "Time periods:                       8   Distribution:                  F(3,3805)\n",
+      "Avg Obs:                       545.00                                           \n",
+      "Min Obs:                       545.00                                           \n",
+      "Max Obs:                       545.00                                           \n",
+      "                                                                                \n",
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "married        0.0467     0.0183     2.5494     0.0108      0.0108      0.0826\n",
+      "union          0.0800     0.0193     4.1430     0.0000      0.0421      0.1179\n",
+      "expersq       -0.0052     0.0007    -7.3612     0.0000     -0.0066     -0.0038\n",
+      "==============================================================================\n",
+      "\n",
+      "F-test for Poolability: 10.067\n",
+      "P-value: 0.0000\n",
+      "Distribution: F(551,3805)\n",
+      "\n",
+      "Included effects: Entity, Time\n"
+     ]
+    }
+   ],
+   "source": [
+    "formula_fe2 = 'lwage ~ married + union + expersq + TimeEffects + EntityEffects'\n",
+    "result_fe2 = PanelOLS.from_formula(formula_fe2, data=wagepan).fit()\n",
+    "print(result_fe2)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`result_fe`と同じ結果を確認できる。$R^2$の値は少し変わっているが，これは時間ダミーを入れて計算している訳ではないためである。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## ダミー変数モデルとしての固定効果モデル"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "固定効果推定量は，他の推定方法でも計算することができる。その１つがダミー変数推定である。アイデアは簡単で，観察単位のダミー変数を使い異質性を捉えるのである。推定方法も簡単で，（式１）に観察単位のダミー変数を加えて通常のOLS推定をおこなうだけである。\n",
+    "\n",
+    "上で使った`wagepan`を使い推定する。まず，観察単位のダミー変数として推定式に`C(nr)`を追加する"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "formula_dum = 'lwage ~  1 + married + union + expersq \\\n",
+    "                        +d81+d82+d83+d84+d85+d86+d87 + C(nr)'"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`PooledOLS`モジュールの関数`from_formula`を使って推定式を定義する。ここで`PooledOLS`とは，`statsmodels`で使う通常のOLS推定と同じである。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "result_dum = PooledOLS.from_formula(formula_dum, data=wagepan).fit()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`nr`のダミー変数が544あるため，そのまま結果を表示せずに，以下のセルにあるフィルターを使いメインの変数だけを表示する。下のコードの`filter`で使う（`result_dum`に続く）属性・メソッドについて：\n",
+    "* `params`：パラメーターを取得する属性\n",
+    "* `index`：`params`のインデックスを取得する属性\n",
+    "* `str`：`index`にある文字列を操作可能なオブジェクトとして取得する属性\n",
+    "* `contains()`：引数の文字列が文字列の中にある場合`True`を返すメソッド\n",
+    "* `( )`：括弧の中を先に評価するという意味\n",
+    "* `tolist()`：リストに変換するメソッド"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Intercept    0.933291\n",
+       "married      0.046680\n",
+       "union        0.080002\n",
+       "expersq     -0.005185\n",
+       "d81          0.151191\n",
+       "d82          0.252971\n",
+       "d83          0.354444\n",
+       "d84          0.490115\n",
+       "d85          0.617482\n",
+       "d86          0.765497\n",
+       "d87          0.925025\n",
+       "Name: parameter, dtype: float64"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "filter = (result_dum.params.index.str.contains('nr') == False).tolist()\n",
+    "result_dum.params[filter]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "３つの変数`I(exper**2)`，`married`，`union`の係数は固定効果モデルと等しいことが確認できる。\n",
+    "\n",
+    "t値とp値の表示には次のコードを使う。\n",
+    "* t値：`result_dum.tstats[filter]`\n",
+    "* p値：`result_dum.pvalues[filter]`\n",
+    "\n",
+    "この場合，`educ`等の時間に対して不変の変数も推定式に加えることが可能である。一方，この方法はパラメーターの数は544+11=555あり，自由度が非常に低くなるのが欠点である。\n",
+    "\n",
+    "\n",
+    "（注意）\n",
+    "\n",
+    "この推定式に時間に対して不変の変数（例えば，`educ`，`blac`，`hisp`，`exper`）を追加すると推定できない（エラーが発生する）。理由は，それらの変数は`nr`ダミー変数と完全に同じ動きをするためである。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## ランダム効果モデル"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 説明"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "ここでは，パネル・データを使い推定するランダム効果モデル（Random Effects Model; RE Model）を解説する。もう一度（式１）を考えよう。\n",
+    "\n",
+    "（仮定） $a_i$は観察単位 $i$ に対して一定であるが，$i$によってその値は異なる。\n",
+    "\n",
+    "＜固定効果モデルの仮定＞\n",
+    "* $\\text{Cov}\\left(a_ix_{it}\\right)\\neq 0,\\quad t=1,2,...,T$\n",
+    "\n",
+    "＜ランダム効果モデルの仮定＞\n",
+    "* $\\text{Cov}\\left(a_ix_{it}\\right)=0,\\quad t=1,2,...,T$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "この違いを念頭に（式１）を次式に書き換える。\n",
+    "\n",
+    "$$y_{it}= \\beta_0 + \\beta_1x_{it}+e_{it}\\qquad\\qquad\\left(\\text{式４}\\right)$$\n",
+    "\n",
+    "ここで，\n",
+    "\n",
+    "$$e_{it}=a_i+u_{it}$$\n",
+    "\n",
+    "しかし，\n",
+    "\n",
+    "$$\\text{Corr}\\left(e_{it},e_{is}\\right)\\neq 0,\\quad t\\neq s$$\n",
+    "\n",
+    "となることが示せる。即ち，誤差項が自己相関することになる。\n",
+    "\n",
+    "＜含意＞\n",
+    "* $a_i$と$x_{it}$に相関がないため次の推定方法で一致性を満たす推定量を計算できる。\n",
+    "    * １つの時点でお横断面データを使いOLS推定（でも他のデータはどうする？）\n",
+    "    * 全てのデータを使い何の区別もなくプールするPooled OLS推定（しかしパネル・データの特性を有効利用していない）。\n",
+    "* 時系列データを扱う場合，自己相関によりOLS推定量は効率性が低くなる。これは横断面データを扱う際の不均一分散が引き起こす問題と似ている。\n",
+    "* １階差分推定や固定効果推定を使う必要はなく，使うと効率性が低い推定量となる。\n",
+    "* 従って，問題は次の点：\n",
+    "    * より効率性が高い推定方法はどのようなものか。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "その方法がランダム効果推定と言われるもので，固定効果のように，変数を平均からの**部分的**な乖離に変換することにより可能となる。具体的には，次式が推定式となる。\n",
+    "\n",
+    "$$\\overset{\\circ}{y}_{it}=\\beta_0(1-\\theta)+\\beta_1\\overset{\\circ}{y}_{it}+\\overset{\\circ}{e}_{it}\\qquad\\qquad\\left(\\text{式５}\\right)$$\n",
+    "\n",
+    "ここで\n",
+    "* $\\overset{\\circ}{y}_{it}=y_{it}-\\theta\\bar{y}_i$\n",
+    "* $\\overset{\\circ}{x}_{it}=x_{it}-\\theta\\bar{x}_i$\n",
+    "* $\\overset{\\circ}{e}_{it}=e_{it}-\\theta\\bar{e}_i$\n",
+    "\n",
+    "は変数の平均からの部分的な乖離であり，乖離の度合いを決める変数$\\theta$は\n",
+    "\n",
+    " $$\\theta = 1-\\sqrt{\\frac{\\sigma_u^2}{\\sigma_u^2+T\\sigma_a^2}}$$\n",
+    "\n",
+    "と定義される。$\\sigma_u^2$は$u_{it}$の分散，$\\sigma_a^2$は$a_{i}$の分散である。\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "（直感）\n",
+    "* $\\sigma_a^2=0$の場合$\\theta=0$となり，$a_i$は$i$に対して一定であり観察単位の異質性はないということである。その場合は，通常のOLSで推定することがベストとなる。\n",
+    "* $\\sigma_a^2$が増加すると$\\theta$は大きくなり，より大きな平均からの乖離が必要となる。極端な場合，$\\sigma_a^2$が無限大に近づくと，$\\theta=1$となり$\\overset{\\circ}{y}=\\ddot{y}$となる。即ち，固定効果モデルはランダム効果モデルの極端な場合と解釈できる。\n",
+    "\n",
+    "（注意）\n",
+    "* $\\theta$は事前にはわからないため推定する必要がある（`linearmodels`が自動的に計算する）。\n",
+    "\n",
+    "（良い点）\n",
+    "* 時間に対して不変の説明変数があってもその係数を推定できる。\n",
+    "* $\\text{Cov}\\left(a_ix_{it}\\right)= 0$が正しければ，推定量は一致性を満たす。しかし，不偏性は満たさない。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 推定"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`exper`，`educ`，`black`，`hisp`を加えて回帰式を定義する。\n",
+    "\n",
+    "（注意）\n",
+    "\n",
+    "時間ダミー変数の代わりに`TimeEffects`を使わないように。入れることができますが，そのような仕様になっていません。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "formula_re = 'lwage ~ 1 + married + union + expersq \\\n",
+    "                        + exper + educ + black + hisp \\\n",
+    "                        +d81+d82+d83+d84+d85+d86+d87'"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`RandomEffects`のモジュールにある関数`from_formula`を使い計算する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "result_re = RandomEffects.from_formula(formula_re, data=wagepan).fit()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "結果の表示。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "Intercept      0.0234     0.1514     0.1546     0.8771     -0.2735      0.3203\n",
+      "married        0.0638     0.0168     3.8035     0.0001      0.0309      0.0967\n",
+      "union          0.1059     0.0179     5.9289     0.0000      0.0709      0.1409\n",
+      "expersq       -0.0047     0.0007    -6.8623     0.0000     -0.0061     -0.0034\n",
+      "exper          0.1058     0.0154     6.8706     0.0000      0.0756      0.1361\n",
+      "educ           0.0919     0.0107     8.5744     0.0000      0.0709      0.1129\n",
+      "black         -0.1394     0.0480    -2.9054     0.0037     -0.2334     -0.0453\n",
+      "hisp           0.0217     0.0428     0.5078     0.6116     -0.0622      0.1057\n",
+      "d81            0.0404     0.0247     1.6362     0.1019     -0.0080      0.0889\n",
+      "d82            0.0309     0.0324     0.9519     0.3412     -0.0327      0.0944\n",
+      "d83            0.0202     0.0417     0.4840     0.6284     -0.0616      0.1020\n",
+      "d84            0.0430     0.0515     0.8350     0.4037     -0.0580      0.1440\n",
+      "d85            0.0577     0.0615     0.9383     0.3482     -0.0629      0.1782\n",
+      "d86            0.0918     0.0716     1.2834     0.1994     -0.0485      0.2321\n",
+      "d87            0.1348     0.0817     1.6504     0.0989     -0.0253      0.2950\n",
+      "==============================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(result_re.summary.tables[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "結果の解釈は下でする。\n",
+    "\n",
+    "RE推定では$\\theta$が重要な役目を果たすが，その値は`result_re`の属性`theta`を使うことにより`DataFrame`の形で表示できる。\n",
+    "* balanced panel dataの場合，`theta`の値は一意で決まる。\n",
+    "* unbalanced panel dataの場合，`theta`は観察単位毎に計算される。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "theta    0.645059\n",
+       "Name: 13, dtype: float64"
+      ]
+     },
+     "execution_count": 21,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "result_re.theta.iloc[0,:]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "上で説明したが$\\theta$は$u_a$と$u_it$の分散である$\\sigma_a^2$と$\\sigma_u^2$に依存する。それらの値は，属性`variance_decomposition`を表示できる。以下の返り値の内容：\n",
+    "* `Effects`：$\\sigma_a^2$\n",
+    "* `Residual`：$\\sigma_u^2$\n",
+    "* `Percept due to Effects`：$\\dfrac{\\sigma_a^2}{\\sigma_a^2+\\sigma_u^2}$"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Effects                   0.106946\n",
+       "Residual                  0.123324\n",
+       "Percent due to Effects    0.464438\n",
+       "Name: Variance Decomposition, dtype: float64"
+      ]
+     },
+     "execution_count": 22,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "result_re.variance_decomposition"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## 相関ランダム効果モデル"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 説明"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "相関ランダム効果モデル（CREモデル）は，固定効果モデルとランダム効果モデルの中間的な位置にあり，両方を包含している。（式１）を考えよう。更に，観察不可能な固定効果$a_i$は説明変数と次の関係にあると仮定する。\n",
+    "\n",
+    "$$a_i = \\alpha + \\gamma\\bar{x}_{it} + r_i\\qquad\\text{(式５)}$$\n",
+    "\n",
+    "* $\\bar{x}_i=\\dfrac{1}{T}\\sum_{t=1}^Tx_{it}$は説明変数の平均\n",
+    "* $\\gamma$は$a_i$と$x_{it}$の相関関係を捉える係数\n",
+    "* $r_i$は説明変数$x_{it}$と相関しないと仮定，即ち，$\\text{Cov}\\left(r_i\\bar{x}_{it}\\right)$\n",
+    "\n",
+    "（式５）を（式１）に代入すると次式を得る。\n",
+    "\n",
+    "$$y_{it}=\\alpha+\\beta x_{it} + \\gamma\\bar{x}_i + v_{it}\\qquad\\text{(式６)}$$\n",
+    "\n",
+    "ここで\n",
+    "\n",
+    "$$v_{it}=r_i + u_{it}$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "（含意）\n",
+    "* $\\text{Cov}\\left(r_i,\\bar{x}_{it}\\right)\\;\\Rightarrow\\;\\text{Cov}\\left(v_i,\\bar{x}_{it}\\right)$\n",
+    "* REモデルと同じ構造となっており，違いは$\\bar{x}_i$が追加されている。\n",
+    "    * `linearmodels`の`RandomEffects`モジュールが使える。\n",
+    "* 次の結果が成立する。\n",
+    "\n",
+    "    $$\\hat{\\beta}_{FE}=\\hat{\\beta}_{CRE}$$\n",
+    "    \n",
+    "    * $\\hat{\\beta}_{FE}$：固定効果推定量\n",
+    "    * $\\hat{\\beta}_{CRE}$：相関ランダム効果推定量\n",
+    "    * この結果は，時間に対して不変な変数（例えば，`black`）を**含めても**成立する"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 推定"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "まず $\\bar{x}_i$ を計算し，それを`wagepan`に追加する。そのために次の関数を定義する。\n",
+    "\n",
+    "（解説）\n",
+    "\n",
+    "* (1)：関数の引数\n",
+    "    * `dframe`：データフレーム\n",
+    "    * `ori_col`：平均を計算したい列\n",
+    "    * `new_col`：計算した平均を入れる列\n",
+    "* (2)：`ori_col`をグループ化し，グループ名とグループ平均からなる辞書の作成\n",
+    "    * `groupby(level=0)`：行の第１インデックスに従ってグループ化\n",
+    "    * `mean()`：グループ平均の計算\n",
+    "    * `to_dict()`：行の第１インデックスにあるグループ名を`key`，グループ平均を`value`にする辞書の作成\n",
+    "* (3)：行の第１インデックスに該当するグループ平均が並ぶリストの作成\n",
+    "    * `index.get_level_values(0)`：行の第１インデックスの値を取得\n",
+    "    * `to_series()`：`series`に変換\n",
+    "    * `map(dict)`：`dict`の内容に従って上の`series`の値をグループ平均に入れ替える\n",
+    "    * `tolist()`：リストに変換\n",
+    "* (4)：`dframe`にグループ平均が並ぶ新しい列が追加し，そのラベルを`new_col`とする\n",
+    "* (5)：`DataFrame`を返す"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "def add_col_mean(dframe, ori_col, new_col):  # (1)\n",
+    "    \n",
+    "    dict = dframe.groupby(level=0)[ori_col].mean().to_dict()  # (2)\n",
+    "    mean = dframe.index.get_level_values(0).to_series().map(dict).tolist()  # (3)\n",
+    "    dframe.loc[:,new_col] = mean  # (4)\n",
+    "    \n",
+    "    return dframe   # (5)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "この関数を使い，`married`，`union`，`expersq`の平均を計算し`wagepan`に追加する。\n",
+    "\n",
+    "（コメント）`exper`は含めない。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "wagepan = add_col_mean(wagepan, 'married', 'married_mean')\n",
+    "wagepan = add_col_mean(wagepan, 'union', 'union_mean')\n",
+    "wagepan = add_col_mean(wagepan, 'expersq', 'expersq_mean')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "CRE推定と結果の表示"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                        RandomEffects Estimation Summary                        \n",
+      "================================================================================\n",
+      "Dep. Variable:                  lwage   R-squared:                        0.1711\n",
+      "Estimator:              RandomEffects   R-squared (Between):              0.0967\n",
+      "No. Observations:                4360   R-squared (Within):               0.1806\n",
+      "Date:                Fri, Jun 05 2020   R-squared (Overall):              0.1355\n",
+      "Time:                        07:33:32   Log-likelihood                   -1609.8\n",
+      "Cov. Estimator:            Unadjusted                                           \n",
+      "                                        F-statistic:                      69.027\n",
+      "Entities:                         545   P-value                           0.0000\n",
+      "Avg Obs:                       8.0000   Distribution:                 F(13,4346)\n",
+      "Min Obs:                       8.0000                                           \n",
+      "Max Obs:                       8.0000   F-statistic (robust):             69.027\n",
+      "                                        P-value                           0.0000\n",
+      "Time periods:                       8   Distribution:                 F(13,4346)\n",
+      "Avg Obs:                       545.00                                           \n",
+      "Min Obs:                       545.00                                           \n",
+      "Max Obs:                       545.00                                           \n",
+      "                                                                                \n",
+      "                              Parameter Estimates                               \n",
+      "================================================================================\n",
+      "              Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "--------------------------------------------------------------------------------\n",
+      "Intercept        1.1537     0.0502     22.979     0.0000      1.0552      1.2521\n",
+      "married          0.0467     0.0183     2.5522     0.0107      0.0108      0.0825\n",
+      "union            0.0800     0.0193     4.1475     0.0000      0.0422      0.1178\n",
+      "expersq         -0.0052     0.0007    -7.3693     0.0000     -0.0066     -0.0038\n",
+      "married_mean     0.1618     0.0469     3.4518     0.0006      0.0699      0.2536\n",
+      "union_mean       0.1612     0.0526     3.0653     0.0022      0.0581      0.2644\n",
+      "expersq_mean     0.0032     0.0009     3.4362     0.0006      0.0014      0.0050\n",
+      "d81              0.1512     0.0219     6.8959     0.0000      0.1082      0.1942\n",
+      "d82              0.2530     0.0244     10.371     0.0000      0.2052      0.3008\n",
+      "d83              0.3544     0.0292     12.134     0.0000      0.2972      0.4117\n",
+      "d84              0.4901     0.0362     13.544     0.0000      0.4192      0.5611\n",
+      "d85              0.6175     0.0452     13.663     0.0000      0.5289      0.7061\n",
+      "d86              0.7655     0.0561     13.654     0.0000      0.6556      0.8754\n",
+      "d87              0.9250     0.0687     13.465     0.0000      0.7903      1.0597\n",
+      "================================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "formula_cre = 'lwage ~ 1 + married + union + expersq \\\n",
+    "                         + married_mean + union_mean + expersq_mean \\\n",
+    "                         +d81+d82+d83+d84+d85+d86+d87'\n",
+    "\n",
+    "result_cre = RandomEffects.from_formula(formula_cre, data=wagepan).fit()\n",
+    "\n",
+    "print(result_cre)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### ２つの利点"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "CREモデルの２つの利点を解説する。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "#### FE対RE検定"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "FEモデルとREモデルのどちらが適しているかを調べることができるHausman検定というものがある。CREモデルを使うことにより，同様の検定が簡単に行える。（式６）を考えよう。\n",
+    "* $\\gamma=0$の場合，REモデルの（式５）と同じになり，REモデルが妥当ということになる。\n",
+    "* $\\gamma\\neq 0$の場合，$a_i$と$\\bar{x}_{i}$は相関することになり，これは$\\text{Cov}\\left(a_i,{x}_{it}\\right)\\neq 0$を意味し，REモデルが妥当な推定方法となる。\n",
+    "\n",
+    "この考えを利用して，次の帰無仮説と対立仮説のもとで$\\gamma$の優位性を調べる。\n",
+    "* $\\text{H}_0:\\;\\text{Cov}\\left(a_i,x_{it}\\right)=0$\n",
+    "* $\\text{H}_a:\\;\\text{Cov}\\left(a_i,x_{it}\\right)\\neq 0$\n",
+    "\n",
+    "（コメント）\n",
+    "* $\\gamma=0$を棄却できれば上の$\\text{H}_0$を棄却できる。\n",
+    "* 平均の変数が$k$ある場合は，$\\gamma_1=\\gamma_2=\\cdots=\\gamma_k=0$を検定する。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`result_cre`のメソッド`wald_test()`を使う。引数には文字列で指定する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Linear Equality Hypothesis Test\n",
+       "H0: Linear equality constraint is valid\n",
+       "Statistic: 35.6454\n",
+       "P-value: 0.0000\n",
+       "Distributed: chi2(3)\n",
+       "WaldTestStatistic, id: 0x7f9c21ec2b20"
+      ]
+     },
+     "execution_count": 26,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# 検定する係数の値を設定する\n",
+    "restriction = 'married_mean = union_mean = expersq_mean = 0'\n",
+    "\n",
+    "# 検定結果を表示する\n",
+    "result_cre.wald_test(formula=restriction)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "p値が非常に小さいので，帰無仮説は棄却できる。従って，FEモデルが妥当だと結論づけることができる。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "#### 一定な変数を含める"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "（式６）に時間に対して一定は変数（$z_{i}$）を含めて\n",
+    "\n",
+    "$$y_{it}=\\alpha+\\beta x_{it}+\\gamma\\bar{x}_i+\\delta z_{i} +v_{it}\\qquad\\text{(式６)}$$\n",
+    "\n",
+    "をRE推定しても次の結果は成立する。\n",
+    "\n",
+    "$$\\hat{\\beta}_{FE}=\\hat{\\beta}_{CRE}$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "---\n",
+    "この結果を利用して，以下では次の変数を加えて回帰式を設定する。\n",
+    "* 時間に対して一定な変数\n",
+    "    * `educ`, `black`，`hisp`\n",
+    "* 一定ではないが，FEにいれると推定できなかった変数\n",
+    "    * `exper`"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                              Parameter Estimates                               \n",
+      "================================================================================\n",
+      "              Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "--------------------------------------------------------------------------------\n",
+      "Intercept       -0.1288     0.1583    -0.8140     0.4157     -0.4391      0.1814\n",
+      "married          0.0467     0.0183     2.5520     0.0107      0.0108      0.0825\n",
+      "union            0.0800     0.0193     4.1473     0.0000      0.0422      0.1178\n",
+      "expersq         -0.0052     0.0007    -7.3689     0.0000     -0.0066     -0.0038\n",
+      "exper           -0.0504     0.0507    -0.9947     0.3200     -0.1499      0.0490\n",
+      "educ             0.0946     0.0110     8.6115     0.0000      0.0731      0.1161\n",
+      "black           -0.1388     0.0492    -2.8193     0.0048     -0.2353     -0.0423\n",
+      "hisp             0.0048     0.0430     0.1110     0.9116     -0.0795      0.0891\n",
+      "married_mean     0.0970     0.0454     2.1382     0.0326      0.0081      0.1859\n",
+      "union_mean       0.1907     0.0507     3.7591     0.0002      0.0912      0.2901\n",
+      "expersq_mean     0.0103     0.0033     3.1135     0.0019      0.0038      0.0168\n",
+      "d81              0.2016     0.0552     3.6497     0.0003      0.0933      0.3099\n",
+      "d82              0.3538     0.1043     3.3923     0.0007      0.1493      0.5583\n",
+      "d83              0.5058     0.1549     3.2650     0.0011      0.2021      0.8094\n",
+      "d84              0.6919     0.2060     3.3580     0.0008      0.2879      1.0958\n",
+      "d85              0.8697     0.2575     3.3768     0.0007      0.3648      1.3746\n",
+      "d86              1.0681     0.3094     3.4525     0.0006      0.4616      1.6746\n",
+      "d87              1.2781     0.3615     3.5351     0.0004      0.5693      1.9869\n",
+      "================================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "formula_cre2 = 'lwage ~ 1 + married + union + expersq \\\n",
+    "                          + exper + educ + black + hisp \\\n",
+    "                          + married_mean + union_mean + expersq_mean \\\n",
+    "                          +d81+d82+d83+d84+d85+d86+d87'\n",
+    "\n",
+    "result_cre2 = RandomEffects.from_formula(formula_cre2, data=wagepan).fit()\n",
+    "\n",
+    "print(result_cre2.summary.tables[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "もう一度，FE対RE検定を行ってみよう。検定統計量（Statistics）は減少したが，以前帰無仮説は高い優位性で棄却できる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Linear Equality Hypothesis Test\n",
+       "H0: Linear equality constraint is valid\n",
+       "Statistic: 26.0233\n",
+       "P-value: 0.0000\n",
+       "Distributed: chi2(3)\n",
+       "WaldTestStatistic, id: 0x7f9c21ebb820"
+      ]
+     },
+     "execution_count": 28,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "result_cre2.wald_test(formula=restriction)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## モデルの比較"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "パネル・データを扱う場合の通常のアプローチは，使える推定法を使いその結果を比べることから始める。以下では以下のモデルを比べる。\n",
+    "* 通常のOLS\n",
+    "* 固定効果モデル\n",
+    "* ランダム効果モデル\n",
+    "* 相関ランダムモデル"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### OLS"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`linearmodels`のモジュール`PooledOLS`では，観察単位や時間の区別なく全てのデータをプールしてOLS推定する。これは通常のOLSと同じ推定法と等しい。`PooledOLS`の関数`from_formula`を使い，以下のように推定する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "Intercept      0.0921     0.0783     1.1761     0.2396     -0.0614      0.2455\n",
+      "married        0.1083     0.0157     6.8997     0.0000      0.0775      0.1390\n",
+      "union          0.1825     0.0172     10.635     0.0000      0.1488      0.2161\n",
+      "expersq       -0.0024     0.0008    -2.9413     0.0033     -0.0040     -0.0008\n",
+      "exper          0.0672     0.0137     4.9095     0.0000      0.0404      0.0941\n",
+      "educ           0.0913     0.0052     17.442     0.0000      0.0811      0.1016\n",
+      "black         -0.1392     0.0236    -5.9049     0.0000     -0.1855     -0.0930\n",
+      "hisp           0.0160     0.0208     0.7703     0.4412     -0.0248      0.0568\n",
+      "d81            0.0583     0.0304     1.9214     0.0548     -0.0012      0.1178\n",
+      "d82            0.0628     0.0332     1.8900     0.0588     -0.0023      0.1279\n",
+      "d83            0.0620     0.0367     1.6915     0.0908     -0.0099      0.1339\n",
+      "d84            0.0905     0.0401     2.2566     0.0241      0.0119      0.1691\n",
+      "d85            0.1092     0.0434     2.5200     0.0118      0.0243      0.1942\n",
+      "d86            0.1420     0.0464     3.0580     0.0022      0.0509      0.2330\n",
+      "d87            0.1738     0.0494     3.5165     0.0004      0.0769      0.2707\n",
+      "==============================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "formula_pool = 'lwage ~ 1 + married + union + expersq \\\n",
+    "                        + exper + educ + black + hisp \\\n",
+    "                        +d81+d82+d83+d84+d85+d86+d87'\n",
+    "\n",
+    "result_pool = PooledOLS.from_formula(formula_pool, data=wagepan).fit()\n",
+    "\n",
+    "print(result_pool.summary.tables[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "### 比較表の作成"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "今までの推定結果を表にまとめるために，`linearmodels`の関数`compare`を使う。\n",
+    "\n",
+    "表作成の順番：\n",
+    "1. `key`が表示したい推定方法の名前，`value`がその上で得た推定結果となる辞書を作る\n",
+    "1. その辞書を`compare`の引数としてつかう。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "res = {'Pooled OLS':result_pool,\n",
+    "       'FE': result_fe,\n",
+    "       'RE': result_re,\n",
+    "       'CRE': result_cre2\n",
+    "      }\n",
+    "\n",
+    "# compare(res)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "このままでも良いか，この方法では推定結果を表示する順番を指定できない。例えば，`OLS`，`FE`，`RE`，`CRE`の順番で左から並べたいとしよう。その場合，`collections`パッケージにある関数`OrderedDict`をつかう。`{}`の中で並べた順番をそのまま維持してくれる関数である。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 31,
+   "metadata": {
+    "hidden": true,
+    "tags": [
+     "output_scroll"
+    ]
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                                     Model Comparison                                    \n",
+      "=========================================================================================\n",
+      "                            Pooled OLS             FE                RE               CRE\n",
+      "-----------------------------------------------------------------------------------------\n",
+      "Dep. Variable                    lwage          lwage             lwage             lwage\n",
+      "Estimator                    PooledOLS       PanelOLS     RandomEffects     RandomEffects\n",
+      "No. Observations                  4360           4360              4360              4360\n",
+      "Cov. Est.                   Unadjusted     Unadjusted        Unadjusted        Unadjusted\n",
+      "R-squared                       0.1893         0.1806            0.1806            0.1855\n",
+      "R-Squared (Within)              0.1692         0.1806            0.1799            0.1806\n",
+      "R-Squared (Between)             0.2066         0.2386            0.1853            0.2192\n",
+      "R-Squared (Overall)             0.1893         0.2361            0.1828            0.2013\n",
+      "F-statistic                     72.459         83.851            68.409            58.165\n",
+      "P-value (F-stat)                0.0000         0.0000            0.0000            0.0000\n",
+      "=====================     ============   ============   ===============   ===============\n",
+      "Intercept                       0.0921                           0.0234           -0.1288\n",
+      "                              (1.1761)                         (0.1546)         (-0.8140)\n",
+      "married                         0.1083         0.0467            0.0638            0.0467\n",
+      "                              (6.8997)       (2.5494)          (3.8035)          (2.5520)\n",
+      "union                           0.1825         0.0800            0.1059            0.0800\n",
+      "                              (10.635)       (4.1430)          (5.9289)          (4.1473)\n",
+      "expersq                        -0.0024        -0.0052           -0.0047           -0.0052\n",
+      "                             (-2.9413)      (-7.3612)         (-6.8623)         (-7.3689)\n",
+      "exper                           0.0672                           0.1058           -0.0504\n",
+      "                              (4.9095)                         (6.8706)         (-0.9947)\n",
+      "educ                            0.0913                           0.0919            0.0946\n",
+      "                              (17.442)                         (8.5744)          (8.6115)\n",
+      "black                          -0.1392                          -0.1394           -0.1388\n",
+      "                             (-5.9049)                        (-2.9054)         (-2.8193)\n",
+      "hisp                            0.0160                           0.0217            0.0048\n",
+      "                              (0.7703)                         (0.5078)          (0.1110)\n",
+      "d81                             0.0583         0.1512            0.0404            0.2016\n",
+      "                              (1.9214)       (6.8883)          (1.6362)          (3.6497)\n",
+      "d82                             0.0628         0.2530            0.0309            0.3538\n",
+      "                              (1.8900)       (10.360)          (0.9519)          (3.3923)\n",
+      "d83                             0.0620         0.3544            0.0202            0.5058\n",
+      "                              (1.6915)       (12.121)          (0.4840)          (3.2650)\n",
+      "d84                             0.0905         0.4901            0.0430            0.6919\n",
+      "                              (2.2566)       (13.529)          (0.8350)          (3.3580)\n",
+      "d85                             0.1092         0.6175            0.0577            0.8697\n",
+      "                              (2.5200)       (13.648)          (0.9383)          (3.3768)\n",
+      "d86                             0.1420         0.7655            0.0918            1.0681\n",
+      "                              (3.0580)       (13.638)          (1.2834)          (3.4525)\n",
+      "d87                             0.1738         0.9250            0.1348            1.2781\n",
+      "                              (3.5165)       (13.450)          (1.6504)          (3.5351)\n",
+      "married_mean                                                                       0.0970\n",
+      "                                                                                 (2.1382)\n",
+      "union_mean                                                                         0.1907\n",
+      "                                                                                 (3.7591)\n",
+      "expersq_mean                                                                       0.0103\n",
+      "                                                                                 (3.1135)\n",
+      "======================= ============== ============== ================= =================\n",
+      "Effects                                        Entity                                    \n",
+      "-----------------------------------------------------------------------------------------\n",
+      "\n",
+      "T-stats reported in parentheses\n"
+     ]
+    }
+   ],
+   "source": [
+    "res_ordered = OrderedDict(res)\n",
+    "print(compare(res_ordered))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "* `married`\n",
+    "    * OLSでの結婚プレミアムは10％以上あるが，FEでは半減している。これは観察単位の異質性$a_i$に生産性が含まれており，「生産性が高い人（高い$a_i$）は，結婚している可能性が高い」という考えと一貫性がある。即ち，$\\text{Cov}\\left(a_i,x_{it}\\right)>0$となり，これによりOLSでは以下のようなバイアスが発生すると解釈できる。\n",
+    "        * 既婚 $\\Rightarrow$ 生産性（$a_i$）が高い $\\Rightarrow$ 賃金が上振れしやすい\n",
+    "        * 未婚 $\\Rightarrow$ 生産性（$a_i$）が低い $\\Rightarrow$ 賃金が下振れしやすい\n",
+    "    * FE推定法が示しているのは，そのようなバイアスを取り除いても，結婚プレミアムは存在する。考えられる理由は：\n",
+    "        * 結婚は生産性を上昇させる\n",
+    "        * 結婚は安定した生活を意味し，それに対して企業はより高い賃金を払う\n",
+    "    * REは推定値はFEに比較的に近い。これは$\\hat{\\theta}>0.5$の値にも現れている。\n",
+    "* `union`\n",
+    "    * FEの値は労働組合の賃金に対する影響力を示している。\n",
+    "    * OLSとFEの推定値を比較すると，約0.1減少している。OLSは労働組合の影響力を過大評価しており，観察単位の異質性が大きく働いていることがわかる。\n",
+    "* `educ`，`black`，`hisp`\n",
+    "    * OLSもREも推定値は似ている。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### FD vs. FE"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "1階差分モデルと固定効果モデルを比較する。\n",
+    "* $T=2$の場合，FDとFEは同じ（if there is intercept in FE）\n",
+    "* $T\\geq 3$の場合：\n",
+    "    * GM仮定に対応する仮定の下ではFDもFEも不偏性・一致性を満たす。\n",
+    "    * 誤差項に系列相関がない場合，FEの方が効率性が高い\n",
+    "    * 誤差項の系列相関がある場合，FDの方が良い。\n",
+    "        * 例えば，誤差項がランダム・ウォークの場合$\\Delta u_{it}$は系列相関はない。\n",
+    "        * FD推定をして$\\Delta u_{it}$を検定する。\n",
+    "    * $N$が少なく$T$が大きい場合（例：$N=20$と$T=30$），時系列の特性が強くなるので，FDの方が良い\n",
+    "* 実証研究では，FDとFEの結果の両方を報告すること。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### FE vs. RE"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "固定効果モデルとランダム効果モデルを比較する。\n",
+    "1. $a_i$はランダムか？\n",
+    "    * 経済学の場合，説明変数は何らかの選択の結果の場合が多い。さらに，その選択が観察単位の特徴に依存する場合，$\\text{Cov}\\left(a_ix_{it}\\right)\\neq 0$となり，FEモデルの方が適切となる。\n",
+    "    * 都道府県データのような場合，「大きな」母集団からランダムに抽出された説明変数とはならないかも知れない。むしろ，都道府県の切片がランダムではなく，単に異なると仮定する方が自然かも知れない。\n",
+    "1. Hausman検定であれ他の検定であれ，間違う確率は存在する。以下では間違った場合どうなるかを考えた。\n",
+    "    * $\\text{Cov}\\left(a_ix_{it}\\right)= 0$，即ち，REモデルが正しい場合：\n",
+    "        * 誤差項の自己相関があるが，FE推定量は不偏性を満たす\n",
+    "    * $\\text{Cov}\\left(a_ix_{it}\\right)\\neq 0$，即ち，FEモデルが正しい場合：\n",
+    "        * GM仮定４が満たされないため，RE推定量は不偏性を満たさない\n",
+    "\n",
+    "Pros for RE\n",
+    "1. FEの場合，時間に対して変化しない変数の係数を推定できない\n",
+    "2. 回帰式が非線形の場合（例えば，Probit），FEでは対応できない。\n",
+    "\n",
+    "\n",
+    "（結論）一般的にFEの方が適切な場合が多いのではないか。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## シミュレーション"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "（目的）真のモデルでは観察単位の固定効果がある場合を考え，FE推定量とRE推定量を比較する。\n",
+    "\n",
+    "単回帰を想定する。以下を真の値として設定する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 32,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "b0 = 1  # 定数項\n",
+    "b1 = 2  # スロープ係数"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 推定値の計算"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "シミュレーションの基本パラメータ等の設定"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 33,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "N = 100  # 観察単位の数\n",
+    "T = 5  # 時間数\n",
+    "ai = np.linspace(0,10,N)  # 観察単位の異質性"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`for`ループによる`DataFrame`の作成。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 34,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "df_sim = pd.DataFrame()  # 空のDataFrame\n",
+    "\n",
+    "for (idx,a) in enumerate(ai):\n",
+    "    \n",
+    "    x = norm.rvs(a,1,size=T)  # T個のaが平均となるランダムな数\n",
+    "    u = norm.rvs(0,1,size=T)  # 誤差項\n",
+    "    y = b0 + b1*x + a + u  # 被説明変数\n",
+    "    df_idx = pd.DataFrame({'id':[idx]*T,    # 観察個体のID\n",
+    "                         'time':np.array(range(T))+2000,\n",
+    "                         'Y':y,\n",
+    "                         'X':x,\n",
+    "                         'ai':[a]*T})\n",
+    "    df_sim = pd.concat([df_sim,df_idx])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`DataFrame`の微調整。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th>Y</th>\n",
+       "      <th>X</th>\n",
+       "      <th>ai</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>id</th>\n",
+       "      <th>time</th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th rowspan=\"5\" valign=\"top\">0</th>\n",
+       "      <th>2000</th>\n",
+       "      <td>1.314495</td>\n",
+       "      <td>0.250996</td>\n",
+       "      <td>0.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2001</th>\n",
+       "      <td>0.935831</td>\n",
+       "      <td>-0.505178</td>\n",
+       "      <td>0.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2002</th>\n",
+       "      <td>-3.016472</td>\n",
+       "      <td>-1.539758</td>\n",
+       "      <td>0.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2003</th>\n",
+       "      <td>0.511721</td>\n",
+       "      <td>-0.673621</td>\n",
+       "      <td>0.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2004</th>\n",
+       "      <td>0.286999</td>\n",
+       "      <td>0.481604</td>\n",
+       "      <td>0.0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                Y         X   ai\n",
+       "id time                         \n",
+       "0  2000  1.314495  0.250996  0.0\n",
+       "   2001  0.935831 -0.505178  0.0\n",
+       "   2002 -3.016472 -1.539758  0.0\n",
+       "   2003  0.511721 -0.673621  0.0\n",
+       "   2004  0.286999  0.481604  0.0"
+      ]
+     },
+     "execution_count": 35,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# id と time の列を 整数型に変換（省いても問題ない）\n",
+    "df_sim['id'] = df_sim['id'].astype(int)\n",
+    "df_sim['time'] = df_sim['time'].astype(int)\n",
+    "\n",
+    "# MultiIndex化\n",
+    "df_sim = df_sim.set_index(['id','time'])\n",
+    "\n",
+    "df_sim.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "固定効果モデルによる推定。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 36,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "X              2.0785     0.0500     41.611     0.0000      1.9803      2.1767\n",
+      "==============================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "form_sim_fe = 'Y ~ X + EntityEffects'\n",
+    "\n",
+    "sim_fe = PanelOLS.from_formula(form_sim_fe, data=df_sim).fit()\n",
+    "\n",
+    "print(sim_fe.summary.tables[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "ランダム効果モデルによる推定。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 37,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "Intercept      1.9367     0.1572     12.317     0.0000      1.6278      2.2456\n",
+      "X              2.8113     0.0264     106.62     0.0000      2.7595      2.8631\n",
+      "==============================================================================\n",
+      "theta: [0.36659057]\n"
+     ]
+    }
+   ],
+   "source": [
+    "form_sim_re = 'Y ~ 1 + X'\n",
+    "\n",
+    "sim_re = RandomEffects.from_formula(form_sim_re, data=df_sim).fit()\n",
+    "\n",
+    "print(sim_re.summary.tables[1])\n",
+    "print('theta:', sim_re.theta.iloc[0,:].values)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "$\\text{Cov}\\left(a_i,x_{it}\\right)>0$により上方バイアスが発生している。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "相関ランダム効果モデルによる推定。\n",
+    "\n",
+    "まず，観察単位の`X`の平均の列を追加する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 38,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "df_sim = add_col_mean(df_sim, 'X', 'X_mean')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 39,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "Intercept      1.1271     0.1371     8.2195     0.0000      0.8577      1.3965\n",
+      "X              2.0785     0.0499     41.643     0.0000      1.9805      2.1766\n",
+      "X_mean         0.8964     0.0552     16.226     0.0000      0.7878      1.0049\n",
+      "==============================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "form_sim_cre = 'Y ~ 1 + X + X_mean'\n",
+    "\n",
+    "sim_cre = RandomEffects.from_formula(form_sim_cre, data=df_sim).fit()\n",
+    "\n",
+    "print(sim_cre.summary.tables[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "通常のOLS（Pooled OLS）による推定はバイアスが発生する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 40,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "Intercept      1.4918     0.1153     12.943     0.0000      1.2653      1.7182\n",
+      "X              2.9012     0.0197     147.53     0.0000      2.8626      2.9399\n",
+      "==============================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "form_sim_pool = 'Y ~ 1 + X'\n",
+    "\n",
+    "sim_pool = PooledOLS.from_formula(form_sim_pool, data=df_sim).fit()\n",
+    "\n",
+    "print(sim_pool.summary.tables[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 推定値の分布"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "基本的に上のシミュレーションのコードを応用する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 41,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "N = 100  # 観察単位数\n",
+    "T = 5  # 年数\n",
+    "R = 100  # シミュレーションの回数\n",
+    "ai = np.linspace(0,10,N)  # 観察単位の異質性"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "（下のコードについて）\n",
+    "* ランダム効果モデルの推定には`linearmodels`を使っている。固定効果モデルと通常のOLS推定にも`linearmodels`を使うと必要がない統計量も計算するため計算に時間が掛かる。少しでも計算時間を縮めるために「手計算」をする。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 42,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "bhat_fe_list = []  # FE推定値を入れるための空のリスト\n",
+    "bhat_re_list = []  # RE推定値を入れるための空のリスト\n",
+    "bhat_pool_list = []  # Pooled OLS推定値を入れるための空のリスト\n",
+    "\n",
+    "for _ in range(R):  # Rの値は下のコードで使わないので\"_\"に設定する\n",
+    "    \n",
+    "    df = pd.DataFrame()  # 空のDataFrame\n",
+    "\n",
+    "    # データの生成\n",
+    "    for (idx,a) in enumerate(ai):\n",
+    "        x = norm.rvs(a,1,size=T)  # T個のaが平均となるランダムな数\n",
+    "        u = norm.rvs(0,1,size=T)  # T個の誤差項\n",
+    "        y = b0 + b1*x + a + u  # T個の被説明変数\n",
+    "        df_idx = pd.DataFrame({'id':[idx]*T,      # DataFrameへ表の追加\n",
+    "                             'time':np.array(range(T))+2000,\n",
+    "                             'Y':y,\n",
+    "                             'X':x,\n",
+    "                             'ai':[a]*T})\n",
+    "        df = pd.concat([df,df_idx])\n",
+    "        \n",
+    "    # RE推定\n",
+    "    df_re = df.set_index(['id','time'])  # MultiIndex化\n",
+    "    form_sim_re = 'Y ~ 1 + X'\n",
+    "    sim_re = RandomEffects.from_formula(form_sim_re, data=df_re).fit()\n",
+    "    bhat_re_list.append(sim_re.params[1])\n",
+    "\n",
+    "    # FE推定\n",
+    "    df_fe = df.loc[:,['Y','X']] - df.groupby('id')[['Y','X']].transform('mean')\n",
+    "    Yfe = df_fe.loc[:,'Y'].values\n",
+    "    Xfe = df_fe.loc[:,'X'].values[:,None]  # [:,None]は(N*T,1)の行列に変換\n",
+    "    bhat_fe = (np.linalg.inv(Xfe.T@Xfe)@Xfe.T@Yfe)[0]\n",
+    "    bhat_fe_list.append(bhat_fe)\n",
+    "    \n",
+    "    # Pooled OLS推定\n",
+    "    c = np.ones(N*T)\n",
+    "    Xpool = np.stack([c, df.loc[:,'X'].values], axis=1)\n",
+    "    Ypool = df.loc[:,'Y'].values\n",
+    "    bhat_pool = (np.linalg.inv(Xpool.T@Xpool)@Xpool.T@Ypool)[1]\n",
+    "    bhat_pool_list.append(bhat_pool)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "分布の図示"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 43,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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MT/84Q/55je/2W77fffd1+WHvNv48eNZv349F1xwQdu2Dz74gPHjx3f5uj59+nD55Zdz+eWXk5SUxGuvvZbwCaKqqoqMjAwyMjLabU/UBGFjECYsnl9fxvPry2IdRsyce+65vPjii9TV1XH8+HGWLFnCOeec43O7pwsvvJDHHnusbRbRvn37OHToEOeeey5Lliyhvr6e2tradkUBPf3gBz/gzjvvpLKyEoANGzbwxBNPcNttt/mM99133237ttzY2MjWrVsZOXJkOP4UPZq3MhuQuAnCWhDGhMGUKVO44YYbmDZtGgDf+MY32rqMfG13mzdvHtu2bWPGjBmA881+8eLFTJkyhSuvvJJJkyYxcuRIn0uXLliwgH379jFz5kxEhL59+7J48WKGDTtZG/Piiy9um6U0Y8YMLr30Um699VZUldbWVi6++GL+5V/+Jbx/lHhy9ChkZ0Na112hvhJEcnIy6enpCZcgJJAmcE9RXFysHed7m+i48verAXjumzMiep1t27YlfDdINPWKv7cqFBbCDTfAz37W5aGzZ8+moaGBd999t9O+gQMH8rWvfY2HHnooMnHGiIisV9Vib/usi8kY07sdPgx798Jmb6sLtOet1LdbIpb8tgRhjOndduxwfpf5HyPz1cUEiZkgbAzChMUTN06L2rX8TeE04dFrup8tQYTMWhAmLDLTkslMS474dTIyMqisrOw9H15xSlWprKzsNN2zR3IniP37oanJ52Gtra1UV1f7XO8hEROEtSBMWDy1ejcA180ojOh18vPzKSsro6KiIqLXMU4yzs/Pj3UY3edOEKpw4AAUeL9Xp6amBlXtsgVx+PDhSEUZlyxBmLB4deN+IPIJIjU1lVGjRkX0GqaX2bED0tPhxAmnm8lHgvBVZsMtOzubPXv2RCzMeGRdTMaY3kvVSRCue0z47DOfhwaSIBKti8kShDGm9zp4EI4dg/PPd553MVDtLvVtYxAnWYIwxvRe7vGHqVOdO6m7SBDWgugsYglCRB4TkUMistlj269FZLuIbBSRJSLiNVWLyG4R2SQiG0TEbo02xoTGnSDGjoX8/G4niPr6elpbW8MeZryKZAviCWB+h23LgQmqejrwCfDDLl5/vqpO8nULuIkvz31zRsTLbBgTtB07ICXFKbURhgQBhLzEbE8UsQShqu8ARzpsW6aqza6na4BeMIfO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\n",
+      "text/plain": [
+       "<Figure size 432x288 with 1 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "xx=np.linspace(1.6,3.1,num=100)  # 図を作成するために横軸の値を設定\n",
+    "\n",
+    "kde_model_fe=gaussian_kde(bhat_fe_list)  # FE推定量のカーネル密度関数を計算\n",
+    "\n",
+    "kde_model_re=gaussian_kde(bhat_re_list)  # RE推定量のカーネル密度関数を計算\n",
+    "\n",
+    "kde_model_pool=gaussian_kde(bhat_pool_list)  # Pooled OLS推定量のカーネル密度関数を計算\n",
+    "\n",
+    "plt.plot(xx, kde_model_fe(xx), 'g-', label='FE')  # FE推定量の分布プロット\n",
+    "plt.plot(xx, kde_model_re(xx),'r-', label='RE')  # RE推定量の分布プロット\n",
+    "plt.plot(xx, kde_model_pool(xx),'k-', label='Pooled OLS')  # RE推定量の分布プロット\n",
+    "plt.axvline(x=b1,linestyle='dashed')  # 真の値での垂直線\n",
+    "plt.ylabel('Kernel Density')  # 縦軸のラベル\n",
+    "plt.legend()  # 凡例\n",
+    "pass"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true
+   },
+   "source": [
+    "## 標準誤差の問題"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "(式３)の固定効果モデルを考えよう。パネル・データの場合，次の2つの問題が発生する場合がある。\n",
+    "* 残差の不均一分散\n",
+    "* 残差の自己相関\n",
+    "\n",
+    "これらの問題が発生しても，基本的な仮定のもとでFE推定量は不偏性と一致性を満たす。しかし，係数の標準誤差は有効ではなくなり検定が無効となる。その対処方法として**クラスター頑健的推定**を使う。これは不均一分散の章で説明した不均一分散頑健的推定を自己相関に拡張し，パネル・データ用に考案された推定と理解すれば十分である。以下では，その使い方を説明する。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 分散の確認"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "`linearmodels`には残差の均一分散を調べるBreusch-Pagan検定やWhite検定をおこなうメソッドは用意されていない。ここでは`statsmodels`を使いWooldridge (2016,p.253)で説明されているWhite検定に基づく検定をおこなう。次に必要な変数を作成する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 44,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [],
+   "source": [
+    "# 残差\n",
+    "u_hat = result_fe.resids.values.flatten()\n",
+    "\n",
+    "# 被説明変数の予測値\n",
+    "y_hat = result_fe.fitted_values.values.flatten()\n",
+    "\n",
+    "# DataFrameの作成\n",
+    "df_white = pd.DataFrame({'u_hat':u_hat,'y_hat':y_hat})"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "（上のコードの説明）\n",
+    "* `resids`は残差を`DataFrame`として取得する属性\n",
+    "* `fitted_values`は予測値を`DataFrame`として取得する属性\n",
+    "* `values`は`DataFrame`を`array`として返す属性\n",
+    "* `flatten()`は`array`が2次元になっているのを1次元に変換するメソッド\n",
+    "    * `array([[..],[..],...[...]])`を`array([....])`に変換する。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "検定に使う式\n",
+    "\n",
+    "$$\\hat{u}^2=\\beta_0+\\beta_1\\hat{y}+\\beta_2\\hat{y}^2+e$$\n",
+    "\n",
+    "* $\\text{H}_0：\\beta_1=\\beta_2=0$（均一分散）\n",
+    "* $\\text{H}_A：$帰無仮説は成立しない"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 45,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "=================================================================================\n",
+      "                    coef    std err          t      P>|t|      [0.025      0.975]\n",
+      "---------------------------------------------------------------------------------\n",
+      "Intercept         0.1172      0.010     11.249      0.000       0.097       0.138\n",
+      "y_hat            -0.0205      0.048     -0.428      0.668      -0.114       0.073\n",
+      "I(y_hat ** 2)    -0.0550      0.099     -0.557      0.577      -0.248       0.138\n",
+      "=================================================================================\n",
+      "F検定のp値： 0.4354339447413128\n"
+     ]
+    }
+   ],
+   "source": [
+    "form_white = 'I(u_hat**2) ~ y_hat + I(y_hat**2)'\n",
+    "\n",
+    "res_white = ols(form_white, data=df_white).fit()\n",
+    "\n",
+    "print(res_white.summary().tables[1])\n",
+    "print('F検定のp値：',res_white.f_pvalue)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "帰無仮説は棄却できない。\n",
+    "\n",
+    "次に図を使い確認する。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 46,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<Figure size 432x288 with 1 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "b0 = res_white.params[0] # beta0\n",
+    "b1 = res_white.params[1] # beta1\n",
+    "b2 = res_white.params[2] # beta2\n",
+    "\n",
+    "xx = np.linspace(min(y_hat), max(y_hat), 100) # x軸の値\n",
+    "z = b0 + b1*xx + b1*xx**2  # 検定に使った式\n",
+    "\n",
+    "plt.scatter(y_hat, u_hat**2)  # u_hat, y_hatの散布図\n",
+    "plt.plot(xx, z, 'red', linewidth=3)  # 検定の式の曲線\n",
+    "plt.xlabel('y_hat')\n",
+    "plt.ylabel('u_hat^2')\n",
+    "pass"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "（解説）\n",
+    "* 上の検定で推定した式は赤い線である。殆ど平行になっているため帰無仮説を棄却できなかった。\n",
+    "* 図の中で`y_hat`の値が`-0.2`を境に`u_hat`の変動はより大きくなっており，不均一分散の疑いが高い。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "heading_collapsed": true,
+    "hidden": true
+   },
+   "source": [
+    "### 対処方法"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "＜使い方＞\n",
+    "* メソッド`fit()`に以下の引数を指定する。\n",
+    "    * 不均一分散だけの場合：`cov_type='clustered', cluster_entity=True`\n",
+    "    * 不均一分散と系列相関の場合：`cov_type='clustered', cluster_entity=True, cluster_time=True`\n",
+    "\n",
+    "\n",
+    "（注意）\n",
+    "* 係数の推定値は変わらない。\n",
+    "* 係数の標準誤差だけが修正され，有効な検定ができるようになる。\n",
+    "\n",
+    "\n",
+    "`wagepan`を使って上で推定した式にクラスター頑健的推定を使う。\n",
+    "\n",
+    "＜不均一分散かだけの場合＞"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 47,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "married        0.0467     0.0210     2.2245     0.0262      0.0055      0.0878\n",
+      "union          0.0800     0.0227     3.5209     0.0004      0.0355      0.1246\n",
+      "expersq       -0.0052     0.0008    -6.4058     0.0000     -0.0068     -0.0036\n",
+      "d81            0.1512     0.0255     5.9195     0.0000      0.1011      0.2013\n",
+      "d82            0.2530     0.0286     8.8340     0.0000      0.1968      0.3091\n",
+      "d83            0.3544     0.0348     10.177     0.0000      0.2862      0.4227\n",
+      "d84            0.4901     0.0454     10.792     0.0000      0.4011      0.5792\n",
+      "d85            0.6175     0.0568     10.879     0.0000      0.5062      0.7288\n",
+      "d86            0.7655     0.0712     10.755     0.0000      0.6259      0.9050\n",
+      "d87            0.9250     0.0840     11.015     0.0000      0.7604      1.0897\n",
+      "==============================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "mod_fe_clus1 = PanelOLS.from_formula(formula_fe, data=wagepan)\n",
+    "\n",
+    "res_fe_clus1 = mod_fe_clus1.fit(cov_type='clustered', cluster_entity=True)\n",
+    "\n",
+    "print(res_fe_clus1.summary.tables[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "＜不均一分散と系列相関の場合＞"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 48,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                             Parameter Estimates                              \n",
+      "==============================================================================\n",
+      "            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI\n",
+      "------------------------------------------------------------------------------\n",
+      "married        0.0467     0.0165     2.8312     0.0047      0.0144      0.0790\n",
+      "union          0.0800     0.0234     3.4242     0.0006      0.0342      0.1258\n",
+      "expersq       -0.0052     0.0008    -6.6189     0.0000     -0.0067     -0.0036\n",
+      "d81            0.1512     0.0066     23.020     0.0000      0.1383      0.1641\n",
+      "d82            0.2530     0.0168     15.027     0.0000      0.2200      0.2860\n",
+      "d83            0.3544     0.0255     13.886     0.0000      0.3044      0.4045\n",
+      "d84            0.4901     0.0374     13.113     0.0000      0.4168      0.5634\n",
+      "d85            0.6175     0.0499     12.366     0.0000      0.5196      0.7154\n",
+      "d86            0.7655     0.0646     11.858     0.0000      0.6389      0.8921\n",
+      "d87            0.9250     0.0776     11.913     0.0000      0.7728      1.0773\n",
+      "==============================================================================\n"
+     ]
+    }
+   ],
+   "source": [
+    "mod_fe_clus2 = PanelOLS.from_formula(formula_fe, data=wagepan)\n",
+    "\n",
+    "res_fe_clus2 = mod_fe_clus2.fit(cov_type='clustered', cluster_entity=True, cluster_time=True)\n",
+    "\n",
+    "print(res_fe_clus2.summary.tables[1])"
+   ]
+  }
+ ],
+ "metadata": {
+  "celltoolbar": "Tags",
+  "kernelspec": {
+   "display_name": "latest",
+   "language": "python",
+   "name": "latest"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.2"
+  },
+  "toc": {
+   "base_numbering": 1,
+   "nav_menu": {},
+   "number_sections": true,
+   "sideBar": true,
+   "skip_h1_title": false,
+   "title_cell": "Table of Contents",
+   "title_sidebar": "Contents",
+   "toc_cell": false,
+   "toc_position": {},
+   "toc_section_display": true,
+   "toc_window_display": false
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

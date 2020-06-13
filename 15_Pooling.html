@@ -1,0 +1,2556 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>プーリング・データとパネル・データ &#8212; Pythonで学ぶ入門計量経済学</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/mystnb.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="canonical" href="https://spring-book.github.io/book_etrics/15_Pooling.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="linearmodels" href="16_linearmodels.html" />
+    <link rel="prev" title="不均一分散" href="14_Heteroskedasticity.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="https://spring-book.github.io/book_etrics/15_Pooling.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="プーリング・データとパネル・データ" />
+<meta property="og:description" content="プーリング・データとパネル・データ  import numpy as np import pandas as pd from statsmodels.formula.api import ols import wooldridge from scipy.stats import t  説明  独立に分布したプーリング・" />
+
+
+<meta name="twitter:card" content="summary">
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Pythonで学ぶ入門計量経済学</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="part_1.html">１. Pythonの基礎</a>
+  </li>
+  <li class="active">
+    <a href="part_2.html">２. Pythonを使った計量経済分析</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="7_Review_of_Statistics.html">統計学の簡単な復習</a>
+    </li>
+    <li class="">
+      <a href="8_Simple_Regression.html">単回帰分析</a>
+    </li>
+    <li class="">
+      <a href="9_Multiple_Regression.html">重回帰分析</a>
+    </li>
+    <li class="">
+      <a href="10_Residuals.html">残差診断</a>
+    </li>
+    <li class="">
+      <a href="11_Inference.html">推論</a>
+    </li>
+    <li class="">
+      <a href="12_Asymptotics.html">大標本特性</a>
+    </li>
+    <li class="">
+      <a href="13_Dummies.html">質的変数と回帰分析</a>
+    </li>
+    <li class="">
+      <a href="14_Heteroskedasticity.html">不均一分散</a>
+    </li>
+    <li class="active">
+      <a href="">プーリング・データとパネル・データ</a>
+    </li>
+    <li class="">
+      <a href="16_linearmodels.html">linearmodels</a>
+    </li>
+    <li class="">
+      <a href="17_Panel.html">パネル・データ分析</a>
+    </li>
+    <li class="">
+      <a href="18_Zero_Conditional_Mean.html">GM仮定４が満たされない場合</a>
+    </li>
+    <li class="">
+      <a href="19_IV2SLS.html">操作変数法と２段階OLS</a>
+    </li>
+    <li class="">
+      <a href="20_LogitProbit.html">離散選択モデル</a>
+    </li>
+    <li class="">
+      <a href="21_TruncregTobitHeckit.html">制限従属変数モデル</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="part_3.html">３. 番外編</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  <a  href="https://github.com/spring-book/py4etrics">&#128200;&#127891;&#128202;</a><!-- Default Statcounter code for Py4etrics https://spring-book.github.io/py4etrics/ --> <script type="text/javascript"> var sc_project=12339954; var sc_invisible=1; var sc_security="45ab8946"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12339954/0/45ab8946/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code -->
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="_sources/15_Pooling.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Source interaction buttons -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/spring-book/py4etrics/master?urlpath=tree/15_Pooling.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                
+            </div>
+        </div>
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id2" class="nav-link">説明</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id3" class="nav-link">独立に分布したプーリング・データ</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id4" class="nav-link">プーリング・データの応用：差分の差分析</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id5" class="nav-link">説明</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#did" class="nav-link">DiD推定</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id6" class="nav-link">パネル・データとその問題点</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id7" class="nav-link">パネル・データについて</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#ols" class="nav-link">OLS推定の問題点</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#groupby" class="nav-link">１階差分推定の準備：groupby</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id8" class="nav-link">１階差分推定</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id9" class="nav-link">説明</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id10" class="nav-link">推定：２期間の場合</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id11" class="nav-link">推定：３期間以上の場合</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="id1">
+<h1>プーリング・データとパネル・データ<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">t</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>説明<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>独立に分布したプーリング・データ（independently distributed pooling data）とパネル・データ（panel data）を考える。両方とも横断面データと時系列データの両方の特徴を兼ね備えたデータである。</p>
+<hr class="docutils" />
+<p><strong>独立に分布したプーリング・データ</strong>には以下の特徴がある。</p>
+<ul class="simple">
+<li><p>ある期間（例えば，2000年から2010年の間）に期間毎無作為に観察単位（例えば，消費者や企業）が抽出される。従って，時間（年次データであれば年）が違えば観察単位は変化する。</p></li>
+<li><p>時間の変化により必ずしも<strong>同一分布</strong>とはならない（即ち，分布は時間によって変化するかも知れない）。</p></li>
+</ul>
+<p>日本の統計の例に<a class="reference external" href="http://www.stat.go.jp/data/roudou/index.html">労働力調査</a>がある。</p>
+<p>＜プーリング・データを使う利点＞</p>
+<ul class="simple">
+<li><p>横断データと比べるとデータ数が増えるため，より正確な推定量や検定統計量を得ることが可能となる。</p></li>
+<li><p>時間軸にそって独立した分布から標本を抽出するため，誤差項に自己相関はない。</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>パネル・データ</strong>には以下の特徴がある。</p>
+<ul class="simple">
+<li><p>初期時点で無作為に観察単位（例えば，消費者や企業）を抽出し，同じ観測単位を時間軸に沿って観測して集めたデータである。</p></li>
+<li><p>観測単位が同じであることが独立に分布したプーリング・データとの違いである。</p></li>
+</ul>
+<p>＜パネル・データを使う意義＞</p>
+<p>例として，各都道府県で行われた公共支出が県内の雇用に与える影響を推定したいとしよう。</p>
+<ul class="simple">
+<li><p>観察単位：47都道府県 <span class="math notranslate nohighlight">\(i=1,2,...,47\)</span></p></li>
+<li><p>時系列範囲：2000~2020年 <span class="math notranslate nohighlight">\(t=2000,2001,...,2020\)</span></p></li>
+<li><p>変数：県内の雇用（<span class="math notranslate nohighlight">\(L\)</span>），公共支出（<span class="math notranslate nohighlight">\(G\)</span>），<span class="math notranslate nohighlight">\(x\)</span>は「その他の変数」</p></li>
+</ul>
+<p>47都道府県と時間の２次元データとなっているため，次の推定方法が考えられる。</p>
+<ul>
+<li><p>年別に横断面データとしてクロス・セクション分析行う。</p>
+<div class="math notranslate nohighlight">
+\[y_i = \beta_{0} + \beta_{1} G_i + \beta_{2}x_i + u_i\]</div>
+<p>しかし，それぞれの推定は20年間の間に起こる要因の変化の効果を無視することになり，公的支出の動的な側面を捉えていない。</p>
+</li>
+<li><p>47都道府県別に時系列の推定を行う。</p>
+<div class="math notranslate nohighlight">
+\[y_t = \beta_{0} + \beta_{1} G_t + \beta_{2}x_t+ u_t\]</div>
+<p>しかし，それぞれの推定は同じ日本の地域でありながら他の都道府県の影響を無視することになる。</p>
+</li>
+</ul>
+<p>このように2次元のデータの1つの軸に沿ったデータだけを使うと何らかの影響を無視することになりうる。換言すると，パネル・データを使い異なる観察単位の動的なデータから得る情報を有効に使うことにより，より正確な推定量や検定統計量を得ることができることになる。</p>
+</div>
+<div class="section" id="id3">
+<h2>独立に分布したプーリング・データ<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>このタイプのデータ扱う上で注意する点：</p>
+<ul class="simple">
+<li><p>時系列の変数があるにも関わらず，被説明変数と少なくとも一部の説明変数とは時間不変の関係にあると暗に仮定することになる。</p></li>
+<li><p>時系列の要素があるため，変数は必ずしも同一分布から抽出さる訳ではない。例えば，多くの経済で賃金と教育水準の分布は変化していると考える方が妥当である。この問題に対処するために時間ダミーを使うことになる。</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">CPS78_85</span></code>のデータを使い推定方法を説明する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># データの読み込み</span>
+<span class="n">cps</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;CPS78_85&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># データの内容の確認</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;CPS78_85&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>name of dataset: cps78_85
+no of variables: 15
+no of observations: 1084
+
++----------+-----------------------+
+| variable | label                 |
++----------+-----------------------+
+| educ     | years of schooling    |
+| south    | =1 if live in south   |
+| nonwhite | =1 if nonwhite        |
+| female   | =1 if female          |
+| married  | =1 if married         |
+| exper    | age - educ - 6        |
+| expersq  | exper^2               |
+| union    | =1 if belong to union |
+| lwage    | log hourly wage       |
+| age      | in years              |
+| year     | 78 or 85              |
+| y85      | =1 if year == 85      |
+| y85fem   | y85*female            |
+| y85educ  | y85*educ              |
+| y85union | y85*union             |
++----------+-----------------------+
+
+Professor Henry Farber, now at Princeton University, compiled these
+data from the 1978 and 1985 Current Population Surveys. Professor
+Farber kindly provided these data when we were colleagues at MIT.
+</pre></div>
+</div>
+</div>
+</div>
+<p>このデータセットには1978年と1985年の変数があり，ダミー変数に次のものが含まれている。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">y85</span></code>：1985年の時間ダミー変数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">female</span></code>：男女のダミー変数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">union</span></code>：労働組合員かどうかのダミー変数</p></li>
+</ul>
+<p>これを使い，賃金と教育の関係を検証する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 回帰分析</span>
+
+<span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ y85 + educ + female + </span><span class="se">\</span>
+<span class="s1">                   y85:educ + y85:female + </span><span class="se">\</span>
+<span class="s1">                   exper + I((exper**2)/100) + union&#39;</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">cps</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>（コメント）</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">y85</span> <span class="pre">+</span> <span class="pre">educ</span> <span class="pre">+</span> <span class="pre">female</span> <span class="pre">+</span> <span class="pre">y85:educ</span> <span class="pre">+</span> <span class="pre">y85:female</span></code>の部分は長いので<code class="docutils literal notranslate"><span class="pre">y85*(educ+female)</span></code>と省略して記述しても結果は同じ。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lwage</span></code>は名目賃金の対数の値である。この場合，実質賃金を考える方が自然なため，インフレの影響を取り除く必要がある。1978年と1985年の消費者物価指数をそれぞれ<span class="math notranslate nohighlight">\(p_{78}\)</span>と<span class="math notranslate nohighlight">\(p_{85}\)</span>とすると，その比率<span class="math notranslate nohighlight">\(P\equiv p_{85}/p_{78}\)</span>がその間のインフレの影響を捉える変数と考える。<span class="math notranslate nohighlight">\(P\)</span>を使い1985年の賃金を次式に従って実質化できる。</p>
+<div class="math notranslate nohighlight">
+\[
+    \ln\left(\text{実質賃金}_{85}\right) = \ln\left(\frac{\text{名目賃金}_{85}}{P}\right) = \ln\left(\text{名目賃金}_{85}\right)-\ln(P) = \text{85年のlwage}- \ln(P)
+    \]</div>
+<p>この式から<span class="math notranslate nohighlight">\(\ln(P)\)</span>は回帰式の右辺の定数項に含まれることがわかる。即ち，上の式を変えることなく<code class="docutils literal notranslate"><span class="pre">educ</span></code>の係数は実質賃金で測った教育の収益率，<code class="docutils literal notranslate"><span class="pre">female</span></code>は実質賃金での男女賃金格差と解釈できる。</p>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>=========================================================================================
+                            coef    std err          t      P&gt;|t|      [0.025      0.975]
+-----------------------------------------------------------------------------------------
+Intercept                 0.4589      0.093      4.911      0.000       0.276       0.642
+y85                       0.1178      0.124      0.952      0.341      -0.125       0.361
+educ                      0.0747      0.007     11.192      0.000       0.062       0.088
+female                   -0.3167      0.037     -8.648      0.000      -0.389      -0.245
+y85:educ                  0.0185      0.009      1.974      0.049       0.000       0.037
+y85:female                0.0851      0.051      1.658      0.098      -0.016       0.186
+exper                     0.0296      0.004      8.293      0.000       0.023       0.037
+I((exper ** 2) / 100)    -0.0399      0.008     -5.151      0.000      -0.055      -0.025
+union                     0.2021      0.030      6.672      0.000       0.143       0.262
+=========================================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p>教育の収益率</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">educ</span></code>の係数0.0747が1978年における教育1年の収益率（約7.5%）。統計的有意性は非常に高い（p-value=0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y85:educ</span></code>の係数0.0185は1978年と1985年の値の差を表している。1985年の収益率は1.85%高く，5％水準で帰無仮説（1978年と1985年の収益率は同じ）を棄却できる。1985年の1年間の収益率は0.0747+0.0185=0.0932である（約9.3%）。</p></li>
+</ul>
+<p>男女間の賃金格差</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">female</span></code>の係数<code class="docutils literal notranslate"><span class="pre">-0.3167</span></code>は1978年における値。即ち，女性の賃金は男性より約32%低く，統計的有意性は非常に高い（p値=0）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y85:female</span></code>の係数0.0851は1978年と1985年の値の差を表しており，1985年の賃金格差は約8.5%改善したことを意味する。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y85:female</span></code>のp値0.098は両側検定であり，10％水準で帰無仮説（賃金格差は変化していない）を棄却できるが，5%水準では棄却できない。</p></li>
+<li><p>一方，<code class="docutils literal notranslate"><span class="pre">y85:female</span></code>は正の値であり，女性の賃金の改善が統計的有意かどうかが問題になる。この点を考慮し片側検定をおこなう。</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(H_0\)</span>: <code class="docutils literal notranslate"><span class="pre">y85:female</span></code>の係数 <span class="math notranslate nohighlight">\(＝0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(H_a\)</span>: <code class="docutils literal notranslate"><span class="pre">y85:female</span></code>の係数 <span class="math notranslate nohighlight">\(&gt;0\)</span></p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t_value</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">tvalues</span><span class="p">[</span><span class="s1">&#39;y85:female&#39;</span><span class="p">]</span>  <span class="c1"># y85:femaleのt値</span>
+
+<span class="n">dof</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">df_resid</span>  <span class="c1"># 自由度 n-k-1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>を使い計算する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_value</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>  <span class="c1"># p値の計算</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.048840603301735674
+</pre></div>
+</div>
+</div>
+</div>
+<p>片側検定では，5%水準で帰無仮説を棄却できる。</p>
+</div>
+<div class="section" id="id4">
+<h2>プーリング・データの応用：差分の差分析<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h3>説明<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>差分の差分析（Difference-in-Differences; DiD）を使うとプーリング・データを使い政策の効果を検証できる。</p>
+<p>＜基本的な考え＞</p>
+<ul>
+<li><p>例として，ゴミ焼却場の建築が近隣住宅価格に与える影響を考える。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t</span></code>=0：政策実施前の年</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t</span></code>=1：政策実施後の年</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">D</span></code>：住宅がゴミ焼却場の近くであれば１，そうでなければ０（距離のダミー変数）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>：住宅価格</p></li>
+<li><p>仮定：ゴミ焼却場が建設されなかったとしたら，データにある全ての住宅価格は同じ率で増加していただろう。</p></li>
+<li><p>次式を使って政策実施前と後それぞれで推定</p>
+<div class="math notranslate nohighlight">
+\[y_t = \alpha_t + \gamma_t D + u\qquad t=0,1\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{y}_0^{\text{遠}}=\hat{\alpha}_0\)</span>：政策実施前の遠くに立地する住宅価格の平均</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{y}_0^{\text{近}}=\hat{\alpha}_0+\hat{\gamma}_0\)</span>：政策実施前の近くに立地する住宅価格の平均</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\hat{\gamma}_0\)</span>：政策実施前の遠くと近くに立地する住宅価格の<strong>差</strong></p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(\hat{y}_1^{\text{遠}}=\hat{\alpha}_1\)</span>：政策実施後の遠くに立地する住宅価格の平均</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{y}_1^{\text{近}}=\hat{\alpha}_1+\hat{\gamma}_1\)</span>：政策実施後の近くに立地する住宅価格の平均</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\hat{\gamma}_1\)</span>：政策実施後の遠くと近くに立地する住宅価格の<strong>差</strong></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>解釈（下の図を参考に）：</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{\gamma}_0\)</span>は政策実施前の住宅価格の差を示す。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{\gamma}_1\)</span>は政策実施後の住宅価格の差を示す。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\left(\hat{\gamma}_1-\hat{\gamma}_0\right)\)</span>は政策実施後と前の住宅価格の差の差を示す。この「差の差」の変化で近くに立地する住宅価格の変化を考えることができる。もしこの差の差が<code class="docutils literal notranslate"><span class="pre">0</span></code>であれば（即ち，差は同じだった），住宅価格は影響を受けなかったと解釈できる。もしこの差がマイナスであれば（即ち，差に違いが生じた）近くに立地する住宅の価格は減少してしたと考えられる。</p></li>
+</ul>
+</li>
+</ul>
+<a class="reference internal image-reference" href="_images/did.png"><img alt="_images/did.png" class="align-center" src="_images/did.png" style="width: 397.5px; height: 298.5px;" /></a>
+<p>上の議論から次のことが分かる。</p>
+<ul>
+<li><p>住宅価格の変化は上の図で示しているように次の「差の差」で捉えることができる。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{align*}
+    \hat{\gamma}_1^{\text{}}-\hat{\gamma}_0&amp;=\hat{y}_1^{\text{近}}-\hat{y}_0^{\text{近}}-\left(\hat{\alpha}_1-\hat{\alpha}_0\right) \\
+    &amp;=\left(\hat{y}_1^{\text{近}}-\hat{y}_0^{\text{近}}\right)-\left(\hat{y}_1^{\text{遠}}-\hat{y}_0^{\text{遠}}\right) \\ 
+    &amp;=\left(\hat{y}_1^{\text{近}}-\hat{y}_1^{\text{遠}}\right)-\left(\hat{y}_0^{\text{近}}-\hat{y}_0^{\text{遠}}\right)
+    \end{align*}
+    \end{split}\]</div>
+</li>
+<li><p>住宅価格の変化の間違った計算：</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{y}_1^{\text{近}}-\hat{y}_0^{\text{近}}=\left(\hat{\alpha}_1-\hat{\alpha}_0\right)+\left(\hat{\gamma}_1-\hat{\gamma}_0\right)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\left(\hat{\alpha}_1-\hat{\alpha}_0\right)\)</span>は，ゴミ焼却場建設から影響を「受けない（仮定）」遠
+い場所に立地する住宅価格が時間と共に変化する部分を捉えており，ゴミ焼却場建設と関係なく発生する価格変化である。この部分を取り除かなければ，ゴミ焼却場建設の効果の推定量にバイアスが発生する。</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<p>＜<code class="docutils literal notranslate"><span class="pre">DiD</span></code>推定方法＞</p>
+<ul>
+<li><p>通常の<code class="docutils literal notranslate"><span class="pre">OLS</span></code>を使うが，時間ダミー変数を導入する。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">T</span></code>：<code class="docutils literal notranslate"><span class="pre">t</span></code>=0の場合は０，<code class="docutils literal notranslate"><span class="pre">t</span></code>=1の場合は１</p></li>
+</ul>
+</li>
+<li><p>推定式：</p>
+<div class="math notranslate nohighlight">
+\[
+    y=\beta_0+\delta_0T + \beta_1D + \delta_1TD + u
+    \]</div>
+</li>
+</ul>
+<p>＜ダミー変数の値により4つのケースがある＞</p>
+<ol>
+<li><p><code class="docutils literal notranslate"><span class="pre">T</span></code>=<code class="docutils literal notranslate"><span class="pre">D</span></code>=0の場合</p>
+<div class="math notranslate nohighlight">
+\[
+    y=\beta_0 + u
+    \]</div>
+<p><span class="math notranslate nohighlight">\(\hat{y}_{0}^{\text{遠}}\equiv\hat{\beta}_0\)</span>：政策実施前の遠くに立地する住宅の平均価格
+<br></p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">T</span></code>=0 と <code class="docutils literal notranslate"><span class="pre">D</span></code>=1の場合</p>
+<div class="math notranslate nohighlight">
+\[
+    y=\beta_0 + \beta_1D + u
+    \]</div>
+<p><span class="math notranslate nohighlight">\(\hat{y}_{0}^{\text{近}}\equiv\hat{\beta}_0+\hat{\beta}_1\)</span>：政策実施前の近くに立地する住宅の平均価格
+<br></p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">T</span></code>=1 と <code class="docutils literal notranslate"><span class="pre">D</span></code>=0の場合</p>
+<div class="math notranslate nohighlight">
+\[
+    y=\beta_0 + \delta_0T + u
+    \]</div>
+<p><span class="math notranslate nohighlight">\(\hat{y}_{1}^{\text{遠}}\equiv\hat{\beta}_0+\hat{\delta}_0\)</span>：政策実施後の遠くに立地する住宅の平均価格
+<br></p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">T</span></code>=<code class="docutils literal notranslate"><span class="pre">D</span></code>=1の場合</p>
+<div class="math notranslate nohighlight">
+\[
+    y=\beta_0 + \delta_0T + \beta_1D + \delta_1TD + u
+    \]</div>
+<p><span class="math notranslate nohighlight">\(\hat{y}_{1}^{\text{近}}\equiv\hat{\beta}_0+\hat{\delta}_0+\hat{\beta}_1+\hat{\delta}_1\)</span>：政策実施後の近くに立地する住宅の平均価格</p>
+</li>
+</ol>
+<p>ここでの関心事は<span class="math notranslate nohighlight">\(\hat{\delta}_1\)</span>の推定値（負かどうか）であり，その統計的優位性である。この定義を使うと次式が成立することが確認できる。</p>
+<div class="math notranslate nohighlight">
+\[\hat{\delta}_1=\left(\hat{y}_1^{\text{近}}-\hat{y}_1^{\text{遠}}\right)-\left(\hat{y}_0^{\text{近}}-\hat{y}_0^{\text{遠}}\right)\]</div>
+<p>これは上で導出した式にある<span class="math notranslate nohighlight">\(\hat{\gamma}_1^{\text{}}-\hat{\gamma}_0\)</span>と同じである。</p>
+</div>
+<div class="section" id="did">
+<h3><code class="docutils literal notranslate"><span class="pre">DiD</span></code>推定<a class="headerlink" href="#did" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">keilmc</span></code>のデータを使いゴミ焼却場建設の近隣住宅価格に対する効果を実際に推計する。</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kielmc</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;kielmc&#39;</span><span class="p">)</span>
+
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;kielmc&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>name of dataset: kielmc
+no of variables: 25
+no of observations: 321
+
++----------+---------------------------------+
+| variable | label                           |
++----------+---------------------------------+
+| year     | 1978 or 1981                    |
+| age      | age of house                    |
+| agesq    | age^2                           |
+| nbh      | neighborhood, 1-6               |
+| cbd      | dist. to cent. bus. dstrct, ft. |
+| intst    | dist. to interstate, ft.        |
+| lintst   | log(intst)                      |
+| price    | selling price                   |
+| rooms    | # rooms in house                |
+| area     | square footage of house         |
+| land     | square footage lot              |
+| baths    | # bathrooms                     |
+| dist     | dist. from house to incin., ft. |
+| ldist    | log(dist)                       |
+| wind     | prc. time wind incin. to house  |
+| lprice   | log(price)                      |
+| y81      | =1 if year == 1981              |
+| larea    | log(area)                       |
+| lland    | log(land)                       |
+| y81ldist | y81*ldist                       |
+| lintstsq | lintst^2                        |
+| nearinc  | =1 if dist &lt;= 15840             |
+| y81nrinc | y81*nearinc                     |
+| rprice   | price, 1978 dollars             |
+| lrprice  | log(rprice)                     |
++----------+---------------------------------+
+
+K.A. Kiel and K.T. McClain (1995), “House Prices During Siting
+Decision Stages: The Case of an Incinerator from Rumor Through
+Operation,” Journal of Environmental Economics and Management 28,
+241-255. Professor McClain kindly provided the data, of which I used
+only a subset.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;rprice ~ nearinc + y81 + nearinc:y81&#39;</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">kielmc</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>（コメント）</p>
+<ul class="simple">
+<li><p>右辺を<code class="docutils literal notranslate"><span class="pre">nearinc</span> <span class="pre">*</span> <span class="pre">y81</span></code>と省略可能。</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>===============================================================================
+                  coef    std err          t      P&gt;|t|      [0.025      0.975]
+-------------------------------------------------------------------------------
+Intercept    8.252e+04   2726.910     30.260      0.000    7.72e+04    8.79e+04
+nearinc     -1.882e+04   4875.322     -3.861      0.000   -2.84e+04   -9232.293
+y81          1.879e+04   4050.065      4.640      0.000    1.08e+04    2.68e+04
+nearinc:y81 -1.186e+04   7456.646     -1.591      0.113   -2.65e+04    2806.867
+===============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nearinc:y81</span></code>の係数は約-11860であり，10%水準の両側検定でも帰無仮説（係数は0）を棄却できない。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nearinc:y81</span></code>は負の値であり住宅価格が減少したかを検証したい。従って，次の片側検定を行う。</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(H_0\)</span>: <code class="docutils literal notranslate"><span class="pre">nearinc:y81</span></code>の係数 <span class="math notranslate nohighlight">\(＝0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(H_a\)</span>: <code class="docutils literal notranslate"><span class="pre">nearinc:y81</span></code>の係数 <span class="math notranslate nohighlight">\(&lt;0\)</span></p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t_value</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">tvalues</span><span class="p">[</span><span class="s1">&#39;nearinc:y81&#39;</span><span class="p">]</span>  <span class="c1"># t値</span>
+
+<span class="n">dof</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">df_resid</span>  <span class="c1"># 自由度 n-k-1</span>
+
+<span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_value</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>  <span class="c1"># p値の計算</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.0562974203495265
+</pre></div>
+</div>
+</div>
+</div>
+<p>片側検定では，10%水準で帰無仮説は棄却できるが，5%水準では棄却できない。負の効果のある程度の統計的有意性はあるようである。一方，上の回帰分析には次のことが言える。</p>
+<ul class="simple">
+<li><p>左辺には住宅価格の対数を置く方が妥当ではないか。それにより，価格変化をパーセンテージ推計できると同時に，実質価格という解釈も成立する。</p></li>
+<li><p>住宅価格に与える他の変数が欠落している可能性がある。</p></li>
+</ul>
+<hr class="docutils" />
+<p>この2点を踏まえて，再度推定をおこなう。</p>
+<p>まず，<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>を使い住宅価格に対数をとり推計する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_1</span> <span class="o">=</span> <span class="s1">&#39;np.log(rprice) ~ nearinc * y81&#39;</span>
+
+<span class="n">result_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">kielmc</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result_1</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>===============================================================================
+                  coef    std err          t      P&gt;|t|      [0.025      0.975]
+-------------------------------------------------------------------------------
+Intercept      11.2854      0.031    369.839      0.000      11.225      11.345
+nearinc        -0.3399      0.055     -6.231      0.000      -0.447      -0.233
+y81             0.1931      0.045      4.261      0.000       0.104       0.282
+nearinc:y81    -0.0626      0.083     -0.751      0.453      -0.227       0.102
+===============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p>（結果）</p>
+<ul class="simple">
+<li><p>特に<code class="docutils literal notranslate"><span class="pre">nearinc:y81</span></code>の係数の統計的有意性が上昇したわけではない。</p></li>
+</ul>
+<p>次に，住宅価格に影響を及ぼしそうな変数を追加する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_2</span> <span class="o">=</span> <span class="s1">&#39;np.log(rprice) ~ nearinc * y81 + age + I(age**2) + </span><span class="se">\</span>
+<span class="s1">            np.log(intst) + np.log(land) + np.log(area) + rooms + baths&#39;</span>
+
+<span class="n">result_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">kielmc</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result_2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>=================================================================================
+                    coef    std err          t      P&gt;|t|      [0.025      0.975]
+---------------------------------------------------------------------------------
+Intercept         7.6517      0.416     18.399      0.000       6.833       8.470
+nearinc           0.0322      0.047      0.679      0.498      -0.061       0.126
+y81               0.1621      0.028      5.687      0.000       0.106       0.218
+nearinc:y81      -0.1315      0.052     -2.531      0.012      -0.234      -0.029
+age              -0.0084      0.001     -5.924      0.000      -0.011      -0.006
+I(age ** 2)    3.763e-05   8.67e-06      4.342      0.000    2.06e-05    5.47e-05
+np.log(intst)    -0.0614      0.032     -1.950      0.052      -0.123       0.001
+np.log(land)      0.0998      0.024      4.077      0.000       0.052       0.148
+np.log(area)      0.3508      0.051      6.813      0.000       0.249       0.452
+rooms             0.0473      0.017      2.732      0.007       0.013       0.081
+baths             0.0943      0.028      3.400      0.001       0.040       0.149
+=================================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p>（結果）</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nearinc:y81</span></code>の係数は，住宅価格が13.1%下落したことを示している。</p></li>
+<li><p>p値はこの経済的効果が非常に有意にゼロではないことを示している。</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>パネル・データとその問題点<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h3>パネル・データについて<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>パネル・データを使い推定する場合，観察単位<span class="math notranslate nohighlight">\(i\)</span>と時間<span class="math notranslate nohighlight">\(t\)</span>の２つ次元を考慮した回帰式となる。説明を具体化するために，47都道府県での雇用に対する公共支出の効果を考えよう。</p>
+<div class="math notranslate nohighlight">
+\[
+y_{it}= \alpha_{it} +\beta_1x_{it}+u_{it}\qquad i=1,2,...,n\quad t=1,2
+\]</div>
+<p>ここで</p>
+<div class="math notranslate nohighlight">
+\[
+\alpha_{i}=\beta_0+a_{i}+\delta_0D_t
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(y_{it}\)</span>：都道府県<span class="math notranslate nohighlight">\(i\)</span>の<span class="math notranslate nohighlight">\(t\)</span>時点における雇用</p></li>
+<li><p><span class="math notranslate nohighlight">\(x_{it}\)</span>：都道府県<span class="math notranslate nohighlight">\(i\)</span>の<span class="math notranslate nohighlight">\(t\)</span>時点における公共支出</p></li>
+<li><p><span class="math notranslate nohighlight">\(\alpha_{it}\)</span>：回帰曲線の切片。</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(i\)</span>がある（都道府県によって切片が異なる）理由：都道府県の間に存在しうる異質性を捉えている。</p>
+<ul>
+<li><p>例えば，他県の公共支出からの影響を受けやすい（若しくは，受けにくい）県がある可能性がある。また，海に接している県や内陸の県では公共支出の効果は異なるかも知れない。また働き方や公共支出に対する県民特有の考え方や好みの違いもありうる。こういう要素は変化には時間が掛かり，推定期間内であれば一定と考えることができる。ありとあらゆる異質性が含まれるため，観察不可能と考えられる。</p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(t\)</span>がある理由：公共支出以外の理由で時間と共に雇用は変化するかもしれない。時間トレンドの効果を捉える。</p></li>
+<li><p>都道府県特有の定数項は3つに分ける。</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\beta_0\)</span>：共通の定数項</p></li>
+<li><p><span class="math notranslate nohighlight">\(a_{i}\)</span>：都道府県別の定数項（<strong>観察不可能</strong>）</p></li>
+<li><p><span class="math notranslate nohighlight">\(\delta_0D_t\)</span>：時間による切片の変化を捉えており，<span class="math notranslate nohighlight">\(D_t\)</span>は時間ダミー変数</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(D_0=0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(D_1=1\)</span></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(u_{it}\)</span>：時間によって変化する観測不可能な誤差項（<span class="math notranslate nohighlight">\(i\)</span>と<span class="math notranslate nohighlight">\(t\)</span>に依存する誤差項であり，idiosyncratic errorsと呼ばれることがある）</p>
+<ul>
+<li><p>仮定：<span class="math notranslate nohighlight">\(\text{Cov}(x_{it},u_{it})=0\)</span></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="ols">
+<h3>OLS推定の問題点<a class="headerlink" href="#ols" title="Permalink to this headline">¶</a></h3>
+<p><span class="math notranslate nohighlight">\(a_i\)</span>は観察不可能なため，上の回帰式は次のように表すことができる。</p>
+<div class="math notranslate nohighlight">
+\[
+y_{it}= \beta_0 + \delta_0D_t + \beta_1x_{it}+e_{it}\qquad e_{it}=a_i+u_{it}
+\]</div>
+<p>ここで<span class="math notranslate nohighlight">\(e_{it}\)</span>は観察不可能な誤差項。</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(x_{it}\)</span>と<span class="math notranslate nohighlight">\(a_i\)</span>とが相関する場合，<span class="math notranslate nohighlight">\(x_{it}\)</span>と<span class="math notranslate nohighlight">\(e_{it}\)</span>は相関することになり，GM仮定４は成立しなくなる。</p>
+<div class="math notranslate nohighlight">
+\[
+    \text{Cov}\left(x_{it}a_{it}\right)\neq 0\quad \Rightarrow\quad \text{Cov}\left(x_{it}e_{it}\right)\neq 0
+    \]</div>
+<p>即ち，<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>は不偏性と一致性を失うことになる。</p>
+</li>
+<li><p>「異質性バイアス」と呼ばれるが，本質的には<span class="math notranslate nohighlight">\(a_i\)</span>の欠落変数バイアスである。</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="groupby">
+<h2>１階差分推定の準備：<code class="docutils literal notranslate"><span class="pre">groupby</span></code><a class="headerlink" href="#groupby" title="Permalink to this headline">¶</a></h2>
+<p>パネル・データを使った推定方法として１階差分推定（First Differenced Estimator）があり，それを使い推定する。その前準備として変数の差分の作成方法について説明する。</p>
+<p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>にはメソッド<code class="docutils literal notranslate"><span class="pre">groupby</span></code>があり，これを使うとカテゴリー変数がある列に従って行をグループ分けしグループ毎の様々な計算が可能となる。具体的な例としては<a class="reference external" href="https://github.com/Haruyama-KobeU/Py4Etrics/blob/master/Gapminder.ipynb">Gapminder</a>を参照。ここでは<code class="docutils literal notranslate"><span class="pre">groupby</span></code>を使い差分の変数の作り方を説明する。</p>
+<p>例として使うデータを読み込む。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># url の設定</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/Haruyama-KobeU/Haruyama-KobeU.github.io/master/data/data4.csv&#39;</span>
+
+<span class="c1"># 読み込み</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>country</th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2000</td>
+      <td>Australia</td>
+      <td>90</td>
+      <td>30.0</td>
+      <td>50.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2001</td>
+      <td>Australia</td>
+      <td>100</td>
+      <td>40.0</td>
+      <td>80.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2002</td>
+      <td>Australia</td>
+      <td>120</td>
+      <td>NaN</td>
+      <td>70.0</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2000</td>
+      <td>Japan</td>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2001</td>
+      <td>Japan</td>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2002</td>
+      <td>Japan</td>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2000</td>
+      <td>UK</td>
+      <td>100</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2001</td>
+      <td>UK</td>
+      <td>110</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2002</td>
+      <td>UK</td>
+      <td>115</td>
+      <td>55.0</td>
+      <td>NaN</td>
+      <td>14</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>列<code class="docutils literal notranslate"><span class="pre">country</span></code>がカテゴリー変数であり，3つの国がある。この列を使いグループ分けする。</p>
+<p>まず前準備として，メソッド<code class="docutils literal notranslate"><span class="pre">.sort_values()</span></code>を使い列<code class="docutils literal notranslate"><span class="pre">country</span></code>で昇順に並び替え，その後，列<code class="docutils literal notranslate"><span class="pre">year</span></code>で昇順に並び替える。</p>
+<p>（コメント）</p>
+<p>以下のコードには<code class="docutils literal notranslate"><span class="pre">.reset_index(drop=True)</span></code>が追加されているが，これは行のインデックスを0,1,2,..と振り直すメソッドである。引数<code class="docutils literal notranslate"><span class="pre">drop=True</span></code>がなければ，元々あったインデックスが新たな列として追加される。試しに，最初から<code class="docutils literal notranslate"><span class="pre">df</span></code>を読み直して<code class="docutils literal notranslate"><span class="pre">.reset_index(drop=True)</span></code>を省いて下のコードを実行してみよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">&#39;country&#39;</span><span class="p">,</span><span class="s1">&#39;year&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>country</th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2000</td>
+      <td>Australia</td>
+      <td>90</td>
+      <td>30.0</td>
+      <td>50.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2001</td>
+      <td>Australia</td>
+      <td>100</td>
+      <td>40.0</td>
+      <td>80.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2002</td>
+      <td>Australia</td>
+      <td>120</td>
+      <td>NaN</td>
+      <td>70.0</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2000</td>
+      <td>Japan</td>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2001</td>
+      <td>Japan</td>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2002</td>
+      <td>Japan</td>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2000</td>
+      <td>UK</td>
+      <td>100</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2001</td>
+      <td>UK</td>
+      <td>110</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2002</td>
+      <td>UK</td>
+      <td>115</td>
+      <td>55.0</td>
+      <td>NaN</td>
+      <td>14</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">country</span></code>でグループ化した<code class="docutils literal notranslate"><span class="pre">df_group</span></code>を作成する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_group</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;country&#39;</span><span class="p">)</span>
+
+<span class="n">df_group</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f8fbf2d6100&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>このコードの出力が示すように，<code class="docutils literal notranslate"><span class="pre">df_group</span></code>は<code class="docutils literal notranslate"><span class="pre">DataFrameGroupBy</span></code>というクラス名のオブジェクト（データ型）であり，<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>とは異なる。これによりグループ別の計算が格段と容易になる。</p>
+<p>例えば，次のコードを使いそれぞれの経済の<code class="docutils literal notranslate"><span class="pre">gdp</span></code>の平均を計算することができる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_group</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>country
+Australia    103.333333
+Japan         96.000000
+UK           108.333333
+Name: gdp, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">mean()</span></code>は<code class="docutils literal notranslate"><span class="pre">df_group</span></code>に備わるメソッドである。他にも便利な使い方があるが，ここでは変数の差分の作りかを説明する。</p>
+<p><code class="docutils literal notranslate"><span class="pre">df_group</span></code>にある変数の差分をとるためにメソッド<code class="docutils literal notranslate"><span class="pre">diff()</span></code>を使う。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="s1">&#39;inv&#39;</span><span class="p">]</span>
+
+<span class="n">df_diff</span> <span class="o">=</span> <span class="n">df_group</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
+
+<span class="n">df_diff</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10.0</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>20.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-5.0</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>-2.0</td>
+      <td>-4.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>10.0</td>
+      <td>9.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>5.0</td>
+      <td>16.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>次に<code class="docutils literal notranslate"><span class="pre">df</span></code>と<code class="docutils literal notranslate"><span class="pre">df_diff</span></code>を横に結合する。</p>
+<p><strong>＜方法１：<code class="docutils literal notranslate"><span class="pre">pd.concat</span></code>＞</strong></p>
+<ol class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">df_diff</span></code>の列名を変更</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pd.condat</span></code>を使い結合</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_diff_1</span> <span class="o">=</span> <span class="n">df_diff</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;gdp&#39;</span><span class="p">:</span><span class="s1">&#39;gdp_diff&#39;</span><span class="p">,</span><span class="s1">&#39;inv&#39;</span><span class="p">:</span><span class="s1">&#39;inv_diff&#39;</span><span class="p">})</span>
+
+<span class="n">df_diff_1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp_diff</th>
+      <th>inv_diff</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10.0</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>20.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-5.0</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>-2.0</td>
+      <td>-4.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>10.0</td>
+      <td>9.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>5.0</td>
+      <td>16.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">df_diff_1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>country</th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>gdp_diff</th>
+      <th>inv_diff</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2000</td>
+      <td>Australia</td>
+      <td>90</td>
+      <td>30.0</td>
+      <td>50.0</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2001</td>
+      <td>Australia</td>
+      <td>100</td>
+      <td>40.0</td>
+      <td>80.0</td>
+      <td>11</td>
+      <td>10.0</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2002</td>
+      <td>Australia</td>
+      <td>120</td>
+      <td>NaN</td>
+      <td>70.0</td>
+      <td>16</td>
+      <td>20.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2000</td>
+      <td>Japan</td>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2001</td>
+      <td>Japan</td>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>-5.0</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2002</td>
+      <td>Japan</td>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+      <td>-2.0</td>
+      <td>-4.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2000</td>
+      <td>UK</td>
+      <td>100</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2001</td>
+      <td>UK</td>
+      <td>110</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12</td>
+      <td>10.0</td>
+      <td>9.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2002</td>
+      <td>UK</td>
+      <td>115</td>
+      <td>55.0</td>
+      <td>NaN</td>
+      <td>14</td>
+      <td>5.0</td>
+      <td>16.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>上のコードの<code class="docutils literal notranslate"><span class="pre">axis='columns'</span></code>は<code class="docutils literal notranslate"><span class="pre">axis=1</span></code>としてもOK。この方法は、<code class="docutils literal notranslate"><span class="pre">df</span></code>と<code class="docutils literal notranslate"><span class="pre">df_diff_1</span></code>の行の順序が同じという想定のもとで行っている。行の順番が同じでない場合や不明な場合は、次の方法が良いであろう。</p>
+<p><strong>＜方法２：<code class="docutils literal notranslate"><span class="pre">pd.merge</span></code>＞</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">df</span></code>と<code class="docutils literal notranslate"><span class="pre">df_diff</span></code>を使い、方法１の２つのステップを１行で済ませる。次のコードでは3つの引数を指定している。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">left_index=True</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">df</span></code>の行のインデックスに合わせて結合する。</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">right_index=True</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">df_diff</span></code>の行のインデックスに合わせて結合する。</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">suffixes=('',</span> <span class="pre">'_diff')</span></code></p>
+<ul>
+<li><p>左の引数<code class="docutils literal notranslate"><span class="pre">''</span></code>：結合後，重複する左の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の列につける接尾辞（空の接尾辞）</p></li>
+<li><p>右の引数<code class="docutils literal notranslate"><span class="pre">'_diff'</span></code>：結合後，重複する右の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の列につける接尾辞</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">df_diff</span><span class="p">,</span> <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">suffixes</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;_diff&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>country</th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+      <th>gdp_diff</th>
+      <th>inv_diff</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2000</td>
+      <td>Australia</td>
+      <td>90</td>
+      <td>30.0</td>
+      <td>50.0</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2001</td>
+      <td>Australia</td>
+      <td>100</td>
+      <td>40.0</td>
+      <td>80.0</td>
+      <td>11</td>
+      <td>10.0</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2002</td>
+      <td>Australia</td>
+      <td>120</td>
+      <td>NaN</td>
+      <td>70.0</td>
+      <td>16</td>
+      <td>20.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2000</td>
+      <td>Japan</td>
+      <td>100</td>
+      <td>20.0</td>
+      <td>80.0</td>
+      <td>8</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2001</td>
+      <td>Japan</td>
+      <td>95</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>9</td>
+      <td>-5.0</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2002</td>
+      <td>Japan</td>
+      <td>93</td>
+      <td>21.0</td>
+      <td>72.0</td>
+      <td>10</td>
+      <td>-2.0</td>
+      <td>-4.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2000</td>
+      <td>UK</td>
+      <td>100</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2001</td>
+      <td>UK</td>
+      <td>110</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12</td>
+      <td>10.0</td>
+      <td>9.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2002</td>
+      <td>UK</td>
+      <td>115</td>
+      <td>55.0</td>
+      <td>NaN</td>
+      <td>14</td>
+      <td>5.0</td>
+      <td>16.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">df</span></code>を上書きしたい場合は，<code class="docutils literal notranslate"><span class="pre">df=</span></code>を付け加える。</p>
+</div>
+<div class="section" id="id8">
+<h2>１階差分推定<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h3>説明<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>異質性バイアスの一番簡単な解決方法が１階差分推定（First Differenced Estimator）である。考え方は非常に簡単である。次の１階差分を定義する。</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\Delta y_{i}=y_{i1}-y_{i0}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\Delta D = D_{1}-D_0 =1-0= 1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\Delta x_{i}=x_{i1}-x_{i0}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\Delta e_{i}=e_{i1}-e_{i0}=a_i+u_{i1}-\left(a_i+u_{i0}\right)=\Delta u_{i}\)</span></p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(a_i\)</span>が削除される。</p></li>
+</ul>
+</li>
+</ul>
+<p>これらを使い，上の式の１階差分をとると次式を得る。</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta y_{it}= \delta_0 + \beta_1\Delta x_{i}+\Delta u_{i}\qquad i=1,2,...,n
+\]</div>
+<ul class="simple">
+<li><p>良い点</p>
+<ul>
+<li><p>（仮定により）<span class="math notranslate nohighlight">\(\Delta x_{i}\)</span>と<span class="math notranslate nohighlight">\(\Delta u_{i}\)</span>は相関しないため，GM仮定４は満たされることになる。</p></li>
+</ul>
+</li>
+<li><p>悪い点</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(t=0\)</span>のデータを使えなくなるため，標本の大きさが小さくなる。</p></li>
+<li><p>期間内の説明変数<span class="math notranslate nohighlight">\(\Delta x_i\)</span>の変化が小さいと，不正確な推定になる（極端な場合，変化がないと推定不可能となる）。</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<p>＜推定方法＞</p>
+<p>データから１階差分を計算し，<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使いOLS推定すれば良い。以下ではパッケージ<code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>にあるデータを使う。</p>
+</div>
+<div class="section" id="id10">
+<h3>推定：２期間の場合<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>以下では<code class="docutils literal notranslate"><span class="pre">crime2</span></code>のデータを使い説明する。</p></li>
+<li><p>このデータを使い，失業率が犯罪に負の影響を与えるかどうかを検証する。</p></li>
+</ul>
+<p>データの読み込み。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crime2</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime2&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>変数の説明。</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime2&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>name of dataset: crime2
+no of variables: 34
+no of observations: 92
+
++----------+----------------------------+
+| variable | label                      |
++----------+----------------------------+
+| pop      | population                 |
+| crimes   | total number index crimes  |
+| unem     | unemployment rate          |
+| officers | number police officers     |
+| pcinc    | per capita income          |
+| west     | =1 if city in west         |
+| nrtheast | =1 if city in NE           |
+| south    | =1 if city in south        |
+| year     | 82 or 87                   |
+| area     | land area, square miles    |
+| d87      | =1 if year = 87            |
+| popden   | people per sq mile         |
+| crmrte   | crimes per 1000 people     |
+| offarea  | officers per sq mile       |
+| lawexpc  | law enforce. expend. pc, $ |
+| polpc    | police per 1000 people     |
+| lpop     | log(pop)                   |
+| loffic   | log(officers)              |
+| lpcinc   | log(pcinc)                 |
+| llawexpc | log(lawexpc)               |
+| lpopden  | log(popden)                |
+| lcrimes  | log(crimes)                |
+| larea    | log(area)                  |
+| lcrmrte  | log(crmrte)                |
+| clcrimes | change in lcrimes          |
+| clpop    | change in lpop             |
+| clcrmrte | change in lcrmrte          |
+| lpolpc   | log(polpc)                 |
+| clpolpc  | change in lpolpc           |
+| cllawexp | change in llawexp          |
+| cunem    | change in unem             |
+| clpopden | change in lpopden          |
+| lcrmrt_1 | lcrmrte lagged             |
+| ccrmrte  | change in crmrte           |
++----------+----------------------------+
+
+These data were collected by David Dicicco, a former MSU
+undergraduate, for a final project. They came from various issues of
+the County and City Data Book, and are for the years 1982 and 1985.
+Unfortunately, I do not have the list of cities.
+</pre></div>
+</div>
+</div>
+</div>
+<p>興味がある変数</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">crmes</span></code>：犯罪率（1000人当たり犯罪数）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unem</span></code>：失業率</p></li>
+</ul>
+<p>（コメント）</p>
+<p>データセットにはこの2つの変数の差分（<code class="docutils literal notranslate"><span class="pre">cunem</span></code>と<code class="docutils literal notranslate"><span class="pre">ccrmrte</span></code>）も用意されているが，以下では<code class="docutils literal notranslate"><span class="pre">groupby</span></code>を使って変数を作成する。</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crime2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pop</th>
+      <th>crimes</th>
+      <th>unem</th>
+      <th>officers</th>
+      <th>pcinc</th>
+      <th>west</th>
+      <th>nrtheast</th>
+      <th>south</th>
+      <th>year</th>
+      <th>area</th>
+      <th>...</th>
+      <th>clcrimes</th>
+      <th>clpop</th>
+      <th>clcrmrte</th>
+      <th>lpolpc</th>
+      <th>clpolpc</th>
+      <th>cllawexp</th>
+      <th>cunem</th>
+      <th>clpopden</th>
+      <th>lcrmrt_1</th>
+      <th>ccrmrte</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>229528.0</td>
+      <td>17136.0</td>
+      <td>8.2</td>
+      <td>326</td>
+      <td>8532</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>82</td>
+      <td>44.599998</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.350872</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>246815.0</td>
+      <td>17306.0</td>
+      <td>3.7</td>
+      <td>321</td>
+      <td>12155</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>87</td>
+      <td>44.599998</td>
+      <td>...</td>
+      <td>0.009871</td>
+      <td>0.072614</td>
+      <td>-0.062743</td>
+      <td>0.262802</td>
+      <td>-0.08807</td>
+      <td>0.977952</td>
+      <td>-4.5</td>
+      <td>0.072615</td>
+      <td>4.312912</td>
+      <td>-4.540268</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>814054.0</td>
+      <td>75654.0</td>
+      <td>8.1</td>
+      <td>1621</td>
+      <td>7551</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>82</td>
+      <td>375.000000</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.688772</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>933177.0</td>
+      <td>83960.0</td>
+      <td>5.4</td>
+      <td>1803</td>
+      <td>11363</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>87</td>
+      <td>375.000000</td>
+      <td>...</td>
+      <td>0.104170</td>
+      <td>0.136568</td>
+      <td>-0.032398</td>
+      <td>0.658612</td>
+      <td>-0.03016</td>
+      <td>0.200762</td>
+      <td>-2.7</td>
+      <td>0.136568</td>
+      <td>4.531899</td>
+      <td>-2.962654</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>374974.0</td>
+      <td>31352.0</td>
+      <td>9.0</td>
+      <td>633</td>
+      <td>8343</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>82</td>
+      <td>49.799999</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.523614</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 34 columns</p>
+</div></div></div>
+</div>
+<p>このデータセットには，観察単位識別用の変数がない。しかし，行0と1が1つの地域のデータ，行2と3が別の地域のデータをなっていることがわかる（<code class="docutils literal notranslate"><span class="pre">year</span></code>を見るとわかる）。まず観察単位識別用のの列を作成する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 観察単位の数</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">crime2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+
+<span class="c1"># 観察単位ID用のリスト作成 [1,2,3,4....]</span>
+<span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+
+<span class="c1"># 観察単位ID用のリスト作成 [1,1,2,2,3,3,4,4....]</span>
+<span class="n">country_list</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">country_list</span></code>の説明：</p>
+<ol class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Series</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">repeat(2)</span></code>は<code class="docutils literal notranslate"><span class="pre">lst</span></code>の要素を２回リピートする<code class="docutils literal notranslate"><span class="pre">Series</span></code>を生成する。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">to_list()</span></code>は<code class="docutils literal notranslate"><span class="pre">Series</span></code>をリストに変換するメソッド。</p></li>
+</ol>
+<p>データセットに列<code class="docutils literal notranslate"><span class="pre">county</span></code>を追加し確認する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crime2</span><span class="p">[</span><span class="s1">&#39;county&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">country_list</span>  <span class="c1"># 追加</span>
+
+<span class="n">crime2</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;county&#39;</span><span class="p">,</span><span class="s1">&#39;year&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>  <span class="c1"># 確認</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>county</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>82</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>87</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>82</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2</td>
+      <td>87</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3</td>
+      <td>82</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">unem</span></code>と<code class="docutils literal notranslate"><span class="pre">crmrte</span></code>の差分を求める。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;unem&#39;</span><span class="p">,</span> <span class="s1">&#39;crmrte&#39;</span><span class="p">]</span>  <span class="c1"># groupbyで差分を取る列の指定</span>
+
+<span class="n">names</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;unem&#39;</span><span class="p">:</span><span class="s1">&#39;unem_diff&#39;</span><span class="p">,</span> <span class="s1">&#39;crmrte&#39;</span><span class="p">:</span><span class="s1">&#39;crmrte_diff&#39;</span><span class="p">}</span>  <span class="c1"># 差分の列のラベル</span>
+
+<span class="n">crime2_diff</span> <span class="o">=</span> <span class="n">crime2</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">)[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">names</span><span class="p">)</span>
+
+<span class="n">crime2_diff</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>unem_diff</th>
+      <th>crmrte_diff</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-4.5</td>
+      <td>-4.540268</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-2.7</td>
+      <td>-2.962654</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">crime2_diff</span></code>を使って回帰分析をおこなう。</p>
+<p>（コメント）</p>
+<p>以下の計算では<code class="docutils literal notranslate"><span class="pre">NaN</span></code>は自動的に無視される。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_1</span> <span class="o">=</span> <span class="s1">&#39;crmrte_diff ~ unem_diff&#39;</span>
+
+<span class="n">result_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_1</span><span class="p">,</span> <span class="n">crime2_diff</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result_1</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept     15.4022      4.702      3.276      0.002       5.926      24.879
+unem_diff      2.2180      0.878      2.527      0.015       0.449       3.987
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p>＜結果＞</p>
+<ul class="simple">
+<li><p>失業率が1%増加すると，犯罪率は約2.2%上昇する。</p>
+<ul>
+<li><p>この場合、微分を計算するのではなく、<code class="docutils literal notranslate"><span class="pre">unem_diff</span></code>に<code class="docutils literal notranslate"><span class="pre">1</span></code>を代入して解釈する。</p></li>
+</ul>
+</li>
+<li><p>5％の水準で帰無仮説を棄却できる。</p></li>
+<li><p>次の片側検定を行う</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(H_0\)</span>: <code class="docutils literal notranslate"><span class="pre">unem</span></code>の係数 <span class="math notranslate nohighlight">\(＝0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(H_a\)</span>: <code class="docutils literal notranslate"><span class="pre">unem</span></code>の係数 <span class="math notranslate nohighlight">\(&gt;0\)</span></p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t_value</span> <span class="o">=</span> <span class="n">result_1</span><span class="o">.</span><span class="n">tvalues</span><span class="p">[</span><span class="s1">&#39;unem_diff&#39;</span><span class="p">]</span>  <span class="c1"># t値</span>
+
+<span class="n">dof</span> <span class="o">=</span> <span class="n">result_1</span><span class="o">.</span><span class="n">df_resid</span>  <span class="c1"># 自由度 n-k-1</span>
+
+<span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_value</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>  <span class="c1"># p値の計算</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.007594658874412463
+</pre></div>
+</div>
+</div>
+</div>
+<p>片側検定では，1%水準で帰無仮説を棄却できる。</p>
+<hr class="docutils" />
+<p><strong>＜参考１＞</strong></p>
+<p>１階差分推定を使わずに直接OLS推定するとどうなるかを確かめてみる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_ols_1</span> <span class="o">=</span> <span class="s1">&#39;crmrte ~ d87 + unem&#39;</span>
+
+<span class="n">result_ols_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_ols_1</span><span class="p">,</span> <span class="n">crime2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result_ols_1</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept     93.4202     12.739      7.333      0.000      68.107     118.733
+d87            7.9404      7.975      0.996      0.322      -7.906      23.787
+unem           0.4265      1.188      0.359      0.720      -1.935       2.788
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>失業の効果は過小評価されている。</p>
+<ul>
+<li><p>地域の異質性を考慮しなため異質性バイアス（欠落変数バイアス）が発生している。</p></li>
+</ul>
+</li>
+<li><p>統計的有意性も低い（p値は非常に高い）。</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>＜参考２＞</strong></p>
+<p>参考１の回帰式にはダミー変数<code class="docutils literal notranslate"><span class="pre">d87</span></code>が入っており、年によって失業と犯罪の関係は異なることを捉えている。もしこのダミーが入らないと通常考えられる関係と逆の相関が発生する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_ols_2</span> <span class="o">=</span> <span class="s1">&#39;crmrte ~ unem&#39;</span>
+
+<span class="n">result_ols_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_ols_2</span><span class="p">,</span> <span class="n">crime2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result_ols_2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept    103.2434      8.059     12.811      0.000      87.233     119.253
+unem          -0.3077      0.932     -0.330      0.742      -2.159       1.543
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h3>推定：３期間以上の場合<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">crime4</span></code>のデータセットを使い，犯罪の決定要因について推定する。</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crime4</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime4&#39;</span><span class="p">)</span>
+<span class="n">crime4</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>county</th>
+      <th>year</th>
+      <th>crmrte</th>
+      <th>prbarr</th>
+      <th>prbconv</th>
+      <th>prbpris</th>
+      <th>avgsen</th>
+      <th>polpc</th>
+      <th>density</th>
+      <th>taxpc</th>
+      <th>...</th>
+      <th>lpctymle</th>
+      <th>lpctmin</th>
+      <th>clcrmrte</th>
+      <th>clprbarr</th>
+      <th>clprbcon</th>
+      <th>clprbpri</th>
+      <th>clavgsen</th>
+      <th>clpolpc</th>
+      <th>cltaxpc</th>
+      <th>clmix</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>81</td>
+      <td>0.039885</td>
+      <td>0.289696</td>
+      <td>0.402062</td>
+      <td>0.472222</td>
+      <td>5.61</td>
+      <td>0.001787</td>
+      <td>2.307159</td>
+      <td>25.697630</td>
+      <td>...</td>
+      <td>-2.433870</td>
+      <td>3.006608</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>82</td>
+      <td>0.038345</td>
+      <td>0.338111</td>
+      <td>0.433005</td>
+      <td>0.506993</td>
+      <td>5.59</td>
+      <td>0.001767</td>
+      <td>2.330254</td>
+      <td>24.874252</td>
+      <td>...</td>
+      <td>-2.449038</td>
+      <td>3.006608</td>
+      <td>-0.039376</td>
+      <td>0.154542</td>
+      <td>0.074143</td>
+      <td>0.071048</td>
+      <td>-0.003571</td>
+      <td>-0.011364</td>
+      <td>-0.032565</td>
+      <td>0.030857</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>83</td>
+      <td>0.030305</td>
+      <td>0.330449</td>
+      <td>0.525703</td>
+      <td>0.479705</td>
+      <td>5.80</td>
+      <td>0.001836</td>
+      <td>2.341801</td>
+      <td>26.451443</td>
+      <td>...</td>
+      <td>-2.464036</td>
+      <td>3.006608</td>
+      <td>-0.235316</td>
+      <td>-0.022922</td>
+      <td>0.193987</td>
+      <td>-0.055326</td>
+      <td>0.036879</td>
+      <td>0.038413</td>
+      <td>0.061477</td>
+      <td>-0.244732</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>84</td>
+      <td>0.034726</td>
+      <td>0.362525</td>
+      <td>0.604706</td>
+      <td>0.520104</td>
+      <td>6.89</td>
+      <td>0.001886</td>
+      <td>2.346420</td>
+      <td>26.842348</td>
+      <td>...</td>
+      <td>-2.478925</td>
+      <td>3.006608</td>
+      <td>0.136180</td>
+      <td>0.092641</td>
+      <td>0.140006</td>
+      <td>0.080857</td>
+      <td>0.172213</td>
+      <td>0.026930</td>
+      <td>0.014670</td>
+      <td>-0.027331</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>85</td>
+      <td>0.036573</td>
+      <td>0.325395</td>
+      <td>0.578723</td>
+      <td>0.497059</td>
+      <td>6.55</td>
+      <td>0.001924</td>
+      <td>2.364896</td>
+      <td>28.140337</td>
+      <td>...</td>
+      <td>-2.497306</td>
+      <td>3.006608</td>
+      <td>0.051825</td>
+      <td>-0.108054</td>
+      <td>-0.043918</td>
+      <td>-0.045320</td>
+      <td>-0.050606</td>
+      <td>0.020199</td>
+      <td>0.047223</td>
+      <td>0.172125</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 59 columns</p>
+</div></div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime4&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>name of dataset: crime4
+no of variables: 59
+no of observations: 630
+
++----------+---------------------------------+
+| variable | label                           |
++----------+---------------------------------+
+| county   | county identifier               |
+| year     | 81 to 87                        |
+| crmrte   | crimes committed per person     |
+| prbarr   | &#39;probability&#39; of arrest         |
+| prbconv  | &#39;probability&#39; of conviction     |
+| prbpris  | &#39;probability&#39; of prison sentenc |
+| avgsen   | avg. sentence, days             |
+| polpc    | police per capita               |
+| density  | people per sq. mile             |
+| taxpc    | tax revenue per capita          |
+| west     | =1 if in western N.C.           |
+| central  | =1 if in central N.C.           |
+| urban    | =1 if in SMSA                   |
+| pctmin80 | perc. minority, 1980            |
+| wcon     | weekly wage, construction       |
+| wtuc     | wkly wge, trns, util, commun    |
+| wtrd     | wkly wge, whlesle, retail trade |
+| wfir     | wkly wge, fin, ins, real est    |
+| wser     | wkly wge, service industry      |
+| wmfg     | wkly wge, manufacturing         |
+| wfed     | wkly wge, fed employees         |
+| wsta     | wkly wge, state employees       |
+| wloc     | wkly wge, local gov emps        |
+| mix      | offense mix: face-to-face/other |
+| pctymle  | percent young male              |
+| d82      | =1 if year == 82                |
+| d83      | =1 if year == 83                |
+| d84      | =1 if year == 84                |
+| d85      | =1 if year == 85                |
+| d86      | =1 if year == 86                |
+| d87      | =1 if year == 87                |
+| lcrmrte  | log(crmrte)                     |
+| lprbarr  | log(prbarr)                     |
+| lprbconv | log(prbconv)                    |
+| lprbpris | log(prbpris)                    |
+| lavgsen  | log(avgsen)                     |
+| lpolpc   | log(polpc)                      |
+| ldensity | log(density)                    |
+| ltaxpc   | log(taxpc)                      |
+| lwcon    | log(wcon)                       |
+| lwtuc    | log(wtuc)                       |
+| lwtrd    | log(wtrd)                       |
+| lwfir    | log(wfir)                       |
+| lwser    | log(wser)                       |
+| lwmfg    | log(wmfg)                       |
+| lwfed    | log(wfed)                       |
+| lwsta    | log(wsta)                       |
+| lwloc    | log(wloc)                       |
+| lmix     | log(mix)                        |
+| lpctymle | log(pctymle)                    |
+| lpctmin  | log(pctmin)                     |
+| clcrmrte | lcrmrte - lcrmrte[_n-1]         |
+| clprbarr | lprbarr - lprbarr[_n-1]         |
+| clprbcon | lprbconv - lprbconv[_n-1]       |
+| clprbpri | lprbpri - lprbpri[t-1]          |
+| clavgsen | lavgsen - lavgsen[t-1]          |
+| clpolpc  | lpolpc - lpolpc[t-1]            |
+| cltaxpc  | ltaxpc - ltaxpc[t-1]            |
+| clmix    | lmix - lmix[t-1]                |
++----------+---------------------------------+
+
+From C. Cornwell and W. Trumball (1994), “Estimating the Economic
+Model of Crime with Panel Data,” Review of Economics and Statistics
+76, 360-366. Professor Cornwell kindly provided the data.
+</pre></div>
+</div>
+</div>
+</div>
+<p>＜興味がある変数＞</p>
+<ul class="simple">
+<li><p>被説明変数</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">lcrmrte</span></code>：１人当たり犯罪数（対数）</p></li>
+</ul>
+</li>
+<li><p>説明変数</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">lprbarr</span></code>：逮捕の確率（対数）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lprbconv</span></code>：有罪判決の確率（対数; 逮捕を所与として）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lprbpris</span></code>：刑務所に収監される確率（対数; 有罪判決を所与として）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lavgsen</span></code>：平均服役期間（対数）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lpolpc</span></code>：１人当たり警官数（対数）</p></li>
+</ul>
+</li>
+</ul>
+<p>それぞれの変数の差分も用意されているが，以下では列<code class="docutils literal notranslate"><span class="pre">county</span></code>をグループ化しそれらの値を計算する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># グループ化</span>
+<span class="n">crime4_group</span> <span class="o">=</span> <span class="n">crime4</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">)</span>
+
+<span class="c1"># 差分を計算したい変数</span>
+<span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;lcrmrte&#39;</span><span class="p">,</span> <span class="s1">&#39;lprbarr&#39;</span><span class="p">,</span> <span class="s1">&#39;lprbconv&#39;</span><span class="p">,</span> <span class="s1">&#39;lprbpris&#39;</span><span class="p">,</span> <span class="s1">&#39;lavgsen&#39;</span><span class="p">,</span> <span class="s1">&#39;lpolpc&#39;</span><span class="p">]</span>
+
+<span class="c1"># 差分のDataFrame</span>
+<span class="n">crime4_diff</span> <span class="o">=</span> <span class="n">crime4_group</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
+
+<span class="c1"># DataFrameの結合</span>
+<span class="n">crime4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">crime4</span><span class="p">,</span> <span class="n">crime4_diff</span><span class="p">,</span> 
+                  <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                  <span class="n">suffixes</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="s1">&#39;_diff&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p>推定式については，2期間モデルと同じように考える。違う点は，7年間の年次データであるため，６つの時間ダミー変数を入れることだけである。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_2</span> <span class="o">=</span> <span class="s1">&#39;lcrmrte_diff ~ d83 + d84 + d85 + d86 + d87 + </span><span class="se">\</span>
+<span class="s1">                            lprbarr_diff + lprbconv_diff + </span><span class="se">\</span>
+<span class="s1">                            lprbpris_diff + lavgsen_diff + </span><span class="se">\</span>
+<span class="s1">                            lpolpc_diff&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_2</span><span class="p">,</span> <span class="n">crime4</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result_2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>=================================================================================
+                    coef    std err          t      P&gt;|t|      [0.025      0.975]
+---------------------------------------------------------------------------------
+Intercept         0.0077      0.017      0.452      0.651      -0.026       0.041
+d83              -0.0999      0.024     -4.179      0.000      -0.147      -0.053
+d84              -0.0479      0.024     -2.040      0.042      -0.094      -0.002
+d85              -0.0046      0.023     -0.196      0.845      -0.051       0.042
+d86               0.0275      0.024      1.139      0.255      -0.020       0.075
+d87               0.0408      0.024      1.672      0.095      -0.007       0.089
+lprbarr_diff     -0.3275      0.030    -10.924      0.000      -0.386      -0.269
+lprbconv_diff    -0.2381      0.018    -13.058      0.000      -0.274      -0.202
+lprbpris_diff    -0.1650      0.026     -6.356      0.000      -0.216      -0.114
+lavgsen_diff     -0.0218      0.022     -0.985      0.325      -0.065       0.022
+lpolpc_diff       0.3984      0.027     14.821      0.000       0.346       0.451
+=================================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p>＜結果＞</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">lprbarr</span></code>（逮捕の確率），<code class="docutils literal notranslate"><span class="pre">lprbconv</span></code>（有罪判決の確率），<code class="docutils literal notranslate"><span class="pre">lprbpris</span></code>（収監確率），<code class="docutils literal notranslate"><span class="pre">lavgsen</span></code>（平均服役期間）は全て予想通りの結果。</p></li>
+<li><p>しかし平均服役期間はの統計的優位性は低い。（犯罪予防効果は低い？）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lpolpc</span></code>（１人当たり警官数）の効果は正</p>
+<ul>
+<li><p>警官が多くなると，犯罪数が同じであっても犯罪の報告は増える？</p></li>
+<li><p>同時性バイアス？</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="14_Heteroskedasticity.html" title="previous page">不均一分散</a>
+    <a class='right-next' id="next-link" href="16_linearmodels.html" title="next page"><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code></a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By 春山 鉄源<br/>
+        
+            &copy; Copyright 2020 Tetsugen Haruyama.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-165998213-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>

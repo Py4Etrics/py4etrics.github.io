@@ -1,0 +1,1899 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>制限従属変数モデル &#8212; Pythonで学ぶ入門計量経済学</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/mystnb.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="canonical" href="https://spring-book.github.io/book_etrics/21_TruncregTobitHeckit.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="３. 番外編" href="part_3.html" />
+    <link rel="prev" title="離散選択モデル" href="20_LogitProbit.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="https://spring-book.github.io/book_etrics/21_TruncregTobitHeckit.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="制限従属変数モデル" />
+<meta property="og:description" content="制限従属変数モデル  import numpy as np import pandas as pd from scipy.stats import norm from statsmodels.formula.api import ols import matplotlib.pyplot as plt import wo" />
+
+
+<meta name="twitter:card" content="summary">
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Pythonで学ぶ入門計量経済学</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="part_1.html">１. Pythonの基礎</a>
+  </li>
+  <li class="active">
+    <a href="part_2.html">２. Pythonを使った計量経済分析</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="7_Review_of_Statistics.html">統計学の簡単な復習</a>
+    </li>
+    <li class="">
+      <a href="8_Simple_Regression.html">単回帰分析</a>
+    </li>
+    <li class="">
+      <a href="9_Multiple_Regression.html">重回帰分析</a>
+    </li>
+    <li class="">
+      <a href="10_Residuals.html">残差診断</a>
+    </li>
+    <li class="">
+      <a href="11_Inference.html">推論</a>
+    </li>
+    <li class="">
+      <a href="12_Asymptotics.html">大標本特性</a>
+    </li>
+    <li class="">
+      <a href="13_Dummies.html">質的変数と回帰分析</a>
+    </li>
+    <li class="">
+      <a href="14_Heteroskedasticity.html">不均一分散</a>
+    </li>
+    <li class="">
+      <a href="15_Pooling.html">プーリング・データとパネル・データ</a>
+    </li>
+    <li class="">
+      <a href="16_linearmodels.html">linearmodels</a>
+    </li>
+    <li class="">
+      <a href="17_Panel.html">パネル・データ分析</a>
+    </li>
+    <li class="">
+      <a href="18_Zero_Conditional_Mean.html">GM仮定４が満たされない場合</a>
+    </li>
+    <li class="">
+      <a href="19_IV2SLS.html">操作変数法と２段階OLS</a>
+    </li>
+    <li class="">
+      <a href="20_LogitProbit.html">離散選択モデル</a>
+    </li>
+    <li class="active">
+      <a href="">制限従属変数モデル</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="part_3.html">３. 番外編</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  <a  href="https://github.com/spring-book/py4etrics">&#128200;&#127891;&#128202;</a><!-- Default Statcounter code for Py4etrics https://spring-book.github.io/py4etrics/ --> <script type="text/javascript"> var sc_project=12339954; var sc_invisible=1; var sc_security="45ab8946"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12339954/0/45ab8946/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code -->
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="_sources/21_TruncregTobitHeckit.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Source interaction buttons -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/spring-book/py4etrics/master?urlpath=tree/21_TruncregTobitHeckit.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                
+            </div>
+        </div>
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id2" class="nav-link">説明</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id3" class="nav-link">切断回帰モデル</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id4" class="nav-link">説明</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id5" class="nav-link">シミュレーション</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id6" class="nav-link">直感的な理解</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#truncreg" class="nav-link">Truncregモジュールの使い方</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id7" class="nav-link">切断回帰推定</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id8" class="nav-link">検定</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id9" class="nav-link">予測値と残差</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id10" class="nav-link">誤差項の仮定について</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#tobit" class="nav-link">Tobitモデル</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id11" class="nav-link">説明</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id12" class="nav-link">シミュレーション</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id13" class="nav-link">Tobitモジュールの使い方</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id14" class="nav-link">Tobitモデルの推定</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id15" class="nav-link">検定と属性</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id16" class="nav-link">残差について</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#heckit" class="nav-link">Heckitモデル</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id17" class="nav-link">説明</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id18" class="nav-link">Heckitモジュールの使い方</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id19" class="nav-link">推定</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#mroz" class="nav-link">mrozを使った推定</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id20" class="nav-link">結果の解釈</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="id1">
+<h1>制限従属変数モデル<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
+<span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="n">see</span>
+<span class="kn">from</span> <span class="nn">py4etrics.truncreg</span> <span class="kn">import</span> <span class="n">Truncreg</span>
+<span class="kn">from</span> <span class="nn">py4etrics.tobit</span> <span class="kn">import</span> <span class="n">Tobit</span>
+<span class="kn">from</span> <span class="nn">py4etrics.heckit</span> <span class="kn">import</span> <span class="n">Heckit</span>
+<span class="kn">from</span> <span class="nn">py4etrics.hetero_test</span> <span class="kn">import</span> <span class="n">het_test_probit</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>説明<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p><strong>制限従属変数</strong>（Limited Dependent Variables; LDV）とは，被説明変数が取り得る値が大きく制限される場合を指す。<code class="docutils literal notranslate"><span class="pre">Logit</span></code>と<code class="docutils literal notranslate"><span class="pre">Probit</span></code>も制限従属変数の例であり，被説明変数は<span class="math notranslate nohighlight">\((0,1)\)</span>に制限されている。この章では，違ったタイプの制限従属変数を考える。</p>
+<p>データの性質上２つに分けることができる。</p>
+<ol class="simple">
+<li><p>切断データ（Truncated Data）</p>
+<ul class="simple">
+<li><p>特定のデータが標本に含まれていない。</p></li>
+<li><p>例：平成30年度「環境にやさしい企業行動調査」の調査対象企業は，従業員数500名以上となっており，500名未満の企業は含まれていない。</p></li>
+</ul>
+</li>
+<li><p>打ち切りデータ（Censored Data）</p>
+<ol class="simple">
+<li><p>端点解の場合</p>
+<ul class="simple">
+<li><p>募金の金額の例：募金しない場合は０円だが，募金する人の額は正の値を取る。（下からの打ち切りデータ）</p></li>
+</ul>
+</li>
+<li><p>データ制約の場合</p>
+<ul class="simple">
+<li><p>所得調査の例：Ｘ万円からＹ万円のようにカテゴリーでまとめる場合が通常であり，最高額カテゴリーはＺ万円以上のようになる。この場合，Ｚ万円以上の所得は全てＺ万円となる。（上からの打ち切りデータ）</p></li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<p>（コメント）以下のようにも呼ばれる</p>
+<ul class="simple">
+<li><p>下からの打ち切りデータ ＝ 左からの打ち切りデータ（left-censored）</p></li>
+<li><p>上からの打ち切りデータ ＝ 右からの打ち切りデータ（right-censored）</p></li>
+</ul>
+<hr class="docutils" />
+<p>データの性質に分けて次のモデルの使い方を説明する。</p>
+<ul class="simple">
+<li><p>切断回帰モデル（Truncated Regression）：切断データ</p></li>
+<li><p>Tobitモデル：打ち切りデータ</p></li>
+<li><p>Heckitモデル：切断データで選択バイアス問題が発生する場合</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>切断回帰モデル<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h3>説明<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>無作為な形ではなく，ある特定の一部のデータが標本から欠らくしている切断データの分析を考える。例として，女性の労働供給を考えよう。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+&amp;y_i=\beta_0+\beta_1x_i+u_i\qquad i\in\cal{Y}\\
+&amp;(y_i,x_i)\text{は観察されない}\qquad i\in\cal{N}
+\end{align*}
+\end{split}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\cal{Y}\)</span>：観測されたデータの集合（通常，無作為に選択されないと考える）。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\cal{N}\)</span>：観測されないデータの集合（通常，無作為に選択されないと考える）。</p></li>
+<li><p><span class="math notranslate nohighlight">\(x\)</span>：労働供給に関する決定要因（例えば，教育年数）</p></li>
+<li><p><span class="math notranslate nohighlight">\(u|x\sim \text{Normal}(0,\sigma^2)\)</span>：労働供給に関するランダムな要素（例えば，好み）</p>
+<ul>
+<li><p>この仮定が非常に重要であり，計算の前提となる。</p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(y_i\)</span>：実際の労働供給（非負の連続変数）</p></li>
+</ul>
+<p>＜＜結果＞＞</p>
+<ul class="simple">
+<li><p>標本集合<span class="math notranslate nohighlight">\(\cal{Y}\)</span>は無作為標本ではない。従って，GM仮定２が満たされないためOLS推定量<span class="math notranslate nohighlight">\(\hat{\beta}_{\text{ols}}\)</span>は不偏性を満たさない。また一致性も満たさない。</p></li>
+</ul>
+<hr class="docutils" />
+<p>まずシミュレーションを使ってこの結果を直感的に確認する。</p>
+</div>
+<div class="section" id="id5">
+<h3>シミュレーション<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 標本の大きさ </span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="c1"># y*を決定するx</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">))</span>  <span class="c1"># ランダム変数を生成し昇順に並べる</span>
+
+<span class="c1"># 被説明変数</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># DataFrame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;Y_trunc&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>
+
+<span class="c1"># 閾値</span>
+<span class="n">left</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># 切断データの作成</span>
+<span class="n">cond</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">left</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cond</span><span class="p">,</span><span class="s1">&#39;Y_trunc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+<span class="c1"># 切断された被説明変数</span>
+<span class="n">y_trunc</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Y_trunc&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>ここで<code class="docutils literal notranslate"><span class="pre">np.nan</span></code>とは<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の定数であり，欠損値<code class="docutils literal notranslate"><span class="pre">NaN</span></code>を作成する。<code class="docutils literal notranslate"><span class="pre">cond</span></code>の条件にある閾値<code class="docutils literal notranslate"><span class="pre">left=0</span></code>以下のデータは欠損ちとして設定されている。<code class="docutils literal notranslate"><span class="pre">numpy</span></code>には次の定数もあるのでこの機会に紹介する。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">np.nan</span></code>：無</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">np.inf</span></code>：（正の）無限</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">np.e</span></code>：<span class="math notranslate nohighlight">\(e=2.71...\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">np.pi</span></code>：<span class="math notranslate nohighlight">\(\pi=3.14...\)</span></p></li>
+</ul>
+<p>母集団回帰式</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_full</span> <span class="o">=</span> <span class="s1">&#39;Y ~ X&#39;</span>
+
+<span class="n">result_full</span><span class="o">=</span>  <span class="n">ols</span><span class="p">(</span><span class="n">formula_full</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="n">b0_full</span><span class="p">,</span><span class="n">b1_full</span> <span class="o">=</span> <span class="n">result_full</span><span class="o">.</span><span class="n">params</span>
+
+<span class="n">result_full</span><span class="o">.</span><span class="n">params</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.934575
+X            1.066915
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>切断データを使ったOLS回帰</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_trunc</span> <span class="o">=</span> <span class="s1">&#39;Y_trunc ~ X&#39;</span>
+
+<span class="n">result_trunc</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_trunc</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="n">b0_trunc</span><span class="p">,</span> <span class="n">b1_trunc</span> <span class="o">=</span> <span class="n">result_trunc</span><span class="o">.</span><span class="n">params</span>
+
+<span class="n">result_trunc</span><span class="o">.</span><span class="n">params</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    2.990633
+X            0.687865
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>比較するために２つの結果を図示する。同じ図に描くために切断データを整理する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x_trunc</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Y_trunc&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;X&#39;</span><span class="p">]</span>  <span class="c1"># 説明（１）</span>
+<span class="n">x_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">x_trunc</span><span class="p">)</span>  <span class="c1"># 説明（２）</span>
+<span class="n">x_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_trunc</span><span class="p">)</span>  <span class="c1"># 説明（３）</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>（１）<code class="docutils literal notranslate"><span class="pre">.dropna()</span></code>を使って列<code class="docutils literal notranslate"><span class="pre">Y_trunc</span></code>から欠損値がある行を取り除き，列<code class="docutils literal notranslate"><span class="pre">X</span></code>を<code class="docutils literal notranslate"><span class="pre">x_trun</span></code>に割り当てる。</p>
+<p>（２）<code class="docutils literal notranslate"><span class="pre">x_trun</span></code>の最小値を設定。</p>
+<p>（２）<code class="docutils literal notranslate"><span class="pre">x_trun</span></code>の最大値を設定。</p>
+<p><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>を使って２つの図を重ねて図示する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># （１）母集団データの散布図</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$y^{*}$&#39;</span><span class="p">)</span>
+
+<span class="c1"># （２）切断データの散布図</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_trunc</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$y$ and $y^{*}$&#39;</span><span class="p">)</span>
+
+<span class="c1"># 母集団OLS</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">b0_full</span><span class="o">+</span><span class="n">b1_full</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Population: $y^*$&#39;</span><span class="p">)</span>
+
+<span class="c1"># 切断回帰</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_trunc</span><span class="p">,</span> <span class="n">b0_trunc</span><span class="o">+</span><span class="n">b1_trunc</span><span class="o">*</span><span class="n">x_trunc</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;Sample: $y&gt; 0$&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y$ and $y^{*}$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/21_TruncregTobitHeckit_18_0.png" src="_images/21_TruncregTobitHeckit_18_0.png" />
+</div>
+</div>
+<p>＜<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>コードの説明＞</p>
+<p>（１）母集団データの散布図</p>
+<ul class="simple">
+<li><p>引数<code class="docutils literal notranslate"><span class="pre">facecolors</span></code>は全ての観測値の点の色を「なし」に設定する。</p></li>
+<li><p>引数<code class="docutils literal notranslate"><span class="pre">edgecolors</span></code>は全ての観測値の円周をグレーに設定する。</p></li>
+<li><p>この２つにより，全ての観測値は左下の観測値のように中が白になるグレーの円として表示される。</p></li>
+</ul>
+<p>（２）切断データの散布図</p>
+<ul class="simple">
+<li><p>この観測値は母集団データの散布図上に重ねて表示されるため，引数<code class="docutils literal notranslate"><span class="pre">facecolors</span></code>を<code class="docutils literal notranslate"><span class="pre">gray</span></code>に設定することにより切断データだけをグレーの点として表示させることができる。</p></li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h3>直感的な理解<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p><strong>＜母集団回帰＞</strong></p>
+<p>母集団回帰式は</p>
+<div class="math notranslate nohighlight">
+\[y=\beta_0+\beta_1 x_1+e\qquad\text{(式１)}\]</div>
+<p>であり，全ての観測値をつかう（即ち，切断されたデータがない）場合の条件付き期待値である母集団回帰関数（母集団で平均で成立する回帰線）は</p>
+<div class="math notranslate nohighlight">
+\[\text{E}\left(y|x\right)=\beta_0+\beta_1 x_1\qquad\text{(式２)}\]</div>
+<p>となる。</p>
+<p><strong>＜切断回帰＞</strong></p>
+<p><span class="math notranslate nohighlight">\(y&gt;0\)</span>のデータだけを使う回帰式は</p>
+<div class="math notranslate nohighlight">
+\[y_i=\beta_0+\beta_1 x_i+u_i\qquad\text{(式３)}\]</div>
+<p>となるが，<span class="math notranslate nohighlight">\(y_i\leq 0\)</span>のデータが切断されているため，(式３)の期待値を取ると</p>
+<div class="math notranslate nohighlight">
+\[\text{E}\left(y_i|y_i&gt;0,x_i\right)=\beta_0+\beta_1 x_i+\sigma\lambda\left(w_i\right)\qquad\text{(式４)}\]</div>
+<p>となる。ここで</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\text{E}(u_i)=\sigma_u\lambda\left(w_i\right)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(w_i\equiv\dfrac{\beta_0+\beta_1x_i-A}{\sigma}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(A\)</span>：下限の値</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma\)</span>：誤差項の標準偏差</p></li>
+</ul>
+<p>である。色々な変数があり複雑に見えるが，重要な項は<span class="math notranslate nohighlight">\(\lambda(w_i)\)</span>である。これは<span class="math notranslate nohighlight">\(y&gt;0\)</span>となる確率の影響を捉えた項であり，逆ミルズ比（inverse Mill’s ratio）と呼ばれる。(式４)を(式３)と比べると，<span class="math notranslate nohighlight">\(\lambda(x)\)</span>が欠落していることがわかる。即ち，(式３)をOLS推定すると<strong>欠落変数バイアス</strong>が発生するのである。上の図では黒と赤の線と違いに現れている。</p>
+</div>
+<div class="section" id="truncreg">
+<h3><code class="docutils literal notranslate"><span class="pre">Truncreg</span></code>モジュールの使い方<a class="headerlink" href="#truncreg" title="Permalink to this headline">¶</a></h3>
+<p>切断データを的確に扱うために切断回帰モデルを展開する。ここでは，具体的な内容は説明できないが，<code class="docutils literal notranslate"><span class="pre">Logit</span></code>と<code class="docutils literal notranslate"><span class="pre">Probit</span></code>と同じように最尤法をつかい推定する。</p>
+<ul class="simple">
+<li><p>切断回帰モデルの推定量は一致性を満たす。</p></li>
+</ul>
+<hr class="docutils" />
+<p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>も<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>も<code class="docutils literal notranslate"><span class="pre">Tobit</span></code>推定のモジュールがない。その代わりに著者が作成した<code class="docutils literal notranslate"><span class="pre">trucreg.py</span></code>を読み込み推定する。このモジュールは<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">GenericMaximumLikelihoodModel</span></code>を使い実装したものである。使用する上で<a class="reference external" href="https://www.statsmodels.org/devel/examples/notebooks/generated/generic_mle.html">このサイト</a>にある次の点に注意する必要がある。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">R</span></code>の推定値と小数点第４位まで同じになるが，標準偏差は小数点第２位までが同じとなる。</p></li>
+</ul>
+<hr class="docutils" />
+<p>＜使い方＞</p>
+<p>基本的に<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">ols</span></code>と同じだが，追加的な操作とオプションがある。</p>
+<ol class="simple">
+<li><p>推定式を決める</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;y ~ 1 + x&#39;</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Truncreg</span></code>の<code class="docutils literal notranslate"><span class="pre">from_formula</span></code>モジュールを使って推定</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">Truncreg</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">left</span><span class="o">=&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">right</span><span class="o">=&lt;</span><span class="n">B</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">data</span><span class="o">=&lt;</span><span class="n">C</span><span class="o">&gt;</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>ここで</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">left</span></code>:左切断の値（デフォルトは<span class="math notranslate nohighlight">\(-\infty\)</span>）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">right</span></code>:右切断の値（デフォルトは<span class="math notranslate nohighlight">\(\infty\)</span>）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">deta</span></code>:データの指定</p></li>
+<li><p>切断方向の設定：</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">left</span></code>だけに値を設定する場合は左切断回帰（left-truncated）となる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">right</span></code>だけに値を設定する場合は右切断回帰（right-truncated）となる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">left</span></code>と<code class="docutils literal notranslate"><span class="pre">right</span></code>の両方に値を設定する場合は左右切断回帰（left- and right-truncated）となる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">left</span></code>と<code class="docutils literal notranslate"><span class="pre">right</span></code>の両方に値を設定しない場合は通常の最尤推定となる。</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h3>切断回帰推定<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>の<code class="docutils literal notranslate"><span class="pre">HTV</span></code>のデータを使い推定する。</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">htv</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;HTV&#39;</span><span class="p">)</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;HTV&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>name of dataset: htv
+no of variables: 23
+no of observations: 1230
+
++----------+---------------------------------+
+| variable | label                           |
++----------+---------------------------------+
+| wage     | hourly wage, 1991               |
+| abil     | abil. measure, not standardized |
+| educ     | highest grade completed by 1991 |
+| ne       | =1 if in northeast, 1991        |
+| nc       | =1 if in nrthcntrl, 1991        |
+| west     | =1 if in west, 1991             |
+| south    | =1 if in south, 1991            |
+| exper    | potential experience            |
+| motheduc | highest grade, mother           |
+| fatheduc | highest grade, father           |
+| brkhme14 | =1 if broken home, age 14       |
+| sibs     | number of siblings              |
+| urban    | =1 if in urban area, 1991       |
+| ne18     | =1 if in NE, age 18             |
+| nc18     | =1 if in NC, age 18             |
+| south18  | =1 if in south, age 18          |
+| west18   | =1 if in west, age 18           |
+| urban18  | =1 if in urban area, age 18     |
+| tuit17   | college tuition, age 17         |
+| tuit18   | college tuition, age 18         |
+| lwage    | log(wage)                       |
+| expersq  | exper^2                         |
+| ctuit    | tuit18 - tuit17                 |
++----------+---------------------------------+
+
+J.J. Heckman, J.L. Tobias, and E. Vytlacil (2003), “Simple Estimators
+for Treatment Parameters in a Latent-Variable Framework,” Review of
+Economics and Statistics 85, 748-755. Professor Tobias kindly provided
+the data, which were obtained from the 1991 National Longitudinal
+Survey of Youth. All people in the sample are males age 26 to 34. For
+confidentiality reasons, I have included only a subset of the
+variables used by the authors.
+</pre></div>
+</div>
+</div>
+</div>
+<p>＜目的＞</p>
+<p>教育（<code class="docutils literal notranslate"><span class="pre">educ</span></code>）が賃金（<code class="docutils literal notranslate"><span class="pre">wage</span></code>）に与える影響を探る。1991年の時間賃金を対数化した<code class="docutils literal notranslate"><span class="pre">lwage</span></code>を説明変数として使い，次の説明変数を使う。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">educ</span></code>：1991年までに修了した最高学位の指標</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">abil</span></code>：能力を捉える指標</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">exper</span></code>：潜在的な労働経験</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nc</span></code>：米国北中部のダミー変数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">west</span></code>：米国西部のダミー変数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">south</span></code>：米国南部のダミー変数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">urban</span></code>：都市部のダミー変数</p></li>
+</ul>
+<p>まずOLS推定を行う。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_trunc</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ + abil + exper + nc + west + south + urban&#39;</span>
+
+<span class="n">res_ols</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_trunc</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">htv</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">res_ols</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      0.3987      0.185      2.158      0.031       0.036       0.761
+educ           0.1037      0.010     10.704      0.000       0.085       0.123
+abil           0.0558      0.008      6.565      0.000       0.039       0.072
+exper          0.0448      0.007      6.619      0.000       0.032       0.058
+nc            -0.1397      0.041     -3.440      0.001      -0.219      -0.060
+west          -0.1282      0.049     -2.638      0.008      -0.224      -0.033
+south         -0.1227      0.045     -2.742      0.006      -0.210      -0.035
+urban          0.2268      0.041      5.589      0.000       0.147       0.306
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">educ</span></code>の係数は<code class="docutils literal notranslate"><span class="pre">0.1037</span></code>であり，標準誤差は<code class="docutils literal notranslate"><span class="pre">0.010</span></code>。</p>
+<p>次に，<code class="docutils literal notranslate"><span class="pre">wage</span></code>が<code class="docutils literal notranslate"><span class="pre">20</span></code>以上の観測値を取り除き，<code class="docutils literal notranslate"><span class="pre">20</span></code>以下のサンプルだけで推計する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">htv_20</span> <span class="o">=</span> <span class="n">htv</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;wage &lt; 20&#39;</span><span class="p">)</span>  <span class="c1"># データの抽出</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;切断前の標本数：</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">htv</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;切断前の標本数：</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">htv_20</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;削除された標本数：</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">htv</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">htv_20</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>切断前の標本数：1230
+切断前の標本数：1066
+削除された標本数：164
+</pre></div>
+</div>
+</div>
+</div>
+<p>164のサンプルが取り除かれた。これにより，ランダムな標本ではなくなっていおり，GM仮定２が満たされていない。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_ols_20</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_trunc</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">htv_20</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">res_ols_20</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      1.1795      0.174      6.795      0.000       0.839       1.520
+educ           0.0579      0.009      6.258      0.000       0.040       0.076
+abil           0.0548      0.008      7.168      0.000       0.040       0.070
+exper          0.0218      0.006      3.467      0.001       0.009       0.034
+nc            -0.1373      0.038     -3.644      0.000      -0.211      -0.063
+west          -0.1415      0.045     -3.120      0.002      -0.230      -0.053
+south         -0.1176      0.042     -2.833      0.005      -0.199      -0.036
+urban          0.1653      0.037      4.525      0.000       0.094       0.237
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">educ</span></code>の係数は<code class="docutils literal notranslate"><span class="pre">0.0579</span></code>に大きく下落。これは，切断データをOLS推定するとバイアスが発生することを示している。</p>
+<hr class="docutils" />
+<p>次に，切断回帰推定をおこなう。</p>
+<ul class="simple">
+<li><p>右切断なので<code class="docutils literal notranslate"><span class="pre">right</span></code>に数値を設定する。</p></li>
+<li><p>説明変数が対数化されているため，それに合わせて<code class="docutils literal notranslate"><span class="pre">right=np.log(20)</span></code>とする。</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_trunc</span> <span class="o">=</span> <span class="n">Truncreg</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_trunc</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="n">data</span><span class="o">=</span><span class="n">htv_20</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">res_trunc</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.481943
+         Iterations: 1216
+         Function evaluations: 1715
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      0.6094      0.302      2.018      0.044       0.017       1.201
+educ           0.1060      0.017      6.312      0.000       0.073       0.139
+abil           0.0818      0.013      6.448      0.000       0.057       0.107
+exper          0.0356      0.011      3.309      0.001       0.015       0.057
+nc            -0.2552      0.068     -3.734      0.000      -0.389      -0.121
+west          -0.2652      0.081     -3.268      0.001      -0.424      -0.106
+south         -0.2078      0.074     -2.818      0.005      -0.352      -0.063
+urban          0.2657      0.059      4.478      0.000       0.149       0.382
+Log(Sigma)    -0.5433      0.039    -14.053      0.000      -0.619      -0.468
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">educ</span></code>の係数は<code class="docutils literal notranslate"><span class="pre">0.1060</span></code>になり，切断される前の標本をOLS推定した際の係数と近い。</p>
+<p>（コメント）</p>
+<p>このように切断回帰は，切断データを使い<code class="docutils literal notranslate"><span class="pre">y</span></code>（賃金）に対する<code class="docutils literal notranslate"><span class="pre">x</span></code>（教育）の効果を推定可能とする。一方で，切断されたデータの中での<code class="docutils literal notranslate"><span class="pre">y</span></code>に対する<code class="docutils literal notranslate"><span class="pre">x</span></code>の効果に興味がある場合，その限界効果の絶対値は<span class="math notranslate nohighlight">\(\left|\hat{\beta}_{\text{Truncreg}}\right|\)</span>よりも低くなる。</p>
+<p>＜<code class="docutils literal notranslate"><span class="pre">Log(Sigma)</span></code>について＞</p>
+<ul class="simple">
+<li><p>誤差項は正規分布に従うと仮定され，最尤法により変数の係数<span class="math notranslate nohighlight">\(\beta\)</span>と誤差項の標準偏差<span class="math notranslate nohighlight">\(\sigma\)</span>が推定される。誤差項の標準偏差の推定値または回帰の標準偏差（<code class="docutils literal notranslate"><span class="pre">Sigma</span></code> = Standard Error of Regression）の対数が<code class="docutils literal notranslate"><span class="pre">Log(Sigma)</span></code>である。</p></li>
+</ul>
+<hr class="docutils" />
+<p><code class="docutils literal notranslate"><span class="pre">dir()</span></code>もしくは<code class="docutils literal notranslate"><span class="pre">see()</span></code>を使い推定結果<code class="docutils literal notranslate"><span class="pre">res_trunc</span></code>の属性とメソッドを確認してみよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">see</span><span class="p">(</span><span class="n">res_trunc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>    &lt;                &lt;=               ==               !=               &gt;
+    &gt;=               dir()            hash()           help()           repr()
+    str()            .aic             .bic             .bootstrap()     .bse
+    .bsejac          .bsejhj          .conf_int()      .cov_kwds
+    .cov_params()    .cov_type        .covjac          .covjhj
+    .df_model        .df_modelwc      .df_resid        .endog           .exog
+    .f_test()        .fitted_endog    .fittedvalues    .get_nlfun()     .hessv
+    .initialize()    .k_constant      .llf             .llnull          .llr
+    .llr_pvalue      .load()          .mle_retvals     .mle_settings    .model
+    .nobs            .normalized_cov_params            .params
+    .predict()       .prsquared       .pvalues         .remove_data()
+    .resid           .result_null     .save()          .scale
+    .score_obsv      .set_null_options()               .summary()
+    .t_test()        .t_test_pairwise()                .tvalues         .use_t
+    .wald_test()     .wald_test_all_slopes             .wald_test_terms()
+</pre></div>
+</div>
+</div>
+</div>
+<p>対数最尤関数の値</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_trunc</span><span class="o">.</span><span class="n">llf</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>-513.7517026401044
+</pre></div>
+</div>
+</div>
+</div>
+<p>疑似決定係数</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_trunc</span><span class="o">.</span><span class="n">prsquared</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.17120380433327054
+</pre></div>
+</div>
+</div>
+</div>
+<p>全ての説明変数（定数項以外）が０の場合の推定結果</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_trunc</span><span class="o">.</span><span class="n">result_null</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                         Truncreg Regression Results                          
+==============================================================================
+Dep. Variable:                      y   Pseudo R-squ:                    0.000
+Model:                       Truncreg   Log-Likelihood:                 -619.9
+Method:            Maximum Likelihood   LL-Null:                        -619.9
+Date:                Sat, 13 Jun 2020   LL-Ratio:                         -0.0
+Time:                        10:46:26   LLR p-value:                       nan
+No. Observations:                1066   AIC:                            1241.8
+Df Residuals:                    1065   BIC:                            1246.7
+Df Model:                           0   Covariance Type:             nonrobust
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          2.6140      0.058     44.907      0.000       2.500       2.728
+Log(Sigma)    -0.3590      0.047     -7.677      0.000      -0.451      -0.267
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3>検定<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>次に検定方法について説明する。</p>
+<p><strong>Wald検定の例１</strong></p>
+<p><span class="math notranslate nohighlight">\(H_0\)</span>：定数項以外の全てのスロープ係数は０</p>
+<p><span class="math notranslate nohighlight">\(H_A\)</span>：少なくとも１つの係数は０ではない</p>
+<p>この検定のために結果のメソッド<code class="docutils literal notranslate"><span class="pre">wald_test()</span></code>を使うが説明変数に含まれている<code class="docutils literal notranslate"><span class="pre">Log(Sigma)</span></code>は残る必要がある。従って，まず定数項と<code class="docutils literal notranslate"><span class="pre">Log(Sigma)</span></code>以外の係数名を<code class="docutils literal notranslate"><span class="pre">slopes_all</span></code>に割り当てる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">slopes_all</span> <span class="o">=</span> <span class="n">res_trunc</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">exog_names</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>結果<code class="docutils literal notranslate"><span class="pre">res_trunc</span></code>に属性<code class="docutils literal notranslate"><span class="pre">model</span></code>があり，その中に説明変数名の属性<code class="docutils literal notranslate"><span class="pre">exog_names</span></code>を使っている。定数項と最後にくる<code class="docutils literal notranslate"><span class="pre">Log(Sigma)</span></code>を省くために<code class="docutils literal notranslate"><span class="pre">[1:-1]</span></code>を指定している。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wald検定</span>
+<span class="n">res_trunc</span><span class="o">.</span><span class="n">wald_test</span><span class="p">(</span><span class="n">slopes_all</span><span class="p">)</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;&lt;Wald test (chi2): statistic=[[173.22132354]], p-value=5.2527918385346595e-34, df_denom=7&gt;&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(p\)</span>値は非常に低いので<code class="docutils literal notranslate"><span class="pre">1%</span></code>の有意水準でも帰無仮説を棄却できる。同じ結果は次のコードでも示すことができる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_trunc</span><span class="o">.</span><span class="n">wald_test_all_slopes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;statsmodels.stats.contrast.ContrastResults&#39;&gt;
+&lt;Wald test (chi2): statistic=[[173.22132354]], p-value=5.2527918385346595e-34, df_denom=7&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>２つ目の例として次の検定を考えよう。</p>
+<p><strong>Wald検定の例２</strong></p>
+<p><span class="math notranslate nohighlight">\(H_0\)</span>：<code class="docutils literal notranslate"><span class="pre">educ</span></code>+<code class="docutils literal notranslate"><span class="pre">abil</span></code><span class="math notranslate nohighlight">\(=\)</span><code class="docutils literal notranslate"><span class="pre">exper</span></code></p>
+<p><span class="math notranslate nohighlight">\(H_A\)</span>：<code class="docutils literal notranslate"><span class="pre">educ</span></code>+<code class="docutils literal notranslate"><span class="pre">abil</span></code><span class="math notranslate nohighlight">\(\neq\)</span><code class="docutils literal notranslate"><span class="pre">exper</span></code></p>
+<p>次の方法でおこなう。</p>
+<ol class="simple">
+<li><p>制約式を文字列で設定する：<code class="docutils literal notranslate"><span class="pre">educ+abil=exper</span></code></p></li>
+<li><p>推定結果のメソッド<code class="docutils literal notranslate"><span class="pre">wald_test</span></code>に制約式を引数として実行する。</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_trunc</span><span class="o">.</span><span class="n">wald_test</span><span class="p">(</span><span class="s1">&#39;educ+abil=exper&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;&lt;Wald test (chi2): statistic=[[130.94605426]], p-value=2.5442742489600915e-30, df_denom=1&gt;&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">1%</span></code>の有意水準でも帰無仮説を棄却できる。</p>
+</div>
+<div class="section" id="id9">
+<h3>予測値と残差<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>次に２つの属性を紹介する。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">.fittedvalues</span></code>：以下の式で与えられる線形の予測値</p>
+<div class="math notranslate nohighlight">
+\[\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1x_i\]</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.resid</span></code>：以下の式で与えられる線形の残差</p>
+<div class="math notranslate nohighlight">
+\[\hat{u}_i=y_i-\hat{y}_i\]</div>
+</li>
+</ul>
+<p>まず予測値の平均・最小値・最大値を計算してみる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">y_hat</span> <span class="o">=</span> <span class="n">res_trunc</span><span class="o">.</span><span class="n">fittedvalues</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;最小値：</span><span class="si">{</span><span class="n">y_hat</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="se">\n</span><span class="s1">平均：</span><span class="si">{</span><span class="n">y_hat</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">}</span><span class="se">\n</span><span class="s1">最大値：</span><span class="si">{</span><span class="n">y_hat</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>最小値：1.436527316538625
+平均：2.5085741631765845
+最大値：3.5561856163374266
+</pre></div>
+</div>
+</div>
+</div>
+<p>次に残差を図示する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">u_hat</span> <span class="o">=</span> <span class="n">res_trunc</span><span class="o">.</span><span class="n">resid</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span><span class="n">u_hat</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;y_hat&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;u_hat&#39;</span><span class="p">)</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/21_TruncregTobitHeckit_62_0.png" src="_images/21_TruncregTobitHeckit_62_0.png" />
+</div>
+</div>
+<p>データの切断による影響が右上に見て取れる。</p>
+</div>
+<div class="section" id="id10">
+<h3>誤差項の仮定について<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>切断回帰推定は最尤法を使っており，次の仮定が重要な役割を果たしている。</p>
+<div class="math notranslate nohighlight">
+\[u|x\sim N(0,\sigma^2)\]</div>
+<p>即ち，説明変数を所与とすると誤差項は正規分布に従い分散は一定であるという仮定である。</p>
+<p>正規分布に関しての検定もあるが<code class="docutils literal notranslate"><span class="pre">truncreg</span></code>には実装されていないので，この仮定の重要性を念頭に置いて推定すること。</p>
+<p>次に不均一分散について考える。確かめるためには検定をする必要があるが，<code class="docutils literal notranslate"><span class="pre">truncreg</span></code>モジュールには実装されていない。その代わりに「目安」として，通常の係数の標準偏差と不均一分散頑健標準偏差の変化を調べてみる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 通常の標準偏差</span>
+<span class="n">tr0</span> <span class="o">=</span> <span class="n">res_trunc</span><span class="o">.</span><span class="n">bse</span>
+
+<span class="c1"># 不均一分散頑健標準編</span>
+<span class="n">tr1</span> <span class="o">=</span> <span class="n">Truncreg</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_trunc</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+                            <span class="n">data</span><span class="o">=</span><span class="n">htv_20</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC1&#39;</span><span class="p">,</span><span class="n">disp</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">bse</span>
+
+<span class="c1"># 不均一分散頑健標準編を使った場合の標準偏差の変化率（％）</span>
+<span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="n">tr1</span><span class="o">-</span><span class="n">tr0</span><span class="p">)</span><span class="o">/</span><span class="n">tr0</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>   <span class="c1"># 最後は Log(Sigma) なので省く</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([ 1.31488659,  6.1496005 ,  2.31798789, -0.29282128, -1.99745692,
+        3.82073133, -3.0276511 ,  2.77569811])
+</pre></div>
+</div>
+</div>
+</div>
+<p>標準偏差が減少した変数と増加したし変数がある。特別に大きくないように見えるが，これは目安であることを念頭に置いておく必要がある。</p>
+<p>（注意）不均一分散の下でお最尤推定</p>
+<ul class="simple">
+<li><p>推定量は一致性を満たさない</p></li>
+<li><p>標準誤差も一致性を満たさない</p>
+<ul>
+<li><p>不均一分散頑健標準誤差を使うことが推奨されることがあるが（研究論文でもそうする研究者も多い），もともと係数の推定量が一致性を満たさないため，<code class="docutils literal notranslate"><span class="pre">cov_type</span></code>で指定する不均一分散頑健標準誤差の有用性に疑問が残る。（<a class="reference external" href="https://davegiles.blogspot.com/2013/05/robust-standard-errors-for-nonlinear.html">参照</a>）</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="tobit">
+<h2>Tobitモデル<a class="headerlink" href="#tobit" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id11">
+<h3>説明<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>打ち切りデータを理解するために，切断データと比べて異なる点を説明する。</p>
+<ul class="simple">
+<li><p>切断データではデータセットに<span class="math notranslate nohighlight">\((x_i,y_i),\;i\in\cal{N}\)</span>が存在しないが，打ち切りデータには含まれる。しかし，<span class="math notranslate nohighlight">\(y_i\)</span>が打ち切りの下限や上限の値と等しくなる。</p></li>
+</ul>
+<p>例として女性の労働供給を考えよう。働いている女性は多いが労働市場から退出している女性も多いのが実情である。言いかえると，女性の労働供給（例えば，一週間の労働時間）は正の値をとるが，労働供給が０の女性も多くいる。これは数式で次のように表すことができる。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+&amp;y^{*}=\beta_0+\beta_1x+u\\
+    &amp;\begin{cases}
+    y=y^{*}&amp;\quad\text{if }y^{*}&gt;0\\
+    y=0&amp;\quad\text{if }y^{*}\leq0
+    \end{cases}
+\end{align*}
+\end{split}\]</div>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(y^{*}\)</span>：潜在変数（例えば，効用と考えても良い）</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(y^{*}&gt;0\)</span>の場合に実際に働き，労働供給は<span class="math notranslate nohighlight">\(y=y^{*}\)</span>となる。</p></li>
+<li><p><span class="math notranslate nohighlight">\(y^{*}\leq 0\)</span>の場合に働かないので<span class="math notranslate nohighlight">\(y=0\)</span>となる。</p></li>
+<li><p><span class="math notranslate nohighlight">\(y^{*}\)</span>は観察不可能</p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(x\)</span>：労働供給に関する決定要因（例えば，教育年数）</p></li>
+<li><p><span class="math notranslate nohighlight">\(y\)</span>：実際の労働供給（非負の連続変数）</p></li>
+<li><p><span class="math notranslate nohighlight">\(u\)</span>：労働供給に関するランダムな要素（例えば，好み）</p>
+<div class="math notranslate nohighlight">
+\[u|x\sim \text{Normal}(0,\sigma^2)\]</div>
+<ul class="simple">
+<li><p>この仮定が非常に重要であり，計算の前提となる。</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<p>（コメント）</p>
+<ul class="simple">
+<li><p>上の例では，女性が労働市場に参加するかしないかによって，<span class="math notranslate nohighlight">\(y\)</span>が正の値もしくは<code class="docutils literal notranslate"><span class="pre">0</span></code>を取る。即ち，<code class="docutils literal notranslate"><span class="pre">0</span></code>が下限になっている。上限の例として，人気歌手のコンサート・チケットがあげられる。チケット数は限られており，売り切れた場合の需要は上限を上回る。また，下限・上限の両方がある場合として大学入試が挙げられる。下限はセンター試験などでの「足切り」であり，上限は定員数でる。</p></li>
+<li><p>労働供給の例では，女性の選択の結果として<span class="math notranslate nohighlight">\(y\)</span>の値が観察される。これはミクロ経済学でおなじみの端点解の例である。</p></li>
+</ul>
+<hr class="docutils" />
+<p>＜＜結果＞＞</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(y&gt;0\)</span>と<span class="math notranslate nohighlight">\(y=0\)</span>の両方のデータを使ったOLS推定量は不偏性・一致性を満たさない。</p></li>
+</ul>
+<hr class="docutils" />
+<p>以下ではまずこの結果をシミュレーションを使って示し，解決策について説明する。</p>
+</div>
+<div class="section" id="id12">
+<h3>シミュレーション<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># データの大きさ </span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="c1"># y*を決定するx</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">))</span>  <span class="c1"># ランダム変数を生成し昇順に並べる</span>
+
+<span class="c1"># y*を生成</span>
+<span class="n">y_star</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># yを生成</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">y_star</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1">#  copy()はコピーを作るメソッド</span>
+<span class="n">y</span><span class="p">[</span><span class="n">y_star</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># y_star&lt;0の場合，０を代入する</span>
+
+<span class="c1"># DataFrame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;Y_star&#39;</span><span class="p">:</span><span class="n">y_star</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>母集団回帰式</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_star</span> <span class="o">=</span> <span class="s1">&#39;Y_star ~ X&#39;</span>
+
+<span class="n">result_star</span><span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_star</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="n">b0_star</span><span class="p">,</span><span class="n">b1_star</span> <span class="o">=</span> <span class="n">result_star</span><span class="o">.</span><span class="n">params</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result_star</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept   -0.796535
+X            0.928418
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(y\geq 0\)</span>を使ったOLS回帰</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_sample</span> <span class="o">=</span> <span class="s1">&#39;Y ~ X&#39;</span>
+
+<span class="n">result_corner</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_sample</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="n">b0_corner</span><span class="p">,</span> <span class="n">b1_corner</span> <span class="o">=</span> <span class="n">result_corner</span><span class="o">.</span><span class="n">params</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result_corner</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.133886
+X            0.395441
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>図示</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># y_starの散布図</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_star</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$y^{*}$&#39;</span><span class="p">)</span>
+
+<span class="c1"># yの散布図</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$y$ and $y^{*}$&#39;</span><span class="p">)</span>
+
+<span class="c1"># 母集団OLS</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">b0_star</span><span class="o">+</span><span class="n">b1_star</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Full Data: $y^*$&#39;</span><span class="p">)</span>
+
+<span class="c1"># y&gt;=0のOLS</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">b0_corner</span><span class="o">+</span><span class="n">b1_corner</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;Sample: $y\geq 0$&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y$ and $y^{*}$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/21_TruncregTobitHeckit_81_0.png" src="_images/21_TruncregTobitHeckit_81_0.png" />
+</div>
+</div>
+<hr class="docutils" />
+<p>この場合，<span class="math notranslate nohighlight">\(y&lt;0\)</span>の値を全て<span class="math notranslate nohighlight">\(y=0\)</span>としてOLS推定しているため，不偏性・一致性が満たされないのは直感的に理解できる。実際，上で説明したように標本回帰式は</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+&amp;y^{*}=\beta_0+\beta_1x+u\\
+    &amp;\begin{cases}
+    y=y^{*}&amp;\quad\text{if }y^{*}&gt;0\\
+    y=0&amp;\quad\text{if }y^{*}\leq0
+    \end{cases}
+\end{align*}
+\end{split}\]</div>
+<p>であるが，<span class="math notranslate nohighlight">\(y\geq 0\)</span>の下での<span class="math notranslate nohighlight">\(y\)</span>の期待値 <span class="math notranslate nohighlight">\(\text{E}(y|y&gt;0,x)\)</span> は複雑な非線形式なり，線形を仮定するOLS推定方で捉えることは不可能である。</p>
+</div>
+<div class="section" id="id13">
+<h3><code class="docutils literal notranslate"><span class="pre">Tobit</span></code>モジュールの使い方<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>残念ながら<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>と<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>にも<code class="docutils literal notranslate"><span class="pre">Tobit</span></code>推定のモジュールがない。その代わりに著者が作成した<code class="docutils literal notranslate"><span class="pre">tobit.py</span></code>を読み込み推定する。このモジュールは<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">GenericMaximumLikelihoodModel</span></code>を使い実装したものである。使用する上で<a class="reference external" href="https://www.statsmodels.org/devel/examples/notebooks/generated/generic_mle.html">このサイト</a>にある次の点に注意する必要がある。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">R</span></code>の推定値と小数点第４位まで同じになるが，標準偏差は小数点第２位までが同じとなる。</p></li>
+</ul>
+<hr class="docutils" />
+<p>＜使い方＞</p>
+<p>基本的に<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">ols</span></code>と同じだが，追加的な操作とオプションがある。</p>
+<ol class="simple">
+<li><p>下限・上限の設定：被説明変数<code class="docutils literal notranslate"><span class="pre">y</span></code>の値に従って<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の<code class="docutils literal notranslate"><span class="pre">array</span></code>もしくは<code class="docutils literal notranslate"><span class="pre">Pandas</span></code>の<code class="docutils literal notranslate"><span class="pre">Series</span></code>を作る。</p>
+<ul class="simple">
+<li><p>下限がある場合：<code class="docutils literal notranslate"><span class="pre">-1</span></code></p></li>
+<li><p>上限がある場合：<code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
+<li><p>上限・下限がない場合：<code class="docutils literal notranslate"><span class="pre">0</span></code></p></li>
+</ul>
+</li>
+<li><p>推定式を決める</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;y ~ 1 + x&#39;</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Tobit</span></code>の<code class="docutils literal notranslate"><span class="pre">from_formula</span></code>モジュールを使って推定</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">Tobit</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">cens</span><span class="o">=&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">left</span><span class="o">=&lt;</span><span class="n">B</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">right</span><span class="o">=&lt;</span><span class="n">C</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">data</span><span class="o">=&lt;</span><span class="n">D</span><span class="o">&gt;</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>ここで</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>* `cens`：ステップ１で作成した下限・上限の設定`array`もしくは`Series`を指定する。
+* `left`:下限の値（デフォルトは`0`）
+    * ステップ１で`-1`が設定されている場合のみ有効となる。
+* `right`:上限の値（デフォルトは`0`）
+    * ステップ１で`1`が設定されている場合のみ有効となる。
+* `deta`:データの指定
+</pre></div>
+</div>
+<p>（コメント）</p>
+<p><code class="docutils literal notranslate"><span class="pre">Logit</span></code>や<code class="docutils literal notranslate"><span class="pre">Probit</span></code>と同じように，非線形モデルなため最尤法をつかい推定する。</p>
+</div>
+<div class="section" id="id14">
+<h3>Tobitモデルの推定<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>以前使った<code class="docutils literal notranslate"><span class="pre">mroz</span></code>のデータを使う。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mroz</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mroz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>女性の労働供給のモデルであり，供給量<code class="docutils literal notranslate"><span class="pre">hours</span></code>を被説明変数となる。特に，<code class="docutils literal notranslate"><span class="pre">hours</span></code>は<code class="docutils literal notranslate"><span class="pre">0</span></code>が下限となっているため<code class="docutils literal notranslate"><span class="pre">Tobit</span></code>モデルが妥当だと考えられる。労働時間<code class="docutils literal notranslate"><span class="pre">hours</span></code>を図示すると<code class="docutils literal notranslate"><span class="pre">0</span></code>に多くの観測値があることがわかる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mroz</span><span class="p">[</span><span class="s1">&#39;hours&#39;</span><span class="p">],</span><span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/21_TruncregTobitHeckit_90_0.png" src="_images/21_TruncregTobitHeckit_90_0.png" />
+</div>
+</div>
+<p>まず，下限の値を設定する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">left</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>次に下限を示す<code class="docutils literal notranslate"><span class="pre">array</span></code>を作成する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cond</span> <span class="o">=</span> <span class="p">(</span><span class="n">mroz</span><span class="p">[</span><span class="s1">&#39;hours&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">left</span><span class="p">)</span>  <span class="c1">#  フィルターの作成</span>
+
+<span class="n">censor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">mroz</span><span class="p">)))</span>  <span class="c1"># 0のarrayの作成</span>
+
+<span class="n">censor</span><span class="p">[</span><span class="n">cond</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1">#  条件に合わせて-1を代入</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">censor</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>  <span class="c1"># Serieに変換し，内訳の確認</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span> 0.0    428
+-1.0    325
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>次のコードでも同じ結果を得ることができる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">censor</span> <span class="o">=</span> <span class="n">mroz</span><span class="p">[</span><span class="s1">&#39;hours&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">x</span><span class="o">==</span><span class="n">left</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>推定</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;hours ~ 1 + nwifeinc + educ + exper + expersq + age + kidslt6 + kidsge6&#39;</span>
+
+<span class="n">res_tobit</span> <span class="o">=</span> <span class="n">Tobit</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span><span class="n">cens</span><span class="o">=</span><span class="n">censor</span><span class="p">,</span><span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">res_tobit</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 5.071839
+         Iterations: 2497
+         Function evaluations: 3625
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                              Tobit Regression Results                             
+===================================================================================
+Dep. Variable:                       hours   Pseudo R-squ:                    0.034
+Method:                 Maximum Likelihood   Log-Likelihood:                -3819.1
+No. Observations:                      753   LL-Null:                       -3954.9
+No. Uncensored Obs:                    428   LL-Ratio:                        271.6
+No. Left-censored Obs:                 325   LLR p-value:                     0.000
+No. Right-censored Obs:                  0   AIC:                            7654.2
+Df Residuals:                          745   BIC:                            7691.2
+Df Model:                                7   Covariance Type:             nonrobust
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept    965.3054    446.431      2.162      0.031      90.317    1840.294
+nwifeinc      -8.8142      4.459     -1.977      0.048     -17.554      -0.075
+educ          80.6456     21.583      3.737      0.000      38.343     122.948
+exper        131.5643     17.279      7.614      0.000      97.697     165.431
+expersq       -1.8642      0.538     -3.467      0.001      -2.918      -0.810
+age          -54.4050      7.418     -7.334      0.000     -68.945     -39.865
+kidslt6     -894.0217    111.878     -7.991      0.000   -1113.298    -674.745
+kidsge6      -16.2180     38.640     -0.420      0.675     -91.950      59.514
+Log(Sigma)     7.0229      0.037    189.514      0.000       6.950       7.096
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p>係数の解釈はOLSと同じようにおこなう。例えば，<code class="docutils literal notranslate"><span class="pre">educ</span></code>の推定値は約<code class="docutils literal notranslate"><span class="pre">80</span></code>なので，教育年数が一年増えると平均で労働時間が年間<code class="docutils literal notranslate"><span class="pre">80</span></code>時間増加することを示している。また<code class="docutils literal notranslate"><span class="pre">Log(Sigma)</span></code>は切断回帰モデルの場合の解釈と同じである。</p>
+<hr class="docutils" />
+<p><code class="docutils literal notranslate"><span class="pre">dir()</span></code>や<code class="docutils literal notranslate"><span class="pre">see()</span></code>を使うことにより属性とメソッドを確認できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">res_tobit</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>    &lt;                &lt;=               ==               !=               &gt;
+    &gt;=               dir()            hash()           help()           repr()
+    str()            .aic             .bic             .bootstrap()     .bse
+    .bsejac          .bsejhj          .conf_int()      .cov_kwds
+    .cov_params()    .cov_type        .covjac          .covjhj
+    .df_model        .df_modelwc      .df_resid        .endog           .exog
+    .f_test()        .fitted_endog    .fittedvalues    .get_nlfun()     .hessv
+    .initialize()    .k_constant      .llf             .llnull          .llr
+    .llr_pvalue      .load()          .mle_retvals     .mle_settings    .model
+    .nobs            .normalized_cov_params            .obs
+    .params          .predict()       .prsquared       .pvalues
+    .remove_data()                    .resid           .result_null
+    .save()          .scale           .score_obsv      .set_null_options()
+    .summary()       .t_test()        .t_test_pairwise()
+    .tvalues         .use_t           .wald_test()     .wald_test_all_slopes
+    .wald_test_terms()
+</pre></div>
+</div>
+</div>
+</div>
+<p>この中にあるメソッドを使って検定をおこなうことになる。</p>
+</div>
+<div class="section" id="id15">
+<h3>検定と属性<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Wald検定</span></code>を考えよう</p>
+<p><strong>Wald検定の例</strong></p>
+<p><span class="math notranslate nohighlight">\(H_0\)</span>：<code class="docutils literal notranslate"><span class="pre">exper</span></code> <span class="math notranslate nohighlight">\(=\)</span> <code class="docutils literal notranslate"><span class="pre">expersq</span></code> <span class="math notranslate nohighlight">\(=0\)</span> &amp; <code class="docutils literal notranslate"><span class="pre">kidslt6</span></code><span class="math notranslate nohighlight">\(=\)</span><code class="docutils literal notranslate"><span class="pre">kidsge6</span></code></p>
+<p><span class="math notranslate nohighlight">\(H_A\)</span>：<span class="math notranslate nohighlight">\(H_0\)</span>は成立しない</p>
+<p>検定方法は切断回帰の<code class="docutils literal notranslate"><span class="pre">Truncreg</span></code>モジュールと同じである。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_tobit</span><span class="o">.</span><span class="n">wald_test</span><span class="p">(</span><span class="s1">&#39;exper=expersq=0, kidslt6=kidsge6&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;&lt;Wald test (chi2): statistic=[[199.25002226]], p-value=6.126467400235263e-43, df_denom=3&gt;&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(p\)</span>値は非常に低いため，<code class="docutils literal notranslate"><span class="pre">1%</span></code>有意水準でも帰無仮説を棄却できる。</p>
+<hr class="docutils" />
+<p>次の３つの属性も有用である。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">.fittedvalues</span></code>：以下の式で与えられる線形の予測値 <span class="math notranslate nohighlight">\(\hat{y}^{*}\)</span></p>
+<div class="math notranslate nohighlight">
+\[\hat{y}_i^{*}=\hat{\beta}_0+\hat{\beta}_1x_i\]</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.fitted_endog</span></code>：被説明変数の予測値 <span class="math notranslate nohighlight">\(\text{E}(y|x)\)</span> （正規分布に基づいた非線形）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.resid</span></code>：以下の式で与えられる線形の残差</p>
+<div class="math notranslate nohighlight">
+\[\hat{u}_i=y_i-\hat{y}_i^{*}\]</div>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">y_star_hat</span> <span class="o">=</span> <span class="n">res_tobit</span><span class="o">.</span><span class="n">fittedvalues</span>
+
+<span class="n">u_hat</span> <span class="o">=</span> <span class="n">res_tobit</span><span class="o">.</span><span class="n">resid</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y_star_hat</span><span class="p">,</span><span class="n">u_hat</span><span class="p">)</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/21_TruncregTobitHeckit_108_0.png" src="_images/21_TruncregTobitHeckit_108_0.png" />
+</div>
+</div>
+<p>図の左下は切り打ちデータを反映している。</p>
+</div>
+<div class="section" id="id16">
+<h3>残差について<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>切断回帰推定と同じように最尤法を使っているので，推定量の標準偏差の変化を使い残差の不均一について考えてみる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 通常の標準偏差</span>
+<span class="n">to0</span> <span class="o">=</span> <span class="n">res_tobit</span><span class="o">.</span><span class="n">bse</span>
+
+<span class="c1"># 不均一分散標準偏差</span>
+<span class="n">res_tobit_HC1</span> <span class="o">=</span> <span class="n">Tobit</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span><span class="n">cens</span><span class="o">=</span><span class="n">censor</span><span class="p">,</span><span class="n">left</span><span class="o">=</span><span class="n">left</span><span class="p">,</span>
+                         <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC1&#39;</span><span class="p">,</span><span class="n">disp</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">to1</span> <span class="o">=</span> <span class="n">res_tobit_HC1</span><span class="o">.</span><span class="n">bse</span>
+
+<span class="c1"># 不均一分算標準偏差を使った場合の標準偏差の変化（％）</span>
+<span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="n">to1</span><span class="o">-</span><span class="n">to0</span><span class="p">)</span><span class="o">/</span><span class="n">to0</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>     <span class="c1"># Log(Sigma)を省く</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([ 0.37107505,  1.4553746 ,  1.12856511,  7.83246523,  6.92968004,
+       -3.52866329,  4.88517743,  1.92156176])
+</pre></div>
+</div>
+</div>
+</div>
+<p>全ての係数の標準誤差は30％程変化している。何らかの問題を示唆しているかも知れない。</p>
+<p>（注意）不均一分散の下でお最尤推定</p>
+<ul class="simple">
+<li><p>推定量は一致性を満たさない</p></li>
+<li><p>標準誤差も一致性を満たさない</p>
+<ul>
+<li><p>不均一分散頑健標準誤差を使うことが推奨されることがあるが（研究論文でもそうする研究者も多い），もともと係数の推定量が一致性を満たさないため，<code class="docutils literal notranslate"><span class="pre">cov_type</span></code>で指定する不均一分散頑健標準誤差の有用性に疑問が残る！（<a class="reference external" href="https://davegiles.blogspot.com/2013/05/robust-standard-errors-for-nonlinear.html">参照</a>）</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="heckit">
+<h2>Heckitモデル<a class="headerlink" href="#heckit" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id17">
+<h3>説明<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Heckit</span></code>モデルは切断回帰モデルの拡張版であり，選択バイアス問題が疑われる場合に威力を発揮する。例を使って選択バイアス問題を説明する。</p>
+<p>＜選択バイアス問題：例１＞</p>
+<p>日本全国の大学４年生にある試験（単位取得できるが必須ではない）を受けさせ，その平均点を使って卒業生全体の学力を測るとしよう。しかし，勉強時間が短い学生は受験しない傾向にあるとしよう。</p>
+<p>２つのシナリオ</p>
+<ul class="simple">
+<li><p>シナリオ１：学生を無作為に選び受験させる。</p></li>
+<li><p>シナリオ２：希望する学生だけに受けさせる。</p></li>
+</ul>
+<p>結果</p>
+<ul class="simple">
+<li><p>シナリオ１：ランダム抽出なので平均点は全体像を反映している。</p></li>
+<li><p>シナリオ２：勉強時間が短い学生は受験しなくなり，比較的に勉強時間が長い学生が受験することになり平均点が上がることになる。全体像を歪める結果がでる可能性がある。</p></li>
+</ul>
+<p>＜選択バイアス問題：例２＞</p>
+<p>賃金に対する大学教育１年間の平均的効果を検証するとしよう。サンプルは大学卒業生と大学に進学しなかった高校卒業生。目的は全体像の把握であり，以下を考える。</p>
+<div class="math notranslate nohighlight">
+\[\dfrac{W_{\text{大}}-W_{\text{高}}}{4}\qquad (式１)\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(W_{\text{大}}\)</span>：大卒の平均賃金</p></li>
+<li><p><span class="math notranslate nohighlight">\(W_{\text{高}}\)</span>：高卒の平均賃金</p></li>
+</ul>
+<p>次の仮定を置く：</p>
+<ul class="simple">
+<li><p>教育が高いほど賃金は高い。</p></li>
+<li><p>他の条件が同じであれば，教育が高いほど働く傾向にある（機会費用が高いため）</p></li>
+</ul>
+<p>２つのシナリオ</p>
+<ul class="simple">
+<li><p>起こりえないシナリオ：卒業生をを無作為に選び（強制的に）働かせて賃金のデータを集める。</p></li>
+<li><p>現実的なシナリオ：自由に労働者が働くか働かないかを決め，働いている労働者のデータを集める。</p></li>
+</ul>
+<p>結果：</p>
+<ul class="simple">
+<li><p>起こりえないシナリオ：ランダム抽出なので(式１)は全体像を反映している。</p></li>
+<li><p>現実的なシナリオ：教育水準が低い人（高卒）ほど働かな人いが多い。特に，賃金が低い人ほど労働市場から退出する場合，高卒の平均賃金<span class="math notranslate nohighlight">\(W_{\text{高}}\)</span>は上昇することになり，(式１)は下落する。大学教育１年の効果は，低く推定され全体像を歪める結果となる。</p></li>
+</ul>
+<hr class="docutils" />
+<p>これらの例が示唆するように，選択問題を無視して単純にOLS推定しても推定量にバイアスが発生する可能性がある。この問題に対処する推定方法の１つが<code class="docutils literal notranslate"><span class="pre">Heckit</span></code>モデルである。<code class="docutils literal notranslate"><span class="pre">Heckit</span></code>モデルは２段階で推定する。</p>
+<p>＜第１段階＞</p>
+<p><code class="docutils literal notranslate"><span class="pre">Probit</span></code>モデルを使った２項選択に関する推定（例えば，労働市場に参加するしないの選択）</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+&amp;z_i^{*}=\alpha_0+\alpha_1w_i+u_i\qquad\text{(式５)}\\
+    &amp;\begin{cases}
+        z_i=1&amp;\quad\text{if }z_i^{*}&gt;0\\
+        z_i=0&amp;\quad\text{if }z_i^{*}\leq0
+    \end{cases}
+\end{align*}
+\end{split}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(z_i^{*}\)</span>：選択に関する潜在変数（例えば，働く時間数）</p></li>
+<li><p><span class="math notranslate nohighlight">\(z_i\)</span>：選択を示す指標（例えば，１＝働く，０＝働かない）</p></li>
+<li><p><span class="math notranslate nohighlight">\(w_i\)</span>：選択に影響する要因（例えば，働く時間に影響を及ぼす要因として小さい子どもの数）</p></li>
+</ul>
+<p>＜第２段階＞</p>
+<p>第一段階の結果を使い<code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定（例えば，賃金の推定）</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+&amp;y_i^{*}=\beta_0+\beta_1x_i+\rho\sigma_e\lambda\left(\hat{k}_i\right)+e_i\qquad\text{(式６)}\\
+    &amp;\begin{cases}
+        y_i=y_i^{*}&amp;\quad\text{if }z_i=1\\
+        y_i\text{は切断される}&amp;\quad\text{if }z_i= 0
+    \end{cases}
+\end{align*}
+\end{split}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(y_i^{*}\)</span>：興味がある変数（例えば，労働者の賃金）</p></li>
+<li><p><span class="math notranslate nohighlight">\(y_i\)</span>：実際に観測される<span class="math notranslate nohighlight">\(y_i^{*}\)</span>の値</p></li>
+<li><p><span class="math notranslate nohighlight">\(x_i\)</span>：<span class="math notranslate nohighlight">\(y_i^{*}\)</span>に影響する要因（例えば，教育，経験）</p></li>
+</ul>
+<p>ここで</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{k}_i\)</span>：第一段階における<span class="math notranslate nohighlight">\(\dfrac{A-\hat{\alpha}_0-\hat{\alpha}_1w_i}{\sigma_u}\)</span>の推定量</p></li>
+<li><p><span class="math notranslate nohighlight">\(A=0\)</span>：下限の値</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma_e\)</span>：<span class="math notranslate nohighlight">\(e_i\)</span>の標準偏差</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma_u\)</span>：<span class="math notranslate nohighlight">\(u_i\)</span>の標準偏差</p></li>
+<li><p><span class="math notranslate nohighlight">\(\rho=\text{Cov}(u_i,e_i)\)</span></p></li>
+</ul>
+<p>（コメント）</p>
+<ul class="simple">
+<li><p>ある仮定のもとで<code class="docutils literal notranslate"><span class="pre">Heckit</span></code>推定量は一致性を満たす。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Heckit</span></code>を使わずに，(式６)を直接OLS推定すると<span class="math notranslate nohighlight">\(\lambda\left(\hat{w}_i\right)\)</span>を無視することになり，欠落変数バイアスが発生する。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\rho=0\)</span>の場合，(式６)を直接OLS推定しても欠落変数バイアスは発生しない。この場合，<code class="docutils literal notranslate"><span class="pre">Heckit</span></code>モデルを使う必要はない。即ち，<span class="math notranslate nohighlight">\(\rho\sigma_e\)</span>のOLS推定量でバイアスが発生しいるか確認できる。</p></li>
+</ul>
+<p>（注意）</p>
+<ul class="simple">
+<li><p>上の説明では，<span class="math notranslate nohighlight">\(k_i\)</span>も<span class="math notranslate nohighlight">\(x_i\)</span>も１変数として説明したが，実際には複数の変数を使うことになる。その際，第１段階の説明変数（上の例では，<span class="math notranslate nohighlight">\(k_i\)</span>）には第２段階の説明変数に<strong>ない</strong>変数を少なくとも１つ入れる必要がある。</p></li>
+</ul>
+</div>
+<div class="section" id="id18">
+<h3><code class="docutils literal notranslate"><span class="pre">Heckit</span></code>モジュールの使い方<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>も<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>も<code class="docutils literal notranslate"><span class="pre">Heckit</span></code>推定の正式モジュールがない。その代わり<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>に正式にmergeされていない<code class="docutils literal notranslate"><span class="pre">Heckman</span></code>モジュールに基づいて著者が作成した<code class="docutils literal notranslate"><span class="pre">Heckit</span></code>モジュールを使う。</p>
+<hr class="docutils" />
+<p>＜使い方＞</p>
+<p>今まで<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使う場合，<code class="docutils literal notranslate"><span class="pre">from_formula</span></code>メソッドを使ったが，それを使わない方法もある。<code class="docutils literal notranslate"><span class="pre">Heckit</span></code>の使い方はその方法に沿っている。</p>
+<ol class="simple">
+<li><p>第１段階と第２段階で使う全ての変数が入った<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作成する。以下の説明では<code class="docutils literal notranslate"><span class="pre">df</span></code>と呼ぶ。</p></li>
+<li><p>第２段階の被説明変数を<code class="docutils literal notranslate"><span class="pre">endog</span></code>として定義する。例えば，<code class="docutils literal notranslate"><span class="pre">df</span></code>の<code class="docutils literal notranslate"><span class="pre">Y</span></code>列にある場合，以下のようにする。</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">endog</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>第２段階の説明変数だけを抜き取って<code class="docutils literal notranslate"><span class="pre">exog</span></code>という<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作成し，それに定数項の列を加える。例えば，<code class="docutils literal notranslate"><span class="pre">X1</span></code>，<code class="docutils literal notranslate"><span class="pre">X2</span></code>，<code class="docutils literal notranslate"><span class="pre">X3</span></code>が該当する変数だとすると，以下のようにする。</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">exog</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="n">X1</span><span class="p">,</span><span class="n">X2</span><span class="p">,</span><span class="n">X3</span><span class="p">]]</span>
+    <span class="n">exog</span><span class="p">[</span><span class="s1">&#39;Intercept&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>第１段階の説明変数だけを抜き取って<code class="docutils literal notranslate"><span class="pre">exog_select</span></code>という<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作成し，それに定数項の列を加える。例えば，<code class="docutils literal notranslate"><span class="pre">Z1</span></code>，<code class="docutils literal notranslate"><span class="pre">Z2</span></code>，<code class="docutils literal notranslate"><span class="pre">Z3</span></code>が該当する変数だとすると，以下のようにする。</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">exog_select</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">Z3</span><span class="p">]]</span>
+    <span class="n">exog_select</span><span class="p">[</span><span class="s1">&#39;Intercept&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>以下のように<code class="docutils literal notranslate"><span class="pre">Heckit</span></code>を使い推定する。</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">Heckit</span><span class="p">(</span><span class="n">endog</span><span class="p">,</span> <span class="n">exog</span><span class="p">,</span> <span class="n">exog_select</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id19">
+<h3>推定<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="mroz">
+<h4><code class="docutils literal notranslate"><span class="pre">mroz</span></code>を使った推定<a class="headerlink" href="#mroz" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">mroz</span></code>のデータセットを使い推定する。</p>
+<ul class="simple">
+<li><p>第２段階の被説明変数：<code class="docutils literal notranslate"><span class="pre">lwage</span></code></p></li>
+<li><p>第２段階の被説明変数：<code class="docutils literal notranslate"><span class="pre">educ</span></code>，<code class="docutils literal notranslate"><span class="pre">exper</span></code>，<code class="docutils literal notranslate"><span class="pre">expersq</span></code></p></li>
+<li><p>第１段階の被説明変数：<code class="docutils literal notranslate"><span class="pre">educ</span></code>，<code class="docutils literal notranslate"><span class="pre">exper</span></code>，<code class="docutils literal notranslate"><span class="pre">expersq</span></code>，<code class="docutils literal notranslate"><span class="pre">nwifeinc</span></code>，<code class="docutils literal notranslate"><span class="pre">age</span></code>，<code class="docutils literal notranslate"><span class="pre">kidslt6</span></code>，<code class="docutils literal notranslate"><span class="pre">kidsge6</span></code></p></li>
+</ul>
+<p>（目的）</p>
+<ul class="simple">
+<li><p>教育の収益率の推定。</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 第２段階の比説明変数</span>
+<span class="n">endog</span> <span class="o">=</span> <span class="n">mroz</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;lwage&#39;</span><span class="p">]</span>
+
+<span class="c1"># 第２段階の比説明変数</span>
+<span class="n">exog</span> <span class="o">=</span> <span class="n">mroz</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;educ&#39;</span><span class="p">,</span> <span class="s1">&#39;exper&#39;</span><span class="p">,</span> <span class="s1">&#39;expersq&#39;</span><span class="p">]]</span>
+<span class="n">exog</span><span class="p">[</span><span class="s1">&#39;Intercept&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="c1"># 第１段階の比説明変数</span>
+<span class="n">exog_select</span> <span class="o">=</span> <span class="n">mroz</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;educ&#39;</span><span class="p">,</span> <span class="s1">&#39;exper&#39;</span><span class="p">,</span> <span class="s1">&#39;expersq&#39;</span><span class="p">,</span><span class="s1">&#39;nwifeinc&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;kidslt6&#39;</span><span class="p">,</span> <span class="s1">&#39;kidsge6&#39;</span><span class="p">,</span> <span class="p">]]</span>
+<span class="n">exog_select</span><span class="p">[</span><span class="s1">&#39;Intercept&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>推定を行う際，<code class="docutils literal notranslate"><span class="pre">fit()</span></code>にオプションを追加し不均一分散頑健標準誤差を指定する。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cov_type_1</span></code>：第１段階推定でのオプション</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cov_type_2</span></code>：第２段階推定でのオプション</p></li>
+</ul>
+<p>（注意）</p>
+<ul class="simple">
+<li><p>オプションを追加しない場合は，<code class="docutils literal notranslate"><span class="pre">nonrobust</span></code>がデフォルトとなる。</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_heckit</span> <span class="o">=</span> <span class="n">Heckit</span><span class="p">(</span><span class="n">endog</span><span class="p">,</span> <span class="n">exog</span><span class="p">,</span> <span class="n">exog_select</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type_2</span><span class="o">=</span><span class="s1">&#39;HC1&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">res_heckit</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                           Heckit Regression Results                            
+================================================================================
+Dep. Variable:                    lwage   R-squared:                       0.156
+Model:                           Heckit   Adj. R-squared:                  0.150
+Method:                Heckman Two-Step   F-statistics:                   26.148
+Date:                  Sat, 13 Jun 2020   Prob (F-statistic):              0.000
+Time:                          10:46:55   Cov in 1st Stage:            nonrobust
+No. Total Obs.:                     753   Cov in 2nd Stage:                  HC1
+No. Censored Obs.:                  325                                         
+No. Uncensored Obs.:                428                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+educ           0.1091      0.016      7.026      0.000       0.079       0.139
+exper          0.0439      0.016      2.699      0.007       0.012       0.076
+expersq       -0.0009      0.000     -1.957      0.050      -0.002    1.15e-06
+Intercept     -0.5781      0.305     -1.895      0.058      -1.176       0.020
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+educ           0.1309      0.025      5.183      0.000       0.081       0.180
+exper          0.1233      0.019      6.590      0.000       0.087       0.160
+expersq       -0.0019      0.001     -3.145      0.002      -0.003      -0.001
+nwifeinc      -0.0120      0.005     -2.484      0.013      -0.022      -0.003
+age           -0.0529      0.008     -6.235      0.000      -0.069      -0.036
+kidslt6       -0.8683      0.119     -7.326      0.000      -1.101      -0.636
+kidsge6        0.0360      0.043      0.828      0.408      -0.049       0.121
+Intercept      0.2701      0.509      0.531      0.595      -0.727       1.267
+================================================================================
+                   coef    std err          z      P&gt;|z|      [0.025      0.975]
+--------------------------------------------------------------------------------
+IMR (Lambda)     0.0323      0.134      0.241      0.809      -0.230       0.294
+=====================================
+rho:                            0.049
+sigma:                          0.664
+=====================================
+
+First table are the estimates for the regression (response) equation.
+Second table are the estimates for the selection equation.
+Third table is the estimate for the coef of the inverse Mills ratio (Heckman&#39;s Lambda).
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>上段の表：第２段階推定</p></li>
+<li><p>中断の表：第１段階推定</p></li>
+<li><p>下段の表</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">IMR</span></code>：逆ミルズ比（(式６)の<span class="math notranslate nohighlight">\(\lambda\left(\hat{w}_i\right)\)</span>）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rho</span></code>：第１・第２段階の誤差項の共分散（(式６)の<span class="math notranslate nohighlight">\(\rho\)</span>）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sigma</span></code>：第２段階誤差項の標準偏差（(式６)の<span class="math notranslate nohighlight">\(\sigma_e\)</span>）</p></li>
+</ul>
+</li>
+</ul>
+<p>（注意）表には通常の標準誤差が表示されている。不均一分散頑健標準誤差は以下で手動で計算する。</p>
+<hr class="docutils" />
+<p>第２段階結果の属性とメソッドは<code class="docutils literal notranslate"><span class="pre">dir()</span></code>や<code class="docutils literal notranslate"><span class="pre">see()</span></code>で確認できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">res_heckit</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>    &lt;                  &lt;=                 ==                 !=
+    &gt;                  &gt;=                 dir()              hash()
+    help()             repr()             str()              .HC1_se
+    .bse               .centered_tss      .conf_int()        .corr_eqnerrors
+    .cov_HC1           .cov_params()      .cov_type_1        .cov_type_2
+    .df_model          .df_resid          .endog             .ess
+    .exog              .f_pvalue          .f_test()          .fittedvalues
+    .fvalue            .initialize()      .k_constant        .llf?
+    .load()            .method            .model             .mse_model
+    .mse_resid         .mse_total         .nobs
+    .normalized_cov_params                .params
+    .params_inverse_mills                 .pinv_wexog        .predict()
+    .pvalues           .remove_data()     .resid             .rsquared
+    .rsquared_adj      .save()            .scale             .select_res
+    .ssr               .stderr_inverse_mills                 .summary()
+    .t_test()          .t_test_pairwise()                    .tvalues
+    .uncentered_tss    .use_t             .var_reg_error     .wald_test()
+    .wald_test_terms()                    .wendog            .wexog
+    .wresid
+</pre></div>
+</div>
+</div>
+</div>
+<p>例えば，<code class="docutils literal notranslate"><span class="pre">predict()</span></code>は予測値を返す。この中にはまだ実装されていないものも含まれている。</p>
+<p>また，この中に<code class="docutils literal notranslate"><span class="pre">select_res</span></code>とあるが，この属性を使い第１段階推定のに関する属性・メソッドを確認できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">res_heckit</span><span class="o">.</span><span class="n">select_res</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>    &lt;                  &lt;=                 ==                 !=
+    &gt;                  &gt;=                 dir()              hash()
+    help()             repr()             str()              .aic
+    .bic               .bse               .conf_int()        .cov_kwds
+    .cov_params()      .cov_type          .df_model          .df_resid
+    .f_test()          .fittedvalues      .get_margeff()     .initialize()
+    .k_constant        .llf               .llnull            .llr
+    .llr_pvalue        .load()            .mle_retvals       .mle_settings
+    .model             .nobs              .normalized_cov_params
+    .params            .pred_table()      .predict()         .prsquared
+    .pvalues           .remove_data()     .resid_dev
+    .resid_generalized                    .resid_pearson     .resid_response
+    .save()            .scale             .set_null_options()
+    .summary()         .summary2()        .t_test()
+    .t_test_pairwise()                    .tvalues           .use_t
+    .wald_test()       .wald_test_terms()
+</pre></div>
+</div>
+</div>
+</div>
+<p>例えば，<code class="docutils literal notranslate"><span class="pre">fittedvalues</span></code>は予測値を返す。次のコードでは基本統計量を表示できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_heckit</span><span class="o">.</span><span class="n">select_res</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                          Probit Regression Results                           
+==============================================================================
+Dep. Variable:                      y   No. Observations:                  753
+Model:                         Probit   Df Residuals:                      745
+Method:                           MLE   Df Model:                            7
+Date:                Sat, 13 Jun 2020   Pseudo R-squ.:                  0.2206
+Time:                        10:46:55   Log-Likelihood:                -401.30
+converged:                       True   LL-Null:                       -514.87
+Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id20">
+<h4>結果の解釈<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>第２段階推定の<code class="docutils literal notranslate"><span class="pre">educ</span></code>の係数は<code class="docutils literal notranslate"><span class="pre">0.1091</span></code>であり統計的に有意。</p></li>
+</ul>
+<p>この結果を単純なOLSと比べよう。（<code class="docutils literal notranslate"><span class="pre">lwage</span></code>にある<code class="docutils literal notranslate"><span class="pre">NaN</span></code>は自動的に除外される。）</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ educ + exper + expersq&#39;</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC1&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept     -0.5220      0.202     -2.589      0.010      -0.917      -0.127
+educ           0.1075      0.013      8.131      0.000       0.082       0.133
+exper          0.0416      0.015      2.722      0.006       0.012       0.072
+expersq       -0.0008      0.000     -1.931      0.053      -0.002    1.21e-05
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">educ</span></code>のOLS推定値は<code class="docutils literal notranslate"><span class="pre">0.1075</span></code>で<code class="docutils literal notranslate"><span class="pre">Heckit</span></code>推定値と大きく変わらない。これは選択バイアスが殆どないことを示唆している。実際，<code class="docutils literal notranslate"><span class="pre">IMR</span></code>（逆ミルズ比）のp値は<code class="docutils literal notranslate"><span class="pre">0.809</span></code>であり，係数は０とする通常の有意水準で帰無仮説を棄却できない。即ち，単純なOLS推定では逆ミルズ比の欠落変数バイアスが発生していないことを意味する。</p>
+<p>次に切断回帰推定を考えてみよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mroz</span><span class="p">[</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span><span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/21_TruncregTobitHeckit_139_0.png" src="_images/21_TruncregTobitHeckit_139_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">thresh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mroz</span><span class="p">[</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">*</span><span class="mf">0.5</span><span class="p">)</span>  <span class="c1"># 左切断の下限</span>
+
+<span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ + exper + expersq&#39;</span>
+
+<span class="n">res_trunc</span> <span class="o">=</span> <span class="n">Truncreg</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">thresh</span><span class="p">,</span>
+                                  <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lwage&#39;</span><span class="p">]))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 1.008409
+         Iterations: 68
+         Function evaluations: 122
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept     -0.5220      0.202     -2.589      0.010      -0.917      -0.127
+educ           0.1075      0.013      8.131      0.000       0.082       0.133
+exper          0.0416      0.015      2.722      0.006       0.012       0.072
+expersq       -0.0008      0.000     -1.931      0.053      -0.002    1.21e-05
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p>この推定では，<code class="docutils literal notranslate"><span class="pre">wage</span></code>の最小値の50%の値の対数を下限の値に設定している。<code class="docutils literal notranslate"><span class="pre">wage=0</span></code>を下限にしてもよいが，その場合，<code class="docutils literal notranslate"><span class="pre">np.log(0)</span></code>はマイナス無限になり，通常の最尤推定と同じになる。切断回帰推定を使っても結果は変わらない。即ち，選択バイアスが大きな問題ではないことを示唆している。</p>
+<hr class="docutils" />
+<p>第１段階推定では<code class="docutils literal notranslate"><span class="pre">Probit</span></code>モデルを使っているが，以下では不均一分散に関して検定を行う。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">het_test_probit</span><span class="p">(</span><span class="n">res_heckit</span><span class="o">.</span><span class="n">select_res</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>H0: homoscedasticity
+HA: heteroscedasticity
+ 
+Wald test: 8.665 
+p-value:   0.278 
+df freedom:  7.
+</pre></div>
+</div>
+</div>
+</div>
+<p>帰無仮説は棄却できない。</p>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="20_LogitProbit.html" title="previous page">離散選択モデル</a>
+    <a class='right-next' id="next-link" href="part_3.html" title="next page">３. 番外編</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By 春山 鉄源<br/>
+        
+            &copy; Copyright 2020 Tetsugen Haruyama.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-165998213-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>

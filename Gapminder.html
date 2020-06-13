@@ -1,0 +1,2470 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Gapminder &#8212; Pythonで学ぶ入門計量経済学</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/mystnb.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="canonical" href="https://spring-book.github.io/book_etrics/Gapminder.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="記述統計とグラフ" href="Descriptive_stats_vs_Graphs.html" />
+    <link rel="prev" title="３. 番外編" href="part_3.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="https://spring-book.github.io/book_etrics/Gapminder.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Gapminder" />
+<meta property="og:description" content="Gapminder  データ  import numpy as np import pandas as pd import matplotlib.pyplot as plt from gapminder import gapminder  df = gapminder df.head()  <div> <style s" />
+
+
+<meta name="twitter:card" content="summary">
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Pythonで学ぶ入門計量経済学</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="part_1.html">１. Pythonの基礎</a>
+  </li>
+  <li class="">
+    <a href="part_2.html">２. Pythonを使った計量経済分析</a>
+  </li>
+  <li class="active">
+    <a href="part_3.html">３. 番外編</a>
+  <ul class="nav sidenav_l2">
+    <li class="active">
+      <a href="">Gapminder</a>
+    </li>
+    <li class="">
+      <a href="Descriptive_stats_vs_Graphs.html">記述統計とグラフ</a>
+    </li>
+  </ul>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  <a  href="https://github.com/spring-book/py4etrics">&#128200;&#127891;&#128202;</a><!-- Default Statcounter code for Py4etrics https://spring-book.github.io/py4etrics/ --> <script type="text/javascript"> var sc_project=12339954; var sc_invisible=1; var sc_security="45ab8946"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12339954/0/45ab8946/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code -->
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="_sources/Gapminder.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Source interaction buttons -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/spring-book/py4etrics/master?urlpath=tree/Gapminder.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                
+            </div>
+        </div>
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id1" class="nav-link">データ</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#groupby" class="nav-link">groupby()</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#continent-again" class="nav-link">continentの内訳（again）</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id2" class="nav-link">統計量</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id3" class="nav-link">データ数</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id4" class="nav-link">平均</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id5" class="nav-link">標準偏差</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id6" class="nav-link">最大値</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id7" class="nav-link">最小値</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#groupby-agg" class="nav-link">groupby.agg()</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id8" class="nav-link">図</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id9" class="nav-link">クロス・セクション</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id10" class="nav-link">複数階層のgroupby()</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#multi-index" class="nav-link">Multi-index</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id11" class="nav-link">統計量</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id12" class="nav-link">データ数</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id13" class="nav-link">平均の計算</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id14" class="nav-link">標準偏差</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id15" class="nav-link">最大値・最小値</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id16" class="nav-link">図</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="gapminder">
+<h1>Gapminder<a class="headerlink" href="#gapminder" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>データ<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">gapminder</span> <span class="kn">import</span> <span class="n">gapminder</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">gapminder</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>continent</th>
+      <th>year</th>
+      <th>lifeExp</th>
+      <th>pop</th>
+      <th>gdpPercap</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Afghanistan</td>
+      <td>Asia</td>
+      <td>1952</td>
+      <td>28.801</td>
+      <td>8425333</td>
+      <td>779.445314</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Afghanistan</td>
+      <td>Asia</td>
+      <td>1957</td>
+      <td>30.332</td>
+      <td>9240934</td>
+      <td>820.853030</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Afghanistan</td>
+      <td>Asia</td>
+      <td>1962</td>
+      <td>31.997</td>
+      <td>10267083</td>
+      <td>853.100710</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Afghanistan</td>
+      <td>Asia</td>
+      <td>1967</td>
+      <td>34.020</td>
+      <td>11537966</td>
+      <td>836.197138</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Afghanistan</td>
+      <td>Asia</td>
+      <td>1972</td>
+      <td>36.088</td>
+      <td>13079460</td>
+      <td>739.981106</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>continent</th>
+      <th>year</th>
+      <th>lifeExp</th>
+      <th>pop</th>
+      <th>gdpPercap</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1699</th>
+      <td>Zimbabwe</td>
+      <td>Africa</td>
+      <td>1987</td>
+      <td>62.351</td>
+      <td>9216418</td>
+      <td>706.157306</td>
+    </tr>
+    <tr>
+      <th>1700</th>
+      <td>Zimbabwe</td>
+      <td>Africa</td>
+      <td>1992</td>
+      <td>60.377</td>
+      <td>10704340</td>
+      <td>693.420786</td>
+    </tr>
+    <tr>
+      <th>1701</th>
+      <td>Zimbabwe</td>
+      <td>Africa</td>
+      <td>1997</td>
+      <td>46.809</td>
+      <td>11404948</td>
+      <td>792.449960</td>
+    </tr>
+    <tr>
+      <th>1702</th>
+      <td>Zimbabwe</td>
+      <td>Africa</td>
+      <td>2002</td>
+      <td>39.989</td>
+      <td>11926563</td>
+      <td>672.038623</td>
+    </tr>
+    <tr>
+      <th>1703</th>
+      <td>Zimbabwe</td>
+      <td>Africa</td>
+      <td>2007</td>
+      <td>43.487</td>
+      <td>12311143</td>
+      <td>469.709298</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 1704 entries, 0 to 1703
+Data columns (total 6 columns):
+ #   Column     Non-Null Count  Dtype  
+---  ------     --------------  -----  
+ 0   country    1704 non-null   object 
+ 1   continent  1704 non-null   object 
+ 2   year       1704 non-null   int64  
+ 3   lifeExp    1704 non-null   float64
+ 4   pop        1704 non-null   int64  
+ 5   gdpPercap  1704 non-null   float64
+dtypes: float64(2), int64(2), object(2)
+memory usage: 80.0+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>lifeExp</th>
+      <th>pop</th>
+      <th>gdpPercap</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>1704.00000</td>
+      <td>1704.000000</td>
+      <td>1.704000e+03</td>
+      <td>1704.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>1979.50000</td>
+      <td>59.474439</td>
+      <td>2.960121e+07</td>
+      <td>7215.327081</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>17.26533</td>
+      <td>12.917107</td>
+      <td>1.061579e+08</td>
+      <td>9857.454543</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>1952.00000</td>
+      <td>23.599000</td>
+      <td>6.001100e+04</td>
+      <td>241.165877</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>1965.75000</td>
+      <td>48.198000</td>
+      <td>2.793664e+06</td>
+      <td>1202.060309</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>1979.50000</td>
+      <td>60.712500</td>
+      <td>7.023596e+06</td>
+      <td>3531.846989</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>1993.25000</td>
+      <td>70.845500</td>
+      <td>1.958522e+07</td>
+      <td>9325.462346</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>2007.00000</td>
+      <td>82.603000</td>
+      <td>1.318683e+09</td>
+      <td>113523.132900</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>含まれる国名</strong></p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">countries</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;country&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<span class="n">countries</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([&#39;Afghanistan&#39;, &#39;Albania&#39;, &#39;Algeria&#39;, &#39;Angola&#39;, &#39;Argentina&#39;,
+       &#39;Australia&#39;, &#39;Austria&#39;, &#39;Bahrain&#39;, &#39;Bangladesh&#39;, &#39;Belgium&#39;,
+       &#39;Benin&#39;, &#39;Bolivia&#39;, &#39;Bosnia and Herzegovina&#39;, &#39;Botswana&#39;, &#39;Brazil&#39;,
+       &#39;Bulgaria&#39;, &#39;Burkina Faso&#39;, &#39;Burundi&#39;, &#39;Cambodia&#39;, &#39;Cameroon&#39;,
+       &#39;Canada&#39;, &#39;Central African Republic&#39;, &#39;Chad&#39;, &#39;Chile&#39;, &#39;China&#39;,
+       &#39;Colombia&#39;, &#39;Comoros&#39;, &#39;Congo, Dem. Rep.&#39;, &#39;Congo, Rep.&#39;,
+       &#39;Costa Rica&#39;, &quot;Cote d&#39;Ivoire&quot;, &#39;Croatia&#39;, &#39;Cuba&#39;, &#39;Czech Republic&#39;,
+       &#39;Denmark&#39;, &#39;Djibouti&#39;, &#39;Dominican Republic&#39;, &#39;Ecuador&#39;, &#39;Egypt&#39;,
+       &#39;El Salvador&#39;, &#39;Equatorial Guinea&#39;, &#39;Eritrea&#39;, &#39;Ethiopia&#39;,
+       &#39;Finland&#39;, &#39;France&#39;, &#39;Gabon&#39;, &#39;Gambia&#39;, &#39;Germany&#39;, &#39;Ghana&#39;,
+       &#39;Greece&#39;, &#39;Guatemala&#39;, &#39;Guinea&#39;, &#39;Guinea-Bissau&#39;, &#39;Haiti&#39;,
+       &#39;Honduras&#39;, &#39;Hong Kong, China&#39;, &#39;Hungary&#39;, &#39;Iceland&#39;, &#39;India&#39;,
+       &#39;Indonesia&#39;, &#39;Iran&#39;, &#39;Iraq&#39;, &#39;Ireland&#39;, &#39;Israel&#39;, &#39;Italy&#39;,
+       &#39;Jamaica&#39;, &#39;Japan&#39;, &#39;Jordan&#39;, &#39;Kenya&#39;, &#39;Korea, Dem. Rep.&#39;,
+       &#39;Korea, Rep.&#39;, &#39;Kuwait&#39;, &#39;Lebanon&#39;, &#39;Lesotho&#39;, &#39;Liberia&#39;, &#39;Libya&#39;,
+       &#39;Madagascar&#39;, &#39;Malawi&#39;, &#39;Malaysia&#39;, &#39;Mali&#39;, &#39;Mauritania&#39;,
+       &#39;Mauritius&#39;, &#39;Mexico&#39;, &#39;Mongolia&#39;, &#39;Montenegro&#39;, &#39;Morocco&#39;,
+       &#39;Mozambique&#39;, &#39;Myanmar&#39;, &#39;Namibia&#39;, &#39;Nepal&#39;, &#39;Netherlands&#39;,
+       &#39;New Zealand&#39;, &#39;Nicaragua&#39;, &#39;Niger&#39;, &#39;Nigeria&#39;, &#39;Norway&#39;, &#39;Oman&#39;,
+       &#39;Pakistan&#39;, &#39;Panama&#39;, &#39;Paraguay&#39;, &#39;Peru&#39;, &#39;Philippines&#39;, &#39;Poland&#39;,
+       &#39;Portugal&#39;, &#39;Puerto Rico&#39;, &#39;Reunion&#39;, &#39;Romania&#39;, &#39;Rwanda&#39;,
+       &#39;Sao Tome and Principe&#39;, &#39;Saudi Arabia&#39;, &#39;Senegal&#39;, &#39;Serbia&#39;,
+       &#39;Sierra Leone&#39;, &#39;Singapore&#39;, &#39;Slovak Republic&#39;, &#39;Slovenia&#39;,
+       &#39;Somalia&#39;, &#39;South Africa&#39;, &#39;Spain&#39;, &#39;Sri Lanka&#39;, &#39;Sudan&#39;,
+       &#39;Swaziland&#39;, &#39;Sweden&#39;, &#39;Switzerland&#39;, &#39;Syria&#39;, &#39;Taiwan&#39;,
+       &#39;Tanzania&#39;, &#39;Thailand&#39;, &#39;Togo&#39;, &#39;Trinidad and Tobago&#39;, &#39;Tunisia&#39;,
+       &#39;Turkey&#39;, &#39;Uganda&#39;, &#39;United Kingdom&#39;, &#39;United States&#39;, &#39;Uruguay&#39;,
+       &#39;Venezuela&#39;, &#39;Vietnam&#39;, &#39;West Bank and Gaza&#39;, &#39;Yemen, Rep.&#39;,
+       &#39;Zambia&#39;, &#39;Zimbabwe&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>国数</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">countries</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>142
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong><code class="docutils literal notranslate"><span class="pre">continent</span></code>の内訳</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># continentのリスト</span>
+
+<span class="n">continent_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;continent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">continent_list</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;Africa&#39;, &#39;Americas&#39;, &#39;Asia&#39;, &#39;Europe&#39;, &#39;Oceania&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 国数を入れる空のリスト</span>
+<span class="n">num_countries</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">continent_list</span><span class="p">:</span>
+    <span class="c1"># 条件</span>
+    <span class="n">con</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;continent&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span>
+    <span class="c1">#　条件が満たされる行を抽出</span>
+    <span class="n">series_countries</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">con</span><span class="p">,</span><span class="s1">&#39;country&#39;</span><span class="p">]</span>
+    <span class="c1"># 重複をなくす</span>
+    <span class="n">series_countries_unique</span> <span class="o">=</span> <span class="n">series_countries</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="c1"># 国数を数える</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">series_countries_unique</span><span class="p">)</span>
+    <span class="c1"># 上のリストに追加</span>
+    <span class="n">num_countries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">continent_list</span><span class="p">,</span><span class="n">num_countries</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">num</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Africa: 52
+Americas: 25
+Asia: 33
+Europe: 30
+Oceania: 2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span><span class="p">(</span><span class="n">num_countries</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>142
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="groupby">
+<h2>groupby()<a class="headerlink" href="#groupby" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_group</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;continent&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">see</span><span class="p">(</span><span class="n">df_group</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>    .*               []               &lt;                &lt;=               ==
+    !=               &gt;                &gt;=               dir()            hash()
+    iter()           len()            repr()           str()            .agg()
+    .aggregate()     .all()           .any()           .apply()
+    .backfill()      .bfill()         .boxplot()       .continent
+    .corr()          .corrwith()      .count()         .country         .cov()
+    .cumcount()      .cummax()        .cummin()        .cumprod()
+    .cumsum()        .describe()      .diff()          .dtypes
+    .expanding()     .ffill()         .fillna()        .filter()
+    .first()         .gdpPercap       .get_group()     .groups
+    .head()          .hist()          .idxmax()        .idxmin()
+    .indices         .last()          .lifeExp         .mad()           .max()
+    .mean()          .median()        .min()           .ndim
+    .ngroup()        .ngroups         .nth()           .nunique()
+    .ohlc()          .pad()           .pct_change()    .pipe()
+    .plot()          .pop             .prod()          .quantile()
+    .rank()          .resample()      .rolling()       .sem()
+    .shift()         .size()          .skew()          .std()           .sum()
+    .tail()          .take()          .transform()     .tshift()        .var()
+    .year
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="continent-again">
+<h3>continentの内訳（again）<a class="headerlink" href="#continent-again" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Seriesを返す</span>
+
+<span class="n">country_names</span> <span class="o">=</span> <span class="n">df_group</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<span class="n">country_names</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>continent
+Africa      [Algeria, Angola, Benin, Botswana, Burkina Fas...
+Americas    [Argentina, Bolivia, Brazil, Canada, Chile, Co...
+Asia        [Afghanistan, Bahrain, Bangladesh, Cambodia, C...
+Europe      [Albania, Austria, Belgium, Bosnia and Herzego...
+Oceania                              [Australia, New Zealand]
+Name: country, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">country_names</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">country_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t0</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">country_names</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="s1">&#39;:&#39;</span><span class="p">,</span><span class="n">t1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Africa : 52
+Americas : 25
+Asia : 33
+Europe : 30
+Oceania : 2
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>統計量<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">three_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span><span class="s1">&#39;pop&#39;</span><span class="p">,</span><span class="s1">&#39;gdpPercap&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h4>データ数<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_group</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>year</th>
+      <th>lifeExp</th>
+      <th>pop</th>
+      <th>gdpPercap</th>
+    </tr>
+    <tr>
+      <th>continent</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Africa</th>
+      <td>624</td>
+      <td>624</td>
+      <td>624</td>
+      <td>624</td>
+      <td>624</td>
+    </tr>
+    <tr>
+      <th>Americas</th>
+      <td>300</td>
+      <td>300</td>
+      <td>300</td>
+      <td>300</td>
+      <td>300</td>
+    </tr>
+    <tr>
+      <th>Asia</th>
+      <td>396</td>
+      <td>396</td>
+      <td>396</td>
+      <td>396</td>
+      <td>396</td>
+    </tr>
+    <tr>
+      <th>Europe</th>
+      <td>360</td>
+      <td>360</td>
+      <td>360</td>
+      <td>360</td>
+      <td>360</td>
+    </tr>
+    <tr>
+      <th>Oceania</th>
+      <td>24</td>
+      <td>24</td>
+      <td>24</td>
+      <td>24</td>
+      <td>24</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_group</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Gapminder_26_0.png" src="_images/Gapminder_26_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h4>平均<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_group</span><span class="p">[</span><span class="n">three_vars</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lifeExp</th>
+      <th>pop</th>
+      <th>gdpPercap</th>
+    </tr>
+    <tr>
+      <th>continent</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Africa</th>
+      <td>48.865330</td>
+      <td>9.916003e+06</td>
+      <td>2193.754578</td>
+    </tr>
+    <tr>
+      <th>Americas</th>
+      <td>64.658737</td>
+      <td>2.450479e+07</td>
+      <td>7136.110356</td>
+    </tr>
+    <tr>
+      <th>Asia</th>
+      <td>60.064903</td>
+      <td>7.703872e+07</td>
+      <td>7902.150428</td>
+    </tr>
+    <tr>
+      <th>Europe</th>
+      <td>71.903686</td>
+      <td>1.716976e+07</td>
+      <td>14469.475533</td>
+    </tr>
+    <tr>
+      <th>Oceania</th>
+      <td>74.326208</td>
+      <td>8.874672e+06</td>
+      <td>18621.609223</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_group</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;gdpPercap&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">)</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Gapminder_29_0.png" src="_images/Gapminder_29_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h4>標準偏差<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_group</span><span class="p">[</span><span class="n">three_vars</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lifeExp</th>
+      <th>pop</th>
+      <th>gdpPercap</th>
+    </tr>
+    <tr>
+      <th>continent</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Africa</th>
+      <td>9.150210</td>
+      <td>1.549092e+07</td>
+      <td>2827.929863</td>
+    </tr>
+    <tr>
+      <th>Americas</th>
+      <td>9.345088</td>
+      <td>5.097943e+07</td>
+      <td>6396.764112</td>
+    </tr>
+    <tr>
+      <th>Asia</th>
+      <td>11.864532</td>
+      <td>2.068852e+08</td>
+      <td>14045.373112</td>
+    </tr>
+    <tr>
+      <th>Europe</th>
+      <td>5.433178</td>
+      <td>2.051944e+07</td>
+      <td>9355.213498</td>
+    </tr>
+    <tr>
+      <th>Oceania</th>
+      <td>3.795611</td>
+      <td>6.506342e+06</td>
+      <td>6358.983321</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h4>最大値<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_group</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>year</th>
+      <th>lifeExp</th>
+      <th>pop</th>
+      <th>gdpPercap</th>
+    </tr>
+    <tr>
+      <th>continent</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Africa</th>
+      <td>Zimbabwe</td>
+      <td>2007</td>
+      <td>76.442</td>
+      <td>135031164</td>
+      <td>21951.21176</td>
+    </tr>
+    <tr>
+      <th>Americas</th>
+      <td>Venezuela</td>
+      <td>2007</td>
+      <td>80.653</td>
+      <td>301139947</td>
+      <td>42951.65309</td>
+    </tr>
+    <tr>
+      <th>Asia</th>
+      <td>Yemen, Rep.</td>
+      <td>2007</td>
+      <td>82.603</td>
+      <td>1318683096</td>
+      <td>113523.13290</td>
+    </tr>
+    <tr>
+      <th>Europe</th>
+      <td>United Kingdom</td>
+      <td>2007</td>
+      <td>81.757</td>
+      <td>82400996</td>
+      <td>49357.19017</td>
+    </tr>
+    <tr>
+      <th>Oceania</th>
+      <td>New Zealand</td>
+      <td>2007</td>
+      <td>81.235</td>
+      <td>20434176</td>
+      <td>34435.36744</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h4>最小値<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_group</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>year</th>
+      <th>lifeExp</th>
+      <th>pop</th>
+      <th>gdpPercap</th>
+    </tr>
+    <tr>
+      <th>continent</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Africa</th>
+      <td>Algeria</td>
+      <td>1952</td>
+      <td>23.599</td>
+      <td>60011</td>
+      <td>241.165877</td>
+    </tr>
+    <tr>
+      <th>Americas</th>
+      <td>Argentina</td>
+      <td>1952</td>
+      <td>37.579</td>
+      <td>662850</td>
+      <td>1201.637154</td>
+    </tr>
+    <tr>
+      <th>Asia</th>
+      <td>Afghanistan</td>
+      <td>1952</td>
+      <td>28.801</td>
+      <td>120447</td>
+      <td>331.000000</td>
+    </tr>
+    <tr>
+      <th>Europe</th>
+      <td>Albania</td>
+      <td>1952</td>
+      <td>43.585</td>
+      <td>147962</td>
+      <td>973.533195</td>
+    </tr>
+    <tr>
+      <th>Oceania</th>
+      <td>Australia</td>
+      <td>1952</td>
+      <td>69.120</td>
+      <td>1994794</td>
+      <td>10039.595640</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>基本的統計</strong></p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_group</span><span class="p">[</span><span class="n">three_vars</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="8" halign="left">lifeExp</th>
+      <th colspan="5" halign="left">pop</th>
+      <th colspan="8" halign="left">gdpPercap</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+      <th>count</th>
+      <th>mean</th>
+      <th>...</th>
+      <th>75%</th>
+      <th>max</th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+    <tr>
+      <th>continent</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Africa</th>
+      <td>624.0</td>
+      <td>48.865330</td>
+      <td>9.150210</td>
+      <td>23.599</td>
+      <td>42.37250</td>
+      <td>47.7920</td>
+      <td>54.41150</td>
+      <td>76.442</td>
+      <td>624.0</td>
+      <td>9.916003e+06</td>
+      <td>...</td>
+      <td>10801489.75</td>
+      <td>1.350312e+08</td>
+      <td>624.0</td>
+      <td>2193.754578</td>
+      <td>2827.929863</td>
+      <td>241.165877</td>
+      <td>761.247010</td>
+      <td>1192.138217</td>
+      <td>2377.417422</td>
+      <td>21951.21176</td>
+    </tr>
+    <tr>
+      <th>Americas</th>
+      <td>300.0</td>
+      <td>64.658737</td>
+      <td>9.345088</td>
+      <td>37.579</td>
+      <td>58.41000</td>
+      <td>67.0480</td>
+      <td>71.69950</td>
+      <td>80.653</td>
+      <td>300.0</td>
+      <td>2.450479e+07</td>
+      <td>...</td>
+      <td>18340309.00</td>
+      <td>3.011399e+08</td>
+      <td>300.0</td>
+      <td>7136.110356</td>
+      <td>6396.764112</td>
+      <td>1201.637154</td>
+      <td>3427.779072</td>
+      <td>5465.509853</td>
+      <td>7830.210416</td>
+      <td>42951.65309</td>
+    </tr>
+    <tr>
+      <th>Asia</th>
+      <td>396.0</td>
+      <td>60.064903</td>
+      <td>11.864532</td>
+      <td>28.801</td>
+      <td>51.42625</td>
+      <td>61.7915</td>
+      <td>69.50525</td>
+      <td>82.603</td>
+      <td>396.0</td>
+      <td>7.703872e+07</td>
+      <td>...</td>
+      <td>46300348.00</td>
+      <td>1.318683e+09</td>
+      <td>396.0</td>
+      <td>7902.150428</td>
+      <td>14045.373112</td>
+      <td>331.000000</td>
+      <td>1056.993223</td>
+      <td>2646.786844</td>
+      <td>8549.255654</td>
+      <td>113523.13290</td>
+    </tr>
+    <tr>
+      <th>Europe</th>
+      <td>360.0</td>
+      <td>71.903686</td>
+      <td>5.433178</td>
+      <td>43.585</td>
+      <td>69.57000</td>
+      <td>72.2410</td>
+      <td>75.45050</td>
+      <td>81.757</td>
+      <td>360.0</td>
+      <td>1.716976e+07</td>
+      <td>...</td>
+      <td>21802867.00</td>
+      <td>8.240100e+07</td>
+      <td>360.0</td>
+      <td>14469.475533</td>
+      <td>9355.213498</td>
+      <td>973.533195</td>
+      <td>7213.085036</td>
+      <td>12081.749115</td>
+      <td>20461.386162</td>
+      <td>49357.19017</td>
+    </tr>
+    <tr>
+      <th>Oceania</th>
+      <td>24.0</td>
+      <td>74.326208</td>
+      <td>3.795611</td>
+      <td>69.120</td>
+      <td>71.20500</td>
+      <td>73.6650</td>
+      <td>77.55250</td>
+      <td>81.235</td>
+      <td>24.0</td>
+      <td>8.874672e+06</td>
+      <td>...</td>
+      <td>14351625.00</td>
+      <td>2.043418e+07</td>
+      <td>24.0</td>
+      <td>18621.609223</td>
+      <td>6358.983321</td>
+      <td>10039.595640</td>
+      <td>14141.858698</td>
+      <td>17983.303955</td>
+      <td>22214.117110</td>
+      <td>34435.36744</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 24 columns</p>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="groupby-agg">
+<h3>groupby.agg()<a class="headerlink" href="#groupby-agg" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">agg()</span></code>を使うとよりメソッドだけではなく，他の関数も使える。</p>
+<p><code class="docutils literal notranslate"><span class="pre">()</span></code>の中に関数を入れる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_group</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>lifeExp</th>
+      <th>pop</th>
+      <th>gdpPercap</th>
+    </tr>
+    <tr>
+      <th>continent</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Africa</th>
+      <td>1979.5</td>
+      <td>48.865330</td>
+      <td>9.916003e+06</td>
+      <td>2193.754578</td>
+    </tr>
+    <tr>
+      <th>Americas</th>
+      <td>1979.5</td>
+      <td>64.658737</td>
+      <td>2.450479e+07</td>
+      <td>7136.110356</td>
+    </tr>
+    <tr>
+      <th>Asia</th>
+      <td>1979.5</td>
+      <td>60.064903</td>
+      <td>7.703872e+07</td>
+      <td>7902.150428</td>
+    </tr>
+    <tr>
+      <th>Europe</th>
+      <td>1979.5</td>
+      <td>71.903686</td>
+      <td>1.716976e+07</td>
+      <td>14469.475533</td>
+    </tr>
+    <tr>
+      <th>Oceania</th>
+      <td>1979.5</td>
+      <td>74.326208</td>
+      <td>8.874672e+06</td>
+      <td>18621.609223</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_group</span><span class="p">[</span><span class="n">three_vars</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="3" halign="left">lifeExp</th>
+      <th colspan="3" halign="left">pop</th>
+      <th colspan="3" halign="left">gdpPercap</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>amax</th>
+      <th>amin</th>
+      <th>mean</th>
+      <th>amax</th>
+      <th>amin</th>
+      <th>mean</th>
+      <th>amax</th>
+      <th>amin</th>
+      <th>mean</th>
+    </tr>
+    <tr>
+      <th>continent</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Africa</th>
+      <td>76.442</td>
+      <td>23.599</td>
+      <td>48.865330</td>
+      <td>135031164</td>
+      <td>60011</td>
+      <td>9.916003e+06</td>
+      <td>21951.21176</td>
+      <td>241.165877</td>
+      <td>2193.754578</td>
+    </tr>
+    <tr>
+      <th>Americas</th>
+      <td>80.653</td>
+      <td>37.579</td>
+      <td>64.658737</td>
+      <td>301139947</td>
+      <td>662850</td>
+      <td>2.450479e+07</td>
+      <td>42951.65309</td>
+      <td>1201.637154</td>
+      <td>7136.110356</td>
+    </tr>
+    <tr>
+      <th>Asia</th>
+      <td>82.603</td>
+      <td>28.801</td>
+      <td>60.064903</td>
+      <td>1318683096</td>
+      <td>120447</td>
+      <td>7.703872e+07</td>
+      <td>113523.13290</td>
+      <td>331.000000</td>
+      <td>7902.150428</td>
+    </tr>
+    <tr>
+      <th>Europe</th>
+      <td>81.757</td>
+      <td>43.585</td>
+      <td>71.903686</td>
+      <td>82400996</td>
+      <td>147962</td>
+      <td>1.716976e+07</td>
+      <td>49357.19017</td>
+      <td>973.533195</td>
+      <td>14469.475533</td>
+    </tr>
+    <tr>
+      <th>Oceania</th>
+      <td>81.235</td>
+      <td>69.120</td>
+      <td>74.326208</td>
+      <td>20434176</td>
+      <td>1994794</td>
+      <td>8.874672e+06</td>
+      <td>34435.36744</td>
+      <td>10039.595640</td>
+      <td>18621.609223</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 自作の関数もOK</span>
+
+<span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">df_group</span><span class="p">[</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span><span class="s1">&#39;pop&#39;</span><span class="p">,</span><span class="s1">&#39;gdpPercap&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="stderr docutils container">
+<pre class="stderr literal-block">&lt;ipython-input-27-11f62f4671e9&gt;:5: FutureWarning: Indexing with multiple keys (implicitly converted to a tuple of keys) will be deprecated, use a list instead.
+  df_group['lifeExp','pop','gdpPercap'].agg(func)
+</pre>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lifeExp</th>
+      <th>pop</th>
+      <th>gdpPercap</th>
+    </tr>
+    <tr>
+      <th>continent</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Africa</th>
+      <td>1.081401</td>
+      <td>13.611447</td>
+      <td>9.896297</td>
+    </tr>
+    <tr>
+      <th>Americas</th>
+      <td>0.666174</td>
+      <td>12.261971</td>
+      <td>5.850528</td>
+    </tr>
+    <tr>
+      <th>Asia</th>
+      <td>0.895731</td>
+      <td>17.115583</td>
+      <td>14.324219</td>
+    </tr>
+    <tr>
+      <th>Europe</th>
+      <td>0.530877</td>
+      <td>4.790574</td>
+      <td>3.343843</td>
+    </tr>
+    <tr>
+      <th>Oceania</th>
+      <td>0.162998</td>
+      <td>2.077754</td>
+      <td>1.310079</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3>図<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p><strong><code class="docutils literal notranslate"><span class="pre">continent</span></code>平均</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_lifeExp_continent</span> <span class="o">=</span> <span class="n">df_group</span><span class="p">[</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_lifeExp_continent</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Gapminder_46_0.png" src="_images/Gapminder_46_0.png" />
+</div>
+</div>
+<div class="section" id="id9">
+<h4>クロス・セクション<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_mean</span> <span class="o">=</span> <span class="n">df_group</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">df_mean</span><span class="p">[</span><span class="s1">&#39;ln_pop&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">df_mean</span><span class="p">[</span><span class="s1">&#39;pop&#39;</span><span class="p">])</span>
+<span class="n">df_mean</span><span class="p">[</span><span class="s1">&#39;ln_gdpPercap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">df_mean</span><span class="p">[</span><span class="s1">&#39;gdpPercap&#39;</span><span class="p">])</span>
+<span class="n">df_mean</span><span class="p">[</span><span class="s1">&#39;lifeExp_10&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_mean</span><span class="p">[</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">10</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_mean</span><span class="p">[[</span><span class="s1">&#39;lifeExp_10&#39;</span><span class="p">,</span> <span class="s1">&#39;ln_gdpPercap&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Gapminder_49_0.png" src="_images/Gapminder_49_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id10">
+<h3>複数階層の<code class="docutils literal notranslate"><span class="pre">groupby()</span></code><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">continent</span></code>別の平均時系列を考えるときに有用。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_group2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span><span class="s1">&#39;year&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_group2</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>lifeExp</th>
+      <th>pop</th>
+      <th>gdpPercap</th>
+    </tr>
+    <tr>
+      <th>continent</th>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="5" valign="top">Africa</th>
+      <th>1952</th>
+      <td>39.135500</td>
+      <td>4.570010e+06</td>
+      <td>1252.572466</td>
+    </tr>
+    <tr>
+      <th>1957</th>
+      <td>41.266346</td>
+      <td>5.093033e+06</td>
+      <td>1385.236062</td>
+    </tr>
+    <tr>
+      <th>1962</th>
+      <td>43.319442</td>
+      <td>5.702247e+06</td>
+      <td>1598.078825</td>
+    </tr>
+    <tr>
+      <th>1967</th>
+      <td>45.334538</td>
+      <td>6.447875e+06</td>
+      <td>2050.363801</td>
+    </tr>
+    <tr>
+      <th>1972</th>
+      <td>47.450942</td>
+      <td>7.305376e+06</td>
+      <td>2339.615674</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># lifeExpの列だけを選択した後，行はyear列はcontinentになるDataFrameに変換</span>
+
+<span class="n">df_lifeExp_group</span> <span class="o">=</span> <span class="n">df_group2</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_lifeExp_group</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Average Life Expectancy&#39;</span><span class="p">)</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Gapminder_55_0.png" src="_images/Gapminder_55_0.png" />
+</div>
+</div>
+<p><strong>世界平均との比較</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_group_year</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">world_lifeExp</span> <span class="o">=</span> <span class="n">df_group_year</span><span class="o">.</span><span class="n">mean</span><span class="p">()[</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_lifeExp_diff</span> <span class="o">=</span> <span class="n">df_lifeExp_group</span> <span class="o">-</span> <span class="n">world_lifeExp</span>
+<span class="n">df_lifeExp_diff</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Gapminder_59_0.png" src="_images/Gapminder_59_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="multi-index">
+<h2>Multi-index<a class="headerlink" href="#multi-index" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># sort_index()がないとWarningがでる場合がある(順番で並ぶとPythonが変数を探しやすくなる)</span>
+
+<span class="n">dfm</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span><span class="s1">&#39;country&#39;</span><span class="p">,</span><span class="s1">&#39;year&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dfm</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>lifeExp</th>
+      <th>pop</th>
+      <th>gdpPercap</th>
+    </tr>
+    <tr>
+      <th>continent</th>
+      <th>country</th>
+      <th>year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="5" valign="top">Africa</th>
+      <th rowspan="5" valign="top">Algeria</th>
+      <th>1952</th>
+      <td>43.077</td>
+      <td>9279525</td>
+      <td>2449.008185</td>
+    </tr>
+    <tr>
+      <th>1957</th>
+      <td>45.685</td>
+      <td>10270856</td>
+      <td>3013.976023</td>
+    </tr>
+    <tr>
+      <th>1962</th>
+      <td>48.303</td>
+      <td>11000948</td>
+      <td>2550.816880</td>
+    </tr>
+    <tr>
+      <th>1967</th>
+      <td>51.407</td>
+      <td>12760499</td>
+      <td>3246.991771</td>
+    </tr>
+    <tr>
+      <th>1972</th>
+      <td>54.518</td>
+      <td>14760787</td>
+      <td>4182.663766</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">continent</span></code>, <code class="docutils literal notranslate"><span class="pre">country</span></code>, <code class="docutils literal notranslate"><span class="pre">year</span></code>の３つがインデックス！</p>
+<div class="section" id="id11">
+<h3>統計量<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id12">
+<h4>データ数<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dfm</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lifeExp</th>
+      <th>pop</th>
+      <th>gdpPercap</th>
+    </tr>
+    <tr>
+      <th>continent</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Africa</th>
+      <td>624</td>
+      <td>624</td>
+      <td>624</td>
+    </tr>
+    <tr>
+      <th>Americas</th>
+      <td>300</td>
+      <td>300</td>
+      <td>300</td>
+    </tr>
+    <tr>
+      <th>Asia</th>
+      <td>396</td>
+      <td>396</td>
+      <td>396</td>
+    </tr>
+    <tr>
+      <th>Europe</th>
+      <td>360</td>
+      <td>360</td>
+      <td>360</td>
+    </tr>
+    <tr>
+      <th>Oceania</th>
+      <td>24</td>
+      <td>24</td>
+      <td>24</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id13">
+<h4>平均の計算<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dfm</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">)</span>
+
+<span class="c1"># dfm.mean(level=0) も同じ</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lifeExp</th>
+      <th>pop</th>
+      <th>gdpPercap</th>
+    </tr>
+    <tr>
+      <th>continent</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Africa</th>
+      <td>48.865330</td>
+      <td>9.916003e+06</td>
+      <td>2193.754578</td>
+    </tr>
+    <tr>
+      <th>Americas</th>
+      <td>64.658737</td>
+      <td>2.450479e+07</td>
+      <td>7136.110356</td>
+    </tr>
+    <tr>
+      <th>Asia</th>
+      <td>60.064903</td>
+      <td>7.703872e+07</td>
+      <td>7902.150428</td>
+    </tr>
+    <tr>
+      <th>Europe</th>
+      <td>71.903686</td>
+      <td>1.716976e+07</td>
+      <td>14469.475533</td>
+    </tr>
+    <tr>
+      <th>Oceania</th>
+      <td>74.326208</td>
+      <td>8.874672e+06</td>
+      <td>18621.609223</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id14">
+<h4>標準偏差<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dfm</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lifeExp</th>
+      <th>pop</th>
+      <th>gdpPercap</th>
+    </tr>
+    <tr>
+      <th>continent</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Africa</th>
+      <td>9.150210</td>
+      <td>1.549092e+07</td>
+      <td>2827.929863</td>
+    </tr>
+    <tr>
+      <th>Americas</th>
+      <td>9.345088</td>
+      <td>5.097943e+07</td>
+      <td>6396.764112</td>
+    </tr>
+    <tr>
+      <th>Asia</th>
+      <td>11.864532</td>
+      <td>2.068852e+08</td>
+      <td>14045.373112</td>
+    </tr>
+    <tr>
+      <th>Europe</th>
+      <td>5.433178</td>
+      <td>2.051944e+07</td>
+      <td>9355.213498</td>
+    </tr>
+    <tr>
+      <th>Oceania</th>
+      <td>3.795611</td>
+      <td>6.506342e+06</td>
+      <td>6358.983321</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="id15">
+<h4>最大値・最小値<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dfm</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lifeExp</th>
+      <th>pop</th>
+      <th>gdpPercap</th>
+    </tr>
+    <tr>
+      <th>continent</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Africa</th>
+      <td>76.442</td>
+      <td>135031164</td>
+      <td>21951.21176</td>
+    </tr>
+    <tr>
+      <th>Americas</th>
+      <td>80.653</td>
+      <td>301139947</td>
+      <td>42951.65309</td>
+    </tr>
+    <tr>
+      <th>Asia</th>
+      <td>82.603</td>
+      <td>1318683096</td>
+      <td>113523.13290</td>
+    </tr>
+    <tr>
+      <th>Europe</th>
+      <td>81.757</td>
+      <td>82400996</td>
+      <td>49357.19017</td>
+    </tr>
+    <tr>
+      <th>Oceania</th>
+      <td>81.235</td>
+      <td>20434176</td>
+      <td>34435.36744</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dfm</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lifeExp</th>
+      <th>pop</th>
+      <th>gdpPercap</th>
+    </tr>
+    <tr>
+      <th>continent</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Africa</th>
+      <td>23.599</td>
+      <td>60011</td>
+      <td>241.165877</td>
+    </tr>
+    <tr>
+      <th>Americas</th>
+      <td>37.579</td>
+      <td>662850</td>
+      <td>1201.637154</td>
+    </tr>
+    <tr>
+      <th>Asia</th>
+      <td>28.801</td>
+      <td>120447</td>
+      <td>331.000000</td>
+    </tr>
+    <tr>
+      <th>Europe</th>
+      <td>43.585</td>
+      <td>147962</td>
+      <td>973.533195</td>
+    </tr>
+    <tr>
+      <th>Oceania</th>
+      <td>69.120</td>
+      <td>1994794</td>
+      <td>10039.595640</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="id16">
+<h3>図<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p><strong>図（５カ国の時系列）</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dfm_2</span> <span class="o">=</span> <span class="n">dfm</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">countries</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Japan&#39;</span><span class="p">,</span> <span class="s1">&#39;United Kingdom&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">,</span> <span class="s1">&#39;China&#39;</span><span class="p">,</span> <span class="s1">&#39;Thailand&#39;</span><span class="p">]</span>
+
+<span class="n">dfm_2</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">countries</span><span class="p">),</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Gapminder_77_0.png" src="_images/Gapminder_77_0.png" />
+</div>
+</div>
+<p><strong><code class="docutils literal notranslate"><span class="pre">lifeExp</span></code>の世界平均との差</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_lifeExp_mi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">continent_list</span><span class="p">:</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">dfm</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">i</span><span class="p">,),</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">df_lifeExp_mi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_lifeExp_mi</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Average Life Expectancy&#39;</span><span class="p">)</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Gapminder_80_0.png" src="_images/Gapminder_80_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">world_lifeExp_mi</span> <span class="o">=</span> <span class="n">dfm_2</span><span class="p">[</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_lifeExp_diff_mi</span> <span class="o">=</span> <span class="n">df_lifeExp_mi</span> <span class="o">-</span> <span class="n">world_lifeExp_mi</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_lifeExp_diff_mi</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Gapminder_83_0.png" src="_images/Gapminder_83_0.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="part_3.html" title="previous page">３. 番外編</a>
+    <a class='right-next' id="next-link" href="Descriptive_stats_vs_Graphs.html" title="next page">記述統計とグラフ</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By 春山 鉄源<br/>
+        
+            &copy; Copyright 2020 Tetsugen Haruyama.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-165998213-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>
