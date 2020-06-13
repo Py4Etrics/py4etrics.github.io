@@ -1,0 +1,1202 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>推論 &#8212; Pythonで学ぶ入門計量経済学</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/mystnb.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="canonical" href="https://spring-book.github.io/book_etrics/11_Inference.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="大標本特性" href="12_Asymptotics.html" />
+    <link rel="prev" title="残差診断" href="10_Residuals.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="https://spring-book.github.io/book_etrics/11_Inference.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="推論" />
+<meta property="og:description" content="推論  from scipy.stats import t, f import numpy as np import pandas as pd from statsmodels.formula.api import ols import matplotlib.pyplot as plt import wooldridg" />
+
+
+<meta name="twitter:card" content="summary">
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Pythonで学ぶ入門計量経済学</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="part_1.html">１. Pythonの基礎</a>
+  </li>
+  <li class="active">
+    <a href="part_2.html">２. Pythonを使った計量経済分析</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="7_Review_of_Statistics.html">統計学の簡単な復習</a>
+    </li>
+    <li class="">
+      <a href="8_Simple_Regression.html">単回帰分析</a>
+    </li>
+    <li class="">
+      <a href="9_Multiple_Regression.html">重回帰分析</a>
+    </li>
+    <li class="">
+      <a href="10_Residuals.html">残差診断</a>
+    </li>
+    <li class="active">
+      <a href="">推論</a>
+    </li>
+    <li class="">
+      <a href="12_Asymptotics.html">大標本特性</a>
+    </li>
+    <li class="">
+      <a href="13_Dummies.html">質的変数と回帰分析</a>
+    </li>
+    <li class="">
+      <a href="14_Heteroskedasticity.html">不均一分散</a>
+    </li>
+    <li class="">
+      <a href="15_Pooling.html">プーリング・データとパネル・データ</a>
+    </li>
+    <li class="">
+      <a href="16_linearmodels.html">linearmodels</a>
+    </li>
+    <li class="">
+      <a href="17_Panel.html">パネル・データ分析</a>
+    </li>
+    <li class="">
+      <a href="18_Zero_Conditional_Mean.html">GM仮定４が満たされない場合</a>
+    </li>
+    <li class="">
+      <a href="19_IV2SLS.html">操作変数法と２段階OLS</a>
+    </li>
+    <li class="">
+      <a href="20_LogitProbit.html">離散選択モデル</a>
+    </li>
+    <li class="">
+      <a href="21_TruncregTobitHeckit.html">制限従属変数モデル</a>
+    </li>
+  </ul>
+  </li>
+  <li class="">
+    <a href="part_3.html">３. 番外編</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  <a  href="https://github.com/spring-book/py4etrics">&#128200;&#127891;&#128202;</a><!-- Default Statcounter code for Py4etrics https://spring-book.github.io/py4etrics/ --> <script type="text/javascript"> var sc_project=12339954; var sc_invisible=1; var sc_security="45ab8946"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12339954/0/45ab8946/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code -->
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="_sources/11_Inference.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Source interaction buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+            <div class="dropdown-buttons sourcebuttons">
+                <a class="repository-button" href="https://github.com/spring-book/py4etrics/"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left" title="Source repository"><i class="fab fa-github"></i>repository</button></a>
+                <a class="issues-button" href="https://github.com/spring-book/py4etrics//issues/new?title=Issue%20on%20page%20%2F11_Inference.html&body=Your%20issue%20content%20here."><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left" title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+                
+            </div>
+        </div>
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/spring-book/py4etrics/master?urlpath=tree/11_Inference.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                
+            </div>
+        </div>
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id2" class="nav-link">説明：仮説検定</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#t" class="nav-link">t検定</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#tp" class="nav-link">説明：t値とp値</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id3" class="nav-link">t値とp値の例</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id4" class="nav-link">t値</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#p" class="nav-link">p値</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id5" class="nav-link">回帰分析とt検定</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#id6" class="nav-link">信頼区間</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id7" class="nav-link">信頼区間の計算</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id8" class="nav-link">信頼区間の図示</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#f" class="nav-link">F検定</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id9" class="nav-link">説明</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#id10" class="nav-link">回帰分析</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id11" class="nav-link">例１</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h5">
+            <a href="#id12" class="nav-link">手計算</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h5">
+            <a href="#id13" class="nav-link">メソッドを使う</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#id14" class="nav-link">例２</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="id1">
+<h1>推論<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">t</span><span class="p">,</span> <span class="n">f</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>説明：仮説検定<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>仮説検定は以下の手順でおこなう。</p>
+<ol class="simple">
+<li><p>母集団のパラメータについて帰無仮説（Null Hypothesis）と対立仮説（Alternative Hypothesis）を設定する。</p>
+<ul class="simple">
+<li><p>帰無仮説は棄却するかどうかの判断の対象となる仮説（例えば，<span class="math notranslate nohighlight">\(\hat{\beta}_1=0\)</span>）</p></li>
+<li><p>対立仮説は帰無仮説に相反する仮説（例えば，<span class="math notranslate nohighlight">\(\hat{\beta}_1\neq 0\)</span>）</p></li>
+</ul>
+</li>
+<li><p>適切な検定統計量を決め，判定するための有意水準を予め決める。</p>
+<ul class="simple">
+<li><p>有意水準 ＝ 下で説明する<strong>第一種過誤の確率</strong></p></li>
+</ul>
+</li>
+<li><p>計算した検定統計量の値と有意水準に対応する値を比較することにより，帰無仮説を棄却するかしないかを判断する。２つの可能性しかない。</p>
+<ul class="simple">
+<li><p>帰無仮説を棄却する（対立仮説を採択する）。</p></li>
+<li><p>帰無仮説を棄却できない（対立仮説を採択できない）。</p></li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+<p>検定をおこなう際には間違いが発生する。それをまとめたのが次の表である。</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>帰無仮説は真</p></th>
+<th class="head"><p>帰無仮説は偽</p></th>
+<th class="head"><p></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>帰無仮説を棄却できない</p></td>
+<td><p>正しい結論</p></td>
+<td><p>第２種過誤</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>帰無仮説を棄却</p></td>
+<td><p>第１種過誤</p></td>
+<td><p>正しい結論</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p>検定を警察の行動に例えて次のように考えることもできる。</p>
+<ul class="simple">
+<li><p>帰無仮説 <span class="math notranslate nohighlight">\(\Rightarrow\)</span> 「無罪」</p></li>
+<li><p>帰無仮説の棄却 <span class="math notranslate nohighlight">\(\Rightarrow\)</span> 「逮捕」</p></li>
+<li><p>帰無仮説を棄却しない <span class="math notranslate nohighlight">\(\Rightarrow\)</span> 「逮捕しない」</p></li>
+<li><p>第１種過誤 <span class="math notranslate nohighlight">\(\Rightarrow\)</span>「冤罪で逮捕」</p></li>
+<li><p>第２種過誤 <span class="math notranslate nohighlight">\(\Rightarrow\)</span>「真犯人を取り逃がす」</p></li>
+</ul>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="text-align:center head"><p>無実は真</p></th>
+<th class="text-align:center head"><p>無実は偽</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>逮捕しない</p></td>
+<td class="text-align:center"><p>正しい結論</p></td>
+<td class="text-align:center"><p>取り逃す</p></td>
+</tr>
+<tr class="row-odd"><td><p>逮捕</p></td>
+<td class="text-align:center"><p>冤罪</p></td>
+<td class="text-align:center"><p>正しい結論</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>統計的優位性とは，帰無仮説が正しい場合，帰無仮説の内容が発生した確率が非常に低い場合を指す。即ち，発生イベントが非常に起こりにくく，偶然のの可能性が非常に高い場合を指す。</p></li>
+<li><p>第一種過誤は，帰無仮説が正しい場合に棄却する場合に発生する。慣例でその確率を<span class="math notranslate nohighlight">\(\alpha\)</span>で表す。<span class="math notranslate nohighlight">\(\alpha=0.05\)</span>がよく使われるが，これを使う場合，間違って正しい帰無仮説を棄却する確率は最大5%まで許容するという意味になる。</p></li>
+</ul>
+</div>
+<div class="section" id="t">
+<h2><span class="math notranslate nohighlight">\(t\)</span>検定<a class="headerlink" href="#t" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tp">
+<h3>説明：<span class="math notranslate nohighlight">\(t\)</span>値と<span class="math notranslate nohighlight">\(p\)</span>値<a class="headerlink" href="#tp" title="Permalink to this headline">¶</a></h3>
+<p>新たな仮定を導入する。</p>
+<ul class="simple">
+<li><p>仮定６：誤差項は説明変数は独立であり正規分布に従う（誤差項の正規性）</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[u\sim N\left(0,\sigma^2\right)\]</div>
+<p>仮定１〜６を<strong>Classical Linear Model (CLM) Assumptions</strong>（CLM仮定）と呼ぶ。</p>
+<hr class="docutils" />
+<p>CLM仮定の下では：</p>
+<ul>
+<li><p>OLS推定量は正規分布に従う。</p>
+<div class="math notranslate nohighlight">
+\[
+    \hat{\beta}_j\sim N\left(\beta_j,\text{Var}\left(\hat{\beta}_j\right)\right)
+    \]</div>
+</li>
+<li><p>OLS推定量の標準誤差を使い標準化すると以下が成立する。</p>
+<div class="math notranslate nohighlight">
+\[
+    \frac{\hat{\beta}_j-\beta_j}{\text{se}\left(\hat{\beta}_j\right)}\sim t_{n-k-1}
+    \]</div>
+<p>ここで<span class="math notranslate nohighlight">\(n-k-1\)</span>は自由度であり，<span class="math notranslate nohighlight">\(n\)</span>は標本の大きさ，<span class="math notranslate nohighlight">\(k\)</span>は定数項以外の説明変数の数である（定数項がある場合）。</p>
+</li>
+</ul>
+<hr class="docutils" />
+<p>この関係を使うことによりOLS推定量の検定が可能となる。</p>
+<ul>
+<li><p>帰無仮説：<span class="math notranslate nohighlight">\(H_0:\hat{\beta}_j=0\)</span></p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(H_0\)</span>が正しい場合，<span class="math notranslate nohighlight">\(t\)</span>統計量は次の分布に従う。</p>
+<div class="math notranslate nohighlight">
+\[
+        t_{\hat{\beta}_j}\equiv\frac{\hat{\beta}_j}{\text{se}\left(\hat{\beta}_j\right)}\sim t_{n-k-1}
+        \]</div>
+</li>
+</ul>
+</li>
+<li><p>対立仮説と棄却ルール（<span class="math notranslate nohighlight">\(\alpha=\)</span>有意水準）：</p>
+<ul>
+<li><p>片側検定１：<span class="math notranslate nohighlight">\(H_A:\hat{\beta}_j&gt;0\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+        t_{\hat{\beta}_j}&gt;t_c(\alpha)&gt;0\quad\Rightarrow\quad H_0\text{を棄却する}
+        \]</div>
+</li>
+<li><p>片側検定２：<span class="math notranslate nohighlight">\(H_A:\hat{\beta}_j&lt;0\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+        t_{\hat{\beta}_j}&lt;t_c(\alpha)&lt;0\quad\Rightarrow\quad H_0\text{を棄却する}
+        \]</div>
+</li>
+<li><p>両側検定：<span class="math notranslate nohighlight">\(H_A:\hat{\beta}_j\neq 0\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+        \left|t_{\hat{\beta}_j}\right|&gt;t_c(\alpha)&gt;0\quad\Rightarrow\quad H_0\text{を棄却する}
+        \]</div>
+</li>
+</ul>
+</li>
+</ul>
+<p>ここで，棄却臨界値<span class="math notranslate nohighlight">\(t_c(\alpha)\)</span>は有意水準<span class="math notranslate nohighlight">\(\alpha\)</span>に対応する<span class="math notranslate nohighlight">\(t\)</span>値。</p>
+<hr class="docutils" />
+<p><strong>＜<span class="math notranslate nohighlight">\(p\)</span>値＞</strong></p>
+<p><span class="math notranslate nohighlight">\(p\)</span>値は，帰無仮説が正しい場合に帰無仮説を棄却するために必要な最小有意水準である。</p>
+<p><span class="math notranslate nohighlight">\(p\)</span>値を使う場合の検定手順</p>
+<ul class="simple">
+<li><p>棄却するための有意水準 <span class="math notranslate nohighlight">\(\alpha\)</span>を決める（例えば，0.05）</p></li>
+<li><p><span class="math notranslate nohighlight">\(p値\leq \alpha\)</span>の場合，<span class="math notranslate nohighlight">\(\text{H}_0\)</span>を棄却</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h3><span class="math notranslate nohighlight">\(t\)</span>値と<span class="math notranslate nohighlight">\(p\)</span>値の例<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>定数項があり</p>
+<ul class="simple">
+<li><p>有意水準：<span class="math notranslate nohighlight">\(\alpha=0.05\)</span></p></li>
+<li><p>標本の大きさ：<span class="math notranslate nohighlight">\(n=30\)</span></p></li>
+<li><p>説明変数の数（定数項以外）：<span class="math notranslate nohighlight">\(k=5\)</span></p></li>
+</ul>
+<p>の場合を考えよう。</p>
+<div class="section" id="id4">
+<h4><span class="math notranslate nohighlight">\(t\)</span>値<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<p>片側検定１の場合の<span class="math notranslate nohighlight">\(t_c(0.05)\)</span>は次の値となる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="n">dof</span> <span class="o">=</span> <span class="mi">30</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">1</span>
+<span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>  <span class="c1"># t.ppfについてはscipy.statsを参照</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>1.7108820799094275
+</pre></div>
+</div>
+</div>
+</div>
+<p>片側検定２の場合の<span class="math notranslate nohighlight">\(t_c(0.05)\)</span>は次の値となる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>-1.7108820799094282
+</pre></div>
+</div>
+</div>
+</div>
+<p>両側検定の場合の<span class="math notranslate nohighlight">\(t_c(0.05)\)</span>は次の値となる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>2.0638985616280205
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="p">
+<h4><span class="math notranslate nohighlight">\(p\)</span>値<a class="headerlink" href="#p" title="Permalink to this headline">¶</a></h4>
+<p>片側検定１で<span class="math notranslate nohighlight">\(t_{\hat{\beta}_j}=1.3\)</span>の場合，<span class="math notranslate nohighlight">\(p\)</span>値は次の値になる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>   <span class="c1"># t.cdfについてはscipy.statsを参照</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.10297414905105884
+</pre></div>
+</div>
+</div>
+</div>
+<p>片側検定２で<span class="math notranslate nohighlight">\(t_{\hat{\beta}_j}=-2.1\)</span>の場合，<span class="math notranslate nohighlight">\(p\)</span>値は次の値になる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="o">-</span><span class="mf">2.1</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.02321075109161751
+</pre></div>
+</div>
+</div>
+</div>
+<p>両側検定で<span class="math notranslate nohighlight">\(\left|t_{\hat{\beta}_j}\right|=2.1\)</span>の場合，<span class="math notranslate nohighlight">\(p\)</span>値は次の値になる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mf">2.1</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.02321075109161752
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3>回帰分析と<span class="math notranslate nohighlight">\(t\)</span>検定<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">gpa1</span></code>のデータを使った回帰分析を考えよう。</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gpa</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;gpa1&#39;</span><span class="p">)</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;gpa1&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>name of dataset: gpa1
+no of variables: 29
+no of observations: 141
+
++----------+--------------------------------+
+| variable | label                          |
++----------+--------------------------------+
+| age      | in years                       |
+| soph     | =1 if sophomore                |
+| junior   | =1 if junior                   |
+| senior   | =1 if senior                   |
+| senior5  | =1 if fifth year senior        |
+| male     | =1 if male                     |
+| campus   | =1 if live on campus           |
+| business | =1 if business major           |
+| engineer | =1 if engineering major        |
+| colGPA   | MSU GPA                        |
+| hsGPA    | high school GPA                |
+| ACT      | &#39;achievement&#39; score            |
+| job19    | =1 if job &lt;= 19 hours          |
+| job20    | =1 if job &gt;= 20 hours          |
+| drive    | =1 if drive to campus          |
+| bike     | =1 if bicycle to campus        |
+| walk     | =1 if walk to campus           |
+| voluntr  | =1 if do volunteer work        |
+| PC       | =1 of pers computer at sch     |
+| greek    | =1 if fraternity or sorority   |
+| car      | =1 if own car                  |
+| siblings | =1 if have siblings            |
+| bgfriend | =1 if boy- or girlfriend       |
+| clubs    | =1 if belong to MSU club       |
+| skipped  | avg lectures missed per week   |
+| alcohol  | avg # days per week drink alc. |
+| gradMI   | =1 if Michigan high school     |
+| fathcoll | =1 if father college grad      |
+| mothcoll | =1 if mother college grad      |
++----------+--------------------------------+
+
+Christopher Lemmon, a former MSU undergraduate, collected these data
+from a survey he took of MSU students in Fall 1994.
+</pre></div>
+</div>
+</div>
+</div>
+<p>このデータセットを使い，次の問題を考える。ミシガン州立大学で学生のGPA（<code class="docutils literal notranslate"><span class="pre">colGDP</span></code>）は以下の変数とどのような関係にあるのか。</p>
+<ul class="simple">
+<li><p>高校のGPA（<code class="docutils literal notranslate"><span class="pre">hsGPA</span></code>）</p></li>
+<li><p>米国大学進学適性試験（<code class="docutils literal notranslate"><span class="pre">ACT</span></code>）</p></li>
+<li><p>週平均の講義欠席回数（<code class="docutils literal notranslate"><span class="pre">skipped</span></code>）</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_gpa</span> <span class="o">=</span> <span class="s1">&#39;colGPA ~ hsGPA + ACT + skipped&#39;</span>
+<span class="n">res_gpa</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_gpa</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">gpa</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性から<span class="math notranslate nohighlight">\(t\)</span>値を表示</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">tvalues</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    4.191039
+hsGPA        4.396260
+ACT          1.393319
+skipped     -3.196840
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>この<span class="math notranslate nohighlight">\(t\)</span>値の属性<code class="docutils literal notranslate"><span class="pre">.values</span></code>を使い<code class="docutils literal notranslate"><span class="pre">array</span></code>に変換し絶対値を取り、任意の棄却臨界値と比較することにより両側検定を行う関数を作る。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">significance_check</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    res = statsmodelsによるOLS推定結果</span>
+<span class="sd">    a = 有意水準</span>
+<span class="sd">    H0棄却の場合はTrueを返す</span>
+<span class="sd">    （注意）定数項あり</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dof</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">nobs</span><span class="o">-</span><span class="n">res</span><span class="o">.</span><span class="n">df_model</span><span class="o">-</span><span class="mi">1</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+<span class="n">significance_check</span><span class="p">(</span><span class="n">res_gpa</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept     True
+hsGPA         True
+ACT          False
+skipped       True
+dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性<code class="docutils literal notranslate"><span class="pre">pvalues</span></code>から<span class="math notranslate nohighlight">\(p\)</span>値を表示</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">pvalues</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.000050
+hsGPA        0.000022
+ACT          0.165780
+skipped      0.001725
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_gpa</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      1.3896      0.332      4.191      0.000       0.734       2.045
+hsGPA          0.4118      0.094      4.396      0.000       0.227       0.597
+ACT            0.0147      0.011      1.393      0.166      -0.006       0.036
+skipped       -0.0831      0.026     -3.197      0.002      -0.135      -0.032
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">coef</span></code>: OLS推定量（<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">std</span> <span class="pre">err</span></code>: OLS推定量の標準誤差（<span class="math notranslate nohighlight">\(\text{se}(\hat{\beta}_j)\)</span>）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t</span></code>: <span class="math notranslate nohighlight">\(t\)</span>値</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code>: <span class="math notranslate nohighlight">\(p\)</span>値</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[0.025</span> <span class="pre">0.975]</span></code>: 信頼区間（次の節を参照）</p></li>
+</ul>
+<p>OLS推定量の標準誤差は属性<code class="docutils literal notranslate"><span class="pre">.bse</span></code>として取得できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">bse</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.331554
+hsGPA        0.093674
+ACT          0.010565
+skipped      0.025999
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>信頼区間<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h3>信頼区間の計算<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>信頼区間は以下のように定義される。</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\beta}_j\pm t_c(a)\cdot se\left(\hat{\beta}_j\right)
+\]</div>
+<p>ここで，<span class="math notranslate nohighlight">\(a\)</span>は有意水準である。</p>
+<p><strong>（解釈）</strong></p>
+<p>標本を取りOLS推定量を計算するというプロセスを100回繰り返した場合（それが可能な場合、それぞれの標本は異なり<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>も異なることになる），その内，母集団の（真の）<span class="math notranslate nohighlight">\(\beta_j\)</span>の値が信頼区間に入るのは<span class="math notranslate nohighlight">\((1-a)\times 100\)</span>回である（<span class="math notranslate nohighlight">\(a=0.05\)</span>の場合，95回）。</p>
+<p><code class="docutils literal notranslate"><span class="pre">gpa</span></code>の例を考える。<code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性から信頼区間を所得できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_gpa</span><span class="o">.</span><span class="n">conf_int</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                  0         1
+Intercept  0.733930  2.045178
+hsGPA      0.226582  0.597050
+ACT       -0.006171  0.035612
+skipped   -0.134523 -0.031703
+</pre></div>
+</div>
+</div>
+</div>
+<p>有意水準のオプション<code class="docutils literal notranslate"><span class="pre">alpha=</span></code>を指定することもできる（デフォルトは<code class="docutils literal notranslate"><span class="pre">0.05</span></code>）。有意水準が1％の場合。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_gpa</span><span class="o">.</span><span class="n">conf_int</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                  0         1
+Intercept  0.523472  2.255635
+hsGPA      0.167121  0.656511
+ACT       -0.012877  0.042318
+skipped   -0.151026 -0.015200
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>＜次の２点を留意＞</strong></p>
+<ul class="simple">
+<li><p>OLS推定値は1つの値を返す「点推定」だが，信頼区間は有意水準に基づく「区間推定」である。両方を確認することが大事である。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ACT</span></code>の信頼区間を考えよう。100回推定をした場合，母集団の<span class="math notranslate nohighlight">\(\beta_{ACT}\)</span>の値は95回この区間に入ることになるが，有意水準が5%でも1%でも<code class="docutils literal notranslate"><span class="pre">0</span></code>が含まれていることに注意。</p></li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h3>信頼区間の図示<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>の<code class="docutils literal notranslate"><span class="pre">errorbar</span></code>を使い図示する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">coef</span> <span class="o">=</span> <span class="n">res_gpa</span><span class="o">.</span><span class="n">params</span>  <span class="c1">#  推定値</span>
+<span class="n">varname</span> <span class="o">=</span> <span class="n">coef</span><span class="o">.</span><span class="n">index</span>  <span class="c1"># 変数名</span>
+<span class="n">ci</span> <span class="o">=</span> <span class="n">res_gpa</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span>  <span class="c1"># 信頼区間を　ci　に入れる</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">ci</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">coef</span>  <span class="c1"># 信頼区間の幅の半分</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">coef</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">y</span><span class="o">=</span><span class="n">varname</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">xerr</span><span class="o">=</span><span class="n">error</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">capsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># 切片以外のエラーバー</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>  <span class="c1"># 垂直線</span>
+<span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/11_Inference_56_0.png" src="_images/11_Inference_56_0.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ACT</span></code>の信頼区間に<code class="docutils literal notranslate"><span class="pre">0</span></code>が含まれることが分かる。</p>
+</div>
+</div>
+<div class="section" id="f">
+<h2><span class="math notranslate nohighlight">\(F\)</span>検定<a class="headerlink" href="#f" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h3>説明<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>回帰分析において複数のOLS推定量に何らかの制約が妥当かどうかを調べる際に使うのが<span class="math notranslate nohighlight">\(F\)</span>検定である。例えば，次の回帰式の場合</p>
+<div class="math notranslate nohighlight">
+\[
+y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+u
+\]</div>
+<p>制約式の例として以下が挙げられる。</p>
+<p><span class="math notranslate nohighlight">\(\beta_1=\beta_2=\beta_3=0\)</span></p>
+<p><span class="math notranslate nohighlight">\(\beta_2=\beta_3=0\)</span></p>
+<p><span class="math notranslate nohighlight">\(\beta_2=2\beta_3\)</span></p>
+<hr class="docutils" />
+<ul class="simple">
+<li><p>帰無仮説：<span class="math notranslate nohighlight">\(\text{H}_0\)</span>：制約が成立する</p></li>
+<li><p>対立仮説：<span class="math notranslate nohighlight">\(\text{H}_A\)</span>：制約は成立しない</p></li>
+</ul>
+<p><strong>検定手順</strong></p>
+<ol>
+<li><p>制約がない回帰式を推定する。</p></li>
+<li><p>制約がある回帰式を推定する。</p></li>
+<li><p>次の式に従い<span class="math notranslate nohighlight">\(F\)</span>値を計算する</p>
+<div class="math notranslate nohighlight">
+\[
+    F=\frac{\left(SSR_1-SSR_0\right)/q}{SSR_0/(n-k-1)}
+    =\frac{\left(R_0^2-R_1^2\right)/q}{\left(1-R_0^2\right)/(n-k-1)}
+    \sim F_{n-k-1}^q
+    \]</div>
+</li>
+<li><p>有意水準に基づく棄却臨界値と比べる（もしくは<span class="math notranslate nohighlight">\(p\)</span>値を有意水準と比べる）</p></li>
+</ol>
+<p>上の式で</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(0\)</span>：制約がない変数の添え字</p></li>
+<li><p><span class="math notranslate nohighlight">\(1\)</span>：制約がある変数の添え字</p></li>
+<li><p><span class="math notranslate nohighlight">\(SSR\)</span>：残差変動の平方和（Residual Sum of Squares）</p></li>
+<li><p><span class="math notranslate nohighlight">\(R^2\)</span>：決定係数</p></li>
+<li><p><span class="math notranslate nohighlight">\(n\)</span>：標本の大きさ</p></li>
+<li><p><span class="math notranslate nohighlight">\(k\)</span>：定数項以外の説明変数（制約がない回帰式）</p></li>
+<li><p><span class="math notranslate nohighlight">\(q\)</span>：制約式の数</p></li>
+</ul>
+<p>名称：</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(q\)</span>を「分子の自由度」と呼ぶ</p></li>
+<li><p><span class="math notranslate nohighlight">\(n-k-1\)</span>を「分母の自由度」と呼ぶ</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>＜棄却ルール＞</strong></p>
+<p><span class="math notranslate nohighlight">\(F&gt;F_c(a)\)</span>　<span class="math notranslate nohighlight">\(\Rightarrow\)</span>　<span class="math notranslate nohighlight">\(\text{H}_0\)</span>を棄却</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(F_c(a)\)</span>：棄却臨界値</p></li>
+<li><p><span class="math notranslate nohighlight">\(a\)</span>：有意水準</p></li>
+</ul>
+<p>（注意）<span class="math notranslate nohighlight">\(F\)</span>値は必ず正の値をとる。従って，<span class="math notranslate nohighlight">\(t\)</span>検定の「片側検定１」のパターンしか存在しない。</p>
+<p><strong>＜<span class="math notranslate nohighlight">\(p\)</span>値を使う場合の手順＞</strong></p>
+<ul class="simple">
+<li><p>棄却するための有意水準 <span class="math notranslate nohighlight">\(a\)</span>を決める（例えば，0.05）</p></li>
+<li><p><span class="math notranslate nohighlight">\(p値&lt;a\)</span>の場合，<span class="math notranslate nohighlight">\(\text{H}_0\)</span>を棄却</p></li>
+</ul>
+</div>
+<div class="section" id="id10">
+<h3>回帰分析<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>例として米国野球選手（メジャーリーグ）に関するデータ<code class="docutils literal notranslate"><span class="pre">mlb1</span></code>を使う。</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mlb1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mlb1&#39;</span><span class="p">)</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mlb1&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>name of dataset: mlb1
+no of variables: 47
+no of observations: 353
+
++----------+----------------------------+
+| variable | label                      |
++----------+----------------------------+
+| salary   | 1993 season salary         |
+| teamsal  | team payroll               |
+| nl       | =1 if national league      |
+| years    | years in major leagues     |
+| games    | career games played        |
+| atbats   | career at bats             |
+| runs     | career runs scored         |
+| hits     | career hits                |
+| doubles  | career doubles             |
+| triples  | career triples             |
+| hruns    | career home runs           |
+| rbis     | career runs batted in      |
+| bavg     | career batting average     |
+| bb       | career walks               |
+| so       | career strike outs         |
+| sbases   | career stolen bases        |
+| fldperc  | career fielding perc       |
+| frstbase | = 1 if first base          |
+| scndbase | =1 if second base          |
+| shrtstop | =1 if shortstop            |
+| thrdbase | =1 if third base           |
+| outfield | =1 if outfield             |
+| catcher  | =1 if catcher              |
+| yrsallst | years as all-star          |
+| hispan   | =1 if hispanic             |
+| black    | =1 if black                |
+| whitepop | white pop. in city         |
+| blackpop | black pop. in city         |
+| hisppop  | hispanic pop. in city      |
+| pcinc    | city per capita income     |
+| gamesyr  | games per year in league   |
+| hrunsyr  | home runs per year         |
+| atbatsyr | at bats per year           |
+| allstar  | perc. of years an all-star |
+| slugavg  | career slugging average    |
+| rbisyr   | rbis per year              |
+| sbasesyr | stolen bases per year      |
+| runsyr   | runs scored per year       |
+| percwhte | percent white in city      |
+| percblck | percent black in city      |
+| perchisp | percent hispanic in city   |
+| blckpb   | black*percblck             |
+| hispph   | hispan*perchisp            |
+| whtepw   | white*percwhte             |
+| blckph   | black*perchisp             |
+| hisppb   | hispan*percblck            |
+| lsalary  | log(salary)                |
++----------+----------------------------+
+
+Collected by G. Mark Holmes, a former MSU undergraduate, for a term
+project. The salary data were obtained from the New York Times, April
+11, 1993. The baseball statistics are from The Baseball Encyclopedia,
+9th edition, and the city population figures are from the Statistical
+Abstract of the United States.
+</pre></div>
+</div>
+</div>
+</div>
+<p>このデータセットを使い，年俸（<code class="docutils literal notranslate"><span class="pre">salary</span></code>）が次の変数とどう関係するかを考える。</p>
+<ul class="simple">
+<li><p>メジャーリーグでプレイした期間（年）（<code class="docutils literal notranslate"><span class="pre">years</span></code>）</p></li>
+<li><p>年間出場回数（<code class="docutils literal notranslate"><span class="pre">gamesyr</span></code>）</p></li>
+<li><p>通算打率（<code class="docutils literal notranslate"><span class="pre">bavg</span></code>）</p></li>
+<li><p>１シーズンあたりホームラン数（<code class="docutils literal notranslate"><span class="pre">hrunsyr</span></code>）</p></li>
+<li><p>１シーズンあたり打点（<code class="docutils literal notranslate"><span class="pre">rbinsyr</span></code>）</p></li>
+</ul>
+<p>まず制約がない回帰分析をおこなう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_0</span> <span class="o">=</span> <span class="s1">&#39;np.log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr&#39;</span>
+<span class="n">res_0</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_0</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mlb1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h4>例１<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<p><strong>＜制約＞</strong>
+<code class="docutils literal notranslate"><span class="pre">bavg</span></code>, <code class="docutils literal notranslate"><span class="pre">hrunsyr</span></code>, <code class="docutils literal notranslate"><span class="pre">rbisyr</span></code>は<code class="docutils literal notranslate"><span class="pre">salary</span></code>に影響を与えない。</p>
+<p><span class="math notranslate nohighlight">\(H_0:\;\beta_{\text{bavg}}=\beta_{\text{hrunsyr}}=\beta_{\text{rbisyr}}=0\)</span></p>
+<p><span class="math notranslate nohighlight">\(H_A:\;H_0は成立しない\)</span></p>
+<p>制約がある場合の回帰分析</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_1</span> <span class="o">=</span> <span class="s1">&#39;np.log(salary) ~ years + gamesyr&#39;</span>
+<span class="n">res_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mlb1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id12">
+<h5>手計算<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h5>
+<p><span class="math notranslate nohighlight">\(F\)</span>値の計算</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 決定係数</span>
+<span class="n">r2_0</span> <span class="o">=</span> <span class="n">res_0</span><span class="o">.</span><span class="n">rsquared</span>
+<span class="n">r2_1</span> <span class="o">=</span> <span class="n">res_1</span><span class="o">.</span><span class="n">rsquared</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="n">res_0</span><span class="o">.</span><span class="n">nobs</span>  <span class="c1"># 標本の大きさ</span>
+<span class="n">k</span> <span class="o">=</span> <span class="n">res_0</span><span class="o">.</span><span class="n">df_model</span>  <span class="c1"># 定数項以外の説明変数の数</span>
+<span class="n">q</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># 制約式の数</span>
+
+<span class="c1"># F値:</span>
+<span class="n">F</span> <span class="o">=</span> <span class="p">(</span><span class="n">r2_0</span> <span class="o">-</span> <span class="n">r2_1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">r2_0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">q</span>
+<span class="n">F</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>9.55025352195195
+</pre></div>
+</div>
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(a=0.05\)</span>の場合の棄却臨界値</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="n">f</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="p">,</span> <span class="n">dfn</span><span class="o">=</span><span class="n">q</span><span class="p">,</span> <span class="n">dfd</span><span class="o">=</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># f.ppfについてはscipy.statsを参照</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>2.6306414891156504
+</pre></div>
+</div>
+</div>
+</div>
+<p>従って<span class="math notranslate nohighlight">\(H_0\)</span>を棄却する。</p>
+<p><span class="math notranslate nohighlight">\(p\)</span>値</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="n">f</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">dfn</span><span class="o">=</span><span class="n">q</span><span class="p">,</span> <span class="n">dfd</span><span class="o">=</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>4.473708139829391e-06
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id13">
+<h5>メソッドを使う<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h5>
+<p>制約式の定義</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hypotheses</span> <span class="o">=</span> <span class="s1">&#39;bavg = 0, hrunsyr = 0, rbisyr = 0&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">res_0</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">f_test</span></code>を使い、引数に上のセルで定義した制約式<code class="docutils literal notranslate"><span class="pre">hypotheses</span></code>を使う。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_f_test</span> <span class="o">=</span> <span class="n">res_0</span><span class="o">.</span><span class="n">f_test</span><span class="p">(</span><span class="n">hypotheses</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">res_f_test</span></code>に<code class="docutils literal notranslate"><span class="pre">F</span></code>検定の結果を割り当てたが、そのメソッド<code class="docutils literal notranslate"><span class="pre">summary()</span></code>を使い結果を表示する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_f_test</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;&lt;F test: F=array([[9.55025352]]), p=4.4737081398389455e-06, df_denom=347, df_num=3&gt;&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>上の結果にある記号の意味：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">F</span></code>：<span class="math notranslate nohighlight">\(F\)</span>値</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code>：<span class="math notranslate nohighlight">\(p\)</span>値</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df_denom</span></code>：分母の自由度</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df_num</span></code>：分子の自由度</p></li>
+</ul>
+<p>手計算と同じ結果である。</p>
+</div>
+</div>
+<div class="section" id="id14">
+<h4>例２<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<p><strong>＜制約＞</strong>
+定数項以外の全ての説明変数は<code class="docutils literal notranslate"><span class="pre">salary</span></code>に影響を与えない。</p>
+<p><span class="math notranslate nohighlight">\(H_0:\;\beta_{\text{years}}=\beta_{\text{gamesyr}}=\beta_{\text{bavg}}=\beta_{\text{hrunsyr}}=\beta_{\text{rbisyr}}=0\)</span></p>
+<p><span class="math notranslate nohighlight">\(H_A:\;H_0は成立しない\)</span></p>
+<p>この場合，<code class="docutils literal notranslate"><span class="pre">res_0</span></code>の<code class="docutils literal notranslate"><span class="pre">fvalue</span></code>から<span class="math notranslate nohighlight">\(F\)</span>値，<code class="docutils literal notranslate"><span class="pre">f_pvalue</span></code>から<span class="math notranslate nohighlight">\(p\)</span>値を属性として取得できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_0</span><span class="o">.</span><span class="n">fvalue</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>117.0603200852145
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_0</span><span class="o">.</span><span class="n">f_pvalue</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>2.9380422932206435e-72
+</pre></div>
+</div>
+</div>
+</div>
+<p>例２の結果はOLS推定結果のメソッド<code class="docutils literal notranslate"><span class="pre">summary()</span></code>で表示される表にも<code class="docutils literal notranslate"><span class="pre">F-statistic</span></code>と<code class="docutils literal notranslate"><span class="pre">Prob(F-statistic)</span></code>として示されている。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_0</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:         np.log(salary)   R-squared:                       0.628
+Model:                            OLS   Adj. R-squared:                  0.622
+Method:                 Least Squares   F-statistic:                     117.1
+Date:                Sat, 13 Jun 2020   Prob (F-statistic):           2.94e-72
+Time:                        10:47:03   Log-Likelihood:                -385.11
+No. Observations:                 353   AIC:                             782.2
+Df Residuals:                     347   BIC:                             805.4
+Df Model:                           5                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept     11.1924      0.289     38.752      0.000      10.624      11.760
+years          0.0689      0.012      5.684      0.000       0.045       0.093
+gamesyr        0.0126      0.003      4.742      0.000       0.007       0.018
+bavg           0.0010      0.001      0.887      0.376      -0.001       0.003
+hrunsyr        0.0144      0.016      0.899      0.369      -0.017       0.046
+rbisyr         0.0108      0.007      1.500      0.134      -0.003       0.025
+==============================================================================
+Omnibus:                        6.816   Durbin-Watson:                   1.265
+Prob(Omnibus):                  0.033   Jarque-Bera (JB):               10.197
+Skew:                          -0.068   Prob(JB):                      0.00610
+Kurtosis:                       3.821   Cond. No.                     2.09e+03
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 2.09e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="10_Residuals.html" title="previous page">残差診断</a>
+    <a class='right-next' id="next-link" href="12_Asymptotics.html" title="next page">大標本特性</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By 春山 鉄源<br/>
+        
+            &copy; Copyright 2020 Tetsugen Haruyama.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-165998213-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>
