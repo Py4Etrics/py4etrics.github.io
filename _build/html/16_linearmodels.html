@@ -26,8 +26,7 @@
     <script src="_static/mystnb.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="canonical" href="https://py4etrics.github.io/16_linearmodels.html" />
     <link rel="index" title="Index" href="genindex.html" />
@@ -35,8 +34,15 @@
     <link rel="next" title="パネル・データ分析" href="17_Panel.html" />
     <link rel="prev" title="プーリング・データとパネル・データ" href="15_Pooling.html" />
 
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<!-- Put requirejs at the end so it's always after bootstrap -->
+<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
 
 
 <!-- Opengraph tags -->
@@ -56,9 +62,9 @@
     <div class="container-xl">
       <div class="row">
           
+
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+    <div class="navbar-brand-box">
 <a class="navbar-brand text-wrap" href="index.html">
   
   
@@ -133,13 +139,7 @@
   </li>
 </ul>
 </nav>
-
- <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  <a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>
-</div>
-
+<p class="navbar_footer"><a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a></p>
 </div>
 
 
@@ -159,7 +159,6 @@
             <i class="fas fa-arrow-left"></i>
             <i class="fas fa-arrow-up"></i>
         </button>
-        
         <div class="dropdown-buttons-trigger">
             <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
 
@@ -175,16 +174,7 @@
             
         </div>
 
-        <!-- Source interaction buttons -->
-        
-        <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-            <div class="dropdown-buttons sourcebuttons">
-                <a class="repository-button" href="https://github.com/Py4Etrics/py4etrics.github.io"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left" title="Source repository"><i class="fab fa-github"></i>repository</button></a>
-                <a class="issues-button" href="https://github.com/Py4Etrics/py4etrics.github.io/issues/new?title=Issue%20on%20page%20%2F16_linearmodels.html&body=Your%20issue%20content%20here."><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left" title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-                
-            </div>
-        </div>
+        <!-- Edit this page -->
         
 
         <!-- Full screen (wrap in <a> to have style consistency -->
@@ -202,6 +192,8 @@
                 
             </div>
         </div>
+        
+
         
     </div>
     <div class="d-none d-md-block col-md-2 bd-toc show">
@@ -267,7 +259,7 @@
     </div>
 </div>
     <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
         
               <div>
                 
@@ -304,14 +296,14 @@
 <td class="text-align:center"><p>.bse</p></td>
 </tr>
 <tr class="row-odd"><td class="text-align:right"><p>linearmodels</p></td>
-<td class="text-align:center"><p>.summary()</p></td>
+<td class="text-align:center"><p>.summary</p></td>
 <td class="text-align:center"><p>.resids</p></td>
 <td class="text-align:center"><p>.std_errors</p></td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>も<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>も回帰式を文字列で指定できるが，定数項の指定する方法が異なる。</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>も<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>も回帰式を文字列で指定できるが，定数項を指定する方法が異なる。</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>では，定数項は自動的に追加される，定数項を省く場合は<code class="docutils literal notranslate"><span class="pre">-1</span></code>を追加する。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>では，定数項は自動的に追加されない。定数項を入れる場合は<code class="docutils literal notranslate"><span class="pre">1</span></code>を追加する。</p></li>
@@ -342,7 +334,6 @@
 <p>以下では<code class="docutils literal notranslate"><span class="pre">.fit()</span></code>のオプションは指定せず，デフォルトのまま議論を続ける。</p>
 <hr class="docutils" />
 <p>以下では<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>を使うが，そのためには<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を<code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>に変換する必要がある。以下では，まず<code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>について説明し，その後に<code class="docutils literal notranslate"><span class="pre">linearmodel</span></code>にある<code class="docutils literal notranslate"><span class="pre">PanelData</span></code>関数について説明する</p>
-<p>まず，このトピックで使用するパッケージを導入する。</p>
 </div>
 <div class="section" id="pandasmultiindex">
 <h2><code class="docutils literal notranslate"><span class="pre">Pandas</span></code>の<code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code><a class="headerlink" href="#pandasmultiindex" title="Permalink to this headline">¶</a></h2>
@@ -483,7 +474,7 @@
 <li><p>第１id：時間（例えば，年，四半期）</p></li>
 </ul>
 <p>次の例では<code class="docutils literal notranslate"><span class="pre">country</span></code>と<code class="docutils literal notranslate"><span class="pre">year</span></code>の行をそれぞれ第０インデックス，第１インデックスに指定する。</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;country&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">])</span><span class="c1">#.sort_index()</span>
 <span class="n">df</span>
@@ -598,7 +589,7 @@
 <p>階層インデックスが綺麗に並んでいるが，元のデータの並び方によっては階層インデックスが期待通りに並ばない場合がありえる。その場合は，メソッド<code class="docutils literal notranslate"><span class="pre">sort_index()</span></code>を使うと良いだろう。</p>
 <hr class="docutils" />
 <p><code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>を解除するにはメソッド<code class="docutils literal notranslate"><span class="pre">.reset_index()</span></code>を使う。</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 </pre></div>
@@ -720,7 +711,7 @@
 </div>
 <div class="section" id="id3">
 <h3>要素，行，列の抽出<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>のまま要素・列・行の抽出およぼスライシングには様々な方法があり，複雑である。特に，スライシングをしたい場合，一番簡単なのは<code class="docutils literal notranslate"><span class="pre">reset_index()</span></code>で通常の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>に戻し，スライシングし新たな<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作成するだけでも十分であろう。</p>
+<p><code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>のまま要素・列・行の抽出およびスライシングには様々な方法があり，複雑である。特に，スライシングをしたい場合，一番簡単なのは<code class="docutils literal notranslate"><span class="pre">reset_index()</span></code>で通常の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>に戻し，スライシングし新たな<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作成するだけでも十分であろう。</p>
 <p>以下では，<code class="docutils literal notranslate"><span class="pre">.loc[]</span></code>を使い<code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>のままでの抽出方法について簡単に説明する。その際，以下のルールは変わらない。</p>
 <div class="math notranslate nohighlight">
 \[.\text{loc}\left[\text{行の指定},\text{列の指定}\right]\]</div>
@@ -728,7 +719,7 @@
 <p>他の方法については<a class="reference external" href="https://note.nkmk.me/python-pandas-multiindex-indexing/">このサイト</a>と<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html">このサイト</a>が参考になる。</p>
 <div class="section" id="id4">
 <h4>１つの観察単位の抽出<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
-<p>１つの要素を抽出する場合は，タプルを使う。例えば，日本の2001年の<code class="docutils literal notranslate"><span class="pre">gdp</span></code>を抽出したい場合。</p>
+<p>１つの要素を抽出する場合はタプルを使う。例えば，日本の2001年の<code class="docutils literal notranslate"><span class="pre">gdp</span></code>を抽出したい場合。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="s1">&#39;Japan&#39;</span><span class="p">,</span><span class="mi">2001</span><span class="p">),</span> <span class="s1">&#39;gdp&#39;</span><span class="p">]</span>
@@ -761,7 +752,7 @@ Name: (Japan, 2001), dtype: float64
 </div>
 </div>
 </div>
-<p>この場合，列に対してスライシングも可能。</p>
+<p>この場合，特定の列に対してスライシングも可能。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="s1">&#39;Japan&#39;</span><span class="p">,</span><span class="mi">2001</span><span class="p">),</span> <span class="s1">&#39;gdp&#39;</span><span class="p">:</span><span class="s1">&#39;con&#39;</span><span class="p">]</span>
@@ -939,7 +930,7 @@ Name: (Japan, 2001), dtype: float64
 <p>複数の場合。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;Japan&#39;</span><span class="p">,</span><span class="s1">&#39;India&#39;</span><span class="p">],</span> <span class="p">:]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;Japan&#39;</span><span class="p">,</span><span class="s1">&#39;UK&#39;</span><span class="p">],</span> <span class="p">:]</span>
 </pre></div>
 </div>
 </div>
@@ -999,6 +990,28 @@ Name: (Japan, 2001), dtype: float64
       <td>21.0</td>
       <td>72.0</td>
       <td>10</td>
+    </tr>
+    <tr>
+      <th rowspan="3" valign="top">UK</th>
+      <th>2000</th>
+      <td>100</td>
+      <td>30.0</td>
+      <td>70.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>110</td>
+      <td>39.0</td>
+      <td>71.0</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>115</td>
+      <td>55.0</td>
+      <td>NaN</td>
+      <td>14</td>
     </tr>
   </tbody>
 </table>
@@ -1560,7 +1573,7 @@ Name: gdp, dtype: int64
 </div>
 <div class="section" id="linearmodelspaneldata">
 <h2><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">PanelData</span></code><a class="headerlink" href="#linearmodelspaneldata" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>では<code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>化された<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>をそのまま読み込み推定することができる。一方で，<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>の関数<code class="docutils literal notranslate"><span class="pre">PanelData</span></code>を使い<code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>化された<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を<code class="docutils literal notranslate"><span class="pre">PanelData</span></code>オブジェクトに変換すると分析に必要な計算を簡単にできるようになる。必須ではないが，知っていて損はしない関数である。</p>
+<p><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>では<code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>化された<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>をそのまま読み込み推定することができる。一方で，<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>の関数<code class="docutils literal notranslate"><span class="pre">PanelData</span></code>を使い<code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>化された<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を<code class="docutils literal notranslate"><span class="pre">PanelData</span></code>オブジェクトに変換すると分析に必要な計算を簡単にできるようになる。必須ではないが，知っておいて損はしない関数である。</p>
 <p>まず<code class="docutils literal notranslate"><span class="pre">df</span></code>を<code class="docutils literal notranslate"><span class="pre">PanelData</span></code>オブジェクトに変換する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1676,10 +1689,9 @@ Name: gdp, dtype: int64
 </div>
 <hr class="docutils" />
 <p>属性<code class="docutils literal notranslate"><span class="pre">shape</span></code>は，<code class="docutils literal notranslate"><span class="pre">PanelData</span></code>の変数の数を表示する。以下が返り値の内容である。</p>
-<div class="math notranslate nohighlight">
-\[
-\left(\text{変数の数},\text{期間数},\text{観察単位の数}\right)
-\]</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">変数の数</span><span class="p">,</span> <span class="n">期間数</span><span class="p">,</span> <span class="n">観察単位の数</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">shape</span>
@@ -2191,7 +2203,7 @@ dtype: bool
 <hr class="docutils" />
 <p>（注意）</p>
 <p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>のメソッドは<code class="docutils literal notranslate"><span class="pre">PanelData</span></code>オブジェクトには使えない。</p>
-<p>従って，<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>のメソッド（例えば，行や列の抽出）を使う場合，<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>に変換する必要がある。その際，<code class="docutils literal notranslate"><span class="pre">PanelData</span></code>オブジェクトの属性<code class="docutils literal notranslate"><span class="pre">.dataframe</span></code>を使うことができる。</p>
+<p>従って，<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>のメソッド（例えば，行や列の抽出）を使う場合，<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>に変換する必要がある。その場合，<code class="docutils literal notranslate"><span class="pre">PanelData</span></code>オブジェクトの属性<code class="docutils literal notranslate"><span class="pre">.dataframe</span></code>を使うことができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">dataframe</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Japan&#39;</span><span class="p">,:]</span>
@@ -2657,7 +2669,7 @@ dtype: bool
 <li><p>7: 期間数（年）</p></li>
 <li><p>90：観察単位の数（人数）</p></li>
 </ul>
-<p>次に，balanced もしくは unbalanced data set かを確認する。</p>
+<p>次にbalanced もしくは unbalanced data set かを確認する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">crime4p</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">==</span><span class="n">crime4p</span><span class="o">.</span><span class="n">nobs</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
@@ -2689,9 +2701,7 @@ dtype: bool
 </div>
 </div>
 </div>
-<ul class="simple">
-<li><p>１階差分モデルのインスタンスの作成</p></li>
-</ul>
+<p>１階差分モデルの設定（インスタンスの作成）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mod_dif</span> <span class="o">=</span> <span class="n">FirstDifferenceOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">crime4</span><span class="p">)</span>
@@ -2699,9 +2709,7 @@ dtype: bool
 </div>
 </div>
 </div>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>と同じように，そこから得た結果にメソッド<code class="docutils literal notranslate"><span class="pre">.fit()</span></code>を使い計算し結果が返される。</p></li>
-</ul>
+<p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>と同じように，そこから得た結果にメソッド<code class="docutils literal notranslate"><span class="pre">.fit()</span></code>を使い計算し結果が返される。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_dif</span> <span class="o">=</span> <span class="n">mod_dif</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
@@ -2766,15 +2774,13 @@ lpolpc         0.3984     0.0269     14.821     0.0000      0.3456      0.4512
 
     </div>
     <footer class="footer mt-5 mt-md-0">
-    <div class="container">
-      <p>
-        
-          By 春山 鉄源<br/>
-        
-            &copy; Copyright 2020 Tetsugen Haruyama.<br/>
-      </p>
-    </div>
-  </footer>
+  <div class="container">
+    <p>
+          &copy; Copyright 2020 Tetsugen Haruyama.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.<br/>
+    </p>
+  </div>
+</footer>
 </main>
 
 

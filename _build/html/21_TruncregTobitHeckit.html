@@ -26,8 +26,7 @@
     <script src="_static/mystnb.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="canonical" href="https://py4etrics.github.io/21_TruncregTobitHeckit.html" />
     <link rel="index" title="Index" href="genindex.html" />
@@ -35,8 +34,15 @@
     <link rel="next" title="３. 番外編" href="part_3.html" />
     <link rel="prev" title="離散選択モデル" href="20_LogitProbit.html" />
 
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<!-- Put requirejs at the end so it's always after bootstrap -->
+<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
 
 
 <!-- Opengraph tags -->
@@ -56,9 +62,9 @@
     <div class="container-xl">
       <div class="row">
           
+
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+    <div class="navbar-brand-box">
 <a class="navbar-brand text-wrap" href="index.html">
   
   
@@ -133,13 +139,7 @@
   </li>
 </ul>
 </nav>
-
- <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  <a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>
-</div>
-
+<p class="navbar_footer"><a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a></p>
 </div>
 
 
@@ -159,7 +159,6 @@
             <i class="fas fa-arrow-left"></i>
             <i class="fas fa-arrow-up"></i>
         </button>
-        
         <div class="dropdown-buttons-trigger">
             <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
 
@@ -175,16 +174,7 @@
             
         </div>
 
-        <!-- Source interaction buttons -->
-        
-        <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-            <div class="dropdown-buttons sourcebuttons">
-                <a class="repository-button" href="https://github.com/Py4Etrics/py4etrics.github.io"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left" title="Source repository"><i class="fab fa-github"></i>repository</button></a>
-                <a class="issues-button" href="https://github.com/Py4Etrics/py4etrics.github.io/issues/new?title=Issue%20on%20page%20%2F21_TruncregTobitHeckit.html&body=Your%20issue%20content%20here."><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left" title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-                
-            </div>
-        </div>
+        <!-- Edit this page -->
         
 
         <!-- Full screen (wrap in <a> to have style consistency -->
@@ -202,6 +192,8 @@
                 
             </div>
         </div>
+        
+
         
     </div>
     <div class="d-none d-md-block col-md-2 bd-toc show">
@@ -319,7 +311,7 @@
     </div>
 </div>
     <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
         
               <div>
                 
@@ -461,8 +453,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.934575
-X            1.066915
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.747024
+X            0.908490
 dtype: float64
 </pre></div>
 </div>
@@ -482,8 +474,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    2.990633
-X            0.687865
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    2.998544
+X            0.417846
 dtype: float64
 </pre></div>
 </div>
@@ -860,8 +852,8 @@ Log(Sigma)    -0.5433      0.039    -14.053      0.000      -0.619      -0.468
 Dep. Variable:                      y   Pseudo R-squ:                    0.000
 Model:                       Truncreg   Log-Likelihood:                 -619.9
 Method:            Maximum Likelihood   LL-Null:                        -619.9
-Date:                Sat, 13 Jun 2020   LL-Ratio:                         -0.0
-Time:                        10:46:26   LLR p-value:                       nan
+Date:                Mon, 15 Jun 2020   LL-Ratio:                         -0.0
+Time:                        12:50:00   LLR p-value:                       nan
 No. Observations:                1066   AIC:                            1241.8
 Df Residuals:                    1065   BIC:                            1246.7
 Df Model:                           0   Covariance Type:             nonrobust
@@ -1117,8 +1109,8 @@ Log(Sigma)    -0.3590      0.047     -7.677      0.000      -0.451      -0.267
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept   -0.796535
-X            0.928418
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept   -0.197543
+X            1.085805
 dtype: float64
 </pre></div>
 </div>
@@ -1138,8 +1130,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.133886
-X            0.395441
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.562861
+X            0.476836
 dtype: float64
 </pre></div>
 </div>
@@ -1630,8 +1622,8 @@ Log(Sigma)     7.0229      0.037    189.514      0.000       6.950       7.096
 Dep. Variable:                    lwage   R-squared:                       0.156
 Model:                           Heckit   Adj. R-squared:                  0.150
 Method:                Heckman Two-Step   F-statistics:                   26.148
-Date:                  Sat, 13 Jun 2020   Prob (F-statistic):              0.000
-Time:                          10:46:55   Cov in 1st Stage:            nonrobust
+Date:                  Mon, 15 Jun 2020   Prob (F-statistic):              0.000
+Time:                          12:50:39   Cov in 1st Stage:            nonrobust
 No. Total Obs.:                     753   Cov in 2nd Stage:                  HC1
 No. Censored Obs.:                  325                                         
 No. Uncensored Obs.:                428                                         
@@ -1755,8 +1747,8 @@ Third table is the estimate for the coef of the inverse Mills ratio (Heckman&#39
 Dep. Variable:                      y   No. Observations:                  753
 Model:                         Probit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Sat, 13 Jun 2020   Pseudo R-squ.:                  0.2206
-Time:                        10:46:55   Log-Likelihood:                -401.30
+Date:                Mon, 15 Jun 2020   Pseudo R-squ.:                  0.2206
+Time:                        12:50:39   Log-Likelihood:                -401.30
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
 ==============================================================================
@@ -1825,7 +1817,9 @@ expersq       -0.0008      0.000     -1.931      0.053      -0.002    1.21e-05
          Current function value: 1.008409
          Iterations: 68
          Function evaluations: 122
-==============================================================================
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>==============================================================================
                  coef    std err          z      P&gt;|z|      [0.025      0.975]
 ------------------------------------------------------------------------------
 Intercept     -0.5220      0.202     -2.589      0.010      -0.917      -0.127
@@ -1877,15 +1871,13 @@ df freedom:  7.
 
     </div>
     <footer class="footer mt-5 mt-md-0">
-    <div class="container">
-      <p>
-        
-          By 春山 鉄源<br/>
-        
-            &copy; Copyright 2020 Tetsugen Haruyama.<br/>
-      </p>
-    </div>
-  </footer>
+  <div class="container">
+    <p>
+          &copy; Copyright 2020 Tetsugen Haruyama.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.<br/>
+    </p>
+  </div>
+</footer>
 </main>
 
 

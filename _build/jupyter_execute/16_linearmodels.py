@@ -14,10 +14,10 @@ import wooldridge
 |              | 推定結果の<br> 表を表示 | 残差を<br> 表示する<br> メソッド | 標準誤差を<br> 取得する<br> 属性 |
 |-------------:|:-----------------------:|:--------------------------------:|:--------------------------------:|
 | statsmodels  | .summary()              | .resid                           | .bse                             |
-| linearmodels | .summary()              | .resids                          | .std_errors                      |
+| linearmodels | .summary                | .resids                          | .std_errors                      |
 
 
-* `statsmodels`も`linearmodels`も回帰式を文字列で指定できるが，定数項の指定する方法が異なる。
+* `statsmodels`も`linearmodels`も回帰式を文字列で指定できるが，定数項を指定する方法が異なる。
     * `statsmodels`では，定数項は自動的に追加される，定数項を省く場合は`-1`を追加する。
     * `linearmodels`では，定数項は自動的に追加されない。定数項を入れる場合は`1`を追加する。
 * `fit()`メソッドの挙動も共通化されていない。
@@ -36,8 +36,6 @@ import wooldridge
 
 ---
 以下では`linearmodels`を使うが，そのためには`DataFrame`を`MultiIndex`に変換する必要がある。以下では，まず`MultiIndex`について説明し，その後に`linearmodel`にある`PanelData`関数について説明する
-
-まず，このトピックで使用するパッケージを導入する。
 
 ## `Pandas`の`MultiIndex`
 
@@ -76,7 +74,7 @@ df.reset_index()
 
 ### 要素，行，列の抽出
 
-`MultiIndex`のまま要素・列・行の抽出およぼスライシングには様々な方法があり，複雑である。特に，スライシングをしたい場合，一番簡単なのは`reset_index()`で通常の`DataFrame`に戻し，スライシングし新たな`DataFrame`を作成するだけでも十分であろう。
+`MultiIndex`のまま要素・列・行の抽出およびスライシングには様々な方法があり，複雑である。特に，スライシングをしたい場合，一番簡単なのは`reset_index()`で通常の`DataFrame`に戻し，スライシングし新たな`DataFrame`を作成するだけでも十分であろう。
 
 以下では，`.loc[]`を使い`MultiIndex`のままでの抽出方法について簡単に説明する。その際，以下のルールは変わらない。
 
@@ -88,7 +86,7 @@ $$.\text{loc}\left[\text{行の指定},\text{列の指定}\right]$$
 
 #### １つの観察単位の抽出
 
-１つの要素を抽出する場合は，タプルを使う。例えば，日本の2001年の`gdp`を抽出したい場合。
+１つの要素を抽出する場合はタプルを使う。例えば，日本の2001年の`gdp`を抽出したい場合。
 
 df.loc[('Japan',2001), 'gdp']
 
@@ -98,7 +96,7 @@ df.loc[('Japan',2001), 'gdp']
 
 df.loc[('Japan',2001), :]
 
-この場合，列に対してスライシングも可能。
+この場合，特定の列に対してスライシングも可能。
 
 df.loc[('Japan',2001), 'gdp':'con']
 
@@ -118,7 +116,7 @@ df.loc['Japan', :]
 
 複数の場合。
 
-df.loc[['Japan','India'], :]
+df.loc[['Japan','UK'], :]
 
 #### 列の抽出
 
@@ -154,7 +152,8 @@ df.reset_index().query('year not in [2001]')
 
 ## `linearmodels`の`PanelData`
 
-`linearmodels`では`MultiIndex`化された`DataFrame`をそのまま読み込み推定することができる。一方で，`linearmodels`の関数`PanelData`を使い`MultiIndex`化された`DataFrame`を`PanelData`オブジェクトに変換すると分析に必要な計算を簡単にできるようになる。必須ではないが，知っていて損はしない関数である。
+
+`linearmodels`では`MultiIndex`化された`DataFrame`をそのまま読み込み推定することができる。一方で，`linearmodels`の関数`PanelData`を使い`MultiIndex`化された`DataFrame`を`PanelData`オブジェクトに変換すると分析に必要な計算を簡単にできるようになる。必須ではないが，知っておいて損はしない関数である。
 
 まず`df`を`PanelData`オブジェクトに変換する。
 
@@ -163,10 +162,9 @@ dfp
 
 ---
 属性`shape`は，`PanelData`の変数の数を表示する。以下が返り値の内容である。
-
-$$
-\left(\text{変数の数},\text{期間数},\text{観察単位の数}\right)
-$$
+```
+(変数の数, 期間数, 観察単位の数)
+```
 
 dfp.shape
 
@@ -224,7 +222,7 @@ dfp.first_difference()
 
 `DataFrame`のメソッドは`PanelData`オブジェクトには使えない。
 
-従って，`DataFrame`のメソッド（例えば，行や列の抽出）を使う場合，`DataFrame`に変換する必要がある。その際，`PanelData`オブジェクトの属性`.dataframe`を使うことができる。
+従って，`DataFrame`のメソッド（例えば，行や列の抽出）を使う場合，`DataFrame`に変換する必要がある。その場合，`PanelData`オブジェクトの属性`.dataframe`を使うことができる。
 
 dfp.dataframe.loc['Japan',:]
 
@@ -249,7 +247,7 @@ crime4p.shape
 * 7: 期間数（年）
 * 90：観察単位の数（人数）
 
-次に，balanced もしくは unbalanced data set かを確認する。
+次にbalanced もしくは unbalanced data set かを確認する。
 
 (crime4p.count()==crime4p.nobs).all().all()
 
@@ -265,11 +263,11 @@ $$\text{.from_formula}(\text{回帰式}, \text{データ})$$
 formula = 'lcrmrte ~ d82 + d83 + d84 + d85 + d86 + d87 + lprbarr + \
                 lprbconv + lprbpris + lavgsen + lpolpc'
 
-* １階差分モデルのインスタンスの作成
+１階差分モデルの設定（インスタンスの作成）
 
 mod_dif = FirstDifferenceOLS.from_formula(formula, data=crime4)
 
-* `statsmodels`と同じように，そこから得た結果にメソッド`.fit()`を使い計算し結果が返される。
+`statsmodels`と同じように，そこから得た結果にメソッド`.fit()`を使い計算し結果が返される。
 
 res_dif = mod_dif.fit()
 

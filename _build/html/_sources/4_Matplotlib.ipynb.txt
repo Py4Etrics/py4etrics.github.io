@@ -18,22 +18,9 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
+   "execution_count": 3,
    "metadata": {},
-   "outputs": [
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "\n",
-      "Bad key \"text.kerning_factor\" on line 4 in\n",
-      "/Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/matplotlib/mpl-data/stylelib/_classic_test_patch.mplstyle.\n",
-      "You probably need to get an updated matplotlibrc file from\n",
-      "https://github.com/matplotlib/matplotlib/blob/v3.1.3/matplotlibrc.template\n",
-      "or from the matplotlib source distribution\n"
-     ]
-    }
-   ],
+   "outputs": [],
    "source": [
     "import numpy as np\n",
     "import pandas as pd\n",
@@ -60,7 +47,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
+   "execution_count": 13,
    "metadata": {
     "hidden": true
    },
@@ -133,7 +120,7 @@
        "2  2002   93  21.0  72.0   10  a"
       ]
      },
-     "execution_count": 2,
+     "execution_count": 13,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -155,7 +142,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 3,
+   "execution_count": 14,
    "metadata": {
     "hidden": true
    },
@@ -206,7 +193,31 @@
     "hidden": true
    },
    "source": [
-    "上の図の不満な点は，横軸が不明なこと（単に`gdp`のデータ数に従って1,2,..と番号が振られている）。横軸の変数を指定するには，`()`内に追加するだけである。ただ順番に気をつけること。"
+    "上の図の不満な点は，横軸が不明なこと（単に`gdp`のデータ数に従って1,2,..と番号が振られている）。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "````{note}\n",
+    "上のコードでは横軸の変数が指定されておらず，デフォルトでは行インデックスが使われことになる。従って，\n",
+    "```\n",
+    "df = df.set_index('year')\n",
+    "```\n",
+    "のように`year`を行インデックスに指定すると，自動的に横軸には`year`が入ることになる。このことを理解した上で，以下では横軸を明示的に指定する場合を想定して説明を続ける。\n",
+    "````"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "横軸の変数を指定するには，`()`内に該当する変数を追加するだけである。ただ順番に気をつけること。"
    ]
   },
   {
@@ -438,6 +449,41 @@
    ],
    "source": [
     "plt.scatter('gdp', 'con', data=df)\n",
+    "plt.xlabel('GDP')  #　横軸のラベル （省略可）\n",
+    "plt.ylabel('Consumption');  # 縦軸のラベル（省略可）"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "hidden": true
+   },
+   "source": [
+    "次のコードでも同じ結果となる。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {
+    "hidden": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<Figure size 432x288 with 1 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "plt.plot('gdp', 'con', marker='o', linestyle='', data=df)\n",
     "plt.xlabel('GDP')  #　横軸のラベル （省略可）\n",
     "plt.ylabel('Consumption');  # 縦軸のラベル（省略可）"
    ]
@@ -731,7 +777,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.8.2"
+   "version": "3.8.3"
   },
   "nteract": {
    "version": "0.15.0"

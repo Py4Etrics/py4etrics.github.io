@@ -2,6 +2,7 @@
 * Variables *
 *********************************************/
 // Breakpoints from Bootstrap: https://getbootstrap.com/docs/4.1/layout/overview/#responsive-breakpoints
+$breakpoint-xxl: 1500px;  // Custom one
 $breakpoint-xl: 1200px;
 $breakpoint-lg: 992px;
 $breakpoint-md: 768px;
@@ -31,9 +32,43 @@ code {
 * Main body *
 *********************************************/
 
+// Custom XXL breakpoint
+@media (min-width: $breakpoint-xxl) {
+    .col-xxl-7 {
+        flex: 0 0 61% !important;
+        max-width: 61% !important;
+        position: relative !important;
+        width: 100% !important;
+        padding-right: 15px !important;
+        padding-left: 15px !important;
+    }
+}
+
+// If the sidebar is collapsed, our main content should expand fully
+div.bd-sidebar.collapse:not(.show) + main.bd-content {
+    @media (max-width: $breakpoint-xxl) {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
 main.bd-content {
     padding-top: $topbar-height !important;
     padding-bottom: 0px !important;
+
+    // CSS unique to a single page
+    &.single-page {
+        max-width: 1100px;
+        margin-left: auto;
+        margin-right: auto;
+
+        // Page title styling
+        div#main-content div.section:first-of-type > h1:first-of-type {
+            border-bottom: 1px solid #130654;
+            padding-bottom: .2em;
+            font-size: 3em;
+        }
+    }
 
     #main-content {
         // Content links and link color
@@ -128,30 +163,22 @@ main.bd-content {
         div.alert {
             padding-bottom: .75em;  // Overriding an override
 
-            p:last-child {
-                margin-bottom: 0;
-            }
-
             p.admonition-title {
                 margin-bottom: .2em;
-                font-weight: bold;
+                font-size: 1.1em;
 
-                &:before {
+                &::after {
                     font-family: "Font Awesome 5 Free";
-                    margin-right: 0.5em;
+                    margin-left: 0.5em;
                     font-weight: 900;
-                    content: "\f05a";  /* info-circle */
+                    // Default content is exclamation point
+                    content: "\f06a";
                 }
             }
 
-            &.alert-warning, &.alert-danger {
-                p.admonition-title:before {
-                    content: "\f071";
-                }
-            }
-
-            &.alert-primary p.admonition-title:before {
-                content: "\f06a" /* exclamation-circle */
+            &.alert-warning p.admonition-title::after {
+                content: "\f071";
+                color: red;
             }
         }
 
@@ -162,13 +189,10 @@ main.bd-content {
             }
         }
 
-        // Within-page Table of contents
-        div.contents {
-            padding: 1em;
-            p.topic-title {
-                font-size: 1.5em;
-                padding: .5em 0 0 1em;
-            }
+        // Table of contents
+        div.contents p.topic-title {
+            font-size: 1.5em;
+            padding: .5em 0 0 1em;
         }
 
         // Misc text and directives
@@ -181,52 +205,6 @@ main.bd-content {
         div.sphinx-tabs > div.menu > a.item {
             width: auto;
             margin: 0;
-        }
-
-        // Footnotes and Citations
-        span.brackets, a.brackets {
-            &:before {
-                content: "[";
-            }
-
-            &:after {
-                content: "]";
-            }
-        }
-
-        .footnote-reference, a.bibtex.internal {
-            font-size: .8em;
-            vertical-align: top;
-        }
-
-        dl.footnote {
-
-            span.fn-backref {
-                font-size: .8em;
-                vertical-align: top;
-                padding-left:.1em;
-            }
-
-            dd {
-                font-size:.9em;
-                margin-left: 3em;
-            }
-        }
-
-        dl.citation {
-            margin-left: 3em;
-        }
-
-        // Footnotes
-
-        dl.footnote {
-            dt.label {
-                float: left;
-            }
-
-            dd p {
-                padding-left: 1.5em;
-            }
         }
     }
 }
@@ -295,13 +273,6 @@ div.sidebar, div.margin, div.margin-caption p.caption, .cell.tag_popout, .cell.t
     div.cell.tag_margin .cell_output {
         padding-left: 0;
     }
-
-    div.sidebar:not(.margin) {
-        width: 60%;
-        margin-left: 1.5em;
-        margin-right: -28%;
-    }
-
 }
 
 
@@ -339,6 +310,17 @@ div.highlight {
     background: none;
 }
 
+// Footnotes
+
+dl.footnote {
+    dt.label {
+        float: left;
+    }
+
+    dd p {
+        padding-left: 1.5em;
+    }
+}
 
 /*********************************************
 * Top Bar *
@@ -366,15 +348,10 @@ div.highlight {
             margin: 0 .1em;
             background-color: white;
             color: $non-content-grey;
+            font-size: 1.4em;
             border: none;
             padding-top: .1rem;
             padding-bottom: .1rem;
-            font-size: 1.4em;
-
-            i.fab {
-                vertical-align: baseline;
-                line-height: 1;
-            }
         }
 
         // buttons float right
@@ -405,15 +382,9 @@ div.dropdown-buttons-trigger {
     div.dropdown-buttons {
         display: none;
         position: absolute;
-        max-width: 130px;
+        max-width: 120px;
         margin-top: .2em;
         z-index: 1000;
-
-        &.sourcebuttons .topbarbtn i {
-            padding-right: 6px;
-            margin-left: -5px;
-            font-size: .9em !important;
-        }
 
         button.topbarbtn {
             padding-top: .35rem;
@@ -509,7 +480,7 @@ button.topbarbtn img {
 
 .bd-toc {
     padding: 0px !important;
-    overflow-y: visible;
+    overflow-y: hidden !important;
     background: white;
     right: 0;
     z-index: 999;
@@ -523,10 +494,7 @@ button.topbarbtn img {
     // By default the nav is hidden unless a few conditions are met
     nav {
         opacity: 0;
-        max-height: 0;
-        transition: opacity 0.2s ease, max-height .7s ease;
-        overflow-y: hidden;
-        background: white;
+        transition: opacity 0.2s ease;
 
         // TOC link color
         a:hover, li.active > a.active {
@@ -538,29 +506,24 @@ button.topbarbtn img {
         }
     }
 
-    // On hover or w/ a show class, we show the TOC
-    &:hover, &.show {
+    // On really wide screens, we always show the nav
+    @media (min-width: $breakpoint-xxl) {
+        height: auto !important;
         nav {
-            max-height: 100vh;
             opacity: 1;
         }
+    }
 
-        // Hide the arrow when we display the toc
-        .tocsection:after {
-            opacity: 0;
+    // On hover or w/ a show calss, we show the TOC
+    &:hover, &.show {
+        height: auto !important;
+        nav {
+            opacity: 1;
         }
     }
 
     .tocsection {
-        padding: .5rem 0 .5rem 1rem !important;
-
-        &:after {
-            content: "\f107";
-            font-family: "Font Awesome 5 Free";
-            font-weight: 900;
-            padding-left: .5em;
-            transition: opacity .3s ease;
-        }
+        padding: .5rem 0 .5rem 1rem !important
     }
 
     .toc-entry a {
@@ -634,11 +597,11 @@ button.topbarbtn img {
         text-align: center;
     }
 
-    div.navbar_extra_footer {
+    p.navbar_footer {
         text-align: center;
         font-size: .9em;
+        padding-top: .5em;
         color: $non-content-grey;
-        margin-bottom: 3em;
     }
 
     &.collapsing {
@@ -712,12 +675,11 @@ div.navbar-brand-box {
         height: auto;
 
         img {
-            display: block;
-            height: auto;
-            width: auto;
+            min-height: 100px;
             max-height:10vh;
-            max-width: 100%;
             margin: 0 auto;
+            display: block;
+            height: auto !important;
             @media (min-width: $breakpoint-md) {
                 max-height: 15vh !important;
             }
