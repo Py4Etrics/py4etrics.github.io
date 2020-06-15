@@ -3337,10 +3337,10 @@ Name: gdp, dtype: bool
 <h2>列と行の追加と削除<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id16">
 <h3>列の追加 <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">]</span></code><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">[]</span></code>は列の抽出に使うことができるが，追加にも使える。定数を設定すると自動的に行数分作成することができる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">[]</span></code>に列ラベルを使って列を抽出することができるが，この授業では混乱を避けるために<code class="docutils literal notranslate"><span class="pre">.loc[]</span></code>のみを扱う。一方で，<code class="docutils literal notranslate"><span class="pre">[]</span></code>は列の追加にも使えるので，ここではその使い方を説明する。まず，全ての行が<code class="docutils literal notranslate"><span class="pre">1.0</span></code>となる列を作成するとしよう。その場合，以下のようにする。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Intercept&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Intercept&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
 </pre></div>
 </div>
 </div>
@@ -3395,7 +3395,7 @@ Name: gdp, dtype: bool
       <td>80.0</td>
       <td>8</td>
       <td>a</td>
-      <td>1</td>
+      <td>1.0</td>
     </tr>
     <tr>
       <th>2001</th>
@@ -3404,20 +3404,36 @@ Name: gdp, dtype: bool
       <td>70.0</td>
       <td>9</td>
       <td>b</td>
-      <td>1</td>
+      <td>1.0</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>既存の列から新たな列を作成する。</p>
+<p>次の例では既存の列から新たな列を作成する。まず１人当たりGDPの計算を計算し，それを変数<code class="docutils literal notranslate"><span class="pre">gdp_pc</span></code>に割り当てる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># １人当たりGDPの計算</span>
-<span class="n">gdp_pc</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;pop&#39;</span><span class="p">]</span>
-
-<span class="c1"># GDPpc を追加</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;gdp_pc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdp_pc</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gdp_pc</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;pop&#39;</span><span class="p">]</span>
+<span class="n">gdp_pc</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>year
+2000    12.500000
+2001    10.555556
+2002     9.300000
+2003     9.090909
+2004     9.166667
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>これは<code class="docutils literal notranslate"><span class="pre">Series</span></code>であり，<code class="docutils literal notranslate"><span class="pre">GDPpc</span></code>として<code class="docutils literal notranslate"><span class="pre">df</span></code>に追加する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;gdp_pc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdp_pc</span>
 </pre></div>
 </div>
 </div>
@@ -3474,7 +3490,7 @@ Name: gdp, dtype: bool
       <td>80.0</td>
       <td>8</td>
       <td>a</td>
-      <td>1</td>
+      <td>1.0</td>
       <td>12.500000</td>
     </tr>
     <tr>
@@ -3484,7 +3500,7 @@ Name: gdp, dtype: bool
       <td>70.0</td>
       <td>9</td>
       <td>b</td>
-      <td>1</td>
+      <td>1.0</td>
       <td>10.555556</td>
     </tr>
   </tbody>
@@ -3494,7 +3510,7 @@ Name: gdp, dtype: bool
 </div>
 <div class="section" id="id17">
 <h3>列の追加 <code class="docutils literal notranslate"><span class="pre">.loc[,]</span></code><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
-<p>行と列の抽出に使ったが，追加にも使える。定数を設定すると自動的に行数分作成することができる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">.loc[]</span></code>は行と列の抽出に使ったが，追加にも使える。<code class="docutils literal notranslate"><span class="pre">[]</span></code>と同じと考えれば良い。次の例では<code class="docutils literal notranslate"><span class="pre">pop</span></code>を2倍した列を追加している。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;2pop&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;pop&#39;</span><span class="p">]</span>
@@ -3515,6 +3531,8 @@ Name: gdp, dtype: bool
 </div>
 <div class="section" id="drop">
 <h3>列の削除 <code class="docutils literal notranslate"><span class="pre">drop()</span></code><a class="headerlink" href="#drop" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>には<code class="docutils literal notranslate"><span class="pre">.drop()</span></code>というメソッドが用意されているので，それを使うことも可能である。</p>
+<p>下のコードの説明：</p>
 <ul class="simple">
 <li><p>オプション<code class="docutils literal notranslate"><span class="pre">axis=</span></code>の値を<code class="docutils literal notranslate"><span class="pre">columns</span></code>の代わりに<code class="docutils literal notranslate"><span class="pre">１</span></code>でも可</p></li>
 <li><p>コピーを作るだけなので，元のdfを書き換えたい場合は以下のどちらかが必要</p>
@@ -3536,7 +3554,7 @@ Name: gdp, dtype: bool
 </div>
 <div class="section" id="id19">
 <h3>行の追加 <code class="docutils literal notranslate"><span class="pre">.loc[,]</span></code><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
-<p>行と列の抽出に使ったが，行の追加にも使える。</p>
+<p>行と列の抽出，そして列の追加に使ったが，行の追加にも使える。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2011</span><span class="p">,:]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">215</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]</span>
@@ -3613,9 +3631,11 @@ Name: gdp, dtype: bool
 </table>
 </div></div></div>
 </div>
+<p>上の例では，最初の4つの要素は整数として入力されたが，<code class="docutils literal notranslate"><span class="pre">df</span></code>の中では浮動小数点に変換されている。</p>
 </div>
 <div class="section" id="id20">
 <h3>行の削除 <code class="docutils literal notranslate"><span class="pre">drop()</span></code><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<p>これは列を削除する際に紹介したメソッド<code class="docutils literal notranslate"><span class="pre">.drop()</span></code>である。</p>
 <ul class="simple">
 <li><p>オプション<code class="docutils literal notranslate"><span class="pre">axis=</span></code>の値を<code class="docutils literal notranslate"><span class="pre">rows</span></code>の代わりに<code class="docutils literal notranslate"><span class="pre">0</span></code>でも可</p></li>
 <li><p>コピーを作るだけなので，元のdfを書き換えたい場合は以下のどちらかが必要</p>
@@ -3673,9 +3693,33 @@ dtype: int64
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">inv</span></code>と<code class="docutils literal notranslate"><span class="pre">con</span></code>に<code class="docutils literal notranslate"><span class="pre">NaN</span></code>があることがわかる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">inv</span></code>と<code class="docutils literal notranslate"><span class="pre">con</span></code>に<code class="docutils literal notranslate"><span class="pre">NaN</span></code>があることがわかる。<code class="docutils literal notranslate"><span class="pre">axis='columns'</span></code>を設定すると<code class="docutils literal notranslate"><span class="pre">NaN</span></code>がある行を確認できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>year
+2000    0
+2001    0
+2002    0
+2003    0
+2004    0
+2005    0
+2006    0
+2007    0
+2008    0
+2009    1
+2010    2
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
 <hr class="docutils" />
-<p><code class="docutils literal notranslate"><span class="pre">NaN</span></code>がある行を抽出する場合はメソッド<code class="docutils literal notranslate"><span class="pre">any()</span></code>が役に立つ。</p>
+<p><code class="docutils literal notranslate"><span class="pre">NaN</span></code>がある行だけを抽出したい場合がある。その場合はメソッド<code class="docutils literal notranslate"><span class="pre">any()</span></code>が役に立つ。</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">any(axis='rows')</span></code>：<code class="docutils literal notranslate"><span class="pre">df</span></code>の上から下に行（<code class="docutils literal notranslate"><span class="pre">rows</span></code>）を縦断して，それぞれの列の中で一つ以上<code class="docutils literal notranslate"><span class="pre">True</span></code>がある場合には<code class="docutils literal notranslate"><span class="pre">True</span></code>を，一つもない場合は<code class="docutils literal notranslate"><span class="pre">False</span></code>を返す。</p>
 <ul>
@@ -4274,6 +4318,7 @@ dtype: int64
 </div>
 <div class="section" id="id25">
 <h2>DataFrameの結合<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
+<p>ここでは３つの<code class="docutils literal notranslate"><span class="pre">.csv</span></code>ファイルを使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/Haruyama-KobeU/Haruyama-KobeU.github.io/master/data/&#39;</span>
@@ -4284,7 +4329,7 @@ dtype: int64
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df1</span>
 </pre></div>
@@ -4421,7 +4466,7 @@ dtype: int64
 </table>
 </div></div></div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span>
 </pre></div>
@@ -4577,11 +4622,11 @@ dtype: int64
 </pre></div>
 </div>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">on</span></code>はどの列を基準にして結合するかを指定（ここでは「基準列」呼ぼう）</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">on</span></code>はどの列を基準にして結合するかを指定（ここでは「基準列」と呼ぼう）</p>
 <ul>
 <li><p>例えば，<code class="docutils literal notranslate"><span class="pre">df1</span></code>と<code class="docutils literal notranslate"><span class="pre">df2</span></code>の両方に<code class="docutils literal notranslate"><span class="pre">year</span></code>の列がある場合，<code class="docutils literal notranslate"><span class="pre">on='year'</span></code>とすると列<code class="docutils literal notranslate"><span class="pre">year</span></code>が基準列となる。</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">df1</span></code>と<code class="docutils literal notranslate"><span class="pre">df2</span></code>の別々の列を指定する場合は<code class="docutils literal notranslate"><span class="pre">left_index=</span></code>と<code class="docutils literal notranslate"><span class="pre">right_index=</span></code>を使う。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df1</span></code>と<code class="docutils literal notranslate"><span class="pre">df2</span></code>の別々の列を指定する場合は<code class="docutils literal notranslate"><span class="pre">left_on=</span></code>と<code class="docutils literal notranslate"><span class="pre">right_on=</span></code>を使う。</p></li>
 </ul>
 </li>
 <li><p>基準列に基づいて残す行を決める（<code class="docutils literal notranslate"><span class="pre">how</span></code>で説明する）</p></li>
@@ -4592,9 +4637,9 @@ dtype: int64
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">how</span></code>は<code class="docutils literal notranslate"><span class="pre">on</span></code>で指定した基準列に基づいてどのように結合するかを指定</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">inner</span></code>：<code class="docutils literal notranslate"><span class="pre">df1</span></code>と<code class="docutils literal notranslate"><span class="pre">df2</span></code>の両方の基準列ある行だけを残す（デフォルト）。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">left</span></code>：<code class="docutils literal notranslate"><span class="pre">df1</span></code>の行は全て残し，<code class="docutils literal notranslate"><span class="pre">df2</span></code>にマッチする行がない場合は<code class="docutils literal notranslate"><span class="pre">NaN</span></code>を入れる。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">right</span></code>：<code class="docutils literal notranslate"><span class="pre">df2</span></code>の行は全て残し，<code class="docutils literal notranslate"><span class="pre">df1</span></code>にマッチする行がない場合は<code class="docutils literal notranslate"><span class="pre">NaN</span></code>を入れる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">inner</span></code>：<code class="docutils literal notranslate"><span class="pre">df1</span></code>と<code class="docutils literal notranslate"><span class="pre">df2</span></code>の両方に基準列ある行だけを残す（デフォルト）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">left</span></code>：<code class="docutils literal notranslate"><span class="pre">df1</span></code>の行は全て残し，<code class="docutils literal notranslate"><span class="pre">df2</span></code>からはマッチする行だけが残り，対応する行がない場合は<code class="docutils literal notranslate"><span class="pre">NaN</span></code>が入る。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">right</span></code>：<code class="docutils literal notranslate"><span class="pre">df2</span></code>の行は全て残し，<code class="docutils literal notranslate"><span class="pre">df1</span></code>からはマッチする行だけが残る，対応する行がない場合は<code class="docutils literal notranslate"><span class="pre">NaN</span></code>が入る。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">outer</span></code>：<code class="docutils literal notranslate"><span class="pre">df1</span></code>と<code class="docutils literal notranslate"><span class="pre">df2</span></code>の両方の行を残し，マッチする行がない場合は<code class="docutils literal notranslate"><span class="pre">NaN</span></code>を入れる。</p></li>
 </ul>
 </li>
@@ -4700,7 +4745,7 @@ dtype: int64
 </table>
 </div></div></div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
 </pre></div>
@@ -4989,7 +5034,7 @@ dtype: int64
 </table>
 </div></div></div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
 </pre></div>
@@ -5285,7 +5330,7 @@ dtype: int64
 <div class="section" id="id28">
 <h3>インデックスを振り直す<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
 <p>メソッド<code class="docutils literal notranslate"><span class="pre">.reset_index()</span></code>を使うと，行のインデックスを0,1,2,..と振り直すことができる。<code class="docutils literal notranslate"><span class="pre">df13</span></code>を使い説明する。</p>
-<div class="cell docutils container">
+<div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df13</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 </pre></div>
@@ -5827,7 +5872,7 @@ dtype: int64
 </div>
 <div class="section" id="id34">
 <h5>方法２<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h5>
-<p>もちろん次の方法も可。</p>
+<p>次の方法も可。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df13</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>

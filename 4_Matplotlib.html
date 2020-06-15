@@ -315,7 +315,16 @@
 </pre></div>
 </div>
 <p>としても同じ結果となる。<code class="docutils literal notranslate"><span class="pre">pass</span></code>は文字通り「パスする」のパスであり。<code class="docutils literal notranslate"><span class="pre">_</span></code>を単独で使う場合，必要でない値を代入する変数によく使われる記号である。</p>
-<p>上の図の不満な点は，横軸が不明なこと（単に<code class="docutils literal notranslate"><span class="pre">gdp</span></code>のデータ数に従って1,2,..と番号が振られている）。横軸の変数を指定するには，<code class="docutils literal notranslate"><span class="pre">()</span></code>内に追加するだけである。ただ順番に気をつけること。</p>
+<p>上の図の不満な点は，横軸が不明なこと（単に<code class="docutils literal notranslate"><span class="pre">gdp</span></code>のデータ数に従って1,2,..と番号が振られている）。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>上のコードでは横軸の変数が指定されておらず，デフォルトでは行インデックスが使われことになる。従って，</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>のように<code class="docutils literal notranslate"><span class="pre">year</span></code>を行インデックスに指定すると，自動的に横軸には<code class="docutils literal notranslate"><span class="pre">year</span></code>が入ることになる。このことを理解した上で，以下では横軸を明示的に指定する場合を想定して説明を続ける。</p>
+</div>
+<p>横軸の変数を指定するには，<code class="docutils literal notranslate"><span class="pre">()</span></code>内に該当する変数を追加するだけである。ただ順番に気をつけること。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">);</span>
@@ -323,7 +332,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4_Matplotlib_10_0.png" src="_images/4_Matplotlib_10_0.png" />
+<img alt="_images/4_Matplotlib_12_0.png" src="_images/4_Matplotlib_12_0.png" />
 </div>
 </div>
 <p>コードをみて分かるように</p>
@@ -338,7 +347,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4_Matplotlib_12_0.png" src="_images/4_Matplotlib_12_0.png" />
+<img alt="_images/4_Matplotlib_14_0.png" src="_images/4_Matplotlib_14_0.png" />
 </div>
 </div>
 <p>上の図で何をプロットしているかを分かっている場合はこれで十分だが，論文などに使う場合は不十分である。以下では「飾り付け」をする。</p>
@@ -357,7 +366,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4_Matplotlib_14_0.png" src="_images/4_Matplotlib_14_0.png" />
+<img alt="_images/4_Matplotlib_16_0.png" src="_images/4_Matplotlib_16_0.png" />
 </div>
 </div>
 <p>様々なオプションが用意されている</p>
@@ -468,7 +477,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4_Matplotlib_18_0.png" src="_images/4_Matplotlib_18_0.png" />
+<img alt="_images/4_Matplotlib_20_0.png" src="_images/4_Matplotlib_20_0.png" />
 </div>
 </div>
 <p><strong>散布図の描画</strong></p>
@@ -481,7 +490,20 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4_Matplotlib_20_0.png" src="_images/4_Matplotlib_20_0.png" />
+<img alt="_images/4_Matplotlib_22_0.png" src="_images/4_Matplotlib_22_0.png" />
+</div>
+</div>
+<p>次のコードでも同じ結果となる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="s1">&#39;con&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;GDP&#39;</span><span class="p">)</span>  <span class="c1">#　横軸のラベル （省略可）</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Consumption&#39;</span><span class="p">);</span>  <span class="c1"># 縦軸のラベル（省略可）</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4_Matplotlib_24_0.png" src="_images/4_Matplotlib_24_0.png" />
 </div>
 </div>
 <p><strong>ヒストグラム</strong></p>
@@ -494,7 +516,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4_Matplotlib_22_0.png" src="_images/4_Matplotlib_22_0.png" />
+<img alt="_images/4_Matplotlib_26_0.png" src="_images/4_Matplotlib_26_0.png" />
 </div>
 </div>
 <p><strong>パイチャート</strong></p>
@@ -511,7 +533,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4_Matplotlib_24_0.png" src="_images/4_Matplotlib_24_0.png" />
+<img alt="_images/4_Matplotlib_28_0.png" src="_images/4_Matplotlib_28_0.png" />
 </div>
 </div>
 <p><strong>ボックスプロット</strong></p>
@@ -525,7 +547,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4_Matplotlib_26_0.png" src="_images/4_Matplotlib_26_0.png" />
+<img alt="_images/4_Matplotlib_30_0.png" src="_images/4_Matplotlib_30_0.png" />
 </div>
 </div>
 </div>
@@ -577,7 +599,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4_Matplotlib_30_0.png" src="_images/4_Matplotlib_30_0.png" />
+<img alt="_images/4_Matplotlib_34_0.png" src="_images/4_Matplotlib_34_0.png" />
 </div>
 </div>
 </div>
@@ -597,7 +619,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4_Matplotlib_33_0.png" src="_images/4_Matplotlib_33_0.png" />
+<img alt="_images/4_Matplotlib_37_0.png" src="_images/4_Matplotlib_37_0.png" />
 </div>
 </div>
 <p>保存できる画像ファイルの種類には以下がある。</p>
