@@ -825,7 +825,9 @@ dtype: float64
 <div class="math notranslate nohighlight">
 \[\text{E}\left(u|X\right)=0,\qquad X=\{x_1,x_2,...x_k\}\]</div>
 <ul class="simple">
-<li><p>説明変数の値は誤差項の平均に影響を与えないことを意味しており，<span class="math notranslate nohighlight">\(X\)</span>は<span class="math notranslate nohighlight">\(u\)</span>に対して何の情報も影響力も全くないということである。即ち，<span class="math notranslate nohighlight">\(X\)</span>がどのような値を取ったとしても，<span class="math notranslate nohighlight">\(u\)</span>の平均は0だということである。ではなぜ<span class="math notranslate nohighlight">\(|X\)</span>を付け加えるのか。実は，<span class="math notranslate nohighlight">\(\text{E}\left(u|X\right)=0\)</span>は<span class="math notranslate nohighlight">\(\text{E}(u)=0\)</span>を意味する。しかし後者は前者を意味しない。<span class="math notranslate nohighlight">\(\text{E}(u)=0\)</span>は単純に平均がゼロであることを示しているだけで，<span class="math notranslate nohighlight">\(X\)</span>と<span class="math notranslate nohighlight">\(u\)</span>の関係について何も語っていないためである。<span class="math notranslate nohighlight">\(X\)</span>と<span class="math notranslate nohighlight">\(u\)</span>が線形・非線形な関係が無いことを明確にするために<span class="math notranslate nohighlight">\(|X\)</span>を付け加えている。</p></li>
+<li><p><span class="math notranslate nohighlight">\(X\)</span>はランダム変数であるが，<span class="math notranslate nohighlight">\(X\)</span>を所与とすると<span class="math notranslate nohighlight">\(u\)</span>の平均はゼロになるという仮定である。即ち，ランダム変数である<span class="math notranslate nohighlight">\(X\)</span>がどのような値を取ったとしても，<span class="math notranslate nohighlight">\(u\)</span>の平均は0だということである。<span class="math notranslate nohighlight">\(X\)</span>は<span class="math notranslate nohighlight">\(u\)</span>に対して何の情報も影響力も全くないので，<span class="math notranslate nohighlight">\(X\)</span>と<span class="math notranslate nohighlight">\(u\)</span>が線形・非線形な関係が無いことを意味する。</p></li>
+<li><p><span class="math notranslate nohighlight">\(X\)</span>はランダム変数であるため，<span class="math notranslate nohighlight">\(X\)</span>が変化する場合の<span class="math notranslate nohighlight">\(\text{E}\left(u|X\right)\)</span>の平均を考えることができる。即ち，<span class="math notranslate nohighlight">\(\text{E}\left[\text{E}\left(u|X\right)\right]=0\)</span>である。最初の<span class="math notranslate nohighlight">\(E\)</span>は<span class="math notranslate nohighlight">\(X\)</span>に対する期待値演算子であり，<span class="math notranslate nohighlight">\(E\)</span>が入れ子になっているのでiterated expectationsと呼ばれる。<span class="math notranslate nohighlight">\(X\)</span>がどのような値を取ったとしても仮定４のもとでは<span class="math notranslate nohighlight">\(0\)</span>になるので等号が成立することになる。更に，<span class="math notranslate nohighlight">\(X\)</span>に対しての期待値が付け加えられているので，<span class="math notranslate nohighlight">\(X\)</span>を省いて<span class="math notranslate nohighlight">\(\text{E}\left[\text{E}\left(u|X\right)\right]=\text{E}(u)=0\)</span>となる。<span class="math notranslate nohighlight">\(X\)</span>の条件をつけなくとも<span class="math notranslate nohighlight">\(u\)</span>の平均はゼロになることを示している。</p></li>
+<li><p><span class="math notranslate nohighlight">\(X\)</span>と<span class="math notranslate nohighlight">\(u\)</span>には線形の依存関係がないので<span class="math notranslate nohighlight">\(\text{Cov}(Xu)=0\)</span>が成立する。<span class="math notranslate nohighlight">\(\text{Cov}(Xu)=0\)</span>は非線型の依存関係を除外していないことに注意しよう。</p></li>
 <li><p><span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>を所与として(式３)の期待値を計算すると次式を得る。</p></li>
 </ul>
 <div class="math notranslate nohighlight">
@@ -1062,7 +1064,7 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([0.77104497, 2.08915578, 2.9740406 ])
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([1.37833714, 1.88485173, 3.03377136])
 </pre></div>
 </div>
 </div>
@@ -1083,9 +1085,9 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.771045
-X1           2.089156
-X2           2.974041
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.378337
+X1           1.884852
+X2           3.033771
 dtype: float64
 </pre></div>
 </div>
@@ -1168,9 +1170,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>b0: 0.9945395242424729 
-b1: 2.0003989487272364 
-b1: 3.000591944045812
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>b0: 0.9981939679069037 
+b1: 2.000261233980152 
+b1: 3.0000018206177206
 </pre></div>
 </div>
 </div>
@@ -1458,7 +1460,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.03909706689901203, 0.1973884880767304)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.038954828758137966, 0.20270419898864378)
 </pre></div>
 </div>
 </div>
@@ -1542,7 +1544,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.19316364129289604, 0.4379958312803293)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.19204109864524244, 0.43912061021939164)
 </pre></div>
 </div>
 </div>
