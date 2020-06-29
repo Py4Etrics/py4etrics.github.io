@@ -25,8 +25,9 @@
     <script src="_static/copybutton.js"></script>
     <script src="_static/mystnb.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="canonical" href="https://py4etrics.github.io/4_Matplotlib.html" />
     <link rel="index" title="Index" href="genindex.html" />
@@ -34,15 +35,8 @@
     <link rel="next" title="SciPy.stats" href="5_SciPy_stats.html" />
     <link rel="prev" title="Pandas" href="3_Pandas.html" />
 
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<!-- Put requirejs at the end so it's always after bootstrap -->
-<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
 
 
 <!-- Opengraph tags -->
@@ -62,9 +56,9 @@
     <div class="container-xl">
       <div class="row">
           
-
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    <div class="navbar-brand-box">
+    
+        <div class="navbar-brand-box">
 <a class="navbar-brand text-wrap" href="index.html">
   
   
@@ -115,7 +109,13 @@
   </li>
 </ul>
 </nav>
-<p class="navbar_footer"><a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a></p>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  <a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>
+</div>
+
 </div>
 
 
@@ -135,6 +135,7 @@
             <i class="fas fa-arrow-left"></i>
             <i class="fas fa-arrow-up"></i>
         </button>
+        
         <div class="dropdown-buttons-trigger">
             <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
 
@@ -143,14 +144,14 @@
                 <!-- ipynb file if we had a myst markdown file -->
                 
                 <!-- Download raw file -->
-                <a class="dropdown-buttons" href="_sources/4_Matplotlib.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <a class="dropdown-buttons" href="_sources/4_Matplotlib.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
                 <!-- Download PDF via print -->
                 <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
             </div>
             
         </div>
 
-        <!-- Edit this page -->
+        <!-- Source interaction buttons -->
         
 
         <!-- Full screen (wrap in <a> to have style consistency -->
@@ -168,8 +169,6 @@
                 
             </div>
         </div>
-        
-
         
     </div>
     <div class="d-none d-md-block col-md-2 bd-toc show">
@@ -199,7 +198,7 @@
     </div>
 </div>
     <div id="main-content" class="row">
-        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
         
               <div>
                 
@@ -298,7 +297,11 @@
 </div>
 </div>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">()</span></code>内の最初の変数は縦軸の変数，次はデータの指定</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">()</span></code>内の最初の変数は縦軸の変数，次はデータの指定</p>
+<ul>
+<li><p>下で説明するが最初の変数は横軸の変数が入ることになるが，この例では省略されているため，デフォルトとして行のインデックスが使われている。</p></li>
+</ul>
+</li>
 <li><p>デフォルトは線グラフ</p></li>
 <li><p>行の最後に<code class="docutils literal notranslate"><span class="pre">;</span></code>があることに注意。これは「以降の出力をストップ」といいう意味である。</p>
 <ul>
@@ -311,13 +314,14 @@
 <span class="k">pass</span>
 </pre></div>
 </div>
-<p>もしくは</p>
+<p>としても同じ結果となる。<code class="docutils literal notranslate"><span class="pre">pass</span></code>は文字通り「それ以降の出力をパスする」という意味。もしくは</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>としても同じ結果となる。<code class="docutils literal notranslate"><span class="pre">pass</span></code>は文字通り「パスする」のパスであり。<code class="docutils literal notranslate"><span class="pre">_</span></code>を単独で使う場合，必要でない値を代入する変数によく使われる記号である。</p>
+<p>でもOK。ここでは，それ以降の出力を<code class="docutils literal notranslate"><span class="pre">_</span></code>に割り当てている。<code class="docutils literal notranslate"><span class="pre">_</span></code>を単独で使う場合，必要でない値を代入する変数によく使われる記号である。</p>
+<hr class="docutils" />
 <p>上の図の不満な点は，横軸が不明なこと（単に<code class="docutils literal notranslate"><span class="pre">gdp</span></code>のデータ数に従って1,2,..と番号が振られている）。</p>
-<div class="alert alert-info">
+<div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>上のコードでは横軸の変数が指定されておらず，デフォルトでは行インデックスが使われことになる。従って，</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)</span>
@@ -340,7 +344,7 @@
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">()</span></code>内の最初の変数は横軸の変数，２番目の変数は縦軸の変数，３番目はデータの指定</p></li>
 </ul>
-<p>３番目のデータ指定は「このデータの中にある<code class="docutils literal notranslate"><span class="pre">year</span></code>と<code class="docutils literal notranslate"><span class="pre">gdp</span></code>を使う」ということを意味しており，データ指定がなければ<code class="docutils literal notranslate"><span class="pre">Python</span></code>はどの<code class="docutils literal notranslate"><span class="pre">year</span></code>と<code class="docutils literal notranslate"><span class="pre">gdp</span></code>か分からずにエラーとなる。一方で，データ指定をせずに，直接横軸・縦軸の変数を指定することも可能である。以下がその例：</p>
+<p>３番目のデータ指定は「このデータの中にある<code class="docutils literal notranslate"><span class="pre">year</span></code>と<code class="docutils literal notranslate"><span class="pre">gdp</span></code>を使う」ことを意味しており，データ指定がなければ<code class="docutils literal notranslate"><span class="pre">Python</span></code>はどの<code class="docutils literal notranslate"><span class="pre">year</span></code>と<code class="docutils literal notranslate"><span class="pre">gdp</span></code>か分からずにエラーとなる。一方で，データ指定をせずに，直接横軸・縦軸の変数を指定することも可能である。以下がその例：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">]);</span>
@@ -361,7 +365,7 @@
          <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>             <span class="c1"># データの指定</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)</span>            <span class="c1"># 横軸のラベル</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;GDP&#39;</span><span class="p">)</span>             <span class="c1"># 縦軸のラベル</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gross Domestic Product&#39;</span><span class="p">)</span>  <span class="c1"># 図のタイトル</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gross Domestic Product&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>  <span class="c1"># 図のタイトル   size=は省略可能</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>                    <span class="c1"># グリッドの表示</span>
 </pre></div>
 </div>
@@ -467,7 +471,7 @@
 </pre></div>
 </div>
 <p><strong>複数の図</strong></p>
-<p>単に<code class="docutils literal notranslate"><span class="pre">plt.plot()</span></code>を付け加えるだけ。</p>
+<p>単に<code class="docutils literal notranslate"><span class="pre">plt.plot()</span></code>を並べるだけである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
@@ -484,7 +488,7 @@
 <p><strong>散布図の描画</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="s1">&#39;con&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="s1">&#39;con&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>  <span class="c1"># 横軸の変数　　縦軸の変数</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;GDP&#39;</span><span class="p">)</span>  <span class="c1">#　横軸のラベル （省略可）</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Consumption&#39;</span><span class="p">);</span>  <span class="c1"># 縦軸のラベル（省略可）</span>
 </pre></div>
@@ -565,6 +569,7 @@
 <p><code class="docutils literal notranslate"><span class="pre">subplot(2,2,2)</span></code>: 右上の位置を指定</p>
 <p><code class="docutils literal notranslate"><span class="pre">subplot(2,2,3)</span></code>: 左下の位置を指定</p>
 <p><code class="docutils literal notranslate"><span class="pre">subplot(2,2,4)</span></code>: 右下の位置を指定</p>
+<p>次の例では線形関数と２次関数を描くが，まず横軸の変数<code class="docutils literal notranslate"><span class="pre">x</span></code>のデータを作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
@@ -572,6 +577,7 @@
 </div>
 </div>
 </div>
+<p>図の作成</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>  <span class="c1"># 図の大きさを設定（省略可）</span>
@@ -600,7 +606,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4_Matplotlib_34_0.png" src="_images/4_Matplotlib_34_0.png" />
+<img alt="_images/4_Matplotlib_36_0.png" src="_images/4_Matplotlib_36_0.png" />
 </div>
 </div>
 </div>
@@ -620,7 +626,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4_Matplotlib_37_0.png" src="_images/4_Matplotlib_37_0.png" />
+<img alt="_images/4_Matplotlib_39_0.png" src="_images/4_Matplotlib_39_0.png" />
 </div>
 </div>
 <p>保存できる画像ファイルの種類には以下がある。</p>
@@ -632,7 +638,7 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;./temp/&lt;ファイル名.png&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>とする。ここで<code class="docutils literal notranslate"><span class="pre">.</span></code>が開いている<code class="docutils literal notranslate"><span class="pre">Jupyter</span> <span class="pre">Notebook</span></code>のファイルがあるフォルダーを表している。</p>
+<p>とする。ここで<code class="docutils literal notranslate"><span class="pre">.</span></code>は開いている<code class="docutils literal notranslate"><span class="pre">Jupyter</span> <span class="pre">Notebook</span></code>のファイルがあるフォルダーを表しており，セル内で<code class="docutils literal notranslate"><span class="pre">pwd</span></code>を実行すると表示される。</p>
 </div>
 </div>
 
@@ -650,13 +656,15 @@
 
     </div>
     <footer class="footer mt-5 mt-md-0">
-  <div class="container">
-    <p>
-          &copy; Copyright 2020 Tetsugen Haruyama.<br/>
-        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.<br/>
-    </p>
-  </div>
-</footer>
+    <div class="container">
+      <p>
+        
+          By 春山 鉄源<br/>
+        
+            &copy; Copyright 2020 Tetsugen Haruyama.<br/>
+      </p>
+    </div>
+  </footer>
 </main>
 
 

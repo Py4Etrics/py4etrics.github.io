@@ -1,6 +1,6 @@
 # SciPy.stats
 
-SciPy（サイパイ）は，NumPyの拡張版と理解して良い。SciPyを読み込むとNumPyの関数などを利用できるようになる。しかしSciPyは大きなパッケージであり，全てを読み込む必要もない。従って，NumPyを読み込んで，SciPyのサブパッケージや関数を読み込むということで十分であろう。ここではSciPyのstatsというサブパッケージについて説明する。
+`SciPy`（サイパイ）は，NumPyの大幅な拡張版と理解して良い。`SciPy`を読み込むとNumPyの関数などを利用できるようになる。しかし`SciPy`は大きなパッケージであり，全てを読み込む必要もない。従って，`NumPy`を読み込んで，`SciPy`のサブパッケージや関数を読み込むということで十分であろう。ここでは`SciPy`の`stats`というサブパッケージについて説明する。
 
 ## 正規分布（Normal Distribution）
 
@@ -37,7 +37,7 @@ SciPy（サイパイ）は，NumPyの拡張版と理解して良い。SciPyを�
     * `rvs`はRandom VariableSの大文字の部分
     * `loc` = 平均
     * `scale` = 標準偏差
-    * `size` = サンプル数
+    * `size` = 生成されるランダム変数の数
     * 返り値：正規分布に従って発生したランダム変数
     * `loc`と`scale`を省略すると標準正規分布のランダム変数生成関数となる。
 
@@ -52,15 +52,17 @@ import matplotlib.pyplot as plt
 
 norm.pdf(0)
 
-`0`が発生する確率は約`39.9%`とわかるが，返り値は１つだけである。`norm.pdf(x)`のグラフを描くためには，$\infty$から$\infty$の`x`の返り値が必要になるが，ここでは`-4`から`4`の区間で100個の`x`の値で近似する。
+`0`が発生する確率は約`39.9%`とわかる。`norm.pdf(x)`のグラフを描くためには，$\infty$から$\infty$の`x`の返り値が必要になるが，ここでは`-4`から`4`の区間で100個の`x`の値で近似する。
 
 x = np.linspace(-4, 4, 100)
 
-この`x`を直接`norm.pdf()`に代入すると，全ての`x`の値に対しての返り値を得ることができる。それを`y_pdf`に代入する。
+この`x`を直接`norm.pdf()`に代入すると，全ての`x`の値に対しての返り値を得ることができる。それを`y_pdf`に割り当てる。
 
 y_pdf = norm.pdf(x)  # 標準正規分布
 
 plt.plot(x,y_pdf)
+plt.xlabel('x')
+plt.ylabel('p')
 plt.title('Standard Normal Distribution')
 pass
 
@@ -70,7 +72,7 @@ y_cdf = norm.cdf(x)  # 標準正規分布
 
 plt.plot(x, y_cdf)
 plt.xlabel('x')
-plt.ylabel('a')
+plt.ylabel('P')
 plt.title('Cumulative Distribution Function')
 pass
 
@@ -78,7 +80,7 @@ pass
 
 norm.cdf(0)
 
-確率密度関数が平均$0$（`loc=0`）を中心に左右対称のため確率は50%。では，`x`が$-4$以下の場合は？
+確率密度関数が平均$0$（`loc=0`）を中心に左右対称のため確率は50%となる。では，`x`が$-4$以下の場合は？
 
 norm.cdf(-4)
 
@@ -92,20 +94,20 @@ a = np.linspace(0,1,100)
 y_ppf = norm.ppf(a)  # 標準正規分布
 
 plt.plot(a,y_ppf)
-plt.xlabel('q')
+plt.xlabel('P')
 plt.ylabel('x')
 plt.title('Percent Point Function')
 pass
 
-パーセント・ポイント関数を使い，累積分布関数の値が`a`である場合の`x`の値を計算できる。`a=0.5`の場合の`x`は？
+パーセント・ポイント関数を使い，累積分布関数の値が`P`である場合の`x`の値を計算できる。`P=0.5`の場合の`x`は？
 
 norm.ppf(0.5)
 
-`a=0.025`の場合の`x`は？
+`P=0.025`の場合の`x`は？
 
 norm.ppf(0.025)
 
-`a=0.975`の場合の`x`は？
+`P=0.975`の場合の`x`は？
 
 norm.ppf(0.975)
 
@@ -118,7 +120,7 @@ y_rvs = norm.rvs(size=10000)  # 標準正規分布
 plt.hist(y_rvs, bins=30)  #  bins=表示する棒の数（デフォルトは10)
 pass
 
-`y_rvs`がどの分布関数から生成された不明だとし，`y_rvs`から元の確率密度関数を推定したいとしよう。それをカーネル密度推定と呼ぶ。`SciPy`にはそのための関数`gaussian_kde`が用意されている。`gaussian`（ガウシアン）とは天才数学者ガウスの名前からきており「ガウス的な」と理解すれば良い。`kde`はKernel Density Estimate（カーネル密度推定）の頭文字をとっている。
+`y_rvs`は標準正規分布から生成されたが，`y_rvs`がどの分布関数から生成されたか不明だったとしよう。更に，`y_rvs`から元の確率密度関数を推定したいとしよう。その際に使う手法をカーネル密度推定と呼ぶ。`SciPy`にはそのための関数`gaussian_kde`が用意されている。`gaussian`（ガウシアン）とは天才数学者ガウスの名前からきており「ガウス的な」と理解すれば良い。`kde`はKernel Density Estimate（カーネル密度推定）の頭文字をとっている。
 
 from scipy.stats import gaussian_kde  # サブパッケージを読み込む
 kde = gaussian_kde(y_rvs)  # y_rvsから確率密度関数を推定
@@ -191,10 +193,10 @@ chi2.cdf(1, df=3)
 
 $F$分布のモジュール名は`f`。
 ```
-t.pdf(x, dfn, dfd)
-t.cdf(x, dfn, dfd)
-t.ppf(a, dfn, dfd)
-t.rvs(dfn, dfd, size=1)
+f.pdf(x, dfn, dfd)
+f.cdf(x, dfn, dfd)
+f.ppf(a, dfn, dfd)
+f.rvs(dfn, dfd, size=1)
 ```
 * `dfn`：分子の自由度（numerator degree of freedom）
 * `dfd`：分母自由度（denominator degree of freedom）
@@ -261,4 +263,3 @@ x = np.linspace(-5,5,100)
 y = logistic.pdf(x)
 plt.plot(x,y)
 pass
-

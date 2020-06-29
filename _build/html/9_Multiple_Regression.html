@@ -25,8 +25,9 @@
     <script src="_static/copybutton.js"></script>
     <script src="_static/mystnb.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="canonical" href="https://py4etrics.github.io/9_Multiple_Regression.html" />
     <link rel="index" title="Index" href="genindex.html" />
@@ -34,15 +35,8 @@
     <link rel="next" title="残差診断" href="10_Residuals.html" />
     <link rel="prev" title="単回帰分析" href="8_Simple_Regression.html" />
 
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<!-- Put requirejs at the end so it's always after bootstrap -->
-<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
 
 
 <!-- Opengraph tags -->
@@ -62,9 +56,9 @@
     <div class="container-xl">
       <div class="row">
           
-
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    <div class="navbar-brand-box">
+    
+        <div class="navbar-brand-box">
 <a class="navbar-brand text-wrap" href="index.html">
   
   
@@ -139,7 +133,13 @@
   </li>
 </ul>
 </nav>
-<p class="navbar_footer"><a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a></p>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  <a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>
+</div>
+
 </div>
 
 
@@ -159,6 +159,7 @@
             <i class="fas fa-arrow-left"></i>
             <i class="fas fa-arrow-up"></i>
         </button>
+        
         <div class="dropdown-buttons-trigger">
             <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
 
@@ -167,14 +168,14 @@
                 <!-- ipynb file if we had a myst markdown file -->
                 
                 <!-- Download raw file -->
-                <a class="dropdown-buttons" href="_sources/9_Multiple_Regression.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <a class="dropdown-buttons" href="_sources/9_Multiple_Regression.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
                 <!-- Download PDF via print -->
                 <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
             </div>
             
         </div>
 
-        <!-- Edit this page -->
+        <!-- Source interaction buttons -->
         
 
         <!-- Full screen (wrap in <a> to have style consistency -->
@@ -192,8 +193,6 @@
                 
             </div>
         </div>
-        
-
         
     </div>
     <div class="d-none d-md-block col-md-2 bd-toc show">
@@ -305,7 +304,7 @@
     </div>
 </div>
     <div id="main-content" class="row">
-        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
         
               <div>
                 
@@ -826,7 +825,9 @@ dtype: float64
 <div class="math notranslate nohighlight">
 \[\text{E}\left(u|X\right)=0,\qquad X=\{x_1,x_2,...x_k\}\]</div>
 <ul class="simple">
-<li><p>説明変数の値は誤差項の平均に影響を与えないことを意味しており，<span class="math notranslate nohighlight">\(X\)</span>は<span class="math notranslate nohighlight">\(u\)</span>に対して何の情報も影響力も全くないということである。即ち，<span class="math notranslate nohighlight">\(X\)</span>がどのような値を取ったとしても，<span class="math notranslate nohighlight">\(u\)</span>の平均は0だということである。ではなぜ<span class="math notranslate nohighlight">\(|X\)</span>を付け加えるのか。実は，<span class="math notranslate nohighlight">\(\text{E}\left(u|X\right)=0\)</span>は<span class="math notranslate nohighlight">\(\text{E}(u)=0\)</span>を意味する。しかし後者は前者を意味しない。<span class="math notranslate nohighlight">\(\text{E}(u)=0\)</span>は単純に平均がゼロであることを示しているだけで，<span class="math notranslate nohighlight">\(X\)</span>と<span class="math notranslate nohighlight">\(u\)</span>の関係について何も語っていないためである。<span class="math notranslate nohighlight">\(X\)</span>と<span class="math notranslate nohighlight">\(u\)</span>が線形・非線形な関係が無いことを明確にするために<span class="math notranslate nohighlight">\(|X\)</span>を付け加えている。</p></li>
+<li><p><span class="math notranslate nohighlight">\(X\)</span>はランダム変数であるが，<span class="math notranslate nohighlight">\(X\)</span>を所与とすると<span class="math notranslate nohighlight">\(u\)</span>の平均はゼロになるという仮定である。即ち，ランダム変数である<span class="math notranslate nohighlight">\(X\)</span>がどのような値を取ったとしても，<span class="math notranslate nohighlight">\(u\)</span>の平均は0だということである。<span class="math notranslate nohighlight">\(X\)</span>は<span class="math notranslate nohighlight">\(u\)</span>に対して何の情報も影響力も全くないので，<span class="math notranslate nohighlight">\(X\)</span>と<span class="math notranslate nohighlight">\(u\)</span>が線形・非線形な関係が無いことを意味する。</p></li>
+<li><p><span class="math notranslate nohighlight">\(X\)</span>はランダム変数であるため，<span class="math notranslate nohighlight">\(X\)</span>が変化する場合の<span class="math notranslate nohighlight">\(\text{E}\left(u|X\right)\)</span>の平均を考えることができる。即ち，<span class="math notranslate nohighlight">\(\text{E}\left[\text{E}\left(u|X\right)\right]=0\)</span>である。最初の<span class="math notranslate nohighlight">\(E\)</span>は<span class="math notranslate nohighlight">\(X\)</span>に対する期待値演算子であり，<span class="math notranslate nohighlight">\(E\)</span>が入れ子になっているのでiterated expectationsと呼ばれる。<span class="math notranslate nohighlight">\(X\)</span>がどのような値を取ったとしても仮定４のもとでは<span class="math notranslate nohighlight">\(0\)</span>になるので等号が成立することになる。更に，<span class="math notranslate nohighlight">\(X\)</span>に対しての期待値が付け加えられているので，<span class="math notranslate nohighlight">\(X\)</span>を省いて<span class="math notranslate nohighlight">\(\text{E}\left[\text{E}\left(u|X\right)\right]=\text{E}(u)=0\)</span>となる。<span class="math notranslate nohighlight">\(X\)</span>の条件をつけなくとも<span class="math notranslate nohighlight">\(u\)</span>の平均はゼロになることを示している。</p></li>
+<li><p><span class="math notranslate nohighlight">\(X\)</span>と<span class="math notranslate nohighlight">\(u\)</span>には線形の依存関係がないので<span class="math notranslate nohighlight">\(\text{Cov}(Xu)=0\)</span>が成立する。<span class="math notranslate nohighlight">\(\text{Cov}(Xu)=0\)</span>は非線型の依存関係を除外していないことに注意しよう。</p></li>
 <li><p><span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>を所与として(式３)の期待値を計算すると次式を得る。</p></li>
 </ul>
 <div class="math notranslate nohighlight">
@@ -1063,7 +1064,7 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([0.77104497, 2.08915578, 2.9740406 ])
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([0.64906008, 1.99845625, 3.02926024])
 </pre></div>
 </div>
 </div>
@@ -1084,9 +1085,9 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.771045
-X1           2.089156
-X2           2.974041
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.649060
+X1           1.998456
+X2           3.029260
 dtype: float64
 </pre></div>
 </div>
@@ -1169,9 +1170,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>b0: 0.9945395242424729 
-b1: 2.0003989487272364 
-b1: 3.000591944045812
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>b0: 0.997521164206555 
+b1: 2.000542664617407 
+b1: 3.0002260177534725
 </pre></div>
 </div>
 </div>
@@ -1459,7 +1460,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.03909706689901203, 0.1973884880767304)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.039335631254585966, 0.2011889245107919)
 </pre></div>
 </div>
 </div>
@@ -1543,7 +1544,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.19316364129289604, 0.4379958312803293)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.1934763806415715, 0.4442765696454881)
 </pre></div>
 </div>
 </div>
@@ -1755,13 +1756,15 @@ exper 	 1.4776177726317783
 
     </div>
     <footer class="footer mt-5 mt-md-0">
-  <div class="container">
-    <p>
-          &copy; Copyright 2020 Tetsugen Haruyama.<br/>
-        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.<br/>
-    </p>
-  </div>
-</footer>
+    <div class="container">
+      <p>
+        
+          By 春山 鉄源<br/>
+        
+            &copy; Copyright 2020 Tetsugen Haruyama.<br/>
+      </p>
+    </div>
+  </footer>
 </main>
 
 

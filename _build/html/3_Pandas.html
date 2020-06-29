@@ -25,8 +25,9 @@
     <script src="_static/copybutton.js"></script>
     <script src="_static/mystnb.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="canonical" href="https://py4etrics.github.io/3_Pandas.html" />
     <link rel="index" title="Index" href="genindex.html" />
@@ -34,15 +35,8 @@
     <link rel="next" title="Matplotlib" href="4_Matplotlib.html" />
     <link rel="prev" title="NumPy" href="2_NumPy.html" />
 
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<!-- Put requirejs at the end so it's always after bootstrap -->
-<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
 
 
 <!-- Opengraph tags -->
@@ -62,9 +56,9 @@
     <div class="container-xl">
       <div class="row">
           
-
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    <div class="navbar-brand-box">
+    
+        <div class="navbar-brand-box">
 <a class="navbar-brand text-wrap" href="index.html">
   
   
@@ -115,7 +109,13 @@
   </li>
 </ul>
 </nav>
-<p class="navbar_footer"><a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a></p>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  <a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>
+</div>
+
 </div>
 
 
@@ -135,6 +135,7 @@
             <i class="fas fa-arrow-left"></i>
             <i class="fas fa-arrow-up"></i>
         </button>
+        
         <div class="dropdown-buttons-trigger">
             <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
 
@@ -143,14 +144,14 @@
                 <!-- ipynb file if we had a myst markdown file -->
                 
                 <!-- Download raw file -->
-                <a class="dropdown-buttons" href="_sources/3_Pandas.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <a class="dropdown-buttons" href="_sources/3_Pandas.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
                 <!-- Download PDF via print -->
                 <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
             </div>
             
         </div>
 
-        <!-- Edit this page -->
+        <!-- Source interaction buttons -->
         
 
         <!-- Full screen (wrap in <a> to have style consistency -->
@@ -168,8 +169,6 @@
                 
             </div>
         </div>
-        
-
         
     </div>
     <div class="d-none d-md-block col-md-2 bd-toc show">
@@ -385,7 +384,7 @@
     </div>
 </div>
     <div id="main-content" class="row">
-        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
         
               <div>
                 
@@ -691,12 +690,12 @@
 </table>
 </div></div></div>
 </div>
-<div class="alert alert-primary">
+<div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">df.set_index('year')</span></code>は直接<code class="docutils literal notranslate"><span class="pre">df</span></code>に影響を与えない。単に，書き換えるとどうなるかを表示している。ここでは<code class="docutils literal notranslate"><span class="pre">df</span></code>に再度割り当てることにより<code class="docutils literal notranslate"><span class="pre">df</span></code>自体を上書きしている。</p></li>
 <li><p>出力にある<code class="docutils literal notranslate"><span class="pre">NaN</span></code>（Not a Number）は欠損値を示す。</p></li>
-<li><p>行ラベルに<code class="docutils literal notranslate"><span class="pre">year</span></code>という列名が残るが，それを消すにはメソッド<code class="docutils literal notranslate"><span class="pre">.rename_axis('')</span></code>を使う。ここで<code class="docutils literal notranslate"><span class="pre">''</span></code>は空の文字列である。</p></li>
+<li><p>行ラベルに<code class="docutils literal notranslate"><span class="pre">year</span></code>という列名が残るが，それを消すにはメソッド<code class="docutils literal notranslate"><span class="pre">.rename_axis('')</span></code>を使う。ここで<code class="docutils literal notranslate"><span class="pre">''</span></code>は空の文字列である。<code class="docutils literal notranslate"><span class="pre">.rename_axis(None)</span></code>でも同じ結果となる。</p></li>
 </ul>
 </div>
 <p>行数が大きい場合（例えば，10000），全てを表示してもあまり意味がない。そこでよく使うメソッドに最初や最後の数行だけを表示すものがある。</p>
@@ -1318,10 +1317,10 @@ memory usage: 528.0+ bytes
 </ul>
 <p>「特例」として<code class="docutils literal notranslate"><span class="pre">.loc[,]</span></code>と<code class="docutils literal notranslate"><span class="pre">.iloc[,]</span></code>以外に</p>
 <ul class="simple">
-<li><p>ラベルと<code class="docutils literal notranslate"><span class="pre">[]</span></code>だけを使い列を選択する方法</p></li>
+<li><p>ラベルと<code class="docutils literal notranslate"><span class="pre">[]</span></code>だけを使い<strong>列</strong>を選択する方法</p></li>
 </ul>
 <p>も説明する。</p>
-<div class="alert alert-warning">
+<div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">.loc[,]</span></code>の場合，<code class="docutils literal notranslate"><span class="pre">end</span></code>を含む。（要注意！）</p></li>
@@ -2533,7 +2532,7 @@ Name: gdp, dtype: bool
 <li><p><code class="docutils literal notranslate"><span class="pre">df.loc[cond,'inv']</span></code></p></li>
 </ul>
 <p>とする。</p>
-<div class="alert alert-warning">
+<div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>以下のように抽出を連続ですることも可能だが，避けるように！</p>
 <ul class="simple">
@@ -3267,7 +3266,7 @@ Name: gdp, dtype: bool
 </table>
 </div></div></div>
 </div>
-<div class="alert alert-primary">
+<div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p><code class="docutils literal notranslate"><span class="pre">df</span></code>にない変数で条件を設定する場合<code class="docutils literal notranslate"><span class="pre">&#64;</span></code>が必要になる。例えば，変数<code class="docutils literal notranslate"><span class="pre">z</span></code>という変数があるとしよう。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="mi">100</span>
@@ -3338,7 +3337,7 @@ Name: gdp, dtype: bool
 <h2>列と行の追加と削除<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id16">
 <h3>列の追加 <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">]</span></code><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">[]</span></code>に列ラベルを使って列を抽出することができるが，この授業では混乱を避けるために<code class="docutils literal notranslate"><span class="pre">.loc[]</span></code>のみを扱う。一方で，<code class="docutils literal notranslate"><span class="pre">[]</span></code>は列の追加にも使えるので，ここではその使い方を説明する。まず，全ての行が<code class="docutils literal notranslate"><span class="pre">1.0</span></code>となる列を作成するとしよう。その場合，以下のようにする。</p>
+<p><code class="docutils literal notranslate"><span class="pre">[]</span></code>に列ラベルを使って列を抽出することができるが，<code class="docutils literal notranslate"><span class="pre">[]</span></code>は列の追加にも使えるので，ここではその使い方を説明する。まず，全ての行が<code class="docutils literal notranslate"><span class="pre">1.0</span></code>となる列を作成するとしよう。その場合，以下のようにする。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Intercept&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
@@ -6050,7 +6049,7 @@ dtype: int64
 <p>最後の行を最初に移動する。</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">.columns.tolist()</span></code>：コラムのラベルを取得し，それをリストに変換</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">[col[-1]]+col[0:-2]</span></code>の分解</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">[col[-1]]+col[0:-2]</span></code>の分解と結合</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">[col[-1]]</span></code>：<code class="docutils literal notranslate"><span class="pre">col</span></code>の最後の要素を抽出するが，文字列として返されるので（外側の）<code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">]</span></code>を使ってリストに変換</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">col[0:-2]</span></code>：<code class="docutils literal notranslate"><span class="pre">col</span></code>の最初から最後から二番目の要素をリストとして取得</p></li>
@@ -6167,13 +6166,15 @@ dtype: int64
 
     </div>
     <footer class="footer mt-5 mt-md-0">
-  <div class="container">
-    <p>
-          &copy; Copyright 2020 Tetsugen Haruyama.<br/>
-        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.<br/>
-    </p>
-  </div>
-</footer>
+    <div class="container">
+      <p>
+        
+          By 春山 鉄源<br/>
+        
+            &copy; Copyright 2020 Tetsugen Haruyama.<br/>
+      </p>
+    </div>
+  </footer>
 </main>
 
 
