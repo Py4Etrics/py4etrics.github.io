@@ -130,46 +130,60 @@
     </div>
     <div class="col pl-2 topbar-main">
         
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
             <i class="fas fa-bars"></i>
             <i class="fas fa-arrow-left"></i>
             <i class="fas fa-arrow-up"></i>
         </button>
         
         <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
 
-            
-            <div class="dropdown-buttons">
-                <!-- ipynb file if we had a myst markdown file -->
-                
-                <!-- Download raw file -->
-                <a class="dropdown-buttons" href="_sources/3_Pandas.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
-                <!-- Download PDF via print -->
-                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-            </div>
-            
-        </div>
-
-        <!-- Source interaction buttons -->
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
         
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/3_Pandas.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
 
         <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
 
         <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
         
-        <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-            <div class="dropdown-buttons">
-                
-                <a class="binder-button" href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/3_Pandas.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
-                
-                
-                
-            </div>
-        </div>
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/3_Pandas.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
         
+        
+        
+        
+    </div>
+</div>
+
     </div>
     <div class="d-none d-md-block col-md-2 bd-toc show">
 <div class="tocsection onthispage pt-5 pb-3">
@@ -695,7 +709,7 @@
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">df.set_index('year')</span></code>は直接<code class="docutils literal notranslate"><span class="pre">df</span></code>に影響を与えない。単に，書き換えるとどうなるかを表示している。ここでは<code class="docutils literal notranslate"><span class="pre">df</span></code>に再度割り当てることにより<code class="docutils literal notranslate"><span class="pre">df</span></code>自体を上書きしている。</p></li>
 <li><p>出力にある<code class="docutils literal notranslate"><span class="pre">NaN</span></code>（Not a Number）は欠損値を示す。</p></li>
-<li><p>行ラベルに<code class="docutils literal notranslate"><span class="pre">year</span></code>という列名が残るが，それを消すにはメソッド<code class="docutils literal notranslate"><span class="pre">.rename_axis('')</span></code>を使う。ここで<code class="docutils literal notranslate"><span class="pre">''</span></code>は空の文字列である。</p></li>
+<li><p>行ラベルに<code class="docutils literal notranslate"><span class="pre">year</span></code>という列名が残るが，それを消すにはメソッド<code class="docutils literal notranslate"><span class="pre">.rename_axis('')</span></code>を使う。ここで<code class="docutils literal notranslate"><span class="pre">''</span></code>は空の文字列である。<code class="docutils literal notranslate"><span class="pre">.rename_axis(None)</span></code>でも同じ結果となる。</p></li>
 </ul>
 </div>
 <p>行数が大きい場合（例えば，10000），全てを表示してもあまり意味がない。そこでよく使うメソッドに最初や最後の数行だけを表示すものがある。</p>
@@ -1317,7 +1331,7 @@ memory usage: 528.0+ bytes
 </ul>
 <p>「特例」として<code class="docutils literal notranslate"><span class="pre">.loc[,]</span></code>と<code class="docutils literal notranslate"><span class="pre">.iloc[,]</span></code>以外に</p>
 <ul class="simple">
-<li><p>ラベルと<code class="docutils literal notranslate"><span class="pre">[]</span></code>だけを使い列を選択する方法</p></li>
+<li><p>ラベルと<code class="docutils literal notranslate"><span class="pre">[]</span></code>だけを使い<strong>列</strong>を選択する方法</p></li>
 </ul>
 <p>も説明する。</p>
 <div class="admonition warning">
@@ -3337,7 +3351,7 @@ Name: gdp, dtype: bool
 <h2>列と行の追加と削除<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id16">
 <h3>列の追加 <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">]</span></code><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">[]</span></code>に列ラベルを使って列を抽出することができるが，この授業では混乱を避けるために<code class="docutils literal notranslate"><span class="pre">.loc[]</span></code>のみを扱う。一方で，<code class="docutils literal notranslate"><span class="pre">[]</span></code>は列の追加にも使えるので，ここではその使い方を説明する。まず，全ての行が<code class="docutils literal notranslate"><span class="pre">1.0</span></code>となる列を作成するとしよう。その場合，以下のようにする。</p>
+<p><code class="docutils literal notranslate"><span class="pre">[]</span></code>に列ラベルを使って列を抽出することができるが，<code class="docutils literal notranslate"><span class="pre">[]</span></code>は列の追加にも使えるので，ここではその使い方を説明する。まず，全ての行が<code class="docutils literal notranslate"><span class="pre">1.0</span></code>となる列を作成するとしよう。その場合，以下のようにする。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Intercept&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
@@ -6049,7 +6063,7 @@ dtype: int64
 <p>最後の行を最初に移動する。</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">.columns.tolist()</span></code>：コラムのラベルを取得し，それをリストに変換</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">[col[-1]]+col[0:-2]</span></code>の分解</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">[col[-1]]+col[0:-2]</span></code>の分解と結合</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">[col[-1]]</span></code>：<code class="docutils literal notranslate"><span class="pre">col</span></code>の最後の要素を抽出するが，文字列として返されるので（外側の）<code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">]</span></code>を使ってリストに変換</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">col[0:-2]</span></code>：<code class="docutils literal notranslate"><span class="pre">col</span></code>の最初から最後から二番目の要素をリストとして取得</p></li>
