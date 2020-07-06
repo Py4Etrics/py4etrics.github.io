@@ -5,8 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from see import *
 import pandas as pd
-from statsmodels.formula.api import logit, probit
-from statsmodels.formula.api import ols
+from statsmodels.formula.api import ols, logit, probit
 import wooldridge
 from py4etrics.hetero_test import *
 
@@ -83,7 +82,9 @@ pass
 
 ---
 （コメント）
-* 被説明変数（$y$）のデータ：$(0,1)$
+* (式１)に使うデータ
+    * 左辺の被説明変数：$y=\{0,1\}$
+    * 右辺の説明変数：$x$は通常の変数
 * (式１)を最尤法（Maximum Likelihood Estimate; MLE）を使って非線形推定
     * 推定には`statsmodels`を使う。
     * (式１)の推計に基づく予測値 ＝ $x$を所与とする労働市場に参加する確率
@@ -104,14 +105,14 @@ pass
     * 欠落変数（右辺にある説明変数と相関しなくてもバイアスが発生する）
 
 ＜＜不均一分散が疑われる場合の問題＞＞
-* OLS推定
+* OLS推定（復習であり，ここでは使わない）
     * 推定量は不偏性・一致性を満たす
     * 標準誤差は一致性を失う
-        * 不均一分散頑健標準誤差を使うことにより，有効な検定を行うことが可能
+        * 不均一分散頑健標準誤差を使うことにより，有効な検定を行うことが可能（即ち，推定量は一致性を満たしているので，標準誤差を修正することにより有効な検定となる）
 * ML推定
-    * 推定量は一致性を満たさない
+    * 推定量は**一致性を満たさない**
     * 標準誤差も一致性を満たさない
-        * 不均一分散頑健標準誤差を使うことが推奨されることがあるが（研究論文でもそうする研究者も多い），もともと係数の推定量が一致性を満たさないため，不均一分散頑健標準誤差の有用性に疑問が残る！（[参照](https://davegiles.blogspot.com/2013/05/robust-standard-errors-for-nonlinear.html)）**このことは次章の制限従属変数モデルに当てはまるので注意すること。**
+        * 不均一分散頑健標準誤差を使うことが推奨されることがあるが（研究論文でもそうする研究者も多い）。しかし，係数の推定量は一致性を満たさないままなので，標準誤差だけを修正してもどこまで意味があるのか疑問である。即ち，この場合の不均一分散頑健標準誤差の有用性に疑問が残る（[参照](https://davegiles.blogspot.com/2013/05/robust-standard-errors-for-nonlinear.html)）。**このことは次章の制限従属変数モデルに当てはまるので注意すること。**
 * 不均一分散に関しての対処方法
     * 均一分散の下での標準誤差と不均一分散頑健標準誤差に大きな差がなければ，不均一分散の問題は「大きくない」と考える。ただし目安。
     * 不均一分散の検定をおこなう。
@@ -128,7 +129,7 @@ wooldridge.data('mroz', description=True)
 * 被説明変数
     * `inlf`：1975年に労働市場に参加した場合１，しない場合は０
 * 説明変数
-    * `nwifeinc`：(faminc - wage*hours)/1000
+    * `nwifeinc`：(`faminc` - `wage`*`hours`)/1000
         * `faminc`：1975年の世帯所得
         * `wage`：賃金
         * `hours`：就業時間
@@ -182,7 +183,7 @@ l1=logit(formula, data=mroz).fit(cov_type='HC1',disp=False).bse
 
 大きく違っているようにもみえない。
 
-次に方法２である検定をおこなう。まず`haru-py`パッケージにある`hetero_test`モジュールを読み込み，その中に`het_test_logit()`という関数をつかう。引数に推定結果のインスタンスを指定することにより，不均一分散のWald検定をおこなうことができる。
+次に方法２である検定をおこなう。まず`py4etrics`パッケージにある`hetero_test`モジュールを読み込み，その中に`het_test_logit()`という関数をつかう。引数に推定結果のインスタンスを指定することにより，不均一分散のWald検定をおこなうことができる。
 
 het_test_logit(res_logit)
 
@@ -214,7 +215,7 @@ p1=probit(formula, data=mroz).fit(cov_type='HC1',disp=False).bse
 
 大きく違っているようにはみえない。
 
-次に検定をおこなう。`haru-py`パッケージの`hetero_test`モジュールにある`het_test_probit()`という関数を使う。使い方は`het_test_probit()`とおなじである。
+次に検定をおこなう。`py4etrics`パッケージの`hetero_test`モジュールにある`het_test_probit()`という関数を使う。使い方は`het_test_probit()`とおなじである。
 
 het_test_probit(res_probit)
 
@@ -307,7 +308,7 @@ print(res_logit.summary().tables[0])
 
 ## 尤度比検定
 
-尤度比検定（Likelihood Ratio Test）について説明する。検定量は，次式に従って制限を課さない場合と課さない場合の残差の対数尤度を使って計算する。
+尤度比検定（Likelihood Ratio Test）について説明する。検定量は，次式に従って制限を課す場合と課さない場合の残差の対数尤度を使って計算する。
 
 $$LR=2\left(\cal{L}_{ur}-\cal{L}_{r}\right)$$
 
@@ -396,13 +397,13 @@ print(res_lin.summary())
 ---
 ＜＜注意＞＞
 
-推定結果には属性`fittedvalues`があるが，３つのモデルでは以下が返される。
+* 推定結果には属性`fittedvalues`があるが，３つのモデルでは以下が返される。
 
-$$\hat{\beta}_0+\hat{\beta}_1x$$
+    $$\hat{\beta}_0+\hat{\beta}_1x$$
 
-（解釈）
-* 線形確率モデル：労働参加の確率$P(y=1|x)$の予測値（`predict()`と同じ）
-* Logit・Probitモデル：潜在変数（または効用）$y^*$の予測値
+* 解釈
+    * 線形確率モデル：労働参加の確率$P(y=1|x)$の予測値（`predict()`と同じ）
+    * Logit・Probitモデル：潜在変数（または効用）$y^*$の予測値
 
 ---
 線形確率モデルでは，労働参加の確率は１以上もしくは０以下になり得る。

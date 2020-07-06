@@ -61,7 +61,7 @@ plt.plot(df['year'], df['gdp']);
 
 上の図で何をプロットしているかを分かっている場合はこれで十分だが，論文などに使う場合は不十分である。以下では「飾り付け」をする。
 
-plt.plot('year', 'gdp',        # 横軸の変数，　　縦軸の変数
+plt.plot('year', 'gdp',       # 横軸の変数，　　縦軸の変数
          color='red',         # 色 ：　赤
          linestyle='dashed',  # 線のタイプ：点線
          marker='o',          # マーカー：点
@@ -128,14 +128,16 @@ plt.legend();   # 凡例
 **散布図の描画**
 
 plt.scatter('gdp', 'con', data=df)  # 横軸の変数　　縦軸の変数
-plt.xlabel('GDP')  #　横軸のラベル （省略可）
-plt.ylabel('Consumption');  # 縦軸のラベル（省略可）
+plt.xlabel('GDP')                   #　横軸のラベル （省略可）
+plt.ylabel('Consumption');          # 縦軸のラベル（省略可）
 
 次のコードでも同じ結果となる。
 
-plt.plot('gdp', 'con', marker='o', linestyle='', data=df)
-plt.xlabel('GDP')  #　横軸のラベル （省略可）
-plt.ylabel('Consumption');  # 縦軸のラベル（省略可）
+plt.plot('gdp', 'con', 'o',  data=df)
+plt.xlabel('GDP')
+plt.ylabel('Consumption');
+
+ここで指定した`'o'`は，`marker='o', linestyle=''`の省略形である。例えば，`'o'`の代わりに`'o-'`として表示の変化を確かめてみよう。
 
 **ヒストグラム**
 
@@ -146,11 +148,11 @@ pass
 **パイチャート**
 
 lab = ['Investment', 'Consumption']  # ラベルの作成
-dt = df.loc[1,['inv','con']]  # 2001年のデータを取り出す
-plt.pie(dt,    # データの指定
-        labels=lab,  # ラベルの指定 （省略可だが，ある方がわかりやすい）
-        autopct='%.2f')   # ％表示  （省略可）
-plt.title('GDP Share in 2001')   # タイトル （省略可）
+dt = df.loc[1,['inv','con']]         # 2001年のデータを取り出す
+plt.pie(dt,                          # データの指定
+        labels=lab,                  # ラベルの指定 （省略可だが，ある方がわかりやすい）
+        autopct='%.2f')              # ％表示  （省略可）
+plt.title('GDP Share in 2001')       # タイトル （省略可）
 pass
 
 **ボックスプロット**
@@ -209,6 +211,8 @@ pass
 
 ## 図の保存方法
 
+### 方法１
+
 例として，図を`png`ファイルで保存する場合を考えよう。
 
 ＜開いている`Jupyter Notebook`のファイルと同じフォルダーに保存する場合＞
@@ -236,3 +240,51 @@ plt.savefig('gdp.png')
 plt.savefig('./temp/<ファイル名.png')
 ```
 とする。ここで`.`は開いている`Jupyter Notebook`のファイルがあるフォルダーを表しており，セル内で`pwd`を実行すると表示される。
+
+```{note}
+TerminalもしくはGit Bashで使うコマンド`pwd`をコードセルで使う事ができる。`%pwd`を実行すると`Jupyter Notebook`のカレント・ディレクトリのパスが表示される。`%`が最初にくるコマンドはMagic Commandと呼ばれるものであり，この他`%ls`や以下で説明する`%matplotlib`もある。非常に便利なので[このサイト](https://ipython.readthedocs.io/en/stable/interactive/magics.html)を参照して欲しい。
+```
+
+### 方法２
+
+この章の最初に次の３つのパッケージをインポートした。
+```
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+```
+第二の方法は，`matplotlib`を読み込む前に次のように`%matplotlib notebook`を読み込む。
+```
+%matplotlib notebook
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+```
+
+`%matplotlib notebook`を読み込み図示すると図を保存するアイコンが出てくるのでそれを押してみよう。
+
+````{warning}
+次のようなメッセージが表示される場合は，メニューから＜Kernel＞ → ＜Restart＞を選んで最初から読み直すと良いだろう。
+```
+Warning: Cannot change to a different GUI toolkit
+```
+````
+
+### 方法３
+
+方法２の`%matplotlib notebook`の代わりに`%matplotlib qt`を読み込む。
+```
+%matplotlib qt
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+```
+
+図がポップアップとして表示され図を保存するアイコンが出てくるのでそれを押してみよう。
+
+````{warning}
+次のようなメッセージが表示される場合は，メニューから＜Kernel＞ → ＜Restart＞を選んで最初から読み直すと良いだろう。
+```
+Warning: Cannot change to a different GUI toolkit
+```
+````
