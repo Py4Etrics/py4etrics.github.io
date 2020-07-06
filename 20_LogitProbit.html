@@ -289,8 +289,7 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">logit</span><span class="p">,</span> <span class="n">probit</span>
-<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span><span class="p">,</span> <span class="n">logit</span><span class="p">,</span> <span class="n">probit</span>
 <span class="kn">import</span> <span class="nn">wooldridge</span>
 <span class="kn">from</span> <span class="nn">py4etrics.hetero_test</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
@@ -385,7 +384,12 @@
 <hr class="docutils" />
 <p>（コメント）</p>
 <ul class="simple">
-<li><p>被説明変数（<span class="math notranslate nohighlight">\(y\)</span>）のデータ：<span class="math notranslate nohighlight">\((0,1)\)</span></p></li>
+<li><p>(式１)に使うデータ</p>
+<ul>
+<li><p>左辺の被説明変数：<span class="math notranslate nohighlight">\(y=\{0,1\}\)</span></p></li>
+<li><p>右辺の説明変数：<span class="math notranslate nohighlight">\(x\)</span>は通常の変数</p></li>
+</ul>
+</li>
 <li><p>(式１)を最尤法（Maximum Likelihood Estimate; MLE）を使って非線形推定</p>
 <ul>
 <li><p>推定には<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使う。</p></li>
@@ -420,22 +424,22 @@
 </ul>
 <p>＜＜不均一分散が疑われる場合の問題＞＞</p>
 <ul class="simple">
-<li><p>OLS推定</p>
+<li><p>OLS推定（復習であり，ここでは使わない）</p>
 <ul>
 <li><p>推定量は不偏性・一致性を満たす</p></li>
 <li><p>標準誤差は一致性を失う</p>
 <ul>
-<li><p>不均一分散頑健標準誤差を使うことにより，有効な検定を行うことが可能</p></li>
+<li><p>不均一分散頑健標準誤差を使うことにより，有効な検定を行うことが可能（即ち，推定量は一致性を満たしているので，標準誤差を修正することにより有効な検定となる）</p></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><p>ML推定</p>
 <ul>
-<li><p>推定量は一致性を満たさない</p></li>
+<li><p>推定量は<strong>一致性を満たさない</strong></p></li>
 <li><p>標準誤差も一致性を満たさない</p>
 <ul>
-<li><p>不均一分散頑健標準誤差を使うことが推奨されることがあるが（研究論文でもそうする研究者も多い），もともと係数の推定量が一致性を満たさないため，不均一分散頑健標準誤差の有用性に疑問が残る！（<a class="reference external" href="https://davegiles.blogspot.com/2013/05/robust-standard-errors-for-nonlinear.html">参照</a>）<strong>このことは次章の制限従属変数モデルに当てはまるので注意すること。</strong></p></li>
+<li><p>不均一分散頑健標準誤差を使うことが推奨されることがあるが（研究論文でもそうする研究者も多い）。しかし，係数の推定量は一致性を満たさないままなので，標準誤差だけを修正してもどこまで意味があるのか疑問である。即ち，この場合の不均一分散頑健標準誤差の有用性に疑問が残る（<a class="reference external" href="https://davegiles.blogspot.com/2013/05/robust-standard-errors-for-nonlinear.html">参照</a>）。<strong>このことは次章の制限従属変数モデルに当てはまるので注意すること。</strong></p></li>
 </ul>
 </li>
 </ul>
@@ -508,7 +512,7 @@ provided the data, which he obtained from Professor Mroz.
 </li>
 <li><p>説明変数</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">nwifeinc</span></code>：(faminc - wage*hours)/1000</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">nwifeinc</span></code>：(<code class="docutils literal notranslate"><span class="pre">faminc</span></code> - <code class="docutils literal notranslate"><span class="pre">wage</span></code>*<code class="docutils literal notranslate"><span class="pre">hours</span></code>)/1000</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">faminc</span></code>：1975年の世帯所得</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">wage</span></code>：賃金</p></li>
@@ -563,8 +567,8 @@ provided the data, which he obtained from Professor Mroz.
 Dep. Variable:                   inlf   No. Observations:                  753
 Model:                          Logit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Mon, 29 Jun 2020   Pseudo R-squ.:                  0.2197
-Time:                        11:27:58   Log-Likelihood:                -401.77
+Date:                Mon, 06 Jul 2020   Pseudo R-squ.:                  0.2197
+Time:                        11:56:49   Log-Likelihood:                -401.77
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 3.159e-45
 ==============================================================================
@@ -657,7 +661,7 @@ dtype: float64
 </div>
 </div>
 <p>大きく違っているようにもみえない。</p>
-<p>次に方法２である検定をおこなう。まず<code class="docutils literal notranslate"><span class="pre">haru-py</span></code>パッケージにある<code class="docutils literal notranslate"><span class="pre">hetero_test</span></code>モジュールを読み込み，その中に<code class="docutils literal notranslate"><span class="pre">het_test_logit()</span></code>という関数をつかう。引数に推定結果のインスタンスを指定することにより，不均一分散のWald検定をおこなうことができる。</p>
+<p>次に方法２である検定をおこなう。まず<code class="docutils literal notranslate"><span class="pre">py4etrics</span></code>パッケージにある<code class="docutils literal notranslate"><span class="pre">hetero_test</span></code>モジュールを読み込み，その中に<code class="docutils literal notranslate"><span class="pre">het_test_logit()</span></code>という関数をつかう。引数に推定結果のインスタンスを指定することにより，不均一分散のWald検定をおこなうことができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">het_test_logit</span><span class="p">(</span><span class="n">res_logit</span><span class="p">)</span>
@@ -706,8 +710,8 @@ df freedom:  7.
 Dep. Variable:                   inlf   No. Observations:                  753
 Model:                         Probit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Mon, 29 Jun 2020   Pseudo R-squ.:                  0.2206
-Time:                        11:27:58   Log-Likelihood:                -401.30
+Date:                Mon, 06 Jul 2020   Pseudo R-squ.:                  0.2206
+Time:                        11:56:49   Log-Likelihood:                -401.30
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
 ==============================================================================
@@ -784,7 +788,7 @@ dtype: float64
 </div>
 </div>
 <p>大きく違っているようにはみえない。</p>
-<p>次に検定をおこなう。<code class="docutils literal notranslate"><span class="pre">haru-py</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">hetero_test</span></code>モジュールにある<code class="docutils literal notranslate"><span class="pre">het_test_probit()</span></code>という関数を使う。使い方は<code class="docutils literal notranslate"><span class="pre">het_test_probit()</span></code>とおなじである。</p>
+<p>次に検定をおこなう。<code class="docutils literal notranslate"><span class="pre">py4etrics</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">hetero_test</span></code>モジュールにある<code class="docutils literal notranslate"><span class="pre">het_test_probit()</span></code>という関数を使う。使い方は<code class="docutils literal notranslate"><span class="pre">het_test_probit()</span></code>とおなじである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">het_test_probit</span><span class="p">(</span><span class="n">res_probit</span><span class="p">)</span>
@@ -967,8 +971,8 @@ kidsge6        0.0141      0.017      0.828      0.408      -0.019       0.047
 Dep. Variable:                   inlf   No. Observations:                  753
 Model:                          Logit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Mon, 29 Jun 2020   Pseudo R-squ.:                  0.2197
-Time:                        11:27:59   Log-Likelihood:                -401.77
+Date:                Mon, 06 Jul 2020   Pseudo R-squ.:                  0.2197
+Time:                        11:56:49   Log-Likelihood:                -401.77
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 3.159e-45
 ==============================================================================
@@ -1019,7 +1023,7 @@ Covariance Type:            nonrobust   LLR p-value:                 3.159e-45
 </div>
 <div class="section" id="id7">
 <h2>尤度比検定<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
-<p>尤度比検定（Likelihood Ratio Test）について説明する。検定量は，次式に従って制限を課さない場合と課さない場合の残差の対数尤度を使って計算する。</p>
+<p>尤度比検定（Likelihood Ratio Test）について説明する。検定量は，次式に従って制限を課す場合と課さない場合の残差の対数尤度を使って計算する。</p>
 <div class="math notranslate nohighlight">
 \[LR=2\left(\cal{L}_{ur}-\cal{L}_{r}\right)\]</div>
 <ul class="simple">
@@ -1136,8 +1140,8 @@ G(z) = z
 Dep. Variable:                   inlf   R-squared:                       0.264
 Model:                            OLS   Adj. R-squared:                  0.257
 Method:                 Least Squares   F-statistic:                     62.48
-Date:                Mon, 29 Jun 2020   Prob (F-statistic):           1.30e-70
-Time:                        11:27:59   Log-Likelihood:                -423.89
+Date:                Mon, 06 Jul 2020   Prob (F-statistic):           1.30e-70
+Time:                        11:56:49   Log-Likelihood:                -423.89
 No. Observations:                 753   AIC:                             863.8
 Df Residuals:                     745   BIC:                             900.8
 Df Model:                           7                                         
@@ -1177,13 +1181,17 @@ strong multicollinearity or other numerical problems.
 <p>を返す。</p>
 <hr class="docutils" />
 <p>＜＜注意＞＞</p>
-<p>推定結果には属性<code class="docutils literal notranslate"><span class="pre">fittedvalues</span></code>があるが，３つのモデルでは以下が返される。</p>
+<ul>
+<li><p>推定結果には属性<code class="docutils literal notranslate"><span class="pre">fittedvalues</span></code>があるが，３つのモデルでは以下が返される。</p>
 <div class="math notranslate nohighlight">
 \[\hat{\beta}_0+\hat{\beta}_1x\]</div>
-<p>（解釈）</p>
+</li>
+<li><p>解釈</p>
 <ul class="simple">
 <li><p>線形確率モデル：労働参加の確率<span class="math notranslate nohighlight">\(P(y=1|x)\)</span>の予測値（<code class="docutils literal notranslate"><span class="pre">predict()</span></code>と同じ）</p></li>
 <li><p>Logit・Probitモデル：潜在変数（または効用）<span class="math notranslate nohighlight">\(y^*\)</span>の予測値</p></li>
+</ul>
+</li>
 </ul>
 <hr class="docutils" />
 <p>線形確率モデルでは，労働参加の確率は１以上もしくは０以下になり得る。</p>
