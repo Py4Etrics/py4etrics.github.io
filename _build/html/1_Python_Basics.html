@@ -1528,8 +1528,8 @@ except
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_string</span> <span class="o">=</span> <span class="s1">&#39;Kobe&#39;</span>
 
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">my_string</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">my_string</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1556,11 +1556,13 @@ e
 </div>
 </div>
 <p>色分けすると，上の<code class="docutils literal notranslate"><span class="pre">for</span></code>ループと内包表記は以下のような対応関係にある。</p>
+<p><code class="docutils literal notranslate"><span class="pre">for</span></code>ループ</p>
 <pre>
 <font color=blue>my_list</font> = []
 for <font color=red>i</font> in <font color=orange>val_list</font>:
     <font color=blue>my_list</font>.append(<font color=green>expression</font>)
 </pre>
+<p>内包表記</p>
 <pre>
 <font color=blue>my_list</font> = [<font color=green>expression</font> for <font color=red>i</font> in <font color=orange>val_list</font>]
 </pre><p>内包表記に<code class="docutils literal notranslate"><span class="pre">if</span></code>文を加えることも可能である。次の例では，偶数の2倍だけをリストに追加している。</p>
@@ -1589,6 +1591,42 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
+<p>応用例として，次のリストの要素抽出について考えてみよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">]</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<p>新たに<code class="docutils literal notranslate"><span class="pre">0</span></code>，<code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">7</span></code>, <code class="docutils literal notranslate"><span class="pre">9</span></code>番目の要素からなるリストを作成したいとする。この場合,</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">lst</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">lst</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">lst</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span><span class="n">lst</span><span class="p">[</span><span class="mi">9</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[10, 12, 17, 19]
+</pre></div>
+</div>
+</div>
+</div>
+<p>とすることも可能だが，内包表記を使うと次のコードになる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">idx</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span>
+<span class="p">[</span><span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">idx</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[10, 12, 17, 19]
+</pre></div>
+</div>
+</div>
+</div>
+<p>何番目の要素にアクセスしているのかは<code class="docutils literal notranslate"><span class="pre">idx</span></code>で確かめる方が見やすい事がわかる。</p>
 </div>
 <div class="section" id="while">
 <h2>while ループ<a class="headerlink" href="#while" title="Permalink to this headline">¶</a></h2>
@@ -1800,7 +1838,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">103</span><span class="o">-</span><span class="n">a68692af39a3</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">106</span><span class="o">-</span><span class="n">a68692af39a3</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">func_1</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="ne">TypeError</span>: func_1() got multiple values for argument &#39;a&#39;
@@ -2516,7 +2554,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">145</span><span class="o">-</span><span class="n">ff852d311315</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">148</span><span class="o">-</span><span class="n">ff852d311315</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">primt</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
 
 <span class="ne">NameError</span>: name &#39;primt&#39; is not defined
@@ -2542,7 +2580,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-146-2a993c6acd9f&gt;&quot;</span><span class="gt">, line </span><span class="mi">3</span>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-149-2a993c6acd9f&gt;&quot;</span><span class="gt">, line </span><span class="mi">3</span>
 <span class="nn">    for i</span> in <span class="ni">range</span><span class="nt">(0,3)</span>
                        <span class="o">^</span>
 <span class="ne">SyntaxError</span>: invalid syntax
@@ -2565,7 +2603,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-147-9ebf21e104e8&gt;&quot;</span><span class="gt">, line </span><span class="mi">1</span>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-150-9ebf21e104e8&gt;&quot;</span><span class="gt">, line </span><span class="mi">1</span>
     <span class="p">(</span><span class="mf">2.1</span> <span class="o">+</span> <span class="mf">1.5</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">10.0</span> <span class="o">+</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="mf">3.2</span>
                                   <span class="o">^</span>
 <span class="ne">SyntaxError</span>: unexpected EOF while parsing
@@ -2621,7 +2659,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ZeroDivisionError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">150</span><span class="o">-</span><span class="mf">150e437</span><span class="n">ad231</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">153</span><span class="o">-</span><span class="mf">150e437</span><span class="n">ad231</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
 
 <span class="ne">ZeroDivisionError</span>: division by zero
@@ -2642,7 +2680,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">151</span><span class="o">-</span><span class="mi">0</span><span class="n">a288a4fc67b</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">154</span><span class="o">-</span><span class="mi">0</span><span class="n">a288a4fc67b</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">xx</span> <span class="o">*</span> <span class="mi">2</span>
 
 <span class="ne">NameError</span>: name &#39;xx&#39; is not defined
@@ -2663,7 +2701,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">152</span><span class="o">-</span><span class="mi">9437</span><span class="n">dcf020b7</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">155</span><span class="o">-</span><span class="mi">9437</span><span class="n">dcf020b7</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="s1">&#39;3&#39;</span> <span class="o">+</span> <span class="mi">10</span>
 
 <span class="ne">TypeError</span>: can only concatenate str (not &quot;int&quot;) to str

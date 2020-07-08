@@ -473,8 +473,8 @@ print(my_list)
 
 my_string = 'Kobe'
 
-for i in my_string:
-    print(i)
+for s in my_string:
+    print(s)
 
 上で使った例では，3行のコードを書き`for`ループを使いリストを作成した。内包表記（list comprehension）を使うと同じ結果を1行のコード（one linerと呼ばれる）で得ることもできる。
 
@@ -482,12 +482,14 @@ for i in my_string:
 
 色分けすると，上の`for`ループと内包表記は以下のような対応関係にある。
 
+`for`ループ
 <pre>
 <font color=blue>my_list</font> = []
 for <font color=red>i</font> in <font color=orange>val_list</font>:
     <font color=blue>my_list</font>.append(<font color=green>expression</font>)
 </pre>
 
+内包表記
 <pre>
 <font color=blue>my_list</font> = [<font color=green>expression</font> for <font color=red>i</font> in <font color=orange>val_list</font>]
 </pre>
@@ -499,6 +501,21 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 次の例では偶数を10倍にし，奇数を1/10にしている。
 
 [10*i if i%2 == 0 else i/10 for i in var_list]
+
+応用例として，次のリストの要素抽出について考えてみよう。
+
+lst = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19] 
+
+新たに`0`，`2`, `7`, `9`番目の要素からなるリストを作成したいとする。この場合,
+
+[lst[0],lst[2],lst[7],lst[9]]
+
+とすることも可能だが，内包表記を使うと次のコードになる。
+
+idx = [0,2,7,9]
+[lst[i] for i in idx]
+
+何番目の要素にアクセスしているのかは`idx`で確かめる方が見やすい事がわかる。
 
 ## while ループ
 
