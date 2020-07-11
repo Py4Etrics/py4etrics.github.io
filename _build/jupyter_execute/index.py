@@ -33,7 +33,7 @@ Stack Overflowとは，プログラミングに関する質問をすると参加
 ## 参考書
 本書では世界的に有名な学部レベルの教科書であるWooldridge (2019)を参考にしている。またこの本で扱われるデータを使い推定をおこなう。
 
-> Introductory Econometrics: A Modern Approach, 7th ed, by J.M. Wooldridge
+> Wooldridge, J.M. (2019) ****Introductory Econometrics: A Modern Approach*******, 7th ed, Cengage
 
 残念ながら邦訳はないが，読者には是非英語で読んで欲しい教科書である。
 
