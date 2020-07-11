@@ -20,7 +20,7 @@ kernelspec:
 ```{code-cell} python3
 import datetime
 dt = datetime.datetime.now()
-print('Version:',dt.strftime('%Y年%m月%d日 %H:%M:%S'))
+print('Version:',dt.strftime('%Y年%m月%d日'))
 ```
 
 本書に関するコメントなどは<haruyama@econ.kobe-u.ac.jp>までご連絡ください。
@@ -46,7 +46,7 @@ Stack Overflowとは，プログラミングに関する質問をすると参加
 ## 参考書
 本書では世界的に有名な学部レベルの教科書であるWooldridge (2019)を参考にしている。またこの本で扱われるデータを使い推定をおこなう。
 
-> Introductory Econometrics: A Modern Approach, 7th ed, by J.M. Wooldridge
+> *Introductory Econometrics: A Modern Approach*, 7th ed, 2019, by J.M. Wooldridge
 
 残念ながら邦訳はないが，読者には是非英語で読んで欲しい教科書である。
 
@@ -90,10 +90,8 @@ glue("paranormal", fig, display=False)
 ```
 
 
-````{toggle} Normal vs Paranormal
 ```{glue:} paranormal
 ```
-````
 
 
 ````{toggle}
