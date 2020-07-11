@@ -429,18 +429,18 @@ else:
 * `elif`は`else if`の省略形であり，２つ目の条件を定義する。
 * `elif`は`if`と`else`の間に複数入れることが可能
 
-## for ループ
+## for ループと内包表記
 
 `for`ループは同じコードを複数回リピートして実行したい場合に有効な方法である。例えば，次のリストにある名前を表示したいとしよう。
 
 name_list = ['太郎', '次郎', '三郎', '四郎', '五郎']
 
-for i in name_list:
-    print(i)
+for name in name_list:
+    print(name)
 
 説明と注意点
 * `for`がある一行目は`:`で終わる。
-* `i`は`name_list`にあるそれぞれの要素を示すダミー記号。
+* `name`は`name_list`にあるそれぞれの要素を示すダミー記号。`name`ではなく`i`や`s`など使いやすい記号を使えば良い。
 * `name_list`にある要素を最初から一つずつ実行する。
 * 2行目は4つの半角スペースがインデントして入る。
 
@@ -459,7 +459,7 @@ for i in var_list:  # 2
 
 このループの考え方：
 
-1. 空のリストの作成（ここに2倍の要素を格納する）
+1. 空のリストの作成（ここに2倍にした数字を格納する）
 1. ここから`for`ループの始まり。`i`はリスト`[1,2,3,4,5]`の要素の代理変数であり，`var_list`の左から一つずつ次の行の`i`に該当する要素を代入して評価する。
 1. `.append()`は`2*i`を`my_list`に追加するメソッド（関数と同義であり，後ほど違いを説明する）
 
@@ -471,12 +471,14 @@ print(my_list)
 上の例では`for`ループの１行目に**リスト**を使って（`name_list`や`var_list`），`0`番目の要素から順に関数・メソッドを使った。これはリストが要素を１つずつ返すことができる反復可能なオブジェクトであるため可能となる。そのようなオブジェクトは**iterable`と呼ばれ，タプルや文字列，そして後で説明する`Numpy`の`array`も含まれる。
 ```
 
-my_string = 'Kobe'
+次の例では文字列を一文字ずつ表示する。
 
-for s in my_string:
-    print(s)
+my_string = 'Kobe'    # 文字列を作成しmy_stringに割り当てる
 
-上で使った例では，3行のコードを書き`for`ループを使いリストを作成した。内包表記（list comprehension）を使うと同じ結果を1行のコード（one linerと呼ばれる）で得ることもできる。
+for s in my_string:   # forループの開始
+    print(s)          # 文字を表示
+
+上で使った例では，3行のコードを書き`for`ループを使いリストを作成した。内包表記（list comprehension）を使うと同じ結果を1行のコード（one linerと呼ばれる）で得ることもできる。例として`var_list`の要素を2倍にする`for`ループをもう一度考えてみる。
 
 [2*i for i in var_list]
 
@@ -494,15 +496,57 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <font color=blue>my_list</font> = [<font color=green>expression</font> for <font color=red>i</font> in <font color=orange>val_list</font>]
 </pre>
 
-内包表記に`if`文を加えることも可能である。次の例では，偶数の2倍だけをリストに追加している。
+`for`ループに`if`文を組み込むことができる。次の例では，`var_list`の数字が偶数であれば2倍にして新たなリストを作成する。
+
+my_list = []    # 空のリストの作成
+
+for i in var_list:            # forループの開始
+    
+    if i % 2 ==0:             # 余りが０の場合
+        my_list.append(2*i)   # 二乗にしてmy_listに追加する
+                              # 余りが０でない場合はpass
+        
+print(my_list)    # my_listの表示
+
+上の例を内包表記にすることも可能である。
 
 [2*i for i in var_list if i % 2 == 0]
 
+改行を入れるとより分かりやすくなる。
+
+# コード１
+
+[2*i
+ for i in var_list
+ if i % 2 == 0]
+
 次の例では偶数を10倍にし，奇数を1/10にしている。
 
-[10*i if i%2 == 0 else i/10 for i in var_list]
+my_list = []    # 空のリストの作成
 
-応用例として，次のリストの要素抽出について考えてみよう。
+for i in var_list:    # forループの開始
+    
+    if i % 2 ==0:     # 余りが０の場合
+        x = 10*i      # 10倍にしてxに割り当てる
+    else:             # 余りが０でない場合
+        x = i/10      # 10分の１にしてxに割り当てる
+        
+    my_list.append(x) # xをmy_listに追加
+        
+print(my_list)    # my_listの表示
+
+内包表記を使うと次のようになる。
+
+# コード２
+
+[10*i
+ if i%2 == 0
+ else i/10
+ for i in var_list]
+
+コード１とコード２で`if`文の位置が異なることに注意しよう。コード１では`if`文は最後に来ているが，コード２では`for`の前に来ている。
+
+内包表記の応用例として，次のリストの要素抽出について考えてみよう。
 
 lst = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19] 
 

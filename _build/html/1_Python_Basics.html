@@ -216,7 +216,7 @@
         </li>
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#for" class="nav-link">for ループ</a>
+            <a href="#for" class="nav-link">for ループと内包表記</a>
         </li>
     
         <li class="nav-item toc-entry toc-h2">
@@ -1448,7 +1448,7 @@ except
 </ul>
 </div>
 <div class="section" id="for">
-<h2>for ループ<a class="headerlink" href="#for" title="Permalink to this headline">¶</a></h2>
+<h2>for ループと内包表記<a class="headerlink" href="#for" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">for</span></code>ループは同じコードを複数回リピートして実行したい場合に有効な方法である。例えば，次のリストにある名前を表示したいとしよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1459,8 +1459,8 @@ except
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">name_list</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">name_list</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1477,7 +1477,7 @@ except
 <p>説明と注意点</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">for</span></code>がある一行目は<code class="docutils literal notranslate"><span class="pre">:</span></code>で終わる。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>は<code class="docutils literal notranslate"><span class="pre">name_list</span></code>にあるそれぞれの要素を示すダミー記号。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>は<code class="docutils literal notranslate"><span class="pre">name_list</span></code>にあるそれぞれの要素を示すダミー記号。<code class="docutils literal notranslate"><span class="pre">name</span></code>ではなく<code class="docutils literal notranslate"><span class="pre">i</span></code>や<code class="docutils literal notranslate"><span class="pre">s</span></code>など使いやすい記号を使えば良い。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">name_list</span></code>にある要素を最初から一つずつ実行する。</p></li>
 <li><p>2行目は4つの半角スペースがインデントして入る。</p></li>
 </ul>
@@ -1503,7 +1503,7 @@ except
 </div>
 <p>このループの考え方：</p>
 <ol class="simple">
-<li><p>空のリストの作成（ここに2倍の要素を格納する）</p></li>
+<li><p>空のリストの作成（ここに2倍にした数字を格納する）</p></li>
 <li><p>ここから<code class="docutils literal notranslate"><span class="pre">for</span></code>ループの始まり。<code class="docutils literal notranslate"><span class="pre">i</span></code>はリスト<code class="docutils literal notranslate"><span class="pre">[1,2,3,4,5]</span></code>の要素の代理変数であり，<code class="docutils literal notranslate"><span class="pre">var_list</span></code>の左から一つずつ次の行の<code class="docutils literal notranslate"><span class="pre">i</span></code>に該当する要素を代入して評価する。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">.append()</span></code>は<code class="docutils literal notranslate"><span class="pre">2*i</span></code>を<code class="docutils literal notranslate"><span class="pre">my_list</span></code>に追加するメソッド（関数と同義であり，後ほど違いを説明する）</p></li>
 </ol>
@@ -1524,12 +1524,13 @@ except
 <p class="admonition-title">Note</p>
 <p>上の例では<code class="docutils literal notranslate"><span class="pre">for</span></code>ループの１行目に<strong>リスト</strong>を使って（<code class="docutils literal notranslate"><span class="pre">name_list</span></code>や<code class="docutils literal notranslate"><span class="pre">var_list</span></code>），<code class="docutils literal notranslate"><span class="pre">0</span></code>番目の要素から順に関数・メソッドを使った。これはリストが要素を１つずつ返すことができる反復可能なオブジェクトであるため可能となる。そのようなオブジェクトは**iterable<code class="docutils literal notranslate"><span class="pre">と呼ばれ，タプルや文字列，そして後で説明する</span></code>Numpy<code class="docutils literal notranslate"><span class="pre">の</span></code>array`も含まれる。</p>
 </div>
+<p>次の例では文字列を一文字ずつ表示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_string</span> <span class="o">=</span> <span class="s1">&#39;Kobe&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_string</span> <span class="o">=</span> <span class="s1">&#39;Kobe&#39;</span>    <span class="c1"># 文字列を作成しmy_stringに割り当てる</span>
 
-<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">my_string</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">my_string</span><span class="p">:</span>   <span class="c1"># forループの開始</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>          <span class="c1"># 文字を表示</span>
 </pre></div>
 </div>
 </div>
@@ -1542,7 +1543,7 @@ e
 </div>
 </div>
 </div>
-<p>上で使った例では，3行のコードを書き<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを使いリストを作成した。内包表記（list comprehension）を使うと同じ結果を1行のコード（one linerと呼ばれる）で得ることもできる。</p>
+<p>上で使った例では，3行のコードを書き<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを使いリストを作成した。内包表記（list comprehension）を使うと同じ結果を1行のコード（one linerと呼ばれる）で得ることもできる。例として<code class="docutils literal notranslate"><span class="pre">var_list</span></code>の要素を2倍にする<code class="docutils literal notranslate"><span class="pre">for</span></code>ループをもう一度考えてみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">var_list</span><span class="p">]</span>
@@ -1565,7 +1566,28 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <p>内包表記</p>
 <pre>
 <font color=blue>my_list</font> = [<font color=green>expression</font> for <font color=red>i</font> in <font color=orange>val_list</font>]
-</pre><p>内包表記に<code class="docutils literal notranslate"><span class="pre">if</span></code>文を加えることも可能である。次の例では，偶数の2倍だけをリストに追加している。</p>
+</pre><p><code class="docutils literal notranslate"><span class="pre">for</span></code>ループに<code class="docutils literal notranslate"><span class="pre">if</span></code>文を組み込むことができる。次の例では，<code class="docutils literal notranslate"><span class="pre">var_list</span></code>の数字が偶数であれば2倍にして新たなリストを作成する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[]</span>    <span class="c1"># 空のリストの作成</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">var_list</span><span class="p">:</span>            <span class="c1"># forループの開始</span>
+    
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span><span class="mi">0</span><span class="p">:</span>             <span class="c1"># 余りが０の場合</span>
+        <span class="n">my_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="p">)</span>   <span class="c1"># 二乗にしてmy_listに追加する</span>
+                              <span class="c1"># 余りが０でない場合はpass</span>
+        
+<span class="nb">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>    <span class="c1"># my_listの表示</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[4, 8]
+</pre></div>
+</div>
+</div>
+</div>
+<p>上の例を内包表記にすることも可能である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">var_list</span> <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
@@ -1578,10 +1600,56 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
+<p>改行を入れるとより分かりやすくなる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># コード１</span>
+
+<span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span>
+ <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">var_list</span>
+ <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[4, 8]
+</pre></div>
+</div>
+</div>
+</div>
 <p>次の例では偶数を10倍にし，奇数を1/10にしている。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">10</span><span class="o">*</span><span class="n">i</span> <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">i</span><span class="o">/</span><span class="mi">10</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">var_list</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[]</span>    <span class="c1"># 空のリストの作成</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">var_list</span><span class="p">:</span>    <span class="c1"># forループの開始</span>
+    
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span><span class="mi">0</span><span class="p">:</span>     <span class="c1"># 余りが０の場合</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span><span class="o">*</span><span class="n">i</span>      <span class="c1"># 10倍にしてxに割り当てる</span>
+    <span class="k">else</span><span class="p">:</span>             <span class="c1"># 余りが０でない場合</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">i</span><span class="o">/</span><span class="mi">10</span>      <span class="c1"># 10分の１にしてxに割り当てる</span>
+        
+    <span class="n">my_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># xをmy_listに追加</span>
+        
+<span class="nb">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>    <span class="c1"># my_listの表示</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[0.1, 20, 0.3, 40, 0.5]
+</pre></div>
+</div>
+</div>
+</div>
+<p>内包表記を使うと次のようになる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># コード２</span>
+
+<span class="p">[</span><span class="mi">10</span><span class="o">*</span><span class="n">i</span>
+ <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+ <span class="k">else</span> <span class="n">i</span><span class="o">/</span><span class="mi">10</span>
+ <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">var_list</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1591,7 +1659,8 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<p>応用例として，次のリストの要素抽出について考えてみよう。</p>
+<p>コード１とコード２で<code class="docutils literal notranslate"><span class="pre">if</span></code>文の位置が異なることに注意しよう。コード１では<code class="docutils literal notranslate"><span class="pre">if</span></code>文は最後に来ているが，コード２では<code class="docutils literal notranslate"><span class="pre">for</span></code>の前に来ている。</p>
+<p>内包表記の応用例として，次のリストの要素抽出について考えてみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">]</span> 
@@ -1838,7 +1907,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">106</span><span class="o">-</span><span class="n">a68692af39a3</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">109</span><span class="o">-</span><span class="n">a68692af39a3</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">func_1</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="ne">TypeError</span>: func_1() got multiple values for argument &#39;a&#39;
@@ -2554,7 +2623,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">148</span><span class="o">-</span><span class="n">ff852d311315</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">151</span><span class="o">-</span><span class="n">ff852d311315</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">primt</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
 
 <span class="ne">NameError</span>: name &#39;primt&#39; is not defined
@@ -2580,7 +2649,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-149-2a993c6acd9f&gt;&quot;</span><span class="gt">, line </span><span class="mi">3</span>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-152-2a993c6acd9f&gt;&quot;</span><span class="gt">, line </span><span class="mi">3</span>
 <span class="nn">    for i</span> in <span class="ni">range</span><span class="nt">(0,3)</span>
                        <span class="o">^</span>
 <span class="ne">SyntaxError</span>: invalid syntax
@@ -2603,7 +2672,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-150-9ebf21e104e8&gt;&quot;</span><span class="gt">, line </span><span class="mi">1</span>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-153-9ebf21e104e8&gt;&quot;</span><span class="gt">, line </span><span class="mi">1</span>
     <span class="p">(</span><span class="mf">2.1</span> <span class="o">+</span> <span class="mf">1.5</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">10.0</span> <span class="o">+</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="mf">3.2</span>
                                   <span class="o">^</span>
 <span class="ne">SyntaxError</span>: unexpected EOF while parsing
@@ -2659,7 +2728,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ZeroDivisionError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">153</span><span class="o">-</span><span class="mf">150e437</span><span class="n">ad231</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">156</span><span class="o">-</span><span class="mf">150e437</span><span class="n">ad231</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
 
 <span class="ne">ZeroDivisionError</span>: division by zero
@@ -2680,7 +2749,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">154</span><span class="o">-</span><span class="mi">0</span><span class="n">a288a4fc67b</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">157</span><span class="o">-</span><span class="mi">0</span><span class="n">a288a4fc67b</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">xx</span> <span class="o">*</span> <span class="mi">2</span>
 
 <span class="ne">NameError</span>: name &#39;xx&#39; is not defined
@@ -2701,7 +2770,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">155</span><span class="o">-</span><span class="mi">9437</span><span class="n">dcf020b7</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">158</span><span class="o">-</span><span class="mi">9437</span><span class="n">dcf020b7</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="s1">&#39;3&#39;</span> <span class="o">+</span> <span class="mi">10</span>
 
 <span class="ne">TypeError</span>: can only concatenate str (not &quot;int&quot;) to str
