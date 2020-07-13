@@ -19,11 +19,11 @@ kernelspec:
 
 ```{code-cell} python3
 import datetime
-dt = datetime.datetime.now()
+dt = datetime.datetime.today()
 print('Version:',dt.strftime('%Y年%m月%d日'))
 ```
 
-本書に関するコメントなどは<haruyama@econ.kobe-u.ac.jp>までご連絡ください。
+本書に関するコメント等は<haruyama@econ.kobe-u.ac.jp>にご連絡ください。
 
 ## はじめに
 

@@ -129,9 +129,11 @@ pass
 
 推定なので標準正規分布の確率密度関数と全く同じにはならないが，非常に近い。上の図と重ねると。
 
-plt.hist(y_rvs, bins=30, density=True)  # density=True により横軸が％表示になる
+plt.hist(y_rvs, bins=30, density=True)
 plt.plot(x, kde(x))
 pass
+
+`plt.hist()`にある`density=True`は縦軸を％表示にする引数である。これにより`plt.hist`のヒストグラムと`plt.plot()`のカーネル密度関数が同じスケールで表示されることになる。
 
 ## その他の分布関数
 
@@ -146,7 +148,7 @@ t.rvs(df, size=1)
 ```
 * `dfn`：自由度（degree of freedom）
 
-`scipy.stats`の`t`を読み込む，確率密度関数の図を描く。
+`scipy.stats`の`t`を読み込み確率密度関数の図を表示する。
 
 from scipy.stats import t
 x = np.linspace(-4,4,100)
@@ -154,11 +156,11 @@ y = t.pdf(x, df=1)
 plt.plot(x,y)
 pass
 
-`df=1`の時に`x`の値が`-3`以下の確率は何か？
+`df=1`の場合に`x`の値が`-3`以下の確率は何か？
 
 t.cdf(-3, df=1)
 
-`df=1`の時に`x`の値が`3`以上の確率は何か？
+`df=1`の場合に`x`の値が`3`以上の確率は何か？
 
 1-t.cdf(3, df=1)
 
@@ -173,7 +175,7 @@ chi2.rvs(df, size=1)
 ```
 * `df`：自由度（degree of freedom）
 
-`scipy.stats`の`chi2`を読み込む，確率密度関数の図を描く。
+`scipy.stats`の`chi2`を読み込み確率密度関数の図を表示する。
 
 from scipy.stats import chi2
 x = np.linspace(0,12,100)
@@ -181,11 +183,11 @@ y = chi2.pdf(x, df=3)
 plt.plot(x,y)
 pass
 
-`df=3`の時に`x`の値が`1`以下の確率は何か？
+`df=3`の場合に`x`の値が`1`以下の確率は何か？
 
 chi2.cdf(1, df=3)
 
-`df=3`の時に`x`の値が`10`以上の確率は何か？
+`df=3`の場合に`x`の値が`10`以上の確率は何か？
 
 1-chi2.cdf(10, df=3)
 
@@ -201,7 +203,7 @@ f.rvs(dfn, dfd, size=1)
 * `dfn`：分子の自由度（numerator degree of freedom）
 * `dfd`：分母自由度（denominator degree of freedom）
 
-`scipy.stats`の`f`を読み込む，確率密度関数の図を描く。
+`scipy.stats`の`f`を読み込み確率密度関数の図を表示する。
 
 from scipy.stats import f
 x = np.linspace(0.001,5,1000)
@@ -209,11 +211,11 @@ y = f.pdf(x, dfn=5, dfd=1)
 plt.plot(x,y)
 pass
 
-`dfn=5`, `dfd=1の時に`x`の値が`0.1`以下の確率は何か？
+`dfn=5`, `dfd=1の場合に`x`の値が`0.1`以下の確率は何か？
 
 f.cdf(0.1, dfn=5, dfd=1)
 
-`dfn=5`, `dfd=1の時に`x`の値が`5`以上の確率は何か？
+`dfn=5`, `dfd=1の場合に`x`の値が`5`以上の確率は何か？
 
 1-f.cdf(5, dfn=5, dfd=1)
 
@@ -233,7 +235,7 @@ uniform.rvs(loc=0, scale=1, size=1)
 loc=m, scale=m+1
 ```
 
-`scipy.stats`の`uniform`を読み込む，確率密度関数の図を描く。
+`scipy.stats`の`uniform`を読み込み確率密度関数の図を表示する。
 
 from scipy.stats import uniform
 x = np.linspace(0,12,100)
@@ -256,7 +258,7 @@ logistic.rvs(loc=0, scale=1, size=1)
 logistic.pdf(x,loc,scale) = logistic.pdf(z), z=(x-loc)/scale
 ```
 
-`scipy.stats`の`logistic`を読み込む，確率密度関数の図を描く。
+`scipy.stats`の`logistic`を読み込み確率密度関数の図を表示する。
 
 from scipy.stats import logistic
 x = np.linspace(-5,5,100)
