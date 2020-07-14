@@ -10,6 +10,11 @@ import datetime
 dt = datetime.datetime.today()
 print('Version:',dt.strftime('%Y年%m月%d日'))
 
+<!---
+dt = datetime.datetime.now()
+dt = datetime.datetime.today()
+-->
+
 本書に関するコメント等は<haruyama@econ.kobe-u.ac.jp>にご連絡ください。
 
 ## はじめに
@@ -33,7 +38,7 @@ Stack Overflowとは，プログラミングに関する質問をすると参加
 ## 参考書
 本書では世界的に有名な学部レベルの教科書であるWooldridge (2019)を参考にしている。またこの本で扱われるデータを使い推定をおこなう。
 
-> *Introductory Econometrics: A Modern Approach*, 7th ed, 2019, by J.M. Wooldridge
+> *Introductory Econometrics: A Modern Approach*, 7th ed, 2019, J.M. Wooldridge
 
 残念ながら邦訳はないが，読者には是非英語で読んで欲しい教科書である。
 
