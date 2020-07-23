@@ -43,7 +43,7 @@
 <meta property="og:url"         content="https://py4etrics.github.io/Grade.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="成績分析" />
-<meta property="og:description" content="成績分析  データの読み込み  import pandas as pd import matplotlib.pyplot as plt from see import see  学生  「うりぼー」→ 成績修得情報　→　成績表を選択コピー  df = pd.read_clipboard() df.head()   # " />
+<meta property="og:description" content="成績分析  授業の成績（優秀良可不可）とGP（Grade Point）を使った成績の分析を行う。成績表のコピーは神戸大学の「うりぼーネット」を用いる例を考えるが、Web上で成績表が表示されるのであればコードを少し修正するだけで分析が行えるであろう。  データの読み込み  import pandas as pd impo" />
 
 
 <meta name="twitter:card" content="summary">
@@ -222,7 +222,7 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id4">
-     教員
+     例
     </a>
    </li>
   </ul>
@@ -231,18 +231,16 @@
   <a class="reference internal nav-link" href="#id5">
    列の内容の確認
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#dataframe">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       DataFrame
-      </span>
-     </code>
-     の作成
-    </a>
-   </li>
-  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dataframe">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     DataFrame
+    </span>
+   </code>
+   の作成
+  </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id6">
@@ -392,6 +390,7 @@
                 
   <div class="section" id="id1">
 <h1>成績分析<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>授業の成績（優秀良可不可）とGP（Grade Point）を使った成績の分析を行う。成績表のコピーは神戸大学の「うりぼーネット」を用いる例を考えるが、Web上で成績表が表示されるのであればコードを少し修正するだけで分析が行えるであろう。</p>
 <div class="section" id="id2">
 <h2>データの読み込み<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
@@ -405,23 +404,29 @@
 </div>
 <div class="section" id="id3">
 <h3>学生<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>「うりぼー」→ 成績修得情報　→　成績表を選択コピー</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_clipboard</span><span class="p">()</span>
-<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
+<p>「うりぼー」→ 成績修得情報　→　成績表を選択しコピー</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># csvに保存</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#ーーーーー dfに成績表を割り当てる ーーーーー</span>
 
-<span class="c1"># df.to_csv(&#39;transcript20200708.csv&#39;)</span>
+<span class="c1"># df = pd.read_clipboard()</span>
+<span class="c1"># df.head()</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 保存先のフォルダの確認</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#ーーーーー csvに保存 ーーーーー</span>
+
+<span class="c1"># df.to_csv(&#39;成績表20200708.csv&#39;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#ーーーーー 保存先のフォルダの確認 ーーーーー</span>
 
 <span class="c1"># %pwd</span>
 </pre></div>
@@ -430,7 +435,8 @@
 </div>
 </div>
 <div class="section" id="id4">
-<h3>教員<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3>例<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>例のファイルを使う場合。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/Haruyama-KobeU/Py4Basics/master/data/data_for_mark.csv&#39;</span><span class="p">)</span>
@@ -970,7 +976,7 @@
 </div>
 </div>
 </div>
-<p>ステップ２：それぞれの列の要素の種類を表示</p>
+<p>ステップ２：それぞれの列の要素の種類を表示方法</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;区分&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
@@ -986,7 +992,7 @@
 <p>スッテプ３：スッテプ１と２を同時に</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">col</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">col</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>      <span class="c1"># Noの列を除外</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
 </pre></div>
@@ -1008,8 +1014,9 @@
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="dataframe">
-<h3><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の作成<a class="headerlink" href="#dataframe" title="Permalink to this headline">¶</a></h3>
+<h2><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の作成<a class="headerlink" href="#dataframe" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_other</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;区分 == &quot;全学共通授業科目&quot; or 区分 == &quot;高度教養科目&quot;&#39;</span><span class="p">)</span>
@@ -1075,11 +1082,11 @@
 </div>
 </div>
 </div>
-</div>
 <div class="section" id="id6">
 <h2>全科目<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="f-string">
 <h3><code class="docutils literal notranslate"><span class="pre">f-string</span></code><a class="headerlink" href="#f-string" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">f-string</span></code>を使うと文字列の<code class="docutils literal notranslate"><span class="pre">{}</span></code>の中の変数を評価して表示することが可能となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;春山&#39;</span>
@@ -1261,6 +1268,7 @@ Name: 評語, dtype: float64
 </div>
 <div class="section" id="id12">
 <h4>表示を整理したい場合<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<p>％だけを表示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1286,6 +1294,7 @@ Name: 評語, dtype: float64
 </div>
 </div>
 </div>
+<p>％と評語も表示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1314,6 +1323,7 @@ Name: 評語, dtype: float64
 </div>
 </div>
 </div>
+<p>小数点の表示を調整する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1321,9 +1331,9 @@ Name: 評語, dtype: float64
 <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mark</span><span class="p">:</span>
     <span class="n">percent</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;評語 == @m&#39;</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
     <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">percent</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;: </span><span class="si">{</span><span class="n">percent</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;: </span><span class="si">{</span><span class="n">percent</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>   <span class="c1"># 小数点第ー位まで表示</span>
     
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;-----------</span><span class="se">\n</span><span class="s1">合計: </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;-----------</span><span class="se">\n</span><span class="s1">合計: </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>  <span class="c1"># 小数点は表示しない</span>
 </pre></div>
 </div>
 </div>
@@ -1485,8 +1495,8 @@ Name: 評語, dtype: float64
 不可    2
 優     2
 取消    2
-良     1
 認定    1
+良     1
 Name: 評語, dtype: int64
 </pre></div>
 </div>
@@ -1532,8 +1542,8 @@ Name: 評語, dtype: int64
 不可    13.3
 優     13.3
 取消    13.3
-良      6.7
 認定     6.7
+良      6.7
 Name: 評語, dtype: float64
 </pre></div>
 </div>
@@ -1560,7 +1570,10 @@ Name: 評語, dtype: float64
 合格 0.0
 認定 6.7
 不可 13.3
-取消 13.3
+取消
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span> 13.3
 --------
 合計 100
 </pre></div>
@@ -1882,9 +1895,23 @@ dtype: object
 <div class="section" id="id19">
 <h4>図示<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
 <p>方法１：横軸に文字列を使う</p>
+<p><code class="docutils literal notranslate"><span class="pre">gpa_mean.index</span></code>を確認する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yr</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">gpa_mean</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gpa_mean</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Int64Index([2018, 2019, 2020], dtype=&#39;int64&#39;, name=&#39;修得年度&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>これを使い横軸に使う文字列を作成する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yr</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">gpa_mean</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
 <span class="n">yr</span>
 </pre></div>
 </div>
@@ -1903,7 +1930,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Grade_85_0.png" src="_images/Grade_85_0.png" />
+<img alt="_images/Grade_94_0.png" src="_images/Grade_94_0.png" />
 </div>
 </div>
 <p>方法２：<code class="docutils literal notranslate"><span class="pre">plt.xticks()</span></code>を使って</p>
@@ -1931,7 +1958,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Grade_90_0.png" src="_images/Grade_90_0.png" />
+<img alt="_images/Grade_99_0.png" src="_images/Grade_99_0.png" />
 </div>
 </div>
 </div>
@@ -2248,7 +2275,7 @@ dtype: object
 </div>
 <div class="section" id="id23">
 <h4>図示<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
-<p>横軸に文字列を使う。</p>
+<p>横軸に文字列を使う。まず<code class="docutils literal notranslate"><span class="pre">gpa_mean</span></code>のインデックスを確認する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gpa_mean</span><span class="o">.</span><span class="n">index</span>
@@ -2267,9 +2294,10 @@ dtype: object
 </div>
 </div>
 </div>
+<p>これを使い横軸に使う文字列を作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yr_half</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">gpa_mean</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yr_half</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">gpa_mean</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
 <span class="n">yr_half</span>
 </pre></div>
 </div>
@@ -2288,7 +2316,7 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Grade_104_0.png" src="_images/Grade_104_0.png" />
+<img alt="_images/Grade_114_0.png" src="_images/Grade_114_0.png" />
 </div>
 </div>
 </div>

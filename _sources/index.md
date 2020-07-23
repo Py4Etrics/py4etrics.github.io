@@ -20,7 +20,7 @@ kernelspec:
 ```{code-cell} python3
 import datetime
 dt = datetime.datetime.now()
-print('Version:',dt.strftime('%Y年%m月%d日 %H:%M:%S'))
+print('Version:',dt.strftime('%Y年%m月%d日'))
 ```
 
 <!---
