@@ -7,10 +7,11 @@
 ```
 
 import datetime
-dt = datetime.datetime.today()
-print('Version:',dt.strftime('%Y年%m月%d日'))
+dt = datetime.datetime.now()
+print('Version:',dt.strftime('%Y年%m月%d日 %H:%M:%S'))
 
 <!---
+%H:%M:%S
 dt = datetime.datetime.now()
 dt = datetime.datetime.today()
 -->

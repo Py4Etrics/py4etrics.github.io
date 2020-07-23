@@ -229,17 +229,18 @@ uniform.ppf(a, loc=0, scale=1)
 uniform.rvs(loc=0, scale=1, size=1)
 ```
 * `loc`：`x`の最小値
-* `scale`：`x`の最大値
+* `scale`：`x`の幅
+    * `x`の最大値：`loc+scale`
 * `m`だけ「右」に平行移動させる場合は
 ```
-loc=m, scale=m+1
+loc=m   # scaleは省略
 ```
 
 `scipy.stats`の`uniform`を読み込み確率密度関数の図を表示する。
 
 from scipy.stats import uniform
 x = np.linspace(0,12,100)
-y = uniform.pdf(x, loc=1, scale=1+9)
+y = uniform.pdf(x, loc=1, scale=9)
 plt.plot(x,y)
 pass
 
