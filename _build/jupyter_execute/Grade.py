@@ -1,5 +1,7 @@
 # 成績分析
 
+授業の成績（優秀良可不可）とGP（Grade Point）を使った成績の分析を行う。成績表のコピーは神戸大学の「うりぼーネット」を用いる例を考えるが、Web上で成績表が表示されるのであればコードを少し修正するだけで分析が行えるであろう。
+
 ## データの読み込み
 
 import pandas as pd
@@ -8,22 +10,24 @@ from see import see
 
 ### 学生
 
-「うりぼー」→ 成績修得情報　→　成績表を選択コピー
+「うりぼー」→ 成績修得情報　→　成績表を選択しコピー
 
-```
-df = pd.read_clipboard()
-df.head()
-```
+#ーーーーー dfに成績表を割り当てる ーーーーー
 
-# csvに保存
+# df = pd.read_clipboard()
+# df.head()
 
-# df.to_csv('transcript20200708.csv')
+#ーーーーー csvに保存 ーーーーー
 
-# 保存先のフォルダの確認
+# df.to_csv('成績表20200708.csv')
+
+#ーーーーー 保存先のフォルダの確認 ーーーーー
 
 # %pwd
 
-### 教員
+### 例
+
+例のファイルを使う場合。
 
 df = pd.read_csv('https://raw.githubusercontent.com/Haruyama-KobeU/Py4Basics/master/data/data_for_mark.csv')
 df
@@ -38,17 +42,17 @@ col
 for c in col:
     print(c)
 
-ステップ２：それぞれの列の要素の種類を表示
+ステップ２：それぞれの列の要素の種類を表示方法
 
 df['区分'].unique()
 
 スッテプ３：スッテプ１と２を同時に
 
-for c in col[1:]:
+for c in col[1:]:      # Noの列を除外
     x = df[c].unique()
     print(c, x)
 
-### `DataFrame`の作成
+## `DataFrame`の作成
 
 df_other = df.query('区分 == "全学共通授業科目" or 区分 == "高度教養科目"')
 df_econ = df.query('区分 == "専門科目"')
@@ -73,6 +77,8 @@ len(df),len(df_other),len(df_econ)
 ## 全科目
 
 ### `f-string`
+
+`f-string`を使うと文字列の`{}`の中の変数を評価して表示することが可能となる。
 
 x='春山'
 print(f'私は{x}ゼミに所属しています。')
@@ -128,6 +134,8 @@ print('--------\n合計',sum(lst))
 
 #### 表示を整理したい場合
 
+％だけを表示する。
+
 lst = []
 
 for m in mark:
@@ -135,6 +143,8 @@ for m in mark:
     lst.append(percent)
 
 lst
+
+％と評語も表示する。
 
 lst = []
 
@@ -145,14 +155,16 @@ for m in mark:
     
 print(f'-----------\n合計: {sum(lst)}')
 
+小数点の表示を調整する。
+
 lst = []
 
 for m in mark:
     percent = 100 * len(df.query('評語 == @m')) / len(df)
     lst.append(percent)
-    print(m, f': {percent:.1f}')
+    print(m, f': {percent:.1f}')   # 小数点第ー位まで表示
     
-print(f'-----------\n合計: {sum(lst):.0f}')
+print(f'-----------\n合計: {sum(lst):.0f}')  # 小数点は表示しない
 
 上のコードでは`f-string`を使った。その代わりに`format()`を使うことも可能。
 
@@ -269,7 +281,13 @@ see(gpa_grouped)
 
 方法１：横軸に文字列を使う
 
-yr = [f'{i}' for i in gpa_mean.index]
+`gpa_mean.index`を確認する。
+
+gpa_mean.index
+
+これを使い横軸に使う文字列を作成する。
+
+yr = [str(i) for i in gpa_mean.index]
 yr
 
 plt.plot(yr,gpa_mean['科目GP'], 'o-')
@@ -314,11 +332,13 @@ gpa_mean
 
 #### 図示
 
-横軸に文字列を使う。
+横軸に文字列を使う。まず`gpa_mean`のインデックスを確認する。
 
 gpa_mean.index
 
-yr_half = [f'{i[0]}-{i[1]}' for i in gpa_mean.index]
+これを使い横軸に使う文字列を作成する。
+
+yr_half = [str(i[0])+'-'+str(i[1]) for i in gpa_mean.index]
 yr_half
 
 plt.plot(yr_half, gpa_mean['科目GP'])

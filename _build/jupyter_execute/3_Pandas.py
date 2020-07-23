@@ -13,7 +13,7 @@ import pandas as pd
 様々なデータを読み込むことが可能だが，ここでは`read_csv()`関数を使ってインターネット上の`.csv`ファイルを読み込む。
 
 # url の設定
-url = 'https://raw.githubusercontent.com/Haruyama-KobeU/Haruyama-KobeU.github.io/master/data/data1.csv'
+url = 'https://raw.githubusercontent.com/Haruyama-KobeU/Py4Basics/master/data/data1.csv'
 
 # 読み込み
 df = pd.read_csv(url)
@@ -41,7 +41,7 @@ df
 
 df.head()
 
-引数に3を指定すると最初の3行のみ表示される。
+引数に2を指定すると最初の3行のみ表示される。
 
 df.head(2)
 
@@ -538,7 +538,7 @@ df.sort_values(['id','gdp'], ascending=['True','False']).head()
 
 ここでは３つの`.csv`ファイルを使う。
 
-url = 'https://raw.githubusercontent.com/Haruyama-KobeU/Haruyama-KobeU.github.io/master/data/'
+url = 'https://raw.githubusercontent.com/Haruyama-KobeU/Py4Basics/master/data/'
 df1 = pd.read_csv(url+'data1.csv')
 df2 = pd.read_csv(url+'data2.csv')
 df3 = pd.read_csv(url+'data3.csv')
