@@ -90,10 +90,10 @@ norm.cdf(-4)
 
 **パーセント・ポイント関数**
 
-a = np.linspace(0,1,100)
-y_ppf = norm.ppf(a)  # 標準正規分布
+p = np.linspace(0,1,100)
+y_ppf = norm.ppf(p)  # 標準正規分布
 
-plt.plot(a,y_ppf)
+plt.plot(p,y_ppf)
 plt.xlabel('P')
 plt.ylabel('x')
 plt.title('Percent Point Function')
@@ -115,7 +115,7 @@ norm.ppf(0.975)
 
 10000個のランダム変数を生成しよう。
 
-y_rvs = norm.rvs(size=10000)  # 標準正規分布
+y_rvs = norm.rvs(size=10_000)  # 標準正規分布
 
 plt.hist(y_rvs, bins=30)  #  bins=表示する棒の数（デフォルトは10)
 pass
@@ -211,11 +211,11 @@ y = f.pdf(x, dfn=5, dfd=1)
 plt.plot(x,y)
 pass
 
-`dfn=5`, `dfd=1の場合に`x`の値が`0.1`以下の確率は何か？
+`dfn=5`, `dfd=1`の場合に`x`の値が`0.1`以下の確率は何か？
 
 f.cdf(0.1, dfn=5, dfd=1)
 
-`dfn=5`, `dfd=1の場合に`x`の値が`5`以上の確率は何か？
+`dfn=5`, `dfd=1`の場合に`x`の値が`5`以上の確率は何か？
 
 1-f.cdf(5, dfn=5, dfd=1)
 
