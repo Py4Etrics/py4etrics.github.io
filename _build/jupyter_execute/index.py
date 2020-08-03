@@ -16,7 +16,7 @@ dt = datetime.datetime.now()
 dt = datetime.datetime.today()
 -->
 
-本書に関するコメント等は<haruyama@econ.kobe-u.ac.jp>にご連絡ください。
+本書に関するコメント等はGitHubの[Issues](https://github.com/Py4Etrics/py4etrics.github.io/issues)もしくは<haruyama@econ.kobe-u.ac.jp>にご連絡ください。
 
 ## はじめに
 
