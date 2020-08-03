@@ -639,7 +639,7 @@ Dep. Variable:                   inlf   No. Observations:                  753
 Model:                          Logit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
 Date:                Mon, 03 Aug 2020   Pseudo R-squ.:                  0.2197
-Time:                        12:49:01   Log-Likelihood:                -401.77
+Time:                        17:44:55   Log-Likelihood:                -401.77
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 3.159e-45
 ==============================================================================
@@ -782,7 +782,7 @@ Dep. Variable:                   inlf   No. Observations:                  753
 Model:                         Probit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
 Date:                Mon, 03 Aug 2020   Pseudo R-squ.:                  0.2206
-Time:                        12:49:01   Log-Likelihood:                -401.30
+Time:                        17:44:55   Log-Likelihood:                -401.30
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
 ==============================================================================
@@ -948,7 +948,9 @@ age           -0.0157      0.002     -6.603      0.000      -0.020      -0.011
 kidslt6       -0.2578      0.032     -8.070      0.000      -0.320      -0.195
 kidsge6        0.0107      0.013      0.805      0.421      -0.015       0.037
 ==============================================================================
-        Logit Marginal Effects       
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>        Logit Marginal Effects       
 =====================================
 Dep. Variable:                   inlf
 Method:                          dydx
@@ -1043,7 +1045,7 @@ Dep. Variable:                   inlf   No. Observations:                  753
 Model:                          Logit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
 Date:                Mon, 03 Aug 2020   Pseudo R-squ.:                  0.2197
-Time:                        12:49:01   Log-Likelihood:                -401.77
+Time:                        17:44:55   Log-Likelihood:                -401.77
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 3.159e-45
 ==============================================================================
@@ -1170,7 +1172,7 @@ Covariance Type:            nonrobust   LLR p-value:                 3.159e-45
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ll_ur</span> <span class="o">=</span> <span class="n">res_probit</span><span class="o">.</span><span class="n">llf</span>  <span class="c1"># 制限を課さない場合の対数尤度</span>
 
-<span class="n">ll_r</span> <span class="o">=</span> <span class="n">res_probit_0</span><span class="o">.</span><span class="n">llnull</span>  <span class="c1"># 制限を課す場合の対数尤度</span>
+<span class="n">ll_r</span> <span class="o">=</span> <span class="n">res_probit_0</span><span class="o">.</span><span class="n">llf</span>  <span class="c1"># 制限を課す場合の対数尤度</span>
 
 <span class="n">LR</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">ll_ur</span><span class="o">-</span><span class="n">ll_r</span><span class="p">)</span>  <span class="c1"># LR統計量</span>
 
@@ -1212,7 +1214,7 @@ Dep. Variable:                   inlf   R-squared:                       0.264
 Model:                            OLS   Adj. R-squared:                  0.257
 Method:                 Least Squares   F-statistic:                     62.48
 Date:                Mon, 03 Aug 2020   Prob (F-statistic):           1.30e-70
-Time:                        12:49:01   Log-Likelihood:                -423.89
+Time:                        17:44:55   Log-Likelihood:                -423.89
 No. Observations:                 753   AIC:                             863.8
 Df Residuals:                     745   BIC:                             900.8
 Df Model:                           7                                         
@@ -1272,13 +1274,13 @@ strong multicollinearity or other numerical problems.
 
 <span class="n">no_0</span> <span class="o">=</span> <span class="p">(</span><span class="n">res_lin</span><span class="o">.</span><span class="n">fittedvalues</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;1を上回る予測値の数：&#39;</span><span class="p">,</span><span class="n">no_1</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">0を下回る予測値の数：&#39;</span><span class="p">,</span><span class="n">no_0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;1を上回る予測値の数：</span><span class="si">{</span><span class="n">no_1</span><span class="si">}</span><span class="se">\n</span><span class="s1">0を下回る予測値の数：</span><span class="si">{</span><span class="n">no_0</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>1を上回る予測値の数： 17 
-0を下回る予測値の数： 16
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>1を上回る予測値の数：17
+0を下回る予測値の数：16
 </pre></div>
 </div>
 </div>
@@ -1323,7 +1325,7 @@ strong multicollinearity or other numerical problems.
 </div>
 </div>
 </div>
-<p>Probitの多数尤度が高いが，殆ど変わらない。この結果は上の図にも反映されている。</p>
+<p>Probitの対数尤度が高いが，殆ど変わらない。この結果は上の図にも反映されている。</p>
 </div>
 </div>
 
