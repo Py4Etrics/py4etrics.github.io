@@ -360,7 +360,7 @@ res_probit_0 = probit(formula_0, data=mroz).fit(cov_type='HC1')
 
 ll_ur = res_probit.llf  # 制限を課さない場合の対数尤度
 
-ll_r = res_probit_0.llnull  # 制限を課す場合の対数尤度
+ll_r = res_probit_0.llf  # 制限を課す場合の対数尤度
 
 LR = 2*(ll_ur-ll_r)  # LR統計量
 
@@ -412,7 +412,7 @@ no_1 = (res_lin.fittedvalues>1).sum()
 
 no_0 = (res_lin.fittedvalues<0).sum()
 
-print('1を上回る予測値の数：',no_1,'\n0を下回る予測値の数：',no_0)
+print(f'1を上回る予測値の数：{no_1}\n0を下回る予測値の数：{no_0}')
 
 ---
 LogitモデルとProbitモデルの予測値を図を使って比べてみる。
@@ -437,4 +437,4 @@ LogitモデルとProbitモデルの予測確率は殆ど変わらない。では
 
 res_logit.llf, res_probit.llf
 
-Probitの多数尤度が高いが，殆ど変わらない。この結果は上の図にも反映されている。
+Probitの対数尤度が高いが，殆ど変わらない。この結果は上の図にも反映されている。
