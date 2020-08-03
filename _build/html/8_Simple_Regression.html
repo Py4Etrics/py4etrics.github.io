@@ -462,8 +462,6 @@
 </ul>
 <div class="math notranslate nohighlight">
 \[\hat{u}_i=y_i-\hat{y}_i\]</div>
-<p>データを使ってPythonの使い方を説明するが，次の世界的に有名な教科書のデータを使う。</p>
-<p>J.M. Wooldridge (2019) <em>Introductory Econometrics: A Modern Approach</em>, Cengage Learning, 7th edition.</p>
 </div>
 <div class="section" id="id4">
 <h2>データ<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
@@ -505,7 +503,7 @@
 </div>
 </div>
 </div>
-<p>以下では<code class="docutils literal notranslate"><span class="pre">wage1</span></code>を使う。データ・セットを読み込むには引数にはデータ・セット名を文字列として入力する。</p>
+<p>以下では<code class="docutils literal notranslate"><span class="pre">wage1</span></code>を使う。データ・セットを読み込むには、引数にデータ・セット名を文字列として入力する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span>
@@ -563,8 +561,8 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 <p>このデータを使い以下の問題を考える。</p>
 <p>「教育水準は賃金にどのような影響を与えるのか」</p>
 <ul class="simple">
-<li><p>被説明変数：<code class="docutils literal notranslate"><span class="pre">wage</span></code></p></li>
-<li><p>説明変数：<code class="docutils literal notranslate"><span class="pre">educ</span></code></p></li>
+<li><p>被説明変数：<code class="docutils literal notranslate"><span class="pre">wage</span></code>（平均時給、単位：米ドル）</p></li>
+<li><p>説明変数：<code class="docutils literal notranslate"><span class="pre">educ</span></code>（教育年数、単位：年）</p></li>
 </ul>
 <p>まず関係する変数だけを取り出す。</p>
 <div class="cell docutils container">
@@ -721,7 +719,7 @@ memory usage: 8.3 KB
 <div class="section" id="id5">
 <h2>「手計算」<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>まず上で示した<span class="math notranslate nohighlight">\(\hat{\beta}_0\)</span>と<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の式を使い計算する。</p>
-<p>まず分散共分散行列を計算する。</p>
+<p>分散共分散行列を計算する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mat_wage_educ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;wage&#39;</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">])</span>
@@ -962,8 +960,8 @@ dtype: float64
 Dep. Variable:                   wage   R-squared:                       0.165
 Model:                            OLS   Adj. R-squared:                  0.163
 Method:                 Least Squares   F-statistic:                     103.4
-Date:                Thu, 23 Jul 2020   Prob (F-statistic):           2.78e-22
-Time:                        20:43:20   Log-Likelihood:                -1385.7
+Date:                Mon, 03 Aug 2020   Prob (F-statistic):           2.78e-22
+Time:                        12:50:00   Log-Likelihood:                -1385.7
 No. Observations:                 526   AIC:                             2775.
 Df Residuals:                     524   BIC:                             2784.
 Df Model:                           1                                         
@@ -1288,7 +1286,7 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 <h2>シミュレーション：<span class="math notranslate nohighlight">\(OLS\)</span>推定<a class="headerlink" href="#ols" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id11">
 <h3>母集団の考え方<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
-<p>分析の対象となる共通の属性などを持つ個人・企業・産業・地域・国などの集合体といえる。ここで重要な点は母集団の大きさとランダム抽出の関係である。</p>
+<p>母集団とは分析の対象となる共通の属性などを持つ個人・企業・産業・地域・国などの集合体といえる。ここで重要な点は母集団の大きさとランダム抽出の関係を理解することである。</p>
 <ul class="simple">
 <li><p>「人間の身長」の母集団：地球上の人間</p>
 <ul>
@@ -1297,12 +1295,10 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </li>
 <li><p>「OECD諸国のGDP」の母集団：34カ国</p>
 <ul>
-<li><p>2018年のGDPは簡単に入手可能 <span class="math notranslate nohighlight">\(\Rightarrow\)</span> 標本の大きさ<span class="math notranslate nohighlight">\(=\)</span>母集団の大きさ？</p></li>
-<li><p>等号で成立する場合，標本ではなく母集団全てのデータを扱うことになり，標本の概念である標準誤差などは意味がなくなる！</p></li>
-<li><p>２つの考え方：標本の大きさ<span class="math notranslate nohighlight">\(&lt;\)</span>母集団の大きさ</p>
+<li><p>2018年のGDPは簡単に入手可能だが、「標本の大きさ<span class="math notranslate nohighlight">\(=\)</span>母集団の大きさ」という意味なのだろうか。そうだとすれば，標本ではなく母集団全てのデータを扱うことになり，標本の概念である標準誤差などは意味がなくなることになる。しかし、「標本の大きさ<span class="math notranslate nohighlight">\(&lt;\)</span>母集団」と解釈できる２つの考え方がある。</p>
 <ol class="simple">
 <li><p>国と時間の概念で考えると母集団の大きさは<span class="math notranslate nohighlight">\(\infty\)</span></p></li>
-<li><p>確率変数とは実現可能な数値から１つを実現させる関数である。またGDP自体は確率変数として解釈する方が自然である（「重回帰分析」で説明する仮定２を参照）。従って，34カ国の実現可能なGDPの値が母集団となる。この解釈によると，標本の大きさ<span class="math notranslate nohighlight">\(&lt;\)</span>母集団の大きさ。</p></li>
+<li><p>確率変数とは実現可能な数値から１つを実現させる関数である。またGDP自体は確率変数として解釈する方が自然である（「重回帰分析」で説明する仮定２を参照）。従って，34カ国の実現可能なGDPの値が母集団となる。この解釈によると「標本の大きさ<span class="math notranslate nohighlight">\(&lt;\)</span>母集団の大きさ」となる。</p></li>
 </ol>
 </li>
 </ul>
@@ -1407,8 +1403,8 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.052639
-Y            0.606993
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.905375
+Y            0.422681
 dtype: float64
 </pre></div>
 </div>
@@ -1436,7 +1432,7 @@ dtype: float64
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_sim</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">b0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">b1</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">su</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>  <span class="c1"># nを指定する，　他はデフォルトを設定</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_sim</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">b0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">b1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">su</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>  <span class="c1"># nを指定する，　他はデフォルトを設定</span>
     
     <span class="n">x</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
     <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">su</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
@@ -1459,8 +1455,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.542790
-X            0.623357
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    1.622228
+X            0.881416
 dtype: float64
 </pre></div>
 </div>
@@ -1468,31 +1464,31 @@ dtype: float64
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">b0</span></code>，<code class="docutils literal notranslate"><span class="pre">b1</span></code>，<code class="docutils literal notranslate"><span class="pre">su</span></code>変えて計算してみよう。</p>
 <hr class="docutils" />
-<p>シミュレーションで同じ計算を数十万回おこなう場合，１回のシミュレーションに時間がかかり，それをどのように高速化するかが問題になる。その際，役に立つパッケージが<code class="docutils literal notranslate"><span class="pre">Numba</span></code>であり，１行のコードを追加するだけで計算を驚く程高速化できる。しかし<code class="docutils literal notranslate"><span class="pre">Numba</span></code>には「相性」の問題がある。例えば，上の関数<code class="docutils literal notranslate"><span class="pre">my_sim()</span></code>で使った<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>，<code class="docutils literal notranslate"><span class="pre">pandas</span></code>，<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>は<code class="docutils literal notranslate"><span class="pre">Numba</span></code>と相性が悪いが，<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>は非常に相性が良いのである。また，<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使う際，リストよりも<code class="docutils literal notranslate"><span class="pre">array</span></code>を使う方が少しでも高速化を図ることができることも覚えておくと良いだろう。以下では，<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使うために<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>を使う「手計算」による関数も考えることにする。</p>
+<p>シミュレーションで同じ計算を数十万回おこなう場合，１回のシミュレーションに時間がかかり，それをどのように高速化するかが問題になる。その際，役に立つパッケージが<code class="docutils literal notranslate"><span class="pre">Numba</span></code>であり，１行のコードを追加するだけで計算を驚く程高速化できる。しかし<code class="docutils literal notranslate"><span class="pre">Numba</span></code>には「相性」の問題がある。例えば，上の関数<code class="docutils literal notranslate"><span class="pre">my_sim()</span></code>で使った<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>，<code class="docutils literal notranslate"><span class="pre">pandas</span></code>，<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>は<code class="docutils literal notranslate"><span class="pre">Numba</span></code>と相性が悪いが，<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>は非常に相性が良いのである。また，<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使う際，リストよりも<code class="docutils literal notranslate"><span class="pre">array</span></code>を使う方が少しでも高速化を図ることができることも覚えておくと良いだろう。以下では，<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使うために<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>を使う「手計算」による関数を考えることにする。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_sim_manual</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">b0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">b1</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">su</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>  <span class="c1"># nを指定する，　他はデフォルトを設定</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_sim_manual</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">b0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">b1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">su</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>  <span class="c1"># nは標本の大きさ，　他はデフォルトを設定</span>
     
-    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
-    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">su</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>   <span class="c1"># 以下を参照</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">su</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 以下を参照</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">u</span>
     
-    <span class="n">var_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># 分散共分散行列</span>
-    <span class="n">cov_yx</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 共分散</span>
-    <span class="n">var_y</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># yの分散</span>
-    <span class="n">var_x</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># xの分散        </span>
-    <span class="n">avr_y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>      <span class="c1"># yの平均</span>
-    <span class="n">avr_x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>      <span class="c1"># xの平均</span>
+    <span class="n">var_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>   <span class="c1"># 分散共分散行列</span>
+    <span class="n">cov_yx</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>   <span class="c1"># 共分散</span>
+    <span class="n">var_y</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>    <span class="c1"># yの分散</span>
+    <span class="n">var_x</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>    <span class="c1"># xの分散        </span>
+    <span class="n">avr_y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>        <span class="c1"># yの平均</span>
+    <span class="n">avr_x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>        <span class="c1"># xの平均</span>
     
-    <span class="n">b1hat</span> <span class="o">=</span> <span class="n">cov_yx</span> <span class="o">/</span> <span class="n">var_x</span>  <span class="c1"># スロープ係数        </span>
-    <span class="n">b0hat</span> <span class="o">=</span> <span class="n">avr_y</span> <span class="o">-</span> <span class="n">b1hat</span><span class="o">*</span><span class="n">avr_x</span>  <span class="c1"># 定数項</span>
+    <span class="n">b1hat</span> <span class="o">=</span> <span class="n">cov_yx</span> <span class="o">/</span> <span class="n">var_x</span>  <span class="c1"># スロープ係数の推定値</span>
+    <span class="n">b0hat</span> <span class="o">=</span> <span class="n">avr_y</span> <span class="o">-</span> <span class="n">b1hat</span><span class="o">*</span><span class="n">avr_x</span>  <span class="c1"># 定数項の推定値</span>
     
-    <span class="k">return</span> <span class="n">b0hat</span><span class="p">,</span> <span class="n">b1hat</span>  <span class="c1"># 推定値</span>
+    <span class="k">return</span> <span class="n">b0hat</span><span class="p">,</span> <span class="n">b1hat</span>     <span class="c1"># 推定値</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>ここで使った<code class="docutils literal notranslate"><span class="pre">np.random.normal()</span></code>について簡単に説明する。<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>にはランダム変数を生成する<code class="docutils literal notranslate"><span class="pre">random</span></code>というサブパッケージがあり，その中の<code class="docutils literal notranslate"><span class="pre">normal()</span></code>を使う。これは<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>の<code class="docutils literal notranslate"><span class="pre">norm.rvs()</span></code>と同じ引数を取り，同じ返り値を返す。</p>
+<p>ここで使った<code class="docutils literal notranslate"><span class="pre">np.random.normal()</span></code>について簡単に説明する。<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>にはランダム変数を生成する<code class="docutils literal notranslate"><span class="pre">random</span></code>というサブパッケージがあり，その中の<code class="docutils literal notranslate"><span class="pre">normal()</span></code>を使う。これは<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>の<code class="docutils literal notranslate"><span class="pre">norm.rvs()</span></code>と同じ引数を取り，同じ返り値を返す。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_sim_manual</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
@@ -1500,12 +1496,12 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(0.08673601428717159, 0.6468141391425078)
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(2.354430207132905, 0.6927245458242969)
 </pre></div>
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">my_sim()</span></code>と<code class="docutils literal notranslate"><span class="pre">my_sim_manual()</span></code>の推定値が異なるのはランダム変数（<code class="docutils literal notranslate"><span class="pre">y</span></code>，<code class="docutils literal notranslate"><span class="pre">x</span></code>）の値が異なるためであり，それが推定誤差である。</p>
+<p><code class="docutils literal notranslate"><span class="pre">my_sim()</span></code>と<code class="docutils literal notranslate"><span class="pre">my_sim_manual()</span></code>の推定値が異なるのはランダム変数（<code class="docutils literal notranslate"><span class="pre">y</span></code>，<code class="docutils literal notranslate"><span class="pre">x</span></code>）の値が異なるためであり，それが推定誤差による影響である。</p>
 </div>
 <div class="section" id="id15">
 <h3>ループを使ってシミュレーション<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
@@ -1513,7 +1509,32 @@ dtype: float64
 <li><p>標本の大きさ<code class="docutils literal notranslate"><span class="pre">n</span></code>のデータを<code class="docutils literal notranslate"><span class="pre">N</span></code>組用意し（<code class="docutils literal notranslate"><span class="pre">N</span></code>は標本数），<code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定を<code class="docutils literal notranslate"><span class="pre">N</span></code>回おこなう。</p></li>
 <li><p>シミュレーション毎に計算した回帰係数の推定値の分布を図示する。</p></li>
 </ul>
-<p>まず<code class="docutils literal notranslate"><span class="pre">def</span></code>を使いシミュレーションの関数を作成するが，パラメータの推定値の計算には<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使わずに，<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の関数を使い「手計算」とする。これにより計算を高速化するパッケージ<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使うことが可能となる。使い方は簡単でデコレーターと呼ばれる<code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code>（又は<code class="docutils literal notranslate"><span class="pre">&#64;jit</span></code>）を関数の上に加えるだけである。これだけで計算速度が数十倍早くなる場合もある。</p>
+<p>まず<code class="docutils literal notranslate"><span class="pre">def</span></code>を使いシミュレーションの関数を作成するが，パラメータの推定値の計算には<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使わずに，<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の関数を使い「手計算」とする。これにより計算を高速化するパッケージ<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使うことが可能となる。使い方は簡単でデコレーターと呼ばれる<code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code>（又は<code class="docutils literal notranslate"><span class="pre">&#64;jit</span></code>）を関数の上に加えるだけである。これだけで計算速度が数十倍早くなる場合もある。そのために、まず上で使った<code class="docutils literal notranslate"><span class="pre">my_sim_manual</span></code>に<code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code>を加えて実行する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>
+<span class="k">def</span> <span class="nf">my_sim_manual</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">su</span><span class="p">):</span>
+    
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">su</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">u</span>
+    
+    <span class="n">var_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">cov_yx</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">var_y</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">var_x</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">avr_y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">avr_x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    
+    <span class="n">b1hat</span> <span class="o">=</span> <span class="n">cov_yx</span> <span class="o">/</span> <span class="n">var_x</span>
+    <span class="n">b0hat</span> <span class="o">=</span> <span class="n">avr_y</span> <span class="o">-</span> <span class="n">b1hat</span><span class="o">*</span><span class="n">avr_x</span>
+    
+    <span class="k">return</span> <span class="n">b0hat</span><span class="p">,</span> <span class="n">b1hat</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>次にシミュレーション用の関数を用意する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>
@@ -1526,19 +1547,8 @@ dtype: float64
     
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># N 回のループ</span>
         
-        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
-        <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">u</span>
-      
-        <span class="n">var_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># 分散共分散行列</span>
-        <span class="n">cov_yx</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 共分散</span>
-        <span class="n">var_y</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># yの分散</span>
-        <span class="n">var_x</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># xの分散        </span>
-        <span class="n">avr_y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>      <span class="c1"># yの平均</span>
-        <span class="n">avr_x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>      <span class="c1"># xの平均</span>
-        
-        <span class="n">b1hat</span> <span class="o">=</span> <span class="n">cov_yx</span> <span class="o">/</span> <span class="n">var_x</span>  <span class="c1"># スロープ係数の推定値</span>
-        <span class="n">b0hat</span> <span class="o">=</span> <span class="n">avr_y</span> <span class="o">-</span> <span class="n">b1hat</span><span class="o">*</span><span class="n">avr_x</span>  <span class="c1"># 定数項の推定値</span>
+        <span class="c1"># 返り値が２つあるので、割り当てる場合には左辺の変数を &#39;,&#39; で区切る </span>
+        <span class="n">b0hat</span><span class="p">,</span> <span class="n">b1hat</span> <span class="o">=</span> <span class="n">my_sim_manual</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">b0</span><span class="o">=</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="o">=</span><span class="n">b1</span><span class="p">,</span><span class="n">su</span><span class="o">=</span><span class="n">su</span><span class="p">)</span>
 
         <span class="n">b0hat_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">b0hat</span>  <span class="c1"># i番目に定数項の推定値をarrに追加</span>
         <span class="n">b1hat_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">b1hat</span>  <span class="c1"># i番目にスロープ係数の推定値をarrに追加</span>
@@ -1577,7 +1587,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_127_0.png" src="_images/8_Simple_Regression_127_0.png" />
+<img alt="_images/8_Simple_Regression_129_0.png" src="_images/8_Simple_Regression_129_0.png" />
 </div>
 </div>
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布</p>
@@ -1589,7 +1599,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_129_0.png" src="_images/8_Simple_Regression_129_0.png" />
+<img alt="_images/8_Simple_Regression_131_0.png" src="_images/8_Simple_Regression_131_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">y</span></code>の理論値を図示するが，図示の時間短縮のために<code class="docutils literal notranslate"><span class="pre">N</span></code>回のシミュレーション中の最初の<code class="docutils literal notranslate"><span class="pre">r</span></code>回の回帰線だけを表示する。</p>
@@ -1618,14 +1628,14 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_133_0.png" src="_images/8_Simple_Regression_133_0.png" />
+<img alt="_images/8_Simple_Regression_135_0.png" src="_images/8_Simple_Regression_135_0.png" />
 </div>
 </div>
 <p>上のコード・ブロックの最後から２行目に<code class="docutils literal notranslate"><span class="pre">f'{r}</span> <span class="pre">rounds</span> <span class="pre">of</span> <span class="pre">OLS</span> <span class="pre">simulation'</span></code>とある。文字列の前に<code class="docutils literal notranslate"><span class="pre">f</span></code>を置き、文字列の中で変数を<code class="docutils literal notranslate"><span class="pre">{}</span></code>で囲むと変数の値を代入してくれるのである。これを<code class="docutils literal notranslate"><span class="pre">f-string</span></code>と呼ぶ。</p>
 <hr class="docutils" />
 <p><strong>＜シミュレーションの含意＞</strong></p>
-<p>まず２つのヒストグラムをみると，値にばらつきがある。これは推定量（<span class="math notranslate nohighlight">\(\hat{\beta}_0\)</span>と<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>）が確率変数であるためである。その実現値は，真の値（<span class="math notranslate nohighlight">\(\beta_0=1.0\)</span>と<span class="math notranslate nohighlight">\(\beta_1=1.0\)</span>）を中心に左右対象に分布している。即ち，推定量は不偏性を満たしている。次の章で簡単に説明するが，上で行ったシミュレーションは不偏推定量に必要な仮定を満たしているのである。</p>
-<p>これを踏まえて，回帰直線の図を考えよう。同じ回帰式を使い<code class="docutils literal notranslate"><span class="pre">N</span></code>回のシミュレーションを行い，最初の<code class="docutils literal notranslate"><span class="pre">r</span></code>個の回帰直線を重ねて描いているためパイプのような形になっている。一方で，実際の実証分析ではこのような繰り返しの試行は不可能であり多くの場合は一度だけである。言い換えると，実証研究では<code class="docutils literal notranslate"><span class="pre">N</span></code>個の回帰直線の中から１つだけを結果としてランダムに「選んでいる」のと等しい。この意味を更に考えるために，（標本の大きさは所与として）たまたま２組みのデータセットが手に入り，別々の回帰分析を行ったとしよう。その場合，パイプの幅が広ければ広いほど，２つの回帰直線の位置は大きく異なる可能性が高くなり，正確性が低い結果になる。逆に，パイプの幅が狭ければ狭いほど，２つの結果は似たものになり，より正確な推定結果となる。このように実証分析ではパイプの幅が可能な限り小さくなる工夫が必要になる。その１つが標本の大きさ<code class="docutils literal notranslate"><span class="pre">n</span></code>である。直感的にわかると思うが，<code class="docutils literal notranslate"><span class="pre">n</span></code>が増えるとパイプは細くなり，極限<span class="math notranslate nohighlight">\(n\rightarrow\infty\)</span>（即ち，標本の大きさと母集団の大きさの差が限りなくゼロに近づく）ではパイプの形が直線（母集団回帰式）に近づくことは容易にイメージできるのではないだろうか。このように，実証分析において標本の大きさは非常に重要な役割を果たすことになる。</p>
+<p>まず２つのヒストグラムをみると，値にばらつきがある。これは推定量（<span class="math notranslate nohighlight">\(\hat{\beta}_0\)</span>と<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>）が確率変数であるためである。その実現値は，真の値（<span class="math notranslate nohighlight">\(\beta_0=1.0\)</span>と<span class="math notranslate nohighlight">\(\beta_1=1.0\)</span>）を中心に左右対象に分布している。即ち，推定量は不偏性を満たしている。次の章で簡単に説明するが，上で行ったシミュレーションは不偏推定量に必要な仮定を満たしている。</p>
+<p>これを踏まえて，回帰直線の図を考えよう。同じ回帰式を使い<code class="docutils literal notranslate"><span class="pre">N</span></code>回のシミュレーションを行った後，最初の<code class="docutils literal notranslate"><span class="pre">r</span></code>個の回帰直線を重ねて描いているためパイプのような形になっている。一方で，実際の実証分析ではこのような繰り返しの試行は不可能であり多くの場合は一度だけである。言い換えると，実証研究では<code class="docutils literal notranslate"><span class="pre">N</span></code>個の回帰直線の中から１つだけを結果としてランダムに「選んでいる」のと等しい。この意味を更に考えるために，（標本の大きさは所与として）たまたま２組みのデータセットが手に入り，別々の回帰分析を行ったとしよう。その場合，パイプの幅が広ければ広いほど，２つの回帰直線の位置は大きく異なる可能性が高くなり，正確性が低い結果になる。逆に，パイプの幅が狭ければ狭いほど，２つの結果は似たものになり，より正確な推定結果となる。このように実証分析ではパイプの幅が可能な限り小さくなる工夫が必要になる。その１つが標本の大きさ<code class="docutils literal notranslate"><span class="pre">n</span></code>である。<code class="docutils literal notranslate"><span class="pre">n</span></code>が増えるとパイプは細くなり，極限<span class="math notranslate nohighlight">\(n\rightarrow\infty\)</span>（即ち，標本の大きさと母集団の大きさの差が限りなくゼロに近づく）ではパイプの形が直線（母集団回帰式）に近づくことになる。このように，実証分析において標本の大きさは非常に重要な役割を果たすことになる。</p>
 <p>（注意）</p>
 <ul class="simple">
 <li><p>このシミュレーションの場合，推定量の<strong>一致性</strong>が満たされているため，パイプが母集団回帰式に収束することになる。しかし一般的に必ずそうなるとは限らない。ある仮定のもとでのみ推定量は一致性を満たすことになる。</p></li>
