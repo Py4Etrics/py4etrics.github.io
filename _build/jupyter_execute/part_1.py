@@ -15,12 +15,13 @@
 1. {doc}`6_things_to_note`
    - コードを書く上で役に立つ点をまとめる。
 
+
+
 ```{toctree}
 :hidden:
 :titlesonly:
 
 
-0_Preparations
 1_Python_Basics
 2_NumPy
 3_Pandas

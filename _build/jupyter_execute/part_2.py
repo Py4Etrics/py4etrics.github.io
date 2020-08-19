@@ -47,6 +47,8 @@
    - Truncated Regression, Tobit and Heckit Models
    - 切断回帰、Tobit、Heckitモデルを考える
 
+
+
 ```{toctree}
 :hidden:
 :titlesonly:

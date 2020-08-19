@@ -10,11 +10,14 @@
 1. {doc}`data_source`
    - データベースのリスト
 
+
+
 ```{toctree}
 :hidden:
 :titlesonly:
 
 
+0_Preparations
 Gapminder
 Descriptive_stats_vs_Graphs
 Grade
