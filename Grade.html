@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>成績分析 &#8212; Pythonで学ぶ入門計量経済学</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="_static/css/index.css" rel="stylesheet">
@@ -14,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-dropdown.css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
     <script src="_static/jquery.js"></script>
@@ -24,12 +25,10 @@
     <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/mystnb.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -314,6 +313,11 @@
         
         
         
+        <a class="colab-button" href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/Grade.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
         
     </div>
 </div>
@@ -512,7 +516,7 @@
 <h2>データの読み込み<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="n">see</span>
 </pre></div>
@@ -524,7 +528,7 @@
 <p>「うりぼー」→ 成績修得情報　→　成績表を選択しコピー</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#ーーーーー dfに成績表を割り当てる ーーーーー</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#ーーーーー dfに成績表を割り当てる ーーーーー</span>
 
 <span class="c1"># df = pd.read_clipboard()</span>
 <span class="c1"># df.head()</span>
@@ -534,7 +538,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#ーーーーー csvに保存 ーーーーー</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#ーーーーー csvに保存 ーーーーー</span>
 
 <span class="c1"># df.to_csv(&#39;成績表20200708.csv&#39;)</span>
 </pre></div>
@@ -543,7 +547,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#ーーーーー 保存先のフォルダの確認 ーーーーー</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#ーーーーー 保存先のフォルダの確認 ーーーーー</span>
 
 <span class="c1"># %pwd</span>
 </pre></div>
@@ -556,7 +560,7 @@
 <p>例のファイルを使う場合。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/Haruyama-KobeU/Py4Basics/master/data/data_for_mark.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/Haruyama-KobeU/Py4Basics/master/data/data_for_mark.csv&#39;</span><span class="p">)</span>
 <span class="n">df</span>
 </pre></div>
 </div>
@@ -1056,13 +1060,13 @@
 <p>ステップ１：<code class="docutils literal notranslate"><span class="pre">for</span></code>ループによる列のラベルの表示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">col</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">col</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span>
 <span class="n">col</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Index([&#39;No.&#39;, &#39;区分&#39;, &#39;科目大区分&#39;, &#39;科目中区分&#39;, &#39;科目ナンバー&#39;, &#39;科目&#39;, &#39;単位数&#39;, &#39;修得年度&#39;, &#39;修得学期&#39;,
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;No.&#39;, &#39;区分&#39;, &#39;科目大区分&#39;, &#39;科目中区分&#39;, &#39;科目ナンバー&#39;, &#39;科目&#39;, &#39;単位数&#39;, &#39;修得年度&#39;, &#39;修得学期&#39;,
        &#39;評語&#39;, &#39;科目GP&#39;, &#39;合否&#39;],
       dtype=&#39;object&#39;)
 </pre></div>
@@ -1071,13 +1075,13 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">col</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">col</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>No.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No.
 区分
 科目大区分
 科目中区分
@@ -1096,12 +1100,12 @@
 <p>ステップ２：それぞれの列の要素の種類を表示方法</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;区分&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;区分&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([&#39;全学共通授業科目&#39;, &#39;高度教養科目&#39;, &#39;専門科目&#39;], dtype=object)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;全学共通授業科目&#39;, &#39;高度教養科目&#39;, &#39;専門科目&#39;], dtype=object)
 </pre></div>
 </div>
 </div>
@@ -1109,14 +1113,14 @@
 <p>スッテプ３：スッテプ１と２を同時に</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">col</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>      <span class="c1"># Noの列を除外</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">col</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>      <span class="c1"># Noの列を除外</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>区分 [&#39;全学共通授業科目&#39; &#39;高度教養科目&#39; &#39;専門科目&#39;]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>区分 [&#39;全学共通授業科目&#39; &#39;高度教養科目&#39; &#39;専門科目&#39;]
 科目大区分 [&#39;基礎教養科目&#39; &#39;高度教養科目&#39; &#39;専門科目&#39;]
 科目中区分 [nan]
 科目ナンバー [&#39;U1AA100&#39; &#39;U1AB100&#39; &#39;U1AD100&#39;]
@@ -1136,7 +1140,7 @@
 <h2><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の作成<a class="headerlink" href="#dataframe" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_other</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;区分 == &quot;全学共通授業科目&quot; or 区分 == &quot;高度教養科目&quot;&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_other</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;区分 == &quot;全学共通授業科目&quot; or 区分 == &quot;高度教養科目&quot;&#39;</span><span class="p">)</span>
 <span class="n">df_econ</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;区分 == &quot;専門科目&quot;&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1144,12 +1148,12 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">df_other</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">df_econ</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">df_other</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">df_econ</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(30, 15, 15)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(30, 15, 15)
 </pre></div>
 </div>
 </div>
@@ -1157,7 +1161,7 @@
 <p>全角文字を使わない方法</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubun</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kubun</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
 
 <span class="n">kubun_arr</span> <span class="o">=</span> <span class="n">kubun</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 <span class="n">kubun_arr</span>
@@ -1165,14 +1169,14 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([&#39;全学共通授業科目&#39;, &#39;高度教養科目&#39;, &#39;専門科目&#39;], dtype=object)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;全学共通授業科目&#39;, &#39;高度教養科目&#39;, &#39;専門科目&#39;], dtype=object)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">other</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span> <span class="n">kubun</span> <span class="o">==</span> <span class="n">kubun_arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span> <span class="o">|</span> <span class="p">(</span> <span class="n">kubun</span> <span class="o">==</span> <span class="n">kubun_arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">)</span> <span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">other</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span> <span class="n">kubun</span> <span class="o">==</span> <span class="n">kubun_arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span> <span class="o">|</span> <span class="p">(</span> <span class="n">kubun</span> <span class="o">==</span> <span class="n">kubun_arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">)</span> <span class="p">)</span>
 <span class="n">econ</span> <span class="o">=</span> <span class="p">(</span> <span class="n">kubun</span> <span class="o">==</span> <span class="n">kubun_arr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">)</span>
 </pre></div>
 </div>
@@ -1180,7 +1184,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_other</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">other</span><span class="p">,:]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_other</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">other</span><span class="p">,:]</span>
 <span class="n">df_econ</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">econ</span><span class="p">,:]</span>
 </pre></div>
 </div>
@@ -1188,12 +1192,12 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">df_other</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">df_econ</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">df_other</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">df_econ</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(30, 15, 15)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(30, 15, 15)
 </pre></div>
 </div>
 </div>
@@ -1206,26 +1210,26 @@
 <p><code class="docutils literal notranslate"><span class="pre">f-string</span></code>を使うと文字列の<code class="docutils literal notranslate"><span class="pre">{}</span></code>の中の変数を評価して表示することが可能となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;春山&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;春山&#39;</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;私は</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">ゼミに所属しています。&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>私は春山ゼミに所属しています。
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>私は春山ゼミに所属しています。
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;合計は</span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="si">}</span><span class="s1">です。&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>合計は6です。
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>合計は6です。
 </pre></div>
 </div>
 </div>
@@ -1238,19 +1242,19 @@
 <p><code class="docutils literal notranslate"><span class="pre">value_counts()</span></code>を使うと簡単になる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>可     10
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>可     10
 秀      7
 優      5
-不可     2
-取消     2
 合格     2
-認定     1
+取消     2
+不可     2
 良      1
+認定     1
 Name: 評語, dtype: int64
 </pre></div>
 </div>
@@ -1262,33 +1266,33 @@ Name: 評語, dtype: int64
 <p>評語の種類</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 <span class="n">m</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([&#39;合格&#39;, &#39;可&#39;, &#39;秀&#39;, &#39;優&#39;, &#39;良&#39;, &#39;取消&#39;, &#39;不可&#39;, &#39;認定&#39;], dtype=object)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;合格&#39;, &#39;可&#39;, &#39;秀&#39;, &#39;優&#39;, &#39;良&#39;, &#39;取消&#39;, &#39;不可&#39;, &#39;認定&#39;], dtype=object)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mark</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="n">m</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">m</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">m</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span><span class="n">m</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">]]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mark</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="n">m</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">m</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">m</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span><span class="n">m</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">]]</span>
 <span class="n">mark</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;秀&#39;, &#39;優&#39;, &#39;良&#39;, &#39;可&#39;, &#39;合格&#39;, &#39;認定&#39;, &#39;不可&#39;, &#39;取消&#39;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;秀&#39;, &#39;優&#39;, &#39;良&#39;, &#39;可&#39;, &#39;合格&#39;, &#39;認定&#39;, &#39;不可&#39;, &#39;取消&#39;]
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mark</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mark</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------</span><span class="se">\n</span><span class="s1">合計&#39;</span><span class="p">)</span>
@@ -1296,7 +1300,7 @@ Name: 評語, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>秀
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>秀
 優
 良
 可
@@ -1312,7 +1316,7 @@ Name: 評語, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mark</span><span class="p">:</span>
     <span class="n">no</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;評語 == @m&#39;</span><span class="p">))</span>
@@ -1323,14 +1327,14 @@ Name: 評語, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[7, 5, 1, 10, 2, 1, 2, 2]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[7, 5, 1, 10, 2, 1, 2, 2]
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mark</span><span class="p">:</span>
     <span class="n">no</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;評語 == @m&#39;</span><span class="p">))</span>
@@ -1342,11 +1346,14 @@ Name: 評語, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>秀 7
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>秀 7
 優 5
 良 1
 可 10
-合格 2
+合格
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 2
 認定 1
 不可 2
 取消 2
@@ -1364,19 +1371,19 @@ Name: 評語, dtype: int64
 <h4>簡単な方法<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">])</span> <span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">])</span> <span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>可     33.3
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>可     33.3
 秀     23.3
 優     16.7
-不可     6.7
-取消     6.7
 合格     6.7
-認定     3.3
+取消     6.7
+不可     6.7
 良      3.3
+認定     3.3
 Name: 評語, dtype: float64
 </pre></div>
 </div>
@@ -1388,7 +1395,7 @@ Name: 評語, dtype: float64
 <p>％だけを表示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mark</span><span class="p">:</span>
     <span class="n">percent</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;評語 == @m&#39;</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
@@ -1399,7 +1406,7 @@ Name: 評語, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[23.333333333333332,
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[23.333333333333332,
  16.666666666666668,
  3.3333333333333335,
  33.333333333333336,
@@ -1414,7 +1421,7 @@ Name: 評語, dtype: float64
 <p>％と評語も表示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mark</span><span class="p">:</span>
     <span class="n">percent</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;評語 == @m&#39;</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
@@ -1426,10 +1433,7 @@ Name: 評語, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>秀
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span> : 23.333333333333332
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>秀 : 23.333333333333332
 優 : 16.666666666666668
 良 : 3.3333333333333335
 可 : 33.333333333333336
@@ -1446,7 +1450,7 @@ Name: 評語, dtype: float64
 <p>小数点の表示を調整する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mark</span><span class="p">:</span>
     <span class="n">percent</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;評語 == @m&#39;</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
@@ -1458,7 +1462,7 @@ Name: 評語, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>秀 : 23.3
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>秀 : 23.3
 優 : 16.7
 良 : 3.3
 可 : 33.3
@@ -1475,7 +1479,7 @@ Name: 評語, dtype: float64
 <p>上のコードでは<code class="docutils literal notranslate"><span class="pre">f-string</span></code>を使った。その代わりに<code class="docutils literal notranslate"><span class="pre">format()</span></code>を使うことも可能。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mark</span><span class="p">:</span>
     <span class="n">percent</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;評語 == @m&#39;</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
@@ -1487,7 +1491,7 @@ Name: 評語, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>秀 23.3
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>秀 23.3
 優 16.7
 良 3.3
 可 33.3
@@ -1510,12 +1514,12 @@ Name: 評語, dtype: float64
 <h3>数<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_other</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_other</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>可     6
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>可     6
 秀     4
 優     3
 合格    2
@@ -1526,7 +1530,7 @@ Name: 評語, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mark</span><span class="p">:</span>
     <span class="n">no</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_other</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;評語 == @m&#39;</span><span class="p">))</span>
@@ -1538,14 +1542,17 @@ Name: 評語, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>秀 4
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>秀 4
 優 3
 良 0
 可 6
 合格 2
 認定 0
 不可 0
-取消 0
+取消
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 0
 --------
 合計 15
 </pre></div>
@@ -1557,12 +1564,12 @@ Name: 評語, dtype: int64
 <h3>割合<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">df_other</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_other</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">])</span> <span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">df_other</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_other</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">])</span> <span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>可     40.0
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>可     40.0
 秀     26.7
 優     20.0
 合格    13.3
@@ -1573,7 +1580,7 @@ Name: 評語, dtype: float64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mark</span><span class="p">:</span>
     <span class="n">percent</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_other</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;評語 == @m&#39;</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_other</span><span class="p">)</span>
@@ -1585,7 +1592,7 @@ Name: 評語, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>秀 26.7
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>秀 26.7
 優 20.0
 良 0.0
 可 40.0
@@ -1605,18 +1612,18 @@ Name: 評語, dtype: float64
 <h2>専門科目<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_econ</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_econ</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>可     4
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>可     4
 秀     3
 優     2
-不可    2
 取消    2
-認定    1
+不可    2
 良     1
+認定    1
 Name: 評語, dtype: int64
 </pre></div>
 </div>
@@ -1624,7 +1631,7 @@ Name: 評語, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mark</span><span class="p">:</span>
     <span class="n">no</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_econ</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;評語 == @m&#39;</span><span class="p">))</span>
@@ -1636,10 +1643,7 @@ Name: 評語, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>秀
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span> 3
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>秀 3
 優 2
 良 1
 可 4
@@ -1655,18 +1659,18 @@ Name: 評語, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">df_econ</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_econ</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">])</span> <span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">df_econ</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_econ</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;評語&#39;</span><span class="p">])</span> <span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>可     26.7
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>可     26.7
 秀     20.0
 優     13.3
-不可    13.3
 取消    13.3
-認定     6.7
+不可    13.3
 良      6.7
+認定     6.7
 Name: 評語, dtype: float64
 </pre></div>
 </div>
@@ -1674,7 +1678,7 @@ Name: 評語, dtype: float64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mark</span><span class="p">:</span>
     <span class="n">percent</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_econ</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;評語 == @m&#39;</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_econ</span><span class="p">)</span>
@@ -1686,11 +1690,14 @@ Name: 評語, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>秀 20.0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>秀 20.0
 優 13.3
 良 6.7
 可 26.7
-合格 0.0
+合格
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 0.0
 認定 6.7
 不可 13.3
 取消 13.3
@@ -1708,12 +1715,12 @@ Name: 評語, dtype: float64
 <p>科目GPの要素の種類</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;科目GP&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;科目GP&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([&#39;-&#39;, &#39;2&#39;, &#39;4.3&#39;, &#39;4&#39;, &#39;3&#39;, &#39;0&#39;, &#39;*&#39;], dtype=object)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;-&#39;, &#39;2&#39;, &#39;4.3&#39;, &#39;4&#39;, &#39;3&#39;, &#39;0&#39;, &#39;*&#39;], dtype=object)
 </pre></div>
 </div>
 </div>
@@ -1722,7 +1729,7 @@ Name: 評語, dtype: float64
 <p>後で「科目GP」のデータ型を変更する際に警告がでないようにメソッド<code class="docutils literal notranslate"><span class="pre">.copy()</span></code>を使い<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>のコピーを作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gpa</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;科目GP not in [&#39;-&#39;, &#39;*&#39;]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpa</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;科目GP not in [&#39;-&#39;, &#39;*&#39;]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">gpa</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1842,12 +1849,12 @@ Name: 評語, dtype: float64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gpa</span><span class="p">[</span><span class="s1">&#39;科目GP&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpa</span><span class="p">[</span><span class="s1">&#39;科目GP&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([&#39;2&#39;, &#39;4.3&#39;, &#39;4&#39;, &#39;3&#39;, &#39;0&#39;], dtype=object)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;2&#39;, &#39;4.3&#39;, &#39;4&#39;, &#39;3&#39;, &#39;0&#39;], dtype=object)
 </pre></div>
 </div>
 </div>
@@ -1856,12 +1863,12 @@ Name: 評語, dtype: float64
 <p>属性<code class="docutils literal notranslate"><span class="pre">.dtypes</span></code>を使って確認することもできる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gpa</span><span class="p">[</span><span class="s1">&#39;科目GP&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtypes</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpa</span><span class="p">[</span><span class="s1">&#39;科目GP&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtypes</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>dtype(&#39;O&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dtype(&#39;O&#39;)
 </pre></div>
 </div>
 </div>
@@ -1873,19 +1880,19 @@ Name: 評語, dtype: float64
 <p>科目GPは<code class="docutils literal notranslate"><span class="pre">object</span></code>（文字列）となっているので，メソッド<code class="docutils literal notranslate"><span class="pre">astype()</span></code>を使って<code class="docutils literal notranslate"><span class="pre">float</span></code>に変換する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gpa</span><span class="p">[</span><span class="s1">&#39;科目GP&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gpa</span><span class="p">[</span><span class="s1">&#39;科目GP&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpa</span><span class="p">[</span><span class="s1">&#39;科目GP&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gpa</span><span class="p">[</span><span class="s1">&#39;科目GP&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gpa</span><span class="o">.</span><span class="n">dtypes</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpa</span><span class="o">.</span><span class="n">dtypes</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>No.         int64
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No.         int64
 区分         object
 科目大区分      object
 科目中区分     float64
@@ -1910,7 +1917,7 @@ dtype: object
 <p><code class="docutils literal notranslate"><span class="pre">groupby</span></code>は<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>や<code class="docutils literal notranslate"><span class="pre">Series</span></code>をグループ化し，グループ内の計算を簡単に行うことができる便利なメソッドである。「修得年度」でグループ化し，平均を計算する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gpa_grouped</span> <span class="o">=</span> <span class="n">gpa</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;修得年度&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpa_grouped</span> <span class="o">=</span> <span class="n">gpa</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;修得年度&#39;</span><span class="p">)</span>
 <span class="n">gpa_mean</span> <span class="o">=</span> <span class="n">gpa_grouped</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">gpa_mean</span>
 </pre></div>
@@ -1980,12 +1987,12 @@ dtype: object
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">gpa_grouped</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">gpa_grouped</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>    .*                 []                 &lt;                  &lt;=
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>    .*                 []                 &lt;                  &lt;=
     ==                 !=                 &gt;                  &gt;=
     dir()              hash()             iter()             len()
     repr()             str()              .agg()             .aggregate()
@@ -2018,12 +2025,12 @@ dtype: object
 <p><code class="docutils literal notranslate"><span class="pre">gpa_mean.index</span></code>を確認する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gpa_mean</span><span class="o">.</span><span class="n">index</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpa_mean</span><span class="o">.</span><span class="n">index</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Int64Index([2018, 2019, 2020], dtype=&#39;int64&#39;, name=&#39;修得年度&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Int64Index([2018, 2019, 2020], dtype=&#39;int64&#39;, name=&#39;修得年度&#39;)
 </pre></div>
 </div>
 </div>
@@ -2031,20 +2038,20 @@ dtype: object
 <p>これを使い横軸に使う文字列を作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yr</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">gpa_mean</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yr</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">gpa_mean</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
 <span class="n">yr</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;2018&#39;, &#39;2019&#39;, &#39;2020&#39;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;2018&#39;, &#39;2019&#39;, &#39;2020&#39;]
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">yr</span><span class="p">,</span><span class="n">gpa_mean</span><span class="p">[</span><span class="s1">&#39;科目GP&#39;</span><span class="p">],</span> <span class="s1">&#39;o-&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">yr</span><span class="p">,</span><span class="n">gpa_mean</span><span class="p">[</span><span class="s1">&#39;科目GP&#39;</span><span class="p">],</span> <span class="s1">&#39;o-&#39;</span><span class="p">)</span>
 <span class="k">pass</span>
 </pre></div>
 </div>
@@ -2057,13 +2064,13 @@ dtype: object
 <p>横軸を調整するために，<code class="docutils literal notranslate"><span class="pre">gpa_mean</span></code>のインデックスを確認。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yr</span> <span class="o">=</span> <span class="n">gpa_mean</span><span class="o">.</span><span class="n">index</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yr</span> <span class="o">=</span> <span class="n">gpa_mean</span><span class="o">.</span><span class="n">index</span>
 <span class="n">yr</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Int64Index([2018, 2019, 2020], dtype=&#39;int64&#39;, name=&#39;修得年度&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Int64Index([2018, 2019, 2020], dtype=&#39;int64&#39;, name=&#39;修得年度&#39;)
 </pre></div>
 </div>
 </div>
@@ -2071,7 +2078,7 @@ dtype: object
 <p><code class="docutils literal notranslate"><span class="pre">xticks()</span></code>を使って横軸の表示を指定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;科目GP&#39;</span><span class="p">,</span> <span class="s1">&#39;o-&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">gpa_mean</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;科目GP&#39;</span><span class="p">,</span> <span class="s1">&#39;o-&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">gpa_mean</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">yr</span><span class="p">)</span>
 <span class="k">pass</span>
 </pre></div>
@@ -2094,7 +2101,7 @@ dtype: object
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gpa</span><span class="p">[</span><span class="s1">&#39;修得学期&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gpa</span><span class="p">[</span><span class="s1">&#39;修得学期&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">&#39;前期&#39;</span><span class="p">:</span><span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="s1">&#39;後期&#39;</span><span class="p">:</span><span class="s1">&#39;2&#39;</span><span class="p">})</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpa</span><span class="p">[</span><span class="s1">&#39;修得学期&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gpa</span><span class="p">[</span><span class="s1">&#39;修得学期&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">&#39;前期&#39;</span><span class="p">:</span><span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="s1">&#39;後期&#39;</span><span class="p">:</span><span class="s1">&#39;2&#39;</span><span class="p">})</span>
 <span class="n">gpa</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2218,7 +2225,7 @@ dtype: object
 <p>「修得年度」と「修得学期」でグループ化する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gpa_grouped</span> <span class="o">=</span> <span class="n">gpa</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;修得年度&#39;</span><span class="p">,</span><span class="s1">&#39;修得学期&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpa_grouped</span> <span class="o">=</span> <span class="n">gpa</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;修得年度&#39;</span><span class="p">,</span><span class="s1">&#39;修得学期&#39;</span><span class="p">])</span>
 <span class="n">gpa_mean</span> <span class="o">=</span> <span class="n">gpa_grouped</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">gpa_mean</span>
 </pre></div>
@@ -2311,7 +2318,7 @@ dtype: object
 <p>図示する際エラーをがでないようにインデックスのラベルを削除する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gpa_mean</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpa_mean</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
 <span class="n">gpa_mean</span>
 </pre></div>
 </div>
@@ -2398,12 +2405,12 @@ dtype: object
 <p>横軸に文字列を使う。まず<code class="docutils literal notranslate"><span class="pre">gpa_mean</span></code>のインデックスを確認する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gpa_mean</span><span class="o">.</span><span class="n">index</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpa_mean</span><span class="o">.</span><span class="n">index</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>MultiIndex([(2018, &#39;1&#39;),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MultiIndex([(2018, &#39;1&#39;),
             (2018, &#39;2&#39;),
             (2019, &#39;1&#39;),
             (2019, &#39;2&#39;),
@@ -2417,20 +2424,20 @@ dtype: object
 <p>これを使い横軸に使う文字列を作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yr_half</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">gpa_mean</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yr_half</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">gpa_mean</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
 <span class="n">yr_half</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;2018-1&#39;, &#39;2018-2&#39;, &#39;2019-1&#39;, &#39;2019-2&#39;, &#39;2020-1&#39;, &#39;2020-2&#39;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;2018-1&#39;, &#39;2018-2&#39;, &#39;2019-1&#39;, &#39;2019-2&#39;, &#39;2020-1&#39;, &#39;2020-2&#39;]
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">yr_half</span><span class="p">,</span> <span class="n">gpa_mean</span><span class="p">[</span><span class="s1">&#39;科目GP&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">yr_half</span><span class="p">,</span> <span class="n">gpa_mean</span><span class="p">[</span><span class="s1">&#39;科目GP&#39;</span><span class="p">])</span>
 <span class="k">pass</span>
 </pre></div>
 </div>
@@ -2482,7 +2489,7 @@ dtype: object
         
           By 春山 鉄源  Tetsugen HARUYAMA<br/>
         
-            &copy; Copyright 2020.<br/>
+            &copy; Copyright 2020（公開開始日：2020年5月4日）.<br/>
       </p>
     </div>
   </footer>

@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>大標本特性 &#8212; Pythonで学ぶ入門計量経済学</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="_static/css/index.css" rel="stylesheet">
@@ -14,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-dropdown.css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
     <script src="_static/jquery.js"></script>
@@ -24,12 +25,10 @@
     <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/mystnb.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -287,6 +286,11 @@
         
         
         
+        <a class="colab-button" href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/12_Asymptotics.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
         
     </div>
 </div>
@@ -416,7 +420,7 @@
 <h1>大標本特性<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">chi2</span><span class="p">,</span> <span class="n">gaussian_kde</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">uniform</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -486,7 +490,7 @@ u = pu_N+(1-p)u_c
 <p>ランダム変数の数</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">10000</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">10000</span>
 </pre></div>
 </div>
 </div>
@@ -494,13 +498,13 @@ u = pu_N+(1-p)u_c
 <p>このシミュレーションでは，<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の関数<code class="docutils literal notranslate"><span class="pre">zeros()</span></code>を使い<code class="docutils literal notranslate"><span class="pre">for</span></code>ループで生成される誤差項の値を格納する<code class="docutils literal notranslate"><span class="pre">array</span></code>を用意する。<code class="docutils literal notranslate"><span class="pre">zeros()</span></code>は<code class="docutils literal notranslate"><span class="pre">0</span></code>が並ぶ<code class="docutils literal notranslate"><span class="pre">array</span></code>を作成する関数であり，一回のループ毎に<code class="docutils literal notranslate"><span class="pre">0</span></code>に誤差項の値が代入されることになる。１行・<code class="docutils literal notranslate"><span class="pre">n</span></code>列の<code class="docutils literal notranslate"><span class="pre">array</span></code>を設定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 <span class="n">u</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([0., 0., 0., ..., 0., 0., 0.])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0., 0., 0., ..., 0., 0., 0.])
 </pre></div>
 </div>
 </div>
@@ -508,14 +512,14 @@ u = pu_N+(1-p)u_c
 <p>正規分布の標準偏差の値。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">u_sd</span> <span class="o">=</span> <span class="mf">0.5</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_sd</span> <span class="o">=</span> <span class="mf">0.5</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1"># (1)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1"># (1)</span>
     
     <span class="n">prob</span> <span class="o">=</span> <span class="mf">0.05</span>  <span class="c1"># (2)</span>
     <span class="n">dist_1</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">u_sd</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1">#(3)</span>
@@ -539,13 +543,13 @@ u = pu_N+(1-p)u_c
 <p><code class="docutils literal notranslate"><span class="pre">u</span></code>の最初の10の値の確認。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([-0.1704317 , -0.0863699 , -0.49382667, -0.63535952, -0.24074484,
-        1.98105403,  0.07584068, -0.50239064, -0.55870857, -0.51415149])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.0280576 ,  1.11610091,  0.95895904,  1.02700197,  0.18523249,
+       -0.64967406, -0.13172282,  0.18395708, -0.59649603,  1.64117729])
 </pre></div>
 </div>
 </div>
@@ -553,7 +557,7 @@ u = pu_N+(1-p)u_c
 <p>図示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">2.0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために-2から２までの横軸の値を設定</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">2.0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために-2から２までの横軸の値を設定</span>
 <span class="n">kde_model</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>  <span class="c1"># カーネル密度推定を設定</span>
 <span class="n">ufunc</span> <span class="o">=</span> <span class="n">kde_model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># カーネル密度推定を使い誤差項の分布を推定</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ufunc</span><span class="p">)</span>  <span class="c1"># 誤差項の分布をプロット</span>
@@ -568,12 +572,12 @@ u = pu_N+(1-p)u_c
 <p>生成された<code class="docutils literal notranslate"><span class="pre">n</span></code>個のランダム変数（誤差項）の平均を確認しよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.0016014645526598514
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.010889282374370984
 </pre></div>
 </div>
 </div>
@@ -594,7 +598,7 @@ u = pu_N+(1-p)u_c
 <p>母集団のパラメータ</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 定数項</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 定数項</span>
 <span class="n">b1</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># 説明変数の係数</span>
 </pre></div>
 </div>
@@ -603,7 +607,7 @@ u = pu_N+(1-p)u_c
 <p>標本数（シミュレーションの回数）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">10000</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">10000</span>
 </pre></div>
 </div>
 </div>
@@ -615,7 +619,7 @@ u = pu_N+(1-p)u_c
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>  <span class="c1"># 計算の高速化</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>  <span class="c1"># 計算の高速化</span>
 <span class="k">def</span> <span class="nf">sim_consistency</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     
     <span class="n">b1_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># b1の推定値を格納するarray</span>
@@ -665,7 +669,7 @@ u = pu_N+(1-p)u_c
 <p>もちろん，この方法でも問題はないが，パターンが増えると書く行も増えていく。別の方法として辞書を使う方法を紹介する。キーを<code class="docutils literal notranslate"><span class="pre">30</span></code>や<code class="docutils literal notranslate"><span class="pre">100</span></code>の数字にして，値にシミュレーションの結果を格納するのである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data_consistency</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># 空の辞書の作成</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_consistency</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># 空の辞書の作成</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">250</span><span class="p">,</span><span class="mi">500</span><span class="p">]:</span>
     <span class="n">data_consistency</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">sim_consistency</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
@@ -680,13 +684,13 @@ u = pu_N+(1-p)u_c
 <p>シミュレーションの結果にアクセスするにはキーを使う。例えば，<code class="docutils literal notranslate"><span class="pre">sim_consistency(30)</span></code>の結果にアクセスする場合は</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;30&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;30&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([1.56873075, 0.97878197, 0.57104463, ..., 0.02782175, 0.41238718,
-       0.41956481])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.34869727,  0.41904564,  0.85784985, ..., -0.14556532,
+        0.15808443,  0.07154983])
 </pre></div>
 </div>
 </div>
@@ -694,7 +698,7 @@ u = pu_N+(1-p)u_c
 <p>とする。次に図をプロットしよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 図を作成するために横軸の値を設定</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 図を作成するために横軸の値を設定</span>
 <span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
 
 <span class="c1"># n = 30</span>
@@ -730,7 +734,7 @@ u = pu_N+(1-p)u_c
 <p>上のコードには同じような行が複数あり，単純な間違いの可能性が高くなる。。<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを使うとよりコンパクトに書くことが可能となり，間違いも少なくなる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># OLS推定量のリスト</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># OLS推定量のリスト</span>
 <span class="n">b1hat_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;30&#39;</span><span class="p">],</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;100&#39;</span><span class="p">],</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;250&#39;</span><span class="p">],</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;500&#39;</span><span class="p">]]</span>
 
 <span class="c1"># 色のリスト</span>
@@ -830,7 +834,7 @@ u = pu_N+(1-p)u_c
 <p>以下の母集団のパラメータは一致性のシミュレーションと同じ値を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 定数項</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 定数項</span>
 <span class="n">b1</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># 説明変数の係数</span>
 </pre></div>
 </div>
@@ -839,7 +843,7 @@ u = pu_N+(1-p)u_c
 <p>誤差項は標準正規分布に従うと仮定する。<code class="docutils literal notranslate"><span class="pre">u_sd</span></code>は誤差項の標準偏差。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">u_sd</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_sd</span> <span class="o">=</span> <span class="mi">1</span>
 </pre></div>
 </div>
 </div>
@@ -847,7 +851,7 @@ u = pu_N+(1-p)u_c
 <p>標本数（シミュレーションの回数）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">100000</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">100000</span>
 </pre></div>
 </div>
 </div>
@@ -860,7 +864,7 @@ u = pu_N+(1-p)u_c
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>  <span class="c1"># 関数の高速化</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>  <span class="c1"># 関数の高速化</span>
 <span class="k">def</span> <span class="nf">sim_norm</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ</span>
     
     <span class="n">q1_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># q1を入れる空array</span>
@@ -900,7 +904,7 @@ u = pu_N+(1-p)u_c
 <p><span class="math notranslate nohighlight">\(n=5,\;10,\;30,\;100\)</span>のシミュレーション</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">q1_norm</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># 空の辞書の作成</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q1_norm</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># 空の辞書の作成</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">100</span><span class="p">]:</span>
     <span class="n">q1_norm</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">sim_norm</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
@@ -911,7 +915,7 @@ u = pu_N+(1-p)u_c
 <p><code class="docutils literal notranslate"><span class="pre">plot</span></code>するための関数を用意する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_dist</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">q1_arr</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ，q1_arr=q1値のarray</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_dist</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">q1_arr</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ，q1_arr=q1値のarray</span>
     
     <span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
 
@@ -934,7 +938,7 @@ u = pu_N+(1-p)u_c
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 
 <span class="c1"># n = 5</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
@@ -977,7 +981,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>  <span class="c1"># 関数の高速化</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>  <span class="c1"># 関数の高速化</span>
 <span class="k">def</span> <span class="nf">sim_non_norm</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ</span>
     
     <span class="n">q1_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># q1を入れる空array</span>
@@ -1019,7 +1023,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 <p><span class="math notranslate nohighlight">\(n=5,\;10,\;30,\;100\)</span>のシミュレーション</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">q1_non_norm</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># 空の辞書の作成</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q1_non_norm</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># 空の辞書の作成</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">100</span><span class="p">]:</span>
     <span class="n">q1_non_norm</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">sim_non_norm</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
@@ -1034,7 +1038,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 
 <span class="c1"># n = 5</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
@@ -1078,7 +1082,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data_norm</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_norm</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
 <span class="n">qqplot</span><span class="p">(</span><span class="n">data_norm</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">,</span> <span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">pass</span>
 </pre></div>
@@ -1091,7 +1095,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 <p><strong>一様分布</strong>から生成したデータのケース。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data_uniform</span> <span class="o">=</span> <span class="n">uniform</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_uniform</span> <span class="o">=</span> <span class="n">uniform</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
 <span class="n">qqplot</span><span class="p">(</span><span class="n">data_uniform</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">,</span> <span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">pass</span>
 </pre></div>
@@ -1105,7 +1109,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 <p>誤差項は<code class="docutils literal notranslate"><span class="pre">res_wage</span></code>の属性である<code class="docutils literal notranslate"><span class="pre">.resid</span></code>から取得できるので，それを<code class="docutils literal notranslate"><span class="pre">qqplot()</span></code>に使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span>
 <span class="n">formula_wage</span> <span class="o">=</span> <span class="s1">&#39;wage ~ educ + exper+ tenure&#39;</span>
 <span class="n">res_wage</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_wage</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">qqplot</span><span class="p">(</span><span class="n">res_wage</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">,</span><span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1120,7 +1124,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 <p>被説明変数の<code class="docutils literal notranslate"><span class="pre">wage</span></code>に対数を取る。こちらの方が当てはまりが良い。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span>
 <span class="n">formula_wage_log</span> <span class="o">=</span> <span class="s1">&#39;np.log(wage) ~ educ + exper+ tenure&#39;</span>
 <span class="n">res_wage_log</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_wage_log</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">qqplot</span><span class="p">(</span><span class="n">res_wage_log</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">,</span><span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1147,15 +1151,15 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 <p>上で使った<code class="docutils literal notranslate"><span class="pre">data_norm</span></code>で試してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jarque_bera</span><span class="p">(</span><span class="n">data_norm</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">jarque_bera</span><span class="p">(</span><span class="n">data_norm</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(1.7548295058130583,
- 0.41585661529499207,
- 0.11164863546287482,
- 3.185391868959076)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3.5970038926434316,
+ 0.16554670040073213,
+ -0.19338374740011033,
+ 3.151878542963929)
 </pre></div>
 </div>
 </div>
@@ -1173,15 +1177,15 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 <p><span class="math notranslate nohighlight">\(p\)</span>値は非常に小さいため，1%有意水準でも<span class="math notranslate nohighlight">\(\text{H}_0\)</span>を棄却できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jarque_bera</span><span class="p">(</span><span class="n">data_uniform</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">jarque_bera</span><span class="p">(</span><span class="n">data_uniform</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(31.28936013363173,
- 1.6054684515847794e-07,
- -0.08463262312180972,
- 1.7862296086868776)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(26.988937396588106,
+ 1.3785632858905168e-06,
+ 0.031033864975955096,
+ 1.8635068887428987)
 </pre></div>
 </div>
 </div>
@@ -1190,12 +1194,12 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 <p>上で行った２つの回帰分析の結果を検定してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jarque_bera</span><span class="p">(</span><span class="n">res_wage</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">jarque_bera</span><span class="p">(</span><span class="n">res_wage</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(650.807511291524,
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(650.807511291524,
  4.774682881101464e-142,
  1.5548017153087925,
  7.474930815416471)
@@ -1205,12 +1209,12 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jarque_bera</span><span class="p">(</span><span class="n">res_wage_log</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">jarque_bera</span><span class="p">(</span><span class="n">res_wage_log</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(20.94123198237358,
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(20.94123198237358,
  2.8357585677393478e-05,
  0.02123204915915199,
  3.9765706706813067)
@@ -1226,12 +1230,12 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_wage_log</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_wage_log</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>==============================================================================
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==============================================================================
 Omnibus:                       11.534   Durbin-Watson:                   1.769
 Prob(Omnibus):                  0.003   Jarque-Bera (JB):               20.941
 Skew:                           0.021   Prob(JB):                     2.84e-05
@@ -1258,12 +1262,12 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">omni_normtest</span><span class="p">(</span><span class="n">data_norm</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">omni_normtest</span><span class="p">(</span><span class="n">data_norm</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=1.96950128216381, pvalue=0.3735323589494305)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=3.8210950404338115, pvalue=0.14799933178167374)
 </pre></div>
 </div>
 </div>
@@ -1274,12 +1278,12 @@ Kurtosis:                       3.977   Cond. No.                         135.
 <p><span class="math notranslate nohighlight">\(p\)</span>値は非常に小さいため，1%有意水準でも<span class="math notranslate nohighlight">\(\text{H}_0\)</span>を棄却できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">omni_normtest</span><span class="p">(</span><span class="n">data_uniform</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">omni_normtest</span><span class="p">(</span><span class="n">data_uniform</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=350.35123373622616, pvalue=8.359806596411284e-77)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=209.27932240749277, pvalue=3.593954304802825e-46)
 </pre></div>
 </div>
 </div>
@@ -1288,24 +1292,24 @@ Kurtosis:                       3.977   Cond. No.                         135.
 <p>上で行った２つの回帰分析の結果を検定してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">omni_normtest</span><span class="p">(</span><span class="n">res_wage</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">omni_normtest</span><span class="p">(</span><span class="n">res_wage</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=179.5971758439393, pvalue=1.0022331946711146e-39)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=179.5971758439393, pvalue=1.0022331946711146e-39)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">omni_normtest</span><span class="p">(</span><span class="n">res_wage_log</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">omni_normtest</span><span class="p">(</span><span class="n">res_wage_log</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=11.534386892183383, pvalue=0.003128525580078861)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=11.534386892183383, pvalue=0.003128525580078861)
 </pre></div>
 </div>
 </div>
@@ -1318,12 +1322,12 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_wage_log</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_wage_log</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>==============================================================================
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==============================================================================
 Omnibus:                       11.534   Durbin-Watson:                   1.769
 Prob(Omnibus):                  0.003   Jarque-Bera (JB):               20.941
 Skew:                           0.021   Prob(JB):                     2.84e-05
@@ -1340,13 +1344,13 @@ Kurtosis:                       3.977   Cond. No.                         135.
 <p>大標本の場合，<span class="math notranslate nohighlight">\(F\)</span>検定の代わりに<span class="math notranslate nohighlight">\(LM\)</span>検定も使える。ここでは<code class="docutils literal notranslate"><span class="pre">crime1</span></code>のデータを使って<span class="math notranslate nohighlight">\(LM\)</span>検定について説明する。<code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">crime1</span></code>データを使おう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crime1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime1&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crime1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime1&#39;</span><span class="p">)</span>
 <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime1&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>name of dataset: crime1
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>name of dataset: crime1
 no of variables: 16
 no of observations: 2725
 
@@ -1394,14 +1398,14 @@ data he used in his article.
 <p>制限がない場合の推定</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_0</span> <span class="o">=</span> <span class="s1">&#39;narr86 ~ pcnv + ptime86 + qemp86 + avgsen + tottime&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_0</span> <span class="o">=</span> <span class="s1">&#39;narr86 ~ pcnv + ptime86 + qemp86 + avgsen + tottime&#39;</span>
 <span class="n">res_0</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_0</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">crime1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">res_0</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.706061
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.706061
 pcnv        -0.151225
 ptime86     -0.039259
 qemp86      -0.103091
@@ -1417,14 +1421,14 @@ dtype: float64
 <p>仮説が正しい場合の推定</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_1</span> <span class="o">=</span> <span class="s1">&#39;narr86 ~ pcnv + ptime86 + qemp86&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_1</span> <span class="o">=</span> <span class="s1">&#39;narr86 ~ pcnv + ptime86 + qemp86&#39;</span>
 <span class="n">res_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">crime1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">res_1</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.711772
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.711772
 pcnv        -0.149927
 ptime86     -0.034420
 qemp86      -0.104113
@@ -1440,12 +1444,12 @@ dtype: float64
 <p><code class="docutils literal notranslate"><span class="pre">res_0</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">.compare_lm_test()</span></code>を使う。引き数は，仮説が正しい場合のOLS推定の結果<code class="docutils literal notranslate"><span class="pre">res_1</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_0</span><span class="o">.</span><span class="n">compare_lm_test</span><span class="p">(</span><span class="n">res_1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_0</span><span class="o">.</span><span class="n">compare_lm_test</span><span class="p">(</span><span class="n">res_1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(4.070729461071163, 0.13063282803270007, 2.0)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4.070729461071163, 0.13063282803270007, 2.0)
 </pre></div>
 </div>
 </div>
@@ -1498,7 +1502,7 @@ dtype: float64
         
           By 春山 鉄源  Tetsugen HARUYAMA<br/>
         
-            &copy; Copyright 2020.<br/>
+            &copy; Copyright 2020（公開開始日：2020年5月4日）.<br/>
       </p>
     </div>
   </footer>

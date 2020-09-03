@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>操作変数法と２段階OLS &#8212; Pythonで学ぶ入門計量経済学</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="_static/css/index.css" rel="stylesheet">
@@ -14,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-dropdown.css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
     <script src="_static/jquery.js"></script>
@@ -24,12 +25,10 @@
     <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/mystnb.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -286,6 +285,11 @@
                     alt="Interact on binder">Binder</button></a>
         
         
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/19_IV2SLS.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
         
         
     </div>
@@ -571,7 +575,7 @@
 <h1>操作変数法と２段階OLS<a class="headerlink" href="#ols" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">linearmodels.iv</span> <span class="kn">import</span> <span class="n">IV2SLS</span>
 <span class="kn">import</span> <span class="nn">wooldridge</span>
@@ -699,14 +703,14 @@
 <p>既婚女性の教育の収益率に関するデータ<code class="docutils literal notranslate"><span class="pre">mroz</span></code>を利用して使い方を説明する。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mroz</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mroz&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lwage&#39;</span><span class="p">])</span>  <span class="c1"># 列&#39;lwage&#39;にNaNがある行は削除する</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mroz</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mroz&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lwage&#39;</span><span class="p">])</span>  <span class="c1"># 列&#39;lwage&#39;にNaNがある行は削除する</span>
 
 <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mroz&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>name of dataset: mroz
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>name of dataset: mroz
 no of variables: 22
 no of observations: 753
 
@@ -761,7 +765,7 @@ provided the data, which he obtained from Professor Mroz.
 <p>まず回帰式を決める。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_1</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + [educ ~ fatheduc]&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_1</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + [educ ~ fatheduc]&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -769,7 +773,7 @@ provided the data, which he obtained from Professor Mroz.
 <p><code class="docutils literal notranslate"><span class="pre">IV2SLS</span></code>モジュールの<code class="docutils literal notranslate"><span class="pre">from_formula</span></code>を使うことにより，<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">ols</span></code>のように回帰式を文字列で指定できる。次式では推定するモデルを設定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mod_1</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mod_1</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -777,7 +781,7 @@ provided the data, which he obtained from Professor Mroz.
 <p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">ols</span></code>のようにメソッド<code class="docutils literal notranslate"><span class="pre">.fit()</span></code>を使い推定する。（以前説明したオプションについての説明を参照）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_1</span> <span class="o">=</span> <span class="n">mod_1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_1</span> <span class="o">=</span> <span class="n">mod_1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -785,12 +789,12 @@ provided the data, which he obtained from Professor Mroz.
 <p><code class="docutils literal notranslate"><span class="pre">res_1</span></code>の属性<code class="docutils literal notranslate"><span class="pre">.summary</span></code>，さらに<code class="docutils literal notranslate"><span class="pre">summary</span></code>の属性<code class="docutils literal notranslate"><span class="pre">tables</span></code>を使ってパラメータの部分だけを表示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_1</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_1</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
@@ -810,7 +814,7 @@ educ           0.0592     0.0351     1.6878     0.0914     -0.0095      0.1279
 <p><strong>第１段階のOLS</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stage_1</span> <span class="o">=</span> <span class="s1">&#39;educ ~ 1 + fatheduc&#39;</span>  <span class="c1"># 回帰式</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stage_1</span> <span class="o">=</span> <span class="s1">&#39;educ ~ 1 + fatheduc&#39;</span>  <span class="c1"># 回帰式</span>
 
 <span class="n">res_stage_1</span> <span class="o">=</span><span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">stage_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>  <span class="c1"># OLS推定</span>
 
@@ -824,7 +828,7 @@ educ           0.0592     0.0351     1.6878     0.0914     -0.0095      0.1279
 <p><strong>第２段階のOLS</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stage_2</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ_fit&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stage_2</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ_fit&#39;</span>
 
 <span class="n">res_stage_2</span> <span class="o">=</span><span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">stage_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>  <span class="c1"># OLS推定</span>
 
@@ -833,7 +837,7 @@ educ           0.0592     0.0351     1.6878     0.0914     -0.0095      0.1279
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
@@ -851,7 +855,7 @@ educ_fit       0.0592     0.0367     1.6119     0.1070     -0.0128      0.1311
 <p>確認のために，操作変数法を使わずに直接OLS推定をおこなうとどうなるかを確認しよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_ols</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_ols</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ&#39;</span>
 
 <span class="n">res_ols</span> <span class="o">=</span><span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_ols</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLS推定</span>
 
@@ -860,7 +864,7 @@ educ_fit       0.0592     0.0367     1.6119     0.1070     -0.0128      0.1311
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
@@ -956,7 +960,7 @@ educ           0.1086     0.0134     8.1178     0.0000      0.0824      0.1349
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_check</span> <span class="o">=</span> <span class="s1">&#39;educ ~ 1 + fatheduc + motheduc&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_check</span> <span class="o">=</span> <span class="s1">&#39;educ ~ 1 + fatheduc + motheduc&#39;</span>
 
 <span class="n">res_check</span> <span class="o">=</span><span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_check</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>
 
@@ -965,13 +969,13 @@ educ           0.1086     0.0134     8.1178     0.0000      0.0824      0.1349
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                            OLS Estimation Summary                            
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            OLS Estimation Summary                            
 ==============================================================================
 Dep. Variable:                   educ   R-squared:                      0.2081
 Estimator:                        OLS   Adj. R-squared:                 0.2043
 No. Observations:                 428   F-statistic:                    112.45
-Date:                Wed, Aug 19 2020   P-value (F-stat)                0.0000
-Time:                        20:54:58   Distribution:                  chi2(2)
+Date:                Wed, Sep 02 2020   P-value (F-stat)                0.0000
+Time:                        18:05:18   Distribution:                  chi2(2)
 Cov. Estimator:            unadjusted                                         
                                                                               
                              Parameter Estimates                              
@@ -1007,7 +1011,7 @@ motheduc       0.1564     0.0357     4.3805     0.0000      0.0864      0.2263
 <p>上述した<code class="docutils literal notranslate"><span class="pre">IV2SLS</span></code>回帰式の一般形に基づいて回帰式を設定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_2</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + exper + expersq +[educ ~ fatheduc + motheduc]&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_2</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + exper + expersq +[educ ~ fatheduc + motheduc]&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -1015,14 +1019,14 @@ motheduc       0.1564     0.0357     4.3805     0.0000      0.0864      0.2263
 <p>操作変数法を使い推定</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span> <span class="o">=</span><span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span> <span class="o">=</span><span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">res_2</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
@@ -1064,7 +1068,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <p>標本数（ループの回数）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">10_000</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">10_000</span>
 </pre></div>
 </div>
 </div>
@@ -1072,7 +1076,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <p>母集団のパラメータ</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="mf">0.5</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="mf">0.5</span>
 <span class="n">b1</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">b2</span> <span class="o">=</span> <span class="mf">0.5</span>
 </pre></div>
@@ -1099,7 +1103,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <p>計算の速度を早めるために下の関数の中では<code class="docutils literal notranslate"><span class="pre">IV2SLS</span></code>は使わず<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の関数を使いIVとOLS推定値を計算している。<code class="docutils literal notranslate"><span class="pre">IV2SLS</span></code>は係数の推定値だけではなく他の多くの統計値も自動的に計算するために一回の計算に比較的に長い時間を要するためである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sim_iv</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">ols</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ, m=x1とｚの共分散</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sim_iv</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">ols</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ, m=x1とｚの共分散</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    n: 標本の大きさ</span>
 <span class="sd">    m: 説明変数と対応する操作変数の相関性の度合い</span>
@@ -1158,7 +1162,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <p>シミュレーションの開始</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b1hat_iv</span><span class="p">,</span> <span class="n">b1hat_ols</span> <span class="o">=</span> <span class="n">sim_iv</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mf">0.9</span><span class="p">,</span><span class="n">ols</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b1hat_iv</span><span class="p">,</span> <span class="n">b1hat_ols</span> <span class="o">=</span> <span class="n">sim_iv</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mf">0.9</span><span class="p">,</span><span class="n">ols</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1166,7 +1170,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <p>図示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">1.3</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">1.3</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
 
 <span class="n">kde_model_ols</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b1hat_ols</span><span class="p">)</span>  <span class="c1"># OLS推定量のカーネル密度関数を計算</span>
 
@@ -1206,7 +1210,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <p>上で使った関数<code class="docutils literal notranslate"><span class="pre">sim_iv()</span></code>をデフォルト（<code class="docutils literal notranslate"><span class="pre">ols=False</span></code>）で使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b1hat_iv_30</span> <span class="o">=</span> <span class="n">sim_iv</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mf">0.8</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b1hat_iv_30</span> <span class="o">=</span> <span class="n">sim_iv</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mf">0.8</span><span class="p">)</span>
 <span class="n">b1hat_iv_100</span> <span class="o">=</span> <span class="n">sim_iv</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mf">0.8</span><span class="p">)</span>
 <span class="n">b1hat_iv_1000</span> <span class="o">=</span> <span class="n">sim_iv</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mf">0.8</span><span class="p">)</span>
 </pre></div>
@@ -1216,7 +1220,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <p>図示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
 
 <span class="n">b1hat_iv_n_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">b1hat_iv_30</span><span class="p">,</span> <span class="n">b1hat_iv_100</span><span class="p">,</span> <span class="n">b1hat_iv_1000</span><span class="p">]</span>
 <span class="n">color_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;g-&#39;</span><span class="p">,</span> <span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">]</span>
@@ -1260,7 +1264,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <p>シミュレーションの開始</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b1hat_iv_weak</span> <span class="o">=</span> <span class="n">sim_iv</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b1hat_iv_weak</span> <span class="o">=</span> <span class="n">sim_iv</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
 <span class="n">b1hat_iv_mid</span> <span class="o">=</span> <span class="n">sim_iv</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span><span class="mf">0.4</span><span class="p">)</span>
 <span class="n">b1hat_iv_strong</span> <span class="o">=</span> <span class="n">sim_iv</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span><span class="mf">0.8</span><span class="p">)</span>
 </pre></div>
@@ -1270,7 +1274,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <p>図示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
 
 <span class="n">b1hat_iv_n_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">b1hat_iv_weak</span><span class="p">,</span> <span class="n">b1hat_iv_mid</span><span class="p">,</span> <span class="n">b1hat_iv_strong</span><span class="p">]</span>
 <span class="n">color_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;g-&#39;</span><span class="p">,</span> <span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">]</span>
@@ -1336,17 +1340,17 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <p>（注意）<code class="docutils literal notranslate"><span class="pre">.wu_hauseman()</span></code>であって<code class="docutils literal notranslate"><span class="pre">.wu_hauseman</span></code>ではない。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span><span class="o">.</span><span class="n">wu_hausman</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span><span class="o">.</span><span class="n">wu_hausman</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Wu-Hausman test of exogeneity
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Wu-Hausman test of exogeneity
 H0: All endogenous variables are exogenous
 Statistic: 2.8035
 P-value: 0.0948
 Distributed: F(1,423)
-WaldTestStatistic, id: 0x7ff21e9b5b80
+WaldTestStatistic, id: 0x7f9cf3349160
 </pre></div>
 </div>
 </div>
@@ -1415,7 +1419,7 @@ WaldTestStatistic, id: 0x7ff21e9b5b80
 <p><strong>第１段階</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_2a</span> <span class="o">=</span> <span class="s1">&#39;educ ~ 1 + exper + expersq + motheduc + fatheduc&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_2a</span> <span class="o">=</span> <span class="s1">&#39;educ ~ 1 + exper + expersq + motheduc + fatheduc&#39;</span>
 
 <span class="n">mod_2a</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_2a</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
 
@@ -1428,7 +1432,7 @@ WaldTestStatistic, id: 0x7ff21e9b5b80
 <p>回帰式に直接<code class="docutils literal notranslate"><span class="pre">res_2a.resids</span></code>を入れる。<code class="docutils literal notranslate"><span class="pre">resids</span></code>は<code class="docutils literal notranslate"><span class="pre">res_2a</span></code>の残差を取得する属性。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_2b</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ + exper + expersq + res_2a.resids&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_2b</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ + exper + expersq + res_2a.resids&#39;</span>
 
 <span class="n">mod_2b</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_2b</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
 
@@ -1439,7 +1443,7 @@ WaldTestStatistic, id: 0x7ff21e9b5b80
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                               Parameter Estimates                               
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                               Parameter Estimates                               
 =================================================================================
                Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ---------------------------------------------------------------------------------
@@ -1460,17 +1464,17 @@ res_2a.resids     0.0582     0.0346     1.6810     0.0928     -0.0097      0.126
 <p><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>には上の計算を自動でおこなった結果を示すメソッドが用意されている。<code class="docutils literal notranslate"><span class="pre">res_2</span></code>の<code class="docutils literal notranslate"><span class="pre">.wooldridge_regression</span></code>である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span><span class="o">.</span><span class="n">wooldridge_regression</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span><span class="o">.</span><span class="n">wooldridge_regression</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Wooldridge&#39;s regression test of exogeneity
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Wooldridge&#39;s regression test of exogeneity
 H0: Endogenous variables are exogenous
 Statistic: 2.8256
 P-value: 0.0928
 Distributed: chi2(1)
-WaldTestStatistic, id: 0x7ff21f78c8e0
+WaldTestStatistic, id: 0x7f9cf338abe0
 </pre></div>
 </div>
 </div>
@@ -1556,7 +1560,7 @@ WaldTestStatistic, id: 0x7ff21f78c8e0
 <p>第２段階の計算のために<code class="docutils literal notranslate"><span class="pre">res_2</span></code>の属性<code class="docutils literal notranslate"><span class="pre">.resids</span></code>を使い回帰残差を取得し，直接以下の回帰式に入れる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_aux</span> <span class="o">=</span> <span class="s1">&#39;res_2.resids ~ 1 + motheduc + fatheduc + exper + expersq&#39;</span> <span class="c1"># 外生的説明変数を省いてもよい</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_aux</span> <span class="o">=</span> <span class="s1">&#39;res_2.resids ~ 1 + motheduc + fatheduc + exper + expersq&#39;</span> <span class="c1"># 外生的説明変数を省いてもよい</span>
 
 <span class="n">mod_aux</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_aux</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
 
@@ -1568,7 +1572,7 @@ WaldTestStatistic, id: 0x7ff21f78c8e0
 <p>検定統計量の計算</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">r2</span> <span class="o">=</span> <span class="n">res_aux</span><span class="o">.</span><span class="n">rsquared</span>  <span class="c1"># 決定係数</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r2</span> <span class="o">=</span> <span class="n">res_aux</span><span class="o">.</span><span class="n">rsquared</span>  <span class="c1"># 決定係数</span>
 <span class="n">n</span> <span class="o">=</span> <span class="n">res_aux</span><span class="o">.</span><span class="n">nobs</span>    <span class="c1"># 標本の大きさ</span>
 <span class="n">teststat</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">r2</span>      <span class="c1"># 検定統計量</span>
 <span class="n">pval</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">chi2</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">teststat</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># p値の計算</span>
@@ -1577,7 +1581,7 @@ WaldTestStatistic, id: 0x7ff21f78c8e0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>0.5386372330714875
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5386372330714875
 </pre></div>
 </div>
 </div>
@@ -1589,17 +1593,17 @@ WaldTestStatistic, id: 0x7ff21f78c8e0
 <p><code class="docutils literal notranslate"><span class="pre">res_2</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">.sargan</span></code>を使うと上と同じ計算結果を表示できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span><span class="o">.</span><span class="n">sargan</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span><span class="o">.</span><span class="n">sargan</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Sargan&#39;s test of overidentification
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sargan&#39;s test of overidentification
 H0: The model is not overidentified.
 Statistic: 0.3781
 P-value: 0.5386
 Distributed: chi2(1)
-WaldTestStatistic, id: 0x7ff21f66ea90
+WaldTestStatistic, id: 0x7f9cf3354460
 </pre></div>
 </div>
 </div>
@@ -1696,7 +1700,7 @@ WaldTestStatistic, id: 0x7ff21f66ea90
 <p><strong><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_L</span> <span class="o">=</span> <span class="s1">&#39;hours ~ 1 + educ + age + kidslt6 + nwifeinc + [lwage ~ exper + expersq]&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_L</span> <span class="o">=</span> <span class="s1">&#39;hours ~ 1 + educ + age + kidslt6 + nwifeinc + [lwage ~ exper + expersq]&#39;</span>
 
 <span class="n">mod_L</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_L</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
 
@@ -1707,7 +1711,7 @@ WaldTestStatistic, id: 0x7ff21f66ea90
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
@@ -1725,7 +1729,7 @@ lwage          1639.6     467.27     3.5088     0.0005      723.73      2555.4
 <p><strong><code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_L_ols</span> <span class="o">=</span> <span class="s1">&#39;hours ~ 1 + educ + age + kidslt6 + nwifeinc + lwage &#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_L_ols</span> <span class="o">=</span> <span class="s1">&#39;hours ~ 1 + educ + age + kidslt6 + nwifeinc + lwage &#39;</span>
 
 <span class="n">mod_L_ols</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_L_ols</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
 
@@ -1736,7 +1740,7 @@ lwage          1639.6     467.27     3.5088     0.0005      723.73      2555.4
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
@@ -1758,7 +1762,7 @@ lwage         -2.0468     54.494    -0.0376     0.9700     -108.85      104.76
 <p><strong><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_P</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ + exper + expersq + [hours ~ age + kidslt6 + nwifeinc]&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_P</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ + exper + expersq + [hours ~ age + kidslt6 + nwifeinc]&#39;</span>
 
 <span class="n">mod_P</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_P</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
 
@@ -1769,7 +1773,7 @@ lwage         -2.0468     54.494    -0.0376     0.9700     -108.85      104.76
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
@@ -1786,7 +1790,7 @@ hours          0.0001     0.0003     0.4974     0.6189     -0.0004      0.0006
 <p><strong><code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_W_ols</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ + exper + expersq + hours&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_W_ols</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ + exper + expersq + hours&#39;</span>
 
 <span class="n">mod_W_ols</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_W_ols</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
 
@@ -1797,7 +1801,7 @@ hours          0.0001     0.0003     0.4974     0.6189     -0.0004      0.0006
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
@@ -1892,7 +1896,7 @@ hours      -5.655e-05  4.353e-05    -1.2992     0.1939     -0.0001   2.876e-05
 <p>標本の大きさと標本数（ループの回数）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">N</span> <span class="o">=</span> <span class="mi">10_000</span>
 </pre></div>
 </div>
@@ -1901,7 +1905,7 @@ hours      -5.655e-05  4.353e-05    -1.2992     0.1939     -0.0001   2.876e-05
 <p>母集団のパラメータの真の値</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="mf">1.0</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="mf">1.0</span>
 <span class="n">b1</span> <span class="o">=</span> <span class="mf">1.0</span>
 </pre></div>
 </div>
@@ -1909,7 +1913,7 @@ hours      -5.655e-05  4.353e-05    -1.2992     0.1939     -0.0001   2.876e-05
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x_pop</span> <span class="o">=</span> <span class="n">uniform</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 母集団の説明変数</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_pop</span> <span class="o">=</span> <span class="n">uniform</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 母集団の説明変数</span>
 <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 母集団の誤差項</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">x_pop</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># 母集団回帰式</span>
 </pre></div>
@@ -1919,7 +1923,7 @@ hours      -5.655e-05  4.353e-05    -1.2992     0.1939     -0.0001   2.876e-05
 <p>測定誤差の標準偏差</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">error_sd</span> <span class="o">=</span> <span class="mi">3</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error_sd</span> <span class="o">=</span> <span class="mi">3</span>
 </pre></div>
 </div>
 </div>
@@ -1927,7 +1931,7 @@ hours      -5.655e-05  4.353e-05    -1.2992     0.1939     -0.0001   2.876e-05
 <p>シミュレーション開始</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># シミュレーションで計算した推定量を入れる空のリストの作成</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># シミュレーションで計算した推定量を入れる空のリストの作成</span>
 <span class="n">b1_ols_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># OLS推定量</span>
 <span class="n">b1_iv_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># IV推定量</span>
 
@@ -1957,7 +1961,7 @@ hours      -5.655e-05  4.353e-05    -1.2992     0.1939     -0.0001   2.876e-05
 <p>結果の図示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">1.2</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">1.2</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
 
 <span class="n">kde_model_ols</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b1_ols_list</span><span class="p">)</span>  <span class="c1"># t値のカーネル密度推定を設定</span>
 <span class="n">b1_ols_dist</span> <span class="o">=</span> <span class="n">kde_model_ols</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
@@ -2024,7 +2028,7 @@ hours      -5.655e-05  4.353e-05    -1.2992     0.1939     -0.0001   2.876e-05
         
           By 春山 鉄源  Tetsugen HARUYAMA<br/>
         
-            &copy; Copyright 2020.<br/>
+            &copy; Copyright 2020（公開開始日：2020年5月4日）.<br/>
       </p>
     </div>
   </footer>
