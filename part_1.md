@@ -11,8 +11,6 @@ kernelspec:
 
 # １. `Python`の基礎
 **内容**
-1. {doc}`0_Preparations`
-   - `Python`や`Git`など使用するアプリのインストール及び使い方を簡単に説明する。
 1. {doc}`1_Python_Basics`
    - 基本となる概念や文法などについて解説する。
 1. {doc}`2_NumPy`

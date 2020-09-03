@@ -117,15 +117,15 @@ len(df)
 
 `DataFrame`には様々な属性があるが，ここでは以下の３点について説明する。
 
-* データ（`df.values`）
+* データ（`df.to_numpy()`）
 * 列ラベル（`df.columns`）
 * 行ラベル（`df.index`）
 
 まずデータ自体を抽出する。
 
-df.values
+df.to_numpy()
 
-type(df.values)
+type(df.to_numpy())
 
 これで分かることは，メインのデータの部分は`NumPy`の`ndarray`（`n`次元`array`）であることが分かる。即ち，`Pandas`は`NumPy`に基づいて構築されており，データ値の計算などは`array`が裏で動いているということである。また行と列のラベルを追加し，より直感的に使えるように拡張しているのである。
 
