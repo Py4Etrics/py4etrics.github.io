@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>質的変数と回帰分析 &#8212; Pythonで学ぶ入門計量経済学</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="_static/css/index.css" rel="stylesheet">
@@ -14,9 +15,9 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="_static/spanels-index--0afa1ebdab0bb23b98b56d34c23d9f57.css" />
+    <link rel="stylesheet" type="text/css" href="_static/spanels-variables--ffc7f74dcb1b9eecba2dbcbc22818714.css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/sphinx-book-theme.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
@@ -24,12 +25,10 @@
     <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/mystnb.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -114,6 +113,11 @@
    <li class="toctree-l2">
     <a class="reference internal" href="7_Review_of_Statistics.html">
      統計学の簡単な復習
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="list_of_terms.html">
+     計量経済学用語
     </a>
    </li>
    <li class="toctree-l2">
@@ -287,6 +291,11 @@
         
         
         
+        <a class="colab-button" href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/13_Dummies.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
         
     </div>
 </div>
@@ -392,7 +401,7 @@
 <h1>質的変数と回帰分析<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
 <span class="kn">import</span> <span class="nn">wooldridge</span>
@@ -418,13 +427,13 @@
 <p>実は，この場合のOLS推定量<span class="math notranslate nohighlight">\(\hat{\beta}_0\)</span>は被説明変数<span class="math notranslate nohighlight">\(y\)</span>の平均と等しいことになる。この結果を確認するために以下では<code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">wage1</span></code>のデータを使う。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span>
 <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>name of dataset: wage1
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>name of dataset: wage1
 no of variables: 24
 no of observations: 526
 
@@ -466,7 +475,7 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 <p>時間平均賃金<code class="docutils literal notranslate"><span class="pre">wage</span></code>を被説明変数に設定する。<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>では，定数項だけの回帰式を考える場合，<code class="docutils literal notranslate"><span class="pre">1</span></code>をつか加える必要がある。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_const</span> <span class="o">=</span> <span class="s1">&#39;wage ~ 1&#39;</span>  <span class="c1"># 定数項だけの場合は１が必要</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_const</span> <span class="o">=</span> <span class="s1">&#39;wage ~ 1&#39;</span>  <span class="c1"># 定数項だけの場合は１が必要</span>
 
 <span class="n">res_const</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_const</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
@@ -475,7 +484,7 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    5.896103
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    5.896103
 dtype: float64
 </pre></div>
 </div>
@@ -484,12 +493,12 @@ dtype: float64
 <p>この推定値が賃金の平均と等しいこをを確認するために，直接平均を計算する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>5.896102674787035
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.896102674787035
 </pre></div>
 </div>
 </div>
@@ -527,7 +536,7 @@ y=\beta_0+\beta_1D
 <p>この回帰式を使い，時間賃金の男女間の差について考察する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_const_2</span> <span class="o">=</span> <span class="s1">&#39;wage ~ female&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_const_2</span> <span class="o">=</span> <span class="s1">&#39;wage ~ female&#39;</span>
 
 <span class="n">res_const_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_const_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
@@ -536,7 +545,7 @@ y=\beta_0+\beta_1D
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    7.099489
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    7.099489
 female      -2.511830
 dtype: float64
 </pre></div>
@@ -555,7 +564,7 @@ dtype: float64
 <p>＜女性の場合＞</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 女性だけを抽出するTrue/False条件の作成</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 女性だけを抽出するTrue/False条件の作成</span>
 <span class="n">cond_female</span> <span class="o">=</span> <span class="p">(</span><span class="n">wage1</span><span class="p">[</span><span class="s1">&#39;female&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">wage1</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cond_female</span><span class="p">,</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
@@ -563,7 +572,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>4.587658740225292
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.587658740225292
 </pre></div>
 </div>
 </div>
@@ -571,7 +580,7 @@ dtype: float64
 <p>＜男性の場合＞</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 男性だけを抽出するTrue/False条件の作成</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 男性だけを抽出するTrue/False条件の作成</span>
 <span class="n">cond_male</span> <span class="o">=</span> <span class="p">(</span><span class="n">wage1</span><span class="p">[</span><span class="s1">&#39;female&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="n">wage1</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cond_male</span><span class="p">,</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
@@ -579,7 +588,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>7.099489067157689
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7.099489067157689
 </pre></div>
 </div>
 </div>
@@ -610,7 +619,7 @@ dtype: float64
 <p>新たなダミー変数の作成ルールを定義する関数を作成する。この関数では<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の行を引数とする。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 以下では row をDataFrameの行と考える。</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 以下では row をDataFrameの行と考える。</span>
 
 <span class="c1"># 未婚男性の関数</span>
 <span class="k">def</span> <span class="nf">singmale</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
@@ -648,7 +657,7 @@ dtype: float64
 <p>以下のコードで使う<code class="docutils literal notranslate"><span class="pre">.apply()</span></code>は第１引数の関数を行または列に適用するメソッドである。<code class="docutils literal notranslate"><span class="pre">axis=1</span></code>は「任意の列に沿って各行に関数を適用する」ことを指定している（<code class="docutils literal notranslate"><span class="pre">axis='columns'</span></code>でもOK）。また、引数の関数に<code class="docutils literal notranslate"><span class="pre">()</span></code>は書かないことに注意しよう。即ち，引数に関数名（関数を参照する「参照記号」）を引数とすることにより，関数のオブジェクトを参照していることになる。即ち、<code class="docutils literal notranslate"><span class="pre">.apply()</span></code>は第１引数の関数を参照し、それを実行するメソッドである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;singmale&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wage1</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">singmale</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;singmale&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wage1</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">singmale</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">wage1</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;marmale&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wage1</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">marmale</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">wage1</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;singfem&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wage1</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">singfem</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
 <span class="n">wage1</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;marfem&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wage1</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">marfem</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
@@ -785,7 +794,7 @@ dtype: float64
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;singmale&#39;</span><span class="p">:</span><span class="n">singmale</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">func_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;singmale&#39;</span><span class="p">:</span><span class="n">singmale</span><span class="p">,</span>
              <span class="s1">&#39;marmale&#39;</span><span class="p">:</span><span class="n">marmale</span><span class="p">,</span>
              <span class="s1">&#39;singfem&#39;</span><span class="p">:</span><span class="n">singfem</span><span class="p">,</span>
              <span class="s1">&#39;marfem&#39;</span><span class="p">:</span><span class="n">marfem</span><span class="p">}</span>
@@ -796,7 +805,7 @@ dtype: float64
 <p>次に<code class="docutils literal notranslate"><span class="pre">func_dict</span></code>を使い<code class="docutils literal notranslate"><span class="pre">for</span></code>ループで列を追加する。ここで<code class="docutils literal notranslate"><span class="pre">key</span></code>は辞書のキーを指す。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">func_dict</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">func_dict</span><span class="p">:</span>
     <span class="n">wage1</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">wage1</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">func_dict</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">wage1</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -949,7 +958,7 @@ dtype: float64
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_0+\hat{\beta}_3\)</span>：既婚女性の平均賃金</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_const_4</span> <span class="o">=</span> <span class="s1">&#39;wage ~ marmale + singfem + marfem&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_const_4</span> <span class="o">=</span> <span class="s1">&#39;wage ~ marmale + singfem + marfem&#39;</span>
 
 <span class="n">res_const_4</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_const_4</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
@@ -959,7 +968,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    5.168023
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    5.168023
 marmale      2.815009
 singfem     -0.556440
 marfem      -0.602114
@@ -979,24 +988,24 @@ dtype: float64
 <p>未婚男性の平均賃金</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;female==0 &amp; married==0&#39;</span><span class="p">)[</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;female==0 &amp; married==0&#39;</span><span class="p">)[</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>5.168023282705351
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.168023282705351
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">para4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">para4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>5.168023282705353
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.168023282705353
 </pre></div>
 </div>
 </div>
@@ -1004,24 +1013,24 @@ dtype: float64
 <p>既婚男性の平均賃金</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;female==0 &amp; married==1&#39;</span><span class="p">)[</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;female==0 &amp; married==1&#39;</span><span class="p">)[</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>7.983031926002909
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7.983031926002909
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">para4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">para4</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">para4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">para4</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>7.983031926002912
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7.983031926002912
 </pre></div>
 </div>
 </div>
@@ -1029,24 +1038,24 @@ dtype: float64
 <p>未婚女性の平均賃金</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;female==1 &amp; married==0&#39;</span><span class="p">)[</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;female==1 &amp; married==0&#39;</span><span class="p">)[</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>4.611583345135053
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.611583345135053
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">para4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">para4</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">para4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">para4</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>4.611583345135056
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.611583345135056
 </pre></div>
 </div>
 </div>
@@ -1054,24 +1063,24 @@ dtype: float64
 <p>既婚女性の平均賃金</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;female==1 &amp; married==1&#39;</span><span class="p">)[</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;female==1 &amp; married==1&#39;</span><span class="p">)[</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>4.565909099398238
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.565909099398238
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">para4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">para4</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">para4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">para4</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>4.5659090993982385
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.5659090993982385
 </pre></div>
 </div>
 </div>
@@ -1088,7 +1097,7 @@ dtype: float64
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_1</span> <span class="o">=</span> <span class="s1">&#39;wage ~ female + educ + exper+ tenure&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_1</span> <span class="o">=</span> <span class="s1">&#39;wage ~ female + educ + exper+ tenure&#39;</span>
 
 <span class="n">res_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
@@ -1097,7 +1106,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept   -1.567939
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept   -1.567939
 female      -1.810852
 educ         0.571505
 exper        0.025396
@@ -1135,7 +1144,7 @@ y=\left(\beta_0+\beta_1\right)+ \left(\beta_2+\beta_3\right)x + u\)</span></p>
 <p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の回帰式では<span class="math notranslate nohighlight">\(\text{female}\times \text{educ}\)</span>を<span class="math notranslate nohighlight">\(\text{female}:\text{educ}\)</span>と書く。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_2</span> <span class="o">=</span> <span class="s1">&#39;np.log(wage) ~ female + female:educ + educ + exper + tenure&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_2</span> <span class="o">=</span> <span class="s1">&#39;np.log(wage) ~ female + female:educ + educ + exper + tenure&#39;</span>
 
 <span class="n">res_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
@@ -1144,12 +1153,12 @@ y=\left(\beta_0+\beta_1\right)+ \left(\beta_2+\beta_3\right)x + u\)</span></p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>===============================================================================
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>===============================================================================
                   coef    std err          t      P&gt;|t|      [0.025      0.975]
 -------------------------------------------------------------------------------
 Intercept       0.4647      0.123      3.781      0.000       0.223       0.706
@@ -1184,14 +1193,14 @@ tenure          0.0174      0.003      5.849      0.000       0.012       0.023
 <code class="docutils literal notranslate"><span class="pre">female:educ</span></code><span class="math notranslate nohighlight">\(=0\)</span>の制約を考えよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hypotheses</span> <span class="o">=</span> <span class="s1">&#39;female=0, female:educ=0&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hypotheses</span> <span class="o">=</span> <span class="s1">&#39;female=0, female:educ=0&#39;</span>
 
 <span class="n">res_2</span><span class="o">.</span><span class="n">f_test</span><span class="p">(</span><span class="n">hypotheses</span><span class="p">)</span><span class="o">.</span><span class="n">pvalue</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array(3.89455469e-14)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(3.89455469e-14)
 </pre></div>
 </div>
 </div>
@@ -1215,7 +1224,7 @@ tenure          0.0174      0.003      5.849      0.000       0.012       0.023
 <p>例として，男女のカテゴリーがある<code class="docutils literal notranslate"><span class="pre">wage1</span></code>のデータセットをもう一度使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">wage1</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;wage&#39;</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">,</span> <span class="s1">&#39;educ&#39;</span><span class="p">]]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">wage1</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;wage&#39;</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">,</span> <span class="s1">&#39;educ&#39;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -1228,14 +1237,14 @@ tenure          0.0174      0.003      5.849      0.000       0.012       0.023
 <p><code class="docutils literal notranslate"><span class="pre">replace()</span></code>の中は辞書になっている（<code class="docutils literal notranslate"><span class="pre">replace()</span></code>の代わりに<code class="docutils literal notranslate"><span class="pre">map()</span></code>でもOK）。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;female&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="s1">&#39;female&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="s1">&#39;male&#39;</span><span class="p">})</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;female&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="s1">&#39;female&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="s1">&#39;male&#39;</span><span class="p">})</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1293,7 +1302,7 @@ tenure          0.0174      0.003      5.849      0.000       0.012       0.023
 <p><code class="docutils literal notranslate"><span class="pre">sex</span></code>の変数を<code class="docutils literal notranslate"><span class="pre">C()</span></code>に入れて回帰式を書いて計算。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_c</span> <span class="o">=</span> <span class="s1">&#39;wage ~  C(sex) + educ&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_c</span> <span class="o">=</span> <span class="s1">&#39;wage ~  C(sex) + educ&#39;</span>
 
 <span class="n">res_c</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_c</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
@@ -1302,7 +1311,7 @@ tenure          0.0174      0.003      5.849      0.000       0.012       0.023
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept        -1.650545
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept        -1.650545
 C(sex)[T.male]    2.273362
 educ              0.506452
 dtype: float64
@@ -1324,7 +1333,7 @@ dtype: float64
 <p>例えば，<code class="docutils literal notranslate"><span class="pre">male</span></code>を基本カテゴリーとする。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_cm</span> <span class="o">=</span> <span class="s1">&#39;wage ~  C(sex,Treatment(&quot;male&quot;)) + educ&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_cm</span> <span class="o">=</span> <span class="s1">&#39;wage ~  C(sex,Treatment(&quot;male&quot;)) + educ&#39;</span>
 
 <span class="n">res_cm</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_cm</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
@@ -1333,7 +1342,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept                              0.622817
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept                              0.622817
 C(sex, Treatment(&quot;male&quot;))[T.female]   -2.273362
 educ                                   0.506452
 dtype: float64
@@ -1344,7 +1353,7 @@ dtype: float64
 <p>この結果は，<code class="docutils literal notranslate"><span class="pre">male</span></code>基本カテゴリーとする以下の結果と同じである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_ca</span> <span class="o">=</span> <span class="s1">&#39;wage ~  female + educ&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_ca</span> <span class="o">=</span> <span class="s1">&#39;wage ~  female + educ&#39;</span>
 
 <span class="n">res_ca</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_ca</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
@@ -1353,7 +1362,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.622817
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.622817
 female      -2.273362
 educ         0.506452
 dtype: float64
@@ -1380,13 +1389,13 @@ dtype: float64
 </ul>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">discrim</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;discrim&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">discrim</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;discrim&#39;</span><span class="p">)</span>
 <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;discrim&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>name of dataset: discrim
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>name of dataset: discrim
 no of variables: 37
 no of observations: 410
 
@@ -1443,12 +1452,12 @@ data set.
 <p>それぞれのファースト・フード店の数を確認する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">discrim</span><span class="p">[</span><span class="s1">&#39;chain&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">discrim</span><span class="p">[</span><span class="s1">&#39;chain&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>1    171
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1    171
 3     99
 2     80
 4     60
@@ -1460,7 +1469,7 @@ Name: chain, dtype: int64
 <p>OLS推定をおこなう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_p</span> <span class="o">=</span> <span class="s1">&#39;np.log(pfries) ~ prpblck + np.log(income) + C(chain)&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_p</span> <span class="o">=</span> <span class="s1">&#39;np.log(pfries) ~ prpblck + np.log(income) + C(chain)&#39;</span>
 
 <span class="n">res_p</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_p</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">discrim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
@@ -1469,7 +1478,7 @@ Name: chain, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>==================================================================================
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==================================================================================
                      coef    std err          t      P&gt;|t|      [0.025      0.975]
 ----------------------------------------------------------------------------------
 Intercept         -1.0812      0.222     -4.860      0.000      -1.519      -0.644
@@ -1503,7 +1512,7 @@ np.log(income)     0.0914      0.021      4.441      0.000       0.051       0.1
 <p>例２を使って説明する。まず説明の前準備として<code class="docutils literal notranslate"><span class="pre">discrim</span></code>の中で使う変数だけを取り出そう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_c</span> <span class="o">=</span> <span class="n">discrim</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;pfries&#39;</span><span class="p">,</span> <span class="s1">&#39;prpblck&#39;</span><span class="p">,</span> <span class="s1">&#39;income&#39;</span><span class="p">,</span> <span class="s1">&#39;chain&#39;</span><span class="p">]]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_c</span> <span class="o">=</span> <span class="n">discrim</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;pfries&#39;</span><span class="p">,</span> <span class="s1">&#39;prpblck&#39;</span><span class="p">,</span> <span class="s1">&#39;income&#39;</span><span class="p">,</span> <span class="s1">&#39;chain&#39;</span><span class="p">]]</span>
 <span class="n">df_c</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1582,7 +1591,7 @@ np.log(income)     0.0914      0.021      4.441      0.000       0.051       0.1
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_c</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;chain&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_c</span><span class="p">[</span><span class="s1">&#39;chain&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_c</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;chain&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_c</span><span class="p">[</span><span class="s1">&#39;chain&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
                         <span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="s1">&#39;Berger_King&#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="s1">&#39;KFC&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">:</span><span class="s1">&#39;Roy_Rogers&#39;</span><span class="p">,</span><span class="mi">4</span><span class="p">:</span><span class="s1">&#39;Wendys&#39;</span><span class="p">})</span>
 
 <span class="n">df_c</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -1657,12 +1666,12 @@ np.log(income)     0.0914      0.021      4.441      0.000       0.051       0.1
 <p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の特徴を確認する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_c</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_c</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
 RangeIndex: 410 entries, 0 to 409
 Data columns (total 4 columns):
  #   Column   Non-Null Count  Dtype  
@@ -1684,13 +1693,13 @@ memory usage: 12.9+ KB
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_c</span><span class="p">[</span><span class="s1">&#39;chain&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">df_c</span><span class="p">[</span><span class="s1">&#39;chain&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_c</span><span class="p">[</span><span class="s1">&#39;chain&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">df_c</span><span class="p">[</span><span class="s1">&#39;chain&#39;</span><span class="p">])</span>
 <span class="n">df_c</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
 RangeIndex: 410 entries, 0 to 409
 Data columns (total 4 columns):
  #   Column   Non-Null Count  Dtype   
@@ -1708,7 +1717,7 @@ memory usage: 10.3 KB
 <p>列<code class="docutils literal notranslate"><span class="pre">chain</span></code>は<code class="docutils literal notranslate"><span class="pre">category</span></code>になっている。後は，<code class="docutils literal notranslate"><span class="pre">chain</span></code>をそのまま回帰式に使うだけである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_c</span> <span class="o">=</span> <span class="s1">&#39;np.log(pfries) ~ prpblck + np.log(income) + chain&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_c</span> <span class="o">=</span> <span class="s1">&#39;np.log(pfries) ~ prpblck + np.log(income) + chain&#39;</span>
 
 <span class="n">res_c</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_c</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_c</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
@@ -1717,7 +1726,7 @@ memory usage: 10.3 KB
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>=======================================================================================
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=======================================================================================
                           coef    std err          t      P&gt;|t|      [0.025      0.975]
 ---------------------------------------------------------------------------------------
 Intercept              -1.0812      0.222     -4.860      0.000      -1.519      -0.644

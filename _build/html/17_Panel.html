@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>パネル・データ分析 &#8212; Pythonで学ぶ入門計量経済学</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="_static/css/index.css" rel="stylesheet">
@@ -14,9 +15,9 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="_static/spanels-index--0afa1ebdab0bb23b98b56d34c23d9f57.css" />
+    <link rel="stylesheet" type="text/css" href="_static/spanels-variables--ffc7f74dcb1b9eecba2dbcbc22818714.css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/sphinx-book-theme.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
@@ -24,12 +25,10 @@
     <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/mystnb.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -114,6 +113,11 @@
    <li class="toctree-l2">
     <a class="reference internal" href="7_Review_of_Statistics.html">
      統計学の簡単な復習
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="list_of_terms.html">
+     計量経済学用語
     </a>
    </li>
    <li class="toctree-l2">
@@ -286,6 +290,11 @@
                     alt="Interact on binder">Binder</button></a>
         
         
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/17_Panel.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
         
         
     </div>
@@ -470,7 +479,7 @@
 <h1>パネル・データ分析<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">gaussian_kde</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -532,13 +541,13 @@
 <p><code class="docutils literal notranslate"><span class="pre">wagepan</span></code>というデータセットを使い，賃金に対する労働組合などの変数の効果を推定する。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wagepan&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wagepan&#39;</span><span class="p">)</span>
 <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wagepan&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>name of dataset: wagepan
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>name of dataset: wagepan
 no of variables: 44
 no of observations: 4360
 
@@ -633,7 +642,7 @@ undergraduates looking to replicate or extend a published study.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 説明変数のリスト</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 説明変数のリスト</span>
 <span class="n">exog</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;married&#39;</span><span class="p">,</span><span class="s1">&#39;union&#39;</span><span class="p">,</span><span class="s1">&#39;expersq&#39;</span><span class="p">,</span><span class="s1">&#39;d81&#39;</span><span class="p">,</span><span class="s1">&#39;d82&#39;</span><span class="p">,</span><span class="s1">&#39;d83&#39;</span><span class="p">,</span><span class="s1">&#39;d84&#39;</span><span class="p">,</span><span class="s1">&#39;d85&#39;</span><span class="p">,</span><span class="s1">&#39;d86&#39;</span><span class="p">,</span><span class="s1">&#39;d87&#39;</span><span class="p">]</span>
 
 <span class="c1"># 全ての変数のリスト</span>
@@ -663,7 +672,7 @@ undergraduates looking to replicate or extend a published study.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>married: 0.04668
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>married: 0.04668
 union: 0.08
 expersq: -0.005185
 d81: 0.1512
@@ -734,14 +743,14 @@ d87: 0.925
 <p>まず<code class="docutils literal notranslate"><span class="pre">wagepan</span></code>を<code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>化する。これにより<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>を使いFD推定可能となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span> <span class="o">=</span> <span class="n">wagepan</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;nr&#39;</span><span class="p">,</span><span class="s1">&#39;year&#39;</span><span class="p">],</span><span class="n">drop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span> <span class="o">=</span> <span class="n">wagepan</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;nr&#39;</span><span class="p">,</span><span class="s1">&#39;year&#39;</span><span class="p">],</span><span class="n">drop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -942,12 +951,12 @@ d87: 0.925
 </div>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
 MultiIndex: 4360 entries, (13, 1980) to (12548, 1987)
 Data columns (total 44 columns):
  #   Column    Non-Null Count  Dtype  
@@ -1005,13 +1014,17 @@ memory usage: 1.5 MB
 <p>次に<code class="docutils literal notranslate"><span class="pre">PanelData</span></code>オブジェクトに変換しデータの特徴を調べる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wagepanp</span> <span class="o">=</span> <span class="n">PanelData</span><span class="p">(</span><span class="n">wagepan</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wagepanp</span> <span class="o">=</span> <span class="n">PanelData</span><span class="p">(</span><span class="n">wagepan</span><span class="p">)</span>
 <span class="n">wagepanp</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(44, 8, 545)
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/linearmodels/panel/data.py:98: FutureWarning: is_categorical is deprecated and will be removed in a future version.  Use is_categorical_dtype instead
+  if is_categorical(s):
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(44, 8, 545)
 </pre></div>
 </div>
 </div>
@@ -1024,12 +1037,12 @@ memory usage: 1.5 MB
 <p>次に，balanced もしくは unbalanced data set かを確認する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">wagepanp</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">==</span><span class="n">wagepanp</span><span class="o">.</span><span class="n">nobs</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">wagepanp</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">==</span><span class="n">wagepanp</span><span class="o">.</span><span class="n">nobs</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>True
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
 </pre></div>
 </div>
 </div>
@@ -1049,7 +1062,7 @@ memory usage: 1.5 MB
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_fe</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ married + union + expersq </span><span class="se">\</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_fe</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ married + union + expersq </span><span class="se">\</span>
 <span class="s1">                      +d81+d82+d83+d84+d85+d86+d87 + EntityEffects&#39;</span>
 </pre></div>
 </div>
@@ -1060,7 +1073,13 @@ memory usage: 1.5 MB
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mod_fe</span> <span class="o">=</span> <span class="n">PanelOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_fe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mod_fe</span> <span class="o">=</span> <span class="n">PanelOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_fe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/linearmodels/panel/data.py:98: FutureWarning: is_categorical is deprecated and will be removed in a future version.  Use is_categorical_dtype instead
+  if is_categorical(s):
 </pre></div>
 </div>
 </div>
@@ -1070,7 +1089,7 @@ memory usage: 1.5 MB
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result_fe</span> <span class="o">=</span> <span class="n">mod_fe</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_fe</span> <span class="o">=</span> <span class="n">mod_fe</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1089,12 +1108,12 @@ memory usage: 1.5 MB
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result_fe</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result_fe</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
@@ -1122,18 +1141,18 @@ d87            0.9250     0.0688     13.450     0.0000      0.7902      1.0599
 <p><span class="math notranslate nohighlight">\(R^2\)</span>を表示してみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result_fe</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result_fe</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                          PanelOLS Estimation Summary                           
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                          PanelOLS Estimation Summary                           
 ================================================================================
 Dep. Variable:                  lwage   R-squared:                        0.1806
 Estimator:                   PanelOLS   R-squared (Between):              0.2386
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Thu, Sep 03 2020   R-squared (Overall):              0.2361
-Time:                        15:58:01   Log-likelihood                   -1324.8
+Date:                Mon, Sep 28 2020   R-squared (Overall):              0.2361
+Time:                        12:23:54   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      83.851
 Entities:                         545   P-value                           0.0000
@@ -1163,20 +1182,20 @@ Max Obs:                       545.00
 <p>上の推定式では時間ダミー変数として使い，観察単位全てに共通な時間的な影響を捉えた。具体的には，インフレにより賃金は変化するが，その変化は全ての労働者には対して同じであり，その効果を時間ダミー変数が捉えている。それを<strong>時間効果</strong>と呼ぶ。このような時間ダミー変数を加えた理由は，時間効果が他の変数（例えば，<code class="docutils literal notranslate"><span class="pre">married</span></code>）の係数を「汚さない」ようにするためであり，よりピュアの効果を推定するためである。一方，<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>では，わざわざ時間ダミー変数を作らずとも<code class="docutils literal notranslate"><span class="pre">TimeEffects</span></code>を回帰式に追加することにより，時間効果を自動的に「排除」することができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_fe2</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ married + union + expersq + TimeEffects + EntityEffects&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_fe2</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ married + union + expersq + TimeEffects + EntityEffects&#39;</span>
 <span class="n">result_fe2</span> <span class="o">=</span> <span class="n">PanelOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_fe2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">result_fe2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                          PanelOLS Estimation Summary                           
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                          PanelOLS Estimation Summary                           
 ================================================================================
 Dep. Variable:                  lwage   R-squared:                        0.0216
 Estimator:                   PanelOLS   R-squared (Between):             -0.2717
 No. Observations:                4360   R-squared (Within):              -0.4809
-Date:                Thu, Sep 03 2020   R-squared (Overall):             -0.2808
-Time:                        15:58:01   Log-likelihood                   -1324.8
+Date:                Mon, Sep 28 2020   R-squared (Overall):             -0.2808
+Time:                        12:23:54   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      27.959
 Entities:                         545   P-value                           0.0000
@@ -1217,7 +1236,7 @@ Included effects: Entity, Time
 <p>上で使った<code class="docutils literal notranslate"><span class="pre">wagepan</span></code>を使い推定する。まず，観察単位のダミー変数として推定式に<code class="docutils literal notranslate"><span class="pre">C(nr)</span></code>を追加する</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_dum</span> <span class="o">=</span> <span class="s1">&#39;lwage ~  1 + married + union + expersq </span><span class="se">\</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_dum</span> <span class="o">=</span> <span class="s1">&#39;lwage ~  1 + married + union + expersq </span><span class="se">\</span>
 <span class="s1">                        +d81+d82+d83+d84+d85+d86+d87 + C(nr)&#39;</span>
 </pre></div>
 </div>
@@ -1226,7 +1245,13 @@ Included effects: Entity, Time
 <p><code class="docutils literal notranslate"><span class="pre">PooledOLS</span></code>モジュールの関数<code class="docutils literal notranslate"><span class="pre">from_formula</span></code>を使って推定式を定義する。ここで<code class="docutils literal notranslate"><span class="pre">PooledOLS</span></code>とは，<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>で使う通常のOLS推定と同じである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result_dum</span> <span class="o">=</span> <span class="n">PooledOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_dum</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_dum</span> <span class="o">=</span> <span class="n">PooledOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_dum</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/linearmodels/panel/data.py:98: FutureWarning: is_categorical is deprecated and will be removed in a future version.  Use is_categorical_dtype instead
+  if is_categorical(s):
 </pre></div>
 </div>
 </div>
@@ -1242,13 +1267,13 @@ Included effects: Entity, Time
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">filter</span> <span class="o">=</span> <span class="p">(</span><span class="n">result_dum</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;nr&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">filter</span> <span class="o">=</span> <span class="p">(</span><span class="n">result_dum</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;nr&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 <span class="n">result_dum</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Intercept    0.933291
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.933291
 married      0.046680
 union        0.080002
 expersq     -0.005185
@@ -1351,7 +1376,7 @@ Name: parameter, dtype: float64
 <p>時間ダミー変数の代わりに<code class="docutils literal notranslate"><span class="pre">TimeEffects</span></code>を使わないように。入れることができますが，そのような仕様になっていません。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_re</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_re</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
 <span class="s1">                        + exper + educ + black + hisp </span><span class="se">\</span>
 <span class="s1">                        +d81+d82+d83+d84+d85+d86+d87&#39;</span>
 </pre></div>
@@ -1361,7 +1386,7 @@ Name: parameter, dtype: float64
 <p><code class="docutils literal notranslate"><span class="pre">RandomEffects</span></code>のモジュールにある関数<code class="docutils literal notranslate"><span class="pre">from_formula</span></code>を使い計算する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result_re</span> <span class="o">=</span> <span class="n">RandomEffects</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_re</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_re</span> <span class="o">=</span> <span class="n">RandomEffects</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_re</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1369,12 +1394,12 @@ Name: parameter, dtype: float64
 <p>結果の表示。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result_re</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result_re</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
@@ -1406,12 +1431,12 @@ d87            0.1348     0.0817     1.6504     0.0989     -0.0253      0.2950
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result_re</span><span class="o">.</span><span class="n">theta</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_re</span><span class="o">.</span><span class="n">theta</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>theta    0.645059
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>theta    0.645059
 Name: 13, dtype: float64
 </pre></div>
 </div>
@@ -1425,12 +1450,12 @@ Name: 13, dtype: float64
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result_re</span><span class="o">.</span><span class="n">variance_decomposition</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_re</span><span class="o">.</span><span class="n">variance_decomposition</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Effects                   0.106946
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Effects                   0.106946
 Residual                  0.123324
 Percent due to Effects    0.464438
 Name: Variance Decomposition, dtype: float64
@@ -1509,7 +1534,7 @@ Name: Variance Decomposition, dtype: float64
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_col_mean</span><span class="p">(</span><span class="n">dframe</span><span class="p">,</span> <span class="n">ori_col</span><span class="p">,</span> <span class="n">new_col</span><span class="p">):</span>  <span class="c1"># (1)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_col_mean</span><span class="p">(</span><span class="n">dframe</span><span class="p">,</span> <span class="n">ori_col</span><span class="p">,</span> <span class="n">new_col</span><span class="p">):</span>  <span class="c1"># (1)</span>
     
     <span class="nb">dict</span> <span class="o">=</span> <span class="n">dframe</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="n">ori_col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>  <span class="c1"># (2)</span>
     <span class="n">mean</span> <span class="o">=</span> <span class="n">dframe</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">to_series</span><span class="p">()</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  <span class="c1"># (3)</span>
@@ -1524,7 +1549,7 @@ Name: Variance Decomposition, dtype: float64
 <p>（コメント）<code class="docutils literal notranslate"><span class="pre">exper</span></code>は含めない。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span> <span class="o">=</span> <span class="n">add_col_mean</span><span class="p">(</span><span class="n">wagepan</span><span class="p">,</span> <span class="s1">&#39;married&#39;</span><span class="p">,</span> <span class="s1">&#39;married_mean&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span> <span class="o">=</span> <span class="n">add_col_mean</span><span class="p">(</span><span class="n">wagepan</span><span class="p">,</span> <span class="s1">&#39;married&#39;</span><span class="p">,</span> <span class="s1">&#39;married_mean&#39;</span><span class="p">)</span>
 <span class="n">wagepan</span> <span class="o">=</span> <span class="n">add_col_mean</span><span class="p">(</span><span class="n">wagepan</span><span class="p">,</span> <span class="s1">&#39;union&#39;</span><span class="p">,</span> <span class="s1">&#39;union_mean&#39;</span><span class="p">)</span>
 <span class="n">wagepan</span> <span class="o">=</span> <span class="n">add_col_mean</span><span class="p">(</span><span class="n">wagepan</span><span class="p">,</span> <span class="s1">&#39;expersq&#39;</span><span class="p">,</span> <span class="s1">&#39;expersq_mean&#39;</span><span class="p">)</span>
 </pre></div>
@@ -1534,7 +1559,7 @@ Name: Variance Decomposition, dtype: float64
 <p>CRE推定と結果の表示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_cre</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_cre</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
 <span class="s1">                         + married_mean + union_mean + expersq_mean </span><span class="se">\</span>
 <span class="s1">                         +d81+d82+d83+d84+d85+d86+d87&#39;</span>
 
@@ -1545,13 +1570,13 @@ Name: Variance Decomposition, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                        RandomEffects Estimation Summary                        
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                        RandomEffects Estimation Summary                        
 ================================================================================
 Dep. Variable:                  lwage   R-squared:                        0.1711
 Estimator:              RandomEffects   R-squared (Between):              0.0967
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Thu, Sep 03 2020   R-squared (Overall):              0.1355
-Time:                        15:58:02   Log-likelihood                   -1609.8
+Date:                Mon, Sep 28 2020   R-squared (Overall):              0.1355
+Time:                        12:23:55   Log-likelihood                   -1609.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      69.027
 Entities:                         545   P-value                           0.0000
@@ -1611,7 +1636,7 @@ d87              0.9250     0.0687     13.465     0.0000      0.7903      1.0597
 <p><code class="docutils literal notranslate"><span class="pre">result_cre</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">wald_test()</span></code>を使う。引数には文字列で指定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 検定する係数の値を設定する</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 検定する係数の値を設定する</span>
 <span class="n">restriction</span> <span class="o">=</span> <span class="s1">&#39;married_mean = union_mean = expersq_mean = 0&#39;</span>
 
 <span class="c1"># 検定結果を表示する</span>
@@ -1620,12 +1645,12 @@ d87              0.9250     0.0687     13.465     0.0000      0.7903      1.0597
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Linear Equality Hypothesis Test
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Linear Equality Hypothesis Test
 H0: Linear equality constraint is valid
 Statistic: 35.6454
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x7f9042e20d00
+WaldTestStatistic, id: 0x7f843c7731c0
 </pre></div>
 </div>
 </div>
@@ -1656,7 +1681,7 @@ WaldTestStatistic, id: 0x7f9042e20d00
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_cre2</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_cre2</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
 <span class="s1">                          + exper + educ + black + hisp </span><span class="se">\</span>
 <span class="s1">                          + married_mean + union_mean + expersq_mean </span><span class="se">\</span>
 <span class="s1">                          +d81+d82+d83+d84+d85+d86+d87&#39;</span>
@@ -1668,7 +1693,7 @@ WaldTestStatistic, id: 0x7f9042e20d00
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                              Parameter Estimates                               
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                              Parameter Estimates                               
 ================================================================================
               Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 --------------------------------------------------------------------------------
@@ -1698,17 +1723,17 @@ d87              1.2781     0.3615     3.5351     0.0004      0.5693      1.9869
 <p>もう一度，FE対RE検定を行ってみよう。検定統計量（Statistics）は減少したが，以前帰無仮説は高い優位性で棄却できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result_cre2</span><span class="o">.</span><span class="n">wald_test</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="n">restriction</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_cre2</span><span class="o">.</span><span class="n">wald_test</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="n">restriction</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Linear Equality Hypothesis Test
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Linear Equality Hypothesis Test
 H0: Linear equality constraint is valid
 Statistic: 26.0233
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x7f9042d28b20
+WaldTestStatistic, id: 0x7f843d4e0dc0
 </pre></div>
 </div>
 </div>
@@ -1730,7 +1755,7 @@ WaldTestStatistic, id: 0x7f9042d28b20
 <p><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>のモジュール<code class="docutils literal notranslate"><span class="pre">PooledOLS</span></code>では，観察単位や時間の区別なく全てのデータをプールしてOLS推定する。これは通常のOLSと同じ推定法と等しい。<code class="docutils literal notranslate"><span class="pre">PooledOLS</span></code>の関数<code class="docutils literal notranslate"><span class="pre">from_formula</span></code>を使い，以下のように推定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_pool</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_pool</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
 <span class="s1">                        + exper + educ + black + hisp </span><span class="se">\</span>
 <span class="s1">                        +d81+d82+d83+d84+d85+d86+d87&#39;</span>
 
@@ -1741,7 +1766,7 @@ WaldTestStatistic, id: 0x7f9042d28b20
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
@@ -1776,7 +1801,7 @@ d87            0.1738     0.0494     3.5165     0.0004      0.0769      0.2707
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Pooled OLS&#39;</span><span class="p">:</span><span class="n">result_pool</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Pooled OLS&#39;</span><span class="p">:</span><span class="n">result_pool</span><span class="p">,</span>
        <span class="s1">&#39;FE&#39;</span><span class="p">:</span> <span class="n">result_fe</span><span class="p">,</span>
        <span class="s1">&#39;RE&#39;</span><span class="p">:</span> <span class="n">result_re</span><span class="p">,</span>
        <span class="s1">&#39;CRE&#39;</span><span class="p">:</span> <span class="n">result_cre2</span>
@@ -1790,13 +1815,13 @@ d87            0.1738     0.0494     3.5165     0.0004      0.0769      0.2707
 <p>このままでも良いか，この方法では推定結果を表示する順番を指定できない。例えば，<code class="docutils literal notranslate"><span class="pre">OLS</span></code>，<code class="docutils literal notranslate"><span class="pre">FE</span></code>，<code class="docutils literal notranslate"><span class="pre">RE</span></code>，<code class="docutils literal notranslate"><span class="pre">CRE</span></code>の順番で左から並べたいとしよう。その場合，<code class="docutils literal notranslate"><span class="pre">collections</span></code>パッケージにある関数<code class="docutils literal notranslate"><span class="pre">OrderedDict</span></code>をつかう。<code class="docutils literal notranslate"><span class="pre">{}</span></code>の中で並べた順番をそのまま維持してくれる関数である。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res_ordered</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_ordered</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">compare</span><span class="p">(</span><span class="n">res_ordered</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                                     Model Comparison                                    
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                     Model Comparison                                    
 =========================================================================================
                             Pooled OLS             FE                RE               CRE
 -----------------------------------------------------------------------------------------
@@ -1947,7 +1972,7 @@ T-stats reported in parentheses
 <p>単回帰を想定する。以下を真の値として設定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 定数項</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 定数項</span>
 <span class="n">b1</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># スロープ係数</span>
 </pre></div>
 </div>
@@ -1958,7 +1983,7 @@ T-stats reported in parentheses
 <p>シミュレーションの基本パラメータ等の設定</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># 観察単位の数</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># 観察単位の数</span>
 <span class="n">T</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># 時間数</span>
 <span class="n">ai</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># 観察単位の異質性</span>
 </pre></div>
@@ -1968,7 +1993,7 @@ T-stats reported in parentheses
 <p><code class="docutils literal notranslate"><span class="pre">for</span></code>ループによる<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の作成。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_sim</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>  <span class="c1"># 空のDataFrame</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_sim</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>  <span class="c1"># 空のDataFrame</span>
 
 <span class="k">for</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span><span class="n">a</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ai</span><span class="p">):</span>
     
@@ -1988,7 +2013,7 @@ T-stats reported in parentheses
 <p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の微調整。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># id と time の列を 整数型に変換（省いても問題ない）</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># id と time の列を 整数型に変換（省いても問題ない）</span>
 <span class="n">df_sim</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_sim</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 <span class="n">df_sim</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_sim</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
@@ -2035,32 +2060,32 @@ T-stats reported in parentheses
     <tr>
       <th rowspan="5" valign="top">0</th>
       <th>2000</th>
-      <td>0.549625</td>
-      <td>0.184306</td>
+      <td>2.289658</td>
+      <td>0.087248</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2001</th>
-      <td>0.194770</td>
-      <td>-0.764488</td>
+      <td>-0.614976</td>
+      <td>-0.710997</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2002</th>
-      <td>1.706078</td>
-      <td>-0.186349</td>
+      <td>-1.842939</td>
+      <td>-1.464865</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2003</th>
-      <td>2.455044</td>
-      <td>1.189515</td>
+      <td>4.014894</td>
+      <td>1.108574</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2004</th>
-      <td>3.142131</td>
-      <td>0.418665</td>
+      <td>2.501662</td>
+      <td>0.353978</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -2070,7 +2095,7 @@ T-stats reported in parentheses
 <p>固定効果モデルによる推定。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_sim_fe</span> <span class="o">=</span> <span class="s1">&#39;Y ~ X + EntityEffects&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_sim_fe</span> <span class="o">=</span> <span class="s1">&#39;Y ~ X + EntityEffects&#39;</span>
 
 <span class="n">sim_fe</span> <span class="o">=</span> <span class="n">PanelOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_sim_fe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
@@ -2079,12 +2104,16 @@ T-stats reported in parentheses
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-X              2.0185     0.0557     36.226     0.0000      1.9090      2.1281
+X              1.9702     0.0499     39.445     0.0000      1.8720      2.0684
 ==============================================================================
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/linearmodels/panel/data.py:98: FutureWarning: is_categorical is deprecated and will be removed in a future version.  Use is_categorical_dtype instead
+  if is_categorical(s):
 </pre></div>
 </div>
 </div>
@@ -2092,7 +2121,7 @@ X              2.0185     0.0557     36.226     0.0000      1.9090      2.1281
 <p>ランダム効果モデルによる推定。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_sim_re</span> <span class="o">=</span> <span class="s1">&#39;Y ~ 1 + X&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_sim_re</span> <span class="o">=</span> <span class="s1">&#39;Y ~ 1 + X&#39;</span>
 
 <span class="n">sim_re</span> <span class="o">=</span> <span class="n">RandomEffects</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_sim_re</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
@@ -2102,14 +2131,14 @@ X              2.0185     0.0557     36.226     0.0000      1.9090      2.1281
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.8547     0.1315     14.099     0.0000      1.5962      2.1132
-X              2.8330     0.0221     128.18     0.0000      2.7895      2.8764
+Intercept      1.9501     0.1399     13.944     0.0000      1.6754      2.2249
+X              2.8198     0.0235     119.92     0.0000      2.7736      2.8660
 ==============================================================================
-theta: [0.19715764]
+theta: [0.22491822]
 </pre></div>
 </div>
 </div>
@@ -2119,14 +2148,14 @@ theta: [0.19715764]
 <p>まず，観察単位の<code class="docutils literal notranslate"><span class="pre">X</span></code>の平均の列を追加する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_sim</span> <span class="o">=</span> <span class="n">add_col_mean</span><span class="p">(</span><span class="n">df_sim</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;X_mean&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_sim</span> <span class="o">=</span> <span class="n">add_col_mean</span><span class="p">(</span><span class="n">df_sim</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;X_mean&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_sim_cre</span> <span class="o">=</span> <span class="s1">&#39;Y ~ 1 + X + X_mean&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_sim_cre</span> <span class="o">=</span> <span class="s1">&#39;Y ~ 1 + X + X_mean&#39;</span>
 
 <span class="n">sim_cre</span> <span class="o">=</span> <span class="n">RandomEffects</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_sim_cre</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
@@ -2135,13 +2164,13 @@ theta: [0.19715764]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.3704     0.1130     12.128     0.0000      1.1484      1.5924
-X              2.0185     0.0557     36.254     0.0000      1.9091      2.1279
-X_mean         0.9115     0.0589     15.468     0.0000      0.7957      1.0272
+Intercept      1.2968     0.1144     11.336     0.0000      1.0720      1.5215
+X              1.9702     0.0499     39.475     0.0000      1.8722      2.0683
+X_mean         0.9797     0.0536     18.270     0.0000      0.8744      1.0851
 ==============================================================================
 </pre></div>
 </div>
@@ -2150,7 +2179,7 @@ X_mean         0.9115     0.0589     15.468     0.0000      0.7957      1.0272
 <p>通常のOLS（Pooled OLS）による推定はバイアスが発生する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_sim_pool</span> <span class="o">=</span> <span class="s1">&#39;Y ~ 1 + X&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_sim_pool</span> <span class="o">=</span> <span class="s1">&#39;Y ~ 1 + X&#39;</span>
 
 <span class="n">sim_pool</span> <span class="o">=</span> <span class="n">PooledOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_sim_pool</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
@@ -2159,12 +2188,12 @@ X_mean         0.9115     0.0589     15.468     0.0000      0.7957      1.0272
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.6948     0.1116     15.189     0.0000      1.4756      1.9141
-X              2.8650     0.0189     151.97     0.0000      2.8279      2.9020
+Intercept      1.7113     0.1160     14.755     0.0000      1.4834      1.9392
+X              2.8674     0.0197     145.92     0.0000      2.8288      2.9060
 ==============================================================================
 </pre></div>
 </div>
@@ -2176,7 +2205,7 @@ X              2.8650     0.0189     151.97     0.0000      2.8279      2.9020
 <p>基本的に上のシミュレーションのコードを応用する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># 観察単位数</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># 観察単位数</span>
 <span class="n">T</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># 年数</span>
 <span class="n">R</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># シミュレーションの回数</span>
 <span class="n">ai</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># 観察単位の異質性</span>
@@ -2190,7 +2219,7 @@ X              2.8650     0.0189     151.97     0.0000      2.8279      2.9020
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bhat_fe_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># FE推定値を入れるための空のリスト</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bhat_fe_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># FE推定値を入れるための空のリスト</span>
 <span class="n">bhat_re_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># RE推定値を入れるための空のリスト</span>
 <span class="n">bhat_pool_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Pooled OLS推定値を入れるための空のリスト</span>
 
@@ -2236,7 +2265,7 @@ X              2.8650     0.0189     151.97     0.0000      2.8279      2.9020
 <p>分布の図示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1.6</span><span class="p">,</span><span class="mf">3.1</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1.6</span><span class="p">,</span><span class="mf">3.1</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
 
 <span class="n">kde_model_fe</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">bhat_fe_list</span><span class="p">)</span>  <span class="c1"># FE推定量のカーネル密度関数を計算</span>
 
@@ -2273,7 +2302,7 @@ X              2.8650     0.0189     151.97     0.0000      2.8279      2.9020
 <p><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>には残差の均一分散を調べるBreusch-Pagan検定やWhite検定をおこなうメソッドは用意されていない。ここでは<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使いWooldridge (2016,p.253)で説明されているWhite検定に基づく検定をおこなう。次に必要な変数を作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 残差</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 残差</span>
 <span class="n">u_hat</span> <span class="o">=</span> <span class="n">result_fe</span><span class="o">.</span><span class="n">resids</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
 
 <span class="c1"># 被説明変数の予測値</span>
@@ -2305,7 +2334,7 @@ X              2.8650     0.0189     151.97     0.0000      2.8279      2.9020
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">form_white</span> <span class="o">=</span> <span class="s1">&#39;I(u_hat**2) ~ y_hat + I(y_hat**2)&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_white</span> <span class="o">=</span> <span class="s1">&#39;I(u_hat**2) ~ y_hat + I(y_hat**2)&#39;</span>
 
 <span class="n">res_white</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_white</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_white</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
@@ -2315,7 +2344,7 @@ X              2.8650     0.0189     151.97     0.0000      2.8279      2.9020
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>=================================================================================
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=================================================================================
                     coef    std err          t      P&gt;|t|      [0.025      0.975]
 ---------------------------------------------------------------------------------
 Intercept         0.1172      0.010     11.249      0.000       0.097       0.138
@@ -2331,7 +2360,7 @@ F検定のp値： 0.4354339447413128
 <p>次に図を使い確認する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="n">res_white</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># beta0</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="n">res_white</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># beta0</span>
 <span class="n">b1</span> <span class="o">=</span> <span class="n">res_white</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># beta1</span>
 <span class="n">b2</span> <span class="o">=</span> <span class="n">res_white</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="c1"># beta2</span>
 
@@ -2376,7 +2405,7 @@ F検定のp値： 0.4354339447413128
 <p>＜不均一分散かだけの場合＞</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mod_fe_clus1</span> <span class="o">=</span> <span class="n">PanelOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_fe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mod_fe_clus1</span> <span class="o">=</span> <span class="n">PanelOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_fe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span>
 
 <span class="n">res_fe_clus1</span> <span class="o">=</span> <span class="n">mod_fe_clus1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;clustered&#39;</span><span class="p">,</span> <span class="n">cluster_entity</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
@@ -2385,7 +2414,7 @@ F検定のp値： 0.4354339447413128
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
@@ -2402,12 +2431,16 @@ d87            0.9250     0.0840     11.015     0.0000      0.7604      1.0897
 ==============================================================================
 </pre></div>
 </div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/linearmodels/panel/data.py:98: FutureWarning: is_categorical is deprecated and will be removed in a future version.  Use is_categorical_dtype instead
+  if is_categorical(s):
+</pre></div>
+</div>
 </div>
 </div>
 <p>＜不均一分散と系列相関の場合＞</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mod_fe_clus2</span> <span class="o">=</span> <span class="n">PanelOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_fe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mod_fe_clus2</span> <span class="o">=</span> <span class="n">PanelOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_fe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span>
 
 <span class="n">res_fe_clus2</span> <span class="o">=</span> <span class="n">mod_fe_clus2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;clustered&#39;</span><span class="p">,</span> <span class="n">cluster_entity</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cluster_time</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
@@ -2416,7 +2449,7 @@ d87            0.9250     0.0840     11.015     0.0000      0.7604      1.0897
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------

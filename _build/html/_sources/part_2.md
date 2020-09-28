@@ -15,6 +15,9 @@ kernelspec:
 1. {doc}`7_Review_of_Statistics` 
    - Review of Statistics
    - 平均、分散、共分散などの計算方法
+1. {doc}`list_of_terms`
+   - List of Ecoometrics Terms
+   - 計量経済学用語のリスト
 1. {doc}`8_Simple_Regression`
    - Simple Regression
    - 最も簡単な計量経済分析
