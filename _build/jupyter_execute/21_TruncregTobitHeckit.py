@@ -202,6 +202,13 @@ $$
 `statsmodels`も`linearmodels`も`Tobit`推定のモジュールがない。その代わりに著者が作成した`py4etrics`パッケージの関数`trucreg`モジュールを使い推定する。これは`statsmodels`の`GenericMaximumLikelihoodModel`を使い実装したものである。使用する上で[このサイト](https://www.statsmodels.org/devel/examples/notebooks/generated/generic_mle.html)にある次の点に注意する必要がある。
 * `R`の推定値と小数点第４位まで同じになるが，標準偏差は小数点第２位までが同じとなる。
 
+````{note}
+MacではTerminal、WindowsではGit Bashを使い、次のコマンドで`py4etrics`モジュールはをインストールできる。
+```
+pip install git+https://github.com/spring-haru/py4etrics.git
+```
+````
+
 
 ---
 ＜使い方＞

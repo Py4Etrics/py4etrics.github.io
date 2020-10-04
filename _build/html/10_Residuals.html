@@ -595,8 +595,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>決定係数が高いケース: 0.929
-決定係数が高いケース: 0.574
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>決定係数が高いケース: 0.884
+決定係数が高いケース: 0.443
 </pre></div>
 </div>
 </div>
@@ -1029,11 +1029,15 @@
 <div class="section" id="id10">
 <h3>ケース１：被説明変数の変換が必要な回帰式<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <p>この例では以下を想定する。</p>
-<ul class="simple">
-<li><p>母集団回帰式
-$<span class="math notranslate nohighlight">\(\ln y = \beta_0 + \beta_1 x + u \)</span>$</p></li>
-<li><p>標本回帰式
-$<span class="math notranslate nohighlight">\(y_i = \beta_0 + \beta_1 x_i + u_i\)</span>$</p></li>
+<ul>
+<li><p>母集団回帰式</p>
+<div class="math notranslate nohighlight">
+\[\ln y = \beta_0 + \beta_1 x + u \]</div>
+</li>
+<li><p>標本回帰式</p>
+<div class="math notranslate nohighlight">
+\[y_i = \beta_0 + \beta_1 x_i + u_i\]</div>
+</li>
 </ul>
 <p>（解決方法）</p>
 <p><span class="math notranslate nohighlight">\(y\)</span>を対数変換する。</p>
@@ -1043,7 +1047,7 @@ $<span class="math notranslate nohighlight">\(y_i = \beta_0 + \beta_1 x_i + u_i\
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">uniform</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 説明変数</span>
 <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 誤差項</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">200.0</span> <span class="o">+</span> <span class="o">.</span><span class="mi">1</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">u</span><span class="p">)</span>   <span class="c1"># 被説明変数</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">100.0</span> <span class="o">+</span> <span class="o">.</span><span class="mi">1</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">u</span><span class="p">)</span>   <span class="c1"># 被説明変数</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>  <span class="c1"># DataFrame</span>
 
@@ -1072,15 +1076,7 @@ $<span class="math notranslate nohighlight">\(y_i = \beta_0 + \beta_1 x_i + u_i\
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/numpy/linalg/linalg.py:2159: RuntimeWarning: overflow encountered in det
-  r = _umath_linalg.det(a, signature=signature)
-/Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/numpy/linalg/linalg.py:2159: RuntimeWarning: overflow encountered in det
-  r = _umath_linalg.det(a, signature=signature)
-/Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/numpy/linalg/linalg.py:2159: RuntimeWarning: overflow encountered in det
-  r = _umath_linalg.det(a, signature=signature)
-</pre></div>
-</div>
-<img alt="_images/10_Residuals_68_1.png" src="_images/10_Residuals_68_1.png" />
+<img alt="_images/10_Residuals_68_0.png" src="_images/10_Residuals_68_0.png" />
 </div>
 </div>
 </div>

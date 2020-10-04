@@ -362,8 +362,11 @@ pass
 
 この例では以下を想定する。
 * 母集団回帰式
+
     $$\ln y = \beta_0 + \beta_1 x + u $$
+    
 * 標本回帰式
+
     $$y_i = \beta_0 + \beta_1 x_i + u_i$$
 
 （解決方法）
@@ -374,7 +377,7 @@ n = 100  # 標本の大きさ
 
 x = uniform.rvs(1, 10, size=n)  # 説明変数
 u = norm.rvs(scale=1, size=n)  # 誤差項
-y = np.exp(200.0 + .1*x + u)   # 被説明変数
+y = np.exp(100.0 + .1*x + u)   # 被説明変数
 
 df = pd.DataFrame({'Y':y, 'X':x})  # DataFrame
 
