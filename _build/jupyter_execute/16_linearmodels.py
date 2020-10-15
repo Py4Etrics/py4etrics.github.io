@@ -5,6 +5,10 @@ from linearmodels.panel.data import PanelData
 from linearmodels.panel import FirstDifferenceOLS
 import wooldridge
 
+# 警告メッセージを非表示
+import warnings
+warnings.filterwarnings("ignore")
+
 ## 説明
 
 `linearmodels`は`statsmodels`を補完する目的として開発されている。主に，パネルデータ，操作変数法を使った推定法やGMMを扱う場合には非常に重宝するパッケージである。しかし，`linearmodels`は`statsmodels`の両方を使う上で以下の点に注意する必要がある。
