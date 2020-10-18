@@ -217,25 +217,17 @@ dfp.dataframe.loc['Japan',:]
 * balanced panel data：$n=N\times T$（観察単位に対して全ての期間の全ての変数に欠損値がない）
 * unbalanced panel data：$n<N\times T$（欠損値がある）
 
-balanced か unbalancedかは以下のコードで確認できる。まず，メソッド`count()`を使う。
+balanced か unbalancedかは以下のコードで確認できる。まず，属性`isnull`を使う。
 
-dfp.count()
+dfp.isnull
 
-観察単位（国）に対して，それぞれの変数に欠損値ではない観測値がいくつ存在するかを`DataFrame`として返す。期間数は3なので，3より低い数字があれば欠損値の存在を表す。例えば，Australiaの`inv`には欠損値がある。
+それぞれの行に`NaN`があれば`True`を、なければ`False`を返す。次に`True/False`を逆転させるために`~`を使う。
 
-このメソッドを使って、1行でbalanced/unbalancedを確認するコードを考える。
+~dfp.isnull
 
-dfp.count() == dfp.nobs
+`True`の行には`NaN`はなく、`False`の行に`NaN`がある。行数が多い場合はメソッド`all()`が便利である。`all()`は列に対して全ての要素が`True`の場合のみ`True`を返す。
 
-上のコードで`nobs`は時間の観測値の数（この場合3）を返す属性である。`nobs`と同じ値は`True`、異なる場合は`False`が返されている。
-
-次のコードの`all()`は，列に対して全ての要素が`True`の場合のみ`True`を返す。
-
-(dfp.count() == dfp.nobs).all()
-
-`( )`はその中を先に評価する，という意味（数学と同じ）。変数が多い場合，`all()`を2回使うと全ての変数に対して評価するので便利である。
-
-(dfp.count() == dfp.nobs).all().all()
+(~dfp.isnull).all()
 
 `False`なので unbalanced panel data ということが確認できた。
 
@@ -257,12 +249,14 @@ crime4p = PanelData(crime4)
 crime4p.shape
 
 * 57: 変数の数
-* 7: 期間数（年）
+* 7: 時間の観測値の数（年次データなので７年間）
 * 90：観察単位の数（人数）
 
 次にbalanced もしくは unbalanced data set かを確認する。
 
-(crime4p.count()==crime4p.nobs).all().all()
+(~crime4p.isnull).all()
+
+Unbalancedのデータセットだと確認できた。
 
 ---
 実際に回帰式を書くことにする。使い方は`statsmodels`と似ている。
@@ -285,9 +279,8 @@ mod_dif = FirstDifferenceOLS.from_formula(formula, data=crime4)
 res_dif = mod_dif.fit()
 
 ＜結果の表示方法＞
-1. `res_dif`を実行。
-1. `res_dif`に関数`print()`を使うと見やすい。
-1. `res_dif`には属性`summary`が用意されているが，表示方法1と同じ。
+1. `res_dif`もしくは`print(res_dif)`を実行。
+1. `res_dif`には属性`summary`が用意されているが、表示方法1と同じ内容が表示される。
 1. `summary`には属性`tables`があり，２つの表がリストとして格納されている。
     * `tables[0]`：検定統計量の表（`print()`を使うと見やすくなる）
     * `tables[1]`：係数の推定値やp値などの表（`print()`を使うと見やすくなる）

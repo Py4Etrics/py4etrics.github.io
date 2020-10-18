@@ -2296,159 +2296,56 @@ Name: gdp, dtype: int64
 <li><p>balanced panel data：<span class="math notranslate nohighlight">\(n=N\times T\)</span>（観察単位に対して全ての期間の全ての変数に欠損値がない）</p></li>
 <li><p>unbalanced panel data：<span class="math notranslate nohighlight">\(n&lt;N\times T\)</span>（欠損値がある）</p></li>
 </ul>
-<p>balanced か unbalancedかは以下のコードで確認できる。まず，メソッド<code class="docutils literal notranslate"><span class="pre">count()</span></code>を使う。</p>
+<p>balanced か unbalancedかは以下のコードで確認できる。まず，属性<code class="docutils literal notranslate"><span class="pre">isnull</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">isnull</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>gdp</th>
-      <th>inv</th>
-      <th>con</th>
-      <th>pop</th>
-    </tr>
-    <tr>
-      <th>country</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Australia</th>
-      <td>3</td>
-      <td>2</td>
-      <td>3</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>Japan</th>
-      <td>3</td>
-      <td>3</td>
-      <td>3</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>UK</th>
-      <td>3</td>
-      <td>3</td>
-      <td>2</td>
-      <td>3</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<p>観察単位（国）に対して，それぞれの変数に欠損値ではない観測値がいくつ存在するかを<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>として返す。期間数は3なので，3より低い数字があれば欠損値の存在を表す。例えば，Australiaの<code class="docutils literal notranslate"><span class="pre">inv</span></code>には欠損値がある。</p>
-<p>このメソッドを使って、1行でbalanced/unbalancedを確認するコードを考える。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="n">dfp</span><span class="o">.</span><span class="n">nobs</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>gdp</th>
-      <th>inv</th>
-      <th>con</th>
-      <th>pop</th>
-    </tr>
-    <tr>
-      <th>country</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Australia</th>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>Japan</th>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>UK</th>
-      <td>True</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<p>上のコードで<code class="docutils literal notranslate"><span class="pre">nobs</span></code>は時間の観測値の数（この場合3）を返す属性である。<code class="docutils literal notranslate"><span class="pre">nobs</span></code>と同じ値は<code class="docutils literal notranslate"><span class="pre">True</span></code>、異なる場合は<code class="docutils literal notranslate"><span class="pre">False</span></code>が返されている。</p>
-<p>次のコードの<code class="docutils literal notranslate"><span class="pre">all()</span></code>は，列に対して全ての要素が<code class="docutils literal notranslate"><span class="pre">True</span></code>の場合のみ<code class="docutils literal notranslate"><span class="pre">True</span></code>を返す。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">dfp</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="n">dfp</span><span class="o">.</span><span class="n">nobs</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>gdp     True
-inv    False
-con    False
-pop     True
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>country    year
+Australia  2000    False
+           2001    False
+           2002     True
+Japan      2000    False
+           2001    False
+           2002    False
+UK         2000    False
+           2001    False
+           2002     True
 dtype: bool
 </pre></div>
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">(</span> <span class="pre">)</span></code>はその中を先に評価する，という意味（数学と同じ）。変数が多い場合，<code class="docutils literal notranslate"><span class="pre">all()</span></code>を2回使うと全ての変数に対して評価するので便利である。</p>
+<p>それぞれの行に<code class="docutils literal notranslate"><span class="pre">NaN</span></code>があれば<code class="docutils literal notranslate"><span class="pre">True</span></code>を、なければ<code class="docutils literal notranslate"><span class="pre">False</span></code>を返す。次に<code class="docutils literal notranslate"><span class="pre">True/False</span></code>を逆転させるために<code class="docutils literal notranslate"><span class="pre">~</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">dfp</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="n">dfp</span><span class="o">.</span><span class="n">nobs</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">~</span><span class="n">dfp</span><span class="o">.</span><span class="n">isnull</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>country    year
+Australia  2000     True
+           2001     True
+           2002    False
+Japan      2000     True
+           2001     True
+           2002     True
+UK         2000     True
+           2001     True
+           2002    False
+dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">True</span></code>の行には<code class="docutils literal notranslate"><span class="pre">NaN</span></code>はなく、<code class="docutils literal notranslate"><span class="pre">False</span></code>の行に<code class="docutils literal notranslate"><span class="pre">NaN</span></code>がある。行数が多い場合はメソッド<code class="docutils literal notranslate"><span class="pre">all()</span></code>が便利である。<code class="docutils literal notranslate"><span class="pre">all()</span></code>は列に対して全ての要素が<code class="docutils literal notranslate"><span class="pre">True</span></code>の場合のみ<code class="docutils literal notranslate"><span class="pre">True</span></code>を返す。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">~</span><span class="n">dfp</span><span class="o">.</span><span class="n">isnull</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2858,13 +2755,13 @@ dtype: bool
 </div>
 <ul class="simple">
 <li><p>57: 変数の数</p></li>
-<li><p>7: 期間数（年）</p></li>
+<li><p>7: 時間の観測値の数（年次データなので７年間）</p></li>
 <li><p>90：観察単位の数（人数）</p></li>
 </ul>
 <p>次にbalanced もしくは unbalanced data set かを確認する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">crime4p</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">==</span><span class="n">crime4p</span><span class="o">.</span><span class="n">nobs</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">~</span><span class="n">crime4p</span><span class="o">.</span><span class="n">isnull</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2874,6 +2771,7 @@ dtype: bool
 </div>
 </div>
 </div>
+<p>Unbalancedのデータセットだと確認できた。</p>
 <hr class="docutils" />
 <p>実際に回帰式を書くことにする。使い方は<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>と似ている。</p>
 <ul class="simple">
@@ -2911,9 +2809,8 @@ dtype: bool
 </div>
 <p>＜結果の表示方法＞</p>
 <ol class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">res_dif</span></code>を実行。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">res_dif</span></code>に関数<code class="docutils literal notranslate"><span class="pre">print()</span></code>を使うと見やすい。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">res_dif</span></code>には属性<code class="docutils literal notranslate"><span class="pre">summary</span></code>が用意されているが，表示方法1と同じ。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">res_dif</span></code>もしくは<code class="docutils literal notranslate"><span class="pre">print(res_dif)</span></code>を実行。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">res_dif</span></code>には属性<code class="docutils literal notranslate"><span class="pre">summary</span></code>が用意されているが、表示方法1と同じ内容が表示される。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">summary</span></code>には属性<code class="docutils literal notranslate"><span class="pre">tables</span></code>があり，２つの表がリストとして格納されている。</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">tables[0]</span></code>：検定統計量の表（<code class="docutils literal notranslate"><span class="pre">print()</span></code>を使うと見やすくなる）</p></li>
