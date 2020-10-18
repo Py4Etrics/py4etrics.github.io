@@ -604,6 +604,10 @@
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">gaussian_kde</span><span class="p">,</span> <span class="n">multivariate_normal</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="n">uniform</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">chi2</span>
+
+<span class="c1"># 警告メッセージを非表示</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -796,12 +800,6 @@ provided the data, which he obtained from Professor Mroz.
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mod_1</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/linearmodels/iv/data.py:25: FutureWarning: is_categorical is deprecated and will be removed in a future version.  Use is_categorical_dtype instead
-  if is_categorical(s):
 </pre></div>
 </div>
 </div>
@@ -1002,8 +1000,8 @@ educ           0.1086     0.0134     8.1178     0.0000      0.0824      0.1349
 Dep. Variable:                   educ   R-squared:                      0.2081
 Estimator:                        OLS   Adj. R-squared:                 0.2043
 No. Observations:                 428   F-statistic:                    112.45
-Date:                Sun, Oct 04 2020   P-value (F-stat)                0.0000
-Time:                        22:00:59   Distribution:                  chi2(2)
+Date:                Sun, Oct 18 2020   P-value (F-stat)                0.0000
+Time:                        12:42:32   Distribution:                  chi2(2)
 Cov. Estimator:            unadjusted                                         
                                                                               
                              Parameter Estimates                              
@@ -1378,7 +1376,7 @@ H0: All endogenous variables are exogenous
 Statistic: 2.8035
 P-value: 0.0948
 Distributed: F(1,423)
-WaldTestStatistic, id: 0x7fa1f5b2b550
+WaldTestStatistic, id: 0x7f9d20340a10
 </pre></div>
 </div>
 </div>
@@ -1455,12 +1453,6 @@ WaldTestStatistic, id: 0x7fa1f5b2b550
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/linearmodels/iv/data.py:25: FutureWarning: is_categorical is deprecated and will be removed in a future version.  Use is_categorical_dtype instead
-  if is_categorical(s):
-</pre></div>
-</div>
-</div>
 </div>
 <p><strong>第２段階</strong></p>
 <p>回帰式に直接<code class="docutils literal notranslate"><span class="pre">res_2a.resids</span></code>を入れる。<code class="docutils literal notranslate"><span class="pre">resids</span></code>は<code class="docutils literal notranslate"><span class="pre">res_2a</span></code>の残差を取得する属性。</p>
@@ -1508,7 +1500,7 @@ H0: Endogenous variables are exogenous
 Statistic: 2.8256
 P-value: 0.0928
 Distributed: chi2(1)
-WaldTestStatistic, id: 0x7fa1f69f5280
+WaldTestStatistic, id: 0x7f9d1fa81a10
 </pre></div>
 </div>
 </div>
@@ -1637,7 +1629,7 @@ H0: The model is not overidentified.
 Statistic: 0.3781
 P-value: 0.5386
 Distributed: chi2(1)
-WaldTestStatistic, id: 0x7fa1f69feee0
+WaldTestStatistic, id: 0x7f9d1fabe3d0
 </pre></div>
 </div>
 </div>
