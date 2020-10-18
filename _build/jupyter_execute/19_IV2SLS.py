@@ -8,6 +8,10 @@ from scipy.stats import gaussian_kde, multivariate_normal, norm, uniform
 import matplotlib.pyplot as plt
 from scipy.stats import chi2
 
+# 警告メッセージを非表示
+import warnings
+warnings.filterwarnings("ignore")
+
 **＜仮定４が満たされない場合＞**
 
 ## 説明

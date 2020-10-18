@@ -4,6 +4,7 @@ import pandas as pd
 from linearmodels.panel.data import PanelData
 from linearmodels.panel import FirstDifferenceOLS
 import wooldridge
+from see import see
 
 # 警告メッセージを非表示
 import warnings
@@ -164,62 +165,42 @@ df.reset_index().query('year not in [2001]')
 dfp = PanelData(df)
 dfp
 
----
+### 属性とメソッド
+
+まず`dfp`の属性とメソッドに何があるかを確認する。
+
+see(dfp)
+
+主なものについて説明する。
+
 属性`shape`は，`PanelData`の変数の数を表示する。以下が返り値の内容である。
 ```
-(変数の数, 期間数, 観察単位の数)
+(変数の数, 時間の観測値の数, 観察単位の数)
 ```
 
 dfp.shape
 
 * 変数の数：4（列にある変数）
-* 期間数：3（年）
+* 時間の観測値の数：3（年）
 * 観察単位の数：3（国）
 
----
-データセットには欠損値がある場合がある。観察単位数が$N$で期間数が$T$の場合，観測値の数は$n=N\times T$となるが，次の2つを区別する。
-* balanced panel data：$n=N\times T$（観察単位に対して全ての期間の全ての変数に欠損値がない）
-* unbalanced panel data：$n<N\times T$（欠損値がある）
-
-balanced か unbalancedかは以下のコードで確認できる。まず，メソッド`count()`を使う。
-
-dfp.count()
-
-観察単位（国）に対して，それぞれの変数に欠損値ではない観測値がいくつ存在するかを`DataFrame`として返す。期間数は3なので，3より低い数字があれば欠損値の存在を表す。例えば，Australiaの`inv`には欠損値がある。
-
-次のコードは，欠損値がある場合には`True`を返す。ここで`nobs`は期間数（この場合3）を返す属性である。
-
-dfp.count() == dfp.nobs
-
-`all()`は，列に対して全ての要素が`True`の場合のみ`True`を返すので，これを使い確認できる。
-
-(dfp.count() == dfp.nobs).all()
-
-`( )`はその中を先に評価する，という意味（数学と同じ）。変数が多い場合，`all()`を2回使うと全ての変数に対して評価するので便利である。
-
-(dfp.count() == dfp.nobs).all().all()
-
-`False`なので unbalanced panel data ということが確認できた。
-
----
-変数の観察単位毎の平均の計算
+メソッド`.mean()`を使うと、変数の観察単位毎の平均の`DataFrame`が返される。
 
 dfp.mean()
 
----
-変数の時間毎の平均の計算
+引数に`time`を指定すると、変数の時間毎の平均が返される。
 
 dfp.mean('time')
 
----
-変数の平均からの乖離　$x-\bar{x}$，$\bar{x}$は平均。
+メソッド`demean()`は、変数の平均からの乖離が返される。即ち、変数$x$の平均が$\bar{x}$とすると、$x-\bar{x}$が返される。
 
 dfp.demean()
 
----
-変数の１階階差の計算　$x_t-x_{t-1}$
+`first_difference()`は変数の１階差分（$x_t-x_{t-1}$）が返される。
 
 dfp.first_difference()
+
+上の例では`NaN`があるため`Australia`と`UK`の行は１つしかない。
 
 ---
 （注意）
@@ -229,6 +210,34 @@ dfp.first_difference()
 従って，`DataFrame`のメソッド（例えば，行や列の抽出）を使う場合，`DataFrame`に変換する必要がある。その場合，`PanelData`オブジェクトの属性`.dataframe`を使うことができる。
 
 dfp.dataframe.loc['Japan',:]
+
+### Balanced/Unbalancedの確認
+
+データセットには欠損値がある場合がある。観察単位数が$N$で時間の観測値の数が$T$の場合，観測値の数は$n=N\times T$となるが，次の2つを区別する。
+* balanced panel data：$n=N\times T$（観察単位に対して全ての期間の全ての変数に欠損値がない）
+* unbalanced panel data：$n<N\times T$（欠損値がある）
+
+balanced か unbalancedかは以下のコードで確認できる。まず，メソッド`count()`を使う。
+
+dfp.count()
+
+観察単位（国）に対して，それぞれの変数に欠損値ではない観測値がいくつ存在するかを`DataFrame`として返す。期間数は3なので，3より低い数字があれば欠損値の存在を表す。例えば，Australiaの`inv`には欠損値がある。
+
+このメソッドを使って、1行でbalanced/unbalancedを確認するコードを考える。
+
+dfp.count() == dfp.nobs
+
+上のコードで`nobs`は時間の観測値の数（この場合3）を返す属性である。`nobs`と同じ値は`True`、異なる場合は`False`が返されている。
+
+次のコードの`all()`は，列に対して全ての要素が`True`の場合のみ`True`を返す。
+
+(dfp.count() == dfp.nobs).all()
+
+`( )`はその中を先に評価する，という意味（数学と同じ）。変数が多い場合，`all()`を2回使うと全ての変数に対して評価するので便利である。
+
+(dfp.count() == dfp.nobs).all().all()
+
+`False`なので unbalanced panel data ということが確認できた。
 
 ## １階差分推定（再考）
 

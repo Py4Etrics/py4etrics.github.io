@@ -69,7 +69,7 @@
 <meta property="og:url"         content="https://py4etrics.github.io/16_linearmodels.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="linearmodels" />
-<meta property="og:description" content="linearmodels  import pandas as pd from linearmodels.panel.data import PanelData from linearmodels.panel import FirstDifferenceOLS import wooldridge  # 警告メッセージを非" />
+<meta property="og:description" content="linearmodels  import pandas as pd from linearmodels.panel.data import PanelData from linearmodels.panel import FirstDifferenceOLS import wooldridge from see imp" />
 
 
 <meta name="twitter:card" content="summary" />
@@ -398,9 +398,21 @@
     </span>
    </code>
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     属性とメソッド
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#balanced-unbalanced">
+     Balanced/Unbalancedの確認
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id9">
+  <a class="reference internal nav-link" href="#id10">
    １階差分推定（再考）
   </a>
  </li>
@@ -423,6 +435,7 @@
 <span class="kn">from</span> <span class="nn">linearmodels.panel.data</span> <span class="kn">import</span> <span class="n">PanelData</span>
 <span class="kn">from</span> <span class="nn">linearmodels.panel</span> <span class="kn">import</span> <span class="n">FirstDifferenceOLS</span>
 <span class="kn">import</span> <span class="nn">wooldridge</span>
+<span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="n">see</span>
 
 <span class="c1"># 警告メッセージを非表示</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
@@ -1843,9 +1856,31 @@ Name: gdp, dtype: int64
 </table>
 </div></div></div>
 </div>
-<hr class="docutils" />
+<div class="section" id="id9">
+<h3>属性とメソッド<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>まず<code class="docutils literal notranslate"><span class="pre">dfp</span></code>の属性とメソッドに何があるかを確認する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">dfp</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>    &lt;             &lt;=            ==            !=            &gt;             &gt;=
+    dir()         hash()        help()        repr()        str()
+    .copy()       .count()      .dataframe    .demean()     .drop()
+    .dummies()    .entities     .entity_ids
+    .first_difference()         .general_demean()           .index
+    .isnull       .mean()       .ndim         .nentity      .nobs
+    .nvar         .panel        .shape        .time         .time_ids
+    .values2d     .values3d     .vars
+</pre></div>
+</div>
+</div>
+</div>
+<p>主なものについて説明する。</p>
 <p>属性<code class="docutils literal notranslate"><span class="pre">shape</span></code>は，<code class="docutils literal notranslate"><span class="pre">PanelData</span></code>の変数の数を表示する。以下が返り値の内容である。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">変数の数</span><span class="p">,</span> <span class="n">期間数</span><span class="p">,</span> <span class="n">観察単位の数</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">変数の数</span><span class="p">,</span> <span class="n">時間の観測値の数</span><span class="p">,</span> <span class="n">観察単位の数</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="cell docutils container">
@@ -1862,179 +1897,10 @@ Name: gdp, dtype: int64
 </div>
 <ul class="simple">
 <li><p>変数の数：4（列にある変数）</p></li>
-<li><p>期間数：3（年）</p></li>
+<li><p>時間の観測値の数：3（年）</p></li>
 <li><p>観察単位の数：3（国）</p></li>
 </ul>
-<hr class="docutils" />
-<p>データセットには欠損値がある場合がある。観察単位数が<span class="math notranslate nohighlight">\(N\)</span>で期間数が<span class="math notranslate nohighlight">\(T\)</span>の場合，観測値の数は<span class="math notranslate nohighlight">\(n=N\times T\)</span>となるが，次の2つを区別する。</p>
-<ul class="simple">
-<li><p>balanced panel data：<span class="math notranslate nohighlight">\(n=N\times T\)</span>（観察単位に対して全ての期間の全ての変数に欠損値がない）</p></li>
-<li><p>unbalanced panel data：<span class="math notranslate nohighlight">\(n&lt;N\times T\)</span>（欠損値がある）</p></li>
-</ul>
-<p>balanced か unbalancedかは以下のコードで確認できる。まず，メソッド<code class="docutils literal notranslate"><span class="pre">count()</span></code>を使う。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>gdp</th>
-      <th>inv</th>
-      <th>con</th>
-      <th>pop</th>
-    </tr>
-    <tr>
-      <th>country</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Australia</th>
-      <td>3</td>
-      <td>2</td>
-      <td>3</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>Japan</th>
-      <td>3</td>
-      <td>3</td>
-      <td>3</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>UK</th>
-      <td>3</td>
-      <td>3</td>
-      <td>2</td>
-      <td>3</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<p>観察単位（国）に対して，それぞれの変数に欠損値ではない観測値がいくつ存在するかを<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>として返す。期間数は3なので，3より低い数字があれば欠損値の存在を表す。例えば，Australiaの<code class="docutils literal notranslate"><span class="pre">inv</span></code>には欠損値がある。</p>
-<p>次のコードは，欠損値がある場合には<code class="docutils literal notranslate"><span class="pre">True</span></code>を返す。ここで<code class="docutils literal notranslate"><span class="pre">nobs</span></code>は期間数（この場合3）を返す属性である。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="n">dfp</span><span class="o">.</span><span class="n">nobs</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>gdp</th>
-      <th>inv</th>
-      <th>con</th>
-      <th>pop</th>
-    </tr>
-    <tr>
-      <th>country</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Australia</th>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>Japan</th>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>UK</th>
-      <td>True</td>
-      <td>True</td>
-      <td>False</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">all()</span></code>は，列に対して全ての要素が<code class="docutils literal notranslate"><span class="pre">True</span></code>の場合のみ<code class="docutils literal notranslate"><span class="pre">True</span></code>を返すので，これを使い確認できる。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">dfp</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="n">dfp</span><span class="o">.</span><span class="n">nobs</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>gdp     True
-inv    False
-con    False
-pop     True
-dtype: bool
-</pre></div>
-</div>
-</div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">(</span> <span class="pre">)</span></code>はその中を先に評価する，という意味（数学と同じ）。変数が多い場合，<code class="docutils literal notranslate"><span class="pre">all()</span></code>を2回使うと全ての変数に対して評価するので便利である。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">dfp</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="n">dfp</span><span class="o">.</span><span class="n">nobs</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
-</pre></div>
-</div>
-</div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">False</span></code>なので unbalanced panel data ということが確認できた。</p>
-<hr class="docutils" />
-<p>変数の観察単位毎の平均の計算</p>
+<p>メソッド<code class="docutils literal notranslate"><span class="pre">.mean()</span></code>を使うと、変数の観察単位毎の平均の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>が返される。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
@@ -2099,8 +1965,7 @@ dtype: bool
 </table>
 </div></div></div>
 </div>
-<hr class="docutils" />
-<p>変数の時間毎の平均の計算</p>
+<p>引数に<code class="docutils literal notranslate"><span class="pre">time</span></code>を指定すると、変数の時間毎の平均が返される。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
@@ -2165,8 +2030,7 @@ dtype: bool
 </table>
 </div></div></div>
 </div>
-<hr class="docutils" />
-<p>変数の平均からの乖離　<span class="math notranslate nohighlight">\(x-\bar{x}\)</span>，<span class="math notranslate nohighlight">\(\bar{x}\)</span>は平均。</p>
+<p>メソッド<code class="docutils literal notranslate"><span class="pre">demean()</span></code>は、変数の平均からの乖離が返される。即ち、変数<span class="math notranslate nohighlight">\(x\)</span>の平均が<span class="math notranslate nohighlight">\(\bar{x}\)</span>とすると、<span class="math notranslate nohighlight">\(x-\bar{x}\)</span>が返される。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">demean</span><span class="p">()</span>
@@ -2278,8 +2142,7 @@ dtype: bool
 </table>
 </div></div></div>
 </div>
-<hr class="docutils" />
-<p>変数の１階階差の計算　<span class="math notranslate nohighlight">\(x_t-x_{t-1}\)</span></p>
+<p><code class="docutils literal notranslate"><span class="pre">first_difference()</span></code>は変数の１階差分（<span class="math notranslate nohighlight">\(x_t-x_{t-1}\)</span>）が返される。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">first_difference</span><span class="p">()</span>
@@ -2356,6 +2219,7 @@ dtype: bool
 </table>
 </div></div></div>
 </div>
+<p>上の例では<code class="docutils literal notranslate"><span class="pre">NaN</span></code>があるため<code class="docutils literal notranslate"><span class="pre">Australia</span></code>と<code class="docutils literal notranslate"><span class="pre">UK</span></code>の行は１つしかない。</p>
 <hr class="docutils" />
 <p>（注意）</p>
 <p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>のメソッドは<code class="docutils literal notranslate"><span class="pre">PanelData</span></code>オブジェクトには使えない。</p>
@@ -2425,8 +2289,180 @@ dtype: bool
 </div></div></div>
 </div>
 </div>
-<div class="section" id="id9">
-<h2>１階差分推定（再考）<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="balanced-unbalanced">
+<h3>Balanced/Unbalancedの確認<a class="headerlink" href="#balanced-unbalanced" title="Permalink to this headline">¶</a></h3>
+<p>データセットには欠損値がある場合がある。観察単位数が<span class="math notranslate nohighlight">\(N\)</span>で時間の観測値の数が<span class="math notranslate nohighlight">\(T\)</span>の場合，観測値の数は<span class="math notranslate nohighlight">\(n=N\times T\)</span>となるが，次の2つを区別する。</p>
+<ul class="simple">
+<li><p>balanced panel data：<span class="math notranslate nohighlight">\(n=N\times T\)</span>（観察単位に対して全ての期間の全ての変数に欠損値がない）</p></li>
+<li><p>unbalanced panel data：<span class="math notranslate nohighlight">\(n&lt;N\times T\)</span>（欠損値がある）</p></li>
+</ul>
+<p>balanced か unbalancedかは以下のコードで確認できる。まず，メソッド<code class="docutils literal notranslate"><span class="pre">count()</span></code>を使う。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+    </tr>
+    <tr>
+      <th>country</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Australia</th>
+      <td>3</td>
+      <td>2</td>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>Japan</th>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>UK</th>
+      <td>3</td>
+      <td>3</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>観察単位（国）に対して，それぞれの変数に欠損値ではない観測値がいくつ存在するかを<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>として返す。期間数は3なので，3より低い数字があれば欠損値の存在を表す。例えば，Australiaの<code class="docutils literal notranslate"><span class="pre">inv</span></code>には欠損値がある。</p>
+<p>このメソッドを使って、1行でbalanced/unbalancedを確認するコードを考える。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="n">dfp</span><span class="o">.</span><span class="n">nobs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdp</th>
+      <th>inv</th>
+      <th>con</th>
+      <th>pop</th>
+    </tr>
+    <tr>
+      <th>country</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Australia</th>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>Japan</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>UK</th>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>上のコードで<code class="docutils literal notranslate"><span class="pre">nobs</span></code>は時間の観測値の数（この場合3）を返す属性である。<code class="docutils literal notranslate"><span class="pre">nobs</span></code>と同じ値は<code class="docutils literal notranslate"><span class="pre">True</span></code>、異なる場合は<code class="docutils literal notranslate"><span class="pre">False</span></code>が返されている。</p>
+<p>次のコードの<code class="docutils literal notranslate"><span class="pre">all()</span></code>は，列に対して全ての要素が<code class="docutils literal notranslate"><span class="pre">True</span></code>の場合のみ<code class="docutils literal notranslate"><span class="pre">True</span></code>を返す。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">dfp</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="n">dfp</span><span class="o">.</span><span class="n">nobs</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>gdp     True
+inv    False
+con    False
+pop     True
+dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">(</span> <span class="pre">)</span></code>はその中を先に評価する，という意味（数学と同じ）。変数が多い場合，<code class="docutils literal notranslate"><span class="pre">all()</span></code>を2回使うと全ての変数に対して評価するので便利である。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">dfp</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="n">dfp</span><span class="o">.</span><span class="n">nobs</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">False</span></code>なので unbalanced panel data ということが確認できた。</p>
+</div>
+</div>
+<div class="section" id="id10">
+<h2>１階差分推定（再考）<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
 <p>ここでは<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>を使い，以前行った１階差分推定を再考する。データ<code class="docutils literal notranslate"><span class="pre">crime4</span></code>を使う。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">

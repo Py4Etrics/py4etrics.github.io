@@ -505,6 +505,10 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
 <span class="kn">import</span> <span class="nn">wooldridge</span>
 <span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
+
+<span class="c1"># 警告メッセージを非表示</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -650,7 +654,7 @@ undergraduates looking to replicate or extend a published study.
 </ul>
 <div class="tip admonition">
 <p class="admonition-title">コメント</p>
-<p>時間に対して変化しない変数使えない。例えば，</p>
+<p>時間に対して変化しない変数は使えない。例えば，</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">educ</span></code>（説明変数に入れば教育の収益率が推定可能である。）</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">black</span></code>，<code class="docutils literal notranslate"><span class="pre">hisp</span></code>（を使うと人種間の賃金格差も推定できる。）</p></li>
@@ -713,6 +717,11 @@ d87: 0.925
 </ul>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">df.loc[:,var]-df_mean</span></code>：<code class="docutils literal notranslate"><span class="pre">var</span></code>のそれぞれの変数の平均からの乖離を計算する。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df_mean</span> <span class="pre">=</span> <span class="pre">...</span></code>と<code class="docutils literal notranslate"><span class="pre">df_md</span> <span class="pre">=</span> <span class="pre">...</span></code>の2行を次のように1行にまとめることも可能。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">df_md</span> <span class="pre">=</span> <span class="pre">df_g[var].transform(lambda</span> <span class="pre">x:</span> <span class="pre">x-x.mean())</span></code></p></li>
+</ul>
+</li>
 </ul>
 <p>説明（２）</p>
 <ul class="simple">
@@ -1037,10 +1046,6 @@ memory usage: 1.5 MB
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/linearmodels/panel/data.py:98: FutureWarning: is_categorical is deprecated and will be removed in a future version.  Use is_categorical_dtype instead
-  if is_categorical(s):
-</pre></div>
-</div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(44, 8, 545)
 </pre></div>
 </div>
@@ -1091,12 +1096,6 @@ memory usage: 1.5 MB
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mod_fe</span> <span class="o">=</span> <span class="n">PanelOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_fe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/linearmodels/panel/data.py:98: FutureWarning: is_categorical is deprecated and will be removed in a future version.  Use is_categorical_dtype instead
-  if is_categorical(s):
 </pre></div>
 </div>
 </div>
@@ -1168,8 +1167,8 @@ d87            0.9250     0.0688     13.450     0.0000      0.7902      1.0599
 Dep. Variable:                  lwage   R-squared:                        0.1806
 Estimator:                   PanelOLS   R-squared (Between):              0.2386
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Sun, Oct 04 2020   R-squared (Overall):              0.2361
-Time:                        22:02:52   Log-likelihood                   -1324.8
+Date:                Sun, Oct 18 2020   R-squared (Overall):              0.2361
+Time:                        12:42:59   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      83.851
 Entities:                         545   P-value                           0.0000
@@ -1211,8 +1210,8 @@ Max Obs:                       545.00
 Dep. Variable:                  lwage   R-squared:                        0.0216
 Estimator:                   PanelOLS   R-squared (Between):             -0.2717
 No. Observations:                4360   R-squared (Within):              -0.4809
-Date:                Sun, Oct 04 2020   R-squared (Overall):             -0.2808
-Time:                        22:02:52   Log-likelihood                   -1324.8
+Date:                Sun, Oct 18 2020   R-squared (Overall):             -0.2808
+Time:                        12:42:59   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      27.959
 Entities:                         545   P-value                           0.0000
@@ -1241,6 +1240,9 @@ Distribution: F(551,3805)
 Included effects: Entity, Time
 </pre></div>
 </div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">result_fe</span></code>と同じ結果を確認できる。<span class="math notranslate nohighlight">\(R^2\)</span>の値は少し変わっているが，これは時間ダミーを入れて計算している訳ではないためである。</p>
@@ -1263,12 +1265,6 @@ Included effects: Entity, Time
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_dum</span> <span class="o">=</span> <span class="n">PooledOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_dum</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/linearmodels/panel/data.py:98: FutureWarning: is_categorical is deprecated and will be removed in a future version.  Use is_categorical_dtype instead
-  if is_categorical(s):
 </pre></div>
 </div>
 </div>
@@ -1592,8 +1588,8 @@ Name: Variance Decomposition, dtype: float64
 Dep. Variable:                  lwage   R-squared:                        0.1711
 Estimator:              RandomEffects   R-squared (Between):              0.0967
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Sun, Oct 04 2020   R-squared (Overall):              0.1355
-Time:                        22:02:53   Log-likelihood                   -1609.8
+Date:                Sun, Oct 18 2020   R-squared (Overall):              0.1355
+Time:                        12:43:01   Log-likelihood                   -1609.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      69.027
 Entities:                         545   P-value                           0.0000
@@ -1667,7 +1663,7 @@ H0: Linear equality constraint is valid
 Statistic: 35.6454
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x7fc0a1d7dc70
+WaldTestStatistic, id: 0x7f8531b10fd0
 </pre></div>
 </div>
 </div>
@@ -1750,7 +1746,7 @@ H0: Linear equality constraint is valid
 Statistic: 26.0233
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x7fc0a2c70ac0
+WaldTestStatistic, id: 0x7f85309b7410
 </pre></div>
 </div>
 </div>
@@ -2077,32 +2073,32 @@ T-stats reported in parentheses
     <tr>
       <th rowspan="5" valign="top">0</th>
       <th>2000</th>
-      <td>2.409791</td>
-      <td>1.265950</td>
+      <td>0.630316</td>
+      <td>0.137642</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2001</th>
-      <td>2.643009</td>
-      <td>0.185675</td>
+      <td>-0.424982</td>
+      <td>-0.448820</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2002</th>
-      <td>-0.707936</td>
-      <td>-0.733003</td>
+      <td>0.860106</td>
+      <td>-0.052954</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2003</th>
-      <td>4.209790</td>
-      <td>1.386730</td>
+      <td>4.328020</td>
+      <td>1.723414</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2004</th>
-      <td>0.354344</td>
-      <td>-0.307892</td>
+      <td>3.627262</td>
+      <td>0.704248</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -2125,12 +2121,8 @@ T-stats reported in parentheses
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-X              2.0482     0.0553     37.018     0.0000      1.9394      2.1570
+X              1.9663     0.0496     39.683     0.0000      1.8689      2.0637
 ==============================================================================
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/linearmodels/panel/data.py:98: FutureWarning: is_categorical is deprecated and will be removed in a future version.  Use is_categorical_dtype instead
-  if is_categorical(s):
 </pre></div>
 </div>
 </div>
@@ -2152,10 +2144,10 @@ X              2.0482     0.0553     37.018     0.0000      1.9394      2.1570
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.7778     0.1338     13.287     0.0000      1.5149      2.0406
-X              2.8523     0.0228     124.92     0.0000      2.8074      2.8971
+Intercept      1.8648     0.1404     13.283     0.0000      1.5890      2.1407
+X              2.8296     0.0236     119.93     0.0000      2.7832      2.8759
 ==============================================================================
-theta: [0.21052027]
+theta: [0.26588904]
 </pre></div>
 </div>
 </div>
@@ -2185,9 +2177,9 @@ theta: [0.21052027]
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.2603     0.1154     10.919     0.0000      1.0335      1.4871
-X              2.0482     0.0553     37.046     0.0000      1.9396      2.1569
-X_mean         0.9088     0.0588     15.454     0.0000      0.7933      1.0243
+Intercept      1.2035     0.1136     10.589     0.0000      0.9802      1.4268
+X              1.9663     0.0495     39.713     0.0000      1.8690      2.0636
+X_mean         0.9960     0.0532     18.718     0.0000      0.8914      1.1005
 ==============================================================================
 </pre></div>
 </div>
@@ -2209,8 +2201,8 @@ X_mean         0.9088     0.0588     15.454     0.0000      0.7933      1.0243
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.5975     0.1123     14.223     0.0000      1.3768      1.8182
-X              2.8888     0.0193     149.76     0.0000      2.8509      2.9267
+Intercept      1.5832     0.1118     14.155     0.0000      1.3635      1.8030
+X              2.8861     0.0190     152.12     0.0000      2.8488      2.9234
 ==============================================================================
 </pre></div>
 </div>
@@ -2446,10 +2438,6 @@ d85            0.6175     0.0568     10.879     0.0000      0.5062      0.7288
 d86            0.7655     0.0712     10.755     0.0000      0.6259      0.9050
 d87            0.9250     0.0840     11.015     0.0000      0.7604      1.0897
 ==============================================================================
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/linearmodels/panel/data.py:98: FutureWarning: is_categorical is deprecated and will be removed in a future version.  Use is_categorical_dtype instead
-  if is_categorical(s):
 </pre></div>
 </div>
 </div>

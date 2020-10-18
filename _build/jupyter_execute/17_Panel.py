@@ -10,6 +10,10 @@ from collections import OrderedDict
 import wooldridge
 from statsmodels.formula.api import ols
 
+# 警告メッセージを非表示
+import warnings
+warnings.filterwarnings("ignore")
+
 パネル・データを使った次のモデルについて説明する。
 * 固定効果モデル（Fixed Effects Model）
 * ランダム効果モデル（Random Effects Model）
@@ -79,7 +83,7 @@ wooldridge.data('wagepan', description=True)
 
 ```{admonition} コメント
 :class: tip
-時間に対して変化しない変数使えない。例えば，
+時間に対して変化しない変数は使えない。例えば，
 * `educ`（説明変数に入れば教育の収益率が推定可能である。）
 * `black`，`hisp`（を使うと人種間の賃金格差も推定できる。）
 
@@ -119,6 +123,8 @@ for idx, name in enumerate(exog):
     * `df_g[var]`：グループ化計算のために`var`の変数だけを使うことを指定する。
     * `.transform('mean')`：指定された変数（`var`）のグループ内平均（それぞれの`nr`内での平均）を計算し，その平均で構成される`DataFrame`を作成する。作成された`DataFrame`の行数は`df`と同じになり，グループ内平均が同じ列内でリピートされることになる。
 * `df.loc[:,var]-df_mean`：`var`のそれぞれの変数の平均からの乖離を計算する。
+* `df_mean = ...`と`df_md = ...`の2行を次のように1行にまとめることも可能。
+    * `df_md = df_g[var].transform(lambda x: x-x.mean())`
 
 説明（２）
 * `.values`は`DataFrame`を`numpy`の`array`として返す。
