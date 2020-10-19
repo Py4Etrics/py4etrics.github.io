@@ -10,6 +10,10 @@ from statsmodels.stats.stattools import jarque_bera, omni_normtest
 import wooldridge
 from numba import njit
 
+# 警告メッセージを非表示
+import warnings
+warnings.filterwarnings("ignore")
+
 ここでは大標本特性（Large sample properties）もしくは漸近的特性（Asymptotic properties）と呼ばれる特性について考察する。この特性は
 
 **仮定６（正規性）が満たされない場合**
