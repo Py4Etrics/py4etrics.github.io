@@ -994,8 +994,8 @@ dtype: float64
 Dep. Variable:                   wage   R-squared:                       0.165
 Model:                            OLS   Adj. R-squared:                  0.163
 Method:                 Least Squares   F-statistic:                     103.4
-Date:                Sat, 10 Oct 2020   Prob (F-statistic):           2.78e-22
-Time:                        22:09:00   Log-Likelihood:                -1385.7
+Date:                Mon, 19 Oct 2020   Prob (F-statistic):           2.78e-22
+Time:                        19:32:17   Log-Likelihood:                -1385.7
 No. Observations:                 526   AIC:                             2775.
 Df Residuals:                     524   BIC:                             2784.
 Df Model:                           1                                         
@@ -1012,7 +1012,7 @@ Skew:                           1.861   Prob(JB):                    3.79e-176
 Kurtosis:                       7.797   Cond. No.                         60.2
 ==============================================================================
 
-Warnings:
+Notes:
 [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
 </pre></div>
 </div>
@@ -1039,6 +1039,9 @@ Warnings:
 Intercept     -0.9049      0.685     -1.321      0.187      -2.250       0.441
 educ           0.5414      0.053     10.167      0.000       0.437       0.646
 ==============================================================================
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>
@@ -1423,7 +1426,7 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 <p><code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;X ~ Y&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;Y ~ X&#39;</span>
 <span class="n">res_sim</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1437,8 +1440,8 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.914295
-Y            0.575389
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    2.241531
+X            0.710021
 dtype: float64
 </pre></div>
 </div>
@@ -1489,8 +1492,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.066629
-X            1.001171
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.960909
+X            0.972413
 dtype: float64
 </pre></div>
 </div>
@@ -1530,7 +1533,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.5428458226468527, 1.0671370869790633)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.15964864061163198, 1.2164447564110894)
 </pre></div>
 </div>
 </div>
@@ -1576,8 +1579,6 @@ dtype: float64
     
     <span class="n">b0hat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># OLS推定量を入れるarray（0がN個並んでいる）</span>
     <span class="n">b1hat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># OLS推定量を入れるarray（0がN個並んでいる）</span>
-    
-    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 定数項（1.がn個並んでいる）</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># N 回のループ</span>
         
@@ -1665,17 +1666,18 @@ dtype: float64
 <img alt="_images/8_Simple_Regression_131_0.png" src="_images/8_Simple_Regression_131_0.png" />
 </div>
 </div>
-<p>上のコード・ブロックの最後から２行目に<code class="docutils literal notranslate"><span class="pre">f'{r}</span> <span class="pre">rounds</span> <span class="pre">of</span> <span class="pre">OLS</span> <span class="pre">simulation'</span></code>とある。文字列の前に<code class="docutils literal notranslate"><span class="pre">f</span></code>を置き、文字列の中で変数を<code class="docutils literal notranslate"><span class="pre">{}</span></code>で囲むと変数の値を代入してくれるのである。これを<code class="docutils literal notranslate"><span class="pre">f-string</span></code>と呼ぶ。</p>
+<p>上のコード・ブロックの最後から２行目に<code class="docutils literal notranslate"><span class="pre">f'{r}</span> <span class="pre">rounds</span> <span class="pre">of</span> <span class="pre">OLS</span> <span class="pre">simulation'</span></code>とある。文字列の前に<code class="docutils literal notranslate"><span class="pre">f</span></code>を置き、文字列の中で上で定義した変数を<code class="docutils literal notranslate"><span class="pre">{}</span></code>で囲むとその変数の値を代入することができる。これを<code class="docutils literal notranslate"><span class="pre">f-string</span></code>と呼ぶ。</p>
 <hr class="docutils" />
 <p><strong>＜シミュレーションの含意＞</strong></p>
 <p>まず上の２つのヒストグラムをみると，値にばらつきがある。これは推定量（<span class="math notranslate nohighlight">\(\hat{\beta}_0\)</span>と<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>）が確率変数であるためである。その実現値は，真の値（<span class="math notranslate nohighlight">\(\beta_0=1.0\)</span>と<span class="math notranslate nohighlight">\(\beta_1=1.0\)</span>）を中心に左右対象に分布している。即ち，推定量は不偏性を満たしている。次の章で簡単に説明するが，上で行ったシミュレーションは不偏推定量に必要な仮定を満たしている。</p>
 <p>これを踏まえて，回帰直線の図を考えよう。同じ回帰式を使い<code class="docutils literal notranslate"><span class="pre">N</span></code>回のシミュレーションを行った後，最初の<code class="docutils literal notranslate"><span class="pre">r</span></code>個の回帰直線を重ねて描いているためパイプのような形になっている。一方で，実際の実証分析ではこのような繰り返しの試行は不可能であり多くの場合は一度だけである。言い換えると，実証研究では<code class="docutils literal notranslate"><span class="pre">N</span></code>個の回帰直線の中から１つだけを結果としてランダムに「選んでいる」のと等しい。この意味を更に考えるために，（標本の大きさは所与として）たまたま２組みのデータセットが手に入り，別々の回帰分析を行ったとしよう。その場合，パイプの幅が広ければ広いほど，２つの回帰直線の位置は大きく異なる可能性が高くなり，正確性が低い結果になる。逆に，パイプの幅が狭ければ狭いほど，２つの結果は似たものになり，より正確な推定結果となる。このように実証分析ではパイプの幅が可能な限り小さくなる工夫が必要になる。その１つが標本の大きさ<code class="docutils literal notranslate"><span class="pre">n</span></code>である。<code class="docutils literal notranslate"><span class="pre">n</span></code>が増えるとパイプは細くなり，極限<span class="math notranslate nohighlight">\(n\rightarrow\infty\)</span>（即ち，標本の大きさと母集団の大きさの差が限りなくゼロに近づく）ではパイプの形が直線（母集団回帰式）に近づくことになる。このように，実証分析において標本の大きさは非常に重要な役割を果たすことになる。</p>
-<p>（注意）</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <ul class="simple">
 <li><p>このシミュレーションの場合，推定量の<strong>一致性</strong>が満たされているため，パイプが母集団回帰式に収束することになる。しかし一般的に必ずそうなるとは限らない。ある仮定のもとでのみ推定量は一致性を満たすことになる。</p></li>
 <li><p>推定方法によっては，不偏性は満たさないが一致性を満たす推定量も存在する。また，エギゾチックな例になるがその逆もあり得る。</p></li>
 </ul>
-<hr class="docutils" />
+</div>
 <p>—– Give it a try! —–</p>
 <p>標本の大きさ<code class="docutils literal notranslate"><span class="pre">n</span></code>を変えて試してみよう。例えば，10, 30, 100, 500, 1000。</p>
 </div>

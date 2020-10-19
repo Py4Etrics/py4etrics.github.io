@@ -451,6 +451,10 @@
 <span class="kn">from</span> <span class="nn">statsmodels.stats.stattools</span> <span class="kn">import</span> <span class="n">jarque_bera</span><span class="p">,</span> <span class="n">omni_normtest</span>
 <span class="kn">import</span> <span class="nn">wooldridge</span>
 <span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span>
+
+<span class="c1"># 警告メッセージを非表示</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -570,8 +574,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.62134397, -0.54666348,  0.45833966,  1.53141267, -0.5556838 ,
-        0.51779397,  1.78948161, -0.00344267, -0.0575812 , -0.24337079])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.14700073, -0.58069958, -0.6668329 , -0.40062538, -0.56920403,
+       -0.52709591,  1.93079993, -0.52335612,  2.18118634, -0.67162609])
 </pre></div>
 </div>
 </div>
@@ -599,7 +603,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.03415800429146515
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.0038906313748506088
 </pre></div>
 </div>
 </div>
@@ -711,8 +715,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.28587615, 0.50418321, 0.2414181 , ..., 0.41365303, 0.5733773 ,
-       0.88589456])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.20329726,  0.59272076,  0.54633878, ..., -0.06891591,
+        0.6563908 ,  0.37054642])
 </pre></div>
 </div>
 </div>
@@ -1178,10 +1182,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.967132797300992,
- 0.3739749738483467,
- 0.029323577857614105,
- 3.3016336940677573)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.2976174570944996,
+ 0.861733924236368,
+ -0.058823358971978205,
+ 3.021092361118451)
 </pre></div>
 </div>
 </div>
@@ -1204,10 +1208,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(30.66742902032816,
- 2.1910505692599438e-07,
- -0.035207785763529315,
- 1.7887699474244088)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(30.26344046233345,
+ 2.681497533961677e-07,
+ -0.037999034075693786,
+ 1.7971411405201096)
 </pre></div>
 </div>
 </div>
@@ -1289,7 +1293,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=2.003501605151327, pvalue=0.36723592040159897)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=0.36173054770491686, pvalue=0.8345477865303536)
 </pre></div>
 </div>
 </div>
@@ -1305,7 +1309,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=343.32175720901313, pvalue=2.809491117714423e-75)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=323.0608392232713, pvalue=7.050665368924152e-71)
 </pre></div>
 </div>
 </div>
@@ -1471,10 +1475,6 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/Tetsu/anaconda3/envs/latest/lib/python3.8/site-packages/statsmodels/regression/linear_model.py:2052: FutureWarning: Support for multi-dimensional indexing (e.g. `obj[:, None]`) is deprecated and will be removed in a future version.  Convert to a numpy array before indexing instead.
-  scores = wexog * wresid[:, None]
-</pre></div>
-</div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4.070729461071163, 0.13063282803270007, 2.0)
 </pre></div>
 </div>
