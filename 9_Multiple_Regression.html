@@ -69,7 +69,7 @@
 <meta property="og:url"         content="https://py4etrics.github.io/9_Multiple_Regression.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="重回帰分析" />
-<meta property="og:description" content="重回帰分析  import numpy as np import pandas as pd from statsmodels.formula.api import ols import wooldridge from see import see import matplotlib.pyplot as plt from" />
+<meta property="og:description" content="重回帰分析  import numpy as np from scipy.stats import norm, uniform, gaussian_kde, multivariate_normal import pandas as pd from pandas.plotting import scatter_matri" />
 
 
 <meta name="twitter:card" content="summary" />
@@ -486,16 +486,16 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
-<span class="kn">import</span> <span class="nn">wooldridge</span>
-<span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="n">see</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">uniform</span><span class="p">,</span> <span class="n">gaussian_kde</span><span class="p">,</span> <span class="n">multivariate_normal</span>
-<span class="kn">from</span> <span class="nn">statsmodels.stats.outliers_influence</span> <span class="kn">import</span> <span class="n">variance_inflation_factor</span> <span class="k">as</span> <span class="n">vif</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">pandas.plotting</span> <span class="kn">import</span> <span class="n">scatter_matrix</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
+<span class="kn">from</span> <span class="nn">statsmodels.stats.outliers_influence</span> <span class="kn">import</span> <span class="n">variance_inflation_factor</span> <span class="k">as</span> <span class="n">vif</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="n">see</span>
 </pre></div>
 </div>
 </div>
@@ -1230,7 +1230,7 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.92268766, 1.9829943 , 2.97660518])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.52784083, 1.97515605, 3.11557725])
 </pre></div>
 </div>
 </div>
@@ -1251,9 +1251,9 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.922688
-X1           1.982994
-X2           2.976605
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.527841
+X1           1.975156
+X2           3.115577
 dtype: float64
 </pre></div>
 </div>
@@ -1269,22 +1269,24 @@ dtype: float64
 <p>シミュレーションでは上で使った同じ回帰式を使う。</p>
 <div class="math notranslate nohighlight">
 \[y=\beta_0+\beta_1x_1+\beta_2x_2+u\]</div>
-<p>シミュレーションの回数<code class="docutils literal notranslate"><span class="pre">N</span></code>と係数の真の値を以下のように設定する。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">100_000</span>
-<span class="n">b0</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="n">b1</span> <span class="o">=</span> <span class="mf">2.0</span>
-<span class="n">b2</span> <span class="o">=</span> <span class="mf">3.0</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>シミュレーションの関数を作成するが，パラメータの推定値の計算には<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使わずに，<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の関数を使い「手計算」としている。これにより計算を高速化するパッケージ<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使うことが可能となる。単回帰分析のシミュレーションと同じように、使い方は簡単でデコレーターと呼ばれる<code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code>（又は<code class="docutils literal notranslate"><span class="pre">&#64;jit</span></code>）を関数の上に加えるだけである。これだけで計算速度が数十倍早くなる場合もある。</p>
+<hr class="docutils" />
+<p>次の関数の引数：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>：標本の大きさ</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">N</span></code>：シミュレーションの回数（標本数と考えても良い）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b1</span></code>：定数項（デフォルトは<code class="docutils literal notranslate"><span class="pre">1.0</span></code>と設定）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b2</span></code>：定数項（デフォルトは<code class="docutils literal notranslate"><span class="pre">2.0</span></code>と設定）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b3</span></code>：定数項（デフォルトは<code class="docutils literal notranslate"><span class="pre">3.0</span></code>と設定）</p></li>
+</ul>
+<p>次の関数の返り値：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">b1</span></code>、<code class="docutils literal notranslate"><span class="pre">b2</span></code>、<code class="docutils literal notranslate"><span class="pre">b3</span></code>の<code class="docutils literal notranslate"><span class="pre">N</span></code>個の推定値がそれぞれ格納されている<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>の<code class="docutils literal notranslate"><span class="pre">array</span></code></p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>  <span class="c1"># 計算の高速化</span>
-<span class="k">def</span> <span class="nf">sim_unbias</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ</span>
+<span class="k">def</span> <span class="nf">sim_unbias</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">b0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">b1</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">b3</span><span class="o">=</span><span class="mf">3.0</span><span class="p">):</span>
 
     <span class="c1"># N個の0からなるarrayであり、0を推定値と置き換えて格納する</span>
     <span class="n">b0hat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
@@ -1318,10 +1320,10 @@ dtype: float64
 </div>
 </div>
 </div>
-<p>この関数の引数<code class="docutils literal notranslate"><span class="pre">n</span></code>は標本の大きさであり，返り値は3つの推定値のリストである。結果は<code class="docutils literal notranslate"><span class="pre">b0hat</span></code>, <code class="docutils literal notranslate"><span class="pre">b1hat</span></code>, <code class="docutils literal notranslate"><span class="pre">b2hat</span></code>に割り当てる。</p>
+<p>標本の大きさは<code class="docutils literal notranslate"><span class="pre">30</span></code>、シミュレーションの回数は<code class="docutils literal notranslate"><span class="pre">100_000</span></code>に設定し、結果は<code class="docutils literal notranslate"><span class="pre">b0hat</span></code>, <code class="docutils literal notranslate"><span class="pre">b1hat</span></code>, <code class="docutils literal notranslate"><span class="pre">b2hat</span></code>に割り当てる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0hat</span><span class="p">,</span> <span class="n">b1hat</span><span class="p">,</span> <span class="n">b2hat</span> <span class="o">=</span> <span class="n">sim_unbias</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0hat</span><span class="p">,</span> <span class="n">b1hat</span><span class="p">,</span> <span class="n">b2hat</span> <span class="o">=</span> <span class="n">sim_unbias</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">100_000</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1336,9 +1338,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 0.9997956527699131 
-b1: 2.00021254535989 
-b1: 2.999845451207441
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 0.9986909758772485 
+b1: 2.000486699885726 
+b1: 2.9998822502479103
 </pre></div>
 </div>
 </div>
@@ -1354,7 +1356,7 @@ b1: 2.999845451207441
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_94_0.png" src="_images/9_Multiple_Regression_94_0.png" />
+<img alt="_images/9_Multiple_Regression_93_0.png" src="_images/9_Multiple_Regression_93_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">b1</span></code>の真の値<code class="docutils literal notranslate"><span class="pre">2.0</span></code>を中心に概ね左右対象に分布していることが分かる。</p>
@@ -1372,7 +1374,7 @@ b1: 2.999845451207441
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_96_0.png" src="_images/9_Multiple_Regression_96_0.png" />
+<img alt="_images/9_Multiple_Regression_95_0.png" src="_images/9_Multiple_Regression_95_0.png" />
 </div>
 </div>
 <p>２つの図を重ねる。</p>
@@ -1391,7 +1393,7 @@ b1: 2.999845451207441
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_98_0.png" src="_images/9_Multiple_Regression_98_0.png" />
+<img alt="_images/9_Multiple_Regression_97_0.png" src="_images/9_Multiple_Regression_97_0.png" />
 </div>
 </div>
 <p>＜Give it a try!＞</p>
@@ -1520,7 +1522,9 @@ exper 	 1.4776177726317783
 </div>
 <div class="section" id="id16">
 <h3>シミュレーション<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
-<p>多重共線性により，<code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定量の標準誤差が上昇し推定量の正確性が損なわれることを確認する。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>シミュレーションをおこない、多重共線性により`OLS`推定量の標準誤差が上昇し推定量の正確性が損なわれることを確認する。
+</pre></div>
+</div>
 <p>シミュレーションでは以下の回帰式を使う。</p>
 <div class="math notranslate nohighlight">
 \[y=\beta_0+\beta_1x_1+\beta_2x_2+u\]</div>
@@ -1622,10 +1626,10 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_127_0.png" src="_images/9_Multiple_Regression_127_0.png" />
+<img alt="_images/9_Multiple_Regression_126_0.png" src="_images/9_Multiple_Regression_126_0.png" />
 </div>
 </div>
-<p>多重共線性が高いと推定値の分布は，真の値（<span class="math notranslate nohighlight">\(\beta_1=\)</span>
+<p>多重共線性が強いと推定値の分布は，真の値（<span class="math notranslate nohighlight">\(\beta_1=\)</span>
 <code class="docutils literal notranslate"><span class="pre">2.0</span></code>）の周辺で低くなり左右に広がっている。推定値の正確性が低下することを示している。<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分散を計算してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1634,7 +1638,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.039403377874427915, 0.20270189679540163)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0382724753043062, 0.20001577193525408)
 </pre></div>
 </div>
 </div>
@@ -1703,7 +1707,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_132_0.png" src="_images/9_Multiple_Regression_132_0.png" />
+<img alt="_images/9_Multiple_Regression_131_0.png" src="_images/9_Multiple_Regression_131_0.png" />
 </div>
 </div>
 <p>問5の答え：<span class="math notranslate nohighlight">\(+\)</span>を押すと答えが表示される。</p>
@@ -1717,7 +1721,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19032437388757664, 0.44202253623036897)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19219107002691535, 0.44414433227710537)
 </pre></div>
 </div>
 </div>
@@ -1741,7 +1745,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_139_0.png" src="_images/9_Multiple_Regression_139_0.png" />
+<img alt="_images/9_Multiple_Regression_138_0.png" src="_images/9_Multiple_Regression_138_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">pandas</span></code>の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>や<code class="docutils literal notranslate"><span class="pre">Series</span></code>には図を作成するメソッド<code class="docutils literal notranslate"><span class="pre">plot()</span></code>が用意されている（裏では<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>が動いている）。例えば，<code class="docutils literal notranslate"><span class="pre">wage1</span></code>にある<code class="docutils literal notranslate"><span class="pre">educ</span></code>のヒストグラムであれば次のコードで図示することができる。</p>
@@ -1771,7 +1775,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_141_0.png" src="_images/9_Multiple_Regression_141_0.png" />
+<img alt="_images/9_Multiple_Regression_140_0.png" src="_images/9_Multiple_Regression_140_0.png" />
 </div>
 </div>
 <p>横軸と縦軸のラベルを確認すること。対角線上はそれぞれの変数のヒストグラム，対角線以外の図は縦横のペアの変数の散布図となっており，相関度をある程度目視で確認できる。</p>
@@ -1789,7 +1793,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_143_0.png" src="_images/9_Multiple_Regression_143_0.png" />
+<img alt="_images/9_Multiple_Regression_142_0.png" src="_images/9_Multiple_Regression_142_0.png" />
 </div>
 </div>
 <p>次に相関係数を簡単に計算する方法を紹介する。<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">corr()</span></code>を使うと変数の相関係数を<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>として返す。</p>
@@ -1872,7 +1876,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_150_0.png" src="_images/9_Multiple_Regression_150_0.png" />
+<img alt="_images/9_Multiple_Regression_149_0.png" src="_images/9_Multiple_Regression_149_0.png" />
 </div>
 </div>
 <p>赤はプラス，青はマイナスを示し，色の濃淡は絶対値に連動している。ここで使った３つのオプション（設定しなくても良い）の説明する。</p>
@@ -1894,7 +1898,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_153_0.png" src="_images/9_Multiple_Regression_153_0.png" />
+<img alt="_images/9_Multiple_Regression_152_0.png" src="_images/9_Multiple_Regression_152_0.png" />
 </div>
 </div>
 <p>図の解釈は<code class="docutils literal notranslate"><span class="pre">pandas</span></code>の場合と同じである。</p>
