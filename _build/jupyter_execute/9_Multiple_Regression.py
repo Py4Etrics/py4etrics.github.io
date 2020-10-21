@@ -1,16 +1,16 @@
 # 重回帰分析
 
 import numpy as np
-import pandas as pd
-from statsmodels.formula.api import ols
-import wooldridge
-from see import see
-import matplotlib.pyplot as plt
-from numba import njit
 from scipy.stats import norm, uniform, gaussian_kde, multivariate_normal
-from statsmodels.stats.outliers_influence import variance_inflation_factor as vif
+import pandas as pd
 from pandas.plotting import scatter_matrix
+import matplotlib.pyplot as plt
+from statsmodels.formula.api import ols
+from statsmodels.stats.outliers_influence import variance_inflation_factor as vif
+import wooldridge
+from numba import njit
 import seaborn as sns
+from see import see
 
 ## 説明
 
@@ -491,17 +491,21 @@ ols('Y ~ X1 + X2', data=df_check).fit().params
 
 $$y=\beta_0+\beta_1x_1+\beta_2x_2+u$$
 
-シミュレーションの回数`N`と係数の真の値を以下のように設定する。
-
-N = 100_000
-b0 = 1.0
-b1 = 2.0
-b2 = 3.0
-
 シミュレーションの関数を作成するが，パラメータの推定値の計算には`statsmodels`を使わずに，`numpy`の関数を使い「手計算」としている。これにより計算を高速化するパッケージ`Numba`を使うことが可能となる。単回帰分析のシミュレーションと同じように、使い方は簡単でデコレーターと呼ばれる`@njit`（又は`@jit`）を関数の上に加えるだけである。これだけで計算速度が数十倍早くなる場合もある。
 
+---
+次の関数の引数：
+* `n`：標本の大きさ
+* `N`：シミュレーションの回数（標本数と考えても良い）
+* `b1`：定数項（デフォルトは`1.0`と設定）
+* `b2`：定数項（デフォルトは`2.0`と設定）
+* `b3`：定数項（デフォルトは`3.0`と設定）
+
+次の関数の返り値：
+* `b1`、`b2`、`b3`の`N`個の推定値がそれぞれ格納されている`NumPy`の`array`
+
 @njit  # 計算の高速化
-def sim_unbias(n):  # n=標本の大きさ
+def sim_unbias(n, N, b0=1.0, b1=2.0, b3=3.0):
 
     # N個の0からなるarrayであり、0を推定値と置き換えて格納する
     b0hat_arr = np.zeros(N)
@@ -532,9 +536,9 @@ def sim_unbias(n):  # n=標本の大きさ
         
     return b0hat_arr, b1hat_arr, b2hat_arr
 
-この関数の引数`n`は標本の大きさであり，返り値は3つの推定値のリストである。結果は`b0hat`, `b1hat`, `b2hat`に割り当てる。
+標本の大きさは`30`、シミュレーションの回数は`100_000`に設定し、結果は`b0hat`, `b1hat`, `b2hat`に割り当てる。
 
-b0hat, b1hat, b2hat = sim_unbias(30)
+b0hat, b1hat, b2hat = sim_unbias(n=30, N=100_000)
 
 推定値の平均を計算してみよう。
 
@@ -643,7 +647,7 @@ for i in range(len(wage1_vif.columns)-1):  # 定数項は無視するために-1
 
 ### シミュレーション
 
-多重共線性により，`OLS`推定量の標準誤差が上昇し推定量の正確性が損なわれることを確認する。
+    シミュレーションをおこない、多重共線性により`OLS`推定量の標準誤差が上昇し推定量の正確性が損なわれることを確認する。
 
 シミュレーションでは以下の回帰式を使う。
 
@@ -726,7 +730,7 @@ plt.ylabel('Kernel Density')  # 縦軸のラベル
 plt.legend()  # 凡例
 pass
 
-多重共線性が高いと推定値の分布は，真の値（$\beta_1=$
+多重共線性が強いと推定値の分布は，真の値（$\beta_1=$
 `2.0`）の周辺で低くなり左右に広がっている。推定値の正確性が低下することを示している。$\hat{\beta}_1$の分散を計算してみよう。
 
 np.var(b1hat_weak), np.var(b1hat_strong)
