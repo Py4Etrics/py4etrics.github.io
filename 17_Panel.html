@@ -541,16 +541,24 @@
 <li><p><span class="math notranslate nohighlight">\(\ddot{u}_i=u_i-\bar{u}\)</span></p></li>
 </ul>
 <p>は平均からの乖離（demeaned values）。</p>
-<p>＜良い点＞</p>
+<p>＜仮定と推定量の性質＞</p>
+<ol class="simple">
+<li><p>(式１)のように回帰式は線形</p></li>
+<li><p>標本のランダム抽出</p></li>
+<li><p><span class="math notranslate nohighlight">\(x_{it}\)</span>は時間と共に変動し、説明変数間の完全多重共線性は存在しない。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{E}(u_{it}|X_i,a_i)=0\)</span>、即ち、<span class="math notranslate nohighlight">\(a_i\)</span> と <span class="math notranslate nohighlight">\(x_{it}\)</span>, <span class="math notranslate nohighlight">\(t=1,2,..,T\)</span> を所与として <span class="math notranslate nohighlight">\(u_{it}\)</span> の平均は0</p></li>
+</ol>
+<p>この仮定の下で，OLS推定量 <span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span> は</p>
 <ul class="simple">
-<li><p>（式３）には <span class="math notranslate nohighlight">\(a_i\)</span> がない。</p></li>
-<li><p><span class="math notranslate nohighlight">\(a_i\)</span> と <span class="math notranslate nohighlight">\(x_{it}\)</span>, <span class="math notranslate nohighlight">\(t=1,2,..,T\)</span> を所与として <span class="math notranslate nohighlight">\(u_{it}\)</span> の平均は0の仮定の下で，OLS推定量 <span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span> は</p>
-<ul>
 <li><p>不偏性を満たす。</p></li>
 <li><p><span class="math notranslate nohighlight">\(T\)</span>を一定として標本の大きさが十分に大きい場合，一致性を満たす。</p></li>
-<li><p>固定効果推定量（Fixed Effects Estimator or FE Estimator）もしくは Between Estimatorと呼ばれる。</p></li>
+<li><p>固定効果推定量（Fixed Effects Estimator or FE Estimator）もしくは Within Estimatorと呼ばれる。</p></li>
 </ul>
-</li>
+<br>
+<hr class="docutils" />
+<p>＜良い点＞</p>
+<ul class="simple">
+<li><p>推定量は上述の仮定の下で不偏性・一致性が満たされる。</p></li>
 </ul>
 <p>＜悪い点＞</p>
 <ul class="simple">
@@ -1059,7 +1067,8 @@ memory usage: 1.5 MB
 <p>次に，balanced もしくは unbalanced data set かを確認する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">wagepanp</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">==</span><span class="n">wagepanp</span><span class="o">.</span><span class="n">nobs</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">~</span><span class="n">wagepanp</span><span class="o">.</span><span class="n">isnull</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="c1"># (wagepanp.count()==wagepanp.nobs).all().all()</span>
 </pre></div>
 </div>
 </div>
@@ -1167,8 +1176,8 @@ d87            0.9250     0.0688     13.450     0.0000      0.7902      1.0599
 Dep. Variable:                  lwage   R-squared:                        0.1806
 Estimator:                   PanelOLS   R-squared (Between):              0.2386
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Wed, Oct 21 2020   R-squared (Overall):              0.2361
-Time:                        09:40:53   Log-likelihood                   -1324.8
+Date:                Thu, Oct 22 2020   R-squared (Overall):              0.2361
+Time:                        10:35:14   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      83.851
 Entities:                         545   P-value                           0.0000
@@ -1182,6 +1191,9 @@ Min Obs:                       545.00
 Max Obs:                       545.00                                           
                                                                                 
 ================================================================================
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>
@@ -1210,8 +1222,8 @@ Max Obs:                       545.00
 Dep. Variable:                  lwage   R-squared:                        0.0216
 Estimator:                   PanelOLS   R-squared (Between):             -0.2717
 No. Observations:                4360   R-squared (Within):              -0.4809
-Date:                Wed, Oct 21 2020   R-squared (Overall):             -0.2808
-Time:                        09:40:53   Log-likelihood                   -1324.8
+Date:                Thu, Oct 22 2020   R-squared (Overall):             -0.2808
+Time:                        10:35:14   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      27.959
 Entities:                         545   P-value                           0.0000
@@ -1585,8 +1597,8 @@ Name: Variance Decomposition, dtype: float64
 Dep. Variable:                  lwage   R-squared:                        0.1711
 Estimator:              RandomEffects   R-squared (Between):              0.0967
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Wed, Oct 21 2020   R-squared (Overall):              0.1355
-Time:                        09:40:55   Log-likelihood                   -1609.8
+Date:                Thu, Oct 22 2020   R-squared (Overall):              0.1355
+Time:                        10:35:15   Log-likelihood                   -1609.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      69.027
 Entities:                         545   P-value                           0.0000
@@ -1660,7 +1672,7 @@ H0: Linear equality constraint is valid
 Statistic: 35.6454
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x7fc7352f9ad0
+WaldTestStatistic, id: 0x7fe53aada6d0
 </pre></div>
 </div>
 </div>
@@ -1743,7 +1755,7 @@ H0: Linear equality constraint is valid
 Statistic: 26.0233
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x7fc735303550
+WaldTestStatistic, id: 0x7fe53aab2f90
 </pre></div>
 </div>
 </div>
@@ -2070,32 +2082,32 @@ T-stats reported in parentheses
     <tr>
       <th rowspan="5" valign="top">0</th>
       <th>2000</th>
-      <td>3.626709</td>
-      <td>1.823649</td>
+      <td>0.533600</td>
+      <td>0.106324</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2001</th>
-      <td>-0.836038</td>
-      <td>-0.362601</td>
+      <td>-1.051133</td>
+      <td>-0.654477</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2002</th>
-      <td>2.449499</td>
-      <td>0.365907</td>
+      <td>-1.285633</td>
+      <td>-0.860210</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2003</th>
-      <td>2.943206</td>
-      <td>0.487927</td>
+      <td>1.402758</td>
+      <td>-0.221239</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2004</th>
-      <td>2.051622</td>
-      <td>0.127607</td>
+      <td>-1.630698</td>
+      <td>-2.086397</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -2118,7 +2130,7 @@ T-stats reported in parentheses
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-X              2.0498     0.0504     40.693     0.0000      1.9508      2.1488
+X              2.0748     0.0536     38.732     0.0000      1.9695      2.1802
 ==============================================================================
 </pre></div>
 </div>
@@ -2141,10 +2153,10 @@ X              2.0498     0.0504     40.693     0.0000      1.9508      2.1488
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      2.0032     0.1481     13.528     0.0000      1.7122      2.2941
-X              2.8015     0.0249     112.39     0.0000      2.7525      2.8504
+Intercept      1.6786     0.1345     12.479     0.0000      1.4143      1.9429
+X              2.8596     0.0227     126.20     0.0000      2.8151      2.9041
 ==============================================================================
-theta: [0.29275785]
+theta: [0.23757154]
 </pre></div>
 </div>
 </div>
@@ -2174,9 +2186,9 @@ theta: [0.29275785]
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.2922     0.1278     10.110     0.0000      1.0411      1.5434
-X              2.0498     0.0503     40.724     0.0000      1.9509      2.1487
-X_mean         0.8948     0.0550     16.283     0.0000      0.7868      1.0028
+Intercept      1.1393     0.1159     9.8284     0.0000      0.9116      1.3671
+X              2.0748     0.0535     38.762     0.0000      1.9697      2.1800
+X_mean         0.8920     0.0571     15.623     0.0000      0.7798      1.0042
 ==============================================================================
 </pre></div>
 </div>
@@ -2198,8 +2210,8 @@ X_mean         0.8948     0.0550     16.283     0.0000      0.7868      1.0028
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.6788     0.1161     14.459     0.0000      1.4506      1.9069
-X              2.8668     0.0198     144.91     0.0000      2.8279      2.9057
+Intercept      1.4694     0.1102     13.331     0.0000      1.2529      1.6860
+X              2.9012     0.0187     155.14     0.0000      2.8645      2.9380
 ==============================================================================
 </pre></div>
 </div>
@@ -2302,7 +2314,7 @@ X              2.8668     0.0198     144.91     0.0000      2.8279      2.9057
 <li><p>残差の不均一分散</p></li>
 <li><p>残差の自己相関</p></li>
 </ul>
-<p>これらの問題が発生しても，基本的な仮定のもとでFE推定量は不偏性と一致性を満たす。しかし，係数の標準誤差は有効ではなくなり検定が無効となる。その対処方法として<strong>クラスター頑健的推定</strong>を使う。これは不均一分散の章で説明した不均一分散頑健的推定を自己相関に拡張し，パネル・データ用に考案された推定と理解すれば十分である。以下では，その使い方を説明する。</p>
+<p>これらの問題が発生しても，基本的な仮定のもとでFE推定量は不偏性と一致性を満たす。しかし，係数の標準誤差は有効ではなくなり検定が無効となる。その対処方法として<strong>クラスター頑健的推定</strong>を使う。これは不均一分散の章で説明した不均一分散頑健的推定を<strong>個体ごとの自己相関</strong>（個体間の相関ではない）に対応できるように拡張し，パネル・データ用に考案された推定と理解すれば十分である。以下では，その使い方を説明する。</p>
 <div class="section" id="id20">
 <h3>分散の確認<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>には残差の均一分散を調べるBreusch-Pagan検定やWhite検定をおこなうメソッドは用意されていない。ここでは<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使いWooldridge (2016,p.253)で説明されているWhite検定に基づく検定をおこなう。次に必要な変数を作成する。</p>
