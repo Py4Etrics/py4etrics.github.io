@@ -186,7 +186,6 @@ wagepanp.shape
 次に，balanced もしくは unbalanced data set かを確認する。
 
 (~wagepanp.isnull).all()
-# (wagepanp.count()==wagepanp.nobs).all().all()
 
 このデータ・セットはbalancedだが，unbalanced だったとしても，固定効果モデルの考え方や以下で説明するコードは変わらない。
 
@@ -346,9 +345,21 @@ $$\overset{\circ}{y}_{it}=\beta_0(1-\theta)+\beta_1\overset{\circ}{y}_{it}+\over
 （注意）
 * $\theta$は事前にはわからないため推定する必要がある（`linearmodels`が自動的に計算する）。
 
+＜仮定と推定量の性質＞
+1. (式１)のように回帰式は線形
+1. 標本のランダム抽出
+1. 説明変数間の完全多重共線性は存在しない。
+1. 説明変数を所与として$a_i$の平均は一定。（従って、$\text{Cov}\left(a_ix_{it}\right)= 0$。）
+
+この仮定の下で，RE推定量 $\hat{\beta}_1$ は
+* 一致性を満たす。しかし不偏性は満たさない。
+
+
+<br>
+
+---
 （良い点）
 * 時間に対して不変の説明変数があってもその係数を推定できる。
-* $\text{Cov}\left(a_ix_{it}\right)= 0$が正しければ，推定量は一致性を満たす。しかし，不偏性は満たさない。
 
 ### 推定
 
