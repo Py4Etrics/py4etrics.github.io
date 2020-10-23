@@ -1068,7 +1068,6 @@ memory usage: 1.5 MB
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">~</span><span class="n">wagepanp</span><span class="o">.</span><span class="n">isnull</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-<span class="c1"># (wagepanp.count()==wagepanp.nobs).all().all()</span>
 </pre></div>
 </div>
 </div>
@@ -1177,7 +1176,7 @@ Dep. Variable:                  lwage   R-squared:                        0.1806
 Estimator:                   PanelOLS   R-squared (Between):              0.2386
 No. Observations:                4360   R-squared (Within):               0.1806
 Date:                Fri, Oct 23 2020   R-squared (Overall):              0.2361
-Time:                        13:45:22   Log-likelihood                   -1324.8
+Time:                        19:33:13   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      83.851
 Entities:                         545   P-value                           0.0000
@@ -1191,9 +1190,6 @@ Min Obs:                       545.00
 Max Obs:                       545.00                                           
                                                                                 
 ================================================================================
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>
@@ -1223,7 +1219,7 @@ Dep. Variable:                  lwage   R-squared:                        0.0216
 Estimator:                   PanelOLS   R-squared (Between):             -0.2717
 No. Observations:                4360   R-squared (Within):              -0.4809
 Date:                Fri, Oct 23 2020   R-squared (Overall):             -0.2808
-Time:                        13:45:22   Log-likelihood                   -1324.8
+Time:                        19:33:13   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      27.959
 Entities:                         545   P-value                           0.0000
@@ -1385,10 +1381,22 @@ Name: parameter, dtype: float64
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\theta\)</span>は事前にはわからないため推定する必要がある（<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>が自動的に計算する）。</p></li>
 </ul>
+<p>＜仮定と推定量の性質＞</p>
+<ol class="simple">
+<li><p>(式１)のように回帰式は線形</p></li>
+<li><p>標本のランダム抽出</p></li>
+<li><p>説明変数間の完全多重共線性は存在しない。</p></li>
+<li><p>説明変数を所与として<span class="math notranslate nohighlight">\(a_i\)</span>の平均は一定。（従って、<span class="math notranslate nohighlight">\(\text{Cov}\left(a_ix_{it}\right)= 0\)</span>。）</p></li>
+</ol>
+<p>この仮定の下で，RE推定量 <span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span> は</p>
+<ul class="simple">
+<li><p>一致性を満たす。しかし不偏性は満たさない。</p></li>
+</ul>
+<br>
+<hr class="docutils" />
 <p>（良い点）</p>
 <ul class="simple">
 <li><p>時間に対して不変の説明変数があってもその係数を推定できる。</p></li>
-<li><p><span class="math notranslate nohighlight">\(\text{Cov}\left(a_ix_{it}\right)= 0\)</span>が正しければ，推定量は一致性を満たす。しかし，不偏性は満たさない。</p></li>
 </ul>
 </div>
 <div class="section" id="id8">
@@ -1598,7 +1606,7 @@ Dep. Variable:                  lwage   R-squared:                        0.1711
 Estimator:              RandomEffects   R-squared (Between):              0.0967
 No. Observations:                4360   R-squared (Within):               0.1806
 Date:                Fri, Oct 23 2020   R-squared (Overall):              0.1355
-Time:                        13:45:23   Log-likelihood                   -1609.8
+Time:                        19:33:14   Log-likelihood                   -1609.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      69.027
 Entities:                         545   P-value                           0.0000
@@ -1672,7 +1680,7 @@ H0: Linear equality constraint is valid
 Statistic: 35.6454
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x7fc7ffff4a90
+WaldTestStatistic, id: 0x7ff3387ec250
 </pre></div>
 </div>
 </div>
@@ -1755,7 +1763,7 @@ H0: Linear equality constraint is valid
 Statistic: 26.0233
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x7fc8000b9210
+WaldTestStatistic, id: 0x7ff3387b3510
 </pre></div>
 </div>
 </div>
@@ -2082,32 +2090,32 @@ T-stats reported in parentheses
     <tr>
       <th rowspan="5" valign="top">0</th>
       <th>2000</th>
-      <td>1.543906</td>
-      <td>0.874171</td>
+      <td>3.577186</td>
+      <td>1.445954</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2001</th>
-      <td>3.306972</td>
-      <td>0.661270</td>
+      <td>0.073367</td>
+      <td>-0.143839</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2002</th>
-      <td>2.122110</td>
-      <td>0.115286</td>
+      <td>0.166286</td>
+      <td>-0.416751</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2003</th>
-      <td>0.415344</td>
-      <td>-0.798527</td>
+      <td>1.831844</td>
+      <td>0.965041</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2004</th>
-      <td>0.716383</td>
-      <td>0.120207</td>
+      <td>-2.607278</td>
+      <td>-1.660679</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -2130,7 +2138,7 @@ T-stats reported in parentheses
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-X              2.0462     0.0501     40.845     0.0000      1.9477      2.1447
+X              2.0027     0.0464     43.117     0.0000      1.9114      2.0940
 ==============================================================================
 </pre></div>
 </div>
@@ -2153,10 +2161,10 @@ X              2.0462     0.0501     40.845     0.0000      1.9477      2.1447
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.7077     0.1311     13.024     0.0000      1.4501      1.9653
-X              2.8627     0.0223     128.41     0.0000      2.8189      2.9065
+Intercept      2.0893     0.1596     13.091     0.0000      1.7757      2.4028
+X              2.7787     0.0269     103.25     0.0000      2.7258      2.8316
 ==============================================================================
-theta: [0.20247622]
+theta: [0.36146781]
 </pre></div>
 </div>
 </div>
@@ -2186,9 +2194,9 @@ theta: [0.20247622]
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.1384     0.1088     10.460     0.0000      0.9246      1.3523
-X              2.0462     0.0501     40.876     0.0000      1.9479      2.1446
-X_mean         0.9313     0.0535     17.410     0.0000      0.8262      1.0363
+Intercept      1.1368     0.1331     8.5383     0.0000      0.8752      1.3984
+X              2.0027     0.0464     43.149     0.0000      1.9115      2.0939
+X_mean         0.9674     0.0519     18.654     0.0000      0.8655      1.0693
 ==============================================================================
 </pre></div>
 </div>
@@ -2210,8 +2218,8 @@ X_mean         0.9313     0.0535     17.410     0.0000      0.8262      1.0363
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.5175     0.1109     13.687     0.0000      1.2997      1.7353
-X              2.9010     0.0190     152.89     0.0000      2.8637      2.9383
+Intercept      1.5767     0.1179     13.379     0.0000      1.3452      1.8083
+X              2.8817     0.0202     142.47     0.0000      2.8420      2.9215
 ==============================================================================
 </pre></div>
 </div>
@@ -2302,7 +2310,7 @@ X              2.9010     0.0190     152.89     0.0000      2.8637      2.9383
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/17_Panel_133_0.png" src="_images/17_Panel_133_0.png" />
+<img alt="_images/17_Panel_134_0.png" src="_images/17_Panel_134_0.png" />
 </div>
 </div>
 </div>
@@ -2394,7 +2402,7 @@ F検定のp値： 0.4354339447413128
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/17_Panel_143_0.png" src="_images/17_Panel_143_0.png" />
+<img alt="_images/17_Panel_144_0.png" src="_images/17_Panel_144_0.png" />
 </div>
 </div>
 <p>（解説）</p>
