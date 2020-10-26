@@ -153,16 +153,9 @@ res = ols(formula, data=df).fit()
 
 また`123go`のように数字から始まる列ラベルもあるかもしれない。この場合も回帰式でそのまま使うとエラーが発生するが、`Q()`の引数として文字列で指定すればが使えるようになる。
 ```
-formula = 'Q("123go") ~ X
+formula = 'Q("return") ~ X + Q("123go")'
 res = ols(formula, data=df).fit()
 ```
-
-df_q = pd.DataFrame({'return':np.random.normal(size=30),
-                     'X':np.random.normal(size=30),
-                     '123go':np.random.normal(size=30)})
-
-res_q = ols('Q("return") ~ X + Q("123go")', data=df_q).fit()
-res_q.params
 
 ## 係数の解釈
 
