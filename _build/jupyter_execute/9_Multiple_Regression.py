@@ -134,6 +134,36 @@ res_3 = ols(formula_3, data=wage1).fit()
 
 res_3.params
 
+### `Q()`について
+
+`Q()`は変数の変換に使うわけではないが、その用途を覚えておくと役に立つことだろう。
+
+`Python`には予約語（reserved words）と呼ばれるものがり、変数名には使えない。以下がその例である。
+* `def`と`return`：関数を定義する場合に使う
+* `for`と`while`：ループに使う
+* `import`と`from`：パッケージのインポート
+* `if`と`elif`と`elase`：`if`文に使う
+
+また`DataFrame`の列ラベルに予約語を文字列として使うことも避けるべきであろう。しかし、どうしても使う場合もあるかもしれない（例えば、他のプログラム用に作成されてデータを読み込む場合）。だが、予約語をそのまま回帰式に書くとエラーが発生する。その際に役に立つのが`Q()`である。例えば、`df`という`DataFrame`に「利子率」の列ラベルとして`return`が設定され、もう一つの変数に`X`があるとしよう。`Q()`の引数として`return`を文字列で書くことにより、通常どおりのコードを書くことができる。
+
+```
+formula = 'Q("return") ~ X
+res = ols(formula, data=df).fit()
+```
+
+また`123go`のように数字から始まる列ラベルもあるかもしれない。この場合も回帰式でそのまま使うとエラーが発生するが、`Q()`の引数として文字列で指定すればが使えるようになる。
+```
+formula = 'Q("123go") ~ X
+res = ols(formula, data=df).fit()
+```
+
+df_q = pd.DataFrame({'return':np.random.normal(size=30),
+                     'X':np.random.normal(size=30),
+                     '123go':np.random.normal(size=30)})
+
+res_q = ols('Q("return") ~ X + Q("123go")', data=df_q).fit()
+res_q.params
+
 ## 係数の解釈
 
 次の推定式を考えよう。
@@ -303,7 +333,7 @@ $$\text{E}\left(\hat{\beta}_j\right)=\beta_j,\qquad j=0,1,2,...,k$$
 $$\text{Var}\left(u|X\right)=\sigma^2$$
 
 ---
-仮定１〜５をガウス・マルコフ仮定（横断回帰分析のGM仮定）と呼び，この下では以下が成立する。
+仮定１〜５をガウス・マルコフ仮定（横断回帰分析のGM仮定）と呼び，この仮定の下では以下が成立する。
 1. 誤差分散の推定量 $\hat{\sigma}^2$の平均は母集団の値と等しい（誤差分散の不偏推定量）。
 
     $$
@@ -327,7 +357,7 @@ $$\text{Var}\left(u|X\right)=\sigma^2$$
     $\widehat{\text{Var}}\left(\hat{\beta}_j\right)$はOLS推定量$\hat{\beta}_j$の正確性を捉え，低ければより高い正確性を示す。（「なぜ分散？」と思う場合は前章のシミュレーション１で，標本のランダム抽出を行うたびに，$\hat{\beta}$の値が変わったことを思い出そう。）
 
 ---
-パラメータの分散の推定量の式から以下が分かる。
+パラメータの分散の推定量の式から次のことが分かる。
 * $\dfrac{1}{n-1}$: 標本の大きさが大きくなると$\hat{\beta}_j$の正確性を高める。
 * $\dfrac{\hat{\sigma}^2}{\text{Var}(x_j)}$: 残差の分散に対して説明変数$x_j$の分散が大きければ，$\hat{\beta}_j$の正確性を高める。
 * $R_j^2$は多重共線性が高くなると大きくなる。従って，多重共線性が高いと$\hat{\beta}_j$の正確性を低下させる。
@@ -368,7 +398,7 @@ k = res_1.df_model
 SSR/(n-k-1)
 
 ```{note}
-上の計算に属性`.ssr`が出てくる。インターネットで`statsmodels result ssr`検索してみよう。[Google](https://www.google.co.jp/search?q=statsmodels+result+ssr)の検索結果の[一番上のサイト](https://www.statsmodels.org/devel/generated/statsmodels.regression.linear_model.RegressionResults.html)は該当する`statsmodels`マニュアルとなっており、ウェブページの下の方に行くと`.ssr`を見つけることができるはずだ。
+上の計算に属性`.ssr`が出てくる。インターネットで`statsmodels result`検索してみよう。[Google](https://www.google.co.jp/search?ei=PySWX4iPCoHWhwPTorWADw&q=statsmodels+result&oq=statsmodels+result&gs_lcp=CgZwc3ktYWIQAzICCAAyAggAMgQIABAeMgQIABAeMgQIABAeMgQIABAeMgQIABAeMgQIABAeOgQIABATOgYIABAeEBM6CAgAEAoQHhATOggIABAIEB4QEzoICAAQBRAeEBNQ9xRY9RhggBxoAHAAeACAAW2IAcwDkgEDNC4xmAEAoAEBqgEHZ3dzLXdpesABAQ&sclient=psy-ab&ved=0ahUKEwjIqtPUi9HsAhUB62EKHVNRDfAQ4dUDCAw&uact=5)の検索結果の[一番上のサイト](https://www.statsmodels.org/devel/generated/statsmodels.regression.linear_model.RegressionResults.html)は該当する`statsmodels`マニュアルとなっており、ウェブページの下の方に行くと`.ssr`を見つけることができるはずだ。
 ```
 
 **パラメータの標準誤差 $\text{se}\left(\hat{\beta}_j\right)$**
@@ -381,7 +411,7 @@ res_1.bse
 
 ## 「手計算」
 
-`statsmodels`は非常に優れたパッケージであり，複雑な計算を簡単なコードで実行してくれる。しかしここでは`numpy`の関数を使い，重回帰分析における推定値を「手計算」で求める。目的は２つある。第１に，`statsmodels`の裏でどのような計算が行われているかを理解する。第２に，今後シミュレーションをおこなうが，「手計算」のコードを使うと`Numba`というパッケージを使い計算速度を格段とアップすることが可能となる。
+`statsmodels`は非常に優れたパッケージであり，複雑な計算を簡単なコードで実行してくれる。しかしここでは`Numpy`の関数を使い，重回帰分析における推定値を「手計算」で求める。目的は２つある。第１に，`statsmodels`の裏でどのような計算が行われているかを理解する。第２に，今後シミュレーションをおこなうが，「手計算」のコードを使うと`Numba`を使い計算速度を格段とアップすることが可能となる。
 
 次の回帰式を考えよう。
 
@@ -433,16 +463,16 @@ $$
 \hat{B}=\left(X^T\cdot X\right)^{-1}\cdot X^T\cdot Y\qquad\qquad\text{(*)} 
 $$
 
-で与えられる。以下では式（\*）を使い計算を進める。
+で与えられる。以下ではシミュレーションを使い式（\*）の計算に使うコードを説明する。
 
-まず数値を設定する。
+まず母集団回帰式の係数と標本の大きさを設定する。
 
-n = 30  # 標本の大きさ
 b0 = 1  # 定数項
 b1 = 2  # x1の係数
 b2 = 3  # x2の係数
+n = 30  # 標本の大きさ
 
-母集団からの観測値を生成する。
+母集団からの標本を生成する。
 
 x1 = np.random.normal(loc=4.0, scale=2.0, size=n)  # (1)の説明
 
@@ -454,27 +484,27 @@ y = b0 + b1*x1 + b2*x2 + u
 
 c = np.ones(n)  # (3)の説明
 
-1. `numpy`には乱数用のモジュール`random`があり，`normal`は標準正規分布からの乱数を発生させる関数である。引数の設定方法は`scipy.stats`の`norm.rvs()`と同じである。`x1`は平均`4.0`と標準偏差`2.0`の正規分布に従うことがわかる。
+1. `Numpy`には乱数用のモジュール`random`があり，`normal`は標準正規分布からの乱数を発生させる関数である。引数の設定方法は`scipy.stats`の`norm.rvs()`と同じである。`x1`は平均`4.0`と標準偏差`2.0`の正規分布に従うことがわかる。
 1. 同じ`np.random`にある`uniform`は`[0,1)`の一様分布から乱数を発生させる関数である。`scipy.stats`の`uniform.rvs`と同じ役割を果たすが，引数の設定が異なる。`low`は最小値，`high`は最大値を指定する。
-1. `numpy`の関数である`ones()`は全ての要素が`1`になる$(n\times 1)$の`array`を生成する。
+1. `Numpy`の関数である`ones()`は全ての要素が`1`になる$(n\times 1)$の`array`を生成する。
 
 ---
-式（\*）を使い推定値を計算しよう。まず`numpy`の関数`stack`を使い`X`を作成する。
+式（\*）を使い推定値を計算しよう。まず`Numpy`の関数`stack`を使い`X`を作成する。
 
 X = np.stack([c,x1,x2],axis=1)
 X.shape
 
-ここでの引数`axis=1`は`c`，`x1`，`x2`を縦ベクトルとして横方向につなぎあわせることを指定している。`X`は$(30\times 3)$の行列`array`である。式（\*）は次のコードで計算できる。
+ここでの引数`axis=1`は`c`，`x1`，`x2`を縦ベクトルとして横方向につなぎあわせることを指定している。`X`は`Numpy`の`array`であり$(30\times 3)$の行列となっている。式（\*）を次のコードで計算する。
 
 bhat = np.linalg.inv((X.T)@X)@(X.T)@y
 bhat
 
 左から`b0`，`b1`，`b2`の推定値となる。上のコードを簡単に説明する。
-* `linalg`は`numpy`の線形代数のパッケージであり，`inv`は逆行列を計算するための関数
+* `linalg`は`Numpy`の線形代数のパッケージであり，`inv`は逆行列を計算するための関数
 * `T`は転置行列の属性
 * `@`は行列の積
 
-`bhat`を計算した１行コードは定数項以外に2つの説明変数を前提として説明したが，実は，定数項以外の説明変数の数には依存しない。1つでも20つでも使えるコードなので覚えておこう。もちろん，`X`は説明変数に合わせて作成する必要がある。
+`bhat`を計算した１行コードは、定数項以外に2つの説明変数を想定している。実は、定数項以外の説明変数の数が1でも20でも同じコードが使える。ただ、必要なのは`X`を説明変の数に合わせて作成することである。
 
 
 `statsmodels`を使い推定値が同じであることを確認する。
@@ -491,7 +521,7 @@ ols('Y ~ X1 + X2', data=df_check).fit().params
 
 $$y=\beta_0+\beta_1x_1+\beta_2x_2+u$$
 
-シミュレーションの関数を作成するが，パラメータの推定値の計算には`statsmodels`を使わずに，`numpy`の関数を使い「手計算」としている。これにより計算を高速化するパッケージ`Numba`を使うことが可能となる。単回帰分析のシミュレーションと同じように、使い方は簡単でデコレーターと呼ばれる`@njit`（又は`@jit`）を関数の上に加えるだけである。これだけで計算速度が数十倍早くなる場合もある。
+シミュレーションの関数を作成するが，パラメータの推定値の計算には`statsmodels`を使わずに，`Numpy`の関数を使い「手計算」とし高速化パッケージ`Numba`を使う。単回帰分析のシミュレーションと同じように、使い方は簡単でデコレーターと呼ばれる`@njit`（又は`@jit`）を関数の上に加えるだけである。
 
 ---
 次の関数の引数：
@@ -502,7 +532,7 @@ $$y=\beta_0+\beta_1x_1+\beta_2x_2+u$$
 * `b3`：定数項（デフォルトは`3.0`と設定）
 
 次の関数の返り値：
-* `b1`、`b2`、`b3`の`N`個の推定値がそれぞれ格納されている`NumPy`の`array`
+* `b1`、`b2`、`b3`の`N`個の推定値がそれぞれ格納されている`Numpy`の`array`
 
 @njit  # 計算の高速化
 def sim_unbias(n, N, b0=1.0, b1=2.0, b3=3.0):
@@ -559,10 +589,9 @@ pass
 次に分布（ヒストグラム）のカーネル密度推定をおこなうために，`scipy.stats`にある`gaussian_kde`を使う。
 
 x=np.linspace(1.5,2.5,100)  # 図を作成するために-0.5から1.5までの横軸の値を設定
-kde_model=gaussian_kde(b1hat)  # bhatのカーネル密度推定を設定
-ufunc = kde_model(x)  # カーネル密度推定を使いb1hatの分布を推定
+kde_model=gaussian_kde(b1hat)  # カーネル密度推定を使いb1hatの分布を推定
 
-plt.plot(x, ufunc)  # 誤差項の分布をプロット
+plt.plot(x, kde_model(x))  # 誤差項の分布をプロット
 plt.axvline(x=b1,color='red')  # 母集団のパラメータ
 pass
 
@@ -572,9 +601,8 @@ pass
 
 x=np.linspace(1.5,2.5,100)
 kde_model=gaussian_kde(b1hat)
-ufunc = kde_model(x)
 
-plt.plot(x, ufunc)
+plt.plot(x, kde_model(x))
 plt.hist(b1hat,bins=30, density=True)
 plt.axvline(x=b1,color='red')
 pass
@@ -607,7 +635,7 @@ $$
 
 wage1_vif = wage1.drop('wage', axis=1)
 
-`corr()`は相関係数を返すメソッドであり，そこから`.to_numpy()`を使いデータを`NumPy`の`array`として取り出す。
+`corr()`は相関係数を返すメソッドであり，そこから`.to_numpy()`を使いデータを`Numpy`の`array`として取り出す。
 
 mc = wage1_vif.corr().to_numpy()
 
@@ -647,7 +675,7 @@ for i in range(len(wage1_vif.columns)-1):  # 定数項は無視するために-1
 
 ### シミュレーション
 
-    シミュレーションをおこない、多重共線性により`OLS`推定量の標準誤差が上昇し推定量の正確性が損なわれることを確認する。
+シミュレーションをおこない、多重共線性により`OLS`推定量の標準誤差が上昇し推定量の正確性が損なわれることを確認する。
 
 シミュレーションでは以下の回帰式を使う。
 
@@ -660,7 +688,7 @@ $$y=\beta_0+\beta_1x_1+\beta_2x_2+u$$
 
 シミュレーションの関数を作成する。
 * 引数
-    * `n`：標本の大きさ`
+    * `n`：標本の大きさ
     * `N`：標本数（ループの回数）
     * `m`：２つの説明変数の共分散
 * 返り値
@@ -668,8 +696,8 @@ $$y=\beta_0+\beta_1x_1+\beta_2x_2+u$$
     
 （コメント）
 
-* `@njit`を使いたいところだが，`Numpy`の`random.multivariate_normal()`が`Numba`に対応していないため`scipy.stats`の `multivariate_normal.rvs()`を使っている。`np.random.normal()`を使って二変量正規分布からの値とする方法もあるが，ここでは簡単化を重視する。
-* `ols`は係数の推定値だけではなく他の多くの統計値も自動的に計算するため一回の計算に比較的に長い時間を要する。計算の速度を早めるために下の関数の中では`ols`は使わず`Numpy`の関数を使いOLS推定値を計算する。
+* `@njit`を使いたいところだが，`Numpy`の`random.multivariate_normal()`が`Numba`に対応していないため`scipy.stats`の `multivariate_normal.rvs()`を使う。`np.random.normal()`を使って二変量正規分布からの値とする方法もあるが，ここでは簡単化を重視する。
+* `ols`は係数の推定値だけではなく他の多くの統計値も自動的に計算するため一回の計算に比較的に長い時間を要する。計算の速度を少しでも早めるために下の関数の中では`ols`は使わず`Numpy`の関数を使いOLS推定値を計算する。
 
 def sim_multi(n, N, m, b0=1.0, b1=2.0, b2=3.0):  # n=標本の大きさ, N=標本数, m=共分散
     
