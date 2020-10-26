@@ -864,29 +864,9 @@ dtype: float64
 </pre></div>
 </div>
 <p>また<code class="docutils literal notranslate"><span class="pre">123go</span></code>のように数字から始まる列ラベルもあるかもしれない。この場合も回帰式でそのまま使うとエラーが発生するが、<code class="docutils literal notranslate"><span class="pre">Q()</span></code>の引数として文字列で指定すればが使えるようになる。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;Q(&quot;123go&quot;) ~ X</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;Q(&quot;return&quot;) ~ X + Q(&quot;123go&quot;)&#39;</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_q</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;return&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span>
-                     <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span>
-                     <span class="s1">&#39;123go&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">30</span><span class="p">)})</span>
-
-<span class="n">res_q</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s1">&#39;Q(&quot;return&quot;) ~ X + Q(&quot;123go&quot;)&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_q</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-<span class="n">res_q</span><span class="o">.</span><span class="n">params</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    -0.069305
-X            -0.227740
-Q(&quot;123go&quot;)    0.332372
-dtype: float64
-</pre></div>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -1281,7 +1261,7 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.44451989, 2.03277829, 3.11502413])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.77774137, 2.14437557, 2.9546327 ])
 </pre></div>
 </div>
 </div>
@@ -1302,9 +1282,9 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.444520
-X1           2.032778
-X2           3.115024
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.777741
+X1           2.144376
+X2           2.954633
 dtype: float64
 </pre></div>
 </div>
@@ -1389,9 +1369,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 1.0004386445809201 
-b1: 2.00006316922713 
-b1: 3.000013803698286
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 1.0028667207609918 
+b1: 1.999882446323642 
+b1: 2.999726733574011
 </pre></div>
 </div>
 </div>
@@ -1407,7 +1387,7 @@ b1: 3.000013803698286
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_96_0.png" src="_images/9_Multiple_Regression_96_0.png" />
+<img alt="_images/9_Multiple_Regression_95_0.png" src="_images/9_Multiple_Regression_95_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">b1</span></code>の真の値<code class="docutils literal notranslate"><span class="pre">2.0</span></code>を中心に概ね左右対象に分布していることが分かる。</p>
@@ -1424,7 +1404,7 @@ b1: 3.000013803698286
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_98_0.png" src="_images/9_Multiple_Regression_98_0.png" />
+<img alt="_images/9_Multiple_Regression_97_0.png" src="_images/9_Multiple_Regression_97_0.png" />
 </div>
 </div>
 <p>２つの図を重ねる。</p>
@@ -1442,7 +1422,7 @@ b1: 3.000013803698286
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_100_0.png" src="_images/9_Multiple_Regression_100_0.png" />
+<img alt="_images/9_Multiple_Regression_99_0.png" src="_images/9_Multiple_Regression_99_0.png" />
 </div>
 </div>
 <p>＜Give it a try!＞</p>
@@ -1673,7 +1653,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_129_0.png" src="_images/9_Multiple_Regression_129_0.png" />
+<img alt="_images/9_Multiple_Regression_128_0.png" src="_images/9_Multiple_Regression_128_0.png" />
 </div>
 </div>
 <p>多重共線性が強いと推定値の分布は，真の値（<span class="math notranslate nohighlight">\(\beta_1=\)</span>
@@ -1685,7 +1665,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0384605115905653, 0.20637886327096508)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.03906862332580141, 0.20116797003945866)
 </pre></div>
 </div>
 </div>
@@ -1754,7 +1734,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_134_0.png" src="_images/9_Multiple_Regression_134_0.png" />
+<img alt="_images/9_Multiple_Regression_133_0.png" src="_images/9_Multiple_Regression_133_0.png" />
 </div>
 </div>
 <p>問5の答え：<span class="math notranslate nohighlight">\(+\)</span>を押すと答えが表示される。</p>
@@ -1768,7 +1748,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19361271015259238, 0.4434728714427899)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19202918223867355, 0.4426123171393645)
 </pre></div>
 </div>
 </div>
@@ -1792,7 +1772,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_141_0.png" src="_images/9_Multiple_Regression_141_0.png" />
+<img alt="_images/9_Multiple_Regression_140_0.png" src="_images/9_Multiple_Regression_140_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">pandas</span></code>の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>や<code class="docutils literal notranslate"><span class="pre">Series</span></code>には図を作成するメソッド<code class="docutils literal notranslate"><span class="pre">plot()</span></code>が用意されている（裏では<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>が動いている）。例えば，<code class="docutils literal notranslate"><span class="pre">wage1</span></code>にある<code class="docutils literal notranslate"><span class="pre">educ</span></code>のヒストグラムであれば次のコードで図示することができる。</p>
@@ -1822,7 +1802,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_143_0.png" src="_images/9_Multiple_Regression_143_0.png" />
+<img alt="_images/9_Multiple_Regression_142_0.png" src="_images/9_Multiple_Regression_142_0.png" />
 </div>
 </div>
 <p>横軸と縦軸のラベルを確認すること。対角線上はそれぞれの変数のヒストグラム，対角線以外の図は縦横のペアの変数の散布図となっており，相関度をある程度目視で確認できる。</p>
@@ -1840,7 +1820,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_145_0.png" src="_images/9_Multiple_Regression_145_0.png" />
+<img alt="_images/9_Multiple_Regression_144_0.png" src="_images/9_Multiple_Regression_144_0.png" />
 </div>
 </div>
 <p>次に相関係数を簡単に計算する方法を紹介する。<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">corr()</span></code>を使うと変数の相関係数を<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>として返す。</p>
@@ -1923,7 +1903,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_152_0.png" src="_images/9_Multiple_Regression_152_0.png" />
+<img alt="_images/9_Multiple_Regression_151_0.png" src="_images/9_Multiple_Regression_151_0.png" />
 </div>
 </div>
 <p>赤はプラス，青はマイナスを示し，色の濃淡は絶対値に連動している。ここで使った３つのオプション（設定しなくても良い）の説明する。</p>
@@ -1945,7 +1925,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_155_0.png" src="_images/9_Multiple_Regression_155_0.png" />
+<img alt="_images/9_Multiple_Regression_154_0.png" src="_images/9_Multiple_Regression_154_0.png" />
 </div>
 </div>
 <p>図の解釈は<code class="docutils literal notranslate"><span class="pre">pandas</span></code>の場合と同じである。</p>
