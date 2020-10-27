@@ -358,6 +358,16 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#numpy">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Numpy
+      </span>
+     </code>
+     の関数を使う方法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#i">
      <code class="docutils literal notranslate">
       <span class="pre">
@@ -587,10 +597,18 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 </div>
 </div>
 </div>
+<p>被説明変数に対数賃金を使うために、新たな列<code class="docutils literal notranslate"><span class="pre">wage_log</span></code>を追加する</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span><span class="p">[</span><span class="s1">&#39;wage_log&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">wage1</span><span class="p">[</span><span class="s1">&#39;wage&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
 <p>回帰式では追加の説明変数の前に<code class="docutils literal notranslate"><span class="pre">+</span></code>を付ける。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_1</span> <span class="o">=</span> <span class="s1">&#39;np.log(wage) ~ educ + tenure + exper&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_1</span> <span class="o">=</span> <span class="s1">&#39;wage_log ~ educ + tenure + exper&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -666,7 +684,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.09202898676928317
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.09202898676928312
 </pre></div>
 </div>
 </div>
@@ -680,10 +698,11 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>wage       5.896103
-educ      12.562738
-tenure     5.104563
-exper     17.017110
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>wage         5.896103
+educ        12.562738
+tenure       5.104563
+exper       17.017110
+wage_log     1.623268
 dtype: float64
 </pre></div>
 </div>
@@ -777,18 +796,20 @@ dtype: float64
 </div>
 <div class="section" id="id5">
 <h2>変数の変換<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
-<p>上の重回帰分析では，回帰式の被説明変数が対数変換されているが，この手法は説明変数にも使うことができる。また以下の方法も被説明変数・説明変数の両方に使用可能である。</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">I()</span></code>の<code class="docutils literal notranslate"><span class="pre">()</span></code>の中に直接式を書く。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">def</span></code>を使い定義した関数を使う。</p></li>
-</ul>
-<div class="section" id="i">
-<h3><code class="docutils literal notranslate"><span class="pre">I()</span></code>を使う方法<a class="headerlink" href="#i" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">exper</span></code>の二乗を回帰式に入れるケースを考えよう。</p>
+<p>上の重回帰分析では，回帰式の<code class="docutils literal notranslate"><span class="pre">wage</span></code>を対数化した変数を新たに作成し計算を行なっているが、回帰式の中で変数の変換を直接指定することもできる。以下で説明する方法は被説明変数・説明変数の両方に使用可能である。</p>
+<div class="section" id="numpy">
+<h3><code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の関数を使う方法<a class="headerlink" href="#numpy" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の対数関数を使って，回帰式の中で直接書き換えることができる。<code class="docutils literal notranslate"><span class="pre">wage</span></code>を対数化する例を考える。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_2</span> <span class="o">=</span> <span class="s1">&#39;np.log(wage) ~ educ + tenure + exper + I(exper**2)&#39;</span>
-<span class="n">res_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_2</span> <span class="o">=</span> <span class="s1">&#39;np.log(wage) ~ educ + tenure + exper&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -796,6 +817,34 @@ dtype: float64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span><span class="o">.</span><span class="n">params</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.284360
+educ         0.092029
+tenure       0.022067
+exper        0.004121
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="i">
+<h3><code class="docutils literal notranslate"><span class="pre">I()</span></code>を使う方法<a class="headerlink" href="#i" title="Permalink to this headline">¶</a></h3>
+<p>次に<code class="docutils literal notranslate"><span class="pre">exper</span></code>の二乗を回帰式に入れるケースを考えよう。この場合、<code class="docutils literal notranslate"><span class="pre">np.square(exper)</span></code>でも良いが、<code class="docutils literal notranslate"><span class="pre">I()</span></code>の<code class="docutils literal notranslate"><span class="pre">()</span></code>の中に直接式を書くことが可能となる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_3</span> <span class="o">=</span> <span class="s1">&#39;np.log(wage) ~ educ + tenure + exper + I(exper**2)&#39;</span>
+<span class="n">res_3</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_3</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_3</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 </div>
 </div>
@@ -810,10 +859,11 @@ dtype: float64
 </div>
 </div>
 </div>
+<p>この方法であれば、<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>に無い関数も直接書くことができる。</p>
 </div>
 <div class="section" id="def">
 <h3><code class="docutils literal notranslate"><span class="pre">def</span></code>を使う方法<a class="headerlink" href="#def" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">exper</span></code>の二乗を回帰式に入れるケースを考えよう。</p>
+<p>より複雑な関数であれば<code class="docutils literal notranslate"><span class="pre">def</span></code>を使い、関数を定義し、それを回帰式の中で使う方が良いかも知れない。<code class="docutils literal notranslate"><span class="pre">exper</span></code>の二乗を回帰式に入れるケースを考えよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">myfunc</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -824,15 +874,15 @@ dtype: float64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_3</span> <span class="o">=</span> <span class="s1">&#39;np.log(wage) ~ educ + exper + tenure + myfunc(exper)&#39;</span>
-<span class="n">res_3</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_3</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_4</span> <span class="o">=</span> <span class="s1">&#39;np.log(wage) ~ educ + exper + tenure + myfunc(exper)&#39;</span>
+<span class="n">res_4</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_4</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_3</span><span class="o">.</span><span class="n">params</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_4</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 </div>
 </div>
@@ -1261,7 +1311,7 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.77774137, 2.14437557, 2.9546327 ])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.31815356,  2.04446951,  3.14074862])
 </pre></div>
 </div>
 </div>
@@ -1282,9 +1332,9 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.777741
-X1           2.144376
-X2           2.954633
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept   -0.318154
+X1           2.044470
+X2           3.140749
 dtype: float64
 </pre></div>
 </div>
@@ -1369,9 +1419,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 1.0028667207609918 
-b1: 1.999882446323642 
-b1: 2.999726733574011
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 0.9988740328334739 
+b1: 2.0003242708162627 
+b1: 2.9999124710473257
 </pre></div>
 </div>
 </div>
@@ -1387,7 +1437,7 @@ b1: 2.999726733574011
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_95_0.png" src="_images/9_Multiple_Regression_95_0.png" />
+<img alt="_images/9_Multiple_Regression_103_0.png" src="_images/9_Multiple_Regression_103_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">b1</span></code>の真の値<code class="docutils literal notranslate"><span class="pre">2.0</span></code>を中心に概ね左右対象に分布していることが分かる。</p>
@@ -1404,7 +1454,7 @@ b1: 2.999726733574011
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_97_0.png" src="_images/9_Multiple_Regression_97_0.png" />
+<img alt="_images/9_Multiple_Regression_105_0.png" src="_images/9_Multiple_Regression_105_0.png" />
 </div>
 </div>
 <p>２つの図を重ねる。</p>
@@ -1422,7 +1472,7 @@ b1: 2.999726733574011
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_99_0.png" src="_images/9_Multiple_Regression_99_0.png" />
+<img alt="_images/9_Multiple_Regression_107_0.png" src="_images/9_Multiple_Regression_107_0.png" />
 </div>
 </div>
 <p>＜Give it a try!＞</p>
@@ -1477,7 +1527,7 @@ b1: 2.999726733574011
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.11277075, 1.34929556, 1.47761777])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.44880661, 1.4808149 , 1.49380638, 1.46201677])
 </pre></div>
 </div>
 </div>
@@ -1490,9 +1540,10 @@ b1: 2.999726733574011
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>educ      1.112771
-tenure    1.349296
-exper     1.477618
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>educ        1.448807
+tenure      1.480815
+exper       1.493806
+wage_log    1.462017
 dtype: float64
 </pre></div>
 </div>
@@ -1511,9 +1562,10 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>educ      1.112771
-tenure    1.349296
-exper     1.477618
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>educ        1.448807
+tenure      1.480815
+exper       1.493806
+wage_log    1.462017
 dtype: float64
 </pre></div>
 </div>
@@ -1539,9 +1591,10 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>educ 	 1.1127707502838835
-tenure 	 1.3492955605611774
-exper 	 1.4776177726317783
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>educ 	 1.4488066076300705
+tenure 	 1.4808148965681553
+exper 	 1.4938063815278086
+wage_log 	 1.4620167739746217
 </pre></div>
 </div>
 </div>
@@ -1653,7 +1706,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_128_0.png" src="_images/9_Multiple_Regression_128_0.png" />
+<img alt="_images/9_Multiple_Regression_136_0.png" src="_images/9_Multiple_Regression_136_0.png" />
 </div>
 </div>
 <p>多重共線性が強いと推定値の分布は，真の値（<span class="math notranslate nohighlight">\(\beta_1=\)</span>
@@ -1665,7 +1718,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.03906862332580141, 0.20116797003945866)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.039456069686100215, 0.197726838026409)
 </pre></div>
 </div>
 </div>
@@ -1734,7 +1787,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_133_0.png" src="_images/9_Multiple_Regression_133_0.png" />
+<img alt="_images/9_Multiple_Regression_141_0.png" src="_images/9_Multiple_Regression_141_0.png" />
 </div>
 </div>
 <p>問5の答え：<span class="math notranslate nohighlight">\(+\)</span>を押すと答えが表示される。</p>
@@ -1748,7 +1801,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19202918223867355, 0.4426123171393645)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19417748496861278, 0.43484700591563913)
 </pre></div>
 </div>
 </div>
@@ -1772,7 +1825,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_140_0.png" src="_images/9_Multiple_Regression_140_0.png" />
+<img alt="_images/9_Multiple_Regression_148_0.png" src="_images/9_Multiple_Regression_148_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">pandas</span></code>の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>や<code class="docutils literal notranslate"><span class="pre">Series</span></code>には図を作成するメソッド<code class="docutils literal notranslate"><span class="pre">plot()</span></code>が用意されている（裏では<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>が動いている）。例えば，<code class="docutils literal notranslate"><span class="pre">wage1</span></code>にある<code class="docutils literal notranslate"><span class="pre">educ</span></code>のヒストグラムであれば次のコードで図示することができる。</p>
@@ -1802,7 +1855,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_142_0.png" src="_images/9_Multiple_Regression_142_0.png" />
+<img alt="_images/9_Multiple_Regression_150_0.png" src="_images/9_Multiple_Regression_150_0.png" />
 </div>
 </div>
 <p>横軸と縦軸のラベルを確認すること。対角線上はそれぞれの変数のヒストグラム，対角線以外の図は縦横のペアの変数の散布図となっており，相関度をある程度目視で確認できる。</p>
@@ -1820,7 +1873,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_144_0.png" src="_images/9_Multiple_Regression_144_0.png" />
+<img alt="_images/9_Multiple_Regression_152_0.png" src="_images/9_Multiple_Regression_152_0.png" />
 </div>
 </div>
 <p>次に相関係数を簡単に計算する方法を紹介する。<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">corr()</span></code>を使うと変数の相関係数を<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>として返す。</p>
@@ -1854,6 +1907,7 @@ exper 	 1.4776177726317783
       <th>educ</th>
       <th>tenure</th>
       <th>exper</th>
+      <th>wage_log</th>
     </tr>
   </thead>
   <tbody>
@@ -1863,6 +1917,7 @@ exper 	 1.4776177726317783
       <td>0.405903</td>
       <td>0.346890</td>
       <td>0.112903</td>
+      <td>0.937062</td>
     </tr>
     <tr>
       <th>educ</th>
@@ -1870,6 +1925,7 @@ exper 	 1.4776177726317783
       <td>1.000000</td>
       <td>-0.056173</td>
       <td>-0.299542</td>
+      <td>0.431053</td>
     </tr>
     <tr>
       <th>tenure</th>
@@ -1877,12 +1933,22 @@ exper 	 1.4776177726317783
       <td>-0.056173</td>
       <td>1.000000</td>
       <td>0.499291</td>
+      <td>0.325538</td>
     </tr>
     <tr>
       <th>exper</th>
       <td>0.112903</td>
       <td>-0.299542</td>
       <td>0.499291</td>
+      <td>1.000000</td>
+      <td>0.111373</td>
+    </tr>
+    <tr>
+      <th>wage_log</th>
+      <td>0.937062</td>
+      <td>0.431053</td>
+      <td>0.325538</td>
+      <td>0.111373</td>
       <td>1.000000</td>
     </tr>
   </tbody>
@@ -1903,7 +1969,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_151_0.png" src="_images/9_Multiple_Regression_151_0.png" />
+<img alt="_images/9_Multiple_Regression_159_0.png" src="_images/9_Multiple_Regression_159_0.png" />
 </div>
 </div>
 <p>赤はプラス，青はマイナスを示し，色の濃淡は絶対値に連動している。ここで使った３つのオプション（設定しなくても良い）の説明する。</p>
@@ -1925,7 +1991,7 @@ exper 	 1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_154_0.png" src="_images/9_Multiple_Regression_154_0.png" />
+<img alt="_images/9_Multiple_Regression_162_0.png" src="_images/9_Multiple_Regression_162_0.png" />
 </div>
 </div>
 <p>図の解釈は<code class="docutils literal notranslate"><span class="pre">pandas</span></code>の場合と同じである。</p>
