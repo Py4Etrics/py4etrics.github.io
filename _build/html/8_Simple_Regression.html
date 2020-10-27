@@ -362,20 +362,8 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id7">
-   変数の変換
+   賃金の対数化
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id8">
-     方法１：回帰式を直接書き換える
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id9">
-     方法２：事前に変数を作成
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#ols">
@@ -387,27 +375,27 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
+    <a class="reference internal nav-link" href="#id8">
      母集団の考え方
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
+    <a class="reference internal nav-link" href="#id9">
      プラン
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id12">
+    <a class="reference internal nav-link" href="#id10">
      シミュレーション
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id13">
+    <a class="reference internal nav-link" href="#id11">
      関数化
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
+    <a class="reference internal nav-link" href="#id12">
      ループを使ってシミュレーション
     </a>
    </li>
@@ -994,8 +982,8 @@ dtype: float64
 Dep. Variable:                   wage   R-squared:                       0.165
 Model:                            OLS   Adj. R-squared:                  0.163
 Method:                 Least Squares   F-statistic:                     103.4
-Date:                Fri, 23 Oct 2020   Prob (F-statistic):           2.78e-22
-Time:                        13:47:59   Log-Likelihood:                -1385.7
+Date:                Tue, 27 Oct 2020   Prob (F-statistic):           2.78e-22
+Time:                        13:06:04   Log-Likelihood:                -1385.7
 No. Observations:                 526   AIC:                             2775.
 Df Residuals:                     524   BIC:                             2784.
 Df Model:                           1                                         
@@ -1203,68 +1191,8 @@ R^2
 </div>
 </div>
 <div class="section" id="id7">
-<h2>変数の変換<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
-<p>上の回帰分析では被説明変数は<code class="docutils literal notranslate"><span class="pre">wage</span></code>をそのまま使ったが，労働経済学では賃金の対数をとり推定するのが一般的であり，そのような式を賃金方程式と呼ぶ。その考えに沿って，ここでは<code class="docutils literal notranslate"><span class="pre">wage</span></code>の自然対数変換をおこない回帰分析をおこなう。</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>変数の変換方法は他にあり、次の章で再度説明する。</p>
-</div>
-<div class="section" id="id8">
-<h3>方法１：回帰式を直接書き換える<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">numpy</span></code>の対数関数を使って，回帰式の中で直接書き換えることができる。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_1</span> <span class="o">=</span> <span class="s1">&#39;np.log(wage) ~ educ&#39;</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_1</span><span class="o">.</span><span class="n">params</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.583773
-educ         0.082744
-dtype: float64
-</pre></div>
-</div>
-</div>
-</div>
-<p>（解釈）</p>
-<p><code class="docutils literal notranslate"><span class="pre">res_1</span></code>は次式の推定結果である。</p>
-<p><span class="math notranslate nohighlight">\(\ln y = \beta_0+\beta_1x+u\)</span></p>
-<p>この式を<span class="math notranslate nohighlight">\(x\)</span>について微分すると以下を得る。</p>
-<p><span class="math notranslate nohighlight">\(\dfrac{d\ln y}{dx}=\dfrac{dy/y}{dx}=\dfrac{y\text{の%変化}}{dx}=\beta_1\)</span></p>
-<p>即ち，<span class="math notranslate nohighlight">\(\beta_1\)</span>は<span class="math notranslate nohighlight">\(x\)</span>（教育年数）が一単位増加した場合，<span class="math notranslate nohighlight">\(y\)</span>（賃金）が何％変化するかを示している（教育の収益率）。このOLS推定結果によると、教育年数が１年増えると賃金は8.2%増加する。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage_log_hat_1</span> <span class="o">=</span> <span class="n">res_1</span><span class="o">.</span><span class="n">fittedvalues</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;wage&#39;</span><span class="p">]))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">],</span> <span class="n">wage_log_hat_1</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Education&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Log of Wage&#39;</span><span class="p">)</span>
-<span class="k">pass</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_79_0.png" src="_images/8_Simple_Regression_79_0.png" />
-</div>
-</div>
-</div>
-<div class="section" id="id9">
-<h3>方法２：事前に変数を作成<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<p>方法１では回帰式を直接書き換えたが、ここでは事前に変数を新しく生成し推定する。</p>
+<h2>賃金の対数化<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>上の回帰分析では被説明変数は<code class="docutils literal notranslate"><span class="pre">wage</span></code>をそのまま使ったが，労働経済学では賃金の対数をとり推定するのが一般的であり，そのような式を賃金方程式と呼ぶ。その考えに沿って，ここでは<code class="docutils literal notranslate"><span class="pre">wage</span></code>の自然対数変換をおこない回帰分析をおこなう。まず対数化賃金お変数を作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;wage_log&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;wage&#39;</span><span class="p">])</span>
@@ -1274,21 +1202,21 @@ dtype: float64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_2</span> <span class="o">=</span> <span class="s1">&#39;wage_log ~ educ&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;wage_log ~ educ&#39;</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1303,11 +1231,12 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </div>
 </div>
 </div>
+<p>結果を図示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage_log_hat_2</span> <span class="o">=</span> <span class="n">res_2</span><span class="o">.</span><span class="n">fittedvalues</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage_log_hat</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">fittedvalues</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s1">&#39;educ&#39;</span><span class="p">,</span> <span class="s1">&#39;wage_log&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">],</span> <span class="n">wage_log_hat_2</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">],</span> <span class="n">wage_log_hat</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Education&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Log of Wage&#39;</span><span class="p">)</span>
 <span class="k">pass</span>
@@ -1315,15 +1244,24 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_86_0.png" src="_images/8_Simple_Regression_86_0.png" />
+<img alt="_images/8_Simple_Regression_77_0.png" src="_images/8_Simple_Regression_77_0.png" />
 </div>
 </div>
+<p>（解釈）</p>
+<p><code class="docutils literal notranslate"><span class="pre">res</span></code>は次式の推定結果である。</p>
+<p><span class="math notranslate nohighlight">\(\ln y = \beta_0+\beta_1x+u\)</span></p>
+<p>この式を<span class="math notranslate nohighlight">\(x\)</span>について微分すると以下を得る。</p>
+<p><span class="math notranslate nohighlight">\(\dfrac{d\ln y}{dx}=\dfrac{dy/y}{dx}=\dfrac{y\text{の%変化}}{dx}=\beta_1\)</span></p>
+<p>即ち，<span class="math notranslate nohighlight">\(\beta_1\)</span>は<span class="math notranslate nohighlight">\(x\)</span>（教育年数）が一単位増加した場合，<span class="math notranslate nohighlight">\(y\)</span>（賃金）が何％変化するかを示している（教育の収益率）。このOLS推定結果によると、教育年数が１年増えると賃金は8.2%増加する。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>上の例では<code class="docutils literal notranslate"><span class="pre">wage_log</span></code>の変数を作成し計算したが、変数変換のコードを回帰式に直接書く方法もある。次の章で説明することにする。</p>
 </div>
 </div>
 <div class="section" id="ols">
 <h2>シミュレーション：<span class="math notranslate nohighlight">\(OLS\)</span>推定<a class="headerlink" href="#ols" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id10">
-<h3>母集団の考え方<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id8">
+<h3>母集団の考え方<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>母集団とは分析の対象となる共通の属性などを持つ個人・企業・産業・地域・国などの集合体といえる。ここで重要な点は母集団の大きさとランダム抽出の関係を理解することである。</p>
 <ul class="simple">
 <li><p>「人間の身長」の母集団：地球上の人間</p>
@@ -1343,8 +1281,8 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </li>
 </ul>
 </div>
-<div class="section" id="id11">
-<h3>プラン<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id9">
+<h3>プラン<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <p>回帰分析の理解を深めるするためにシミュレーションを以下の手順でおこなう。</p>
 <p><strong>＜Step 1＞</strong></p>
 <ul>
@@ -1386,8 +1324,8 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </li>
 </ul>
 </div>
-<div class="section" id="id12">
-<h3>シミュレーション<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id10">
+<h3>シミュレーション<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <p>母集団のパラメータの設定</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1441,8 +1379,8 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.858120
-X            1.075296
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.044245
+X            1.025091
 dtype: float64
 </pre></div>
 </div>
@@ -1450,8 +1388,8 @@ dtype: float64
 </div>
 <p>母集団パラメータと比べると、推定誤差が発生していることがわかる。</p>
 </div>
-<div class="section" id="id13">
-<h3>関数化<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h3>関数化<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">def</span></code>を使って上のコードを関数としてまとめる。</p>
 <ul class="simple">
 <li><p>引数</p>
@@ -1493,8 +1431,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.654042
-X            1.157611
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.466217
+X            1.159888
 dtype: float64
 </pre></div>
 </div>
@@ -1534,15 +1472,15 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.0300511535575483, 1.0087727125046793)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.7532245816533605, 1.0972503789061343)
 </pre></div>
 </div>
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">my_sim()</span></code>と<code class="docutils literal notranslate"><span class="pre">my_sim_manual()</span></code>の推定値が異なるのはランダム変数（<code class="docutils literal notranslate"><span class="pre">y</span></code>，<code class="docutils literal notranslate"><span class="pre">x</span></code>）の値が異なるためであり，それが推定誤差による影響である。</p>
 </div>
-<div class="section" id="id14">
-<h3>ループを使ってシミュレーション<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id12">
+<h3>ループを使ってシミュレーション<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>標本の大きさ<code class="docutils literal notranslate"><span class="pre">n</span></code>のデータを<code class="docutils literal notranslate"><span class="pre">N</span></code>組用意し（<code class="docutils literal notranslate"><span class="pre">N</span></code>は標本数），<code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定を<code class="docutils literal notranslate"><span class="pre">N</span></code>回おこなう。</p></li>
 <li><p>シミュレーション毎に計算した回帰係数の推定値の分布を図示する。</p></li>
@@ -1623,7 +1561,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_126_0.png" src="_images/8_Simple_Regression_126_0.png" />
+<img alt="_images/8_Simple_Regression_119_0.png" src="_images/8_Simple_Regression_119_0.png" />
 </div>
 </div>
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布</p>
@@ -1635,7 +1573,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_128_0.png" src="_images/8_Simple_Regression_128_0.png" />
+<img alt="_images/8_Simple_Regression_121_0.png" src="_images/8_Simple_Regression_121_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">y</span></code>の理論値を図示するが，図示の時間短縮のために<code class="docutils literal notranslate"><span class="pre">N</span></code>回のシミュレーション中の最初の<code class="docutils literal notranslate"><span class="pre">r</span></code>回の回帰線だけを表示する。</p>
@@ -1664,7 +1602,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_132_0.png" src="_images/8_Simple_Regression_132_0.png" />
+<img alt="_images/8_Simple_Regression_125_0.png" src="_images/8_Simple_Regression_125_0.png" />
 </div>
 </div>
 <p>上のコード・ブロックの最後から２行目に<code class="docutils literal notranslate"><span class="pre">f'{r}</span> <span class="pre">rounds</span> <span class="pre">of</span> <span class="pre">OLS</span> <span class="pre">simulation'</span></code>とある。文字列の前に<code class="docutils literal notranslate"><span class="pre">f</span></code>を置き、文字列の中で上で定義した変数を<code class="docutils literal notranslate"><span class="pre">{}</span></code>で囲むとその変数の値を代入することができる。これを<code class="docutils literal notranslate"><span class="pre">f-string</span></code>と呼ぶ。</p>

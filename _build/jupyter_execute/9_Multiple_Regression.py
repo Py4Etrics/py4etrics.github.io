@@ -42,9 +42,13 @@ wage1 = wooldridge.data('wage1').loc[:,['wage', 'educ', 'tenure', 'exper']]
 
 wooldridge.data('wage1',description=True)
 
+被説明変数に対数賃金を使うために、新たな列`wage_log`を追加する
+
+wage1['wage_log'] = np.log(wage1['wage'])
+
 回帰式では追加の説明変数の前に`+`を付ける。
 
-formula_1 = 'np.log(wage) ~ educ + tenure + exper'
+formula_1 = 'wage_log ~ educ + tenure + exper'
 
 推計結果を変数`res_1`に割り当てる。
 
@@ -109,30 +113,40 @@ res_1.predict(z2)
 
 ## 変数の変換
 
-上の重回帰分析では，回帰式の被説明変数が対数変換されているが，この手法は説明変数にも使うことができる。また以下の方法も被説明変数・説明変数の両方に使用可能である。
-* `I()`の`()`の中に直接式を書く。
-* `def`を使い定義した関数を使う。
+上の重回帰分析では，回帰式の`wage`を対数化した変数を新たに作成し計算を行なっているが、回帰式の中で変数の変換を直接指定することもできる。以下で説明する方法は被説明変数・説明変数の両方に使用可能である。
 
-### `I()`を使う方法
+### `Numpy`の関数を使う方法
 
-`exper`の二乗を回帰式に入れるケースを考えよう。
+`Numpy`の対数関数を使って，回帰式の中で直接書き換えることができる。`wage`を対数化する例を考える。
 
-formula_2 = 'np.log(wage) ~ educ + tenure + exper + I(exper**2)'
+formula_2 = 'np.log(wage) ~ educ + tenure + exper'
+
 res_2 = ols(formula_2, data=wage1).fit()
 
 res_2.params
 
+### `I()`を使う方法
+
+次に`exper`の二乗を回帰式に入れるケースを考えよう。この場合、`np.square(exper)`でも良いが、`I()`の`()`の中に直接式を書くことが可能となる。
+
+formula_3 = 'np.log(wage) ~ educ + tenure + exper + I(exper**2)'
+res_3 = ols(formula_3, data=wage1).fit()
+
+res_3.params
+
+この方法であれば、`Numpy`に無い関数も直接書くことができる。
+
 ### `def`を使う方法
 
-`exper`の二乗を回帰式に入れるケースを考えよう。
+より複雑な関数であれば`def`を使い、関数を定義し、それを回帰式の中で使う方が良いかも知れない。`exper`の二乗を回帰式に入れるケースを考えよう。
 
 def myfunc(x):
     return x**2
 
-formula_3 = 'np.log(wage) ~ educ + exper + tenure + myfunc(exper)'
-res_3 = ols(formula_3, data=wage1).fit()
+formula_4 = 'np.log(wage) ~ educ + exper + tenure + myfunc(exper)'
+res_4 = ols(formula_4, data=wage1).fit()
 
-res_3.params
+res_4.params
 
 ### `Q()`について
 

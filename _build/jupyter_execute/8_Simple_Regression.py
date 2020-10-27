@@ -295,27 +295,30 @@ res.rsquared_adj
 adjR2 = 1-(1-R2)*(n-1)/(n-k-1)
 adjR2
 
-## 変数の変換
+## 賃金の対数化
 
-上の回帰分析では被説明変数は`wage`をそのまま使ったが，労働経済学では賃金の対数をとり推定するのが一般的であり，そのような式を賃金方程式と呼ぶ。その考えに沿って，ここでは`wage`の自然対数変換をおこない回帰分析をおこなう。
+上の回帰分析では被説明変数は`wage`をそのまま使ったが，労働経済学では賃金の対数をとり推定するのが一般的であり，そのような式を賃金方程式と呼ぶ。その考えに沿って，ここでは`wage`の自然対数変換をおこない回帰分析をおこなう。まず対数化賃金お変数を作成する。
 
-```{note}
-変数の変換方法は他にあり、次の章で再度説明する。
-```
+df['wage_log'] = np.log(df['wage'])
 
-### 方法１：回帰式を直接書き換える
+formula = 'wage_log ~ educ'
 
-`numpy`の対数関数を使って，回帰式の中で直接書き換えることができる。
+res = ols(formula, data=df).fit()
 
-formula_1 = 'np.log(wage) ~ educ'
+print(res.summary().tables[1])
 
-res_1 = ols(formula_1, data=df).fit()
+結果を図示する。
 
-res_1.params
+wage_log_hat = res.fittedvalues
+plt.scatter('educ', 'wage_log', data=df)
+plt.plot(df['educ'], wage_log_hat, 'r')
+plt.xlabel('Education')
+plt.ylabel('Log of Wage')
+pass
 
 （解釈）
 
-`res_1`は次式の推定結果である。
+`res`は次式の推定結果である。
 
 $\ln y = \beta_0+\beta_1x+u$
 
@@ -325,31 +328,9 @@ $\dfrac{d\ln y}{dx}=\dfrac{dy/y}{dx}=\dfrac{y\text{の%変化}}{dx}=\beta_1$
 
 即ち，$\beta_1$は$x$（教育年数）が一単位増加した場合，$y$（賃金）が何％変化するかを示している（教育の収益率）。このOLS推定結果によると、教育年数が１年増えると賃金は8.2%増加する。
 
-wage_log_hat_1 = res_1.fittedvalues
-plt.scatter(df['educ'], np.log(df.loc[:,'wage']))
-plt.plot(df['educ'], wage_log_hat_1, 'r')
-plt.xlabel('Education')
-plt.ylabel('Log of Wage')
-pass
-
-### 方法２：事前に変数を作成
-
-方法１では回帰式を直接書き換えたが、ここでは事前に変数を新しく生成し推定する。
-
-df['wage_log'] = np.log(df['wage'])
-
-formula_2 = 'wage_log ~ educ'
-
-res_2 = ols(formula_2, data=df).fit()
-
-print(res_2.summary().tables[1])
-
-wage_log_hat_2 = res_2.fittedvalues
-plt.scatter('educ', 'wage_log', data=df)
-plt.plot(df['educ'], wage_log_hat_2, 'r')
-plt.xlabel('Education')
-plt.ylabel('Log of Wage')
-pass
+```{note}
+上の例では`wage_log`の変数を作成し計算したが、変数変換のコードを回帰式に直接書く方法もある。次の章で説明することにする。
+```
 
 ## シミュレーション：$OLS$推定
 
