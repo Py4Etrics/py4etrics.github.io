@@ -80,7 +80,7 @@ ax2.set_title('Paranormal Distribution', size=25)
 plt.show()
 
 from myst_nb import glue
-glue("paranormal", fig, display=False)
+glue("paranormal", fig, display=True)
 
 ```{glue:} paranormal
 ```

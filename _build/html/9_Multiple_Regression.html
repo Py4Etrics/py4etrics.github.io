@@ -1311,7 +1311,7 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.31815356,  2.04446951,  3.14074862])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.20998481, 1.97910608, 3.00770789])
 </pre></div>
 </div>
 </div>
@@ -1332,9 +1332,9 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept   -0.318154
-X1           2.044470
-X2           3.140749
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.209985
+X1           1.979106
+X2           3.007708
 dtype: float64
 </pre></div>
 </div>
@@ -1356,18 +1356,18 @@ dtype: float64
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>：標本の大きさ</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">N</span></code>：シミュレーションの回数（標本数と考えても良い）</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">b1</span></code>：定数項（デフォルトは<code class="docutils literal notranslate"><span class="pre">1.0</span></code>と設定）</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">b2</span></code>：定数項（デフォルトは<code class="docutils literal notranslate"><span class="pre">2.0</span></code>と設定）</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">b3</span></code>：定数項（デフォルトは<code class="docutils literal notranslate"><span class="pre">3.0</span></code>と設定）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b0</span></code>：定数項（デフォルトは<code class="docutils literal notranslate"><span class="pre">1.0</span></code>と設定）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b1</span></code>：定数項（デフォルトは<code class="docutils literal notranslate"><span class="pre">2.0</span></code>と設定）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b2</span></code>：定数項（デフォルトは<code class="docutils literal notranslate"><span class="pre">3.0</span></code>と設定）</p></li>
 </ul>
 <p>次の関数の返り値：</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">b1</span></code>、<code class="docutils literal notranslate"><span class="pre">b2</span></code>、<code class="docutils literal notranslate"><span class="pre">b3</span></code>の<code class="docutils literal notranslate"><span class="pre">N</span></code>個の推定値がそれぞれ格納されている<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の<code class="docutils literal notranslate"><span class="pre">array</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b0</span></code>、<code class="docutils literal notranslate"><span class="pre">b1</span></code>、<code class="docutils literal notranslate"><span class="pre">b2</span></code>の<code class="docutils literal notranslate"><span class="pre">N</span></code>個の推定値がそれぞれ格納されている<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の<code class="docutils literal notranslate"><span class="pre">array</span></code></p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>  <span class="c1"># 計算の高速化</span>
-<span class="k">def</span> <span class="nf">sim_unbias</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">b0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">b1</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">b3</span><span class="o">=</span><span class="mf">3.0</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">sim_unbias</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">b0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">b1</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">b2</span><span class="o">=</span><span class="mf">3.0</span><span class="p">):</span>
 
     <span class="c1"># N個の0からなるarrayであり、0を推定値と置き換えて格納する</span>
     <span class="n">b0hat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
@@ -1412,16 +1412,16 @@ dtype: float64
 <p>推定値の平均を計算してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;b0:&#39;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">b0hat</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">b0hat</span><span class="p">),</span>
-      <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">b1:&#39;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">b1hat</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">b1hat</span><span class="p">),</span>
-      <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">b1:&#39;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">b2hat</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">b2hat</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;b0:&#39;</span><span class="p">,</span> <span class="n">b0hat</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+      <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">b1:&#39;</span><span class="p">,</span> <span class="n">b1hat</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+      <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">b1:&#39;</span><span class="p">,</span> <span class="n">b2hat</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 0.9988740328334739 
-b1: 2.0003242708162627 
-b1: 2.9999124710473257
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 0.9975400167673023 
+b1: 2.0002132457296944 
+b1: 3.0004161047169338
 </pre></div>
 </div>
 </div>
@@ -1444,7 +1444,7 @@ b1: 2.9999124710473257
 <p>次に分布（ヒストグラム）のカーネル密度推定をおこなうために，<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>にある<code class="docutils literal notranslate"><span class="pre">gaussian_kde</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span><span class="mf">2.5</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために-0.5から1.5までの横軸の値を設定</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span><span class="mf">2.5</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために1.5から2.5までの横軸の値を設定</span>
 <span class="n">kde_model</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b1hat</span><span class="p">)</span>  <span class="c1"># カーネル密度推定を使いb1hatの分布を推定</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">kde_model</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># 誤差項の分布をプロット</span>
@@ -1553,7 +1553,7 @@ dtype: float64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_vif</span><span class="p">(</span><span class="n">dataframe</span><span class="p">):</span>
-    <span class="n">mc</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">mc</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
     <span class="n">vif</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">mc</span><span class="p">)</span><span class="o">.</span><span class="n">diagonal</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">vif_manual</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">dataframe</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 
@@ -1586,21 +1586,28 @@ dtype: float64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">wage1_vif</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>  <span class="c1"># 定数項は無視するために-1</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">wage1_vif</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">vif</span><span class="p">(</span><span class="n">wage1_vif</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">wage1_vif</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">vif_val</span> <span class="o">=</span> <span class="n">vif</span><span class="p">(</span><span class="n">wage1_vif</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">i</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span> <span class="si">:</span><span class="s1"> &lt;10</span><span class="si">}{</span><span class="n">vif_val</span><span class="si">:</span><span class="s1"> &gt;10</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>educ 	 1.4488066076300705
-tenure 	 1.4808148965681553
-exper 	 1.4938063815278086
-wage_log 	 1.4620167739746217
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>educ      1.4488066076300705
+tenure    1.4808148965681553
+exper     1.4938063815278086
+wage_log  1.4620167739746217
 </pre></div>
 </div>
 </div>
 </div>
 <p>定数項は考えなくて良い。</p>
-<p>（コメント）上のコードにある<code class="docutils literal notranslate"><span class="pre">\t</span></code>は見やすくするために文字列の中でタブを入れる場合に使う。</p>
+<p>（コードの説明）</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">f-string</span></code>を使っている。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{name</span> <span class="pre">:</span> <span class="pre">&lt;10}</span></code>は、<code class="docutils literal notranslate"><span class="pre">name</span></code>の値を代入し、<code class="docutils literal notranslate"><span class="pre">10</span></code>という幅の中で左寄せしている。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{vif_val</span> <span class="pre">:</span> <span class="pre">&gt;10}</span></code>は、<code class="docutils literal notranslate"><span class="pre">vif_val</span></code>の値を代入し、<code class="docutils literal notranslate"><span class="pre">10</span></code>という幅の中で右寄せしている。</p></li>
+</ul>
 </div>
 <div class="section" id="id16">
 <h3>シミュレーション<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
@@ -1642,7 +1649,7 @@ wage_log 	 1.4620167739746217
     <span class="n">rv_mean</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># x1, x2の平均</span>
     <span class="c1"># x1, x2の共分散行列</span>
     <span class="n">rv_cov</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">m</span><span class="p">],</span>    <span class="c1"># 全ての変数の分散は１（対角成分）</span>
-               <span class="p">[</span><span class="n">m</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]]</span>  <span class="c1"># Cov(x1,x2)=m</span>
+              <span class="p">[</span><span class="n">m</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]]</span>  <span class="c1"># Cov(x1,x2)=m</span>
     
     <span class="c1"># 推定値を入れる空のリスト</span>
     <span class="n">b0hat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
@@ -1718,7 +1725,7 @@ wage_log 	 1.4620167739746217
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.039456069686100215, 0.197726838026409)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.03880414913704464, 0.20072822946687585)
 </pre></div>
 </div>
 </div>
@@ -1801,7 +1808,7 @@ wage_log 	 1.4620167739746217
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19417748496861278, 0.43484700591563913)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19302956245076403, 0.4404667554468392)
 </pre></div>
 </div>
 </div>

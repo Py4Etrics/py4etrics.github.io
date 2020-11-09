@@ -534,15 +534,15 @@ $$y=\beta_0+\beta_1x_1+\beta_2x_2+u$$
 次の関数の引数：
 * `n`：標本の大きさ
 * `N`：シミュレーションの回数（標本数と考えても良い）
-* `b1`：定数項（デフォルトは`1.0`と設定）
-* `b2`：定数項（デフォルトは`2.0`と設定）
-* `b3`：定数項（デフォルトは`3.0`と設定）
+* `b0`：定数項（デフォルトは`1.0`と設定）
+* `b1`：定数項（デフォルトは`2.0`と設定）
+* `b2`：定数項（デフォルトは`3.0`と設定）
 
 次の関数の返り値：
-* `b1`、`b2`、`b3`の`N`個の推定値がそれぞれ格納されている`Numpy`の`array`
+* `b0`、`b1`、`b2`の`N`個の推定値がそれぞれ格納されている`Numpy`の`array`
 
 @njit  # 計算の高速化
-def sim_unbias(n, N, b0=1.0, b1=2.0, b3=3.0):
+def sim_unbias(n, N, b0=1.0, b1=2.0, b2=3.0):
 
     # N個の0からなるarrayであり、0を推定値と置き換えて格納する
     b0hat_arr = np.zeros(N)
@@ -579,9 +579,9 @@ b0hat, b1hat, b2hat = sim_unbias(n=30, N=100_000)
 
 推定値の平均を計算してみよう。
 
-print('b0:', sum(b0hat)/len(b0hat),
-      '\nb1:', sum(b1hat)/len(b1hat),
-      '\nb1:', sum(b2hat)/len(b2hat))
+print('b0:', b0hat.mean(),
+      '\nb1:', b1hat.mean(),
+      '\nb1:', b2hat.mean())
 
 平均は真の値と全く同じではないが，十分に近い値である。即ち，不偏性が満たされている。標本数`N`を増加させるとより真の値に近づくことになる。
 
@@ -595,7 +595,7 @@ pass
 
 次に分布（ヒストグラム）のカーネル密度推定をおこなうために，`scipy.stats`にある`gaussian_kde`を使う。
 
-x=np.linspace(1.5,2.5,100)  # 図を作成するために-0.5から1.5までの横軸の値を設定
+x=np.linspace(1.5,2.5,100)  # 図を作成するために1.5から2.5までの横軸の値を設定
 kde_model=gaussian_kde(b1hat)  # カーネル密度推定を使いb1hatの分布を推定
 
 plt.plot(x, kde_model(x))  # 誤差項の分布をプロット
@@ -659,7 +659,7 @@ pd.Series(vif_manual, index=wage1_vif.columns)
 次に上の計算を関数にまとめる。
 
 def my_vif(dataframe):
-    mc = dataframe.corr().values
+    mc = dataframe.corr().to_numpy()
     vif = np.linalg.inv(mc).diagonal()
     return pd.Series(vif_manual, index=dataframe.columns)
 
@@ -674,11 +674,16 @@ my_vif(wage1_vif)
 wage1_vif['Intercept'] = 1.0
 
 for i in range(len(wage1_vif.columns)-1):  # 定数項は無視するために-1
-    print(wage1_vif.columns[i], '\t',vif(wage1_vif.values, i))
+    name = wage1_vif.columns[i]
+    vif_val = vif(wage1_vif.to_numpy(), i)
+    print(f'{name : <10}{vif_val: >10}')
 
 定数項は考えなくて良い。
 
-（コメント）上のコードにある`\t`は見やすくするために文字列の中でタブを入れる場合に使う。
+（コードの説明）
+* `f-string`を使っている。
+* `{name : <10}`は、`name`の値を代入し、`10`という幅の中で左寄せしている。
+* `{vif_val : >10}`は、`vif_val`の値を代入し、`10`という幅の中で右寄せしている。
 
 ### シミュレーション
 
@@ -712,7 +717,7 @@ def sim_multi(n, N, m, b0=1.0, b1=2.0, b2=3.0):  # n=標本の大きさ, N=標�
     rv_mean = [4, 1]  # x1, x2の平均
     # x1, x2の共分散行列
     rv_cov = [[1.0, m],    # 全ての変数の分散は１（対角成分）
-               [m, 1.0]]  # Cov(x1,x2)=m
+              [m, 1.0]]  # Cov(x1,x2)=m
     
     # 推定値を入れる空のリスト
     b0hat_arr = np.zeros(N)
