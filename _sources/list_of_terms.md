@@ -10,6 +10,9 @@ kernelspec:
 ---
 
 # 計量経済学用語
+
+The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2Flist_of_terms.html) in English or the language of your choice.
+
 * 横断面データ（cross-sectional data）
     * ある時点において複数の対象を観察し収集したデータ（例えば，2018年の47都道府県の県内総生産）
 * 時系列データ（time-series data）
