@@ -1,11 +1,14 @@
 # Gapminder
 
+The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2FGapminder.html) in English or the language of your choice.
+
 ## データ
 
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from gapminder import gapminder
+from see import see
 
 df = gapminder
 df.head()
@@ -56,12 +59,11 @@ sum(num_countries)
 
 df_group = df.groupby('continent')
 
-from see import *
 see(df_group)
 
 ### continentの内訳（again）
 
-# Seriesを返す
+# Seriesを返し，要素はarray
 
 country_names = df_group['country'].unique()
 country_names

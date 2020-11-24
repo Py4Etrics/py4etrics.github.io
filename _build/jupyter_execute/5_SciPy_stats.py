@@ -1,5 +1,7 @@
 # SciPy.stats
 
+The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F5_SciPy_stats.html) in English or the language of your choice.
+
 `SciPy`（サイパイ）は，NumPyの大幅な拡張版と理解して良い。`SciPy`を読み込むとNumPyの関数などを利用できるようになる。しかし`SciPy`は大きなパッケージであり，全てを読み込む必要もない。従って，`NumPy`を読み込んで，`SciPy`のサブパッケージや関数を読み込むということで十分であろう。ここでは`SciPy`の`stats`というサブパッケージについて説明する。
 
 ## 正規分布（Normal Distribution）

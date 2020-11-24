@@ -1,5 +1,7 @@
 # プーリング・データとパネル・データ
 
+The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F15_Pooling.html) in English or the language of your choice.
+
 import numpy as np
 import pandas as pd
 from statsmodels.formula.api import ols
@@ -139,7 +141,7 @@ dof = result.df_resid  # 自由度 n-k-1
     * $\hat{\gamma}_1$は政策実施後の住宅価格の差を示す。
     * $\left(\hat{\gamma}_1-\hat{\gamma}_0\right)$は政策実施後と前の住宅価格の差の差を示す。この「差の差」の変化で近くに立地する住宅価格の変化を考えることができる。もしこの差の差が`0`であれば（即ち，差は同じだった），住宅価格は影響を受けなかったと解釈できる。もしこの差がマイナスであれば（即ち，差に違いが生じた）近くに立地する住宅の価格は減少してしたと考えられる。
 
-```{image} /image/did.png
+```{figure} /images/did.png
 :scale: 30%
 :align: center
 ```

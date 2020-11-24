@@ -1,5 +1,7 @@
 # 記述統計とグラフ
 
+The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2FDescriptive_stats_vs_Graphs.html) in English or the language of your choice.
+
 **Anscombeのデータセット**
 * 4つのデータセット
     * それぞれ変数は`x`と`y`の2つ

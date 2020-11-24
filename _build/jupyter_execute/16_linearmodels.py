@@ -1,5 +1,7 @@
 # `linearmodels`
 
+The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F16_linearmodels.html) in English or the language of your choice.
+
 import pandas as pd
 from linearmodels.panel.data import PanelData
 from linearmodels.panel import FirstDifferenceOLS

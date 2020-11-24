@@ -18,15 +18,14 @@ dt = datetime.datetime.today()
 
 本サイトに関するコメント等はGitHubの[Issues](https://github.com/Py4Etrics/py4etrics.github.io/issues)もしくは<haruyama@econ.kobe-u.ac.jp>にご連絡ください。
 
-If you happen to come here without expecting Japanese, please click [Google translated English version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io). Note that my first name is not "Iron Source" as Google claims, though its meaning is.
-
+The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io) in English or the language of your choice. Note that my first name is not "Iron Source" as Google claims, though its meaning is.
 
 ## はじめに
 
 「なぜプログラミング？」文系の経済学の学生が理系のプログラミングを学ぶとなると，まず頭に浮かぶ質問かも知れない。過去にも同じような質問を問うた経済学部の卒業生は多くいると思われる。例えば，Excelのようなスプレッドシートのソフトは1980年代からあり，当時の大学生も使い方を学ぶ際「なぜ？」と思ったことだろう。しかし今ではWord，Excel，PowerPointの使い方は，大学卒業生にとって当たり前のスキルになっている。同じように，AI（人工知能）やビッグデータが注目を集める社会では，ある程度のプログラミング能力も経済学部卒業生にとって当たり前のスキルになると予測される。実際，文系出身でプログラミングとは縁のなかったある大手新聞社の記者の話では，社内で`Python`の研修を受けており，仕事に活かすことが期待されているという。また，プログラミングを学ぶ重要性を象徴するかのように，2020年度からは小学校でプログラミング的思考を育成する学習指導要領が実施され，続いて中高教育でもプログラミングに関する内容・科目が充実される予定である。このようにプログラミングのスキルの重要性は益々大きくなると思われる。
 
 「なぜ`Python`？」プログラミング言語は無数に存在し，それぞれ様々な特徴があり，お互いに影響し合い進化している。その過程で，広く使われ出す言語もあれば廃れていく言語もある。その中で`Python`は，近年注目を集める言語となっている。それを示す相対的な人気指標として[Stack Overflow Trends](https://insights.stackoverflow.com（/trendstに追いつくには年数を重ねる必要があるだろうags=java%2Cc%2B%2B%2Cpython%2Cc%23%2Cjavascript%2Cassembly%2Cphp%2Cr%2Cruby%2Cruby-on-rails&fbclid=IwAR3nGm3GtZT99DnP6Ov-hW0-TmZoeePajsLOyRxZYSUjV3F8qbeiOcG-oak)がある。
-```{figure} /image/many_languages.png
+```{figure} /images/many_languages.png
 :scale: 35%
 ```
 [Stack Overflow](https://stackoverflow.com)とは（[日本語版はこちら](https://ja.stackoverflow.com)），プログラミングに関する質問をすると参加者が回答するフォーラムであり，質の高い回答で定評があるサイトである。その英語版で，ある言語に関する質問が何％を占めるのかを示しているのが図１である。2012年頃から`Python`は急上昇しているが（右上がりの赤色の線），過去５年間でみると下降トレンドの言語が多い印象である。
@@ -35,7 +34,7 @@ If you happen to come here without expecting Japanese, please click [Google tran
 
 `Python`は経済学でどれ程使われているのだろうか。残念ながらデータはないが，私の個人的な印象では，数値計算に優れている`Matlab`（有料）や`Octave`（無料），計量経済学では`R`（無料）や`Stata`（有料）が広く使われているようであり，その中で`Python`は比較的にマイナーであった。しかし近年それが変わる気配がある。2011年にノーベル経済学賞を受賞したThomas J. SargentとJohn Stachurskiが始めた[QuantEcon](https://quantecon.org/)では，`Python`と今後有望視される`Julia`のパッケージが公開され，高額な有料ソフトである`Matlab`でできることが可能になっている。また講義ノートや様々なコードも公開され，特に若い研究者は大きな影響を受けるのではないかと予想される。更には，経済学関連分野のファイナンスやデータ・サイエンス（例えば，機械学習）の分野では`Python`は広く使われている。
 
-まず経済学部生にとっての関心事は、`Python`を学ぶ意義はどこにあるのかということだろ。IT関連企業への就職を考えていない学生であれば、なおさらそうであろう。実際、図１のデータはディベロッパーや様々な学問・業種の人々の行動を反映しており，経済学に携わる人の中での人気を表している訳ではない。しかし経済学部の大多数の卒業生は幅広い産業で働くことになる。社会全体で注目され，今後より多くの産業で使われることが予測される言語を学ぶことは有意義ではないだろうか。
+まず経済学部生にとっての関心事は、`Python`を学ぶ意義はどこにあるのかということだろう。IT関連企業への就職を考えていない学生であれば、なおさらそうであろう。実際、図１のデータはディベロッパーや様々な学問・業種の人々の行動を反映しており，経済学に携わる人の中での人気を表している訳ではない。しかし経済学部の大多数の卒業生は幅広い産業で働くことになる。社会全体で注目され，今後より多くの産業で使われることが予測される言語を学ぶことは有意義ではないだろうか。
 
 本サイトの目的は基本的な`Python`の使い方を学び，入門レベルの計量経済学を`Python`を使って学ぶことである。換言すると，計量経済学を通して`Python`の使い方を学ぶことである。本書を通して学ぶ`Python`の知識は，他分野への応用に大いに役立つと期待される。また`Python`を使い推定だけではなくシミュレーションもおこなうため，計量経済学の教科書で学ぶ推定量の性質などを直に感じ取り，計量経済学の復習にも役立つであろう。第１部では，`Python`の基礎を学び，第２部では計量経済分析に`Python`をどのように使うかを解説する。第３部では番外編として，関連するトピックに言及する。
 
@@ -44,9 +43,9 @@ If you happen to come here without expecting Japanese, please click [Google tran
 
 > *Introductory Econometrics: A Modern Approach*, 7th ed, 2019, J.M. Wooldridge
 
-邦訳がないのが不思議なくらい有名な教科書なので，英語を学ぶ意味でも読者には是非読んで欲しい教科書である。
+邦訳がないのが不思議なくらい有名な教科書なので，英語の勉強を兼ねて是非読んで欲しい教科書である。
 
-## 本書で使うPythonとパッケージのバージョン
+## 本サイトで使うPythonとパッケージのバージョン
 
 import gapminder, linearmodels, lmdiag, matplotlib, numba, numpy, pandas, py4etrics, scipy, see, statsmodels, wooldridge
 from platform import python_version

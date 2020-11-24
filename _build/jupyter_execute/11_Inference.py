@@ -1,5 +1,7 @@
 # 推論
 
+The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F11_Inference.html) in English or the language of your choice.
+
 from scipy.stats import t, f
 import numpy as np
 import pandas as pd
@@ -105,8 +107,7 @@ CLM仮定の下では：
 ---
 **＜$p$値＞**
 
-$p$値は，帰無仮説が正しい場合に観測された事象が起こった確率であり、帰無仮説を棄却するために必要な最小有意水準である。
-
+$p$値は，帰無仮説が正しい場合に観測された事象が起こった確率である。即ち、$p$値が非常に低い場合（例えば、0.01）、帰無仮説のもとで発生した事象は非常に起こりにくく，偶然のの可能性が非常に高いことを意味する。また、第一種過誤の確率は非常に低いことも意味する。
 
 $p$値を使う場合の検定手順
 * 棄却するための有意水準 $\alpha$を決める（例えば，0.05）

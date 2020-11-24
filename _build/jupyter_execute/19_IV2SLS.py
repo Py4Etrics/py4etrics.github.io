@@ -1,5 +1,7 @@
 # 操作変数法と２段階OLS
 
+The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F19_IV2SLS.html) in English or the language of your choice.
+
 import numpy as np
 import pandas as pd
 from linearmodels.iv import IV2SLS

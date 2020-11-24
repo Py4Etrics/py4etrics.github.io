@@ -1,5 +1,7 @@
 # 離散選択モデル
 
+The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F20_LogitProbit.html) in English or the language of your choice.
+
 from scipy.stats import logistic, norm, chi2
 import numpy as np
 import matplotlib.pyplot as plt

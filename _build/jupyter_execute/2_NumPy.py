@@ -1,5 +1,7 @@
 # NumPy
 
+The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F2_NumPy.html) in English or the language of your choice.
+
 ## array
 
 このパッケージは，数値計算をする上で重要な役割を果たし，特に，行列計算に威力を発揮する。`NumPy`は「ナンパイ」と読む。
