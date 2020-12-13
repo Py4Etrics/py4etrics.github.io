@@ -1,7 +1,5 @@
 # 不均一分散
 
-The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F14_Heteroskedasticity.html) in English or the language of your choice.
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -311,9 +309,9 @@ pass
 通常`import seaborn as sns`でインポートすることが多いようであるが，ここでは`residplot`のみをインポートしている。
 
 `residplot()`は散布図を作成する関数である。
-* 第１引き数：横軸の変数
+* `x=`：横軸の変数を指定
     * 被説明変数を設定することを勧める。
-* 第２引き数：縦軸の変数
+* `y=`：縦軸の変数を指定
     * 残差
 * オプション
     * `lowerss=True`（デフォルトは`False`）にすると，散布図にベスト・フィットする**曲線**を表示する。
@@ -321,12 +319,12 @@ pass
 ---
 対数変換前
 
-residplot(res_h.fittedvalues, res_h.resid, lowess=True)
+residplot(x=res_h.fittedvalues, y=res_h.resid, lowess=True)
 pass
 
 対数変換後
 
-residplot(res_h_log.fittedvalues, res_h_log.resid, lowess=True)
+residplot(x=res_h_log.fittedvalues, y=res_h_log.resid, lowess=True)
 pass
 
 ## 線形性

@@ -1,6 +1,11 @@
 # 記述統計とグラフ
 
-The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2FDescriptive_stats_vs_Graphs.html) in English or the language of your choice.
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from statsmodels.formula.api import ols
+
+## 説明
 
 **Anscombeのデータセット**
 * 4つのデータセット
@@ -13,17 +18,13 @@ The [Google translated version](https://translate.google.co.jp/translate?hl=ja&s
     * 決定係数（coefficient of determination, $R^2$）
 * 図示（散布図）すると大きく異なる
 
----
-**＜含意＞**
+**＜本トピックの目的＞**
 
-データセットの質的な違いは記述統計だけでは確認できない。図示することが重要。
+データセットの質的な違いは記述統計だけでは確認できない。図示することが重要ということを示す例を紹介する。
+
+## 記述統計 vs 図
 
 ここでは`matplotlib`に基づいた`seaborn`パッケージを使う。このパッケージを使うことにより，`matplotlib`よりも簡単に，更により綺麗にできるようになる。
-
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-from statsmodels.formula.api import ols
 
 Anscombeのデータセット
 

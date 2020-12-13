@@ -1,7 +1,5 @@
 # パネル・データ分析
 
-The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F17_Panel.html) in English or the language of your choice.
-
 import numpy as np
 from scipy.stats import norm, gaussian_kde
 import matplotlib.pyplot as plt

@@ -1,14 +1,23 @@
 # Gapminder
 
-The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2FGapminder.html) in English or the language of your choice.
-
-## データ
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from gapminder import gapminder
 from see import see
+
+[Gapminder](https://www.gapminder.org)とは世界規模で見た経済格差をデータで探る有名なサイトであり、一見の価値があるサイトである。そのサイトで使われているデータを整理してパッケージにまとめたのが`gapminder`である。
+
+````{note}
+MacではTerminal、WindowsではGit Bashを使い、次のコマンドで`gapminder`をインストールできる。
+```
+pip install gapminder
+```
+````
+
+ここでは`gapminder`に含まれるデータを使い`pandas`の`groupby`という`DataFrame`のメソッドと`Multi-index`（階層型インデックス）の使い方の例を紹介する。両方ともデータをグループ化して扱う場合に非常に重宝するので、覚えておいて損はしないだろう。
+
+## データ
 
 df = gapminder
 df.head()

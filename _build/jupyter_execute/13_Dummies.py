@@ -1,7 +1,5 @@
 # 質的変数と回帰分析
 
-The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F13_Dummies.html) in English or the language of your choice.
-
 import numpy as np
 import pandas as pd
 from statsmodels.formula.api import ols

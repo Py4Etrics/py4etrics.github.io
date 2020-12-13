@@ -1,14 +1,12 @@
 # 成績分析
 
-The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2FGrade.html) in English or the language of your choice.
+import pandas as pd
+import matplotlib.pyplot as plt
+from see import see
 
 授業の成績（優秀良可不可）とGP（Grade Point）を使った成績の分析を行う。成績表のコピーは神戸大学の「うりぼーネット」を用いる例を考えるが、Web上で成績表が表示されるのであればコードを少し修正するだけで分析が行えるであろう。
 
 ## データの読み込み
-
-import pandas as pd
-import matplotlib.pyplot as plt
-from see import see
 
 ### 学生
 

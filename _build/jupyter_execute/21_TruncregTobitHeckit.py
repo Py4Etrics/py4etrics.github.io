@@ -1,7 +1,5 @@
 # 制限従属変数モデル
 
-The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F21_TruncregTobitHeckit.html) in English or the language of your choice.
-
 import numpy as np
 import pandas as pd
 from scipy.stats import norm
@@ -196,7 +194,7 @@ $$
 
 ### `Truncreg`モジュールの使い方
 
-切断データを扱うために切断回帰モデルを展開する。ここでは，具体的な内容は説明できないが，`Logit`と`Probit`と同じように最尤法をつかい推定する。
+切断データを扱うために切断回帰モデルを展開する。ここでは具体的な内容は割愛するが，`Logit`と`Probit`と同じように最尤法をつかい推定する。
 
 * 切断回帰モデルの推定量は一致性を満たす。
 
@@ -205,7 +203,7 @@ $$
 * `R`の推定値と小数点第４位まで同じになるが，標準偏差は小数点第２位までが同じとなる。
 
 ````{note}
-MacではTerminal、WindowsではGit Bashを使い、次のコマンドで`py4etrics`モジュールはをインストールできる。
+MacではTerminal、WindowsではGit Bashを使い、次のコマンドで`py4etrics`モジュールをインストールできる。
 ```
 pip install git+https://github.com/spring-haru/py4etrics.git
 ```

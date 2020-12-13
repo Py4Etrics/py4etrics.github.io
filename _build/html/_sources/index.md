@@ -31,8 +31,6 @@ dt = datetime.datetime.today()
 
 本サイトに関するコメント等はGitHubの[Issues](https://github.com/Py4Etrics/py4etrics.github.io/issues)もしくは<haruyama@econ.kobe-u.ac.jp>にご連絡ください。
 
-The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io) in English or the language of your choice. Note that my first name is not "Iron Source" as Google claims, though its meaning is.
-
 ## はじめに
 
 「なぜプログラミング？」文系の経済学の学生が理系のプログラミングを学ぶとなると，まず頭に浮かぶ質問かも知れない。過去にも同じような質問を問うた経済学部の卒業生は多くいると思われる。例えば，Excelのようなスプレッドシートのソフトは1980年代からあり，当時の大学生も使い方を学ぶ際「なぜ？」と思ったことだろう。しかし今ではWord，Excel，PowerPointの使い方は，大学卒業生にとって当たり前のスキルになっている。同じように，AI（人工知能）やビッグデータが注目を集める社会では，ある程度のプログラミング能力も経済学部卒業生にとって当たり前のスキルになると予測される。実際，文系出身でプログラミングとは縁のなかったある大手新聞社の記者の話では，社内で`Python`の研修を受けており，仕事に活かすことが期待されているという。また，プログラミングを学ぶ重要性を象徴するかのように，2020年度からは小学校でプログラミング的思考を育成する学習指導要領が実施され，続いて中高教育でもプログラミングに関する内容・科目が充実される予定である。このようにプログラミングのスキルの重要性は益々大きくなると思われる。

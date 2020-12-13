@@ -1,7 +1,5 @@
 # Pythonの基礎
 
-The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F1_Python_Basics.html) in English or the language of your choice.
-
 ## `=`の意味と「オブジェクト」
 
 変数$x$に値`10`を「代入」するには等号`=`を使う。

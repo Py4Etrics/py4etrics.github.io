@@ -69,7 +69,7 @@
 <meta property="og:url"         content="https://py4etrics.github.io/20_LogitProbit.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="離散選択モデル" />
-<meta property="og:description" content="離散選択モデル  The Google translated version in English or the language of your choice.  from scipy.stats import logistic, norm, chi2 import numpy as np import matplo" />
+<meta property="og:description" content="離散選択モデル  from scipy.stats import logistic, norm, chi2 import numpy as np import matplotlib.pyplot as plt from see import * import pandas as pd from statsmodels." />
 
 
 <meta name="twitter:card" content="summary" />
@@ -402,7 +402,6 @@
                 
   <div class="section" id="id1">
 <h1>離散選択モデル<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p>The <a class="reference external" href="https://translate.google.co.jp/translate?hl=ja&amp;sl=ja&amp;tl=en&amp;u=https%3A%2F%2Fpy4etrics.github.io%2F20_LogitProbit.html">Google translated version</a> in English or the language of your choice.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">logistic</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="n">chi2</span>
@@ -499,7 +498,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/20_LogitProbit_7_0.png" src="_images/20_LogitProbit_7_0.png" />
+<img alt="_images/20_LogitProbit_6_0.png" src="_images/20_LogitProbit_6_0.png" />
 </div>
 </div>
 <hr class="docutils" />
@@ -688,8 +687,8 @@ provided the data, which he obtained from Professor Mroz.
 Dep. Variable:                   inlf   No. Observations:                  753
 Model:                          Logit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Tue, 24 Nov 2020   Pseudo R-squ.:                  0.2197
-Time:                        22:27:43   Log-Likelihood:                -401.77
+Date:                Sun, 13 Dec 2020   Pseudo R-squ.:                  0.2197
+Time:                        15:24:53   Log-Likelihood:                -401.77
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 3.159e-45
 ==============================================================================
@@ -782,7 +781,15 @@ dtype: float64
 </div>
 </div>
 <p>大きく違っているようにもみえない。</p>
-<p>次に方法２である検定をおこなう。まず<code class="docutils literal notranslate"><span class="pre">py4etrics</span></code>パッケージにある<code class="docutils literal notranslate"><span class="pre">hetero_test</span></code>モジュールを読み込み，その中に<code class="docutils literal notranslate"><span class="pre">het_test_logit()</span></code>という関数をつかう。引数に推定結果のインスタンスを指定することにより，不均一分散のWald検定をおこなうことができる。</p>
+<p>次に方法２である検定をおこなう。まず<code class="docutils literal notranslate"><span class="pre">py4etrics</span></code>パッケージにある<code class="docutils literal notranslate"><span class="pre">hetero_test</span></code>モジュールを読み込み，その中に<code class="docutils literal notranslate"><span class="pre">het_test_logit()</span></code>という関数をつかう。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>MacではTerminal、WindowsではGit Bashを使い、次のコマンドで<code class="docutils literal notranslate"><span class="pre">py4etrics</span></code>モジュールをインストールできる。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">spring</span><span class="o">-</span><span class="n">haru</span><span class="o">/</span><span class="n">py4etrics</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+</div>
+<p>引数に推定結果のインスタンスを指定することにより，不均一分散のWald検定をおこなうことができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">het_test_logit</span><span class="p">(</span><span class="n">res_logit</span><span class="p">)</span>
@@ -831,8 +838,8 @@ df freedom:  7.
 Dep. Variable:                   inlf   No. Observations:                  753
 Model:                         Probit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Tue, 24 Nov 2020   Pseudo R-squ.:                  0.2206
-Time:                        22:27:43   Log-Likelihood:                -401.30
+Date:                Sun, 13 Dec 2020   Pseudo R-squ.:                  0.2206
+Time:                        15:24:53   Log-Likelihood:                -401.30
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
 ==============================================================================
@@ -1042,9 +1049,7 @@ age           -0.0159      0.002     -6.739      0.000      -0.021      -0.011
 kidslt6       -0.2612      0.032     -8.197      0.000      -0.324      -0.199
 kidsge6        0.0108      0.013      0.829      0.407      -0.015       0.036
 ==============================================================================
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>       Probit Marginal Effects       
+       Probit Marginal Effects       
 =====================================
 Dep. Variable:                   inlf
 Method:                          dydx
@@ -1094,8 +1099,8 @@ kidsge6        0.0141      0.017      0.828      0.408      -0.019       0.047
 Dep. Variable:                   inlf   No. Observations:                  753
 Model:                          Logit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Tue, 24 Nov 2020   Pseudo R-squ.:                  0.2197
-Time:                        22:27:43   Log-Likelihood:                -401.77
+Date:                Sun, 13 Dec 2020   Pseudo R-squ.:                  0.2197
+Time:                        15:24:53   Log-Likelihood:                -401.77
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 3.159e-45
 ==============================================================================
@@ -1263,8 +1268,8 @@ G(z) = z
 Dep. Variable:                   inlf   R-squared:                       0.264
 Model:                            OLS   Adj. R-squared:                  0.257
 Method:                 Least Squares   F-statistic:                     62.48
-Date:                Tue, 24 Nov 2020   Prob (F-statistic):           1.30e-70
-Time:                        22:27:43   Log-Likelihood:                -423.89
+Date:                Sun, 13 Dec 2020   Prob (F-statistic):           1.30e-70
+Time:                        15:24:53   Log-Likelihood:                -423.89
 No. Observations:                 753   AIC:                             863.8
 Df Residuals:                     745   BIC:                             900.8
 Df Model:                           7                                         
@@ -1333,6 +1338,9 @@ strong multicollinearity or other numerical problems.
 0を下回る予測値の数：16
 </pre></div>
 </div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
 </div>
 </div>
 <hr class="docutils" />
@@ -1355,7 +1363,7 @@ strong multicollinearity or other numerical problems.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/20_LogitProbit_77_0.png" src="_images/20_LogitProbit_77_0.png" />
+<img alt="_images/20_LogitProbit_78_0.png" src="_images/20_LogitProbit_78_0.png" />
 </div>
 </div>
 <p>LogitモデルとProbitモデルの予測確率は殆ど変わらない。ではLogitとProbitのどちらをどのような基準で選ぶべきか。<em>Microeconometrics Using Stata</em> (2009)は次を推奨している。</p>

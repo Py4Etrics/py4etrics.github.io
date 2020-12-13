@@ -1,7 +1,5 @@
 # 離散選択モデル
 
-The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F20_LogitProbit.html) in English or the language of your choice.
-
 from scipy.stats import logistic, norm, chi2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -185,7 +183,16 @@ l1=logit(formula, data=mroz).fit(cov_type='HC1',disp=False).bse
 
 大きく違っているようにもみえない。
 
-次に方法２である検定をおこなう。まず`py4etrics`パッケージにある`hetero_test`モジュールを読み込み，その中に`het_test_logit()`という関数をつかう。引数に推定結果のインスタンスを指定することにより，不均一分散のWald検定をおこなうことができる。
+次に方法２である検定をおこなう。まず`py4etrics`パッケージにある`hetero_test`モジュールを読み込み，その中に`het_test_logit()`という関数をつかう。
+
+````{note}
+MacではTerminal、WindowsではGit Bashを使い、次のコマンドで`py4etrics`モジュールをインストールできる。
+```
+pip install git+https://github.com/spring-haru/py4etrics.git
+```
+````
+
+引数に推定結果のインスタンスを指定することにより，不均一分散のWald検定をおこなうことができる。
 
 het_test_logit(res_logit)
 
