@@ -1,7 +1,5 @@
 # ツールのインストールと説明
 
-The [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F0_Preparations.html) in English or the language of your choice.
-
 ## 説明
 
 Pythonのインストールと関連ツールについて簡単な説明をする。
