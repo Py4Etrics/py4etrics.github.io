@@ -81,13 +81,13 @@ CLM仮定の下では：
         $$
         
 * 対立仮説と棄却ルール（$\alpha=$有意水準）：
-    * 片側検定１：$H_A:\hat{\beta}_j>0$
+    * 右側検定：$H_A:\hat{\beta}_j>0$
     
         $$
         t_{\hat{\beta}_j}>t_c(\alpha)>0\quad\Rightarrow\quad H_0\text{を棄却する}
         $$
         
-    * 片側検定２：$H_A:\hat{\beta}_j<0$
+    * 左側検定：$H_A:\hat{\beta}_j<0$
     
         $$
         t_{\hat{\beta}_j}<t_c(\alpha)<0\quad\Rightarrow\quad H_0\text{を棄却する}
@@ -96,11 +96,11 @@ CLM仮定の下では：
     * 両側検定：$H_A:\hat{\beta}_j\neq 0$
     
         $$
-        \left|t_{\hat{\beta}_j}\right|>t_c(\alpha)>0\quad\Rightarrow\quad H_0\text{を棄却する}
+        \left|t_{\hat{\beta}_j}\right|>t_c(\alpha/2)>0\quad\Rightarrow\quad H_0\text{を棄却する}
         $$
 
 
-ここで，棄却臨界値$t_c(\alpha)$は有意水準$\alpha$に対応する$t$値。
+ここで，$t_c(\alpha)$は有意水準$\alpha$に対応する片側検定の棄却臨界値であり、$t_c(\alpha/2)$は有意水準$\alpha$に対応する両側検定の棄却臨界値である。
 
 ---
 **＜$p$値＞**
@@ -122,7 +122,7 @@ $p$値を使う場合の検定手順
 
 #### $t$値
 
-片側検定１の場合の$t_c(0.05)$は次の値となる。
+右側検定の場合の$t_c(0.05)$は次の値となる。
 
 a = 0.05
 dof = 30-5-1
@@ -130,7 +130,7 @@ dof = 30-5-1
 t_right = t.ppf(1-a, dof)  # t.ppfについてはscipy.statsを参照
 t_right
 
-片側検定２の場合の$t_c(0.05)$は次の値となる。
+左側検定の場合の$t_c(0.05)$は次の値となる。
 
 t_left = t.ppf(a, dof)
 t_left
@@ -150,12 +150,12 @@ abs(t.ppf(a/2,dof))
 
 $p$値の計算の例として上の`t_right`、`t_left`、`t_both`を使ってみる。
 
-片側検定１で$t_{\hat{\beta}_j}=$
+右側検定で$t_{\hat{\beta}_j}=$
 `t_right`の場合，$p$値は次の値になる。
 
 1-t.cdf(t_right, dof)   # t.cdfについてはscipy.statsを参照
 
-片側検定２で$t_{\hat{\beta}_j}=$
+左側検定で$t_{\hat{\beta}_j}=$
 `t_left`の場合，$p$値は次の値になる。
 
 t.cdf(t_left, dof)
@@ -322,7 +322,7 @@ $F>F_c(a)$　$\Rightarrow$　$\text{H}_0$を棄却
 * $F_c(a)$：棄却臨界値
 * $a$：有意水準
 
-（注意）$F$値は必ず正の値をとる。従って，$t$検定の「片側検定１」のパターンしか存在しない。
+（注意）$F$値は必ず正の値をとる。従って，$t$検定の「右片側検定」のパターンしか存在しない。
 
 **＜$p$値を使う場合の手順＞**
 
