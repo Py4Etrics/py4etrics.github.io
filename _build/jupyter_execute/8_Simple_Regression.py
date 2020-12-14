@@ -58,10 +58,10 @@ $$\hat{u}_i=y_i-\hat{y}_i$$
 
 ## データ
 
-Wooldridge (2020)で使われるデータセットは全て`wooldridge`のパッケージに含まれている。そのパッケージからからデータを読み込んで使うことにする。
+Wooldridge (2019)で使われるデータセットは全て`wooldridge`のパッケージに含まれている。そのパッケージからからデータを読み込んで使うことにする。
 
 ````{note}
-MacではTerminal、WindowsではGit Bashを使い、次のコマンドで`wooldridge`パッケージはをインストールできる。
+MacではTerminal、WindowsではGit Bashを使い、次のコマンドで`wooldridge`パッケージをインストールできる。
 ```
 pip install wooldridge
 ```

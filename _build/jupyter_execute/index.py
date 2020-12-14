@@ -83,8 +83,6 @@ from myst_nb import glue
 glue("paranormal", fig, display=True)
 
 ```{glue:figure} paranormal
-:figwidth: 500px
-
 正規分布と超常分布
 ```
 

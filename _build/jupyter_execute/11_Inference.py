@@ -126,29 +126,50 @@ $p$値を使う場合の検定手順
 
 a = 0.05
 dof = 30-5-1
-t.ppf(1-a, dof)  # t.ppfについてはscipy.statsを参照
+
+t_right = t.ppf(1-a, dof)  # t.ppfについてはscipy.statsを参照
+t_right
 
 片側検定２の場合の$t_c(0.05)$は次の値となる。
 
-t.ppf(a, dof)
+t_left = t.ppf(a, dof)
+t_left
 
-両側検定の場合の$t_c(0.05)$は次の値となる。
+両側検定の場合の$t_c(0.05)$は、$1-a/2$を使うと次のコードとなる。
 
-t.ppf(1-a/2, dof)
+t_both = t.ppf(1-a/2, dof)
+t_both
+
+$a/2$を使うと次のコードで同じ値を計算できる。
+
+abs(t.ppf(a/2,dof))
+
+`abs()`は絶対値を計算する関数である。
 
 #### $p$値
 
-片側検定１で$t_{\hat{\beta}_j}=1.3$の場合，$p$値は次の値になる。
+$p$値の計算の例として上の`t_right`、`t_left`、`t_both`を使ってみる。
 
-1-t.cdf(1.3, dof)   # t.cdfについてはscipy.statsを参照
+片側検定１で$t_{\hat{\beta}_j}=$
+`t_right`の場合，$p$値は次の値になる。
 
-片側検定２で$t_{\hat{\beta}_j}=-2.1$の場合，$p$値は次の値になる。
+1-t.cdf(t_right, dof)   # t.cdfについてはscipy.statsを参照
 
-t.cdf(-2.1, dof)
+片側検定２で$t_{\hat{\beta}_j}=$
+`t_left`の場合，$p$値は次の値になる。
 
-両側検定で$\left|t_{\hat{\beta}_j}\right|=2.1$の場合，$p$値は次の値になる。
+t.cdf(t_left, dof)
 
-1-t.cdf(2.1, dof)
+両側検定で$\left|t_{\hat{\beta}_j}\right|=$
+`t_both`の場合，$p$値は次の値になる。
+
+2*( 1-t.cdf(t_both, dof) )
+
+```{figure} ./images/t_p_values.jpeg
+:align: center
+
+$t$値と$p$値の関係は図のように表すことができる。
+```
 
 ### 回帰分析と$t$検定
 

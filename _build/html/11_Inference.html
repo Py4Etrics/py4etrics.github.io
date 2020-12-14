@@ -644,7 +644,9 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">0.05</span>
 <span class="n">dof</span> <span class="o">=</span> <span class="mi">30</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">1</span>
-<span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>  <span class="c1"># t.ppfについてはscipy.statsを参照</span>
+
+<span class="n">t_right</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>  <span class="c1"># t.ppfについてはscipy.statsを参照</span>
+<span class="n">t_right</span>
 </pre></div>
 </div>
 </div>
@@ -657,7 +659,8 @@
 <p>片側検定２の場合の<span class="math notranslate nohighlight">\(t_c(0.05)\)</span>は次の値となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_left</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+<span class="n">t_left</span>
 </pre></div>
 </div>
 </div>
@@ -667,10 +670,11 @@
 </div>
 </div>
 </div>
-<p>両側検定の場合の<span class="math notranslate nohighlight">\(t_c(0.05)\)</span>は次の値となる。</p>
+<p>両側検定の場合の<span class="math notranslate nohighlight">\(t_c(0.05)\)</span>は、<span class="math notranslate nohighlight">\(1-a/2\)</span>を使うと次のコードとなる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_both</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+<span class="n">t_both</span>
 </pre></div>
 </div>
 </div>
@@ -680,47 +684,69 @@
 </div>
 </div>
 </div>
+<p><span class="math notranslate nohighlight">\(a/2\)</span>を使うと次のコードで同じ値を計算できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">abs</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">dof</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.063898561628021
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">abs()</span></code>は絶対値を計算する関数である。</p>
 </div>
 <div class="section" id="p">
 <h4><span class="math notranslate nohighlight">\(p\)</span>値<a class="headerlink" href="#p" title="Permalink to this headline">¶</a></h4>
-<p>片側検定１で<span class="math notranslate nohighlight">\(t_{\hat{\beta}_j}=1.3\)</span>の場合，<span class="math notranslate nohighlight">\(p\)</span>値は次の値になる。</p>
+<p><span class="math notranslate nohighlight">\(p\)</span>値の計算の例として上の<code class="docutils literal notranslate"><span class="pre">t_right</span></code>、<code class="docutils literal notranslate"><span class="pre">t_left</span></code>、<code class="docutils literal notranslate"><span class="pre">t_both</span></code>を使ってみる。</p>
+<p>片側検定１で<span class="math notranslate nohighlight">\(t_{\hat{\beta}_j}=\)</span>
+<code class="docutils literal notranslate"><span class="pre">t_right</span></code>の場合，<span class="math notranslate nohighlight">\(p\)</span>値は次の値になる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>   <span class="c1"># t.cdfについてはscipy.statsを参照</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_right</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>   <span class="c1"># t.cdfについてはscipy.statsを参照</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.10297414905105884
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.050000000000000155
 </pre></div>
 </div>
 </div>
 </div>
-<p>片側検定２で<span class="math notranslate nohighlight">\(t_{\hat{\beta}_j}=-2.1\)</span>の場合，<span class="math notranslate nohighlight">\(p\)</span>値は次の値になる。</p>
+<p>片側検定２で<span class="math notranslate nohighlight">\(t_{\hat{\beta}_j}=\)</span>
+<code class="docutils literal notranslate"><span class="pre">t_left</span></code>の場合，<span class="math notranslate nohighlight">\(p\)</span>値は次の値になる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="o">-</span><span class="mf">2.1</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_left</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.02321075109161751
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.050000000000000024
 </pre></div>
 </div>
 </div>
 </div>
-<p>両側検定で<span class="math notranslate nohighlight">\(\left|t_{\hat{\beta}_j}\right|=2.1\)</span>の場合，<span class="math notranslate nohighlight">\(p\)</span>値は次の値になる。</p>
+<p>両側検定で<span class="math notranslate nohighlight">\(\left|t_{\hat{\beta}_j}\right|=\)</span>
+<code class="docutils literal notranslate"><span class="pre">t_both</span></code>の場合，<span class="math notranslate nohighlight">\(p\)</span>値は次の値になる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mf">2.1</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span><span class="o">*</span><span class="p">(</span> <span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_both</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span> <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.02321075109161752
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.05000000000000049
 </pre></div>
 </div>
 </div>
+</div>
+<div class="figure align-center" id="id15">
+<img alt="_images/t_p_values.jpeg" src="_images/t_p_values.jpeg" />
+<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text"><span class="math notranslate nohighlight">\(t\)</span>値と<span class="math notranslate nohighlight">\(p\)</span>値の関係は図のように表すことができる。</span><a class="headerlink" href="#id15" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
@@ -969,7 +995,7 @@ skipped   -0.151026 -0.015200
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/11_Inference_56_0.png" src="_images/11_Inference_56_0.png" />
+<img alt="_images/11_Inference_60_0.png" src="_images/11_Inference_60_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">ACT</span></code>の信頼区間に<code class="docutils literal notranslate"><span class="pre">0</span></code>が含まれることが分かる。</p>
@@ -1283,8 +1309,8 @@ Abstract of the United States.
 Dep. Variable:         np.log(salary)   R-squared:                       0.628
 Model:                            OLS   Adj. R-squared:                  0.622
 Method:                 Least Squares   F-statistic:                     117.1
-Date:                Sun, 13 Dec 2020   Prob (F-statistic):           2.94e-72
-Time:                        17:48:16   Log-Likelihood:                -385.11
+Date:                Mon, 14 Dec 2020   Prob (F-statistic):           2.94e-72
+Time:                        12:01:14   Log-Likelihood:                -385.11
 No. Observations:                 353   AIC:                             782.2
 Df Residuals:                     347   BIC:                             805.4
 Df Model:                           5                                         
