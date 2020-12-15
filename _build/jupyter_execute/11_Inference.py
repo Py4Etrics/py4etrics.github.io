@@ -168,7 +168,7 @@ t.cdf(t_left, dof)
 ```{figure} ./images/t_p_values.jpeg
 :align: center
 
-$t$値と$p$値の関係は図のように表すことができる。
+上で計算した数値の図示（累積分布関数と確率密度関数は$t$分布）。
 ```
 
 ### 回帰分析と$t$検定
