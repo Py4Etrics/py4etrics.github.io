@@ -40,7 +40,6 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
@@ -610,8 +609,8 @@
 </tbody>
 </table>
 <ul class="simple">
-<li><p>統計的優位性とは，帰無仮説が正しい場合，帰無仮説の内容が発生した確率が非常に低い場合を指す。即ち，発生イベントが非常に起こりにくく，偶然のの可能性が非常に高い場合を指す。</p></li>
-<li><p>第一種過誤は，帰無仮説が正しい場合に棄却する場合に発生する。慣例でその確率を<span class="math notranslate nohighlight">\(\alpha\)</span>で表す。<span class="math notranslate nohighlight">\(\alpha=0.05\)</span>がよく使われるが，これを使う場合，間違って正しい帰無仮説を棄却する確率は最大5%まで許容するという意味になる。</p></li>
+<li><p>統計的優位性とは，帰無仮説が正しい場合，帰無仮説の内容が発生した確率が非常に低い場合を指す。即ち，発生イベントが非常に起こりにくく，偶然のの可能性が非常に高い場合である。</p></li>
+<li><p>第一種過誤は，帰無仮説が正しい場合に棄却すると発生する。慣例でその確率を<span class="math notranslate nohighlight">\(\alpha\)</span>で表す。<span class="math notranslate nohighlight">\(\alpha=0.05\)</span>がよく使われるが，これを使う場合，間違って正しい帰無仮説を棄却する確率は最大5%まで許容するという意味になる。</p></li>
 </ul>
 </div>
 <div class="section" id="t">
@@ -639,7 +638,7 @@
 \[
     \frac{\hat{\beta}_j-\beta_j}{\text{se}\left(\hat{\beta}_j\right)}\sim t_{n-k-1}
     \]</div>
-<p>ここで<span class="math notranslate nohighlight">\(n-k-1\)</span>は自由度であり，<span class="math notranslate nohighlight">\(n\)</span>は標本の大きさ，<span class="math notranslate nohighlight">\(k\)</span>は定数項以外の説明変数の数である（定数項がある場合）。</p>
+<p>ここで<span class="math notranslate nohighlight">\(t_{n-k-1}\)</span>は自由度<span class="math notranslate nohighlight">\(n-k-1\)</span>の<span class="math notranslate nohighlight">\(t\)</span>分布を表している。<span class="math notranslate nohighlight">\(n\)</span>は標本の大きさ，<span class="math notranslate nohighlight">\(k\)</span>は定数項以外の説明変数の数である（定数項がある場合）。</p>
 </li>
 </ul>
 <hr class="docutils" />
@@ -867,9 +866,9 @@ from a survey he took of MSU students in Fall 1994.
 </div>
 <p>このデータセットを使い，次の問題を考える。ミシガン州立大学で学生のGPA（<code class="docutils literal notranslate"><span class="pre">colGDP</span></code>）は以下の変数とどのような関係にあるのか。</p>
 <ul class="simple">
-<li><p>高校のGPA（<code class="docutils literal notranslate"><span class="pre">hsGPA</span></code>）</p></li>
-<li><p>米国大学進学適性試験（<code class="docutils literal notranslate"><span class="pre">ACT</span></code>）</p></li>
-<li><p>週平均の講義欠席回数（<code class="docutils literal notranslate"><span class="pre">skipped</span></code>）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hsGPA</span></code>：高校のGPA</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ACT</span></code>：米国大学進学適性試験</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">skipped</span></code>：週平均の講義欠席回数</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -879,7 +878,7 @@ from a survey he took of MSU students in Fall 1994.
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性から<span class="math notranslate nohighlight">\(t\)</span>値を表示</p>
+<p><code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性<code class="docutils literal notranslate"><span class="pre">tvalues</span></code>を使い<span class="math notranslate nohighlight">\(t\)</span>値を表示してみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">tvalues</span>
@@ -896,7 +895,7 @@ dtype: float64
 </div>
 </div>
 </div>
-<p>この<span class="math notranslate nohighlight">\(t\)</span>値の属性<code class="docutils literal notranslate"><span class="pre">.values</span></code>を使い<code class="docutils literal notranslate"><span class="pre">array</span></code>に変換し絶対値を取り、任意の棄却臨界値と比較することにより両側検定を行う関数を作る。</p>
+<p>この<span class="math notranslate nohighlight">\(t\)</span>値のメソッド<code class="docutils literal notranslate"><span class="pre">.to_numpy()</span></code>を使い<code class="docutils literal notranslate"><span class="pre">array</span></code>に変換し絶対値を取り、任意の棄却臨界値と比較することにより両側検定を行う関数を作る。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">significance_check</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
@@ -907,7 +906,7 @@ dtype: float64
 <span class="sd">    （注意）定数項あり</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dof</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">nobs</span><span class="o">-</span><span class="n">res</span><span class="o">.</span><span class="n">df_model</span><span class="o">-</span><span class="mi">1</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span> <span class="o">&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 
 <span class="n">significance_check</span><span class="p">(</span><span class="n">res_gpa</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
@@ -924,7 +923,7 @@ dtype: bool
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性<code class="docutils literal notranslate"><span class="pre">pvalues</span></code>から<span class="math notranslate nohighlight">\(p\)</span>値を表示</p>
+<p><code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性<code class="docutils literal notranslate"><span class="pre">pvalues</span></code>から<span class="math notranslate nohighlight">\(p\)</span>値を表示してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">pvalues</span>
@@ -998,7 +997,7 @@ dtype: float64
 <p>ここで，<span class="math notranslate nohighlight">\(a\)</span>は有意水準である。</p>
 <p><strong>（解釈）</strong></p>
 <p>標本を取りOLS推定量を計算するというプロセスを100回繰り返した場合（それが可能な場合、それぞれの標本は異なり<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>も異なることになる），その内，母集団の（真の）<span class="math notranslate nohighlight">\(\beta_j\)</span>の値が信頼区間に入るのは<span class="math notranslate nohighlight">\((1-a)\times 100\)</span>回である（<span class="math notranslate nohighlight">\(a=0.05\)</span>の場合，95回）。</p>
-<p><code class="docutils literal notranslate"><span class="pre">gpa</span></code>の例を考える。<code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性から信頼区間を所得できる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">gpa</span></code>の例を考える。<code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性から信頼区間を取得できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_gpa</span><span class="o">.</span><span class="n">conf_int</span><span class="p">())</span>
@@ -1015,7 +1014,7 @@ skipped   -0.134523 -0.031703
 </div>
 </div>
 </div>
-<p>有意水準のオプション<code class="docutils literal notranslate"><span class="pre">alpha=</span></code>を指定することもできる（デフォルトは<code class="docutils literal notranslate"><span class="pre">0.05</span></code>）。有意水準が1％の場合。</p>
+<p>有意水準のオプション<code class="docutils literal notranslate"><span class="pre">alpha=</span></code>を指定することもできる（デフォルトは<code class="docutils literal notranslate"><span class="pre">0.05</span></code>）。有意水準が1％の場合は次のように指定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_gpa</span><span class="o">.</span><span class="n">conf_int</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">))</span>
@@ -1032,20 +1031,16 @@ skipped   -0.151026 -0.015200
 </div>
 </div>
 </div>
-<p><strong>＜次の２点を留意＞</strong></p>
-<ul class="simple">
-<li><p>OLS推定値は1つの値を返す「点推定」だが，信頼区間は有意水準に基づく「区間推定」である。両方を確認することが大事である。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ACT</span></code>の信頼区間を考えよう。100回推定をした場合，母集団の<span class="math notranslate nohighlight">\(\beta_{ACT}\)</span>の値は95回この区間に入ることになるが，有意水準が5%でも1%でも<code class="docutils literal notranslate"><span class="pre">0</span></code>が含まれていることに注意。</p></li>
-</ul>
+<p>OLS推定値は1つの値を返す「点推定」だが，信頼区間は有意水準に基づく「区間推定」である。両方を確認することが大事である。例えば、<code class="docutils literal notranslate"><span class="pre">ACT</span></code>の信頼区間を考えよう。100回推定をした場合，母集団の<span class="math notranslate nohighlight">\(\beta_{ACT}\)</span>の値は95回この区間に入ることになるが，有意水準が1%でも5%でも<code class="docutils literal notranslate"><span class="pre">0</span></code>が含まれている。0の可能性が高いことを示している。</p>
 </div>
 <div class="section" id="id8">
 <h3>信頼区間の図示<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>の<code class="docutils literal notranslate"><span class="pre">errorbar</span></code>を使い図示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coef</span> <span class="o">=</span> <span class="n">res_gpa</span><span class="o">.</span><span class="n">params</span>  <span class="c1">#  推定値</span>
-<span class="n">varname</span> <span class="o">=</span> <span class="n">coef</span><span class="o">.</span><span class="n">index</span>  <span class="c1"># 変数名</span>
-<span class="n">ci</span> <span class="o">=</span> <span class="n">res_gpa</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span>  <span class="c1"># 信頼区間を　ci　に入れる</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coef</span> <span class="o">=</span> <span class="n">res_gpa</span><span class="o">.</span><span class="n">params</span>      <span class="c1"># 推定値</span>
+<span class="n">varname</span> <span class="o">=</span> <span class="n">coef</span><span class="o">.</span><span class="n">index</span>       <span class="c1"># 変数名</span>
+<span class="n">ci</span> <span class="o">=</span> <span class="n">res_gpa</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span>    <span class="c1"># 信頼区間を　ci　に入れる</span>
 <span class="n">error</span> <span class="o">=</span> <span class="n">ci</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">coef</span>  <span class="c1"># 信頼区間の幅の半分</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">coef</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">y</span><span class="o">=</span><span class="n">varname</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">xerr</span><span class="o">=</span><span class="n">error</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">capsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># 切片以外のエラーバー</span>
@@ -1075,11 +1070,12 @@ y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+u
 <p><span class="math notranslate nohighlight">\(\beta_2=\beta_3=0\)</span></p>
 <p><span class="math notranslate nohighlight">\(\beta_2=2\beta_3\)</span></p>
 <hr class="docutils" />
+<p>帰無仮説と対立仮説は次のようになる。</p>
 <ul class="simple">
 <li><p>帰無仮説：<span class="math notranslate nohighlight">\(\text{H}_0\)</span>：制約が成立する</p></li>
 <li><p>対立仮説：<span class="math notranslate nohighlight">\(\text{H}_A\)</span>：制約は成立しない</p></li>
 </ul>
-<p><strong>検定手順</strong></p>
+<p>検定手順</p>
 <ol>
 <li><p>制約がない回帰式を推定する。</p></li>
 <li><p>制約がある回帰式を推定する。</p></li>
@@ -1090,6 +1086,7 @@ y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+u
     =\frac{\left(R_0^2-R_1^2\right)/q}{\left(1-R_0^2\right)/(n-k-1)}
     \sim F_{n-k-1}^q
     \]</div>
+<p>左辺の<span class="math notranslate nohighlight">\(F\)</span>は<span class="math notranslate nohighlight">\(F\)</span>値、右辺の<span class="math notranslate nohighlight">\(F_{n-k-1}^q\)</span>は自由度が<span class="math notranslate nohighlight">\(q\)</span>と<span class="math notranslate nohighlight">\(n-k-1\)</span>の<span class="math notranslate nohighlight">\(F\)</span>分布。</p>
 </li>
 <li><p>有意水準に基づく棄却臨界値と比べる（もしくは<span class="math notranslate nohighlight">\(p\)</span>値を有意水準と比べる）</p></li>
 </ol>
@@ -1200,11 +1197,11 @@ Abstract of the United States.
 </div>
 <p>このデータセットを使い，年俸（<code class="docutils literal notranslate"><span class="pre">salary</span></code>）が次の変数とどう関係するかを考える。</p>
 <ul class="simple">
-<li><p>メジャーリーグでプレイした期間（年）（<code class="docutils literal notranslate"><span class="pre">years</span></code>）</p></li>
-<li><p>年間出場回数（<code class="docutils literal notranslate"><span class="pre">gamesyr</span></code>）</p></li>
-<li><p>通算打率（<code class="docutils literal notranslate"><span class="pre">bavg</span></code>）</p></li>
-<li><p>１シーズンあたりホームラン数（<code class="docutils literal notranslate"><span class="pre">hrunsyr</span></code>）</p></li>
-<li><p>１シーズンあたり打点（<code class="docutils literal notranslate"><span class="pre">rbinsyr</span></code>）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">years</span></code>：メジャーリーグでプレイした期間（年）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gamesyr</span></code>：年間出場回数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bavg</span></code>：通算打率</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hrunsyr</span></code>：１シーズンあたりホームラン数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rbinsyr</span></code>：１シーズンあたり打点</p></li>
 </ul>
 <p>まず制約がない回帰分析をおこなう。</p>
 <div class="cell docutils container">
@@ -1369,8 +1366,8 @@ Abstract of the United States.
 Dep. Variable:         np.log(salary)   R-squared:                       0.628
 Model:                            OLS   Adj. R-squared:                  0.622
 Method:                 Least Squares   F-statistic:                     117.1
-Date:                Mon, 14 Dec 2020   Prob (F-statistic):           2.94e-72
-Time:                        22:52:23   Log-Likelihood:                -385.11
+Date:                Mon, 21 Dec 2020   Prob (F-statistic):           2.94e-72
+Time:                        12:24:23   Log-Likelihood:                -385.11
 No. Observations:                 353   AIC:                             782.2
 Df Residuals:                     347   BIC:                             805.4
 Df Model:                           5                                         
