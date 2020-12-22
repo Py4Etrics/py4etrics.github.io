@@ -190,18 +190,35 @@ res_gpa = ols(formula_gpa, data=gpa).fit()
 
 res_gpa.tvalues
 
-この$t$値のメソッド`.to_numpy()`を使い`array`に変換し絶対値を取り、任意の棄却臨界値と比較することにより両側検定を行う関数を作る。
+この値を１つ１つ棄却臨界値と比べるのも手間がかかるので、次のような関数を作成し、任意の棄却臨界値に基づき両側検定を行うことも簡単にできる。
 
-def significance_check(res, a):
+def significance_check(res, a=0.05):
     """
-    res = statsmodelsによるOLS推定結果
-    a = 有意水準
-    H0棄却の場合はTrueを返す
-    （注意）定数項あり
+    定数項がある場合のt検定をおこなう。
+    
+    引数：
+        res = statsmodelsによるOLS推定結果
+        a = 有意水準（デフォルト：0.05）
+    返り値：
+        帰無仮説を棄却する場合はTrueを返す。
     """
+    
     dof = res.nobs-res.df_model-1
-    result = abs(res.tvalues.to_numpy()) > t.ppf(1-a/2, dof)
+    result = abs(res.tvalues) > t.ppf(1-a/2, dof)
+    
     return pd.Series(result, index=res.tvalues.index)
+
+＜コードの説明＞
+> `"""`と`"""`で囲まれた行は関数の説明であり、`docstring`と呼ばれる。`docstring`は覚え書きのようなもので、何ヶ月後の自分が読んだり、他の人が読む場合に便利となる。また、`statsmodels`などのパッケージは数多くの関数を使っており、それらにも`docstring`が追加されているのが普通である。関数`help()`を使うと`docstring`が表示される。
+
+help(significance_check)
+
+次のコードでも同じ内容を確認できる。
+```
+significance_check?
+```
+
+関数を実行してみよう。
 
 significance_check(res_gpa, 0.05)
 
@@ -237,7 +254,7 @@ $$
 
 **（解釈）**
 
-標本を取りOLS推定量を計算するというプロセスを100回繰り返した場合（それが可能な場合、それぞれの標本は異なり$\hat{\beta}_j$も異なることになる），その内，母集団の（真の）$\beta_j$の値が信頼区間に入るのは$(1-a)\times 100$回である（$a=0.05$の場合，95回）。
+標本を取りOLS推定値を計算するというプロセスを100回繰り返した場合（それが可能な場合、それぞれの標本は異なり$\hat{\beta}_j$も異なることになる），その内，母集団の（真の）$\beta_j$の値が信頼区間に入るのは$(1-a)\times 100$回である（$a=0.05$の場合，95回）。
 
 `gpa`の例を考える。`res_gpa`の属性から信頼区間を取得できる。
 
@@ -427,6 +444,8 @@ res_0.fvalue
 
 res_0.f_pvalue
 
-例２の結果はOLS推定結果のメソッド`summary()`で表示される表にも`F-statistic`と`Prob(F-statistic)`として示されている。
+$p$値は非常に小さな値となっており、0.1%の有意水準でも帰無仮説を棄却できる。
+
+例２の結果はOLS推定結果のメソッド`summary()`で表示される表の中にある`F-statistic`と`Prob(F-statistic)`で確認することもできる。
 
 print(res_0.summary())
