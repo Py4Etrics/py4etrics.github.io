@@ -895,21 +895,61 @@ dtype: float64
 </div>
 </div>
 </div>
-<p>この<span class="math notranslate nohighlight">\(t\)</span>値のメソッド<code class="docutils literal notranslate"><span class="pre">.to_numpy()</span></code>を使い<code class="docutils literal notranslate"><span class="pre">array</span></code>に変換し絶対値を取り、任意の棄却臨界値と比較することにより両側検定を行う関数を作る。</p>
+<p>この値を１つ１つ棄却臨界値と比べるのも手間がかかるので、次のような関数を作成し、任意の棄却臨界値に基づき両側検定を行うことも簡単にできる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">significance_check</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">significance_check</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    res = statsmodelsによるOLS推定結果</span>
-<span class="sd">    a = 有意水準</span>
-<span class="sd">    H0棄却の場合はTrueを返す</span>
-<span class="sd">    （注意）定数項あり</span>
+<span class="sd">    定数項がある場合のt検定をおこなう。</span>
+<span class="sd">    </span>
+<span class="sd">    引数：</span>
+<span class="sd">        res = statsmodelsによるOLS推定結果</span>
+<span class="sd">        a = 有意水準（デフォルト：0.05）</span>
+<span class="sd">    返り値：</span>
+<span class="sd">        帰無仮説を棄却する場合はTrueを返す。</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    
     <span class="n">dof</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">nobs</span><span class="o">-</span><span class="n">res</span><span class="o">.</span><span class="n">df_model</span><span class="o">-</span><span class="mi">1</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span> <span class="o">&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+    
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>＜コードの説明＞</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code>と<code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code>で囲まれた行は関数の説明であり、<code class="docutils literal notranslate"><span class="pre">docstring</span></code>と呼ばれる。<code class="docutils literal notranslate"><span class="pre">docstring</span></code>は覚え書きのようなもので、何ヶ月後の自分が読んだり、他の人が読む場合に便利となる。また、<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>などのパッケージは数多くの関数を使っており、それらにも<code class="docutils literal notranslate"><span class="pre">docstring</span></code>が追加されているのが普通である。関数<code class="docutils literal notranslate"><span class="pre">help()</span></code>を使うと<code class="docutils literal notranslate"><span class="pre">docstring</span></code>が表示される。</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">significance_check</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function significance_check in module __main__:
 
-<span class="n">significance_check</span><span class="p">(</span><span class="n">res_gpa</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+significance_check(res, a=0.05)
+    定数項がある場合のt検定をおこなう。
+    
+    引数：
+        res = statsmodelsによるOLS推定結果
+        a = 有意水準（デフォルト：0.05）
+    返り値：
+        帰無仮説を棄却する場合はTrueを返す。
+</pre></div>
+</div>
+</div>
+</div>
+<p>次のコードでも同じ内容を確認できる。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>significance_check?
+</pre></div>
+</div>
+<p>関数を実行してみよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">significance_check</span><span class="p">(</span><span class="n">res_gpa</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -996,7 +1036,7 @@ dtype: float64
 \]</div>
 <p>ここで，<span class="math notranslate nohighlight">\(a\)</span>は有意水準である。</p>
 <p><strong>（解釈）</strong></p>
-<p>標本を取りOLS推定量を計算するというプロセスを100回繰り返した場合（それが可能な場合、それぞれの標本は異なり<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>も異なることになる），その内，母集団の（真の）<span class="math notranslate nohighlight">\(\beta_j\)</span>の値が信頼区間に入るのは<span class="math notranslate nohighlight">\((1-a)\times 100\)</span>回である（<span class="math notranslate nohighlight">\(a=0.05\)</span>の場合，95回）。</p>
+<p>標本を取りOLS推定値を計算するというプロセスを100回繰り返した場合（それが可能な場合、それぞれの標本は異なり<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>も異なることになる），その内，母集団の（真の）<span class="math notranslate nohighlight">\(\beta_j\)</span>の値が信頼区間に入るのは<span class="math notranslate nohighlight">\((1-a)\times 100\)</span>回である（<span class="math notranslate nohighlight">\(a=0.05\)</span>の場合，95回）。</p>
 <p><code class="docutils literal notranslate"><span class="pre">gpa</span></code>の例を考える。<code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性から信頼区間を取得できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1050,7 +1090,7 @@ skipped   -0.151026 -0.015200
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/11_Inference_60_0.png" src="_images/11_Inference_60_0.png" />
+<img alt="_images/11_Inference_64_0.png" src="_images/11_Inference_64_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">ACT</span></code>の信頼区間に<code class="docutils literal notranslate"><span class="pre">0</span></code>が含まれることが分かる。</p>
@@ -1353,7 +1393,8 @@ Abstract of the United States.
 </div>
 </div>
 </div>
-<p>例２の結果はOLS推定結果のメソッド<code class="docutils literal notranslate"><span class="pre">summary()</span></code>で表示される表にも<code class="docutils literal notranslate"><span class="pre">F-statistic</span></code>と<code class="docutils literal notranslate"><span class="pre">Prob(F-statistic)</span></code>として示されている。</p>
+<p><span class="math notranslate nohighlight">\(p\)</span>値は非常に小さな値となっており、0.1%の有意水準でも帰無仮説を棄却できる。</p>
+<p>例２の結果はOLS推定結果のメソッド<code class="docutils literal notranslate"><span class="pre">summary()</span></code>で表示される表の中にある<code class="docutils literal notranslate"><span class="pre">F-statistic</span></code>と<code class="docutils literal notranslate"><span class="pre">Prob(F-statistic)</span></code>で確認することもできる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_0</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
@@ -1366,8 +1407,8 @@ Abstract of the United States.
 Dep. Variable:         np.log(salary)   R-squared:                       0.628
 Model:                            OLS   Adj. R-squared:                  0.622
 Method:                 Least Squares   F-statistic:                     117.1
-Date:                Mon, 21 Dec 2020   Prob (F-statistic):           2.94e-72
-Time:                        12:24:23   Log-Likelihood:                -385.11
+Date:                Tue, 22 Dec 2020   Prob (F-statistic):           2.94e-72
+Time:                        12:45:51   Log-Likelihood:                -385.11
 No. Observations:                 353   AIC:                             782.2
 Df Residuals:                     347   BIC:                             805.4
 Df Model:                           5                                         

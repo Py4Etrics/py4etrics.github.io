@@ -529,14 +529,18 @@
 は必要だということである。一致性を記号で表現すると</p>
 <div class="math notranslate nohighlight">
 \[
-\underset{n\rightarrow\infty}{\text{plim}}\;\hat{\beta}_j=\beta_j
+\underset{n\rightarrow\infty}{\text{plim}}\;\hat{\beta}=\beta
 \]</div>
-<p>となり，<span class="math notranslate nohighlight">\(\text{plm}\)</span>は確率収束を表している。この式の意味を理解するために<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>は確率変数であることを思い出そう（シミュレーションの結果が毎回異なることを思い出そう）。不偏性と比較して直感的に説明することにする。</p>
+<p>となり，<span class="math notranslate nohighlight">\(\text{plim}\)</span>（probability limit）は確率収束を表している。この式の意味を理解するために<span class="math notranslate nohighlight">\(\hat{\beta}\)</span>は確率変数であることを思い出そう（シミュレーションの結果が毎回異なることを思い出そう）。不偏性と比較して直感的に説明することにする。</p>
 <ul class="simple">
-<li><p>ある母集団から標本の大きさ<span class="math notranslate nohighlight">\(n\)</span>のサンプルを<span class="math notranslate nohighlight">\(N\)</span>回復元抽出し（<span class="math notranslate nohighlight">\(N\)</span>は標本数），そのたびにOLS推定値<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>を計算するとしよう。その平均が母集団のパラメータの値と等しいというのが不偏性（<span class="math notranslate nohighlight">\(\text{E}\left(\hat{\beta}_j\right)={\beta}_j\)</span>）である。</p></li>
-<li><p>上の例での標本数は<span class="math notranslate nohighlight">\(N\)</span>であるため，<span class="math notranslate nohighlight">\(N\)</span>個のOLS推定量<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>があり，その分布を考えることができる。GM仮定１〜４のもとで<span class="math notranslate nohighlight">\(N\)</span>が大きければ，連続分布関数をイメージすれば良い（例えば，単峰性の左右非対称の連続分布関数）。ここで標本数<span class="math notranslate nohighlight">\(N\)</span>を固定して，標本の大きさ<span class="math notranslate nohighlight">\(n\)</span>を増やしたとしよう。<span class="math notranslate nohighlight">\(n\)</span>の増加によりOLS推定量はより正確になり，推定値の分布はより分散が小さな形に変わっていく（分布の「幅が狭くなる」）。更に，<span class="math notranslate nohighlight">\(n\rightarrow\infty\)</span>とすると，推定値の分布は<span class="math notranslate nohighlight">\(\beta_j\)</span>の点に退化（一点に集中）することになる。即ち，標本の大きさが大きければ，OLS推定値<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>の分布自体が真の値<span class="math notranslate nohighlight">\(\beta_j\)</span>に限りなく近づいていくのである。これが上の式の意味である。</p></li>
+<li><p>ある母集団から標本の大きさ<span class="math notranslate nohighlight">\(n\)</span>のサンプルを<span class="math notranslate nohighlight">\(N\)</span>回復元抽出し（<span class="math notranslate nohighlight">\(N\)</span>は標本数），そのたびにOLS推定値<span class="math notranslate nohighlight">\(\hat{\beta}\)</span>を計算するとしよう。その平均が母集団のパラメータの値と等しいというのが不偏性（<span class="math notranslate nohighlight">\(\text{E}\left(\hat{\beta}\right)={\beta}\)</span>）である。</p></li>
+<li><p>上の例での標本数は<span class="math notranslate nohighlight">\(N\)</span>であるため，<span class="math notranslate nohighlight">\(N\)</span>個のOLS推定量<span class="math notranslate nohighlight">\(\hat{\beta}\)</span>があり，その分布を考えることができる。GM仮定１〜４のもとで<span class="math notranslate nohighlight">\(N\)</span>が大きければ，連続分布関数をイメージすれば良い（例えば，単峰性の左右非対称の連続分布関数）。ここで標本数<span class="math notranslate nohighlight">\(N\)</span>を固定して，標本の大きさ<span class="math notranslate nohighlight">\(n\)</span>を増やしたとしよう。<span class="math notranslate nohighlight">\(n\)</span>の増加によりOLS推定量はより正確になり，推定値の分布はより分散が小さな形に変わっていく（分布の「幅が狭くなる」）。更に，<span class="math notranslate nohighlight">\(n\rightarrow\infty\)</span>とすると，推定値の分布は<span class="math notranslate nohighlight">\(\beta\)</span>の点に退化（一点に集中）することになる。即ち，標本の大きさが大きければ，OLS推定値<span class="math notranslate nohighlight">\(\hat{\beta}\)</span>の分布自体が真の値<span class="math notranslate nohighlight">\(\beta\)</span>に限りなく近づいていくのである。これが上の式の意味である。</p></li>
 </ul>
-<p>以下ではシミュレーションを使って分布の収束の過程を示すが，その前に定理としてまとめる。</p>
+<div class="figure align-center" id="id13">
+<img alt="_images/unbiased.jpg" src="_images/unbiased.jpg" />
+<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">推定値の分布：不偏性と一致性</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
+</div>
+<p>この章ではシミュレーションを使って分布の収束過程を示すが，その前に定理としてまとめる。</p>
 <hr class="docutils" />
 <p><strong>定理</strong></p>
 <p>仮定１〜４（GM仮定）のもとで，OLS推定量は一致性を満たす。</p>
@@ -653,7 +657,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12_Asymptotics_22_0.png" src="_images/12_Asymptotics_22_0.png" />
+<img alt="_images/12_Asymptotics_23_0.png" src="_images/12_Asymptotics_23_0.png" />
 </div>
 </div>
 <p>確認のために、生成された<code class="docutils literal notranslate"><span class="pre">n</span></code>個のランダム変数（誤差項）の平均を計算してみる。</p>
@@ -815,7 +819,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12_Asymptotics_38_0.png" src="_images/12_Asymptotics_38_0.png" />
+<img alt="_images/12_Asymptotics_39_0.png" src="_images/12_Asymptotics_39_0.png" />
 </div>
 </div>
 <p>上のコードには同じような行が複数あり，単純な間違いの可能性が高くなる。。<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを使うとよりコンパクトに書くことが可能となり，間違いも少なくなる。</p>
@@ -847,7 +851,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12_Asymptotics_40_0.png" src="_images/12_Asymptotics_40_0.png" />
+<img alt="_images/12_Asymptotics_41_0.png" src="_images/12_Asymptotics_41_0.png" />
 </div>
 </div>
 <ol>
@@ -1052,7 +1056,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12_Asymptotics_66_0.png" src="_images/12_Asymptotics_66_0.png" />
+<img alt="_images/12_Asymptotics_67_0.png" src="_images/12_Asymptotics_67_0.png" />
 </div>
 </div>
 <p>（結果：小標本特性）</p>
@@ -1152,7 +1156,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12_Asymptotics_74_0.png" src="_images/12_Asymptotics_74_0.png" />
+<img alt="_images/12_Asymptotics_75_0.png" src="_images/12_Asymptotics_75_0.png" />
 </div>
 </div>
 <p>（結果：大標本特性）</p>
@@ -1181,7 +1185,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12_Asymptotics_80_0.png" src="_images/12_Asymptotics_80_0.png" />
+<img alt="_images/12_Asymptotics_81_0.png" src="_images/12_Asymptotics_81_0.png" />
 </div>
 </div>
 <p><strong>一様分布</strong>から生成したデータの場合。45度線から乖離しているのが分かる。</p>
@@ -1194,7 +1198,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12_Asymptotics_82_0.png" src="_images/12_Asymptotics_82_0.png" />
+<img alt="_images/12_Asymptotics_83_0.png" src="_images/12_Asymptotics_83_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>パッケージにある<code class="docutils literal notranslate"><span class="pre">wage1</span></code>のデータを使ってみる。</p>
@@ -1210,7 +1214,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12_Asymptotics_84_0.png" src="_images/12_Asymptotics_84_0.png" />
+<img alt="_images/12_Asymptotics_85_0.png" src="_images/12_Asymptotics_85_0.png" />
 </div>
 </div>
 <p>被説明変数の<code class="docutils literal notranslate"><span class="pre">wage</span></code>に対数を取ると、こちらの方が当てはまりが良いことが分かる。</p>
@@ -1225,7 +1229,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12_Asymptotics_86_0.png" src="_images/12_Asymptotics_86_0.png" />
+<img alt="_images/12_Asymptotics_87_0.png" src="_images/12_Asymptotics_87_0.png" />
 </div>
 </div>
 </div>
