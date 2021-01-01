@@ -29,7 +29,7 @@ dt = datetime.datetime.now()
 dt = datetime.datetime.today()
 -->
 
-本サイトに関するコメント等はGitHubの[Issues](https://github.com/Py4Etrics/py4etrics.github.io/issues)もしくは<haruyama@econ.kobe-u.ac.jp>にご連絡ください。
+本サイトに関するコメント等はGitHubの[Discussions](https://github.com/Py4Etrics/py4etrics.github.io/discussions)もしくは<haruyama@econ.kobe-u.ac.jp>にご連絡ください。
 
 ## はじめに
 

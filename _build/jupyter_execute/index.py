@@ -16,7 +16,7 @@ dt = datetime.datetime.now()
 dt = datetime.datetime.today()
 -->
 
-本サイトに関するコメント等はGitHubの[Issues](https://github.com/Py4Etrics/py4etrics.github.io/issues)もしくは<haruyama@econ.kobe-u.ac.jp>にご連絡ください。
+本サイトに関するコメント等はGitHubの[Discussions](https://github.com/Py4Etrics/py4etrics.github.io/discussions)もしくは<haruyama@econ.kobe-u.ac.jp>にご連絡ください。
 
 ## はじめに
 
@@ -114,9 +114,52 @@ plt.show()
 ```{toctree}
 :hidden:
 :titlesonly:
-
+:caption: １. Pythonの学習
 
 part_1
+1_Python_Basics
+2_NumPy
+3_Pandas
+4_Matplotlib
+5_SciPy_stats
+6_things_to_note
+```
+
+
+```{toctree}
+:hidden:
+:titlesonly:
+:caption: ２. Pythonを使った計量経済分析
+
 part_2
+7_Review_of_Statistics
+list_of_terms
+8_Simple_Regression
+9_Multiple_Regression
+10_Residuals
+11_Inference
+12_Asymptotics
+13_Dummies
+14_Hetero
+15_Pooling
+16_linearmodels
+17_Panel
+18_Zero_Conditional_Mean
+19_IV2SLS
+20_LogitProbit
+21_TruncregTobitHeckit
+```
+
+
+```{toctree}
+:hidden:
+:titlesonly:
+:caption: ３. 番外編
+
 part_3
+0_Preparations
+Gapminder
+Descriptive_stats_vs_Graphs
+Grade
+data_source
 ```

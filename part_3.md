@@ -9,11 +9,11 @@ kernelspec:
   name: python3
 ---
 
-# ３. 番外編
-**内容**
+<!--# ３. 番外編-->
+# 目次と内容
 
 1. {doc}`0_Preparations`
-   - Pythonと関連ツール（GitやGitHubなど）のインストールと使い方について簡単に説明する。
+   - Pythonと関連ツール（GitやGitHubなど）のインストールと使い方について説明する。
 1. {doc}`Gapminder`
    - [Gapminder](https://www.gapminder.org)は世界経済のGDPなどデータを駆使し興味深い分析をおこなっているサイトであり、ここではその時系列データを図示する。
 1. {doc}`Descriptive_stats_vs_Graphs`
