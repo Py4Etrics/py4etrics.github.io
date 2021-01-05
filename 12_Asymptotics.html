@@ -605,12 +605,12 @@ u = pu_N+(1-p)u_c
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1"># (1)</span>
     
-    <span class="n">prob</span> <span class="o">=</span> <span class="mf">0.05</span>  <span class="c1"># (2)</span>
-    <span class="n">dist_1</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">u_sd</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1">#(3)</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="mf">0.05</span>     <span class="c1"># (2)</span>
+    <span class="n">dist_1</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">u_sd</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>     <span class="c1"># (3)</span>
     <span class="n">dist_2</span> <span class="o">=</span> <span class="p">(</span><span class="n">chi2</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># (4)</span>
     
-    <span class="n">error</span> <span class="o">=</span> <span class="n">prob</span><span class="o">*</span><span class="p">(</span><span class="n">dist_1</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">prob</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">dist_2</span><span class="p">)</span>  <span class="c1"># (5)</span>
-    <span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">error</span>  <span class="c1"># (6)</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="n">prob</span><span class="o">*</span><span class="p">(</span><span class="n">dist_1</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">prob</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">dist_2</span><span class="p">)</span>          <span class="c1"># (5)</span>
+    <span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">error</span>    <span class="c1"># (6)</span>
 </pre></div>
 </div>
 </div>
@@ -626,6 +626,19 @@ u = pu_N+(1-p)u_c
 <li><p>この誤差項を<code class="docutils literal notranslate"><span class="pre">u[]</span></code>の<code class="docutils literal notranslate"><span class="pre">i</span></code>番目に代入。</p></li>
 </ol>
 </div></blockquote>
+<p>＜コメント＞<br>
+(5)では<code class="docutils literal notranslate"><span class="pre">dist_1</span></code>と<code class="docutils literal notranslate"><span class="pre">dist_2</span></code>の混合として<code class="docutils literal notranslate"><span class="pre">error</span></code>を生成しているが，<code class="docutils literal notranslate"><span class="pre">prob</span></code>で<code class="docutils literal notranslate"><span class="pre">dist_1</span></code>が発生し<code class="docutils literal notranslate"><span class="pre">1-prob</span></code>で<code class="docutils literal notranslate"><span class="pre">dist_2</span></code>が発生するように設定することも可能である。例えば，次のコード。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+
+    <span class="n">random_var</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;normal&#39;</span><span class="p">:</span><span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">u_sd</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                  <span class="s1">&#39;chi2&#39;</span><span class="p">:(</span><span class="n">chi2</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)}</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span><span class="s1">&#39;chi2&#39;</span><span class="p">]</span>
+
+    <span class="n">choice</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="n">random_var</span><span class="p">[</span><span class="n">choice</span><span class="p">]</span>
+    <span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">error</span>
+</pre></div>
+</div>
 <p><code class="docutils literal notranslate"><span class="pre">u</span></code>の最初の10の値を確認してみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -634,8 +647,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.82039924,  2.47316975,  0.14847802, -0.66137598, -0.57851914,
-        0.28827039, -0.58067918, -0.61286662, -0.51005622, -0.47704762])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.6525498 , -0.34677746, -0.40111614,  0.14235739, -0.57204323,
+        0.74087528,  2.21288862, -0.54497751,  0.10494545,  1.76209295])
 </pre></div>
 </div>
 </div>
@@ -663,7 +676,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.001635629420680229
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.0021821566686902154
 </pre></div>
 </div>
 </div>
@@ -775,8 +788,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.08186333, 0.74391163, 0.28358197, ..., 0.233548  , 0.16359471,
-       0.59902673])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 1.08618494, -0.02198079,  1.11930817, ...,  0.05187494,
+        0.58080975,  0.34906816])
 </pre></div>
 </div>
 </div>
@@ -849,20 +862,20 @@ u = pu_N+(1-p)u_c
 <img alt="_images/12_Asymptotics_41_0.png" src="_images/12_Asymptotics_41_0.png" />
 </div>
 </div>
-<ol>
-<li><p><code class="docutils literal notranslate"><span class="pre">zip()</span></code>はループによく使われる便利な関数である。以下の単純な<code class="docutils literal notranslate"><span class="pre">for</span></code>ループ</p>
+<p>＜コードの説明＞</p>
+<blockquote>
+<div><ul>
+<li><p>(1) <code class="docutils literal notranslate"><span class="pre">zip()</span></code>はループによく使われる便利な関数である。以下の単純な<code class="docutils literal notranslate"><span class="pre">for</span></code>ループ</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hi&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>にはループ・インデックスが<code class="docutils literal notranslate"><span class="pre">i</span></code>の１種類しかない。しかし複数のループ・インデックスがあると便利な場合があり，その際使うのが<code class="docutils literal notranslate"><span class="pre">zip()</span></code>である。使い方は，<code class="docutils literal notranslate"><span class="pre">zip()</span></code>の中に複数のリスト（例えば，<code class="docutils literal notranslate"><span class="pre">b1hat_list</span></code>, <code class="docutils literal notranslate"><span class="pre">color_list</span></code>, <code class="docutils literal notranslate"><span class="pre">label_list</span></code>）を入れ，<code class="docutils literal notranslate"><span class="pre">in</span></code>の前にタプルとして同じ順番にループ・インデックスを並べる。</p>
+<p>にはループ・インデックスが<code class="docutils literal notranslate"><span class="pre">i</span></code>の１種類しかない。しかし複数のループ・インデックスを同時に使えると便利な場合があり，その際使うのが<code class="docutils literal notranslate"><span class="pre">zip()</span></code>である。使い方は，<code class="docutils literal notranslate"><span class="pre">zip()</span></code>の中に複数のリスト（例えば，<code class="docutils literal notranslate"><span class="pre">b1hat_list</span></code>, <code class="docutils literal notranslate"><span class="pre">color_list</span></code>, <code class="docutils literal notranslate"><span class="pre">label_list</span></code>）を入れ，<code class="docutils literal notranslate"><span class="pre">in</span></code>の前にタプルとして同じ順番にループ・インデックスを並べる。</p>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">'...n={}'.format(l)</span></code>について。文字列は<code class="docutils literal notranslate"><span class="pre">''</span></code>で挟むが，その中に定義した変数の値を書きたい場合がある。直接書いても構わないが，値が変更される度に書き直すのは面倒である。<code class="docutils literal notranslate"><span class="pre">'&lt;文字列&gt;{}'.format(&lt;変数&gt;)</span></code>を使うと変数の値が変わっても自動的に変更される。使い方は，<code class="docutils literal notranslate"><span class="pre">''</span></code>の入れたい箇所に<code class="docutils literal notranslate"><span class="pre">{}</span></code>を入れ，その後に<code class="docutils literal notranslate"><span class="pre">.format(&lt;変数&gt;)</span></code>を書く。もちろん<code class="docutils literal notranslate"><span class="pre">f-string</span></code>を使い次のように書いても同じ結果となる。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sa">f</span><span class="s1">&#39;...n=</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s1">&#39;</span>
-</pre></div>
-</div>
-</li>
-</ol>
+<li><p>(2) <code class="docutils literal notranslate"><span class="pre">'n={}'.format(l)</span></code>について。文字列は<code class="docutils literal notranslate"><span class="pre">''</span></code>で挟むが，その中に定義した変数の値を書きたい場合がある。直接書いても構わないが，値が変更される度に書き直すのは面倒である。<code class="docutils literal notranslate"><span class="pre">'&lt;文字列&gt;{}'.format(&lt;変数&gt;)</span></code>を使うと変数の値が変わっても自動的に変更される。使い方は，<code class="docutils literal notranslate"><span class="pre">''</span></code>の入れたい箇所に<code class="docutils literal notranslate"><span class="pre">{}</span></code>を入れ，その後に<code class="docutils literal notranslate"><span class="pre">.format(&lt;変数&gt;)</span></code>を書く。もちろん<code class="docutils literal notranslate"><span class="pre">f-string</span></code>を使い次のように書いても同じ結果となる。
+<code class="docutils literal notranslate">&#160; <span class="pre">f'n={l}'</span>&#160; </code></p></li>
+</ul>
+</div></blockquote>
 <hr class="docutils" />
 <p>図から<span class="math notranslate nohighlight">\(n\)</span>が増加すると分布の分散が小さくなるのが視覚的に確認できる。これが一致性である。<code class="docutils literal notranslate"><span class="pre">n</span></code>の増加により推定量<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の正確性が増すことが理解できる。また4つの分布は真の値<span class="math notranslate nohighlight">\(b_1=0.5\)</span>を中心に左右対象であることもわかる。即ち，推定量<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>は不偏性も満たしていることがわかる。</p>
 </div>
@@ -977,7 +990,7 @@ u = pu_N+(1-p)u_c
         <span class="n">yhat</span> <span class="o">=</span> <span class="n">b0hat</span> <span class="o">+</span> <span class="n">b1hat</span><span class="o">*</span><span class="n">x</span>  <span class="c1"># yの予測値</span>
         <span class="n">uhat</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yhat</span>  <span class="c1"># 残差</span>
         
-        <span class="n">rss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">uhat</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 残差平方話</span>
+        <span class="n">rss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">uhat</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 残差平方和</span>
         <span class="n">sigma2</span> <span class="o">=</span> <span class="n">rss</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 回帰の残差（不偏）分散 </span>
         <span class="n">ser</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma2</span><span class="p">)</span>  <span class="c1"># 回帰の標準誤差</span>
         
@@ -1096,7 +1109,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
         <span class="n">yhat</span> <span class="o">=</span> <span class="n">b0hat</span> <span class="o">+</span> <span class="n">b1hat</span><span class="o">*</span><span class="n">x</span>  <span class="c1"># yの予測値</span>
         <span class="n">uhat</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yhat</span>  <span class="c1"># 残差</span>
         
-        <span class="n">rss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">uhat</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 残差平方話</span>
+        <span class="n">rss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">uhat</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 残差平方和</span>
         <span class="n">sigma2</span> <span class="o">=</span> <span class="n">rss</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 回帰の残差（不偏）分散 </span>
         <span class="n">ser</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma2</span><span class="p">)</span>  <span class="c1"># 回帰の標準誤差</span>
         
@@ -1247,10 +1260,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.40852812477682293,
- 0.8152470666740603,
- -0.06108952894178657,
- 2.9315775782073596)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4.054307408352594,
+ 0.13170987339973517,
+ 0.20142285978288527,
+ 2.820216569649867)
 </pre></div>
 </div>
 </div>
@@ -1273,10 +1286,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(28.86059550410644,
- 5.407559591302928e-07,
- 0.005982376480564631,
- 1.8230694885067817)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(29.344543810911212,
+ 4.24534778901001e-07,
+ 0.02179241909138318,
+ 1.813982097603784)
 </pre></div>
 </div>
 </div>
@@ -1358,7 +1371,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=0.34859257561183815, pvalue=0.8400479648140078)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=3.988362646277926, pvalue=0.13612505099108008)
 </pre></div>
 </div>
 </div>
@@ -1374,7 +1387,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=270.06833769356297, pvalue=2.2667603190020693e-59)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=287.12463774318724, pvalue=4.484118746059255e-63)
 </pre></div>
 </div>
 </div>
