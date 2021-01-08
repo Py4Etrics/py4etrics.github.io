@@ -22,7 +22,7 @@ dt = datetime.datetime.today()
 
 「なぜプログラミング？」文系の経済学の学生が理系のプログラミングを学ぶとなると，まず頭に浮かぶ質問かも知れない。過去にも同じような質問を問うた経済学部の卒業生は多くいると思われる。例えば，Excelのようなスプレッドシートのソフトは1980年代からあり，当時の大学生も使い方を学ぶ際「なぜ？」と思ったことだろう。しかし今ではWord，Excel，PowerPointの使い方は，大学卒業生にとって当たり前のスキルになっている。同じように，AI（人工知能）やビッグデータが注目を集める社会では，ある程度のプログラミング能力も経済学部卒業生にとって当たり前のスキルになると予測される。実際，文系出身でプログラミングとは縁のなかったある大手新聞社の記者の話では，社内で`Python`の研修を受けており，仕事に活かすことが期待されているという。また，プログラミングを学ぶ重要性を象徴するかのように，2020年度からは小学校でプログラミング的思考を育成する学習指導要領が実施され，続いて中高教育でもプログラミングに関する内容・科目が充実される予定である。このようにプログラミングのスキルの重要性は益々大きくなると思われる。
 
-「なぜ`Python`？」プログラミング言語は無数に存在し，それぞれ様々な特徴があり，お互いに影響し合い進化している。その過程で，広く使われ出す言語もあれば廃れていく言語もある。その中で`Python`は，近年注目を集める言語となっている。それを示す相対的な人気指標として[Stack Overflow Trends](https://insights.stackoverflow.com（/trendstに追いつくには年数を重ねる必要があるだろうags=java%2Cc%2B%2B%2Cpython%2Cc%23%2Cjavascript%2Cassembly%2Cphp%2Cr%2Cruby%2Cruby-on-rails&fbclid=IwAR3nGm3GtZT99DnP6Ov-hW0-TmZoeePajsLOyRxZYSUjV3F8qbeiOcG-oak)がある。
+「なぜ`Python`？」プログラミング言語は無数に存在し，それぞれ様々な特徴があり，お互いに影響し合い進化している。その過程で，広く使われ出す言語もあれば廃れていく言語もある。その中で`Python`は，近年注目を集める言語となっている。それを示す相対的な人気指標として[Stack Overflow Trends]( https://insights.stackoverflow.com/trends?tags=java%2Cc%2Cc%2B%2B%2Cpython%2Cc%23%2Cvb.net%2Cjavascript%2Cassembly%2Cphp%2Cperl%2Cruby%2Cvb%2Cswift%2Cr%2Cobjective-c)がある。
 ```{figure} /images/many_languages.png
 :scale: 35%
 ```

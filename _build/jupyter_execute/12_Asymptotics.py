@@ -100,12 +100,12 @@ u_sd = 0.5
 
 for i in range(n):  # (1)
     
-    prob = 0.05  # (2)
-    dist_1 = norm.rvs(loc=0, scale=u_sd, size=1)  #(3)
+    prob = 0.05     # (2)
+    dist_1 = norm.rvs(loc=0, scale=u_sd, size=1)     # (3)
     dist_2 = (chi2.rvs(1, size=1) - 1) / np.sqrt(2)  # (4)
     
-    error = prob*(dist_1)+(1-prob)*(dist_2)  # (5)
-    u[i] = error  # (6)
+    error = prob*(dist_1)+(1-prob)*(dist_2)          # (5)
+    u[i] = error    # (6)
 
 ＜上のコードの説明＞
 > 1. `n`回`for`ループを宣言。
@@ -114,6 +114,20 @@ for i in range(n):  # (1)
 > 4. カイ二乗分布に従う１つのランダム変数を生成。
 > 5. `error`が誤差項
 > 6. この誤差項を`u[]`の`i`番目に代入。
+
+＜コメント＞<br>
+(5)では`dist_1`と`dist_2`の混合として`error`を生成しているが，`prob`で`dist_1`が発生し`1-prob`で`dist_2`が発生するように設定することも可能である。例えば，次のコード。
+```
+for i in range(n):
+
+    random_var = {'normal':norm.rvs(loc=0, scale=u_sd, size=1),
+                  'chi2':(chi2.rvs(1, size=1)-1)/np.sqrt(2)}
+    dist = ['normal','chi2']
+
+    choice = np.random.choice(dist, p=[0,1])
+    error = random_var[choice]
+    u[i] = error
+```
 
 `u`の最初の10の値を確認してみる。
 
@@ -269,15 +283,16 @@ plt.title('Consistency: N={}'.format(N))  # 下の説明（２）
 plt.legend()
 pass
 
-1. `zip()`はループによく使われる便利な関数である。以下の単純な`for`ループ
+＜コードの説明＞
+> * (1) `zip()`はループによく使われる便利な関数である。以下の単純な`for`ループ
+>    ```
+>    for i in range(5):
+>        print('Hi')
+>    ```
+>    にはループ・インデックスが`i`の１種類しかない。しかし複数のループ・インデックスを同時に使えると便利な場合があり，その際使うのが`zip()`である。使い方は，`zip()`の中に複数のリスト（例えば，`b1hat_list`, `color_list`, `label_list`）を入れ，`in`の前にタプルとして同じ順番にループ・インデックスを並べる。
+> * (2) `'n={}'.format(l)`について。文字列は`''`で挟むが，その中に定義した変数の値を書きたい場合がある。直接書いても構わないが，値が変更される度に書き直すのは面倒である。`'<文字列>{}'.format(<変数>)`を使うと変数の値が変わっても自動的に変更される。使い方は，`''`の入れたい箇所に`{}`を入れ，その後に`.format(<変数>)`を書く。もちろん`f-string`を使い次のように書いても同じ結果となる。
     ```
-    for i in range(5):
-        print('Hi')
-    ```
-    にはループ・インデックスが`i`の１種類しかない。しかし複数のループ・インデックスがあると便利な場合があり，その際使うのが`zip()`である。使い方は，`zip()`の中に複数のリスト（例えば，`b1hat_list`, `color_list`, `label_list`）を入れ，`in`の前にタプルとして同じ順番にループ・インデックスを並べる。
-2. `'...n={}'.format(l)`について。文字列は`''`で挟むが，その中に定義した変数の値を書きたい場合がある。直接書いても構わないが，値が変更される度に書き直すのは面倒である。`'<文字列>{}'.format(<変数>)`を使うと変数の値が変わっても自動的に変更される。使い方は，`''`の入れたい箇所に`{}`を入れ，その後に`.format(<変数>)`を書く。もちろん`f-string`を使い次のように書いても同じ結果となる。
-    ```
-    f'...n={l}'
+    f'n={l}'
     ```
 
 ---
@@ -378,7 +393,7 @@ def sim_norm(n):  # n=標本の大きさ
         yhat = b0hat + b1hat*x  # yの予測値
         uhat = y - yhat  # 残差
         
-        rss = np.sum(uhat**2)  # 残差平方話
+        rss = np.sum(uhat**2)  # 残差平方和
         sigma2 = rss/(n-2)  # 回帰の残差（不偏）分散 
         ser = np.sqrt(sigma2)  # 回帰の標準誤差
         
@@ -479,7 +494,7 @@ def sim_non_norm(n):  # n=標本の大きさ
         yhat = b0hat + b1hat*x  # yの予測値
         uhat = y - yhat  # 残差
         
-        rss = np.sum(uhat**2)  # 残差平方話
+        rss = np.sum(uhat**2)  # 残差平方和
         sigma2 = rss/(n-2)  # 回帰の残差（不偏）分散 
         ser = np.sqrt(sigma2)  # 回帰の標準誤差
         
