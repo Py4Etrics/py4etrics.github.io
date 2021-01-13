@@ -631,7 +631,7 @@ JB検定の結果は，回帰分析の結果の`summary()`に含まれている�
 
 print(res_wage_log.summary().tables[2])
 
-### Obminbus検定
+### Omnibus検定
 
 正規性を確認するもう１つの検定を紹介する。
 
