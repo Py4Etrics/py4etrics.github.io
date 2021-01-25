@@ -227,7 +227,7 @@ het_breuschpagan(res_h_log.resid, res_h_log.model.exog)
 
 ### ホワイト（White）検定
 
-この検定はOLS推定量の標準誤差と検定統計量を無効にする不均一分散を主な対象としており，Breusch-Pagan検定よりもより一般的な式に基づいて検定をおこなう。`statsmodels`のサブパッケージ`stats`の関数`het_breuschpagan`を使う。
+この検定はOLS推定量の標準誤差と検定統計量を無効にする不均一分散を主な対象としており，Breusch-Pagan検定よりもより一般的な式に基づいて検定をおこなう。`statsmodels`のサブパッケージ`stats`の関数`het_white`を使う。
 
 `hprice`のデータを使った上の例を使う。
 

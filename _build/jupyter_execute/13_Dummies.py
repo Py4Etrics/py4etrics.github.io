@@ -454,10 +454,14 @@ print(res_p.summary().tables[1])
 * BKとKFCの価格比較
 
     $$
-    \ln P_{\text{BK}}-\ln P_{\text{KFC}}=-0.0682 \\
-    \quad\Downarrow \\
-    \dfrac{P_{\text{BK}}}{P_{\text{KFC}}}=e^{-0.0682}=1.071
+    \begin{align}
+    \ln P_{\text{KFC}}&=\ln P_{\text{BK}}-0.0682 \\
+    &\Downarrow \\
+    \dfrac{P_{\text{KFC}}}{P_{\text{BK}}}-1&=e^{-0.0682}-1\approx-0.06593
+    \end{align}
     $$
+    
+  Berger Kingと比べてKFCの価格は約6.6%低いことがわかる。
     
 * `prpblck`と`np.log(income)`の$p$値は`0`に近く，帰無仮説は１％有意水準でも棄却できる。
 

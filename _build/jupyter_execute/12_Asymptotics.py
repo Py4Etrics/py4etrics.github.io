@@ -1,5 +1,7 @@
 # 大標本特性
 
+Click [here](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F12_Asymptotics.html) for a Google-translated version in English or the language of your choice.
+
 import numpy as np
 from scipy.stats import norm, chi2, gaussian_kde, t, uniform
 import matplotlib.pyplot as plt
@@ -669,7 +671,7 @@ omni_normtest(res_wage.resid)
 omni_normtest(res_wage_log.resid)
 
 ---
-Omnibu検定の結果は，回帰分析の結果の`summary()`に含まれている。
+Omnibus検定の結果は，回帰分析の結果の`summary()`に含まれている。
 * `Omnibus`：検定統計量
 * `Prob(Omnibus)`：$p$値
 
