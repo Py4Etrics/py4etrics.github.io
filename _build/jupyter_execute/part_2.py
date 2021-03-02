@@ -1,6 +1,10 @@
 <!--# ２. `Python`を使った計量経済分析-->
 # 目次と内容
 
+If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2Fpart_2.html) in English or the language of your choice.
+
+---
+
 1. {doc}`7_Review_of_Statistics` 
    - Review of Statistics
    - 平均、分散、共分散などの計算方法の復習

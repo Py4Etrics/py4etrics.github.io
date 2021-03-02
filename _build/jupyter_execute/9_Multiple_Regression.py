@@ -1,5 +1,9 @@
 # 重回帰分析
 
+If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F9_Multiple_Regression.html) in English or the language of your choice.
+
+---
+
 import numpy as np
 from scipy.stats import norm, uniform, gaussian_kde, multivariate_normal
 import pandas as pd
@@ -303,6 +307,9 @@ $$\text{E}\left(y|x_1,x_2\right)=y^*\qquad\because\;\text{E}(u)=0$$
 * 仮定３：No Perfect Collinearity（母集団回帰式の説明変数の非完全多重共線性）
     * 説明変数$x_j$が他の説明変数の完全な線形結合（例えば，$x_2=1+2x_1$や$x_1=x_2+5x_4$）として表すことができないという意味である。もしこの仮定が満たされなければ$x_j$は何の追加的な情報を持たな⑨なる。
     * 定数項以外の説明変数が全く変化しないことも排除している（例えば，$x_j=3$）。このような変数は定数項の単なるスケールアップ・バージョンであり，追加的な情報はない。（定数項以外の説明変数は変化してこそ$y$を説明できる。）
+
+* 仮定４$\text{E}\left(u|x\right)=0$の意味をもう一度考えてみるために、線形もしくは非線形の任意の関数を$f(.)$とおこう。この関数を使い$u=f(x)$とすると、$u$と$x$には線形もしくは非線形の関係が存在することを意味している。$\text{E}\left(u|x\right)=0$は、$u=f(x)$の関係は存在し**ない**ことを意味する強い仮定になっている。この仮定を少し緩めたものが仮定４aである。任意の線形関数を$h(.)$とすると、$u$と$x$に線形の関係がある場合は$u=h(x)$となる（例えば、$u=1+2x$）。$\text{Cov}(u,x)=0$は$u=h(x)$の関係が存在しないということを意味しているが、必ずしも$u=f(x)$の関係が存在しないことを意味しない。更に付け加えると、$u$と$x$に非線形の関係がある場合，$\text{Cov}(u,x)=0$であっても，$\text{E}\left(u|x\right)\neq0$になりえるのである。即ち，仮定４は仮定４aを意味するが，仮定４aは仮定４を必ずしも意味しないのである。
+
 
 * 仮定４：Zero Conditional Mean（母集団回帰式の誤差項の条件付き期待値は０）
 

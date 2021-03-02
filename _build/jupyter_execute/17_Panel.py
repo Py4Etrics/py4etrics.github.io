@@ -1,5 +1,9 @@
 # パネル・データ分析
 
+If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F17_Panel.html) in English or the language of your choice.
+
+---
+
 import numpy as np
 from scipy.stats import norm, gaussian_kde
 import matplotlib.pyplot as plt

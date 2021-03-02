@@ -1,6 +1,8 @@
 # 大標本特性
 
-Click [here](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F12_Asymptotics.html) for a Google-translated version in English or the language of your choice.
+If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F12_Asymptotics.html) in English or the language of your choice.
+
+---
 
 import numpy as np
 from scipy.stats import norm, chi2, gaussian_kde, t, uniform

@@ -1,5 +1,9 @@
 # 残差診断
 
+If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F10_Residuals.html) in English or the language of your choice.
+
+---
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt

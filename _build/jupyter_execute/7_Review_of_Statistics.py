@@ -1,5 +1,9 @@
 # 統計学の簡単な復習
 
+If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F7_Review_of_Statistics.html) in English or the language of your choice.
+
+---
+
 ## 確率変数
 
 **定義**

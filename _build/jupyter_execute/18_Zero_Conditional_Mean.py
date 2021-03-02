@@ -1,5 +1,9 @@
 # GM仮定４が満たされない場合
 
+If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F18_Zero_Conditional_Mean.html) in English or the language of your choice.
+
+---
+
 from scipy.stats import multivariate_normal, norm, uniform
 import numpy as np
 import pandas as pd

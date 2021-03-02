@@ -1,5 +1,9 @@
 # Tipsと注意点
 
+If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F6_things_to_note.html) in English or the language of your choice.
+
+---
+
 ## 書式について
 
 コードを書く際に以下を注意すること。
