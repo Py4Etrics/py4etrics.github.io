@@ -49,9 +49,9 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="canonical" href="https://py4etrics.github.io/1_Python_Basics.html" />
@@ -325,11 +325,11 @@
         aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
     <div class="dropdown-buttons sourcebuttons">
         <a class="repository-button"
-            href="https://github.com/Py4Etrics/"><button type="button" class="btn btn-secondary topbarbtn"
+            href="https://github.com/Py4Etrics/py4etrics.github.io"><button type="button" class="btn btn-secondary topbarbtn"
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/Py4Etrics//issues/new?title=Issue%20on%20page%20%2F1_Python_Basics.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/Py4Etrics/py4etrics.github.io/issues/new?title=Issue%20on%20page%20%2F1_Python_Basics.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -350,7 +350,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/Py4Etrics//master?urlpath=tree/1_Python_Basics.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/1_Python_Basics.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
@@ -358,6 +358,14 @@
         
         
         
+        <a class="colab-button" href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/1_Python_Basics.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
         
     </div>
 </div>
@@ -1126,7 +1134,7 @@
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">dict0</span></code>には２つのペアがある。<code class="docutils literal notranslate"><span class="pre">a</span></code>のキーには値<code class="docutils literal notranslate"><span class="pre">10</span></code>が対応しており，<code class="docutils literal notranslate"><span class="pre">b</span></code>には<code class="docutils literal notranslate"><span class="pre">'kobe'</span></code>が設定されている。今の段階では辞書を使う目的が不明確でしっくりこないと思うが，勉強を進めるととてもパワフルなツールだと気づくだろう。</p>
+<p><code class="docutils literal notranslate"><span class="pre">dict0</span></code>には２つのペアがある。<code class="docutils literal notranslate"><span class="pre">a</span></code>のキーには値<code class="docutils literal notranslate"><span class="pre">10</span></code>が対応しており，<code class="docutils literal notranslate"><span class="pre">b</span></code>には<code class="docutils literal notranslate"><span class="pre">'Kobe'</span></code>が設定されている。今の段階では辞書を使う目的が不明確でしっくりこないと思うが，勉強を進めるととてもパワフルなツールだと気づくだろう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">dict0</span><span class="p">)</span>
@@ -1378,15 +1386,15 @@ except
 <div class="section" id="id5">
 <h2>算術演算子<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">+</span></code>（加算）</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-</span></code>（減算）</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">*</span></code>（乗算）</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">/</span></code>（除算）</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">//</span></code>（切り捨て除算; 実数の整数部分）</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">%</span></code>（剰余演算; 余りを取得する演算）</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">**</span></code>（累乗）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">+</span></code>（加算; addition）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-</span></code>（減算; subtraction）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*</span></code>（乗算; multiplication）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/</span></code>（除算; division）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">//</span></code>（切り捨て除算; 実数の整数部分; floor division）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%</span></code>（剰余演算; 余りを取得する演算; modulo）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">**</span></code>（累乗; exponentiation）</p></li>
 </ul>
-<p>加算</p>
+<p>加算（addition）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
@@ -1447,7 +1455,7 @@ except
 </div>
 </div>
 </div>
-<p>減算</p>
+<p>減算（division）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="mf">0.5</span>
@@ -1460,7 +1468,7 @@ except
 </div>
 </div>
 </div>
-<p>乗算</p>
+<p>乗算（multiplication）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
@@ -1497,7 +1505,7 @@ except
 </div>
 </div>
 </div>
-<p>除算</p>
+<p>除算（division）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="mi">10</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span>
@@ -1510,7 +1518,10 @@ except
 </div>
 </div>
 </div>
-<p>切り捨て除算</p>
+<p>切り捨て除算（floor division）</p>
+<ul class="simple">
+<li><p>以下では分子・分母が正の値の場合だけを考える</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span><span class="o">//</span><span class="mi">2</span> <span class="c1"># 5/2=2.5</span>
@@ -1523,7 +1534,10 @@ except
 </div>
 </div>
 </div>
-<p>剰余演算</p>
+<p>剰余演算（modulo）</p>
+<ul class="simple">
+<li><p>以下では分母が正の値の場合だけを考える</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span><span class="o">%</span><span class="k">2</span> # 5÷2＝2 余り 1
@@ -1536,7 +1550,7 @@ except
 </div>
 </div>
 </div>
-<p>累乗</p>
+<p>累乗（exponentiation）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
@@ -1668,13 +1682,15 @@ except
 </div>
 </div>
 </div>
-<p>注意点</p>
-<ul class="simple">
+<p>＜注意点＞</p>
+<blockquote>
+<div><ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">if</span></code>と<code class="docutils literal notranslate"><span class="pre">else</span></code> で始まる条件を示す行の最後は<code class="docutils literal notranslate"><span class="pre">:</span></code>となる。入れ忘れるとエラーとなる。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">print()</span></code>の行は４つの半角スペースのインデントが入る。入れ忘れるとエラーとなる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">print()</span></code>の行は４つの半角スペースのインデントを入れること。（半角スペースが入っていれば、スペースの数は関係なしにエラーは発生しい。しかし可読性向上のために４つの半角スペースを使うことが慣例となっている。）</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">else</span></code>とは「<code class="docutils literal notranslate"><span class="pre">X&gt;0</span></code>以外の場合」という意味。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">pass</span></code>は「何もしない」という意味。</p></li>
 </ul>
+</div></blockquote>
 <p>ここで<code class="docutils literal notranslate"><span class="pre">else</span></code>以下を省略してもエラーにはならない（結果も変わらない）。即ち，<code class="docutils literal notranslate"><span class="pre">else</span></code>以下がない場合は，それが省略されていると考えれば良い。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1703,7 +1719,7 @@ except
 </div>
 <p>両方とも何も表示されない。</p>
 <hr class="docutils" />
-<p>次に，複数の条件を導入するために次の関数を考える。</p>
+<p>次に，複数の条件を導入するために次の３つ<code class="docutils literal notranslate"><span class="pre">print</span></code>関数を使おう。</p>
 <ol class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">print(X,</span> <span class="pre">'は正です')</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">print(X,</span> <span class="pre">'はゼロです')</span></code></p></li>
@@ -1737,7 +1753,7 @@ except
 <p>注意点</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">if</span></code>, <code class="docutils literal notranslate"><span class="pre">elif</span></code>, <code class="docutils literal notranslate"><span class="pre">else</span></code> で始まる条件を示す行の最後は<code class="docutils literal notranslate"><span class="pre">:</span></code>となる。入れ忘れるとエラーとなる。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">print()</span></code>の行は４つの半角スペースのインデントが入る。入れ忘れるとエラーとなる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">print()</span></code>の行は４つの半角スペースのインデントが入れる。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">else</span></code>の行に<code class="docutils literal notranslate"><span class="pre">X&lt;0</span></code>は不要（残りの可能性は<code class="docutils literal notranslate"><span class="pre">X&lt;0</span></code>しかないため）</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">elif</span></code>は<code class="docutils literal notranslate"><span class="pre">else</span> <span class="pre">if</span></code>の省略形であり，２つ目の条件を定義する。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">elif</span></code>は<code class="docutils literal notranslate"><span class="pre">if</span></code>と<code class="docutils literal notranslate"><span class="pre">else</span></code>の間に複数入れることが可能</p></li>
@@ -3123,8 +3139,8 @@ print(...)
     {
         requestKernel: true,
         binderOptions: {
-            repo: "binder-examples/jupyter-stacks-datascience",
-            ref: "master",
+            repo: "Py4Etrics/py4etrics.github.io",
+            ref: "source",
         },
         codeMirrorConfig: {
             theme: "abcdef",

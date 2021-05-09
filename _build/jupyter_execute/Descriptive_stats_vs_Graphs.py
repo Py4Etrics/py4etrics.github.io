@@ -1,36 +1,46 @@
-# 記述統計とグラフ
+#!/usr/bin/env python
+# coding: utf-8
 
-If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2FDescriptive_stats_vs_Graphs.html) in English or the language of your choice.
+# # 記述統計とグラフ
 
----
+# If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2FDescriptive_stats_vs_Graphs.html) in English or the language of your choice.
+# 
+# ---
+
+# In[1]:
+
 
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from statsmodels.formula.api import ols
 
-## 説明
 
-**Anscombeのデータセット**
-* 4つのデータセット
-    * それぞれ変数は`x`と`y`の2つ
-* 全てのデータセットで以下が殆ど同じ
-    * `x`と`y`の平均（mean）
-    * `x`と`y`の標準偏差（standard deviation）
-    * `x`と`y`の相関係数（correlation coefficient）
-    * 回帰線（regression line）
-    * 決定係数（coefficient of determination, $R^2$）
-* 図示（散布図）すると大きく異なる
+# ## 説明
 
-**＜本トピックの目的＞**
+# **Anscombeのデータセット**
+# * 4つのデータセット
+#     * それぞれ変数は`x`と`y`の2つ
+# * 全てのデータセットで以下が殆ど同じ
+#     * `x`と`y`の平均（mean）
+#     * `x`と`y`の標準偏差（standard deviation）
+#     * `x`と`y`の相関係数（correlation coefficient）
+#     * 回帰線（regression line）
+#     * 決定係数（coefficient of determination, $R^2$）
+# * 図示（散布図）すると大きく異なる
 
-データセットの質的な違いは記述統計だけでは確認できない。図示することが重要ということを示す例を紹介する。
+# **＜本トピックの目的＞**
+# 
+# データセットの質的な違いは記述統計だけでは確認できない。図示することが重要ということを示す例を紹介する。
 
-## 記述統計 vs 図
+# ## 記述統計 vs 図
 
-ここでは`matplotlib`に基づいた`seaborn`パッケージを使う。このパッケージを使うことにより，`matplotlib`よりも簡単に，更により綺麗にできるようになる。
+# ここでは`matplotlib`に基づいた`seaborn`パッケージを使う。このパッケージを使うことにより，`matplotlib`よりも簡単に，更により綺麗にできるようになる。
 
-Anscombeのデータセット
+# Anscombeのデータセット
+
+# In[2]:
+
 
 x1 = [10.0, 8.0,  13.0,  9.0,  11.0, 14.0, 6.0,  4.0,  12.0,  7.0,  5.0]
 y1 = [8.04, 6.95, 7.58,  8.81, 8.33, 9.96, 7.24, 4.26, 10.84, 4.82, 5.68]
@@ -49,7 +59,11 @@ df2 = pd.DataFrame({'x':x2, 'y':y2})  # Dataset 2
 df3 = pd.DataFrame({'x':x3, 'y':y3})  # Dataset 3
 df4 = pd.DataFrame({'x':x4, 'y':y4})  # Dataset 4
 
-散布図
+
+# 散布図
+
+# In[3]:
+
 
 ax1 = plt.subplot(221)  # ax1に図の座標の情報を挿入
 plt.scatter('x', 'y', data=df1)
@@ -72,24 +86,40 @@ plt.title('Dataset 4')
 plt.tight_layout()  # レイアウトを見やすく調整
 pass
 
-平均
+
+# 平均
+
+# In[4]:
+
 
 df_list = [df1, df2, df3, df4]
 
 for df in df_list:
     print('x:',df['x'].mean(), '    ', 'y:',df['y'].mean())
 
-標準偏差
+
+# 標準偏差
+
+# In[5]:
+
 
 for df in df_list:
     print('x:',df['x'].std(), '    ', 'y:',df['y'].std())
 
-相関係数
+
+# 相関係数
+
+# In[6]:
+
 
 for df in df_list:
     print(df.corr().iloc[0,1])
 
-回帰直線の係数の推定値
+
+# 回帰直線の係数の推定値
+
+# In[7]:
+
 
 b0hat = []  # 切片の推定値を入れる空のリスト
 b1hat = []  # スロープの推定値を入れる空のリスト
@@ -100,7 +130,11 @@ for df in df_list:
     b1hat.append(mod.params[1])         # 空のリストに推定値を追加
     print('b0:',mod.params[0], '    ', 'b1:',mod.params[1])
 
-回帰直線の図示
+
+# 回帰直線の図示
+
+# In[8]:
+
 
 xx = np.linspace(2,20,100)  # 回帰直線を描くための横軸の値
 
@@ -129,8 +163,13 @@ plt.title('Dataset 4')
 plt.tight_layout()
 pass
 
-決定係数
+
+# 決定係数
+
+# In[9]:
+
 
 for df in df_list:
     mod = ols('y ~ x', data=df).fit()
     print('R^2:',mod.rsquared)
+

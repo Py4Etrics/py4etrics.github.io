@@ -33,7 +33,7 @@ dt = datetime.datetime.today()
 
 ---
 
-If you come here without expecting Japanese, please click [Google translated version](https://translate.google.co.jp/translate?hl=ja&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io) in English or the language of your choice. Note that my name is Tetsu HARUYAMA, not  "Haruyama Iron Source" as Google claims. The title of this site may be more appropriately translated as "Learning Introductory Econometrics with Python."
+If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?sl=auto&tl=en&u=https://py4etrics.github.io) in English or the language of your choice. Note that my name is Tetsu HARUYAMA, not  "Haruyama Iron Source" as Google claims. The title of this site may be more appropriately translated as "Learning Introductory Econometrics with Python."
 
 ---
 
@@ -96,8 +96,8 @@ ax1.plot(xx, norm.pdf(xx,scale=1), 'k')
 ax1.set_title('Normal Distribution', size=25)
 
 ax2.plot(xx, norm.pdf(xx,scale=1), 'k')
-ax2.scatter(-0.4, 0.28, s=300, linewidth=2.5, facecolors='none', edgecolors='k')
-ax2.scatter(0.4, 0.28, s=300, linewidth=2.5, facecolors='none', edgecolors='k')
+ax2.scatter(-0.4, 0.28, s=300, linewidth=2.5, facecolors='k', edgecolors='k')
+ax2.scatter(0.4, 0.28, s=300, linewidth=2.5, facecolors='k', edgecolors='k')
 ax2.plot(xx,-0.02*np.cos(3*xx), 'k')
 ax2.set_title('Paranormal Distribution', size=25)
 plt.show()
@@ -126,9 +126,17 @@ ax1.plot(xx, norm.pdf(xx,scale=1), 'k')
 ax1.set_title('Normal Distribution', size=25)
 
 ax2.plot(xx, norm.pdf(xx,scale=1), 'k')
-ax2.scatter(-0.4, 0.28, s=300, linewidth=2.5, facecolors='none', edgecolors='k')
-ax2.scatter(0.4, 0.28, s=300, linewidth=2.5, facecolors='none', edgecolors='k')
+ax2.scatter(-0.4, 0.28, s=300, linewidth=2.5, facecolors='k', edgecolors='k')
+ax2.scatter(0.4, 0.28, s=300, linewidth=2.5, facecolors='k', edgecolors='k')
 ax2.plot(xx,-0.02*np.cos(3*xx), 'k')
 ax2.set_title('Paranormal Distribution', size=25)
 plt.show()
 ```
+
+---
+
+[Economists（経済学を研究もしくは勉強(?)する人）と付き合わない方が良い２１＋$\alpha$の理由]( http://inesad.edu.bo/developmentroast/2012/10/21-reasons-why-you-should-never-date-an-economist/)
+
+---
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Haruyama-KobeU/for_binder/main?filepath=for_binder.ipynb) for an interactive Jupyter Notebook session with empty code cells.
