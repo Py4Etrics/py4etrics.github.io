@@ -10,55 +10,77 @@ author                      : 春山 鉄源  Tetsugen HARUYAMA # The author of t
 copyright                   : "2020-2021（公開開始日：2020年5月4日）"  # Copyright year to be placed in the footer
 logo                        : ""  # A path to the book logo
 exclude_patterns            : []  # Patterns to skip when building the book. Can be glob-style (e.g. "*skip.ipynb")
-only_build_toc_files        : false 
+only_build_toc_files        : true 
 
 #######################################################################################
 # Execution settings
 execute:
-  execute_notebooks         : cache  # Whether to execute notebooks at build time. Must be one of ("auto", "force", "cache", "off")
+  execute_notebooks         : auto  # Whether to execute notebooks at build time. Must be one of ("auto", "force", "cache", "off")
   cache                     : ""  # A path to the jupyter cache that will be used to store execution artifacs. Defaults to `_build/.jupyter_cache/`
   exclude_patterns          : []  # A list of patterns to *skip* in execution (e.g. a notebook that takes a really long time)
   timeout                   : -1  # default is 30, -1 for no limit
-  allow_errors              : true  # show error messages
+  run_in_temp               : false # If `True`, then a temporary directory will be created and used as the command working directory (cwd),
+                                    # otherwise the notebook's parent directory will be the cwd.
+  allow_errors              : false  # show error messages
+  stderr_output             : show  # One of 'show', 'remove', 'remove-warn', 'warn', 'error', 'severe'
+
+#######################################################################################
+# Parse and render settings
+parse:
+  myst_enable_extensions:  # default extensions to enable in the myst parser. See https://myst-parser.readthedocs.io/en/latest/using/syntax-optional.html
+    - amsmath
+    - colon_fence
+    - deflist
+    - dollarmath
+    # - html_admonition
+    # - html_image
+    - linkify
+    # - replacements
+    # - smartquotes
+    #- substitution
+
+  myst_url_schemes          : [mailto, http, https]  # URI schemes that will be recognised as external URLs in Markdown links
+
 #######################################################################################
 # HTML-specific settings
 html:
   favicon                   : ""  # A path to a favicon image
   navbar_number_sections    : true  # Add a number to each section in your left navbar
-  extra_navbar              : '<a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>'  # Will be displayed underneath the left navbar.
-
-
-  extra_footer              : ""  # Will be displayed underneath the copy right 
-
-  google_analytics_id       : UA-165998213-1  # A GA id that can be used to track book views.
-  baseurl                   : https://py4etrics.github.io/  # The base URL where your book will be hosted. Used for creating image previews and social links. e.g.: https://mypage.com/mybook/
-  home_page_in_navbar       : false # Whether to include your home page in the left Navigation Bar
   use_edit_page_button      : false  # Whether to add an "edit this page" button to pages. If `true`, repository information in repository: must be filled in
-  use_repository_button     : true
-  use_issues_button         : true
+  use_repository_button     : false 
+  use_issues_button         : false
+  extra_navbar              : '<a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>'  # Will be displayed underneath the left navbar.
+  extra_footer              : ""  # Will be displayed underneath the copy right 
+  google_analytics_id       : UA-165998213-1  # A GA id that can be used to track book views.
+  home_page_in_navbar       : false # Whether to include your home page in the left Navigation Bar
+  baseurl                   : 'https://py4etrics.github.io/'  # The base URL where your book will be hosted. Used for creating image previews and social links. e.g.: https://mypage.com/mybook/
+  comments:
+    hypothesis              : false
+    utterances              : false
 
 ########################################################
 # LaTeX-specific settings
 latex:
-  latex_engine              : xelatex  # one of 'pdflatex', 'xelatex' (recommended for unicode), 'luatex', 'platex', 'uplatex'
-
+  latex_engine              : 'xelatex'  # one of 'pdflatex', 'xelatex' (recommended for unicode), 'luatex', 'platex', 'uplatex'
 
 #######################################################################################
-launch_buttons: # Launch button settings
+# Launch button settings
+launch_buttons: 
   notebook_interface        : "classic"  # The interface interactive links will activate ["classic", "jupyterlab"]
   binderhub_url             : "https://mybinder.org"  # The URL of the BinderHub (e.g., https://mybinder.org)
   jupyterhub_url            : ""  # The URL of the JupyterHub (e.g., https://datahub.berkeley.edu)
-  thebelab                  : true  # Add a thebelab button to pages (requires the repository to run on Binder)
-  thebe                     : true  # make code cells interactive
+  thebelab                  : false  # Add a thebelab button to pages (requires the repository to run on Binder)
+  thebe                     : false  # make code cells interactive
   colab_url                 : "https://colab.research.google.com"
 
 repository:
-  url                       : https://github.com/Py4Etrics/py4etrics.github.io  # The URL to your book's repository
+  url                       : 'https://github.com/Py4Etrics/py4etrics.github.io'  # The URL to your book's repository
   path_to_book              : ""  # A path to your book's folder, relative to the repository root.
   branch                    : source  # Which branch of the repository should be used when creating links
 
 #######################################################################################
 # Advanced and power-user settings
 #sphinx:
-  #extra_extensions          : ""  # A list of extra extensions to load by Sphinx.
-  #config                    : ""  # key-value pairs to directly over-ride the Sphinx configuration
+  #extra_extensions          :   # A list of extra extensions to load by Sphinx (added to those already used by JB).
+  #local_extensions          :   # A list of local extensions to load by sphinx specified by "name: path" items
+  #config                    :   # key-value pairs to directly over-ride the Sphinx configuration
