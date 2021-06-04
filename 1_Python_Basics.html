@@ -28,6 +28,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/my_style.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -44,9 +45,9 @@
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
-        const thebe_selector = ".thebe,.cell"
-        const thebe_selector_input = "pre,.cell_input div.highlight"
-        const thebe_selector_output = ".output,.cell_output"
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -309,22 +310,6 @@
 
             <!-- Source interaction buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/Py4Etrics/py4etrics.github.io"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/Py4Etrics/py4etrics.github.io/issues/new?title=Issue%20on%20page%20%2F1_Python_Basics.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
             <!-- Full screen (wrap in <a> to have style consistency -->
 
 <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -352,9 +337,6 @@
                     src="_static/images/logo_colab.png"
                     alt="Interact on Colab">Colab</button></a>
         
-        <button type="button" class="btn btn-secondary topbarbtn"
-            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
-                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
         
     </div>
 </div>
@@ -436,7 +418,7 @@
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id9">
-     引数の位置が重要
+     引数の位置が重要なケース
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -1207,7 +1189,7 @@
 </div>
 </div>
 </div>
-<p>この例では１番目から3番目を選択している。<code class="docutils literal notranslate"><span class="pre">:</span></code>の左側の番号を省略すると<code class="docutils literal notranslate"><span class="pre">0</span></code>と解釈され，<code class="docutils literal notranslate"><span class="pre">:</span></code>右側を省略すると<code class="docutils literal notranslate"><span class="pre">-1</span></code>と解釈される。</p>
+<p>この例では１番目から3番目を選択している。<code class="docutils literal notranslate"><span class="pre">:</span></code>の左側の番号を省略すると<code class="docutils literal notranslate"><span class="pre">0</span></code>と解釈され，<code class="docutils literal notranslate"><span class="pre">:</span></code>右側を省略すると最後まで全てと解釈される。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_list</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
@@ -1339,19 +1321,53 @@
 <li><p>小文字と大文字は異なる記号としてあつかう</p></li>
 <li><p>次の単語は特定の目的のために事前に定義されているため，変数名としては使えない。</p></li>
 </ul>
-<pre>
-and       exec     not
-as 	   finally  or
-assert    for      pass
-break     from     print
-class     global   raise
-continue  if       return
-def       import   try
-del       in       while
-elif      is       with
-else      lambda   yield
-except
-</pre>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">keyword</span>
+<span class="n">keyword</span><span class="o">.</span><span class="n">kwlist</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;False&#39;,
+ &#39;None&#39;,
+ &#39;True&#39;,
+ &#39;and&#39;,
+ &#39;as&#39;,
+ &#39;assert&#39;,
+ &#39;async&#39;,
+ &#39;await&#39;,
+ &#39;break&#39;,
+ &#39;class&#39;,
+ &#39;continue&#39;,
+ &#39;def&#39;,
+ &#39;del&#39;,
+ &#39;elif&#39;,
+ &#39;else&#39;,
+ &#39;except&#39;,
+ &#39;finally&#39;,
+ &#39;for&#39;,
+ &#39;from&#39;,
+ &#39;global&#39;,
+ &#39;if&#39;,
+ &#39;import&#39;,
+ &#39;in&#39;,
+ &#39;is&#39;,
+ &#39;lambda&#39;,
+ &#39;nonlocal&#39;,
+ &#39;not&#39;,
+ &#39;or&#39;,
+ &#39;pass&#39;,
+ &#39;raise&#39;,
+ &#39;return&#39;,
+ &#39;try&#39;,
+ &#39;while&#39;,
+ &#39;with&#39;,
+ &#39;yield&#39;]
+</pre></div>
+</div>
+</div>
+</div>
 <p>これらに加え，</p>
 <ul class="simple">
 <li><p>変数の頭文字は小文字とする</p></li>
@@ -1742,7 +1758,7 @@ except
 <p>注意点</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">if</span></code>, <code class="docutils literal notranslate"><span class="pre">elif</span></code>, <code class="docutils literal notranslate"><span class="pre">else</span></code> で始まる条件を示す行の最後は<code class="docutils literal notranslate"><span class="pre">:</span></code>となる。入れ忘れるとエラーとなる。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">print()</span></code>の行は４つの半角スペースのインデントが入れる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">print()</span></code>の行は４つの半角スペースのインデントが入る。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">else</span></code>の行に<code class="docutils literal notranslate"><span class="pre">X&lt;0</span></code>は不要（残りの可能性は<code class="docutils literal notranslate"><span class="pre">X&lt;0</span></code>しかないため）</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">elif</span></code>は<code class="docutils literal notranslate"><span class="pre">else</span> <span class="pre">if</span></code>の省略形であり，２つ目の条件を定義する。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">elif</span></code>は<code class="docutils literal notranslate"><span class="pre">if</span></code>と<code class="docutils literal notranslate"><span class="pre">else</span></code>の間に複数入れることが可能</p></li>
@@ -1778,11 +1794,11 @@ except
 <p>説明と注意点</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">for</span></code>がある一行目は<code class="docutils literal notranslate"><span class="pre">:</span></code>で終わる。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>は<code class="docutils literal notranslate"><span class="pre">name_list</span></code>にあるそれぞれの要素を示すダミー記号。<code class="docutils literal notranslate"><span class="pre">name</span></code>ではなく<code class="docutils literal notranslate"><span class="pre">i</span></code>や<code class="docutils literal notranslate"><span class="pre">s</span></code>など使いやすい記号を使えば良い。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>は<code class="docutils literal notranslate"><span class="pre">name_list</span></code>にあるそれぞれの要素を示すダミー記号。<code class="docutils literal notranslate"><span class="pre">name</span></code>ではなく<code class="docutils literal notranslate"><span class="pre">i</span></code>や<code class="docutils literal notranslate"><span class="pre">s</span></code>など使いやすい記号を使って構わない。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">name_list</span></code>にある要素を最初から一つずつ実行する。</p></li>
-<li><p>2行目は4つの半角スペースがインデントして入る。</p></li>
+<li><p>2行目は4つの半角スペースを使ってインデントしている。</p></li>
 </ul>
-<p><code class="docutils literal notranslate"><span class="pre">for</span></code>ループのよく使う例として以下を挙げる。この例では，リストに要素を追加する関数である<code class="docutils literal notranslate"><span class="pre">.append()</span></code>を使うが，この関数については以下でより詳しく説明する。</p>
+<p><code class="docutils literal notranslate"><span class="pre">for</span></code>ループでよく使うパターンして次の例を考える。この例では，リストに要素を追加する<code class="docutils literal notranslate"><span class="pre">.append()</span></code>を使うが，これについては以下でより詳しく説明する。</p>
 <p>まず次のリストを定義する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1791,7 +1807,7 @@ except
 </div>
 </div>
 </div>
-<p>それぞれの要素の2倍からなるリストを作成するとしよう。</p>
+<p>それぞれの要素の2倍からなるリストを作成したいとしよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 1</span>
@@ -1805,10 +1821,10 @@ except
 <p>このループの考え方：</p>
 <ol class="simple">
 <li><p>空のリストの作成（ここに2倍にした数字を格納する）</p></li>
-<li><p>ここから<code class="docutils literal notranslate"><span class="pre">for</span></code>ループの始まり。<code class="docutils literal notranslate"><span class="pre">i</span></code>はリスト<code class="docutils literal notranslate"><span class="pre">[1,2,3,4,5]</span></code>の要素の代理変数であり，<code class="docutils literal notranslate"><span class="pre">var_list</span></code>の左から一つずつ次の行の<code class="docutils literal notranslate"><span class="pre">i</span></code>に該当する要素を代入して評価する。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">.append()</span></code>は<code class="docutils literal notranslate"><span class="pre">2*i</span></code>を<code class="docutils literal notranslate"><span class="pre">my_list</span></code>に追加するメソッド（関数と同義であり，後ほど違いを説明する）</p></li>
+<li><p>ここから<code class="docutils literal notranslate"><span class="pre">for</span></code>ループの始まりとなる。<code class="docutils literal notranslate"><span class="pre">i</span></code>はループを回していく際に<code class="docutils literal notranslate"><span class="pre">[1,2,3,4,5]</span></code>の要素を割り当てる変数である。<code class="docutils literal notranslate"><span class="pre">var_list</span></code>には５つの要素があるので５回同じ作業を繰り返す。１回目のループでは，<code class="docutils literal notranslate"><span class="pre">var_list</span></code>の0番目の要素<code class="docutils literal notranslate"><span class="pre">1</span></code>を<code class="docutils literal notranslate"><span class="pre">i</span></code>に割り当てる事になる。次の行に進んで，その行の評価が終わると２回目のループが始まり，<code class="docutils literal notranslate"><span class="pre">var_list</span></code>の1番目の要素<code class="docutils literal notranslate"><span class="pre">2</span></code>を<code class="docutils literal notranslate"><span class="pre">i</span></code>に割り当てる。そして次の行に進み，その評価が終わると３回目のループが始まり，同じ作業が続く。ループは５回目で終わることになる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.append()</span></code>は<code class="docutils literal notranslate"><span class="pre">2*i</span></code>を<code class="docutils literal notranslate"><span class="pre">my_list</span></code>に追加するリストのメソッド（関数と同義であり，後ほど違いを説明する）であり，この行が評価される毎に<code class="docutils literal notranslate"><span class="pre">my_list</span></code>に<code class="docutils literal notranslate"><span class="pre">2*i</span></code>が追加されて行くことになる。</p></li>
 </ol>
-<p><code class="docutils literal notranslate"><span class="pre">my_list</span></code>を表示しよう。</p>
+<p>このように，<code class="docutils literal notranslate"><span class="pre">for</span></code>ループとは上のコードの２〜３を５回繰り返している。<code class="docutils literal notranslate"><span class="pre">my_list</span></code>を表示しよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>
@@ -1861,12 +1877,12 @@ e
 <p><code class="docutils literal notranslate"><span class="pre">for</span></code>ループ</p>
 <pre>
 <font color=blue>my_list</font> = []
-for <font color=red>i</font> in <font color=orange>val_list</font>:
+<font color=red>for i in val_list</font>:
     <font color=blue>my_list</font>.append(<font color=green>expression</font>)
 </pre>
 <p>内包表記</p>
 <pre>
-<font color=blue>my_list</font> = [<font color=green>expression</font> for <font color=red>i</font> in <font color=orange>val_list</font>]
+<font color=blue>my_list</font> = [<font color=green>expression</font> <font color=red>for i in val_list</font>]
 </pre><p><code class="docutils literal notranslate"><span class="pre">for</span></code>ループに<code class="docutils literal notranslate"><span class="pre">if</span></code>文を組み込むことができる。次の例では，<code class="docutils literal notranslate"><span class="pre">var_list</span></code>の数字が偶数であれば2倍にして新たなリストを作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1875,7 +1891,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">var_list</span><span class="p">:</span>            <span class="c1"># forループの開始</span>
     
     <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span><span class="mi">0</span><span class="p">:</span>             <span class="c1"># 余りが０の場合</span>
-        <span class="n">my_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="p">)</span>   <span class="c1"># 二乗にしてmy_listに追加する</span>
+        <span class="n">my_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="p">)</span>   <span class="c1"># 二乗してmy_listに追加する</span>
                               <span class="c1"># 余りが０でない場合はpass</span>
         
 <span class="nb">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>    <span class="c1"># my_listの表示</span>
@@ -1960,7 +1976,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<p>コード１とコード２で<code class="docutils literal notranslate"><span class="pre">if</span></code>文の位置が異なることに注意しよう。コード１では<code class="docutils literal notranslate"><span class="pre">if</span></code>文は最後に来ているが，コード２では<code class="docutils literal notranslate"><span class="pre">for</span></code>の前に来ている。</p>
+<p>コード１とコード２で<code class="docutils literal notranslate"><span class="pre">if</span></code>文の位置が異なることに注意しよう。コード１では<code class="docutils literal notranslate"><span class="pre">if</span></code>文は<code class="docutils literal notranslate"><span class="pre">for</span></code>の後にくるが，コード２では<code class="docutils literal notranslate"><span class="pre">for</span></code>の前に来ている。</p>
 <p>内包表記の応用例として，次のリストの要素抽出について考えてみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2002,7 +2018,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <h2>while ループ<a class="headerlink" href="#while" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">for</span></code>ループと同様，<code class="docutils literal notranslate"><span class="pre">while</span></code>ループもコードを複数回実行したい場合に使う。２つは以下の点で違いがある。</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">for</span></code>ループは与えられたリストに従いループが実行される。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">for</span></code>ループは与えられたリストなどのiterableの要素数の数だけループが実行される。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">while</span></code>ループはある条件が満たされるまでループが実行される。</p></li>
 </ul>
 <p>例として，上で定義した<code class="docutils literal notranslate"><span class="pre">name_list</span></code>を表示するループを考える。</p>
@@ -2071,7 +2087,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </li>
 <li><p>２行目：</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">return</span></code>は評価した値を「返す」という意味。必ず<code class="docutils literal notranslate"><span class="pre">return</span></code>の前には4つのスペースが必要であり，ないとエラーになる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">return</span></code>は評価した値を「返す」という意味。必ず<code class="docutils literal notranslate"><span class="pre">return</span></code>の前には4つの半角スペースが必要である。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">x**2</span></code>という返り値（戻り値）の設定をする</p></li>
 </ul>
 </li>
@@ -2093,27 +2109,28 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <ul class="simple">
 <li><p>関数を定義する場合の引数（上の例では<code class="docutils literal notranslate"><span class="pre">x</span></code>)は「仮引数」（parameter）と呼ぶ。</p></li>
 <li><p>関数を評価する際に関数に引き渡す引数（上の例では<code class="docutils literal notranslate"><span class="pre">2</span></code>）は「実引数」（argument）と呼ぶ。</p></li>
-<li><p>本書では両方を「引数」と読んでいる。</p></li>
+<li><p>本書では両方を「引数」と呼んでいる。</p></li>
 </ul>
 <hr class="docutils" />
 <p>引数が無い関数を定義することを可能である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_kobe</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;I love Kobe :)&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">&#39;I love Kobe :)&#39;</span>
+    
 
 <span class="n">func_kobe</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>I love Kobe :)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;I love Kobe :)&#39;
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="id9">
-<h3>引数の位置が重要<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<h3>引数の位置が重要なケース<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <p>上の例では引数が１つしかないが，引数が複数ある場合にその位置が重要になってくる。次の例を考えよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2208,7 +2225,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">113</span><span class="o">-</span><span class="n">a68692af39a3</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">114</span><span class="o">-</span><span class="n">a68692af39a3</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">func_1</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="ne">TypeError</span>: func_1() got multiple values for argument &#39;a&#39;
@@ -2229,7 +2246,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<p>ここでも引数の位置の重要性がうかがえる。</p>
+<p>ここでも引数の位置が重要な役割を果たしている。</p>
 </div>
 <div class="section" id="id11">
 <h3>定義する際に<code class="docutils literal notranslate"><span class="pre">=</span></code>を使う<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
@@ -2380,7 +2397,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<p>ここから分かることは、<code class="docutils literal notranslate"><span class="pre">func_5(*args)</span></code>の<code class="docutils literal notranslate"><span class="pre">args</span></code>自体は引数のタプルであり，<code class="docutils literal notranslate"><span class="pre">*args</span></code>はタプルを展開したものである。<code class="docutils literal notranslate"><span class="pre">print(*args)</span></code>の<code class="docutils literal notranslate"><span class="pre">*args</span></code>もタプルを展開したものである。このことを念頭にもう一度<code class="docutils literal notranslate"><span class="pre">func_4(*args)</span></code>を考えてみよう。<code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">func_4(*args)の</span></code>の<code class="docutils literal notranslate"><span class="pre">args</span></code>は引数になる数字のタプル（例えば，<code class="docutils literal notranslate"><span class="pre">(1,2,3)</span></code>）であり，<code class="docutils literal notranslate"><span class="pre">*args</span></code>はそれを展開したものである。<code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">sum(args)</span></code>の<code class="docutils literal notranslate"><span class="pre">args</span></code>はもちろんタプルである。この性質を使うことにより、関数に任意の数の引数を指定することが可能となる。</p>
+<p>ここから分かることは、<code class="docutils literal notranslate"><span class="pre">func_5(*args)</span></code>の<code class="docutils literal notranslate"><span class="pre">args</span></code>自体はタプルであり，<code class="docutils literal notranslate"><span class="pre">*args</span></code>はタプルを展開したものである。<code class="docutils literal notranslate"><span class="pre">print(*args)</span></code>の<code class="docutils literal notranslate"><span class="pre">*args</span></code>もタプルを展開したものである。このことを念頭にもう一度<code class="docutils literal notranslate"><span class="pre">func_4(*args)</span></code>を考えてみよう。<code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">func_4(*args)の</span></code>の<code class="docutils literal notranslate"><span class="pre">args</span></code>は引数になる数字のタプル（例えば，<code class="docutils literal notranslate"><span class="pre">(1,2,3)</span></code>）であり，<code class="docutils literal notranslate"><span class="pre">*args</span></code>はそれを展開したものである。<code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">sum(args)</span></code>の<code class="docutils literal notranslate"><span class="pre">args</span></code>はもちろんタプルである。この性質を使うことにより、関数に任意の数の引数を指定することが可能となる。</p>
 <p>＜コメント＞</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">*args</span></code>の<code class="docutils literal notranslate"><span class="pre">args</span></code>はarguments（引数）の省略形である。</p></li>
@@ -2408,7 +2425,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 <p>＜注意＞</p>
-<p>必ず<code class="docutils literal notranslate"><span class="pre">*args</span></code>は，位置引数の次に置くこと。これは<code class="docutils literal notranslate"><span class="pre">*args</span></code>が「その他全ての位置引数」という意味であるためであり、全ての位置引数の後に位置してこそ意味があるからである。言い換えると、<code class="docutils literal notranslate"><span class="pre">*args</span></code>は位置引数の終わりを意味する。</p>
+<p>必ず<code class="docutils literal notranslate"><span class="pre">*args</span></code>は位置引数の後に置くこと。これは<code class="docutils literal notranslate"><span class="pre">*args</span></code>が「その他全ての位置引数」という意味であるためであり、全ての位置引数の後に位置してこそ意味があるからである。言い換えると、<code class="docutils literal notranslate"><span class="pre">*args</span></code>は位置引数の終わりを意味する。</p>
 </div>
 <div class="section" id="lambda">
 <h3><code class="docutils literal notranslate"><span class="pre">lambda</span></code>関数<a class="headerlink" href="#lambda" title="Permalink to this headline">¶</a></h3>
@@ -2450,7 +2467,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <p>引数が無い場合</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">func_9</span> <span class="o">=</span> <span class="k">lambda</span> <span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;I love Kobe ;)&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">func_9</span> <span class="o">=</span> <span class="k">lambda</span> <span class="p">:</span> <span class="s1">&#39;I love Kobe ;)&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -2462,7 +2479,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>I love Kobe ;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;I love Kobe ;)&#39;
 </pre></div>
 </div>
 </div>
@@ -2722,7 +2739,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <p>Pythonには組み込み関数が多く用意されている。例えば，<a class="reference external" href="https://docs.python.org/ja/3/library/functions.html">このリンク</a>を参照。しかし組み込み関数には計量経済学用の便利な関数は用意されていない。そこで活躍するのがモジュール（modules）やパッケージ（package）と呼ばれるもである。もちろん計量経済学以外のモジュールやパッケージが無数にあり，使う用途（例えば，グラフを描く）に沿って読み込むことになる。２つの違いを簡単にいうと</p>
 <ul class="simple">
 <li><p>モジュールは１つのファイル（.py）にまとめられた関数群であり，</p></li>
-<li><p>パッケージは複数つのファイル（.py）で構成されている（フォルダーにまとめられている）</p></li>
+<li><p>パッケージは複数つのファイル（.py）で構成され，フォルダーにまとめられているもの</p></li>
 </ul>
 <p>となる。従って，モジュール全体を読み込んだり，あるパッケージの１つのモジュールだけを読み込むということも可能である。</p>
 <p>まず例として<code class="docutils literal notranslate"><span class="pre">math</span></code>モジュールを考える。名前が示すように数学用のモジュールである。使うためには<code class="docutils literal notranslate"><span class="pre">import</span></code>を使って読み込む必要がある。</p>
@@ -2746,7 +2763,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 </div>
-<p>この場合モジュール名が必要とり，「<code class="docutils literal notranslate"><span class="pre">math</span></code>モジュールの<code class="docutils literal notranslate"><span class="pre">sqrt</span></code>」を指定しているという意味である。これは他のモジュールとバッティングしないようにするためである。</p>
+<p>この場合モジュール名が必要となり，「<code class="docutils literal notranslate"><span class="pre">math</span></code>モジュールの<code class="docutils literal notranslate"><span class="pre">sqrt</span></code>」を指定しているという意味である。これは他のモジュールとバッティングしないようにするためである。</p>
 <p>モジュール名が長い場合は，短い名前で読み込むことも可能である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2793,7 +2810,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <p>前のセクションで<code class="docutils literal notranslate"><span class="pre">dir()</span></code>を使いオブジェクトの属性を調べたが，その際<code class="docutils literal notranslate"><span class="pre">see</span></code>を使うとリストが見やすくなると説明した。それを使ってみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="n">see</span>  <span class="c1"># seeモジュールから関数seeを導入</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="n">see</span>  <span class="c1"># seeモジュールから関数seeをインポートする</span>
 </pre></div>
 </div>
 </div>
@@ -2907,7 +2924,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <p>＜＜コメント＞＞</p>
 <ul class="simple">
 <li><p>エラーが発生するとエラー・メッセージが表示されるが，多くの場合，エラー・メッセージにエラーの理由のヒントがあるので確認することを強く推奨する。はじめは意味が分からないかも知れないが，パターンがあるので慣れると直ぐに理解できるケースも多くあるだろう。</p></li>
-<li><p>例外の場合，最初にエラーが発生するとそれに付随して他の場所でもエラーが誘発される場合がある。<code class="docutils literal notranslate"><span class="pre">Python</span></code>はエラーを追跡し，最後に確認したエラーをメッセージの一番最後に示すことになる。</p></li>
+<li><p>例外の場合，最初にエラーが発生するとそれに付随して他の場所でもエラーが誘発される場合がある。<code class="docutils literal notranslate"><span class="pre">Python</span></code>はエラーを追跡し，最後に確認したエラーをメッセージの一番最後に表示するので覚えておこう。</p></li>
 </ul>
 <div class="section" id="id16">
 <h3>構文エラー<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
@@ -2924,7 +2941,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">155</span><span class="o">-</span><span class="n">ff852d311315</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">156</span><span class="o">-</span><span class="n">ff852d311315</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">primt</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
 
 <span class="ne">NameError</span>: name &#39;primt&#39; is not defined
@@ -2950,7 +2967,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-156-2a993c6acd9f&gt;&quot;</span><span class="gt">, line </span><span class="mi">3</span>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-157-2a993c6acd9f&gt;&quot;</span><span class="gt">, line </span><span class="mi">3</span>
 <span class="nn">    for i</span> in <span class="ni">range</span><span class="nt">(0,3)</span>
                        <span class="o">^</span>
 <span class="ne">SyntaxError</span>: invalid syntax
@@ -2973,7 +2990,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-157-9ebf21e104e8&gt;&quot;</span><span class="gt">, line </span><span class="mi">1</span>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-158-9ebf21e104e8&gt;&quot;</span><span class="gt">, line </span><span class="mi">1</span>
     <span class="p">(</span><span class="mf">2.1</span> <span class="o">+</span> <span class="mf">1.5</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">10.0</span> <span class="o">+</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="mf">3.2</span>
                                   <span class="o">^</span>
 <span class="ne">SyntaxError</span>: unexpected EOF while parsing
@@ -3029,7 +3046,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ZeroDivisionError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">160</span><span class="o">-</span><span class="mf">150e437</span><span class="n">ad231</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">161</span><span class="o">-</span><span class="mf">150e437</span><span class="n">ad231</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
 
 <span class="ne">ZeroDivisionError</span>: division by zero
@@ -3050,7 +3067,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">161</span><span class="o">-</span><span class="mi">0</span><span class="n">a288a4fc67b</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">162</span><span class="o">-</span><span class="mi">0</span><span class="n">a288a4fc67b</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">xx</span> <span class="o">*</span> <span class="mi">2</span>
 
 <span class="ne">NameError</span>: name &#39;xx&#39; is not defined
@@ -3071,7 +3088,7 @@ for <font color=red>i</font> in <font color=orange>val_list</font>:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">162</span><span class="o">-</span><span class="mi">9437</span><span class="n">dcf020b7</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">163</span><span class="o">-</span><span class="mi">9437</span><span class="n">dcf020b7</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="s1">&#39;3&#39;</span> <span class="o">+</span> <span class="mi">10</span>
 
 <span class="ne">TypeError</span>: can only concatenate str (not &quot;int&quot;) to str
@@ -3107,7 +3124,7 @@ print(...)
 </div>
 </div>
 </div>
-<p>引数は関数名であり<code class="docutils literal notranslate"><span class="pre">()</span></code>は付いていないことに留意しよう。<code class="docutils literal notranslate"><span class="pre">()</span></code>を付けると<code class="docutils literal notranslate"><span class="pre">print()</span></code>を評価した結果に対しての説明が表示されることになる。英語での説明だがパターンを理解すればこれだけでも有用に感じることだろう。</p>
+<p>引数は関数名であり<code class="docutils literal notranslate"><span class="pre">()</span></code>は付いていないことに注意しよう。<code class="docutils literal notranslate"><span class="pre">()</span></code>を付けると<code class="docutils literal notranslate"><span class="pre">print()</span></code>を評価した結果に対しての説明が表示されることになる。英語での説明だがパターンを理解すればこれだけでも有用に感じることだろう。</p>
 <p><code class="docutils literal notranslate"><span class="pre">help()</span></code>の代わりに<code class="docutils literal notranslate"><span class="pre">?</span></code>を使うこともできる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3128,21 +3145,21 @@ print(...)
     {
         requestKernel: true,
         binderOptions: {
-            repo: "Py4Etrics/py4etrics.github.io",
-            ref: "source",
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "jb"
+            mode: "python"
         },
         kernelOptions: {
-            kernelName: "jb",
+            kernelName: "python3",
             path: "./."
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'jb'</script>
+    <script>kernelName = 'python3'</script>
 
               </div>
               

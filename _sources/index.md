@@ -17,11 +17,11 @@ kernelspec:
 神戸大学経済学研究科
 ```
 
-```{code-cell} python3
-import datetime
-dt = datetime.datetime.now()
-print('Version:',dt.strftime('%Y年%m月%d日'))
-```
+<!--```{code-cell} python3-->
+<!--import datetime-->
+<!--dt = datetime.datetime.now()-->
+<!--print('Version:',dt.strftime('%Y年%m月%d日'))-->
+<!--```-->
 
 <!---
 %H:%M:%S
@@ -36,6 +36,10 @@ dt = datetime.datetime.today()
 If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?sl=auto&tl=en&u=https://py4etrics.github.io) in English or the language of your choice. Note that my name is Tetsu HARUYAMA, not  "Haruyama Iron Source" as Google claims. The title of this site may be more appropriately translated as "Learning Introductory Econometrics with Python."
 
 ---
+
+<br>
+
+姉妹サイト：[「Pythonで学ぶ中級マクロ経済学」](https://py4macro.github.io) <font size="+0">🐍</font>
 
 ## はじめに
 
@@ -135,7 +139,7 @@ plt.show()
 
 ---
 
-[Economists（経済学を研究もしくは勉強(?)する人）と付き合わない方が良い２１＋$\alpha$の理由]( http://inesad.edu.bo/developmentroast/2012/10/21-reasons-why-you-should-never-date-an-economist/)
+[Economists（経済学を勉強する人も含めて(?)）と付き合わない方が良い２１＋$\alpha$の理由]( http://inesad.edu.bo/developmentroast/2012/10/21-reasons-why-you-should-never-date-an-economist/)
 
 ---
 
