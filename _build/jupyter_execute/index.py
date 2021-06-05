@@ -39,9 +39,14 @@
 # 
 # 「なぜ`Python`？」プログラミング言語は無数に存在し，それぞれ様々な特徴があり，お互いに影響し合い進化している。その過程で，広く使われ出す言語もあれば廃れていく言語もある。その中で`Python`は，近年注目を集める言語となっている。それを示す相対的な人気指標として[Stack Overflow Trends]( https://insights.stackoverflow.com/trends?tags=java%2Cc%2Cc%2B%2B%2Cpython%2Cc%23%2Cvb.net%2Cjavascript%2Cassembly%2Cphp%2Cperl%2Cruby%2Cvb%2Cswift%2Cr%2Cobjective-c)がある。
 # ```{figure} /images/many_languages.png
-# :scale: 35%
+# ---
+# scale: 35%
+# name: stackoverflow
+# ---
+# 
+# Stack Overflow Trends
 # ```
-# [Stack Overflow](https://stackoverflow.com)とは（[日本語版はこちら](https://ja.stackoverflow.com)），プログラミングに関する質問をすると参加者が回答するフォーラムであり，質の高い回答で定評があるサイトである。その英語版で，ある言語に関する質問が何％を占めるのかを示しているのが図１である。2012年頃から`Python`は急上昇しているが（右上がりの赤色の線），過去５年間でみると下降トレンドの言語が多い印象である。
+# [Stack Overflow](https://stackoverflow.com)とは（[日本語版はこちら](https://ja.stackoverflow.com)），プログラミングに関する質問をすると参加者が回答するフォーラムであり，質の高い回答で定評があるサイトである。その英語版で，ある言語に関する質問が何％を占めるのかを示しているのが{numref}`stackoverflow`である。2012年頃から`Python`は急上昇しているが（右上がりの赤色の線），過去５年間でみると下降トレンドの言語が多い印象である。もう一つの指標として[2020 Kaggle Machine Learning & Data Science Survey](https://www.kaggle.com/c/kaggle-survey-2020/data)を紹介する。Google合同会社の子会社である[Kaggle](https://www.kaggle.com)は，データサイエンスや機械学習などに関連する課題を解決するためのコンテストがおこなわれる有名なオンライン・コミュニティであり，課題には賞金が設定され世界中からの参加者が切磋琢磨して競争する。2020年におこなわれたKaggle参加者へのアンケートの中に「データサイエンティストになりたい人に最初に学ぶ言語として何を薦めますか？」の質問があり，17,740の回答中（重複回答含む）80％が`Python`を選んでいる。`Python`の独り勝ち状態である（[他の言語を含めた図はこちらを参照](https://py4macro.github.io/index.html#popularity)）。
 # 
 # では，`Python`の人気はどこにあるのか？まず最初の理由は無料ということである。経済学研究でよく使われる数十万円するソフトと比べると，その人気の理由は理解できる。しかし計量経済学で広く使われる`R`を含めて他の多くの言語も無料であり，それだけが理由ではない。人気の第２の理由は，汎用性である。`Python`はデータ分析や科学的数値計算だけではなく，ゲーム（ゲーム理論ではない），画像処理や顔認識にも使われている。またPCやスマートフォンの様々な作業の自動化に使うことも可能なのである。第３の理由は，学習コストが比較的に低いことである。`Python`のコードは英語を読む・書く感覚と近いため，他の言語と比較して可読性の高さが大きな特徴である（日本語にも近い点もある）。もちろん，`Python`の文法や基本的な関数を覚える必要があるが，相対的に最も初心者に易しい言語と言われる程である。他にも理由はあるが，`Python`はIT産業だけではなく金融・コンサルティング・保険・医療などの幅広い分野で使われており，データ分析の重要性が増すごとにより多くの産業で使われると思われる。
 # 
@@ -106,6 +111,8 @@ glue("paranormal", fig, display=True)
 
 
 # ```{glue:figure} paranormal
+# :name: "para-fig"
+# 
 # 正規分布と超常分布
 # ```
 # 
