@@ -9,9 +9,9 @@ kernelspec:
   name: python3
 ---
 
-# Pythonで学ぶ中級マクロ経済学
+# Pythonで学ぶマクロ経済学 (中級＋$\alpha$)
 
-[Pythonで学ぶ中級マクロ経済学](https://py4macro.github.io/)
+[Pythonで学ぶマクロ経済学 (中級＋$\alpha$)](https://py4macro.github.io/)
 
 第１部：Pythonの学習
 
@@ -38,6 +38,12 @@ kernelspec:
 第３部：マクロ経済学 - 短期分析
 
 [　　GDPと構成要素](https://py4macro.github.io/10_Data_Fluctuation.html)
+
+[　　法則・曲線・増加率](https://py4macro.github.io/11_Macro_Variables.html)
+
+[　　IS-MP-PCモデル](https://py4macro.github.io/12_IS-MP-PC.html)
+
+[　　ランダム変数と全要素生産性](https://py4macro.github.io/13_NumPy_random.html)
 
 [　　今後の計画](https://py4macro.github.io/Plan.html)
 
