@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Pythonで学ぶマクロ経済学 (中級＋$\alpha$)
+# # Pythonで学ぶマクロ経済学 (中級＋レベル)
 # 
-# [Pythonで学ぶマクロ経済学 (中級＋$\alpha$)](https://py4macro.github.io/)
+# [Pythonで学ぶマクロ経済学 (中級＋レベル)](https://py4macro.github.io/)
 # 
 # 第１部：Pythonの学習
 # 

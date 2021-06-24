@@ -39,7 +39,7 @@ If you come here without expecting Japanese, please click [Google translated ver
 
 <br>
 
-姉妹サイト：[「Pythonで学ぶマクロ経済学 (中級＋$\alpha$)」](https://py4macro.github.io) <font size="+0">🐍</font>
+姉妹サイト：[「Pythonで学ぶマクロ経済学 (中級＋レベル)」](https://py4macro.github.io) <font size="+0">🐍</font>
 
 ## はじめに
 
