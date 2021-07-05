@@ -12,6 +12,8 @@ kernelspec:
 # Pythonで学ぶ入門計量経済学
 
 ```{epigraph}
+**Learning Introductory Econometrics with Python**
+
 [春山 鉄源](https://t-haruyama.github.io)
 
 神戸大学経済学研究科
@@ -33,7 +35,7 @@ dt = datetime.datetime.today()
 
 ---
 
-If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?sl=auto&tl=en&u=https://py4etrics.github.io) in English or the language of your choice. Note that my name is Tetsu HARUYAMA, not  "Haruyama Iron Source" as Google claims. The title of this site may be more appropriately translated as "Learning Introductory Econometrics with Python."
+If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?sl=auto&tl=en&u=https://py4etrics.github.io) in English or the language of your choice. Note that my name is Tetsu HARUYAMA, not  "Haruyama Iron Source" as Google claims."
 
 ---
 

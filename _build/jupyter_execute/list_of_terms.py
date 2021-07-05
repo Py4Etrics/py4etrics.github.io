@@ -57,3 +57,6 @@
 #     
 #     * $\hat{\beta}_0$, $\hat{\beta}_0$はデータを使って計算した推定量
 #     * $i=1,2,...n$（$n$は標本の大きさ）
+# 
+# 
+# [統計用語の基礎知識](https://www.jstat.or.jp/basic_knowledge/)

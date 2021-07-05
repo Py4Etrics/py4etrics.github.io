@@ -350,6 +350,8 @@ type(r0_list)
 np.sqrt(4)
 
 
+# `sqrt`は square root の略。
+
 # **底が$e$の指数関数（$e^x$）**
 
 # In[36]:
@@ -357,6 +359,8 @@ np.sqrt(4)
 
 np.exp(10)
 
+
+# `exp`は exponentiation の略
 
 # **自然対数（$\log_ex$または$\ln x$）**
 
@@ -441,7 +445,7 @@ np.median(xx)
 # 
 # `x`が数字の`array`やリストの場合
 # 
-# `np.var(x, ddof=0)`$=s_x^2=\dfrac{1}{1-\text{ddof}}\sum_{i=1}^n\left(x_i-\bar{x}\right)^2$（`ddof=0`がデフォルト）
+# `np.var(x, ddof=0)`$=s_x^2=\dfrac{1}{n-\text{ddof}}\sum_{i=1}^n\left(x_i-\bar{x}\right)^2$（`ddof=0`がデフォルト）
 # 
 # （注意）計量経済学で習う分散の不偏推定量は`ddof=1`が必要！
 
@@ -469,9 +473,9 @@ np.std(xx,ddof=1)
 # 
 # 2次元以上の`array`やリストの場合
 # 
-# `np.cov(xy, ddof=0)`$=c_{xy}=\dfrac{1}{1-\text{ddof}}\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})$（`ddof=0`がデフォルト）
+# `np.cov(xy, ddof=0)`$=c_{xy}=\dfrac{1}{n-\text{ddof}}\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})$（`ddof=0`がデフォルト）
 # 
-# （注意）計量経済学で習う分散の不偏推定量は`ddof=1`が必要！
+# （注意１）計量経済学で習う分散の不偏推定量は`ddof=1`が必要！
 # 
 # 下の計算結果
 # 
@@ -482,15 +486,44 @@ np.std(xx,ddof=1)
 # In[46]:
 
 
-xy = [[1,2,3,4,5,6],[1,6,2,5,3,1]]
-np.cov(xy,ddof=1)
+x = [1,2,3,4,5,6]
+y = [1,6,2,5,3,1]
 
+cov_xy = np.cov([x,y],ddof=1)
+cov_xy
+
+
+# In[47]:
+
+
+from myst_nb import glue
+varx = cov_xy[0,0]
+vary = cov_xy[1,1]
+covxy = cov_xy[0,1]
+glue('varx', varx, display=False)
+glue('vary', vary, display=False)
+glue('covxy', covxy, display=False)
+
+
+# ここでそれぞれの数字は次を表している。
+# * {glue:text}`covxy:.1f`：`x`と`y`の共分散であり，次のように値を抽出できる。
+#     ```
+#     `cov_xy[0,1]` もしくは　`cov_xy[1,0]`
+#     ```
+# * {glue:text}`varx`：`x`の分散であり，次のように値を抽出できる。
+#     ```
+#     `cov_xy[0,0]`
+#     ```
+# * {glue:text}`vary`：`y`の分散であり，次のように値を抽出できる。
+#     ```
+#     `cov_xy[1,1]`
+#     ```
 
 # **標本相関係数**
 # 
 # 2次元以上の`array`やリストの場合
 # 
-# `np.(xy)`$=r_{xy}=\dfrac{c_{xy}}{s_x\cdot s_y}$
+# `np.corrcoef(xy)`$=r_{xy}=\dfrac{c_{xy}}{s_x\cdot s_y}$
 # 
 # （注意）`ddof`の影響はない。
 # 
@@ -498,18 +531,45 @@ np.cov(xy,ddof=1)
 # * $r_{xy}=-0.152...$
 # * $r_{xx}=r_{yy}=1$
 
-# In[47]:
+# In[48]:
 
 
-np.corrcoef(xy)
+corr_xy = np.corrcoef([x,y])
+corr_xy
 
+
+# In[49]:
+
+
+from myst_nb import glue
+corrx = corr_xy[0,0]
+corry = corr_xy[1,1]
+corrxy = corr_xy[0,1]
+glue('corrx', corrx, display=False)
+glue('corry', corry, display=False)
+glue('corrxy', corrxy, display=False)
+
+
+# ここでそれぞれの数字は次を表している。
+# * {glue:text}`corrxy:.8f`：`x`と`y`の相関係数であり，次のように値を抽出できる。
+#     ```
+#     `corr_xy[0,1]` もしくは　`corr_xy[1,0]`
+#     ```
+# * {glue:text}`corrx`：`x`と`x`の相関関係であり，次のように値を抽出できる。
+#     ```
+#     `corr_xy[0,0]`
+#     ```
+# * {glue:text}`corry`：`y`と`y`の相関係数であり，次のように値を抽出できる。
+#     ```
+#     `corr_xy[1,1]`
+#     ```
 
 # ## array vs list
 
 # ここでは`list`と`NumPy`の`array`の重要な違いについて説明する。
 # 次のリストのそれぞれの要素に`10`を足したいとしよう。
 
-# In[48]:
+# In[50]:
 
 
 list0 = [1.0, 2.0, 3.0, 4.0, 5.0]
@@ -517,7 +577,7 @@ list0 = [1.0, 2.0, 3.0, 4.0, 5.0]
 
 # `for`ループを使うと次のようになる。
 
-# In[49]:
+# In[51]:
 
 
 list1 = []
@@ -529,16 +589,16 @@ list1
 
 # もう１つの方法として内包標記（list comprehension）がある。
 
-# In[50]:
+# In[52]:
 
 
 list2 = [i + 10 for i in list0]
 list2
 
 
-# どちらの方法を使ったとしても，複雑さが残る。また次のコードでは`10`を最後に追加するだけである。
+# どちらの方法を使ったとしても複雑さが残る。また次のコードでは`10`を最後に追加するだけである。
 
-# In[51]:
+# In[53]:
 
 
 list0 + [10]
@@ -546,7 +606,7 @@ list0 + [10]
 
 # より簡単なコードで実行できれば良いが，以下のコードではエラーが発生する。
 
-# In[52]:
+# In[54]:
 
 
 list0 + 10
@@ -557,14 +617,14 @@ list0 + 10
 # 
 # まず`array`を作成する。
 
-# In[53]:
+# In[55]:
 
 
 arr0 = np.array(list0)
 arr0
 
 
-# In[54]:
+# In[56]:
 
 
 arr0 + 10
@@ -572,7 +632,7 @@ arr0 + 10
 
 # この機能はベクトル演算（Vectorization）と呼ばれ、ループを使わずに個々の要素に直接働きかけ計算している。上記のコードは次の計算を行っている。
 
-# In[55]:
+# In[57]:
 
 
 arr0 + np.array([10]*5)
@@ -580,31 +640,31 @@ arr0 + np.array([10]*5)
 
 # 裏で`arr0`の長さに合わせて`10`を「拡張」し計算している。この機能により、より高速な計算が可能となるばかりか、より短いコードでそれを実現できる。`+`, `-`, `*`, `**` や他の関数にも同様に使うことができる。以下で例を挙げる。
 
-# In[56]:
+# In[58]:
 
 
 arr0 - 5
 
 
-# In[57]:
+# In[59]:
 
 
 arr0 * 10  
 
 
-# In[58]:
+# In[60]:
 
 
 arr0 ** 2
 
 
-# In[59]:
+# In[61]:
 
 
 np.sqrt(arr0)
 
 
-# In[60]:
+# In[62]:
 
 
 np.log(arr0)
@@ -612,7 +672,7 @@ np.log(arr0)
 
 # 次の計算も可能である。
 
-# In[61]:
+# In[63]:
 
 
 y = arr0 * 2 + np.sqrt(arr0) + 10
@@ -621,26 +681,26 @@ y
 
 # この機能は`NumPy`の行列でも有効である。
 
-# In[62]:
+# In[64]:
 
 
 mat0 = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 mat0
 
 
-# In[63]:
+# In[65]:
 
 
 mat0 * 10
 
 
-# In[64]:
+# In[66]:
 
 
 np.sqrt(mat0)
 
 
-# In[65]:
+# In[67]:
 
 
 np.log(mat0)
