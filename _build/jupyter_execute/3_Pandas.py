@@ -70,7 +70,7 @@ df
 df.head()
 
 
-# 引数に2を指定すると最初の3行のみ表示される。
+# 引数に2を指定すると最初の2行のみ表示される。
 
 # In[6]:
 
@@ -438,7 +438,7 @@ df['gdp'] < 100
 # In[39]:
 
 
-cond = (df['gdp'] < 100)
+cond = ( df['gdp'] < 100 )
 
 
 # `cond`を`.loc[,]`の引数とすることにより，`True`の行だけを抽出できる。（注意：`cond`を使って**行**を抽出しようとしているので`,`の左側に書く。）
@@ -466,7 +466,7 @@ df.loc[cond,:]
 # In[41]:
 
 
-cond = (df.loc[:,'id'] == 'a')
+cond = ( df.loc[:,'id'] == 'a' )
 df.loc[cond,:]
 
 
@@ -484,8 +484,8 @@ df.loc[cond,:]
 # In[42]:
 
 
-cond1 = (df['gdp'] >= 100)
-cond2 = (df['inv'] <= 30)
+cond1 = ( df['gdp'] >= 100 )
+cond2 = ( df['inv'] <= 30 )
 
 
 # ２つの条件が同時に満たされる条件を作成する。
@@ -493,7 +493,7 @@ cond2 = (df['inv'] <= 30)
 # In[43]:
 
 
-cond = (cond1 & cond2)
+cond = ( cond1 & cond2 )
 
 
 # `cond`を引数に使い行を抽出する。
@@ -513,9 +513,9 @@ df.loc[cond, :]
 # In[45]:
 
 
-cond1 = (df['gdp'] >= 200)
-cond2 = (df['con'] <= 60)
-cond = (cond1 | cond2)
+cond1 = ( df['gdp'] >= 200 )
+cond2 = ( df['con'] <= 60 )
+cond = ( cond1 | cond2 )
 
 df.loc[cond, :]
 
@@ -532,10 +532,10 @@ df.loc[cond, :]
 # In[46]:
 
 
-cond1 = (df['gdp'] >= 200)
-cond2 = (df['con'] <= 60)
-cond3 = (df['id'] == 'a')
-cond = ((cond1 | cond2) & cond3)
+cond1 = ( df['gdp'] >= 200 )
+cond2 = ( df['con'] <= 60 )
+cond3 = ( df['id'] == 'a' )
+cond = ( (cond1 | cond2) & cond3 )
 
 df.loc[cond, :]
 

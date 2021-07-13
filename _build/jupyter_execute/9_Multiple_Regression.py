@@ -272,6 +272,9 @@ res_4.params
 
 # ## 係数の解釈
 
+# (sec:9-interpretation)=
+# ## 係数の解釈
+
 # 次の推定式を考えよう。
 # 
 # $$y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+u$$
@@ -382,6 +385,9 @@ res_1a.params
 # 
 # 以下では１から考える。
 
+# ### 仮定と望ましい性質
+
+# (sec:9-assumptions)=
 # ### 仮定と望ましい性質
 
 # * 仮定１：Linear in Parameters（母集団回帰式の線形性）
