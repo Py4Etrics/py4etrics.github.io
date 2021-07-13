@@ -624,7 +624,9 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 </div>
 </div>
 <p>このデータを使い次の問題を考える。</p>
-<p>「教育水準は賃金にどのような影響を与えるのか」</p>
+<blockquote>
+<div><p>教育水準は賃金にどのような影響を与えるのか」</p>
+</div></blockquote>
 <ul class="simple">
 <li><p>被説明変数：<code class="docutils literal notranslate"><span class="pre">wage</span></code>（平均時給、単位：米ドル）</p></li>
 <li><p>説明変数：<code class="docutils literal notranslate"><span class="pre">educ</span></code>（教育年数、単位：年）</p></li>
@@ -783,6 +785,7 @@ memory usage: 8.3 KB
 </table>
 </div></div></div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">.head()</span></code>，<code class="docutils literal notranslate"><span class="pre">.tail()</span></code>，<code class="docutils literal notranslate"><span class="pre">.info()</span></code>そして<code class="docutils literal notranslate"><span class="pre">.describe()</span></code>を使い<code class="docutils literal notranslate"><span class="pre">df</span></code>の情報を確認し，データのイメージ作りをすることは回帰分析に役立つだろう。</p>
 </div>
 <div class="section" id="id4">
 <h2>「手計算」<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
@@ -866,6 +869,25 @@ memory usage: 8.3 KB
 </div>
 </div>
 </div>
+<p><strong>＜結果の解釈＞</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">b1hat</span></code>は次式の推定結果である。</p>
+<div class="math notranslate nohighlight">
+\[y = \beta_0+\beta_1x+u\]</div>
+<p>この式を<span class="math notranslate nohighlight">\(x\)</span>について微分すると</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\dfrac{dy}{dx}=\dfrac{y\text{の変化}}{x\text{の増加}}
+=
+\left(
+\begin{array}{l}
+    x\text{が1単位増加した}\\
+    \text{場合の}yの\text{変化}
+    \phantom{春}
+\end{array}
+\right)
+=\beta_1
+\end{split}\]</div>
+<p>となる。即ち，<span class="math notranslate nohighlight">\(\beta_1\)</span>は教育年数が１年増加した場合，平均時給は何ドル変化するかを示している。OLS推定結果は教育年数が１年増えると賃金は約0.54ドル上昇することを示している。</p>
 <p>同様に<span class="math notranslate nohighlight">\(\beta_0\)</span>の推定値 <span class="math notranslate nohighlight">\(\left(\hat{\beta}_0\right)\)</span>も計算する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1012,9 +1034,10 @@ dtype: float64
 </div>
 </div>
 </div>
+<p>「手計算」での計算結果と同じだと確認できる。</p>
 <p>また<code class="docutils literal notranslate"><span class="pre">wage</span></code>の予測値は<code class="docutils literal notranslate"><span class="pre">res.fittedvalues</span></code>もしくは<code class="docutils literal notranslate"><span class="pre">res.predict()</span></code>で得ることができる。<code class="docutils literal notranslate"><span class="pre">res.fittedvalues</span></code>は属性であり<code class="docutils literal notranslate"><span class="pre">res.predict()</span></code>はメソッドであるが、後者は引数がない場合は前者と同じ結果を返すことになる。</p>
-<p>上のリストが示すように<code class="docutils literal notranslate"><span class="pre">res</span></code>には多くの情報が詰まっており，これらを駆使し，図を描いたり推定値の検定をおこなうことになる。</p>
-<p>この中にあるメソッド<code class="docutils literal notranslate"><span class="pre">summary()</span></code>を使うと，主な結果がまとめられた表を出力することが可能である。</p>
+<p>上のリストが示すように<code class="docutils literal notranslate"><span class="pre">res</span></code>には多くの情報が詰まっており，これらを駆使して図を描いたり推定値の検定をおこなうことになる。</p>
+<p>この中にあるメソッド<code class="docutils literal notranslate"><span class="pre">summary()</span></code>を使うと，主な結果がまとめられた表を出力することができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
@@ -1027,8 +1050,8 @@ dtype: float64
 Dep. Variable:                   wage   R-squared:                       0.165
 Model:                            OLS   Adj. R-squared:                  0.163
 Method:                 Least Squares   F-statistic:                     103.4
-Date:                Mon, 05 Jul 2021   Prob (F-statistic):           2.78e-22
-Time:                        08:57:06   Log-Likelihood:                -1385.7
+Date:                Tue, 13 Jul 2021   Prob (F-statistic):           2.78e-22
+Time:                        04:56:25   Log-Likelihood:                -1385.7
 No. Observations:                 526   AIC:                             2775.
 Df Residuals:                     524   BIC:                             2784.
 Df Model:                           1                                         
@@ -1101,7 +1124,7 @@ educ           0.5414      0.053     10.167      0.000       0.437       0.646
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_63_0.png" src="_images/8_Simple_Regression_63_0.png" />
+<img alt="_images/8_Simple_Regression_65_0.png" src="_images/8_Simple_Regression_65_0.png" />
 </div>
 </div>
 </div>
@@ -1170,18 +1193,7 @@ R^2
 </div>
 </div>
 <p><strong>決定係数</strong></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">rsquared</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.16475751099205127
-</pre></div>
-</div>
-</div>
-</div>
+<p>上の定義を使うと次のように計算できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="n">SSR</span><span class="o">/</span><span class="n">SST</span>
@@ -1194,6 +1206,7 @@ R^2
 </div>
 </div>
 </div>
+<p>また次のように計算することも可能である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_hat</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">resid</span>  <span class="c1"># 残差</span>
@@ -1209,10 +1222,25 @@ R^2
 </div>
 </div>
 </div>
-<p><strong>修正済み決定係数</strong></p>
+<p>しかし「手計算」よりも<code class="docutils literal notranslate"><span class="pre">res</span></code>の属性<code class="docutils literal notranslate"><span class="pre">.rsquared</span></code>を使う方がより簡単である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">rsquared_adj</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">rsquared</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.16475751099205127
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>修正済み決定係数</strong></p>
+<p>上の定義を使うと次のように計算できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adjR2</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">R2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">adjR2</span>
 </pre></div>
 </div>
 </div>
@@ -1222,10 +1250,10 @@ R^2
 </div>
 </div>
 </div>
+<p>一方で修正済み決定係数を取得するメソッドは<code class="docutils literal notranslate"><span class="pre">.rsquared_adj</span></code>である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adjR2</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">R2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">adjR2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">rsquared_adj</span>
 </pre></div>
 </div>
 </div>
@@ -1277,6 +1305,18 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </div>
 </div>
 </div>
+<p><strong>＜結果の解釈＞</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">res</span></code>は次式の推定結果である。</p>
+<div class="math notranslate nohighlight">
+\[\ln y = \beta_0+\beta_1x+u\]</div>
+<p>この式を<span class="math notranslate nohighlight">\(x\)</span>について微分すると</p>
+<div class="math notranslate nohighlight">
+\[\dfrac{d\ln y}{dx}=\dfrac{dy/y}{dx}=\dfrac{y\text{の%変化}}{dx}=\beta_1\]</div>
+<p>となる。即ち，<span class="math notranslate nohighlight">\(\beta_1\)</span>は<span class="math notranslate nohighlight">\(x\)</span>（教育年数）が一単位増加した場合，<span class="math notranslate nohighlight">\(y\)</span>（賃金）が何％変化するかを示している。この値は教育の収益率である。OLS推定結果は教育年数が１年増えると賃金は8.2%増加することを示している。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>上の例では<code class="docutils literal notranslate"><span class="pre">wage_log</span></code>の変数を作成し計算したが、変数変換のコードを回帰式に直接書く方法もある。次章で説明することにする。</p>
+</div>
 <p>結果を図示しよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1293,48 +1333,28 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_82_0.png" src="_images/8_Simple_Regression_82_0.png" />
+<img alt="_images/8_Simple_Regression_89_0.png" src="_images/8_Simple_Regression_89_0.png" />
 </div>
-</div>
-<p>＜結果の解釈＞</p>
-<p><code class="docutils literal notranslate"><span class="pre">res</span></code>は次式の推定結果である。</p>
-<div class="math notranslate nohighlight">
-\[\ln y = \beta_0+\beta_1x+u\]</div>
-<p>この式を<span class="math notranslate nohighlight">\(x\)</span>について微分すると</p>
-<div class="math notranslate nohighlight">
-\[\dfrac{d\ln y}{dx}=\dfrac{dy/y}{dx}=\dfrac{y\text{の%変化}}{dx}=\beta_1\]</div>
-<p>となる。即ち，<span class="math notranslate nohighlight">\(\beta_1\)</span>は<span class="math notranslate nohighlight">\(x\)</span>（教育年数）が一単位増加した場合，<span class="math notranslate nohighlight">\(y\)</span>（賃金）が何％変化するかを示している。この値は教育の収益率である。OLS推定結果は教育年数が１年増えると賃金は8.2%増加することを示している。</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>上の例では<code class="docutils literal notranslate"><span class="pre">wage_log</span></code>の変数を作成し計算したが、変数変換のコードを回帰式に直接書く方法もある。次章で説明することにする。</p>
 </div>
 </div>
 <div class="section" id="ols">
 <h2>シミュレーション：<span class="math notranslate nohighlight">\(OLS\)</span>推定<a class="headerlink" href="#ols" title="Permalink to this headline">¶</a></h2>
+<p>上ではデータを使い「手計算」と<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使い係数を計算したが，ここではOLS推定の「意味」をシミュレーションを使って考えてみることにする。</p>
 <div class="section" id="id8">
 <h3>母集団の考え方<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
-<p>母集団とは分析の対象となる共通の属性などを持つ個人・企業・産業・地域・国などの集合体といえる。ここで重要な点は母集団の大きさとランダム抽出の関係を理解することである。</p>
+<p>母集団とは分析の対象となる共通の属性などを持つ個人・企業・産業・地域・国などの集合体といえる。ここで重要な点は母集団の大きさとランダム抽出の関係を理解することである。次の２つの例を使って考えてみよう。</p>
 <ul class="simple">
-<li><p>「人間の身長」の母集団：地球上の人間</p>
-<ul>
-<li><p>全員の身長を測るのはあまりにも費用が高い <span class="math notranslate nohighlight">\(\Rightarrow\)</span> 標本の大きさ<span class="math notranslate nohighlight">\(&lt;\)</span>母集団の大きさ</p></li>
-</ul>
-</li>
-<li><p>「OECD諸国のGDP」の母集団：37カ国</p>
-<ul>
-<li><p>2019年のGDPは簡単に入手可能だが、「標本の大きさ<span class="math notranslate nohighlight">\(=\)</span>母集団の大きさ」という意味なのだろうか。そうだとすれば，標本ではなく母集団全てのデータを扱うことになり，標本の概念である標準誤差などは意味がなくなることになる。しかし、「標本の大きさ<span class="math notranslate nohighlight">\(&lt;\)</span>母集団」と解釈できる２つの考え方がある。</p>
+<li><p>「今年の人間の平均身長」を知りたいとしよう。この場合の母集団は地球上の全ての人間である。しかし，全員の身長を測るのはあまりにも費用が高いため，標本を集め，その平均から「人間の平均身長」を推定することが可能である（<a class="reference external" href="https://ja.wikipedia.org/wiki/%E5%A4%A7%E6%95%B0%E3%81%AE%E6%B3%95%E5%89%87">参照</a>）。この場合「標本の大きさ<span class="math notranslate nohighlight">\(&lt;\)</span>母集団の大きさ」となる。</p></li>
+<li><p>「今年のOECD諸国のGDP」についての何らかの統計量を計算したいとしよう。2021年現在でOECDには38カ国のメンバー国があり，GDPのデータは簡単に入手可能である。これは「標本の大きさ<span class="math notranslate nohighlight">\(=\)</span>母集団の大きさ」という意味なのだろうか。そうだとすれば，標本ではなく母集団全てのデータを扱うことになり，標本の概念である標準誤差などは意味がなくなることになる。しかし「標本の大きさ<span class="math notranslate nohighlight">\(&lt;\)</span>母集団」と解釈できる２つの考え方がある。</p>
 <ol class="simple">
-<li><p>時間は「無限」と考えることができる。その考えに従うと、37カ国のGDPデータも「無限」に存在することになる。従って、ある時点の37カ国のGDPのデータは、「無限」の母集団から抽出されたランダム変数と考えることができる。国と時間の概念で考えると母集団の大きさは<span class="math notranslate nohighlight">\(\infty\)</span>となる。</p></li>
-<li><p>確率変数とは実現可能な数値から１つを実現させる関数である。またGDP自体は確率変数として解釈する方が自然である（「重回帰分析」で説明する仮定２を参照）。従って，37カ国の<strong>実現可能なGDPの値が母集団</strong>となる。この解釈によると「標本の大きさ<span class="math notranslate nohighlight">\(&lt;\)</span>母集団の大きさ」となる。</p></li>
+<li><p>時間は「無限」と考えることができる。この考えに従うと、38カ国のGDPデータも「無限」に存在することになる（OECDが存在する限りという意味での「無限」）。従って、ある時点の38カ国のGDPのデータは「無限」の母集団から抽出されたランダム変数と考えることができる。国と時間の概念で考えると母集団の大きさは非常に大きいと解釈できる。</p></li>
+<li><p>確率変数とは実現可能な数値から１つを実現させる関数である。またGDP自体は確率変数として解釈する方が自然である（<a class="reference internal" href="9_Multiple_Regression.html#sec-9-assumptions"><span class="std std-ref">「重回帰分析」</span></a>)で説明する仮定２を参照）。従って，38カ国の<strong>実現可能なGDPの値が母集団</strong>となる。今年度のみでの実現可能なGDPは無数にあるため，この解釈によると「標本の大きさ<span class="math notranslate nohighlight">\(&lt;\)</span>母集団の大きさ」となる。</p></li>
 </ol>
-</li>
-</ul>
 </li>
 </ul>
 </div>
 <div class="section" id="id9">
 <h3>プラン<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<p>回帰分析の理解を深めるするために、上述の母集団の考え方に基づいてシミュレーションを次の手順でおこなう。</p>
 <p><strong>＜Step 1＞</strong></p>
 <ul>
 <li><p>母集団の大きさは指定しない。</p></li>
@@ -1430,22 +1450,22 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    2.733890
-X            0.552306
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.636138
+X            1.115548
 dtype: float64
 </pre></div>
 </div>
 </div>
 </div>
-<p>母集団パラメータと比べると、推定誤差が発生していることがわかる。</p>
+<p>母集団パラメータと比べると，推定誤差が発生していることがわかる。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>ランダム変数を発生させ回帰分析を行っていることに注意しよう。ここで生成したランダム変数は、読者が生成したランダム変数とは異なる。従って、係数の推定値も異なることになる。</p>
+<p>ランダム変数を発生させ回帰分析を行っていることに注意しよう。ここで生成したランダム変数は、読者が生成したランダム変数とは異なる。従って，係数の推定値も異なることになる。</p>
 </div>
 </div>
 <div class="section" id="id11">
 <h3>関数化<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
-<p>次に、上で行ったシミュレーションのコードを関数をしてまとめることにする。</p>
+<p>次に，上で行ったシミュレーションのコードを関数にまとめることにする。</p>
 <p><code class="docutils literal notranslate"><span class="pre">def</span></code>を使い<code class="docutils literal notranslate"><span class="pre">my_sim</span></code>という名前の関数を作成する。</p>
 <ul class="simple">
 <li><p>引数</p>
@@ -1488,8 +1508,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.288672
-X            1.155475
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.198089
+X            0.917354
 dtype: float64
 </pre></div>
 </div>
@@ -1497,7 +1517,7 @@ dtype: float64
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">b0</span></code>，<code class="docutils literal notranslate"><span class="pre">b1</span></code>，<code class="docutils literal notranslate"><span class="pre">su</span></code>変えて計算してみよう。</p>
 <hr class="docutils" />
-<p>シミュレーションで同じ計算を数十万回おこなう場合，１回のシミュレーションに時間がかかり，それをどのように高速化するかが問題になる。その際，役に立つパッケージが<code class="docutils literal notranslate"><span class="pre">Numba</span></code>であり，１行のコードを追加するだけで計算を驚く程高速化できる。しかし<code class="docutils literal notranslate"><span class="pre">Numba</span></code>には「相性」の問題がある。例えば，上の関数<code class="docutils literal notranslate"><span class="pre">my_sim()</span></code>で使った<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>，<code class="docutils literal notranslate"><span class="pre">pandas</span></code>，<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>は<code class="docutils literal notranslate"><span class="pre">Numba</span></code>と相性が悪いが，<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>は非常に相性が良い。また，<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使う際，リストよりも<code class="docutils literal notranslate"><span class="pre">array</span></code>を使う方が少しでも高速化を図ることができることも覚えておくと良いだろう。以下では，<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使うために<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>を使う「手計算」による関数を考えることにする。</p>
+<p>シミュレーションで同じ計算を数十万回おこなう場合，１回のシミュレーションに時間がかかり，それをどのように高速化するかが問題になる。その際に役に立つパッケージが<code class="docutils literal notranslate"><span class="pre">Numba</span></code>であり，１行のコードを追加するだけで計算を驚く程高速化できる。しかし<code class="docutils literal notranslate"><span class="pre">Numba</span></code>には「相性」の問題がある。例えば，上の関数<code class="docutils literal notranslate"><span class="pre">my_sim()</span></code>で使った<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>，<code class="docutils literal notranslate"><span class="pre">pandas</span></code>，<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>は<code class="docutils literal notranslate"><span class="pre">Numba</span></code>と相性が悪いが，<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>は非常に相性が良い。また，<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使う際，リストよりも<code class="docutils literal notranslate"><span class="pre">array</span></code>を使う方が少しでも高速化を図ることができることも覚えておくと良いだろう。以下では，<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使う準備として，<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>を使う「手計算」関数を考えることにする。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_sim_manual</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">b0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">b1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">su</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>  <span class="c1"># nは標本の大きさ，　他はデフォルトを設定</span>
@@ -1529,7 +1549,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.7795032309916574, 1.026313292872231)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.6733171994482028, 0.8460708366516474)
 </pre></div>
 </div>
 </div>
@@ -1538,7 +1558,7 @@ dtype: float64
 </div>
 <div class="section" id="id12">
 <h3>ループを使ってシミュレーション<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
-<p>標本による推定は誤差が発生する。その誤差はどれだけ大きく（小さく）何に依存するかを確認するために<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを使い次のシミュレーションを行う。</p>
+<p>標本による推定は誤差が発生する。その誤差はどれだけ大きく（小さく）何に依存するかを確認するために<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを使い次のシミュレーションを行うことにする。</p>
 <ul class="simple">
 <li><p>標本の大きさ<code class="docutils literal notranslate"><span class="pre">n</span></code>のデータを<code class="docutils literal notranslate"><span class="pre">N</span></code>組用意し（<code class="docutils literal notranslate"><span class="pre">N</span></code>は標本数），<code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定を<code class="docutils literal notranslate"><span class="pre">N</span></code>回おこなう。</p></li>
 <li><p>シミュレーション毎に計算した回帰係数の推定値の分布を図示する。</p></li>
@@ -1568,7 +1588,8 @@ dtype: float64
 </div>
 </div>
 </div>
-<p>次にシミュレーション用の関数を用意する。</p>
+<p>この<code class="docutils literal notranslate"><span class="pre">my_sim_manual()</span></code>の内容は，上で作成した<code class="docutils literal notranslate"><span class="pre">my_sim_manual()</span></code>と全く同じである。単に<code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code>の一行だけが付け加えられているだけだが，これにより全く別の高速化された関数に「変身」することになる。</p>
+<p>次に<code class="docutils literal notranslate"><span class="pre">my_sim_manual()</span></code>を<code class="docutils literal notranslate"><span class="pre">for</span></code>ループで計算するシミュレーション用の関数を用意する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>
@@ -1590,7 +1611,7 @@ dtype: float64
 </div>
 </div>
 </div>
-<p>標本の大きさを<code class="docutils literal notranslate"><span class="pre">50</span></code>、シミュレーションの回数を<code class="docutils literal notranslate"><span class="pre">100_000</span></code>としてシミュレーションを始める。</p>
+<p>標本の大きさを<code class="docutils literal notranslate"><span class="pre">50</span></code>，シミュレーションの回数を<code class="docutils literal notranslate"><span class="pre">100_000</span></code>としてシミュレーションを始める。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0hat</span><span class="p">,</span> <span class="n">b1hat</span> <span class="o">=</span> <span class="n">my_sim_loop</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">N</span><span class="o">=</span><span class="mi">100_000</span><span class="p">)</span>
@@ -1611,7 +1632,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_123_0.png" src="_images/8_Simple_Regression_123_0.png" />
+<img alt="_images/8_Simple_Regression_129_0.png" src="_images/8_Simple_Regression_129_0.png" />
 </div>
 </div>
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布を図示する。</p>
@@ -1623,7 +1644,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_125_0.png" src="_images/8_Simple_Regression_125_0.png" />
+<img alt="_images/8_Simple_Regression_131_0.png" src="_images/8_Simple_Regression_131_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">y</span></code>の理論値を図示するが，図示の時間短縮のために<code class="docutils literal notranslate"><span class="pre">N</span></code>回のシミュレーション中の最初の<code class="docutils literal notranslate"><span class="pre">r</span></code>回の回帰線だけを表示する。</p>
@@ -1652,12 +1673,13 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_129_0.png" src="_images/8_Simple_Regression_129_0.png" />
+<img alt="_images/8_Simple_Regression_135_0.png" src="_images/8_Simple_Regression_135_0.png" />
 </div>
 </div>
-<blockquote>
-<div><p>上のコード・ブロックの最後から２行目に<code class="docutils literal notranslate"><span class="pre">f'{r}</span> <span class="pre">rounds</span> <span class="pre">of</span> <span class="pre">OLS</span> <span class="pre">simulation'</span></code>とある。文字列の前に<code class="docutils literal notranslate"><span class="pre">f</span></code>を置き、文字列の中で上で定義した変数を<code class="docutils literal notranslate"><span class="pre">{}</span></code>で囲むとその変数の値を代入することができる。これを<code class="docutils literal notranslate"><span class="pre">f-string</span></code>と呼ぶ。</p>
-</div></blockquote>
+<div class="admonition- admonition">
+<p class="admonition-title">コードの説明</p>
+<p>上のコード・ブロックの最後から２行目に<code class="docutils literal notranslate"><span class="pre">f'{r}</span> <span class="pre">rounds</span> <span class="pre">of</span> <span class="pre">OLS</span> <span class="pre">simulation'</span></code>とある。文字列の前に<code class="docutils literal notranslate"><span class="pre">f</span></code>を置き、文字列の中で上で定義した変数を<code class="docutils literal notranslate"><span class="pre">{}</span></code>で囲むとその変数の値を代入することができる。これを<code class="docutils literal notranslate"><span class="pre">f-string</span></code>と呼ぶ。</p>
+</div>
 <hr class="docutils" />
 <p><strong>＜シミュレーションの含意＞</strong></p>
 <p>まず上の２つのヒストグラムをみると，値にばらつきがある。これは推定量（<span class="math notranslate nohighlight">\(\hat{\beta}_0\)</span>と<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>）が確率変数であるためである。その実現値は，真の値（<span class="math notranslate nohighlight">\(\beta_0=1.0\)</span>と<span class="math notranslate nohighlight">\(\beta_1=1.0\)</span>）を中心に左右対象に分布している。即ち，推定量は不偏性を満たしている。次の章で簡単に説明するが，上で行ったシミュレーションは不偏推定量に必要な仮定を満たしているためである。</p>
