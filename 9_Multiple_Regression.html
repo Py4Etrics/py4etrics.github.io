@@ -532,8 +532,8 @@
         
               <div>
                 
-  <div class="section" id="id1">
-<h1>重回帰分析<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="chap-9-multiple">
+<span id="id1"></span><h1>重回帰分析<a class="headerlink" href="#chap-9-multiple" title="Permalink to this headline">¶</a></h1>
 <p>If you come here without expecting Japanese, please click <a class="reference external" href="https://translate.google.com/translate?hl=&amp;sl=ja&amp;tl=en&amp;u=https%3A%2F%2Fpy4etrics.github.io%2F9_Multiple_Regression.html">Google translated version</a> in English or the language of your choice.</p>
 <hr class="docutils" />
 <div class="cell docutils container">
@@ -570,7 +570,7 @@
 <h2><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使う<a class="headerlink" href="#statsmodels" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id3">
 <h3>推定<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>単回帰分析で使った同じデータセット<code class="docutils literal notranslate"><span class="pre">wage1</span></code>を使い，賃金と教育の関係を再考する。前章と異なる点は，複数の説明変数を導入し重回帰分析をおこなうことである。追加的な説明変数として次の変数を加える。</p>
+<p>単回帰分析で使った同じデータセット<code class="docutils literal notranslate"><span class="pre">wage1</span></code>を使い，賃金と教育の関係を再考する。<a class="reference internal" href="8_Simple_Regression.html#chap-8-simple"><span class="std std-ref">前章</span></a>と異なる点は，複数の説明変数を導入し重回帰分析をおこなうことである。追加的な説明変数として次の変数を加える。</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">exper</span></code>：潜在的な経験年数（＝年齢ー最高学歴までの年数ー６）</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">tenure</span></code>：現在の職場での在職年数</p></li>
@@ -709,7 +709,7 @@ dtype: float64
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">res_1</span></code>は<code class="docutils literal notranslate"><span class="pre">pandas.Series</span></code>型なので、インデックスを使って<code class="docutils literal notranslate"><span class="pre">educ</span></code>の係数だけを取り出す場合は次のようにする。</p>
+<p><code class="docutils literal notranslate"><span class="pre">res_1</span></code>は<code class="docutils literal notranslate"><span class="pre">Series</span></code>なので、インデックスを使って<code class="docutils literal notranslate"><span class="pre">educ</span></code>の係数だけを取り出す場合は次のようにする。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_1</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -741,7 +741,7 @@ dtype: float64
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">wm</span></code>は<code class="docutils literal notranslate"><span class="pre">pandas.Series</span></code>なので、変数の行ラベルを使い<code class="docutils literal notranslate"><span class="pre">wm['educ']</span></code>で<code class="docutils literal notranslate"><span class="pre">educ</span></code>の平均値だけを取り出すことができる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">wm</span></code>は<code class="docutils literal notranslate"><span class="pre">Series</span></code>なので、変数の行ラベルを使い<code class="docutils literal notranslate"><span class="pre">wm['educ']</span></code>で<code class="docutils literal notranslate"><span class="pre">educ</span></code>の平均値だけを取り出すことができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wm</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span>
@@ -754,7 +754,7 @@ dtype: float64
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">predict()</span></code>に渡す引数としては、説明変数の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作るのが一番簡単であろう。</p>
+<p><code class="docutils literal notranslate"><span class="pre">predict()</span></code>に渡す引数としては，説明変数の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作るのが一番簡単であろう。</p>
 <p>次のコードでは辞書の値が<code class="docutils literal notranslate"><span class="pre">wm['educ']</span></code>ではなく<code class="docutils literal notranslate"><span class="pre">[wm['educ']]</span></code>となっている点に注意しよう。これは<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作成する際，単なる値ではなく<code class="docutils literal notranslate"><span class="pre">list</span></code>や<code class="docutils literal notranslate"><span class="pre">array</span></code>にして値として使う必要があるためである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -778,25 +778,82 @@ dtype: float64
 </div>
 </div>
 </div>
-<p>複数の予測値を計算するには、辞書の値にある<code class="docutils literal notranslate"><span class="pre">list</span></code>や<code class="docutils literal notranslate"><span class="pre">array</span></code>に複数の要素を書き込む。次の例では、<code class="docutils literal notranslate"><span class="pre">tenure</span></code>と<code class="docutils literal notranslate"><span class="pre">exper</span></code>を平均値に固定し、<code class="docutils literal notranslate"><span class="pre">educ</span></code>を平均値、平均値の0.5倍の値、平均値の1.5倍の値に変化させて予測値を計算している。</p>
+<p>３つの変数が平均値を取る場合の平均時給の対数値は約1.62である。</p>
+<p>複数の予測値を計算するには、辞書の値にある<code class="docutils literal notranslate"><span class="pre">list</span></code>や<code class="docutils literal notranslate"><span class="pre">array</span></code>に複数の要素を書き込めば良い。次の例では、<code class="docutils literal notranslate"><span class="pre">tenure</span></code>と<code class="docutils literal notranslate"><span class="pre">exper</span></code>を平均値に固定し、<code class="docutils literal notranslate"><span class="pre">educ</span></code>を平均値、平均値-1、平均値+1に変化させて予測値を計算している。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">educ_mean</span> <span class="o">=</span> <span class="n">wm</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span>
 <span class="n">tenure_mean</span> <span class="o">=</span> <span class="n">wm</span><span class="p">[</span><span class="s1">&#39;tenure&#39;</span><span class="p">]</span>
 <span class="n">exper_mean</span> <span class="o">=</span> <span class="n">wm</span><span class="p">[</span><span class="s1">&#39;exper&#39;</span><span class="p">]</span>
 
-<span class="n">z2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;educ&#39;</span><span class="p">:[</span><span class="n">educ_mean</span><span class="o">*</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">educ_mean</span><span class="p">,</span> <span class="n">educ_mean</span><span class="o">*</span><span class="mf">1.5</span><span class="p">],</span>
+<span class="n">z2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;educ&#39;</span><span class="p">:[</span><span class="n">educ_mean</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">educ_mean</span><span class="p">,</span> <span class="n">educ_mean</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span>
                   <span class="s1">&#39;tenure&#39;</span><span class="p">:[</span><span class="n">tenure_mean</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span>
                   <span class="s1">&#39;exper&#39;</span><span class="p">:[</span><span class="n">exper_mean</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">})</span>
-<span class="n">res_1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">z2</span><span class="p">)</span>
+<span class="n">educ_return</span> <span class="o">=</span> <span class="n">res_1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">z2</span><span class="p">)</span>
+<span class="n">educ_return</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    1.045200
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    1.531239
 1    1.623268
-2    2.201336
+2    1.715297
 dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>３つの変数が平均の値を取る場合，平均賃金の対数値は1.623268であり，上の計算と同じになることが確認できる。教育年数が1年減少すると予測値は1.531239であり，教育年数が1年増えると予測値は2.201336となる。この結果を使い，教育年数が一年変化する場合の影響を計算してみよう。まず教育年数が1年減少すると場合を計算しよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">educ_return</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">educ_return</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.09202898676928317
+</pre></div>
+</div>
+</div>
+</div>
+<p>次に教育年数が1年増える場合を計算しよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">educ_return</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">educ_return</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.09202898676928317
+</pre></div>
+</div>
+</div>
+</div>
+<p>これらの数字は同じである。この結果は偶然ではない。他の要因を固定し教育年数が1年変化（減少もしくは増加）した場合，平均時給の対数値がどれだけ変化したかを計算している。これは正しく教育の収益率である。この点を数式で確認するために，変数<span class="math notranslate nohighlight">\(x\)</span>の値が小さい場合（例えば，0.02），次の近似が成立することを思い出そう。</p>
+<div class="math notranslate nohighlight" id="equation-eq-9-approx">
+<span class="eqno">(1)<a class="headerlink" href="#equation-eq-9-approx" title="Permalink to this equation">¶</a></span>\[
+\log(x+1)\approx x
+\]</div>
+<p>また教育年数が<span class="math notranslate nohighlight">\(h\)</span>の場合の平均時給を<span class="math notranslate nohighlight">\(w(h)\)</span>としよう。教育年数が一年増えた場合の教育の収益率は<span class="math notranslate nohighlight">\(\dfrac{w(h+1)-w(h)}{w(h)}\)</span>となり，<a class="reference internal" href="#equation-eq-9-approx">(1)</a>を使うと次のように書くことができる。</p>
+<div class="math notranslate nohighlight" id="equation-eq-9-approx2">
+<span class="eqno">(2)<a class="headerlink" href="#equation-eq-9-approx2" title="Permalink to this equation">¶</a></span>\[\begin{split}
+\begin{align*}
+\frac{w(h+1)-w(h)}{w(h)}
+&amp;\approx\log\left(\frac{w(h+1)-w(h)}{w(h)}+1\right)\\
+&amp;=\log\left(\frac{w(h+1)}{w(h)}\right)\\
+&amp;=\log(w(h+1))-\log(w(h))
+\end{align*}
+\end{split}\]</div>
+<p>最後の等号が上の計算で使った式である。<span class="math notranslate nohighlight">\(h+1\)</span>を<span class="math notranslate nohighlight">\(h-1\)</span>に変えると教育年数が1年減少した場合を考えることができる。</p>
+<p>もう一点付け加えるために，上の回帰分析の変数<code class="docutils literal notranslate"><span class="pre">educ</span></code>の係数の解釈を思い出そう。教育年数が一年増えた場合，平均賃金の対数値はどれだけ変化するかを示しており，教育の収益率を表している。従って，ここで計算した値と同じになるはずである。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_1</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0920289867692832
 </pre></div>
 </div>
 </div>
@@ -815,15 +872,18 @@ dtype: float64
 </div>
 </div>
 </div>
+<div class="admonition- admonition">
+<p class="admonition-title">コードの説明</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">res_1.predict()</span> <span class="pre">==</span> <span class="pre">res_1.fittedvalues</span></code>の意味</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">res_1.predict()</span></code>と<code class="docutils literal notranslate"><span class="pre">res_1.fittedvalues</span></code>はSeriesを返すので，<code class="docutils literal notranslate"><span class="pre">==</span></code>で比較することにより，それぞれの対応する値が等しければ<code class="docutils literal notranslate"><span class="pre">True</span></code>異なれば<code class="docutils literal notranslate"><span class="pre">False</span></code>になるSeriesを返す。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">res_1.predict()</span></code>と<code class="docutils literal notranslate"><span class="pre">res_1.fittedvalues</span></code>はSeriesを返すので，<code class="docutils literal notranslate"><span class="pre">==</span></code>で比較することにより，それぞれの対応する要素の値が等しければ<code class="docutils literal notranslate"><span class="pre">True</span></code>，異なれば<code class="docutils literal notranslate"><span class="pre">False</span></code>になるSeriesを返す。</p></li>
 </ul>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">(</span> <span class="pre">res_1.predict()</span> <span class="pre">==</span> <span class="pre">res_1.fittedvalues</span> <span class="pre">)</span></code>の<code class="docutils literal notranslate"><span class="pre">()</span></code>は、その中のコードを先に実行することを指定する（数学の<code class="docutils literal notranslate"><span class="pre">()</span></code>と同じ）。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">all()</span></code>は返されたSeriesの値が全て<code class="docutils literal notranslate"><span class="pre">True</span></code>である場合は<code class="docutils literal notranslate"><span class="pre">True</span></code>を、１つでも<code class="docutils literal notranslate"><span class="pre">False</span></code>があれば<code class="docutils literal notranslate"><span class="pre">False</span></code>を返す。</p></li>
 </ul>
+</div>
 <p><code class="docutils literal notranslate"><span class="pre">True</span></code>が返されているので、値は全て同じだと確認できた。</p>
 </div>
 </div>
@@ -933,7 +993,7 @@ dtype: float64
 </div>
 <div class="section" id="q">
 <h3><code class="docutils literal notranslate"><span class="pre">Q()</span></code>について<a class="headerlink" href="#q" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">Q()</span></code>は変数の変換に使うわけではないが、その用途を覚えておくと役に立つことだろう。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Q()</span></code>は変数の変換に使うわけではないが、その用途を覚えておくと役に立つだろう。</p>
 <p><code class="docutils literal notranslate"><span class="pre">Python</span></code>には予約語（reserved words）と呼ばれるものがり、変数名には使えない。以下がその例である。</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">def</span></code>と<code class="docutils literal notranslate"><span class="pre">return</span></code>：関数を定義する場合に使う</p></li>
@@ -941,7 +1001,7 @@ dtype: float64
 <li><p><code class="docutils literal notranslate"><span class="pre">import</span></code>と<code class="docutils literal notranslate"><span class="pre">from</span></code>：パッケージのインポート</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">if</span></code>と<code class="docutils literal notranslate"><span class="pre">elif</span></code>と<code class="docutils literal notranslate"><span class="pre">elase</span></code>：<code class="docutils literal notranslate"><span class="pre">if</span></code>文に使う</p></li>
 </ul>
-<p>また<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の列ラベルに予約語を文字列として使うことも避けるべきであろう。しかし、どうしても使う場合もあるかもしれない（例えば、他のプログラム用に作成されてデータを読み込む場合）。だが、予約語をそのまま回帰式に書くとエラーが発生する。その際に役に立つのが<code class="docutils literal notranslate"><span class="pre">Q()</span></code>である。例えば、<code class="docutils literal notranslate"><span class="pre">df</span></code>という<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>に「利子率」の列ラベルとして<code class="docutils literal notranslate"><span class="pre">return</span></code>が設定され、もう一つの変数に<code class="docutils literal notranslate"><span class="pre">X</span></code>があるとしよう。<code class="docutils literal notranslate"><span class="pre">Q()</span></code>の引数として<code class="docutils literal notranslate"><span class="pre">return</span></code>を文字列で書くことにより、通常どおりのコードを書くことができる。</p>
+<p>また<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の列ラベルに予約語を文字列として使うことも避けるべきであろう。しかし、どうしても使う場合もあるかもしれない（例えば、他のプログラム用に作成されてデータを読み込む場合）。だが、予約語をそのまま回帰式に書くとエラーが発生する。その際に役に立つのが<code class="docutils literal notranslate"><span class="pre">Q()</span></code>である。例えば、<code class="docutils literal notranslate"><span class="pre">df</span></code>という<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>に「利子率」の列があり，列ラベルとして<code class="docutils literal notranslate"><span class="pre">return</span></code>が設定されているとしよう。<code class="docutils literal notranslate"><span class="pre">Q()</span></code>の引数として<code class="docutils literal notranslate"><span class="pre">return</span></code>を文字列で書くことにより、通常どおりのコードを書くことができる。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;Q(&quot;return&quot;) ~ X</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
@@ -1005,7 +1065,7 @@ dtype: float64
 =\dfrac{\%\Delta\text{wage}}{\Delta\text{educ}}
 \]</div>
 <p>ここで，<span class="math notranslate nohighlight">\(\%\Delta\text{wage}=\)</span>％で表した
-<code class="docutils literal notranslate"><span class="pre">wage</span></code>の変化。従って，教育期間が一単位（ここでは一年）増えると賃金は約9.2%増加することを示している。</p>
+<code class="docutils literal notranslate"><span class="pre">wage</span></code>の変化を意味する（<a class="reference internal" href="#equation-eq-9-approx2">(2)</a>を参照）。従って，教育期間が一単位（ここでは一年）増えると賃金は約9.2%増加することを示している。</p>
 </div>
 <div class="section" id="id7">
 <h2>ガウス・マルコフ定理<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
@@ -1013,7 +1073,7 @@ dtype: float64
 <h3>母集団回帰式と標本回帰式<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>今までは回帰式に基づいて<code class="docutils literal notranslate"><span class="pre">Python</span></code>を使い係数の推定方法を説明したが，ここではOLS推定量の望ましい性質とはなにか，望ましい性質の条件はなにかを考える。そのために，まず母集団回帰式と標本回帰式について説明する。</p>
 <p>計量経済学では，データを使い<strong>経済理論（経済学的な考え）</strong>
-に基づいた仮説を検証する。例として「消費は家計の所得<span class="math notranslate nohighlight">\(x_1\)</span>が高くなると増えるが，子どもの数<span class="math notranslate nohighlight">\(x_2\)</span>と反比例する」という仮説を考える。所得と子どもの数に依存する消費の部分だけを<span class="math notranslate nohighlight">\(y^*\)</span>と書くと，一般型の消費関数は<span class="math notranslate nohighlight">\(y^*=f\left(x_1,x_2\right)\)</span>となる。更に，線形を仮定すると次式となる。</p>
+に基づいた仮説を検証する。例として「消費は家計の所得<span class="math notranslate nohighlight">\(x_1\)</span>が高くなると増え，子どもの数<span class="math notranslate nohighlight">\(x_2\)</span>とも正比例する」という仮説を考えよう。所得と子どもの数に依存する消費の部分だけを<span class="math notranslate nohighlight">\(y^*\)</span>と書くと，一般型の消費関数は<span class="math notranslate nohighlight">\(y^*=f\left(x_1,x_2\right)\)</span>となる。更に，線形を仮定すると次式となる。</p>
 <div class="math notranslate nohighlight">
 \[y^*=\beta_0+\beta_1x_1+\beta_2x_2\qquad{(式１)}\]</div>
 <p>例えば，所得30万円，子ども2人の家計の場合、消費は<span class="math notranslate nohighlight">\(\beta_0+\beta_1\cdot\left(\text{30万円}\right)+\beta_2\cdot\left(\text{2人}\right)\)</span>となる。所得 <span class="math notranslate nohighlight">\(x_1\)</span>が変化すると消費<span class="math notranslate nohighlight">\(y^*\)</span>も変化することが分かる。このことは<span class="math notranslate nohighlight">\(\beta_2=0\)</span>の単回帰の場合（消費が子供の数に依存しない場合）を考えればもっと分かりやすいだろう。その場合，(式１)は</p>
@@ -1037,7 +1097,7 @@ dtype: float64
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p>母集団回帰式(式３)は理論的な仮定に基づいて導出したため，それが正しいかどうかは事前に分からない。</p></li>
+<li><p>母集団回帰式(式３)は理論的な仮定に基づいて導出したため，それが正しいかどうかは事前に分からない。従って，経済理論に基づき母集団回帰式の妥当性を検討する必要がある。</p></li>
 <li><p>母集団パラメータ<span class="math notranslate nohighlight">\(\beta_j\)</span>, <span class="math notranslate nohighlight">\(j=0,1,2\)</span>と誤差項<span class="math notranslate nohighlight">\(u\)</span>は<strong>観測できない</strong>。</p></li>
 </ul>
 </div>
@@ -1094,13 +1154,10 @@ dtype: float64
 <ul class="simple">
 <li><p>仮定３：No Perfect Collinearity（母集団回帰式の説明変数の非完全多重共線性）</p>
 <ul>
-<li><p>説明変数<span class="math notranslate nohighlight">\(x_j\)</span>が他の説明変数の完全な線形結合（例えば，<span class="math notranslate nohighlight">\(x_2=1+2x_1\)</span>や<span class="math notranslate nohighlight">\(x_1=x_2+5x_4\)</span>）として表すことができないという意味である。もしこの仮定が満たされなければ<span class="math notranslate nohighlight">\(x_j\)</span>は何の追加的な情報を持たな⑨なる。</p></li>
+<li><p>説明変数<span class="math notranslate nohighlight">\(x_j\)</span>が他の説明変数の完全な線形結合（例えば，<span class="math notranslate nohighlight">\(x_2=1+2x_1\)</span>や<span class="math notranslate nohighlight">\(x_1=x_2+5x_4\)</span>）として表すことができないという意味である。もしこの仮定が満たされなければ<span class="math notranslate nohighlight">\(x_j\)</span>は何の追加的な情報を持たなくなる。</p></li>
 <li><p>定数項以外の説明変数が全く変化しないことも排除している（例えば，<span class="math notranslate nohighlight">\(x_j=3\)</span>）。このような変数は定数項の単なるスケールアップ・バージョンであり，追加的な情報はない。（定数項以外の説明変数は変化してこそ<span class="math notranslate nohighlight">\(y\)</span>を説明できる。）</p></li>
 </ul>
 </li>
-</ul>
-<ul class="simple">
-<li><p>仮定４<span class="math notranslate nohighlight">\(\text{E}\left(u|x\right)=0\)</span>の意味をもう一度考えてみるために、線形もしくは非線形の任意の関数を<span class="math notranslate nohighlight">\(f(.)\)</span>とおこう。この関数を使い<span class="math notranslate nohighlight">\(u=f(x)\)</span>とすると、<span class="math notranslate nohighlight">\(u\)</span>と<span class="math notranslate nohighlight">\(x\)</span>には線形もしくは非線形の関係が存在することを意味している。<span class="math notranslate nohighlight">\(\text{E}\left(u|x\right)=0\)</span>は、<span class="math notranslate nohighlight">\(u=f(x)\)</span>の関係は存在し<strong>ない</strong>ことを意味する強い仮定になっている。この仮定を少し緩めたものが仮定４aである。任意の線形関数を<span class="math notranslate nohighlight">\(h(.)\)</span>とすると、<span class="math notranslate nohighlight">\(u\)</span>と<span class="math notranslate nohighlight">\(x\)</span>に線形の関係がある場合は<span class="math notranslate nohighlight">\(u=h(x)\)</span>となる（例えば、<span class="math notranslate nohighlight">\(u=1+2x\)</span>）。<span class="math notranslate nohighlight">\(\text{Cov}(u,x)=0\)</span>は<span class="math notranslate nohighlight">\(u=h(x)\)</span>の関係が存在しないということを意味しているが、必ずしも<span class="math notranslate nohighlight">\(u=f(x)\)</span>の関係が存在しないことを意味しない。更に付け加えると、<span class="math notranslate nohighlight">\(u\)</span>と<span class="math notranslate nohighlight">\(x\)</span>に非線形の関係がある場合，<span class="math notranslate nohighlight">\(\text{Cov}(u,x)=0\)</span>であっても，<span class="math notranslate nohighlight">\(\text{E}\left(u|x\right)\neq0\)</span>になりえるのである。即ち，仮定４は仮定４aを意味するが，仮定４aは仮定４を必ずしも意味しないのである。</p></li>
 </ul>
 <ul>
 <li><p>仮定４：Zero Conditional Mean（母集団回帰式の誤差項の条件付き期待値は０）</p>
@@ -1110,15 +1167,7 @@ dtype: float64
 <li><p><span class="math notranslate nohighlight">\(X\)</span>はランダム変数であるが，<span class="math notranslate nohighlight">\(X\)</span>を所与とすると<span class="math notranslate nohighlight">\(u\)</span>の平均はゼロになるという仮定である。即ち，ランダム変数である<span class="math notranslate nohighlight">\(X\)</span>がどのような値を取ったとしても，<span class="math notranslate nohighlight">\(u\)</span>の平均は0だということである。<span class="math notranslate nohighlight">\(X\)</span>は<span class="math notranslate nohighlight">\(u\)</span>に対して何の情報も影響力も全くないので，<span class="math notranslate nohighlight">\(X\)</span>と<span class="math notranslate nohighlight">\(u\)</span>が線形・非線形な関係が無いことを意味する。</p></li>
 <li><p><span class="math notranslate nohighlight">\(X\)</span>はランダム変数であるため，<span class="math notranslate nohighlight">\(X\)</span>が変化する場合の<span class="math notranslate nohighlight">\(\text{E}\left(u|X\right)\)</span>の平均を考えることができる。即ち，<span class="math notranslate nohighlight">\(\text{E}\left[\text{E}\left(u|X\right)\right]=0\)</span>である。外側の<span class="math notranslate nohighlight">\(E\)</span>は<span class="math notranslate nohighlight">\(X\)</span>に対する期待値演算子であり，<span class="math notranslate nohighlight">\(E\)</span>が入れ子になっているのでiterated expectationsと呼ばれる。<span class="math notranslate nohighlight">\(X\)</span>がどのような値を取ったとしても仮定４のもとでは<span class="math notranslate nohighlight">\(0\)</span>になるので等号が成立することになる。更に，<span class="math notranslate nohighlight">\(X\)</span>に対しての期待値が付け加えられているので，<span class="math notranslate nohighlight">\(X\)</span>を省いて<span class="math notranslate nohighlight">\(\text{E}\left[\text{E}\left(u|X\right)\right]=\text{E}(u)=0\)</span>となる。<span class="math notranslate nohighlight">\(X\)</span>の条件をつけなくとも<span class="math notranslate nohighlight">\(u\)</span>の平均はゼロになることを示している。</p></li>
 <li><p><span class="math notranslate nohighlight">\(X\)</span>と<span class="math notranslate nohighlight">\(u\)</span>には線形の依存関係がないので<span class="math notranslate nohighlight">\(\text{Cov}(Xu)=0\)</span>が成立する。<span class="math notranslate nohighlight">\(\text{Cov}(Xu)=0\)</span>は非線型の依存関係を除外してい<strong>ない</strong>ことに注意しよう。</p></li>
-<li><p>仮定４の下で<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>を所与として(式３)の期待値を計算すると次式を得る。</p></li>
 </ul>
-<div class="math notranslate nohighlight">
-\[
-    \text{E}\left(y|x_1,x_2\right)=\beta_0+\beta_1x_1+\beta_2x_2=y^*,
-    \qquad\because\;
-    \text{E}\left(u|x_1,x_2\right)=0
-    \]</div>
-<p>消費の条件付き期待値は，説明変数（所得と子どもの数）だけに依存する消費の部分<span class="math notranslate nohighlight">\(y^*\)</span>（母集団回帰関数）と等しい。</p>
 </li>
 </ul>
 <hr class="docutils" />
@@ -1347,7 +1396,7 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.78164767, 2.01352414, 3.01162889])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.84238538, 1.84798295, 2.96010018])
 </pre></div>
 </div>
 </div>
@@ -1368,9 +1417,9 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.781648
-X1           2.013524
-X2           3.011629
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.842385
+X1           1.847983
+X2           2.960100
 dtype: float64
 </pre></div>
 </div>
@@ -1455,9 +1504,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 0.9972313131566078 
-b1: 2.0001431567965975 
-b1: 3.0002303363191563
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 1.00180563707134 
+b1: 1.9996473864230193 
+b1: 2.9998557665746928
 </pre></div>
 </div>
 </div>
@@ -1473,7 +1522,7 @@ b1: 3.0002303363191563
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_107_0.png" src="_images/9_Multiple_Regression_107_0.png" />
+<img alt="_images/9_Multiple_Regression_112_0.png" src="_images/9_Multiple_Regression_112_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">b1</span></code>の真の値<code class="docutils literal notranslate"><span class="pre">2.0</span></code>を中心に概ね左右対象に分布していることが分かる。</p>
@@ -1490,7 +1539,7 @@ b1: 3.0002303363191563
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_109_0.png" src="_images/9_Multiple_Regression_109_0.png" />
+<img alt="_images/9_Multiple_Regression_114_0.png" src="_images/9_Multiple_Regression_114_0.png" />
 </div>
 </div>
 <p>２つの図を重ねる。</p>
@@ -1508,7 +1557,7 @@ b1: 3.0002303363191563
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_111_0.png" src="_images/9_Multiple_Regression_111_0.png" />
+<img alt="_images/9_Multiple_Regression_116_0.png" src="_images/9_Multiple_Regression_116_0.png" />
 </div>
 </div>
 <p>＜Give it a try!＞</p>
@@ -1749,7 +1798,7 @@ wage_log  1.4620167739746215
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_140_0.png" src="_images/9_Multiple_Regression_140_0.png" />
+<img alt="_images/9_Multiple_Regression_145_0.png" src="_images/9_Multiple_Regression_145_0.png" />
 </div>
 </div>
 <p>多重共線性が強いと推定値の分布は，真の値（<span class="math notranslate nohighlight">\(\beta_1=\)</span>
@@ -1761,7 +1810,7 @@ wage_log  1.4620167739746215
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.03869350630574556, 0.20106492100918918)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.038639117158028695, 0.20043895911023404)
 </pre></div>
 </div>
 </div>
@@ -1830,7 +1879,7 @@ wage_log  1.4620167739746215
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_145_0.png" src="_images/9_Multiple_Regression_145_0.png" />
+<img alt="_images/9_Multiple_Regression_150_0.png" src="_images/9_Multiple_Regression_150_0.png" />
 </div>
 </div>
 <p>問5の答え：<span class="math notranslate nohighlight">\(+\)</span>を押すと答えが表示される。</p>
@@ -1844,7 +1893,7 @@ wage_log  1.4620167739746215
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19391117522768714, 0.439675415402559)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.1919734928162757, 0.4440783893975417)
 </pre></div>
 </div>
 </div>
@@ -1868,7 +1917,7 @@ wage_log  1.4620167739746215
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_152_0.png" src="_images/9_Multiple_Regression_152_0.png" />
+<img alt="_images/9_Multiple_Regression_157_0.png" src="_images/9_Multiple_Regression_157_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">pandas</span></code>の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>や<code class="docutils literal notranslate"><span class="pre">Series</span></code>には図を作成するメソッド<code class="docutils literal notranslate"><span class="pre">plot()</span></code>が用意されている（裏では<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>が動いている）。例えば，<code class="docutils literal notranslate"><span class="pre">wage1</span></code>にある<code class="docutils literal notranslate"><span class="pre">educ</span></code>のヒストグラムであれば次のコードで図示することができる。</p>
@@ -1898,7 +1947,7 @@ wage_log  1.4620167739746215
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_154_0.png" src="_images/9_Multiple_Regression_154_0.png" />
+<img alt="_images/9_Multiple_Regression_159_0.png" src="_images/9_Multiple_Regression_159_0.png" />
 </div>
 </div>
 <p>横軸と縦軸のラベルを確認すること。対角線上はそれぞれの変数のヒストグラム，対角線以外の図は縦横のペアの変数の散布図となっており，相関度をある程度目視で確認できる。</p>
@@ -1916,7 +1965,7 @@ wage_log  1.4620167739746215
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_156_0.png" src="_images/9_Multiple_Regression_156_0.png" />
+<img alt="_images/9_Multiple_Regression_161_0.png" src="_images/9_Multiple_Regression_161_0.png" />
 </div>
 </div>
 <p>次に相関係数を簡単に計算する方法を紹介する。<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">corr()</span></code>を使うと変数の相関係数を<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>として返す。</p>
@@ -2012,7 +2061,7 @@ wage_log  1.4620167739746215
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_163_0.png" src="_images/9_Multiple_Regression_163_0.png" />
+<img alt="_images/9_Multiple_Regression_168_0.png" src="_images/9_Multiple_Regression_168_0.png" />
 </div>
 </div>
 <p>赤はプラス，青はマイナスを示し，色の濃淡は絶対値に連動している。ここで使った３つのオプション（設定しなくても良い）の説明する。</p>
@@ -2034,7 +2083,7 @@ wage_log  1.4620167739746215
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_166_0.png" src="_images/9_Multiple_Regression_166_0.png" />
+<img alt="_images/9_Multiple_Regression_171_0.png" src="_images/9_Multiple_Regression_171_0.png" />
 </div>
 </div>
 <p>図の解釈は<code class="docutils literal notranslate"><span class="pre">pandas</span></code>の場合と同じである。</p>
