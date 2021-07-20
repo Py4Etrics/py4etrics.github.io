@@ -236,6 +236,9 @@ b0hat
 
 # ## `statsmodels`を使う
 
+# (sec:8-statsmodels)=
+# ## `statsmodels`を使う
+
 # `Python`では簡単なコードで回帰分析に関する多くの計算を行うことができるパッケージが提供されている。その内、代表的なパッケージが`statsmodels`である。次の順番で使い方を説明する。
 # * `ols`サブパッケージを読み込む
 # * 回帰式を定義する
@@ -346,6 +349,50 @@ print(res.summary())
 
 print(res.summary().tables[1])
 
+
+# **＜表の説明＞**
+# 
+# 表は3つのセクションから構成されている。
+# * 上段にはOLS推定の基本的な情報が表示されている。
+#     * 左側
+#         * `Dep. Variable`：被説明変数
+#         * `Model`：モデル
+#         * `Method`：手法
+#         * `Data`：日にち
+#         * `Time`：時間
+#         * `No. Observation`：標本の大きさ
+#         * `Df Residuals`：残差の自由度
+#         * `Df Model`：モデルの自由度（定数項以外の説明変数の数）
+#         * `Covariance Type`：共分散のタイプ
+#     * 右側
+#         * `R-squared`：決定係数
+#         * `adj. R-squared`：自由度調整済み決定係数
+#         * `F-statistic`：$F$統計量
+#         * `Prob (F-statistic)`：$F$値
+#         * `Log-Likelihood`：対数尤度
+#         * `AIC`：赤池情報量規準
+#         * `BIC`：ベイズ情報量規準
+# * 中段には主な推定結果が表示される。
+#     * 列ラベル
+#         * `coef`：係数
+#         * `std err`：標準誤差
+#         * `t`：$t$値
+#         * `P>|t|`：$p$値
+#         * `[0.025,0.975]`：信頼区間（5%)
+#     * 行ラベル
+#         * `Intercept`：定数項
+#         * `tfp_relative`：説明変数（選択する変数によって変わる）
+# * 下段には様々な検定などに関する数値が並んでいる。
+#     * 左側
+#         * `Omnibus`：オムニバス検定統計量（帰無仮説：残差は正規分布に従う）
+#         * `Prob(Omnibus)`：オムニバス検定$p$値（帰無仮説：残差は正規分布に従う）
+#         * `Skew`：残差の歪度（正規分布であれば`0`）
+#         * `Kurtosis`：残差の尖度（正規分布であれば`3`）
+#     * 右側
+#         * `Durbin-Watson`：ダービン・ワトソン統計量（残差の自己相関の検定）
+#         * `Jarque-Bera (JB)`：ジャーク・ベラ検定統計量（帰無仮説：残差は正規分布に従う）
+#         * `Prob(JB)`：ジャーク・ベラ検定$p$値（帰無仮説：残差は正規分布に従う）
+#         * `Cond. No.`：条件指数（Condition Index）の最大値（多重共線性を確認するための指標であり，単回帰分析では無視して良い。一方，`statsmodels`では該当する行列を標準化して計算していないため変数の値の大きさに依存することになり，使い難い指標となっている。重回帰分析においての多重共線性の確認については[ここで](sec:9-vif)説明する手法を使うことを勧める）
 
 # OLS推定結果を割り当てた`res`には，ここで説明した以外に数多くの属性が存在する。それらに関する説明は[このサイト](https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.RegressionResults.html)を参照すること。
 

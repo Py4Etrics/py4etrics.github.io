@@ -86,11 +86,19 @@ formula_1 = 'wage_log ~ educ + tenure + exper'
 res_1 = ols(formula_1, data=wage1).fit()
 
 
+# [単回帰分析](sec:8-statsmodels)で説明したが，次のコードで結果を表にまとめて表示することができる。（関数`print()`を使っているが使わなくても同じ情報が表示される。）
+
+# In[7]:
+
+
+print(res_1.summary())
+
+
 # ### 属性とメソッド
 
 # 推定結果`res_1`の属性とメソッドは`dir()`や`see()`で確認できる。以下では`see()`を使う。
 
-# In[7]:
+# In[8]:
 
 
 see(res_1)
@@ -98,7 +106,7 @@ see(res_1)
 
 # 単回帰分析と同様に、係数の推定値は属性`.params`で取得できる。
 
-# In[8]:
+# In[9]:
 
 
 res_1.params
@@ -106,7 +114,7 @@ res_1.params
 
 # `res_1`は`Series`なので、インデックスを使って`educ`の係数だけを取り出す場合は次のようにする。
 
-# In[9]:
+# In[10]:
 
 
 res_1.params[1]
@@ -114,7 +122,7 @@ res_1.params[1]
 
 # 次に，メソッド`predict()`を使って予測値を計算してみよう。次の例では，`educ`, `tenure`, `exper`の平均値での`np.log(wage)`を計算する。
 
-# In[10]:
+# In[11]:
 
 
 wm = wage1.mean()  # 変数の平均の計算
@@ -123,7 +131,7 @@ wm
 
 # `wm`は`Series`なので、変数の行ラベルを使い`wm['educ']`で`educ`の平均値だけを取り出すことができる。
 
-# In[11]:
+# In[12]:
 
 
 wm['educ']
@@ -133,7 +141,7 @@ wm['educ']
 # 
 # 次のコードでは辞書の値が`wm['educ']`ではなく`[wm['educ']]`となっている点に注意しよう。これは`DataFrame`を作成する際，単なる値ではなく`list`や`array`にして値として使う必要があるためである。
 
-# In[12]:
+# In[13]:
 
 
 z = pd.DataFrame({'educ':[wm['educ']],
@@ -141,7 +149,7 @@ z = pd.DataFrame({'educ':[wm['educ']],
                   'exper':[wm['exper']]})
 
 
-# In[13]:
+# In[14]:
 
 
 res_1.predict(z)
@@ -151,7 +159,7 @@ res_1.predict(z)
 # 
 # 複数の予測値を計算するには、辞書の値にある`list`や`array`に複数の要素を書き込めば良い。次の例では、`tenure`と`exper`を平均値に固定し、`educ`を平均値、平均値-1、平均値+1に変化させて予測値を計算している。
 
-# In[14]:
+# In[15]:
 
 
 educ_mean = wm['educ']
@@ -167,7 +175,7 @@ educ_return
 
 # ３つの変数が平均の値を取る場合，平均賃金の対数値は1.623268であり，上の計算と同じになることが確認できる。教育年数が1年減少すると予測値は1.531239であり，教育年数が1年増えると予測値は2.201336となる。この結果を使い，教育年数が一年変化する場合の影響を計算してみよう。まず教育年数が1年減少すると場合を計算しよう。
 
-# In[15]:
+# In[16]:
 
 
 educ_return[0]-educ_return[1]
@@ -175,7 +183,7 @@ educ_return[0]-educ_return[1]
 
 # 次に教育年数が1年増える場合を計算しよう。
 
-# In[16]:
+# In[17]:
 
 
 educ_return[2]-educ_return[1]
@@ -202,7 +210,7 @@ educ_return[2]-educ_return[1]
 # 
 # もう一点付け加えるために，上の回帰分析の変数`educ`の係数の解釈を思い出そう。教育年数が一年増えた場合，平均賃金の対数値はどれだけ変化するかを示しており，教育の収益率を表している。従って，ここで計算した値と同じになるはずである。
 
-# In[17]:
+# In[18]:
 
 
 res_1.params['educ']
@@ -212,7 +220,7 @@ res_1.params['educ']
 # 
 # `predict()`の引数を省略すると予測値を返す属性`.fittedvalues`と同じ値を返す。それを確かめるために次のコードを評価してみる。
 
-# In[18]:
+# In[19]:
 
 
 ( res_1.predict() == res_1.fittedvalues ).all()
@@ -235,19 +243,19 @@ res_1.params['educ']
 
 # `Numpy`の対数関数を使って，回帰式の中で直接書き換えることができる。`wage`を対数化する例を考える。
 
-# In[19]:
+# In[20]:
 
 
 formula_2 = 'np.log(wage) ~ educ + tenure + exper'
 
 
-# In[20]:
+# In[21]:
 
 
 res_2 = ols(formula_2, data=wage1).fit()
 
 
-# In[21]:
+# In[22]:
 
 
 res_2.params
@@ -257,14 +265,14 @@ res_2.params
 
 # 次に`exper`の二乗を回帰式に入れるケースを考えよう。この場合、`np.square(exper)`でも良いが、`I()`の`()`の中に直接式を書くことが可能となる。
 
-# In[22]:
+# In[23]:
 
 
 formula_3 = 'np.log(wage) ~ educ + tenure + exper + I(exper**2)'
 res_3 = ols(formula_3, data=wage1).fit()
 
 
-# In[23]:
+# In[24]:
 
 
 res_3.params
@@ -276,21 +284,21 @@ res_3.params
 
 # より複雑な関数であれば`def`を使い、関数を定義し、それを回帰式の中で使う方が良いかも知れない。`exper`の二乗を回帰式に入れるケースを考えよう。
 
-# In[24]:
+# In[25]:
 
 
 def myfunc(x):
     return x**2
 
 
-# In[25]:
+# In[26]:
 
 
 formula_4 = 'np.log(wage) ~ educ + exper + tenure + myfunc(exper)'
 res_4 = ols(formula_4, data=wage1).fit()
 
 
-# In[26]:
+# In[27]:
 
 
 res_4.params
@@ -347,7 +355,7 @@ res_4.params
 # ---
 # `wage1`を使い以下を推定しよう。
 
-# In[27]:
+# In[28]:
 
 
 formula_1a = 'wage ~ educ + tenure + exper'
@@ -546,13 +554,13 @@ res_1a.params
 # 
 # `res_1`の属性`.scale`で取得可能。
 
-# In[28]:
+# In[29]:
 
 
 res_1.scale
 
 
-# In[29]:
+# In[30]:
 
 
 SSR = res_1.ssr  # 残差の二乗平方和
@@ -569,7 +577,7 @@ SSR/(n-k-1)
 # 
 # `res_1`のメソッド`.bse`で取得可能。
 
-# In[30]:
+# In[31]:
 
 
 res_1.bse
@@ -635,7 +643,7 @@ res_1.bse
 # 
 # まず母集団回帰式の係数と標本の大きさを設定する。
 
-# In[31]:
+# In[32]:
 
 
 b0 = 1  # 定数項
@@ -646,7 +654,7 @@ n = 30  # 標本の大きさ
 
 # 母集団からの標本を生成する。
 
-# In[32]:
+# In[33]:
 
 
 x1 = np.random.normal(loc=4.0, scale=2.0, size=n)  # (1)の説明
@@ -667,7 +675,7 @@ c = np.ones(n)  # (3)の説明
 # ---
 # 式（\*）を使い推定値を計算しよう。まず`Numpy`の関数`stack`を使い`X`を作成する。
 
-# In[33]:
+# In[34]:
 
 
 X = np.stack([c,x1,x2],axis=1)
@@ -676,7 +684,7 @@ X.shape
 
 # ここでの引数`axis=1`は`c`，`x1`，`x2`を縦ベクトルとして横方向につなぎあわせることを指定している。`X`は`Numpy`の`array`であり$(30\times 3)$の行列となっている。式（\*）を次のコードで計算する。
 
-# In[34]:
+# In[35]:
 
 
 bhat = np.linalg.inv((X.T)@X)@(X.T)@y
@@ -693,7 +701,7 @@ bhat
 # 
 # `statsmodels`を使い推定値が同じであることを確認する。
 
-# In[35]:
+# In[36]:
 
 
 df_check = pd.DataFrame({'Y':y,'X1':x1,'X2':x2})
@@ -722,7 +730,7 @@ ols('Y ~ X1 + X2', data=df_check).fit().params
 # 次の関数の返り値：
 # * `b0`、`b1`、`b2`の`N`個の推定値がそれぞれ格納されている`Numpy`の`array`
 
-# In[36]:
+# In[37]:
 
 
 @njit  # 計算の高速化
@@ -760,7 +768,7 @@ def sim_unbias(n, N, b0=1.0, b1=2.0, b2=3.0):
 
 # 標本の大きさは`30`、シミュレーションの回数は`100_000`に設定し、結果は`b0hat`, `b1hat`, `b2hat`に割り当てる。
 
-# In[37]:
+# In[38]:
 
 
 b0hat, b1hat, b2hat = sim_unbias(n=30, N=100_000)
@@ -768,7 +776,7 @@ b0hat, b1hat, b2hat = sim_unbias(n=30, N=100_000)
 
 # 推定値の平均を計算してみよう。
 
-# In[38]:
+# In[39]:
 
 
 print('b0:', b0hat.mean(),
@@ -780,7 +788,7 @@ print('b0:', b0hat.mean(),
 # 
 # 次に、OLS推定量$\hat{\beta}_1$の分布を図示しよう。
 
-# In[39]:
+# In[40]:
 
 
 plt.hist(b1hat,bins=30)
@@ -792,7 +800,7 @@ pass
 # 
 # 次に分布（ヒストグラム）のカーネル密度推定をおこなうために，`scipy.stats`にある`gaussian_kde`を使う。
 
-# In[40]:
+# In[41]:
 
 
 x=np.linspace(1.5,2.5,100)  # 図を作成するために1.5から2.5までの横軸の値を設定
@@ -807,7 +815,7 @@ pass
 # 
 # （注意）ヒストグラムの縦軸は頻度である。一方，カーネル密度推定の場合，曲線の下の面積が１になるように縦軸が設定されている。ヒストグラムの縦軸をカーネル密度推定に合わせるために`density=True`のオプションを加える。
 
-# In[41]:
+# In[42]:
 
 
 x=np.linspace(1.5,2.5,100)
@@ -825,6 +833,9 @@ pass
 # * `n`を変化させて違いを確かめなさい。
 # * `N`を変化させて違いを確かめなさい。
 
+# ## シミュレーション：多重共線性
+
+# (sec:9-vif)=
 # ## シミュレーション：多重共線性
 
 # ### 説明
@@ -845,7 +856,7 @@ pass
 
 # まず説明変数だけから構成される`DataFrame`を作成する。
 
-# In[42]:
+# In[43]:
 
 
 wage1_vif = wage1.drop('wage', axis=1)
@@ -853,7 +864,7 @@ wage1_vif = wage1.drop('wage', axis=1)
 
 # `corr()`は相関係数を返すメソッドであり，そこから`.to_numpy()`を使いデータを`Numpy`の`array`として取り出す。
 
-# In[43]:
+# In[44]:
 
 
 mc = wage1_vif.corr().to_numpy()
@@ -862,7 +873,7 @@ mc = wage1_vif.corr().to_numpy()
 # * 上でも使った`linalg.inv()`は、`NumPy`にある`linalg`サブパッケージの関数であり、逆行列を返す。
 # * `diagonal()`は対角成分を返すメソッドであり，それが`vif`である。
 
-# In[44]:
+# In[45]:
 
 
 vif_manual = np.linalg.inv(mc).diagonal()
@@ -871,7 +882,7 @@ vif_manual
 
 # 変数名と一緒に表示するために次のように`Series`として表示する。
 
-# In[45]:
+# In[46]:
 
 
 pd.Series(vif_manual, index=wage1_vif.columns)
@@ -879,7 +890,7 @@ pd.Series(vif_manual, index=wage1_vif.columns)
 
 # 次に上の計算を関数にまとめる。
 
-# In[46]:
+# In[47]:
 
 
 def my_vif(dataframe):
@@ -896,13 +907,13 @@ my_vif(wage1_vif)
 
 # 必ず**定数項を含む**説明変数だけから構成される`DataFrame`を作成する。
 
-# In[47]:
+# In[48]:
 
 
 wage1_vif['Intercept'] = 1.0
 
 
-# In[48]:
+# In[49]:
 
 
 for i in range(len(wage1_vif.columns)-1):  # 定数項は無視するために-1
@@ -944,7 +955,7 @@ for i in range(len(wage1_vif.columns)-1):  # 定数項は無視するために-1
 # * `@njit`を使いたいところだが，`Numpy`の`random.multivariate_normal()`が`Numba`に対応していないため`scipy.stats`の `multivariate_normal.rvs()`を使う。`np.random.normal()`を使って二変量正規分布からの値とする方法もあるが，ここでは簡単化を重視する。
 # * `ols`は係数の推定値だけではなく他の多くの統計値も自動的に計算するため一回の計算に比較的に長い時間を要する。計算の速度を少しでも早めるために下の関数の中では`ols`は使わず`Numpy`の関数を使いOLS推定値を計算する。
 
-# In[49]:
+# In[50]:
 
 
 def sim_multi(n, N, m, b0=1.0, b1=2.0, b2=3.0):  # n=標本の大きさ, N=標本数, m=共分散
@@ -984,7 +995,7 @@ def sim_multi(n, N, m, b0=1.0, b1=2.0, b2=3.0):  # n=標本の大きさ, N=標�
 
 # シミュレーションの開始
 
-# In[50]:
+# In[51]:
 
 
 # 多重共線性が弱いケース 
@@ -996,7 +1007,7 @@ b0hat_strong, b1hat_strong, b2hat_strong = sim_multi(30, 10_000, m=0.9)
 
 # $\hat{\beta}_1$の分布の図示
 
-# In[51]:
+# In[52]:
 
 
 xx=np.linspace(0.5,3.5,num=100)  # 図を作成するために横軸の値を設定
@@ -1018,7 +1029,7 @@ pass
 # 多重共線性が強いと推定値の分布は，真の値（$\beta_1=$
 # `2.0`）の周辺で低くなり左右に広がっている。推定値の正確性が低下することを示している。$\hat{\beta}_1$の分散を計算してみよう。
 
-# In[52]:
+# In[53]:
 
 
 np.var(b1hat_weak), np.var(b1hat_strong)
@@ -1034,7 +1045,7 @@ np.var(b1hat_weak), np.var(b1hat_strong)
 
 # 問4の答え：$+$を押すと答えが表示される。
 
-# In[53]:
+# In[54]:
 
 
 def sim_se(n, N, m, b0=1.0, b1=2.0, b2=3.0):  # n=標本の大きさ, N=標本数, m=共分散
@@ -1090,7 +1101,7 @@ pass
 
 # 問5の答え：$+$を押すと答えが表示される。
 
-# In[54]:
+# In[55]:
 
 
 sum(se_x1_weak)/len(se_x1_weak), sum(se_x1_strong)/len(se_x1_strong)
@@ -1109,7 +1120,7 @@ sum(se_x1_weak)/len(se_x1_weak), sum(se_x1_strong)/len(se_x1_strong)
 
 # まずコードの中で`matplotlib`を明示的に導入せずに`pandas`のみを使い図示する方法を紹介する。こちらの方が簡単と感じるかもしれない。散布図を描いてみる。
 
-# In[55]:
+# In[56]:
 
 
 wage1.plot.scatter('educ','wage')
@@ -1138,7 +1149,7 @@ pass
 # ---
 # 変数の相関度をチェックするために`pandas.plotting`の`scatter_matrix`を使う。このモジュールは`DataFrame`を引数とする。
 
-# In[56]:
+# In[57]:
 
 
 scatter_matrix(wage1)
@@ -1152,7 +1163,7 @@ pass
 # 1. 図の大きさは`figsize=(9, 6)`で指定する。この例では`9`が横幅，`6`が縦幅である。 
 # 1. `diagonal='kde'`を指定すると対角線上のヒストグラムをカーネル密度推定に変更できる。
 
-# In[57]:
+# In[58]:
 
 
 scatter_matrix(wage1, figsize=(9, 6), diagonal='kde')
@@ -1161,7 +1172,7 @@ pass
 
 # 次に相関係数を簡単に計算する方法を紹介する。`DataFrame`のメソッド`corr()`を使うと変数の相関係数を`DataFrame`として返す。
 
-# In[58]:
+# In[59]:
 
 
 mat = wage1.corr()
@@ -1176,7 +1187,7 @@ mat
 
 # まず上で`DataFrame`のメソッド`corr()`を使い変数の相関係数を計算したが，`seaborn`の`heatmap()`関数を使うと相関係数を色に変換してより見やすい表示となる。
 
-# In[59]:
+# In[60]:
 
 
 sns.heatmap(mat, vmin=-1, annot=True, cmap='coolwarm')
@@ -1191,7 +1202,7 @@ pass
 
 # `seaborn`には`matplotlib`の相関度をチェックする`scatter_matrix`関数に対応する`pairplot`があり，より使い勝手が良いと感じるかもしれない。
 
-# In[60]:
+# In[61]:
 
 
 sns.pairplot(wage1, height=1.5, aspect=1.3)
