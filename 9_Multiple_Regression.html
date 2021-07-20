@@ -463,7 +463,7 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id12">
+  <a class="reference internal nav-link" href="#sec-9-vif">
    シミュレーション：多重共線性
   </a>
   <ul class="nav section-nav flex-column">
@@ -654,6 +654,45 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 </div>
 </div>
 </div>
+<p><a class="reference internal" href="8_Simple_Regression.html#sec-8-statsmodels"><span class="std std-ref">単回帰分析</span></a>で説明したが，次のコードで結果を表にまとめて表示することができる。（関数<code class="docutils literal notranslate"><span class="pre">print()</span></code>を使っているが使わなくても同じ情報が表示される。）</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_1</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:               wage_log   R-squared:                       0.316
+Model:                            OLS   Adj. R-squared:                  0.312
+Method:                 Least Squares   F-statistic:                     80.39
+Date:                Tue, 20 Jul 2021   Prob (F-statistic):           9.13e-43
+Time:                        06:23:03   Log-Likelihood:                -313.55
+No. Observations:                 526   AIC:                             635.1
+Df Residuals:                     522   BIC:                             652.2
+Df Model:                           3                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      0.2844      0.104      2.729      0.007       0.080       0.489
+educ           0.0920      0.007     12.555      0.000       0.078       0.106
+tenure         0.0221      0.003      7.133      0.000       0.016       0.028
+exper          0.0041      0.002      2.391      0.017       0.001       0.008
+==============================================================================
+Omnibus:                       11.534   Durbin-Watson:                   1.769
+Prob(Omnibus):                  0.003   Jarque-Bera (JB):               20.941
+Skew:                           0.021   Prob(JB):                     2.84e-05
+Kurtosis:                       3.977   Cond. No.                         135.
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="id4">
 <h3>属性とメソッド<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
@@ -674,8 +713,8 @@ Henry Farber when he and I were colleagues at MIT in 1988.
     .compare_lr_test()                        .condition_number    .conf_int()
     .conf_int_el()       .cov_HC0             .cov_HC1             .cov_HC2
     .cov_HC3             .cov_kwds            .cov_params()        .cov_type
-    .df_model            .df_resid            .eigenvals           .el_test()
-    .ess                 .f_pvalue            .f_test()
+    .df_model            .df_resid            .diagn               .eigenvals
+    .el_test()           .ess                 .f_pvalue            .f_test()
     .fittedvalues        .fvalue              .get_influence()
     .get_prediction()    .get_robustcov_results()
     .initialize()        .k_constant          .llf                 .load()
@@ -1396,7 +1435,7 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.7749315 , 1.94501557, 3.04985665])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.27927825, 2.15995324, 2.99534217])
 </pre></div>
 </div>
 </div>
@@ -1417,9 +1456,9 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.774931
-X1           1.945016
-X2           3.049857
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.279278
+X1           2.159953
+X2           2.995342
 dtype: float64
 </pre></div>
 </div>
@@ -1504,9 +1543,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 1.00003857436598 
-b1: 1.999772475085209 
-b1: 2.99999953425574
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 1.0026747566991916 
+b1: 1.999668458917507 
+b1: 2.999754859703205
 </pre></div>
 </div>
 </div>
@@ -1522,7 +1561,7 @@ b1: 2.99999953425574
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_112_0.png" src="_images/9_Multiple_Regression_112_0.png" />
+<img alt="_images/9_Multiple_Regression_114_0.png" src="_images/9_Multiple_Regression_114_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">b1</span></code>の真の値<code class="docutils literal notranslate"><span class="pre">2.0</span></code>を中心に概ね左右対象に分布していることが分かる。</p>
@@ -1539,7 +1578,7 @@ b1: 2.99999953425574
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_114_0.png" src="_images/9_Multiple_Regression_114_0.png" />
+<img alt="_images/9_Multiple_Regression_116_0.png" src="_images/9_Multiple_Regression_116_0.png" />
 </div>
 </div>
 <p>２つの図を重ねる。</p>
@@ -1557,7 +1596,7 @@ b1: 2.99999953425574
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_116_0.png" src="_images/9_Multiple_Regression_116_0.png" />
+<img alt="_images/9_Multiple_Regression_118_0.png" src="_images/9_Multiple_Regression_118_0.png" />
 </div>
 </div>
 <p>＜Give it a try!＞</p>
@@ -1568,8 +1607,8 @@ b1: 2.99999953425574
 <li><p><code class="docutils literal notranslate"><span class="pre">N</span></code>を変化させて違いを確かめなさい。</p></li>
 </ul>
 </div>
-<div class="section" id="id12">
-<h2>シミュレーション：多重共線性<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sec-9-vif">
+<span id="id12"></span><h2>シミュレーション：多重共線性<a class="headerlink" href="#sec-9-vif" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id13">
 <h3>説明<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>多重共線性が高くなると，パラメータの推定値の正確性が低下する（即ち、パラメータの標準誤差<span class="math notranslate nohighlight">\(\text{se}\left(\hat{\beta}_j\right)\)</span>が大きくなる）。この点を確認するためにパラメータの分散の推定値にある</p>
@@ -1798,7 +1837,7 @@ wage_log  1.4620167739746215
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_145_0.png" src="_images/9_Multiple_Regression_145_0.png" />
+<img alt="_images/9_Multiple_Regression_148_0.png" src="_images/9_Multiple_Regression_148_0.png" />
 </div>
 </div>
 <p>多重共線性が強いと推定値の分布は，真の値（<span class="math notranslate nohighlight">\(\beta_1=\)</span>
@@ -1810,7 +1849,7 @@ wage_log  1.4620167739746215
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.03859137475426435, 0.20138186473576425)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.038759954398228866, 0.19812527545409225)
 </pre></div>
 </div>
 </div>
@@ -1879,7 +1918,7 @@ wage_log  1.4620167739746215
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_150_0.png" src="_images/9_Multiple_Regression_150_0.png" />
+<img alt="_images/9_Multiple_Regression_153_0.png" src="_images/9_Multiple_Regression_153_0.png" />
 </div>
 </div>
 <p>問5の答え：<span class="math notranslate nohighlight">\(+\)</span>を押すと答えが表示される。</p>
@@ -1893,7 +1932,7 @@ wage_log  1.4620167739746215
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19366993084638867, 0.442494829551172)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19391296929664303, 0.4432965610926062)
 </pre></div>
 </div>
 </div>
@@ -1917,7 +1956,7 @@ wage_log  1.4620167739746215
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_157_0.png" src="_images/9_Multiple_Regression_157_0.png" />
+<img alt="_images/9_Multiple_Regression_160_0.png" src="_images/9_Multiple_Regression_160_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">pandas</span></code>の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>や<code class="docutils literal notranslate"><span class="pre">Series</span></code>には図を作成するメソッド<code class="docutils literal notranslate"><span class="pre">plot()</span></code>が用意されている（裏では<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>が動いている）。例えば，<code class="docutils literal notranslate"><span class="pre">wage1</span></code>にある<code class="docutils literal notranslate"><span class="pre">educ</span></code>のヒストグラムであれば次のコードで図示することができる。</p>
@@ -1947,7 +1986,7 @@ wage_log  1.4620167739746215
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_159_0.png" src="_images/9_Multiple_Regression_159_0.png" />
+<img alt="_images/9_Multiple_Regression_162_0.png" src="_images/9_Multiple_Regression_162_0.png" />
 </div>
 </div>
 <p>横軸と縦軸のラベルを確認すること。対角線上はそれぞれの変数のヒストグラム，対角線以外の図は縦横のペアの変数の散布図となっており，相関度をある程度目視で確認できる。</p>
@@ -1965,7 +2004,7 @@ wage_log  1.4620167739746215
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_161_0.png" src="_images/9_Multiple_Regression_161_0.png" />
+<img alt="_images/9_Multiple_Regression_164_0.png" src="_images/9_Multiple_Regression_164_0.png" />
 </div>
 </div>
 <p>次に相関係数を簡単に計算する方法を紹介する。<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">corr()</span></code>を使うと変数の相関係数を<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>として返す。</p>
@@ -2061,7 +2100,7 @@ wage_log  1.4620167739746215
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_168_0.png" src="_images/9_Multiple_Regression_168_0.png" />
+<img alt="_images/9_Multiple_Regression_171_0.png" src="_images/9_Multiple_Regression_171_0.png" />
 </div>
 </div>
 <p>赤はプラス，青はマイナスを示し，色の濃淡は絶対値に連動している。ここで使った３つのオプション（設定しなくても良い）の説明する。</p>
@@ -2083,7 +2122,7 @@ wage_log  1.4620167739746215
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_171_0.png" src="_images/9_Multiple_Regression_171_0.png" />
+<img alt="_images/9_Multiple_Regression_174_0.png" src="_images/9_Multiple_Regression_174_0.png" />
 </div>
 </div>
 <p>図の解釈は<code class="docutils literal notranslate"><span class="pre">pandas</span></code>の場合と同じである。</p>
