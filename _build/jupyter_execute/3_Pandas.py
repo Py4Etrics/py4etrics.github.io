@@ -585,7 +585,7 @@ df.query('(gdp >= 200 | con <= 60) & (id == "a")')
 
 
 # ````{tip}
-# `df`にない変数で条件を設定する場合`@`が必要になる。例えば，変数`z`という変数があるとしよう。
+# 変数で条件を設定する場合`@`が必要になる。例えば，変数`z`という変数があるとしよう。
 # 
 # ```python
 # z = 100
@@ -764,8 +764,8 @@ df.isna().sum(axis='columns')
 # In[66]:
 
 
-filter = df.isna().any(axis='columns')
-df.loc[filter,:]
+cond = df.isna().any(axis='columns')
+df.loc[cond,:]
 
 
 # これで`NaN`がある行を抽出することができる。
@@ -875,21 +875,33 @@ df3
 #     * デフォルトは`None`
 # * `how`は`on`で指定した基準列に基づいてどのように結合するかを指定
 #     * `inner`：`df1`と`df2`の両方に基準列ある行だけを残す（デフォルト）。
-#     * `left`：`df1`の行は全て残し，`df2`からはマッチする行だけが残り，対応する行がない場合は`NaN`が入る。
-#     * `right`：`df2`の行は全て残し，`df1`からはマッチする行だけが残る，対応する行がない場合は`NaN`が入る。
+#     * `left`：`df1`の行は全て残し，`df2`からはマッチする行だけが残る（マッチしない行は削除）。また`df1`にあり`df2`にない行には`NaN`が入る。
+#     * `right`：`df2`の行は全て残し，`df1`からはマッチする行だけが残る（マッチしない行は削除）。また`df2`にあり`df1`にない行には`NaN`が入る。
 #     * `outer`：`df1`と`df2`の両方の行を残し，マッチする行がない場合は`NaN`を入れる。
 # 
 # 
 # （コメント）
 # この他に様々な引数があるので[このサイト](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.merge.html)を参照。例えば，場合によっては次の引数を使う必要があるかも知れないので確認しよう。
-# * `left_index`と`right_index`
-# * `suffixes`
+# * `left_index=True`：`df1`では行インデックスを基準列にする。
+# * `right_index=True`：`df2`では行インデックスを基準列にする。
+
+# #### 例１
+
+# * `year`を基準列とする。
+# * 共通する行だけを残す。
 
 # In[76]:
 
 
 pd.merge(df1, df2, on='year', how='inner')
 
+
+# #### 例２
+
+# * `year`を基準列とする。
+# * `df1`の全ての行を残す。
+# * `df2`ではマッチする行だけ残り，マッチしない行は削除される。
+# * `df1`にあり`df2`にない行には`NaN`が入る。
 
 # In[77]:
 
@@ -902,6 +914,13 @@ pd.merge(df1, df2, on='year', how='left')
 
 pd.merge(df1, df2, on='year', how='right')
 
+
+# #### 例３
+
+# * `year`を基準列とする。
+# * `df1`と`df2`の全ての行は残る。
+# * `df1`にあり`df2`にない行には`NaN`が入る。
+# * `df2`にあり`df1`にない行には`NaN`が入る。
 
 # In[79]:
 
@@ -939,7 +958,7 @@ df13.tail()
 df13.reset_index()
 
 
-# `reset_index()`に引数`drop=True`を加えると，列`index`が自動的に削除される。
+# この例では元のインデックスが列`index`として追加されている。`reset_index()`に引数`drop=True`を加えると，列`index`は追加されない。
 
 # In[83]:
 
@@ -964,6 +983,12 @@ df13.reset_index(drop=True).head()
 
 df13.rename(columns={'pop':'pop_new','id':'id_new'}).head()
 
+
+# `.rename()`以外にリストを使って列ラベルを変更することも可能である。例えば，
+# ```
+# df.columns = ['year', 'gdp', 'inv', 'con', 'pop_new', 'id_new']
+# ```
+# この場合，列の数とリストの要素数が合わないとエラーとなるので注意しよう。
 
 # ### 列の並び替え
 
@@ -995,7 +1020,7 @@ df13.loc[:,var].head()
 
 # ##### 方法２
 
-# 次の方法も可。
+# 次の列の選択方法でも可。
 
 # In[87]:
 
