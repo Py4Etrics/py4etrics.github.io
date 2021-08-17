@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.5f77b4aec8189eecf79907ce328c390d.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -622,62 +622,67 @@
        例３
       </a>
      </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id29">
+       例４
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id29">
+    <a class="reference internal nav-link" href="#id30">
      縦結合
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id30">
+  <a class="reference internal nav-link" href="#id31">
    その他
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id31">
+    <a class="reference internal nav-link" href="#id32">
      インデックスを振り直す
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id32">
+    <a class="reference internal nav-link" href="#id33">
      列のラベルの変更
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id33">
+    <a class="reference internal nav-link" href="#id34">
      列の並び替え
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id34">
+      <a class="reference internal nav-link" href="#id35">
        アルファベット順
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id35">
+      <a class="reference internal nav-link" href="#id36">
        順番を指定する
       </a>
       <ul class="nav section-nav flex-column">
        <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id36">
+        <a class="reference internal nav-link" href="#id37">
          方法１
         </a>
        </li>
        <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id37">
+        <a class="reference internal nav-link" href="#id38">
          方法２
         </a>
        </li>
        <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id38">
+        <a class="reference internal nav-link" href="#id39">
          方法３
         </a>
        </li>
        <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id39">
+        <a class="reference internal nav-link" href="#id40">
          方法３の応用
         </a>
        </li>
@@ -4116,7 +4121,7 @@ dtype: int64
 </div>
 <div class="section" id="id23">
 <h3>欠損値がある行の削除<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
-<p>欠損値がある全ての行を削除する。</p>
+<p>欠損値がある行を削除するには，<code class="docutils literal notranslate"><span class="pre">df</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">.dropna()</span></code>を使う。次のコードでは，欠損値がある<strong>全て</strong>の行を削除する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
@@ -4238,11 +4243,11 @@ dtype: int64
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>とするか，削除後の<code class="docutils literal notranslate"><span class="pre">df</span></code>を<code class="docutils literal notranslate"><span class="pre">df</span></code>自体に代入する。</p>
+<p>とするか，削除後の<code class="docutils literal notranslate"><span class="pre">df</span></code>を変数<code class="docutils literal notranslate"><span class="pre">df</span></code>に再度割り当てる。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>ある列で<code class="docutils literal notranslate"><span class="pre">NaN</span></code>がある場合のみ行を削除する。</p>
+<p>一方で，ある列に<code class="docutils literal notranslate"><span class="pre">NaN</span></code>がある場合のみ行を削除したい場合もあるだろう。その場合は引数<code class="docutils literal notranslate"><span class="pre">subset</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;inv&#39;</span><span class="p">])</span>
@@ -4368,12 +4373,18 @@ dtype: int64
 </table>
 </div></div></div>
 </div>
-<p>（注意）オプション<code class="docutils literal notranslate"><span class="pre">subset=</span></code>には削除する列が１つであってもリスト<code class="docutils literal notranslate"><span class="pre">[]</span></code>で指定する。</p>
+<p>列<code class="docutils literal notranslate"><span class="pre">con</span></code>に<code class="docutils literal notranslate"><span class="pre">NaN</span></code>が残っている。</p>
+<p>＜注意＞<br>
+<code class="docutils literal notranslate"><span class="pre">subset=['inv']</span></code>のように，<code class="docutils literal notranslate"><span class="pre">NaN</span></code>があるかを確認する列が１つであってもリスト<code class="docutils literal notranslate"><span class="pre">[]</span></code>で指定する。複数であれば，次のように列ラベルをリストとして並べれば良い。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;inv&#39;</span><span class="p">,</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>非常に便利な引数なので覚えておこう！</p>
 </div>
 </div>
 <div class="section" id="id24">
 <h2>並び替え<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">df</span></code>を<code class="docutils literal notranslate"><span class="pre">gdp</span></code>の昇順に並び替える。</p>
+<p><code class="docutils literal notranslate"><span class="pre">df</span></code>の行を並び替えるにはメソッド<code class="docutils literal notranslate"><span class="pre">.sort_values()</span></code>を使う。引数には，並び替える基準となる列ラベルを指定し，デフォルトでは昇順となる。次のコードでは<code class="docutils literal notranslate"><span class="pre">gdp</span></code>に従って昇順に並び替えている。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;gdp&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -4459,7 +4470,7 @@ dtype: int64
 </table>
 </div></div></div>
 </div>
-<p>降順の場合</p>
+<p>引数<code class="docutils literal notranslate"><span class="pre">ascending=False</span></code>を使うと降順になる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -4545,7 +4556,7 @@ dtype: int64
 </table>
 </div></div></div>
 </div>
-<p>複数の列を指定する場合</p>
+<p>複数の列を基準として，昇順と降順を別々に指定することも可能である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;gdp&#39;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;True&#39;</span><span class="p">,</span><span class="s1">&#39;False&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -4631,11 +4642,12 @@ dtype: int64
 </table>
 </div></div></div>
 </div>
-<p>ここでは<code class="docutils literal notranslate"><span class="pre">id</span></code>に従って先に並び替えられ，その後に<code class="docutils literal notranslate"><span class="pre">gdp</span></code>に従って並び替えられている。<code class="docutils literal notranslate"><span class="pre">ascending</span></code>は昇順（<code class="docutils literal notranslate"><span class="pre">True</span></code>）か降順（<code class="docutils literal notranslate"><span class="pre">False</span></code>）かを指定する引数であり，<code class="docutils literal notranslate"><span class="pre">['id','gdp']</span></code>と<code class="docutils literal notranslate"><span class="pre">ascending=['True','False']</span></code>の順番が対応している。</p>
+<p>ここでは<code class="docutils literal notranslate"><span class="pre">id</span></code>に従って先に並び替えられ，その後に<code class="docutils literal notranslate"><span class="pre">gdp</span></code>に従って並び替えられている。<code class="docutils literal notranslate"><span class="pre">ascending</span></code>は昇順（<code class="docutils literal notranslate"><span class="pre">True</span></code>）か降順（<code class="docutils literal notranslate"><span class="pre">False</span></code>）かを指定する引数であり，<code class="docutils literal notranslate"><span class="pre">['id','gdp']</span></code>と<code class="docutils literal notranslate"><span class="pre">ascending=['True','False']</span></code>の順番が対応している。即ち，<code class="docutils literal notranslate"><span class="pre">id</span></code>は昇順，<code class="docutils literal notranslate"><span class="pre">gdp</span></code>は降順となるように並び替えている。</p>
 </div>
 <div class="section" id="id25">
 <h2>DataFrameの結合<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
-<p>ここでは３つの<code class="docutils literal notranslate"><span class="pre">.csv</span></code>ファイルを使う。</p>
+<p>データを扱うと必ずと言って良いほど必要になるのがデータ・セットの結合である。例えば，日本銀行と米国連邦準備制度（米国の中央銀行）のデータからなる<code class="docutils literal notranslate"><span class="pre">df</span></code>を作るとすると，それぞれのサイトから取得したデータ・セットを結合する必要がある。<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>には，そのための便利なメソッドが準備されているので，ここではそれを紹介する。</p>
+<p>３つの<code class="docutils literal notranslate"><span class="pre">.csv</span></code>ファイルを使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/Haruyama-KobeU/Py4Basics/master/data/&#39;</span>
@@ -4930,6 +4942,18 @@ dtype: int64
   </tbody>
 </table>
 </div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df3</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;year&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2011
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="merge">
 <h3>横結合：<code class="docutils literal notranslate"><span class="pre">merge()</span></code><a class="headerlink" href="#merge" title="Permalink to this headline">¶</a></h3>
@@ -5238,6 +5262,15 @@ dtype: int64
 </table>
 </div></div></div>
 </div>
+</div>
+<div class="section" id="id28">
+<h4>例３<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">year</span></code>を基準列とする。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df2</span></code>の全ての行を残す。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df1</span></code>ではマッチする行だけ残り，マッチしない行は削除される。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df1</span></code>にあり<code class="docutils literal notranslate"><span class="pre">df2</span></code>にない行には<code class="docutils literal notranslate"><span class="pre">NaN</span></code>が入る。</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
@@ -5367,8 +5400,8 @@ dtype: int64
 </div></div></div>
 </div>
 </div>
-<div class="section" id="id28">
-<h4>例３<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id29">
+<h4>例４<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">year</span></code>を基準列とする。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">df1</span></code>と<code class="docutils literal notranslate"><span class="pre">df2</span></code>の全ての行は残る。</p></li>
@@ -5571,8 +5604,8 @@ dtype: int64
 </div>
 </div>
 </div>
-<div class="section" id="id29">
-<h3>縦結合<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id30">
+<h3>縦結合<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">concat()</span></code>は横結合にも使えるが，縦結合のみ考える。</p>
 <p>引数には複数の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>をリストとして書く。</p>
 <div class="cell docutils container">
@@ -5667,10 +5700,10 @@ dtype: int64
 </div>
 </div>
 </div>
-<div class="section" id="id30">
-<h2>その他<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id31">
-<h3>インデックスを振り直す<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
+<h2>その他<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id32">
+<h3>インデックスを振り直す<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
 <p>メソッド<code class="docutils literal notranslate"><span class="pre">.reset_index()</span></code>を使うと，行のインデックスを0,1,2,..と振り直すことができる。<code class="docutils literal notranslate"><span class="pre">df13</span></code>を使い説明する。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
@@ -5936,8 +5969,8 @@ dtype: int64
 </div></div></div>
 </div>
 </div>
-<div class="section" id="id32">
-<h3>列のラベルの変更<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id33">
+<h3>列のラベルの変更<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h3>
 <p>メソッド<code class="docutils literal notranslate"><span class="pre">.rename()</span></code>を使い列のラベルを変更する。引数は次の形で設定する。</p>
 <div class="math notranslate nohighlight">
 \[\text{.rename}\left(\text{columns=}辞書\right)\]</div>
@@ -6036,10 +6069,10 @@ dtype: int64
 </div>
 <p>この場合，列の数とリストの要素数が合わないとエラーとなるので注意しよう。</p>
 </div>
-<div class="section" id="id33">
-<h3>列の並び替え<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id34">
-<h4>アルファベット順<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h4>
+<h3>列の並び替え<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id35">
+<h4>アルファベット順<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h4>
 <p>メソッド<code class="docutils literal notranslate"><span class="pre">.sort_index()</span></code>を使い，引数には<code class="docutils literal notranslate"><span class="pre">axis='columns'</span></code>もしくは<code class="docutils literal notranslate"><span class="pre">axis=1</span></code>を指定する。</p>
 <p>（コメント）引数が<code class="docutils literal notranslate"><span class="pre">axis='rows'</span></code>もしくは<code class="docutils literal notranslate"><span class="pre">axis=0</span></code>の場合，行が並び替えられる。</p>
 <div class="cell docutils container">
@@ -6126,10 +6159,10 @@ dtype: int64
 </div></div></div>
 </div>
 </div>
-<div class="section" id="id35">
-<h4>順番を指定する<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h4>
 <div class="section" id="id36">
-<h5>方法１<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h5>
+<h4>順番を指定する<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id37">
+<h5>方法１<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h5>
 <p>列を選択する方法を使い並び替える。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -6217,8 +6250,8 @@ dtype: int64
 </div></div></div>
 </div>
 </div>
-<div class="section" id="id37">
-<h5>方法２<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h5>
+<div class="section" id="id38">
+<h5>方法２<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h5>
 <p>次の列の選択方法でも可。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -6304,8 +6337,8 @@ dtype: int64
 </div></div></div>
 </div>
 </div>
-<div class="section" id="id38">
-<h5>方法３<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h5>
+<div class="section" id="id39">
+<h5>方法３<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h5>
 <p>メソッド<code class="docutils literal notranslate"><span class="pre">.reindex()</span></code>を使う。引数は<code class="docutils literal notranslate"><span class="pre">columns=[]</span></code>。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -6391,8 +6424,8 @@ dtype: int64
 </div></div></div>
 </div>
 </div>
-<div class="section" id="id39">
-<h5>方法３の応用<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h5>
+<div class="section" id="id40">
+<h5>方法３の応用<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h5>
 <p>最後の行を最初に移動する。</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">.columns.tolist()</span></code>：コラムのラベルを取得し，それをリストに変換</p></li>
