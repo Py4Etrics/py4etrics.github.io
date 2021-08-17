@@ -772,7 +772,7 @@ df.loc[cond,:]
 
 # ### 欠損値がある行の削除
 
-# 欠損値がある全ての行を削除する。
+# 欠損値がある行を削除するには，`df`のメソッド`.dropna()`を使う。次のコードでは，欠損値がある**全て**の行を削除する。
 
 # In[67]:
 
@@ -784,12 +784,12 @@ df.dropna()
 # ```
 # df.dropna(inplace=True)
 # ```
-# とするか，削除後の`df`を`df`自体に代入する。
+# とするか，削除後の`df`を変数`df`に再度割り当てる。
 # ```
 # df = df.dropna()
 # ```
 
-# ある列で`NaN`がある場合のみ行を削除する。
+# 一方で，ある列に`NaN`がある場合のみ行を削除したい場合もあるだろう。その場合は引数`subset`を使う。
 
 # In[68]:
 
@@ -797,11 +797,18 @@ df.dropna()
 df.dropna(subset=['inv'])
 
 
-# （注意）オプション`subset=`には削除する列が１つであってもリスト`[]`で指定する。
+# 列`con`に`NaN`が残っている。
+# 
+# ＜注意＞<br>
+# `subset=['inv']`のように，`NaN`があるかを確認する列が１つであってもリスト`[]`で指定する。複数であれば，次のように列ラベルをリストとして並べれば良い。
+# ```
+# subset=['inv','id']
+# ```
+# 非常に便利な引数なので覚えておこう！
 
 # ## 並び替え
 
-# `df`を`gdp`の昇順に並び替える。
+# `df`の行を並び替えるにはメソッド`.sort_values()`を使う。引数には，並び替える基準となる列ラベルを指定し，デフォルトでは昇順となる。次のコードでは`gdp`に従って昇順に並び替えている。
 
 # In[69]:
 
@@ -809,7 +816,7 @@ df.dropna(subset=['inv'])
 df.sort_values('gdp').head()
 
 
-# 降順の場合
+# 引数`ascending=False`を使うと降順になる。
 
 # In[70]:
 
@@ -817,7 +824,7 @@ df.sort_values('gdp').head()
 df.sort_values('gdp', ascending=False).head()
 
 
-# 複数の列を指定する場合
+# 複数の列を基準として，昇順と降順を別々に指定することも可能である。
 
 # In[71]:
 
@@ -825,11 +832,13 @@ df.sort_values('gdp', ascending=False).head()
 df.sort_values(['id','gdp'], ascending=['True','False']).head()
 
 
-# ここでは`id`に従って先に並び替えられ，その後に`gdp`に従って並び替えられている。`ascending`は昇順（`True`）か降順（`False`）かを指定する引数であり，`['id','gdp']`と`ascending=['True','False']`の順番が対応している。
+# ここでは`id`に従って先に並び替えられ，その後に`gdp`に従って並び替えられている。`ascending`は昇順（`True`）か降順（`False`）かを指定する引数であり，`['id','gdp']`と`ascending=['True','False']`の順番が対応している。即ち，`id`は昇順，`gdp`は降順となるように並び替えている。
 
 # ## DataFrameの結合
 
-# ここでは３つの`.csv`ファイルを使う。
+# データを扱うと必ずと言って良いほど必要になるのがデータ・セットの結合である。例えば，日本銀行と米国連邦準備制度（米国の中央銀行）のデータからなる`df`を作るとすると，それぞれのサイトから取得したデータ・セットを結合する必要がある。`DataFrame`には，そのための便利なメソッドが準備されているので，ここではそれを紹介する。
+# 
+# ３つの`.csv`ファイルを使う。
 
 # In[72]:
 
@@ -856,6 +865,12 @@ df2
 
 
 df3
+
+
+# In[76]:
+
+
+df3.loc[0,'year']
 
 
 # ### 横結合：`merge()`
@@ -890,7 +905,7 @@ df3
 # * `year`を基準列とする。
 # * 共通する行だけを残す。
 
-# In[76]:
+# In[77]:
 
 
 pd.merge(df1, df2, on='year', how='inner')
@@ -903,26 +918,33 @@ pd.merge(df1, df2, on='year', how='inner')
 # * `df2`ではマッチする行だけ残り，マッチしない行は削除される。
 # * `df1`にあり`df2`にない行には`NaN`が入る。
 
-# In[77]:
+# In[78]:
 
 
 pd.merge(df1, df2, on='year', how='left')
 
 
-# In[78]:
+# #### 例３
+
+# * `year`を基準列とする。
+# * `df2`の全ての行を残す。
+# * `df1`ではマッチする行だけ残り，マッチしない行は削除される。
+# * `df1`にあり`df2`にない行には`NaN`が入る。
+
+# In[79]:
 
 
 pd.merge(df1, df2, on='year', how='right')
 
 
-# #### 例３
+# #### 例４
 
 # * `year`を基準列とする。
 # * `df1`と`df2`の全ての行は残る。
 # * `df1`にあり`df2`にない行には`NaN`が入る。
 # * `df2`にあり`df1`にない行には`NaN`が入る。
 
-# In[79]:
+# In[80]:
 
 
 pd.merge(df1, df2, on='year', how='outer')
@@ -934,13 +956,13 @@ pd.merge(df1, df2, on='year', how='outer')
 # 
 # 引数には複数の`DataFrame`をリストとして書く。
 
-# In[80]:
+# In[81]:
 
 
 df13 = pd.concat([df1,df3])
 
 
-# In[81]:
+# In[82]:
 
 
 df13.tail()
@@ -952,7 +974,7 @@ df13.tail()
 
 # メソッド`.reset_index()`を使うと，行のインデックスを0,1,2,..と振り直すことができる。`df13`を使い説明する。
 
-# In[82]:
+# In[83]:
 
 
 df13.reset_index()
@@ -960,7 +982,7 @@ df13.reset_index()
 
 # この例では元のインデックスが列`index`として追加されている。`reset_index()`に引数`drop=True`を加えると，列`index`は追加されない。
 
-# In[83]:
+# In[84]:
 
 
 df13.reset_index(drop=True).head()
@@ -978,7 +1000,7 @@ df13.reset_index(drop=True).head()
 # 
 # 下のコードでは，`df13`を使い新しいラベルとして`pop_new`と`id_new`を使っている。
 
-# In[84]:
+# In[85]:
 
 
 df13.rename(columns={'pop':'pop_new','id':'id_new'}).head()
@@ -998,7 +1020,7 @@ df13.rename(columns={'pop':'pop_new','id':'id_new'}).head()
 # 
 # （コメント）引数が`axis='rows'`もしくは`axis=0`の場合，行が並び替えられる。
 
-# In[85]:
+# In[86]:
 
 
 df13.sort_index(axis='columns').head()
@@ -1010,7 +1032,7 @@ df13.sort_index(axis='columns').head()
 
 # 列を選択する方法を使い並び替える。
 
-# In[86]:
+# In[87]:
 
 
 var = ['id','year','gdp','con','inv','pop']
@@ -1022,7 +1044,7 @@ df13.loc[:,var].head()
 
 # 次の列の選択方法でも可。
 
-# In[87]:
+# In[88]:
 
 
 df13[var].head()
@@ -1032,7 +1054,7 @@ df13[var].head()
 
 # メソッド`.reindex()`を使う。引数は`columns=[]`。
 
-# In[88]:
+# In[89]:
 
 
 df13.reindex(columns=['id','year','gdp','con','inv','pop']).head()
@@ -1047,7 +1069,7 @@ df13.reindex(columns=['id','year','gdp','con','inv','pop']).head()
 #     * `col[0:-2]`：`col`の最初から最後から二番目の要素をリストとして取得
 #     * `+`：リストの結合
 
-# In[89]:
+# In[90]:
 
 
 col = df13.columns.tolist()
