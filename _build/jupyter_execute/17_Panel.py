@@ -396,7 +396,7 @@ result_dum.params[filter]
 # ---
 # その方法がランダム効果推定と言われるもので，固定効果のように，変数を平均からの**部分的**な乖離に変換することにより可能となる。具体的には，次式が推定式となる。
 # 
-# $$\overset{\circ}{y}_{it}=\beta_0(1-\theta)+\beta_1\overset{\circ}{y}_{it}+\overset{\circ}{e}_{it}\qquad\qquad\left(\text{式５}\right)$$
+# $$\overset{\circ}{y}_{it}=\beta_0(1-\theta)+\beta_1\overset{\circ}{x}_{it}+\overset{\circ}{e}_{it}\qquad\qquad\left(\text{式５}\right)$$
 # 
 # ここで
 # * $\overset{\circ}{y}_{it}=y_{it}-\theta\bar{y}_i$
