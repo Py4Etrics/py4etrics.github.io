@@ -3,10 +3,6 @@
 
 # # 推論
 
-# If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F11_Inference.html) in English or the language of your choice.
-# 
-# ---
-
 # In[1]:
 
 
@@ -19,6 +15,14 @@ import wooldridge
 
 
 # ## 説明：仮説検定
+
+# ```{margin}
+# <div name="html-admonition">
+# Do you want to read in a differnt language? Open the 
+# <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translated version" style="color:#ffffff;background-color:#008080;" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/>
+# in English or the language of your choice.
+# </div>
+# ```
 
 # 仮説検定は以下の手順でおこなう。
 # 1. 母集団のパラメータについて帰無仮説（Null Hypothesis）と対立仮説（Alternative Hypothesis）を設定する。
@@ -323,13 +327,17 @@ res_gpa.bse
 # \hat{\beta}_j\pm t_c(a)\cdot se\left(\hat{\beta}_j\right)
 # $$
 # 
-# ここで，$a$は有意水準である。
+# ここで，$a$は有意水準である。$a=0.05$場合での解釈を考えよう。
 # 
-# **（解釈）**
+# **（間違った解釈）**<br>
+# 母集団の（真の）$\beta_j$の値が信頼区間に入る確率は95％である。
 # 
-# 標本を取りOLS推定値を計算するというプロセスを100回繰り返した場合（それが可能な場合、それぞれの標本は異なり$\hat{\beta}_j$も異なることになる），その内，母集団の（真の）$\beta_j$の値が信頼区間に入るのは$(1-a)\times 100$回である（$a=0.05$の場合，95回）。
+# **（正しい解釈）**<br>
+# 標本を取りOLS推定値を計算するというプロセスを100回繰り返すとしよう。それぞれの標本は異なるため推定値$\hat{\beta}_j$と$t$値も異なることになり，100の異なる信頼区間が生成される。その内，母集団の（真の）$\beta_j$の値が信頼区間に入るのは概ね$(1-0.05)\times 100$回=95回であり，概ね5回は入らない。更に，100回ではなく無限回繰り返すと，計算した信頼区間の95%には真の値が入り，5%には入らない。
+# 
+# 紛らわしい解釈だが，次の理由でこの様な解釈となる。まず母集団の（真の）$\beta_j$の値は一定として与えられている。即ち，ランダム変数では**ない**。従って，１つの信頼区間を計算した後に，その区間に（一定な値である）真の値が入るかについての確率を考えることは意味がないのである。言い換えると，真の値が信頼区間に入るか，もしくは入らないかの２つのケースのどちらかだけである。一方で，信頼区間の上限と下限の値はランダムである。ランダムに変動する信頼区間に対しての確率を考えるのは意味があることである。
 
-# `gpa`の例を考える。`res_gpa`の属性から信頼区間を取得できる。
+# では`gpa`の例を考えよう。`res_gpa`の属性から信頼区間を取得できる。
 
 # In[18]:
 

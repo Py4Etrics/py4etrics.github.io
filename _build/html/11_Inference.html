@@ -497,8 +497,6 @@
                 
   <div class="section" id="id1">
 <h1>推論<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p>If you come here without expecting Japanese, please click <a class="reference external" href="https://translate.google.com/translate?hl=&amp;sl=ja&amp;tl=en&amp;u=https%3A%2F%2Fpy4etrics.github.io%2F11_Inference.html">Google translated version</a> in English or the language of your choice.</p>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">t</span><span class="p">,</span> <span class="n">f</span>
@@ -513,6 +511,14 @@
 </div>
 <div class="section" id="id2">
 <h2>説明：仮説検定<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<div name="html-admonition">
+Do you want to read in a differnt language? Open the 
+<input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translated version" style="color:#ffffff;background-color:#008080;" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/>
+in English or the language of your choice.
+</div>
+</div>
 <p>仮説検定は以下の手順でおこなう。</p>
 <ol class="simple">
 <li><p>母集団のパラメータについて帰無仮説（Null Hypothesis）と対立仮説（Alternative Hypothesis）を設定する。</p>
@@ -1008,10 +1014,13 @@ dtype: float64
 \[
 \hat{\beta}_j\pm t_c(a)\cdot se\left(\hat{\beta}_j\right)
 \]</div>
-<p>ここで，<span class="math notranslate nohighlight">\(a\)</span>は有意水準である。</p>
-<p><strong>（解釈）</strong></p>
-<p>標本を取りOLS推定値を計算するというプロセスを100回繰り返した場合（それが可能な場合、それぞれの標本は異なり<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>も異なることになる），その内，母集団の（真の）<span class="math notranslate nohighlight">\(\beta_j\)</span>の値が信頼区間に入るのは<span class="math notranslate nohighlight">\((1-a)\times 100\)</span>回である（<span class="math notranslate nohighlight">\(a=0.05\)</span>の場合，95回）。</p>
-<p><code class="docutils literal notranslate"><span class="pre">gpa</span></code>の例を考える。<code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性から信頼区間を取得できる。</p>
+<p>ここで，<span class="math notranslate nohighlight">\(a\)</span>は有意水準である。<span class="math notranslate nohighlight">\(a=0.05\)</span>場合での解釈を考えよう。</p>
+<p><strong>（間違った解釈）</strong><br>
+母集団の（真の）<span class="math notranslate nohighlight">\(\beta_j\)</span>の値が信頼区間に入る確率は95％である。</p>
+<p><strong>（正しい解釈）</strong><br>
+標本を取りOLS推定値を計算するというプロセスを100回繰り返すとしよう。それぞれの標本は異なるため推定値<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>と<span class="math notranslate nohighlight">\(t\)</span>値も異なることになり，100の異なる信頼区間が生成される。その内，母集団の（真の）<span class="math notranslate nohighlight">\(\beta_j\)</span>の値が信頼区間に入るのは概ね<span class="math notranslate nohighlight">\((1-0.05)\times 100\)</span>回=95回であり，概ね5回は入らない。更に，100回ではなく無限回繰り返すと，計算した信頼区間の95%には真の値が入り，5%には入らない。</p>
+<p>紛らわしい解釈だが，次の理由でこの様な解釈となる。まず母集団の（真の）<span class="math notranslate nohighlight">\(\beta_j\)</span>の値は一定として与えられている。即ち，ランダム変数では<strong>ない</strong>。従って，１つの信頼区間を計算した後に，その区間に（一定な値である）真の値が入るかについての確率を考えることは意味がないのである。言い換えると，真の値が信頼区間に入るか，もしくは入らないかの２つのケースのどちらかだけである。一方で，信頼区間の上限と下限の値はランダムである。ランダムに変動する信頼区間に対しての確率を考えるのは意味があることである。</p>
+<p>では<code class="docutils literal notranslate"><span class="pre">gpa</span></code>の例を考えよう。<code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性から信頼区間を取得できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_gpa</span><span class="o">.</span><span class="n">conf_int</span><span class="p">())</span>
@@ -1381,8 +1390,8 @@ Abstract of the United States.
 Dep. Variable:         np.log(salary)   R-squared:                       0.628
 Model:                            OLS   Adj. R-squared:                  0.622
 Method:                 Least Squares   F-statistic:                     117.1
-Date:                Tue, 17 Aug 2021   Prob (F-statistic):           2.94e-72
-Time:                        11:36:59   Log-Likelihood:                -385.11
+Date:                Thu, 09 Sep 2021   Prob (F-statistic):           2.94e-72
+Time:                        18:55:52   Log-Likelihood:                -385.11
 No. Observations:                 353   AIC:                             782.2
 Df Residuals:                     347   BIC:                             805.4
 Df Model:                           5                                         
