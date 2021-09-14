@@ -12,14 +12,19 @@ kernelspec:
 <!--# ３. 番外編-->
 # 目次と内容
 
-If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2Fpart_3.html) in English or the language of your choice.
+```{margin}
+<div name="html-admonition">
+Do you want to read in a differnt language? Open the 
+<input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translated version" style="color:#ffffff;background-color:#008080;" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/>
+in English or the language of your choice.
+</div>
+```
 
----
-
-
-1. {doc}`Gapminder`
-   - [Gapminder](https://www.gapminder.org)は世界経済のGDPなどデータを駆使し興味深い分析をおこなっているサイトであり、ここではその時系列データを図示する。
 1. {doc}`Descriptive_stats_vs_Graphs`
-   - 記述統計だけではデータの性質は分からないことを示す有名なデータを紹介する。
+    - 記述統計だけではデータの性質は分からないことを示す有名なデータを紹介する。
 1. {doc}`data_source`
-   - データベースのリスト
+    - データベースのリスト
+1. [Pythonで学ぶマクロ経済学 (中級＋レベル)](https://py4macro.github.io)
+    - データとシミュレーションを駆使して，中級レベルより一歩進んだマクロ経済学を考える。
+1. [経済学のためのPython入門](https://py4basics.github.io)
+    - タイトルの通り。

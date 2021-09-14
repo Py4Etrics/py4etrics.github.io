@@ -3,9 +3,13 @@
 
 # # 計量経済学用語
 # 
-# If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F7_Review_of_Statistics.html) in English or the language of your choice.
-# 
-# ---
+# ```{margin}
+# <div name="html-admonition">
+# Do you want to read in a differnt language? Open the 
+# <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translated version" style="color:#ffffff;background-color:#008080;" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/>
+# in English or the language of your choice.
+# </div>
+# ```
 # 
 # 横断面データ（cross-sectional data）
 # : ある時点において複数の対象を観察し収集したデータ（例えば，2018年の47都道府県の県内総生産）
