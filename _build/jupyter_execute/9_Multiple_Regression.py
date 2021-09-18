@@ -4,10 +4,6 @@
 # (chap:9-multiple)=
 # # 重回帰分析
 
-# If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F9_Multiple_Regression.html) in English or the language of your choice.
-# 
-# ---
-
 # In[1]:
 
 
@@ -25,6 +21,14 @@ from see import see
 
 
 # ## 説明
+
+# ```{margin}
+# <div name="html-admonition">
+# Do you want to read in a differnt language? Open the 
+# <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translated version" style="color:#ffffff;background-color:#008080;" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/>
+# in English or the language of your choice.
+# </div>
+# ```
 
 # 説明変数が複数の重回帰分析（Multiple Regression）を考える。
 # 

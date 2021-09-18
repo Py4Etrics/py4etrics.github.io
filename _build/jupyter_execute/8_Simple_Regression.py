@@ -4,10 +4,6 @@
 # (chap:8-simple)=
 # # 単回帰分析
 
-# If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F8_Simple_Regression.html) in English or the language of your choice.
-# 
-# ---
-
 # In[1]:
 
 
@@ -22,6 +18,14 @@ from numba import njit  # シミュレーションの計算を高速化する
 
 
 # ## 説明
+
+# ```{margin}
+# <div name="html-admonition">
+# Do you want to read in a differnt language? Open the 
+# <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translated version" style="color:#ffffff;background-color:#008080;" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/>
+# in English or the language of your choice.
+# </div>
+# ```
 
 # 説明変数が１つの単回帰（Simple Regression）を考える。
 # 
@@ -349,6 +353,13 @@ print(res.summary())
 
 print(res.summary().tables[1])
 
+
+# ````{note}
+# `statsmodels 13.0`では`.summary()`に引数`slim`（デフォルトは`False`）が追加されており，`.tables`を使わずに次のコードで簡略化された表を表示できる。
+# ```
+# result.summary(slim=True)
+# ```
+# ````
 
 # **＜表の説明＞**
 # 
