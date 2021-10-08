@@ -3,10 +3,6 @@
 
 # # Pandas
 
-# If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F3_Pandas.html) in English or the language of your choice.
-# 
-# ---
-
 # `Pandas`は`NumPy`の`array`のようにデータを扱うパッケージだが，Pandas特有のデータ構造を提供し複雑なデータを扱いやすくしている。例えば，行列にはラベルを使うことにより，インデックス番号だけではなくラベル名（例えば，GDP）を使って操作することが可能となる。Pandasには`DataFrame`（データフレーム）と`Series`（シリーズ）と呼ばれるオブジェクトがある。前者はエクセルのスプレッド・シートをイメージすれば良いだろう。後者は，スプレッド・シートから１つの行または列を取り出したようなデータと思えば良い。また，`Pandas`は`NumPy`に基づいているため，ベクトル演算（ブロードキャスティング）の機能が使える。
 # 
 # ここで説明できない他の使い方については[このサイト](https://github.com/ysdyt/pandas_tutorial)と[このサイト](https://note.nkmk.me/python-pandas-post-summary/)が参考になる。
@@ -20,6 +16,14 @@ import pandas as pd
 
 
 # ## データの読み込みとデータのチェック
+
+# ```{margin}
+# <div name="html-admonition">
+# Do you want to read in a differnt language? Open the 
+# <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translated version" style="color:#ffffff;background-color:#008080;" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/>
+# in English or the language of your choice.
+# </div>
+# ```
 
 # 様々なデータを読み込むことが可能だが，ここでは`read_csv()`関数を使ってインターネット上の`.csv`ファイルを読み込む。
 

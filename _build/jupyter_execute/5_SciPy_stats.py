@@ -3,13 +3,17 @@
 
 # # SciPy.stats
 
-# If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F5_SciPy_stats.html) in English or the language of your choice.
-# 
-# ---
-
 # `SciPy`（サイパイ）は，NumPyの大幅な拡張版と理解して良い。`SciPy`を読み込むとNumPyの関数などを利用できるようになる。しかし`SciPy`は大きなパッケージであり，全てを読み込む必要もない。従って，`NumPy`を読み込んで，`SciPy`のサブパッケージや関数を読み込むということで十分であろう。ここでは`SciPy`の`stats`というサブパッケージについて説明する。
 
 # ## 正規分布（Normal Distribution）
+
+# ```{margin}
+# <div name="html-admonition">
+# Do you want to read in a differnt language? Open the 
+# <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translated version" style="color:#ffffff;background-color:#008080;" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/>
+# in English or the language of your choice.
+# </div>
+# ```
 
 # 正規分布のモジュール名は`norm`であり，以下が主な関数である。
 # 

@@ -3,10 +3,6 @@
 
 # # Pythonの基礎
 
-# If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F1_Python_Basics.html) in English or the language of your choice.
-# 
-# ------
-
 # ## `=`の意味と「オブジェクト」
 
 # 変数$x$に値`10`を「代入」するには等号`=`を使う。
@@ -26,6 +22,15 @@ x
 
 
 # ここで「代入」に使った`=`について少し説明する。実は、`=`は「代入」ではない。更には、`x`と`10`は別物なのである。これを理解するために、多くの品物が保管されている大きな倉庫を考えてみよう。倉庫の管理者はどの品物がどこに保管されているかを記録する在庫リスト（記録帳やコンピューター・ファイル）を作成し、そこに品物が保管されている棚を示す記号を記入しているとしよう。この例を使うと、
+
+# ```{margin}
+# <div name="html-admonition">
+# Do you want to read in a differnt language? Open the 
+# <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translated version" style="color:#ffffff;background-color:#008080;" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/>
+# in English or the language of your choice.
+# </div>
+# ```
+
 # * `10`　→　倉庫の棚に保管されている品物
 # * `x`　→　在庫リストに記載されている棚の記号
 # 

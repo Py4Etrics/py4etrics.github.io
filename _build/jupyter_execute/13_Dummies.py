@@ -3,10 +3,6 @@
 
 # # 質的変数と回帰分析
 
-# If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F13_Dummies.html) in English or the language of your choice.
-# 
-# ---
-
 # In[1]:
 
 
@@ -21,6 +17,14 @@ import wooldridge
 # 2. 質的変数（性別，人種，地域など）
 # 
 # 今までは量的変数を考えたが，ここでは質的変数について議論する。まず男女のような２つの属性に分けるダミー変数を考える。その後に，より一般的な3つ以上の属性をに特徴付けられるカテゴリー変数を扱う場合を説明する。
+
+# ```{margin}
+# <div name="html-admonition">
+# Do you want to read in a differnt language? Open the 
+# <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translated version" style="color:#ffffff;background-color:#008080;" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/>
+# in English or the language of your choice.
+# </div>
+# ```
 
 # ## ダミー変数
 

@@ -3,10 +3,6 @@
 
 # # Matplotlib
 
-# If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F4_Matplotlib.html) in English or the language of your choice.
-# 
-# ---
-
 # Matplotlib（マットプロットリブ）は図を描くためのパッケージである。どこまで手の込んだ図を書くかによってコードが違ってくるが，ここでは`pyplot`というサブパッケージを使い，一番シンプルなコードになるものを紹介する。ここで説明することができない多くの機能が備わっているが，この[リンク](https://nbviewer.jupyter.org/github/jrjohansson/scientific-python-lectures/blob/master/Lecture-4-Matplotlib.ipynb)が参考になるだろう。
 # 
 # 通常，`plt`として読み込む。
@@ -20,6 +16,14 @@ import matplotlib.pyplot as plt
 
 
 # ## 図の作成
+
+# ```{margin}
+# <div name="html-admonition">
+# Do you want to read in a differnt language? Open the 
+# <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translated version" style="color:#ffffff;background-color:#008080;" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/>
+# in English or the language of your choice.
+# </div>
+# ```
 
 # `df`を再度読み直す。今回は`year`を行ラベルにせず，インデックス番号をそのまま使う。
 

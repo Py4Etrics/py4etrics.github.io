@@ -3,15 +3,17 @@
 
 # # Tipsと注意点
 
-# If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F6_things_to_note.html) in English or the language of your choice.
-# 
-# ---
-
 # ## 書式について
 
 # コードを書く際に以下を注意すること。
 # 1. 分かりやすい変数名を使う。
 #     * 具体的な内容を示す変数名は可読性を高める。例えば、インフレ率を`inflation`、インフレ率の変化を`inf_change`。また単位を含めるとより分かりやすくなる。例えば、`kg`や`percent`。`var1`や`var2`と書くと、短くて書きやすいが、他の人や数ヶ月後の自分自身が読み返す時に非常に読み難いコードとなる。
+#     ```{margin}
+#     <div name="html-admonition">
+#     Do you want to read in a differnt language? Open the 
+#     <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translated version" style="color:#ffffff;background-color:#008080;" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/> in English or the language of your choice.
+#     </div>
+#     ```
 # 1. 変数や関数の命名規則
 #     * 名は小文字とアンダースコア`_`を使う（スネーク・スケールと呼ばれる）。
 #     * 例えば、`inflation_rate`と書き、`Inflation`や`InflationRate`は避ける。大文字で始まる変数は、慣例としてクラスと呼ばれるオブジェクトに使う。
@@ -21,7 +23,7 @@
 #     * 行頭にに`#`を挿入することをコメント・アウト（commet out）という。コメント・アウトされたコードは実行されない。
 #     * （Tip）行頭に`#`を挿入または削除するトグルのショートカット。
 #         * Macの場合、トグルしたい行にカーソルを置き`Command`を押したまま`/`を押下する（`Cmd+/`）。複数行をトグルしたい場合は、それらをハイライトし`Cmd+/`。
-#         * Windowsの場合、トグルしたい行にカーソルを置き`Control`を押したまま`/`を押下する（`Ctrl+/`）。複数行をトグルしたい場合は、それらをハイライトし`Ctrl+/`。
+#         * Windowsの場合、トグルしたい行にカーソルを置き`Control`を押したまま`/`を押下する（`Ctrl+/`）。複数行をトグルしたい場合は、それらをハイライトし`Ctrl+/`。        
 # 1. インデントを駆使して可読性を高める。（以下の例で改行は必要ないかもしれないが、１行が長い場合に役立つ）
 #     * `(`と`)`の間は改行してもエラーにならない。
 #         ```

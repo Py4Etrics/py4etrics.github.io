@@ -3,10 +3,6 @@
 
 # # `linearmodels`
 
-# If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F16_linearmodels.html) in English or the language of your choice.
-# 
-# ---
-
 # In[1]:
 
 
@@ -22,6 +18,14 @@ warnings.filterwarnings("ignore")
 
 
 # ## 説明
+
+# ```{margin}
+# <div name="html-admonition">
+# Do you want to read in a differnt language? Open the 
+# <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translated version" style="color:#ffffff;background-color:#008080;" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/>
+# in English or the language of your choice.
+# </div>
+# ```
 
 # `linearmodels`は`statsmodels`を補完する目的として開発されている。主に，パネルデータ，操作変数法を使った推定法やGMMを扱う場合には非常に重宝するパッケージである。しかし，`linearmodels`は`statsmodels`の両方を使う上で以下の点に注意する必要がある。
 # * 推定結果などのメソッドや属性が共通化されているわけではない。次の表に３つの例を挙げる。

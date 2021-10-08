@@ -3,10 +3,6 @@
 
 # # 制限従属変数モデル
 
-# If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F21_TruncregTobitHeckit.html) in English or the language of your choice.
-# 
-# ---
-
 # In[1]:
 
 
@@ -24,6 +20,14 @@ from py4etrics.hetero_test import het_test_probit
 
 
 # ## 説明
+
+# ```{margin}
+# <div name="html-admonition">
+# Do you want to read in a differnt language? Open the 
+# <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translated version" style="color:#ffffff;background-color:#008080;" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/>
+# in English or the language of your choice.
+# </div>
+# ```
 
 # **制限従属変数**（Limited Dependent Variables; LDV）とは，被説明変数が取り得る値が大きく制限される場合を指す。`Logit`と`Probit`も制限従属変数の例であり，被説明変数は$(0,1)$に制限されている。この章では，違ったタイプの制限従属変数を考える。
 # 

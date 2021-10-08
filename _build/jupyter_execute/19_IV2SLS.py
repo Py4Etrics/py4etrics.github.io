@@ -3,10 +3,6 @@
 
 # # 操作変数法と２段階OLS
 
-# If you come here without expecting Japanese, please click [Google translated version](https://translate.google.com/translate?hl=&sl=ja&tl=en&u=https%3A%2F%2Fpy4etrics.github.io%2F19_IV2SLS.html) in English or the language of your choice.
-# 
-# ---
-
 # In[1]:
 
 
@@ -24,6 +20,14 @@ warnings.filterwarnings("ignore")
 
 
 # **＜仮定４が満たされない場合＞**
+
+# ```{margin}
+# <div name="html-admonition">
+# Do you want to read in a differnt language? Open the 
+# <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translated version" style="color:#ffffff;background-color:#008080;" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/>
+# in English or the language of your choice.
+# </div>
+# ```
 
 # ## 説明
 
