@@ -309,7 +309,7 @@ res = mod.fit()
 
 # 上の２つを分けずに一行で書いても良い。
 # ```
-# res = old(formula, data=df).fit()
+# res = ols(formula, data=df).fit()
 # ```
 # `res`の属性を確認してみよう。
 
