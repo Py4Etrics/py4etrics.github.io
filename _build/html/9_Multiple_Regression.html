@@ -664,8 +664,8 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 Dep. Variable:               wage_log   R-squared:                       0.316
 Model:                            OLS   Adj. R-squared:                  0.312
 Method:                 Least Squares   F-statistic:                     80.39
-Date:                Fri, 15 Oct 2021   Prob (F-statistic):           9.13e-43
-Time:                        23:03:42   Log-Likelihood:                -313.55
+Date:                Mon, 01 Nov 2021   Prob (F-statistic):           9.13e-43
+Time:                        16:22:32   Log-Likelihood:                -313.55
 No. Observations:                 526   AIC:                             635.1
 Df Residuals:                     522   BIC:                             652.2
 Df Model:                           3                                         
@@ -1432,7 +1432,7 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.69773909, 2.07134214, 2.97391667])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.65786535, 1.90066801, 2.95383493])
 </pre></div>
 </div>
 </div>
@@ -1453,9 +1453,9 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.697739
-X1           2.071342
-X2           2.973917
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.657865
+X1           1.900668
+X2           2.953835
 dtype: float64
 </pre></div>
 </div>
@@ -1478,8 +1478,8 @@ dtype: float64
 <li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>：標本の大きさ</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">N</span></code>：シミュレーションの回数（標本数と考えても良い）</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">b0</span></code>：定数項（デフォルトは<code class="docutils literal notranslate"><span class="pre">1.0</span></code>と設定）</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">b1</span></code>：定数項（デフォルトは<code class="docutils literal notranslate"><span class="pre">2.0</span></code>と設定）</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">b2</span></code>：定数項（デフォルトは<code class="docutils literal notranslate"><span class="pre">3.0</span></code>と設定）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b1</span></code>：スロープ係数（デフォルトは<code class="docutils literal notranslate"><span class="pre">2.0</span></code>と設定）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b2</span></code>：スロープ係数（デフォルトは<code class="docutils literal notranslate"><span class="pre">3.0</span></code>と設定）</p></li>
 </ul>
 <p>次の関数の返り値：</p>
 <ul class="simple">
@@ -1540,9 +1540,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 1.0002811250206913 
-b1: 2.0001732767506137 
-b1: 2.9998774125869714
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 0.9994917435360119 
+b1: 1.9999909203719404 
+b1: 2.9999949973134576
 </pre></div>
 </div>
 </div>
@@ -1623,7 +1623,7 @@ b1: 2.9998774125869714
 <p>まず説明変数だけから構成される<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage1_vif</span> <span class="o">=</span> <span class="n">wage1</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;wage&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage1_vif</span> <span class="o">=</span> <span class="n">wage1</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;educ&#39;</span><span class="p">,</span><span class="s1">&#39;tenure&#39;</span><span class="p">,</span><span class="s1">&#39;exper&#39;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -1648,7 +1648,7 @@ b1: 2.9998774125869714
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.44880661, 1.4808149 , 1.49380638, 1.46201677])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.11277075, 1.34929556, 1.47761777])
 </pre></div>
 </div>
 </div>
@@ -1661,10 +1661,9 @@ b1: 2.9998774125869714
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>educ        1.448807
-tenure      1.480815
-exper       1.493806
-wage_log    1.462017
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>educ      1.112771
+tenure    1.349296
+exper     1.477618
 dtype: float64
 </pre></div>
 </div>
@@ -1683,10 +1682,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>educ        1.448807
-tenure      1.480815
-exper       1.493806
-wage_log    1.462017
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>educ      1.112771
+tenure    1.349296
+exper     1.477618
 dtype: float64
 </pre></div>
 </div>
@@ -1709,15 +1707,14 @@ dtype: float64
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">wage1_vif</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>  <span class="c1"># 定数項は無視するために-1</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">wage1_vif</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
     <span class="n">vif_val</span> <span class="o">=</span> <span class="n">vif</span><span class="p">(</span><span class="n">wage1_vif</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">i</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span> <span class="si">:</span><span class="s1"> &lt;10</span><span class="si">}{</span><span class="n">vif_val</span><span class="si">:</span><span class="s1"> &gt;10</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span> <span class="si">:</span><span class="s1"> &lt;10</span><span class="si">}{</span><span class="n">vif_val</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>educ      1.4488066076300705
-tenure    1.4808148965681553
-exper     1.4938063815278086
-wage_log  1.4620167739746217
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>educ      1.1127707502838835
+tenure    1.3492955605611776
+exper     1.4776177726317783
 </pre></div>
 </div>
 </div>
@@ -1727,7 +1724,7 @@ wage_log  1.4620167739746217
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">f-string</span></code>を使っている。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{name</span> <span class="pre">:</span> <span class="pre">&lt;10}</span></code>は、<code class="docutils literal notranslate"><span class="pre">name</span></code>の値を代入し、<code class="docutils literal notranslate"><span class="pre">10</span></code>という幅の中で左寄せしている。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{vif_val</span> <span class="pre">:</span> <span class="pre">&gt;10}</span></code>は、<code class="docutils literal notranslate"><span class="pre">vif_val</span></code>の値を代入し、<code class="docutils literal notranslate"><span class="pre">10</span></code>という幅の中で右寄せしている。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{vif_val}</span></code>は、<code class="docutils literal notranslate"><span class="pre">vif_val</span></code>の値を代入している。</p></li>
 </ul>
 </div>
 <div class="section" id="id16">
@@ -1749,6 +1746,9 @@ wage_log  1.4620167739746217
 <li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>：標本の大きさ</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">N</span></code>：標本数（ループの回数）</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">m</span></code>：２つの説明変数の共分散</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b0</span></code>：定数項（デフォルトは<code class="docutils literal notranslate"><span class="pre">1.0</span></code>と設定）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b1</span></code>：スロープ係数（デフォルトは<code class="docutils literal notranslate"><span class="pre">2.0</span></code>と設定）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b2</span></code>：スロープ係数（デフォルトは<code class="docutils literal notranslate"><span class="pre">3.0</span></code>と設定）</p></li>
 </ul>
 </li>
 <li><p>返り値</p>
@@ -1772,7 +1772,7 @@ wage_log  1.4620167739746217
     <span class="n">rv_cov</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">m</span><span class="p">],</span>    <span class="c1"># 全ての変数の分散は１（対角成分）</span>
               <span class="p">[</span><span class="n">m</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]]</span>  <span class="c1"># Cov(x1,x2)=m</span>
     
-    <span class="c1"># 推定値を入れる空のリスト</span>
+    <span class="c1"># 推定値を入れる空のarray</span>
     <span class="n">b0hat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
     <span class="n">b1hat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
     <span class="n">b2hat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
@@ -1792,9 +1792,9 @@ wage_log  1.4620167739746217
         <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">c</span><span class="p">,</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 説明変数の行列</span>
         <span class="n">bhat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@X</span><span class="p">)</span><span class="o">@</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@y</span>  <span class="c1"># OLS推定</span>
         
-        <span class="n">b0hat_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">bhat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># b0hat_listへの追加</span>
-        <span class="n">b1hat_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">bhat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># b1hat_listへの追加</span>
-        <span class="n">b2hat_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">bhat</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># b2hat_listへの追加</span>
+        <span class="n">b0hat_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">bhat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># b0hat_arrへの追加</span>
+        <span class="n">b1hat_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">bhat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># b1hat_arrへの追加</span>
+        <span class="n">b2hat_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">bhat</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># b2hat_arrへの追加</span>
 
     <span class="k">return</span> <span class="n">b0hat_arr</span><span class="p">,</span> <span class="n">b1hat_arr</span><span class="p">,</span> <span class="n">b2hat_arr</span> <span class="c1"># 返り値の設定</span>
 </pre></div>
@@ -1846,7 +1846,7 @@ wage_log  1.4620167739746217
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.038748831076901184, 0.20081018873388123)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.039013855709297544, 0.19947804589728926)
 </pre></div>
 </div>
 </div>
@@ -1929,7 +1929,7 @@ wage_log  1.4620167739746217
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19271212922129177, 0.4426434315489343)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.1927146568133277, 0.4422222176211888)
 </pre></div>
 </div>
 </div>
