@@ -591,6 +591,8 @@ res_1.bse
 
 # ## 「手計算」
 
+# ### 係数の推定値
+
 # `statsmodels`は非常に優れたパッケージであり，複雑な計算を簡単なコードで実行してくれる。しかしここでは`Numpy`の関数を使い，重回帰分析における推定値を「手計算」で求める。目的は２つある。第１に，`statsmodels`の裏でどのような計算が行われているかを理解する。第２に，今後シミュレーションをおこなうが，「手計算」のコードを使うと`Numba`を使い計算速度を格段とアップすることが可能となる。
 # 
 # 次の回帰式を考えよう。
@@ -709,8 +711,86 @@ bhat
 
 
 df_check = pd.DataFrame({'Y':y,'X1':x1,'X2':x2})
-ols('Y ~ X1 + X2', data=df_check).fit().params
+res_check = ols('Y ~ X1 + X2', data=df_check).fit()
+res_check.params
 
+
+# ### 推定値の標準誤差
+
+# 次に推定値の標準誤差を考えよう。推定値の分散共分散行列は次式で表される。
+# 
+# $$
+# \text{Var}\left(\hat{B}\right)=\hat{\sigma}_e^2\left(X^TX\right)^{-1}
+# $$
+# 
+# $\sigma_e^2$は次の２つの式から求められる。
+# 
+# $$
+# e = Y-X\hat{B},\qquad
+# \text{SSR}=ee^T,\qquad
+# \hat{\sigma}_e^2=\dfrac{\text{SSR}}{n-1-k}
+# $$
+# 
+# ここで$e$は残差，SSR（Residual Sum of Squares）残差変動の平方和を指しており，$k$は定数項以外の説明変数の数である。係数の推定値の標準誤差は$\text{Var}\left(\hat{B}\right)$の対角成分の平方根で与えられる。実際に計算してみよう。
+
+# In[37]:
+
+
+e = y.T-X@bhat.T
+SSR = e@e.T
+SSR
+
+
+# この値は`res_check`の属性`.ssr`と同じことが確認できる。
+
+# In[38]:
+
+
+res_check.ssr
+
+
+# 次に$\hat{\sigma}_e^2$を計算しよう。
+
+# In[39]:
+
+
+sigma_e2 = SSR/(n-1-2)
+sigma_e2
+
+
+# この値も`res_check`の属性`.scale`から取得できる。
+
+# In[40]:
+
+
+res_check.scale
+
+
+# 次に$\text{Var}\left(\hat{B}\right)$を計算し変数`bvar`に割り当てる。
+
+# In[41]:
+
+
+bvar = sigma_e2 * np.linalg.inv(X.T@X)
+
+
+# `bvar`は3X3の行列になっており，その対角成分はメソッド`.diagonal()`で抽出できる。その平方根が推定値の標準誤差となる。
+
+# In[42]:
+
+
+np.sqrt(bvar.diagonal())
+
+
+# `statsmodels`の結果と比べてみよう。
+
+# In[43]:
+
+
+res_check.bse
+
+
+# 同じ結果である。
 
 # ## シミュレーション：不偏性
 
@@ -734,7 +814,7 @@ ols('Y ~ X1 + X2', data=df_check).fit().params
 # 次の関数の返り値：
 # * `b0`、`b1`、`b2`の`N`個の推定値がそれぞれ格納されている`Numpy`の`array`
 
-# In[37]:
+# In[44]:
 
 
 @njit  # 計算の高速化
@@ -772,7 +852,7 @@ def sim_unbias(n, N, b0=1.0, b1=2.0, b2=3.0):
 
 # 標本の大きさは`30`、シミュレーションの回数は`100_000`に設定し、結果は`b0hat`, `b1hat`, `b2hat`に割り当てる。
 
-# In[38]:
+# In[45]:
 
 
 b0hat, b1hat, b2hat = sim_unbias(n=30, N=100_000)
@@ -780,7 +860,7 @@ b0hat, b1hat, b2hat = sim_unbias(n=30, N=100_000)
 
 # 推定値の平均を計算してみよう。
 
-# In[39]:
+# In[46]:
 
 
 print('b0:', b0hat.mean(),
@@ -792,7 +872,7 @@ print('b0:', b0hat.mean(),
 # 
 # 次に、OLS推定量$\hat{\beta}_1$の分布を図示しよう。
 
-# In[40]:
+# In[47]:
 
 
 plt.hist(b1hat,bins=30)
@@ -804,7 +884,7 @@ pass
 # 
 # 次に分布（ヒストグラム）のカーネル密度推定をおこなうために，`scipy.stats`にある`gaussian_kde`を使う。
 
-# In[41]:
+# In[48]:
 
 
 x=np.linspace(1.5,2.5,100)  # 図を作成するために1.5から2.5までの横軸の値を設定
@@ -819,7 +899,7 @@ pass
 # 
 # （注意）ヒストグラムの縦軸は頻度である。一方，カーネル密度推定の場合，曲線の下の面積が１になるように縦軸が設定されている。ヒストグラムの縦軸をカーネル密度推定に合わせるために`density=True`のオプションを加える。
 
-# In[42]:
+# In[49]:
 
 
 x=np.linspace(1.5,2.5,100)
@@ -860,7 +940,7 @@ pass
 
 # まず説明変数だけから構成される`DataFrame`を作成する。
 
-# In[43]:
+# In[50]:
 
 
 wage1_vif = wage1.loc[:,['educ','tenure','exper']]
@@ -868,7 +948,7 @@ wage1_vif = wage1.loc[:,['educ','tenure','exper']]
 
 # `corr()`は相関係数を返すメソッドであり，そこから`.to_numpy()`を使いデータを`Numpy`の`array`として取り出す。
 
-# In[44]:
+# In[51]:
 
 
 mc = wage1_vif.corr().to_numpy()
@@ -877,7 +957,7 @@ mc = wage1_vif.corr().to_numpy()
 # * 上でも使った`linalg.inv()`は、`NumPy`にある`linalg`サブパッケージの関数であり、逆行列を返す。
 # * `diagonal()`は対角成分を返すメソッドであり，それが`vif`である。
 
-# In[45]:
+# In[52]:
 
 
 vif_manual = np.linalg.inv(mc).diagonal()
@@ -886,7 +966,7 @@ vif_manual
 
 # 変数名と一緒に表示するために次のように`Series`として表示する。
 
-# In[46]:
+# In[53]:
 
 
 pd.Series(vif_manual, index=wage1_vif.columns)
@@ -894,7 +974,7 @@ pd.Series(vif_manual, index=wage1_vif.columns)
 
 # 次に上の計算を関数にまとめる。
 
-# In[47]:
+# In[54]:
 
 
 def my_vif(dataframe):
@@ -911,13 +991,13 @@ my_vif(wage1_vif)
 
 # 必ず**定数項を含む**説明変数だけから構成される`DataFrame`を作成する。
 
-# In[48]:
+# In[55]:
 
 
 wage1_vif['Intercept'] = 1.0
 
 
-# In[49]:
+# In[56]:
 
 
 for i in range(len(wage1_vif.columns)-1):  # 定数項は無視するために-1
@@ -962,7 +1042,7 @@ for i in range(len(wage1_vif.columns)-1):  # 定数項は無視するために-1
 # * `@njit`を使いたいところだが，`Numpy`の`random.multivariate_normal()`が`Numba`に対応していないため`scipy.stats`の `multivariate_normal.rvs()`を使う。`np.random.normal()`を使って二変量正規分布からの値とする方法もあるが，ここでは簡単化を重視する。
 # * `ols`は係数の推定値だけではなく他の多くの統計値も自動的に計算するため一回の計算に比較的に長い時間を要する。計算の速度を少しでも早めるために下の関数の中では`ols`は使わず`Numpy`の関数を使いOLS推定値を計算する。
 
-# In[50]:
+# In[57]:
 
 
 def sim_multi(n, N, m, b0=1.0, b1=2.0, b2=3.0):  # n=標本の大きさ, N=標本数, m=共分散
@@ -1002,7 +1082,7 @@ def sim_multi(n, N, m, b0=1.0, b1=2.0, b2=3.0):  # n=標本の大きさ, N=標�
 
 # シミュレーションの開始
 
-# In[51]:
+# In[58]:
 
 
 # 多重共線性が弱いケース 
@@ -1014,7 +1094,7 @@ b0hat_strong, b1hat_strong, b2hat_strong = sim_multi(30, 10_000, m=0.9)
 
 # $\hat{\beta}_1$の分布の図示
 
-# In[52]:
+# In[59]:
 
 
 xx=np.linspace(0.5,3.5,num=100)  # 図を作成するために横軸の値を設定
@@ -1036,7 +1116,7 @@ pass
 # 多重共線性が強いと推定値の分布は，真の値（$\beta_1=$
 # `2.0`）の周辺で低くなり左右に広がっている。推定値の正確性が低下することを示している。$\hat{\beta}_1$の分散を計算してみよう。
 
-# In[53]:
+# In[60]:
 
 
 np.var(b1hat_weak), np.var(b1hat_strong)
@@ -1052,7 +1132,7 @@ np.var(b1hat_weak), np.var(b1hat_strong)
 
 # 問4の答え：$+$を押すと答えが表示される。
 
-# In[54]:
+# In[61]:
 
 
 def sim_se(n, N, m, b0=1.0, b1=2.0, b2=3.0):  # n=標本の大きさ, N=標本数, m=共分散
@@ -1108,7 +1188,7 @@ pass
 
 # 問5の答え：$+$を押すと答えが表示される。
 
-# In[55]:
+# In[62]:
 
 
 sum(se_x1_weak)/len(se_x1_weak), sum(se_x1_strong)/len(se_x1_strong)
@@ -1127,7 +1207,7 @@ sum(se_x1_weak)/len(se_x1_weak), sum(se_x1_strong)/len(se_x1_strong)
 
 # まずコードの中で`matplotlib`を明示的に導入せずに`pandas`のみを使い図示する方法を紹介する。こちらの方が簡単と感じるかもしれない。散布図を描いてみる。
 
-# In[56]:
+# In[63]:
 
 
 wage1.plot.scatter('educ','wage')
@@ -1156,7 +1236,7 @@ pass
 # ---
 # 変数の相関度をチェックするために`pandas.plotting`の`scatter_matrix`を使う。このモジュールは`DataFrame`を引数とする。
 
-# In[57]:
+# In[64]:
 
 
 scatter_matrix(wage1)
@@ -1170,7 +1250,7 @@ pass
 # 1. 図の大きさは`figsize=(9, 6)`で指定する。この例では`9`が横幅，`6`が縦幅である。 
 # 1. `diagonal='kde'`を指定すると対角線上のヒストグラムをカーネル密度推定に変更できる。
 
-# In[58]:
+# In[65]:
 
 
 scatter_matrix(wage1, figsize=(9, 6), diagonal='kde')
@@ -1179,7 +1259,7 @@ pass
 
 # 次に相関係数を簡単に計算する方法を紹介する。`DataFrame`のメソッド`corr()`を使うと変数の相関係数を`DataFrame`として返す。
 
-# In[59]:
+# In[66]:
 
 
 mat = wage1.corr()
@@ -1194,7 +1274,7 @@ mat
 
 # まず上で`DataFrame`のメソッド`corr()`を使い変数の相関係数を計算したが，`seaborn`の`heatmap()`関数を使うと相関係数を色に変換してより見やすい表示となる。
 
-# In[60]:
+# In[67]:
 
 
 sns.heatmap(mat, vmin=-1, annot=True, cmap='coolwarm')
@@ -1209,7 +1289,7 @@ pass
 
 # `seaborn`には`matplotlib`の相関度をチェックする`scatter_matrix`関数に対応する`pairplot`があり，より使い勝手が良いと感じるかもしれない。
 
-# In[61]:
+# In[68]:
 
 
 sns.pairplot(wage1, height=1.5, aspect=1.3)
