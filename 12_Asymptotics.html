@@ -42,7 +42,7 @@
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
@@ -313,7 +313,7 @@
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
@@ -353,7 +353,7 @@
         </div>
 
         <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
@@ -470,7 +470,127 @@
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>大標本特性</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#consistency">
+   一致性（Consistency）
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     説明
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     シミュレーション：一致性
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id4">
+       誤差項のプロット
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id5">
+       一致性
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   標本の大きさによる違い
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     小標本特性
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     大標本特性
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#t">
+   シミュレーション：大標本特性と
+   <span class="math notranslate nohighlight">
+    \(t\)
+   </span>
+   値の分布
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     説明
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     誤差項の正規性が満たされる場合
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     誤差項の正規性が満たされない場合
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id12">
+   正規性の確認
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#qq">
+     qqプロット
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#jarque-bera">
+     Jarque-Bera検定
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#omnibus">
+     Omnibus検定
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#lm">
+   <span class="math notranslate nohighlight">
+    \(LM\)
+   </span>
+   検定
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="id1">
@@ -636,8 +756,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.32173111, -0.14390131,  1.72049892,  0.53870754, -0.32402817,
-       -0.64633247, -0.44967483, -0.59618845, -0.24566514, -0.47733784])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.68331629, -0.43750276, -0.55221121,  0.11384948, -0.62712211,
+       -0.31647459, -0.51996766,  1.88646616,  0.13549048,  0.5899786 ])
 </pre></div>
 </div>
 </div>
@@ -665,7 +785,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.016068126749505696
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.003863829712949681
 </pre></div>
 </div>
 </div>
@@ -777,8 +897,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.41265475, 0.47474151, 0.33996946, ..., 0.52535988, 0.4034762 ,
-       0.52411168])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.6864623 , 0.53519473, 1.16824171, ..., 0.01736608, 0.80817829,
+       0.50834256])
 </pre></div>
 </div>
 </div>
@@ -1249,10 +1369,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(6.127643862976232,
- 0.04670883567340767,
- -0.27074808568932207,
- 2.969853660170276)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.0169795044761234,
+ 0.6014031610807611,
+ 0.0006049666803009113,
+ 2.779062107649872)
 </pre></div>
 </div>
 </div>
@@ -1275,10 +1395,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(28.36043552261457,
- 6.943999390962518e-07,
- 0.013953146389752558,
- 1.833585775160126)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(34.597117625864925,
+ 3.071364517274268e-08,
+ -0.0683952435255957,
+ 1.7186140282124927)
 </pre></div>
 </div>
 </div>
@@ -1360,7 +1480,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=6.078396373996247, pvalue=0.04787325951127174)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=0.9865817968728403, pvalue=0.6106136166813871)
 </pre></div>
 </div>
 </div>
@@ -1376,7 +1496,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=252.11075853777615, pvalue=1.7982263999562303e-55)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=627.5760217165982, pvalue=5.291738770214578e-137)
 </pre></div>
 </div>
 </div>
@@ -1579,8 +1699,8 @@ dtype: float64
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
+            
+                <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
     <a class='left-prev' id="prev-link" href="11_Inference.html" title="previous page">
         <i class="fas fa-angle-left"></i>
@@ -1597,19 +1717,17 @@ dtype: float64
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-        
+            
         </div>
     </div>
     <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By 春山 鉄源  Tetsugen HARUYAMA<br/>
-        
-            &copy; Copyright 2020-2021（公開開始日：2020年5月4日）.<br/>
-      </p>
-    </div>
-  </footer>
+  <p>
+    
+      By 春山 鉄源  Tetsugen HARUYAMA<br/>
+    
+        &copy; Copyright 2020-2021（公開開始日：2020年5月4日）.<br/>
+  </p>
+</footer>
 </main>
 
 

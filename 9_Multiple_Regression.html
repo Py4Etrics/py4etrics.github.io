@@ -42,7 +42,7 @@
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
@@ -313,7 +313,7 @@
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
@@ -353,7 +353,7 @@
         </div>
 
         <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
@@ -545,7 +545,202 @@
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>重回帰分析</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   説明
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#statsmodels">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     statsmodels
+    </span>
+   </code>
+   を使う
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     推定
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     属性とメソッド
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   変数の変換
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#numpy">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Numpy
+      </span>
+     </code>
+     の関数を使う方法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#i">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       I()
+      </span>
+     </code>
+     を使う方法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#def">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       def
+      </span>
+     </code>
+     を使う方法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#q">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Q()
+      </span>
+     </code>
+     について
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sec-9-interpretation">
+   係数の解釈
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   ガウス・マルコフ定理
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     母集団回帰式と標本回帰式
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sec-9-assumptions">
+     仮定と望ましい性質
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id10">
+   「手計算」
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     係数の推定値
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     推定値の標準誤差
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id13">
+   シミュレーション：不偏性
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sec-9-vif">
+   シミュレーション：多重共線性
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id15">
+     説明
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id16">
+     方法１：手計算
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id17">
+     方法２：
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       statsmodels
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id18">
+     シミュレーション
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id19">
+     図を使ってチェック
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#pandas">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         pandas
+        </span>
+       </code>
+       を使う方法
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#seaborn">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         seaborn
+        </span>
+       </code>
+       を使う方法
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="chap-9-multiple">
@@ -689,8 +884,8 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 Dep. Variable:               wage_log   R-squared:                       0.316
 Model:                            OLS   Adj. R-squared:                  0.312
 Method:                 Least Squares   F-statistic:                     80.39
-Date:                Sun, 14 Nov 2021   Prob (F-statistic):           9.13e-43
-Time:                        11:10:29   Log-Likelihood:                -313.55
+Date:                Sun, 16 Jan 2022   Prob (F-statistic):           9.13e-43
+Time:                        01:58:00   Log-Likelihood:                -313.55
 No. Observations:                 526   AIC:                             635.1
 Df Residuals:                     522   BIC:                             652.2
 Df Model:                           3                                         
@@ -1459,7 +1654,7 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.73110537, 1.9398123 , 2.95988876])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.22889744, 2.0138264 , 2.9697664 ])
 </pre></div>
 </div>
 </div>
@@ -1481,9 +1676,9 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.731105
-X1           1.939812
-X2           2.959889
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.228897
+X1           2.013826
+X2           2.969766
 dtype: float64
 </pre></div>
 </div>
@@ -1514,7 +1709,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>26.47730499677102
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>17.203495053993414
 </pre></div>
 </div>
 </div>
@@ -1527,7 +1722,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>26.477304996771046
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>17.20349505399339
 </pre></div>
 </div>
 </div>
@@ -1541,7 +1736,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9806409258063341
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6371664834812376
 </pre></div>
 </div>
 </div>
@@ -1554,7 +1749,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.980640925806335
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6371664834812366
 </pre></div>
 </div>
 </div>
@@ -1575,7 +1770,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.59689419, 0.10384127, 0.06825523])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.47029257, 0.08678758, 0.06471199])
 </pre></div>
 </div>
 </div>
@@ -1588,9 +1783,9 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.596894
-X1           0.103841
-X2           0.068255
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.470293
+X1           0.086788
+X2           0.064712
 dtype: float64
 </pre></div>
 </div>
@@ -1677,9 +1872,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 1.0029721732287311 
-b1: 1.9999920555683612 
-b1: 2.9994837127954264
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 0.9993520591146141 
+b1: 2.0002568220962917 
+b1: 3.0000878175579455
 </pre></div>
 </div>
 </div>
@@ -1983,7 +2178,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.03897218328663371, 0.20362282954701144)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.03932267870984616, 0.20050434680898066)
 </pre></div>
 </div>
 </div>
@@ -2066,7 +2261,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19335314185263694, 0.44152052512234335)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19280306678249876, 0.44581257728930934)
 </pre></div>
 </div>
 </div>
@@ -2299,8 +2494,8 @@ exper     1.4776177726317783
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
+            
+                <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
     <a class='left-prev' id="prev-link" href="8_Simple_Regression.html" title="previous page">
         <i class="fas fa-angle-left"></i>
@@ -2317,19 +2512,17 @@ exper     1.4776177726317783
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-        
+            
         </div>
     </div>
     <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By 春山 鉄源  Tetsugen HARUYAMA<br/>
-        
-            &copy; Copyright 2020-2021（公開開始日：2020年5月4日）.<br/>
-      </p>
-    </div>
-  </footer>
+  <p>
+    
+      By 春山 鉄源  Tetsugen HARUYAMA<br/>
+    
+        &copy; Copyright 2020-2021（公開開始日：2020年5月4日）.<br/>
+  </p>
+</footer>
 </main>
 
 

@@ -42,7 +42,7 @@
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
@@ -313,7 +313,7 @@
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
@@ -353,7 +353,7 @@
         </div>
 
         <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
@@ -432,7 +432,89 @@
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>離散選択モデル</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   説明
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   推定
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     データ
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#logit">
+     Logitモデル
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#probit">
+     Probitモデル
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   係数の推定値の解釈
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   推定結果の表（上段右）
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   尤度比検定
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     例１
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     例２
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id10">
+   線形確率モデル
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id11">
+   ３つのモデルの比較
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="id1">
@@ -730,8 +812,8 @@ provided the data, which he obtained from Professor Mroz.
 Dep. Variable:                   inlf   No. Observations:                  753
 Model:                          Logit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Sun, 14 Nov 2021   Pseudo R-squ.:                  0.2197
-Time:                        10:59:57   Log-Likelihood:                -401.77
+Date:                Sun, 16 Jan 2022   Pseudo R-squ.:                  0.2197
+Time:                        01:48:29   Log-Likelihood:                -401.77
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 3.159e-45
 ==============================================================================
@@ -885,8 +967,8 @@ df freedom:  7.
 Dep. Variable:                   inlf   No. Observations:                  753
 Model:                         Probit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Sun, 14 Nov 2021   Pseudo R-squ.:                  0.2206
-Time:                        10:59:57   Log-Likelihood:                -401.30
+Date:                Sun, 16 Jan 2022   Pseudo R-squ.:                  0.2206
+Time:                        01:48:29   Log-Likelihood:                -401.30
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
 ==============================================================================
@@ -1118,9 +1200,6 @@ kidsge6        0.0141      0.017      0.828      0.408      -0.019       0.047
 ==============================================================================
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
 </div>
 </div>
 <p>APEとPEAの値だけを取り題したい場合は，属性<code class="docutils literal notranslate"><span class="pre">margeff</span></code>を使うと良いだろう。</p>
@@ -1153,8 +1232,8 @@ kidsge6        0.0141      0.017      0.828      0.408      -0.019       0.047
 Dep. Variable:                   inlf   No. Observations:                  753
 Model:                          Logit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Sun, 14 Nov 2021   Pseudo R-squ.:                  0.2197
-Time:                        10:59:57   Log-Likelihood:                -401.77
+Date:                Sun, 16 Jan 2022   Pseudo R-squ.:                  0.2197
+Time:                        01:48:30   Log-Likelihood:                -401.77
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 3.159e-45
 ==============================================================================
@@ -1322,8 +1401,8 @@ G(z) = z
 Dep. Variable:                   inlf   R-squared:                       0.264
 Model:                            OLS   Adj. R-squared:                  0.257
 Method:                 Least Squares   F-statistic:                     62.48
-Date:                Sun, 14 Nov 2021   Prob (F-statistic):           1.30e-70
-Time:                        10:59:57   Log-Likelihood:                -423.89
+Date:                Sun, 16 Jan 2022   Prob (F-statistic):           1.30e-70
+Time:                        01:48:30   Log-Likelihood:                -423.89
 No. Observations:                 753   AIC:                             863.8
 Df Residuals:                     745   BIC:                             900.8
 Df Model:                           7                                         
@@ -1460,8 +1539,8 @@ strong multicollinearity or other numerical problems.
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
+            
+                <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
     <a class='left-prev' id="prev-link" href="19_IV2SLS.html" title="previous page">
         <i class="fas fa-angle-left"></i>
@@ -1478,19 +1557,17 @@ strong multicollinearity or other numerical problems.
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-        
+            
         </div>
     </div>
     <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By 春山 鉄源  Tetsugen HARUYAMA<br/>
-        
-            &copy; Copyright 2020-2021（公開開始日：2020年5月4日）.<br/>
-      </p>
-    </div>
-  </footer>
+  <p>
+    
+      By 春山 鉄源  Tetsugen HARUYAMA<br/>
+    
+        &copy; Copyright 2020-2021（公開開始日：2020年5月4日）.<br/>
+  </p>
+</footer>
 </main>
 
 

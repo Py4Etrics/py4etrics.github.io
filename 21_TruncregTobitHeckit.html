@@ -42,7 +42,7 @@
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
@@ -313,7 +313,7 @@
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
@@ -353,7 +353,7 @@
         </div>
 
         <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
@@ -511,7 +511,168 @@
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>制限従属変数モデル</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   説明
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   切断回帰モデル
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     説明
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     シミュレーション
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     直感的な理解
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#truncreg">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Truncreg
+      </span>
+     </code>
+     モジュールの使い方
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     切断回帰推定
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     検定
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     予測値と残差
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     誤差項の仮定について
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tobit">
+   Tobitモデル
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     説明
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     シミュレーション
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id13">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Tobit
+      </span>
+     </code>
+     モジュールの使い方
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id14">
+     Tobitモデルの推定
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id15">
+     検定と属性
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id16">
+     残差について
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#heckit">
+   Heckitモデル
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id17">
+     説明
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id18">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Heckit
+      </span>
+     </code>
+     モジュールの使い方
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id19">
+     推定
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#mroz">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         mroz
+        </span>
+       </code>
+       を使った推定
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id20">
+       結果の解釈
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="id1">
@@ -660,8 +821,8 @@ in English or the language of your choice.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.830422
-X            1.065621
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.936539
+X            0.900921
 dtype: float64
 </pre></div>
 </div>
@@ -681,8 +842,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    2.950091
-X            0.531399
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    2.933248
+X            0.412963
 dtype: float64
 </pre></div>
 </div>
@@ -1074,8 +1235,8 @@ Log(Sigma)    -0.5433      0.039    -14.053      0.000      -0.619      -0.468
 Dep. Variable:                      y   Pseudo R-squ:                    0.000
 Model:                       Truncreg   Log-Likelihood:                 -619.9
 Method:            Maximum Likelihood   LL-Null:                        -619.9
-Date:                Sun, 14 Nov 2021   LL-Ratio:                         -0.0
-Time:                        11:04:52   LLR p-value:                       nan
+Date:                Sun, 16 Jan 2022   LL-Ratio:                         -0.0
+Time:                        01:52:57   LLR p-value:                       nan
 No. Observations:                1066   AIC:                            1241.8
 Df Residuals:                    1065   BIC:                            1246.7
 Df Model:                           0   Covariance Type:             nonrobust
@@ -1335,8 +1496,8 @@ Log(Sigma)    -0.3590      0.047     -7.677      0.000      -0.451      -0.267
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept   -0.426157
-X            0.893988
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept   -0.119733
+X            0.915744
 dtype: float64
 </pre></div>
 </div>
@@ -1356,8 +1517,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.390528
-X            0.480707
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.582844
+X            0.437532
 dtype: float64
 </pre></div>
 </div>
@@ -1900,8 +2061,8 @@ $$</p>
 Dep. Variable:                    lwage   R-squared:                       0.156
 Model:                           Heckit   Adj. R-squared:                  0.150
 Method:                Heckman Two-Step   F-statistics:                   26.148
-Date:                  Sun, 14 Nov 2021   Prob (F-statistic):              0.000
-Time:                          11:09:33   Cov in 1st Stage:            nonrobust
+Date:                  Sun, 16 Jan 2022   Prob (F-statistic):              0.000
+Time:                          01:57:07   Cov in 1st Stage:            nonrobust
 No. Total Obs.:                     753   Cov in 2nd Stage:                  HC1
 No. Censored Obs.:                  325                                         
 No. Uncensored Obs.:                428                                         
@@ -2025,8 +2186,8 @@ Third table is the estimate for the coef of the inverse Mills ratio (Heckman&#39
 Dep. Variable:                      y   No. Observations:                  753
 Model:                         Probit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Sun, 14 Nov 2021   Pseudo R-squ.:                  0.2206
-Time:                        11:09:33   Log-Likelihood:                -401.30
+Date:                Sun, 16 Jan 2022   Pseudo R-squ.:                  0.2206
+Time:                        01:57:07   Log-Likelihood:                -401.30
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
 ==============================================================================
@@ -2162,8 +2323,8 @@ df freedom:  7.
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
+            
+                <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
     <a class='left-prev' id="prev-link" href="20_LogitProbit.html" title="previous page">
         <i class="fas fa-angle-left"></i>
@@ -2180,19 +2341,17 @@ df freedom:  7.
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-        
+            
         </div>
     </div>
     <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By 春山 鉄源  Tetsugen HARUYAMA<br/>
-        
-            &copy; Copyright 2020-2021（公開開始日：2020年5月4日）.<br/>
-      </p>
-    </div>
-  </footer>
+  <p>
+    
+      By 春山 鉄源  Tetsugen HARUYAMA<br/>
+    
+        &copy; Copyright 2020-2021（公開開始日：2020年5月4日）.<br/>
+  </p>
+</footer>
 </main>
 
 
