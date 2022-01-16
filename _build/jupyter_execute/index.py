@@ -29,7 +29,9 @@
 # 
 # <br>
 # 
-# 姉妹サイト：[「Pythonで学ぶマクロ経済学 (中級＋レベル)」](https://py4macro.github.io) <font size="+0">🐍</font>
+# 姉妹サイト１：[「Pythonで学ぶマクロ経済学 (中級＋レベル)」](https://py4macro.github.io) <font size="+0">🚀</font>
+# 
+# 姉妹サイト２：[「経済学のためのPython入門」](https://py4basics.github.io) <font size="+0">🐍</font>
 # 
 # ## はじめに
 # 
@@ -90,7 +92,7 @@ for pack, ver in zip(packages, versions):
 # ## おまけ２
 # [これを](https://www.google.co.jp/search?source=univ&tbm=isch&q=paranormal+distribution&sa=X&ved=2ahUKEwis27624czrAhXIfd4KHR9JAzgQsAR6BAgLEAE&biw=1280&bih=689)`Python`コードで書いてみた。
 
-# In[2]:
+# In[ ]:
 
 
 import numpy as np

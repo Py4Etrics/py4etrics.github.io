@@ -37,7 +37,9 @@ dt = datetime.datetime.today()
 
 <br>
 
-姉妹サイト：[「Pythonで学ぶマクロ経済学 (中級＋レベル)」](https://py4macro.github.io) <font size="+0">🐍</font>
+姉妹サイト１：[「Pythonで学ぶマクロ経済学 (中級＋レベル)」](https://py4macro.github.io) <font size="+0">🚀</font>
+
+姉妹サイト２：[「経済学のためのPython入門」](https://py4basics.github.io) <font size="+0">🐍</font>
 
 ## はじめに
 
