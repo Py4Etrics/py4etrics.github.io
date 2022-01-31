@@ -1157,8 +1157,8 @@ dtype: float64
 Dep. Variable:                   wage   R-squared:                       0.165
 Model:                            OLS   Adj. R-squared:                  0.163
 Method:                 Least Squares   F-statistic:                     103.4
-Date:                Sun, 16 Jan 2022   Prob (F-statistic):           2.78e-22
-Time:                        10:35:46   Log-Likelihood:                -1385.7
+Date:                Mon, 31 Jan 2022   Prob (F-statistic):           2.78e-22
+Time:                        12:38:32   Log-Likelihood:                -1385.7
 No. Observations:                 526   AIC:                             2775.
 Df Residuals:                     524   BIC:                             2784.
 Df Model:                           1                                         
@@ -1635,8 +1635,8 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept   -0.318057
-X            1.274559
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.776050
+X            1.077109
 dtype: float64
 </pre></div>
 </div>
@@ -1694,8 +1694,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.478204
-X            0.885517
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.81998
+X            1.04937
 dtype: float64
 </pre></div>
 </div>
@@ -1735,7 +1735,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.6793961896123566, 1.061216306596566)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.495549555180152, 0.8941566100775667)
 </pre></div>
 </div>
 </div>
@@ -1809,28 +1809,63 @@ dtype: float64
 <p class="admonition-title">Note</p>
 <p>初めて<code class="docutils literal notranslate"><span class="pre">my_sim_loop()</span></code>を実行すると<code class="docutils literal notranslate"><span class="pre">Numba</span></code>はコンパイルと呼ばれる高速化準備プロセスを経るため，<code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code>がない場合と比べて実行スピードは早くない。２回目の実行から<code class="docutils literal notranslate"><span class="pre">Numba</span></code>の効果がフルに発揮されることになる。</p>
 </div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p><code class="docutils literal notranslate"><span class="pre">Python</span></code>の<code class="docutils literal notranslate"><span class="pre">for</span></code>ループはコンパイル言語（例えば，<code class="docutils literal notranslate"><span class="pre">C</span></code>）と比べると実行速度が遅い。それを少しでも克服しようというのが<code class="docutils literal notranslate"><span class="pre">Numba</span></code>である。他方，<code class="docutils literal notranslate"><span class="pre">for</span></code>ループ自体を使わずに<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>のベクトル演算を使うと格段に実行速度が速くなる。例えば，<code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">my_sim_loop</span></code>の代わりに次の関数を試してみよう。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sim_vectorize</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">b0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">b1</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">su</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+    
+    <span class="c1"># 一度に全てのランダム変数を生成し，(n,N)のarrayに変換する</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="o">*</span><span class="n">N</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">su</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="o">*</span><span class="n">N</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">u</span>
+
+    <span class="c1"># 平均の計算</span>
+    <span class="n">x_mean</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">y_mean</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># 分散の計算</span>
+    <span class="n">x_var</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">y_var</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># 平均からの乖離を計算</span>
+    <span class="n">x_mean_dev</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">x_mean</span>
+    <span class="n">y_mean_dev</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">y_mean</span>
+
+    <span class="c1"># 共分散の計算</span>
+    <span class="n">yx_dev</span> <span class="o">=</span> <span class="n">y_mean_dev</span> <span class="o">*</span> <span class="n">x_mean_dev</span>
+    <span class="n">yx_cov</span> <span class="o">=</span> <span class="n">yx_dev</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="c1"># 推定値の計算</span>
+    <span class="n">b1</span> <span class="o">=</span> <span class="n">yx_cov</span> <span class="o">/</span> <span class="n">x_var</span>
+    <span class="n">b0</span> <span class="o">=</span> <span class="n">y_mean</span> <span class="o">-</span> <span class="n">b1</span><span class="o">*</span><span class="n">x_mean</span>
+    
+    <span class="k">return</span> <span class="n">b0</span><span class="p">,</span> <span class="n">b1</span>
+</pre></div>
+</div>
+<p>戻り値<code class="docutils literal notranslate"><span class="pre">b0</span></code>と<code class="docutils literal notranslate"><span class="pre">b1</span></code>は<code class="docutils literal notranslate"><span class="pre">N</span></code>個の要素からなる推定値のarrayとなる。<code class="docutils literal notranslate"><span class="pre">n=30</span></code>，<code class="docutils literal notranslate"><span class="pre">N=1_000_000</span></code>で試すと，<code class="docutils literal notranslate"><span class="pre">for</span></code>ループ＋<code class="docutils literal notranslate"><span class="pre">Numba</span></code>よりも２倍近く速くなることが確認できるだろう。</p>
+</div>
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_0\)</span>の分布を図示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">b0hat</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">b0hat</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
 <span class="k">pass</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_132_0.png" src="_images/8_Simple_Regression_132_0.png" />
+<img alt="_images/8_Simple_Regression_133_0.png" src="_images/8_Simple_Regression_133_0.png" />
 </div>
 </div>
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布を図示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">b1hat</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">b1hat</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
 <span class="k">pass</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_134_0.png" src="_images/8_Simple_Regression_134_0.png" />
+<img alt="_images/8_Simple_Regression_135_0.png" src="_images/8_Simple_Regression_135_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">y</span></code>の理論値を図示するが，図示の時間短縮のために<code class="docutils literal notranslate"><span class="pre">N</span></code>回のシミュレーション中の最初の<code class="docutils literal notranslate"><span class="pre">r</span></code>回の回帰線だけを表示する。</p>
@@ -1859,7 +1894,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_138_0.png" src="_images/8_Simple_Regression_138_0.png" />
+<img alt="_images/8_Simple_Regression_139_0.png" src="_images/8_Simple_Regression_139_0.png" />
 </div>
 </div>
 <div class="admonition- admonition">
@@ -1931,7 +1966,7 @@ dtype: float64
     
       著者 春山 鉄源  Tetsugen HARUYAMA<br/>
     
-        &copy; Copyright 2020-2021（公開開始日：2020年5月4日）.<br/>
+        &copy; Copyright 2020-2022（公開開始日：2020年5月4日）.<br/>
   </p>
 </footer>
 </main>

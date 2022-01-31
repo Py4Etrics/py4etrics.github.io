@@ -850,12 +850,47 @@ b0hat, b1hat = my_sim_loop(n=50,N=100_000)
 # 初めて`my_sim_loop()`を実行すると`Numba`はコンパイルと呼ばれる高速化準備プロセスを経るため，`@njit`がない場合と比べて実行スピードは早くない。２回目の実行から`Numba`の効果がフルに発揮されることになる。
 # ```
 
+# ````{hint}
+# `Python`の`for`ループはコンパイル言語（例えば，`C`）と比べると実行速度が遅い。それを少しでも克服しようというのが`Numba`である。他方，`for`ループ自体を使わずに`Numpy`のベクトル演算を使うと格段に実行速度が速くなる。例えば，`def my_sim_loop`の代わりに次の関数を試してみよう。
+# ```
+# def sim_vectorize(n,N,b0=1.0,b1=1.0,su=1.0)
+#     
+#     # 一度に全てのランダム変数を生成し，(n,N)のarrayに変換する
+#     x = np.random.normal(loc=4, scale=1, size=n*N).reshape(n,N)
+#     u = np.random.normal(loc=0, scale=su, size=n*N).reshape(n,N)
+#     y = b0 + b1*x + u
+# 
+#     # 平均の計算
+#     x_mean = x.mean(axis=0)
+#     y_mean = y.mean(axis=0)
+# 
+#     # 分散の計算
+#     x_var = x.var(axis=0)
+#     y_var = y.var(axis=0)
+# 
+#     # 平均からの乖離を計算
+#     x_mean_dev = x - x_mean
+#     y_mean_dev = y - y_mean
+# 
+#     # 共分散の計算
+#     yx_dev = y_mean_dev * x_mean_dev
+#     yx_cov = yx_dev.mean(axis=0)
+#     
+#     # 推定値の計算
+#     b1 = yx_cov / x_var
+#     b0 = y_mean - b1*x_mean
+#     
+#     return b0, b1
+# ```
+# 戻り値`b0`と`b1`は`N`個の要素からなる推定値のarrayとなる。`n=30`，`N=1_000_000`で試すと，`for`ループ＋`Numba`よりも２倍近く速くなることが確認できるだろう。
+# ````
+
 # $\hat{\beta}_0$の分布を図示する。
 
 # In[50]:
 
 
-plt.hist(b0hat,bins=30)
+plt.hist(b0hat,bins=60, edgecolor='white')
 pass
 
 
@@ -864,7 +899,7 @@ pass
 # In[51]:
 
 
-plt.hist(b1hat,bins=30)
+plt.hist(b1hat,bins=60, edgecolor='white')
 pass
 
 
