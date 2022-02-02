@@ -851,9 +851,9 @@ b0hat, b1hat = my_sim_loop(n=50,N=100_000)
 # ```
 
 # ````{hint}
-# `Python`の`for`ループはコンパイル言語（例えば，`C`）と比べると実行速度が遅い。それを少しでも克服しようというのが`Numba`である。他方，`for`ループ自体を使わずに`Numpy`のベクトル演算を使うと格段に実行速度が速くなる。例えば，`my_sim_loop`の代わりに次の関数を試してみよう。
+# `Python`の`for`ループはコンパイル言語（例えば，`C`）と比べると実行速度が遅い。それを少しでも克服しようというのが`Numba`である。一方，`for`ループ自体を使わずに`Numpy`の特徴であるベクトル演算を使うと格段に実行速度が速くなる。例えば，`my_sim_loop`の代わりに次の関数を試してみよう。
 # ```
-# def sim_vectorize(n,N,b0=1.0,b1=1.0,su=1.0):
+# def my_sim_vectorize(n,N,b0=1.0,b1=1.0,su=1.0):
 #     
 #     # 一度に全てのランダム変数を生成し，(n,N)のarrayに変換する
 #     x = np.random.normal(loc=4, scale=1, size=(n,N))
@@ -882,45 +882,19 @@ b0hat, b1hat = my_sim_loop(n=50,N=100_000)
 #     
 #     return b0, b1
 # ```
-# 戻り値`b0`と`b1`は`N`個の要素からなる推定値のarrayとなる。`n=30`，`N=1_000_000`で試すと，`for`ループ＋`Numba`よりも速くなることが確認できるだろう。できる限りベクトル演算を使う方が計算の時間を短縮できることを覚えておこう。
+# この関数には`for`ループはなく，戻り値`b0`と`b1`は`N`個の要素からなる推定値のarrayとなる。実行速度を比べるために次の２つのコードを別々のコードセルで実行してみよう。
+# ```
+# %timeit my_sim_loop(n=50,N=1_000_000)
+# ```
+# ```
+# %timeit my_sim_vectorize(n=50,N=1_000_000)
+# ```
+# ここで`%timeit`は実行速度を測るマジック・コマンドと呼ばれるコードである。`my_sim_vectorize`が２倍近く速くなることが確認できるだろう。`Numba`のようなパッケージを導入しなくても，ベクトル演算を使う方が計算の時間を短縮できることを覚えておこう。
 # ````
-
-# In[50]:
-
-
-def sim_vectorize(n,N,b0=1.0,b1=1.0,su=1.0):
-    
-    # 一度に全てのランダム変数を生成し，(n,N)のarrayに変換する
-    x = np.random.normal(loc=4, scale=1, size=(n,N))
-    u = np.random.normal(loc=0, scale=su, size=(n,N))
-    y = b0 + b1*x + u
-
-    # 平均の計算
-    x_mean = x.mean(axis=0)
-    y_mean = y.mean(axis=0)
-
-    # 分散の計算
-    x_var = x.var(axis=0)
-    y_var = y.var(axis=0)
-
-    # 平均からの乖離を計算
-    x_mean_dev = x - x_mean
-    y_mean_dev = y - y_mean
-
-    # 共分散の計算
-    yx_dev = y_mean_dev * x_mean_dev
-    yx_cov = yx_dev.mean(axis=0)
-    
-    # 推定値の計算
-    b1 = yx_cov / x_var
-    b0 = y_mean - b1*x_mean
-    
-    return b0, b1
-
 
 # $\hat{\beta}_0$の分布を図示する。
 
-# In[51]:
+# In[50]:
 
 
 plt.hist(b0hat,bins=60, edgecolor='white')
@@ -929,7 +903,7 @@ pass
 
 # $\hat{\beta}_1$の分布を図示する。
 
-# In[52]:
+# In[51]:
 
 
 plt.hist(b1hat,bins=60, edgecolor='white')
@@ -938,7 +912,7 @@ pass
 
 # `y`の理論値を図示するが，図示の時間短縮のために`N`回のシミュレーション中の最初の`r`回の回帰線だけを表示する。
 
-# In[53]:
+# In[52]:
 
 
 r = 1000
@@ -946,7 +920,7 @@ r = 1000
 
 # `r`回の回帰線を`for`ループを使って重ねて図示してみよう。
 
-# In[54]:
+# In[53]:
 
 
 xx = np.linspace(2,6,50)
