@@ -92,7 +92,7 @@ for pack, ver in zip(packages, versions):
 # ## おまけ２
 # [これを](https://www.google.co.jp/search?source=univ&tbm=isch&q=paranormal+distribution&sa=X&ved=2ahUKEwis27624czrAhXIfd4KHR9JAzgQsAR6BAgLEAE&biw=1280&bih=689)`Python`コードで書いてみた。
 
-# In[ ]:
+# In[2]:
 
 
 import numpy as np

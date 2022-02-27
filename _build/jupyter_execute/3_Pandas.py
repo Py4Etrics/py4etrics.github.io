@@ -833,7 +833,7 @@ df.sort_values('gdp', ascending=False).head()
 # In[71]:
 
 
-df.sort_values(['id','gdp'], ascending=['True','False']).head()
+df.sort_values(['id','gdp'], ascending=[True,False]).head()
 
 
 # ここでは`id`に従って先に並び替えられ，その後に`gdp`に従って並び替えられている。`ascending`は昇順（`True`）か降順（`False`）かを指定する引数であり，`['id','gdp']`と`ascending=['True','False']`の順番が対応している。即ち，`id`は昇順，`gdp`は降順となるように並び替えている。

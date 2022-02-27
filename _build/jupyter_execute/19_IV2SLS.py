@@ -199,7 +199,7 @@ stage_1 = 'educ ~ 1 + fatheduc'  # 回帰式
 
 res_stage_1 =IV2SLS.from_formula(stage_1, data=mroz).fit(cov_type='unadjusted')  # OLS推定
 
-educ_fit = res_stage_1.fitted_values  # educの予測値を取得
+mroz['educ_fit'] = res_stage_1.fitted_values  # educの予測値を取得
 
 
 # 上の３行目のでは`res_stage_1`の属性`.fitted_values`を使い予測値を取得している。`statsmodels`を使いOLS推定した際に使った`.fittedvalues`と異なるメソッド名になっていることに注意しよう。
@@ -681,12 +681,13 @@ res_2a = mod_2a.fit(cov_type='unadjusted')
 
 # **第２段階**
 # 
-# 回帰式に直接`res_2a.resids`を入れる。`resids`は`res_2a`の残差を取得する属性。
+# `res_2a`の残差を使うが，メソッド`resids`を使い取得する。すなわち，`res_2a.resids`が残差を返す。また次の点を覚えておこう。
+# * `res_2a.resids`を直接回帰式に入れることはできないが，`I()`の引数とすれば可能となる。これは`statsmodels`と同じである。
 
 # In[24]:
 
 
-form_2b = 'lwage ~ 1 + educ + exper + expersq + res_2a.resids'
+form_2b = 'lwage ~ 1 + educ + exper + expersq + I(res_2a.resids)'
 
 mod_2b = IV2SLS.from_formula(form_2b, data=mroz)
 
@@ -781,7 +782,7 @@ res_2.wooldridge_regression
 # In[26]:
 
 
-form_aux = 'res_2.resids ~ 1 + motheduc + fatheduc + exper + expersq' # 外生的説明変数を省いてもよい
+form_aux = 'I(res_2.resids) ~ 1 + motheduc + fatheduc + exper + expersq' # 外生的説明変数を省いてもよい
 
 mod_aux = IV2SLS.from_formula(form_aux, data=mroz)
 
