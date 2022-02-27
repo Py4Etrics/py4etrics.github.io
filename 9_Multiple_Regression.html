@@ -38,20 +38,22 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="canonical" href="https://py4etrics.github.io/9_Multiple_Regression.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -761,12 +763,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/runner/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/statsmodels/compat/pandas.py:65: FutureWarning: pandas.Int64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.
-  from pandas import Int64Index as NumericIndex
-</pre></div>
-</div>
-</div>
 </div>
 <div class="section" id="id2">
 <h2>説明<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
@@ -890,8 +886,8 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 Dep. Variable:               wage_log   R-squared:                       0.316
 Model:                            OLS   Adj. R-squared:                  0.312
 Method:                 Least Squares   F-statistic:                     80.39
-Date:                Wed, 02 Feb 2022   Prob (F-statistic):           9.13e-43
-Time:                        14:39:32   Log-Likelihood:                -313.55
+Date:                Sun, 27 Feb 2022   Prob (F-statistic):           9.13e-43
+Time:                        02:18:26   Log-Likelihood:                -313.55
 No. Observations:                 526   AIC:                             635.1
 Df Residuals:                     522   BIC:                             652.2
 Df Model:                           3                                         
@@ -1660,7 +1656,7 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.29601975, 2.07332265, 3.08230504])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.92045159, 1.86128658, 3.07919399])
 </pre></div>
 </div>
 </div>
@@ -1682,9 +1678,9 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.296020
-X1           2.073323
-X2           3.082305
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.920452
+X1           1.861287
+X2           3.079194
 dtype: float64
 </pre></div>
 </div>
@@ -1715,7 +1711,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>33.08243163290219
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>27.045656494091546
 </pre></div>
 </div>
 </div>
@@ -1728,7 +1724,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>33.08243163290219
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>27.04565649409156
 </pre></div>
 </div>
 </div>
@@ -1742,7 +1738,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.2252752456630442
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0016909812626498
 </pre></div>
 </div>
 </div>
@@ -1755,7 +1751,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.2252752456630442
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0016909812626504
 </pre></div>
 </div>
 </div>
@@ -1776,7 +1772,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.6713033 , 0.08476753, 0.09329791])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.63048402, 0.07611833, 0.08461245])
 </pre></div>
 </div>
 </div>
@@ -1789,9 +1785,9 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.671303
-X1           0.084768
-X2           0.093298
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.630484
+X1           0.076118
+X2           0.084612
 dtype: float64
 </pre></div>
 </div>
@@ -1878,9 +1874,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 0.9997321090358036 
-b1: 1.999931949545197 
-b1: 2.999875389747064
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 0.9954137776743558 
+b1: 2.000702499205432 
+b1: 3.0003955747058964
 </pre></div>
 </div>
 </div>
@@ -2184,7 +2180,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.038229093602789935, 0.1984540540406706)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.03974506192653039, 0.20494926902940114)
 </pre></div>
 </div>
 </div>
@@ -2267,7 +2263,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19226749063667337, 0.44229425823674634)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19298957190251315, 0.44035454215453007)
 </pre></div>
 </div>
 </div>

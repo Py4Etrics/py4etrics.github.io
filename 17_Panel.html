@@ -38,20 +38,22 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="canonical" href="https://py4etrics.github.io/17_Panel.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -718,12 +720,6 @@
 <span class="c1"># 警告メッセージを非表示</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/runner/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/statsmodels/compat/pandas.py:65: FutureWarning: pandas.Int64Index is deprecated and will be removed from pandas in a future version. Use pandas.Index with the appropriate dtype instead.
-  from pandas import Int64Index as NumericIndex
 </pre></div>
 </div>
 </div>
@@ -1398,8 +1394,8 @@ union          0.0800     0.0193     4.1430     0.0000      0.0421      0.1179
 Dep. Variable:                  lwage   R-squared:                        0.1806
 Estimator:                   PanelOLS   R-squared (Between):              0.2386
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Wed, Feb 02 2022   R-squared (Overall):              0.2361
-Time:                        14:26:56   Log-likelihood                   -1324.8
+Date:                Sun, Feb 27 2022   R-squared (Overall):              0.2361
+Time:                        02:05:28   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      83.851
 Entities:                         545   P-value                           0.0000
@@ -1441,8 +1437,8 @@ Max Obs:                       545.00
 Dep. Variable:                  lwage   R-squared:                        0.0216
 Estimator:                   PanelOLS   R-squared (Between):             -0.2717
 No. Observations:                4360   R-squared (Within):              -0.4809
-Date:                Wed, Feb 02 2022   R-squared (Overall):             -0.2808
-Time:                        14:26:56   Log-likelihood                   -1324.8
+Date:                Sun, Feb 27 2022   R-squared (Overall):             -0.2808
+Time:                        02:05:28   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      27.959
 Entities:                         545   P-value                           0.0000
@@ -1828,8 +1824,8 @@ Name: Variance Decomposition, dtype: float64
 Dep. Variable:                  lwage   R-squared:                        0.1711
 Estimator:              RandomEffects   R-squared (Between):              0.0967
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Wed, Feb 02 2022   R-squared (Overall):              0.1355
-Time:                        14:26:58   Log-likelihood                   -1609.8
+Date:                Sun, Feb 27 2022   R-squared (Overall):              0.1355
+Time:                        02:05:30   Log-likelihood                   -1609.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      69.027
 Entities:                         545   P-value                           0.0000
@@ -1903,7 +1899,7 @@ H0: Linear equality constraint is valid
 Statistic: 35.6454
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x122b45880
+WaldTestStatistic, id: 0x12e4c2be0
 </pre></div>
 </div>
 </div>
@@ -1986,7 +1982,7 @@ H0: Linear equality constraint is valid
 Statistic: 26.0233
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x122bf6f10
+WaldTestStatistic, id: 0x12c302370
 </pre></div>
 </div>
 </div>
@@ -2313,32 +2309,32 @@ T-stats reported in parentheses
     <tr>
       <th rowspan="5" valign="top">0</th>
       <th>2000</th>
-      <td>-0.262309</td>
-      <td>-0.503528</td>
+      <td>-3.255001</td>
+      <td>-1.882216</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2001</th>
-      <td>2.195131</td>
-      <td>0.115832</td>
+      <td>-0.397542</td>
+      <td>-1.054443</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2002</th>
-      <td>0.294032</td>
-      <td>-0.165670</td>
+      <td>-1.357779</td>
+      <td>-0.402923</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2003</th>
-      <td>2.789216</td>
-      <td>0.585234</td>
+      <td>7.675143</td>
+      <td>3.230572</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2004</th>
-      <td>2.143200</td>
-      <td>-0.025573</td>
+      <td>3.190067</td>
+      <td>1.050556</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -2361,7 +2357,7 @@ T-stats reported in parentheses
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-X              1.9873     0.0507     39.164     0.0000      1.8876      2.0871
+X              1.9584     0.0491     39.871     0.0000      1.8619      2.0550
 ==============================================================================
 </pre></div>
 </div>
@@ -2384,10 +2380,10 @@ X              1.9873     0.0507     39.164     0.0000      1.8876      2.0871
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.8542     0.1486     12.477     0.0000      1.5623      2.1462
-X              2.8368     0.0251     113.07     0.0000      2.7875      2.8861
+Intercept      1.9669     0.1595     12.328     0.0000      1.6535      2.2804
+X              2.8026     0.0267     104.98     0.0000      2.7501      2.8550
 ==============================================================================
-theta: [0.23871868]
+theta: [0.32797631]
 </pre></div>
 </div>
 </div>
@@ -2417,9 +2413,9 @@ theta: [0.23871868]
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.1199     0.1227     9.1274     0.0000      0.8788      1.3610
-X              1.9873     0.0507     39.194     0.0000      1.8877      2.0870
-X_mean         0.9964     0.0549     18.134     0.0000      0.8884      1.1043
+Intercept      1.0828     0.1309     8.2700     0.0000      0.8256      1.3401
+X              1.9584     0.0491     39.901     0.0000      1.8620      2.0549
+X_mean         1.0198     0.0540     18.891     0.0000      0.9138      1.1259
 ==============================================================================
 </pre></div>
 </div>
@@ -2441,8 +2437,8 @@ X_mean         0.9964     0.0549     18.134     0.0000      0.8884      1.1043
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.5736     0.1221     12.888     0.0000      1.3337      1.8135
-X              2.8929     0.0208     139.08     0.0000      2.8521      2.9338
+Intercept      1.5238     0.1209     12.609     0.0000      1.2863      1.7612
+X              2.8906     0.0205     140.97     0.0000      2.8504      2.9309
 ==============================================================================
 </pre></div>
 </div>
