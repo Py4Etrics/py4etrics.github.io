@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>重回帰分析 &#8212; Pythonで学ぶ入門計量経済学</title>
     
-  <link href="_static/css/theme.css" rel="stylesheet">
-  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,31 +20,31 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="_static/my_style.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -73,7 +75,21 @@ const thebe_selector_output = ".output, .cell_output"
                     </script>
 
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -82,9 +98,10 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
       
@@ -94,7 +111,7 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="この本を検索..." aria-label="この本を検索..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <p aria-level="2" class="caption" role="heading">
@@ -269,96 +286,182 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  <a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="ナビゲーションを切り替え" aria-controls="site-navigation"
-                title="ナビゲーションを切り替え" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="このページをダウンロード"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/9_Multiple_Regression.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="ソースファイルをダウンロード" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="PDFに印刷"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="全画面モード"
-        title="全画面モード"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/9_Multiple_Regression.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="発売 Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/9_Multiple_Regression.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="発売 Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> 目次
+            <div class="navbar_extra_footer">
+            <a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/9_Multiple_Regression.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/9_Multiple_Regression.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/9_Multiple_Regression.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
    説明
@@ -538,12 +641,11 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1>重回帰分析</h1>
@@ -552,7 +654,7 @@ const thebe_selector_output = ".output, .cell_output"
                     <div id="jb-print-toc">
                         
                         <div>
-                            <h2> 目次 </h2>
+                            <h2> Contents </h2>
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
@@ -739,38 +841,39 @@ const thebe_selector_output = ".output, .cell_output"
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="chap-9-multiple">
-<span id="id1"></span><h1>重回帰分析<a class="headerlink" href="#chap-9-multiple" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="chap-9-multiple">
+<span id="id1"></span><h1>重回帰分析<a class="headerlink" href="#chap-9-multiple" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">uniform</span><span class="p">,</span> <span class="n">gaussian_kde</span><span class="p">,</span> <span class="n">multivariate_normal</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">pandas.plotting</span> <span class="kn">import</span> <span class="n">scatter_matrix</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
-<span class="kn">from</span> <span class="nn">statsmodels.stats.outliers_influence</span> <span class="kn">import</span> <span class="n">variance_inflation_factor</span> <span class="k">as</span> <span class="n">vif</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">import</span> <span class="nn">wooldridge</span>
 <span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">pandas.plotting</span> <span class="kn">import</span> <span class="n">scatter_matrix</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">uniform</span><span class="p">,</span> <span class="n">gaussian_kde</span><span class="p">,</span> <span class="n">multivariate_normal</span>
 <span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="n">see</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
+<span class="kn">from</span> <span class="nn">statsmodels.stats.outliers_influence</span> <span class="kn">import</span> <span class="n">variance_inflation_factor</span> <span class="k">as</span> <span class="n">vif</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="id2">
-<h2>説明<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="margin sidebar">
+<section id="id2">
+<h2>説明<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<aside class="margin sidebar">
 <p class="sidebar-title"></p>
 <div name="html-admonition">
 Do you want to read in a differnt language? Open the 
 <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translated version" style="color:#ffffff;background-color:#008080;" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/>
 in English or the language of your choice.
 </div>
-</div>
+</aside>
 <p>説明変数が複数の重回帰分析（Multiple Regression）を考える。</p>
 <div class="math notranslate nohighlight">
 \[y_i=\beta_0+\sum_{j=1}^k\beta_j x_{ij} + u_i\]</div>
@@ -781,11 +884,11 @@ in English or the language of your choice.
 <p>（注意）</p>
 <p><span class="math notranslate nohighlight">\(x_1\)</span>と書く場合，<span class="math notranslate nohighlight">\(x_{i1},x_{i1},...x_{n1}\)</span>を表す（第１番目の説明変数）。</p>
 <p>一般的に<span class="math notranslate nohighlight">\(x_j\)</span>と書く場合，<span class="math notranslate nohighlight">\(x_{ij},x_{ij},...x_{nj}\)</span>を表す（第<span class="math notranslate nohighlight">\(j\)</span>番目の説明変数）。</p>
-</div>
-<div class="section" id="statsmodels">
-<h2><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使う<a class="headerlink" href="#statsmodels" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id3">
-<h3>推定<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="statsmodels">
+<h2><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使う<a class="headerlink" href="#statsmodels" title="Permalink to this headline">#</a></h2>
+<section id="id3">
+<h3>推定<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
 <p>単回帰分析で使った同じデータセット<code class="docutils literal notranslate"><span class="pre">wage1</span></code>を使い，賃金と教育の関係を再考する。<a class="reference internal" href="8_Simple_Regression.html#chap-8-simple"><span class="std std-ref">前章</span></a>と異なる点は，複数の説明変数を導入し重回帰分析をおこなうことである。追加的な説明変数として次の変数を加える。</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">exper</span></code>：潜在的な経験年数（＝年齢ー最高学歴までの年数ー６）</p></li>
@@ -883,8 +986,8 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 Dep. Variable:               wage_log   R-squared:                       0.316
 Model:                            OLS   Adj. R-squared:                  0.312
 Method:                 Least Squares   F-statistic:                     80.39
-Date:                Sun, 08 May 2022   Prob (F-statistic):           9.13e-43
-Time:                        17:36:37   Log-Likelihood:                -313.55
+Date:                Tue, 20 Dec 2022   Prob (F-statistic):           9.13e-43
+Time:                        22:28:19   Log-Likelihood:                -313.55
 No. Observations:                 526   AIC:                             635.1
 Df Residuals:                     522   BIC:                             652.2
 Df Model:                           3                                         
@@ -909,9 +1012,9 @@ Notes:
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id4">
-<h3>属性とメソッド<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id4">
+<h3>属性とメソッド<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
 <p>推定結果<code class="docutils literal notranslate"><span class="pre">res_1</span></code>の属性とメソッドは<code class="docutils literal notranslate"><span class="pre">dir()</span></code>や<code class="docutils literal notranslate"><span class="pre">see()</span></code>で確認できる。以下では<code class="docutils literal notranslate"><span class="pre">see()</span></code>を使う。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
@@ -1086,12 +1189,12 @@ dtype: float64
 </div>
 <p>これらの数字の絶対値は同じである。この結果は偶然ではない。他の要因を固定し教育年数が1年変化（減少もしくは増加）した場合，平均時給の対数値がどれだけ変化したかを計算している。これは正しく教育の収益率である。この点を数式で確認するために，変数<span class="math notranslate nohighlight">\(x\)</span>の値が小さい場合（例えば，0.02），次の近似が成立することを思い出そう。</p>
 <div class="math notranslate nohighlight" id="equation-eq-9-approx">
-<span class="eqno">(1)<a class="headerlink" href="#equation-eq-9-approx" title="Permalink to this equation">¶</a></span>\[
+<span class="eqno">(1)<a class="headerlink" href="#equation-eq-9-approx" title="Permalink to this equation">#</a></span>\[
 \log(x+1)\approx x
 \]</div>
 <p>また教育年数が<span class="math notranslate nohighlight">\(h\)</span>の場合の平均時給を<span class="math notranslate nohighlight">\(w(h)\)</span>としよう。教育年数が一年増えた場合の教育の収益率は<span class="math notranslate nohighlight">\(\dfrac{w(h+1)-w(h)}{w(h)}\)</span>となり，<a class="reference internal" href="#equation-eq-9-approx">(1)</a>を使うと次のように書くことができる。</p>
 <div class="math notranslate nohighlight" id="equation-eq-9-approx2">
-<span class="eqno">(2)<a class="headerlink" href="#equation-eq-9-approx2" title="Permalink to this equation">¶</a></span>\[\begin{split}
+<span class="eqno">(2)<a class="headerlink" href="#equation-eq-9-approx2" title="Permalink to this equation">#</a></span>\[\begin{split}
 \begin{align*}
 \frac{w(h+1)-w(h)}{w(h)}
 &amp;\approx\log\left(\frac{w(h+1)-w(h)}{w(h)}+1\right)\\
@@ -1140,13 +1243,13 @@ dtype: float64
 </ul>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">True</span></code>が返されているので、値は全て同じだと確認できた。</p>
-</div>
-</div>
-<div class="section" id="id5">
-<h2>変数の変換<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="id5">
+<h2>変数の変換<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h2>
 <p>上の重回帰分析では，回帰式の<code class="docutils literal notranslate"><span class="pre">wage</span></code>を対数化した変数を新たに作成し計算を行なっているが、回帰式の中で変数の変換を直接指定することもできる。以下で説明する方法は被説明変数・説明変数の両方に使用可能である。</p>
-<div class="section" id="numpy">
-<h3><code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の関数を使う方法<a class="headerlink" href="#numpy" title="Permalink to this headline">¶</a></h3>
+<section id="numpy">
+<h3><code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の関数を使う方法<a class="headerlink" href="#numpy" title="Permalink to this headline">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の対数関数を使って，回帰式の中で直接書き換えることができる。<code class="docutils literal notranslate"><span class="pre">wage</span></code>を対数化する例を考える。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1178,9 +1281,9 @@ dtype: float64
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="i">
-<h3><code class="docutils literal notranslate"><span class="pre">I()</span></code>を使う方法<a class="headerlink" href="#i" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="i">
+<h3><code class="docutils literal notranslate"><span class="pre">I()</span></code>を使う方法<a class="headerlink" href="#i" title="Permalink to this headline">#</a></h3>
 <p>次に<code class="docutils literal notranslate"><span class="pre">exper</span></code>の二乗を回帰式に入れるケースを考えよう。この場合、<code class="docutils literal notranslate"><span class="pre">np.square(exper)</span></code>でも良いが、<code class="docutils literal notranslate"><span class="pre">I()</span></code>の<code class="docutils literal notranslate"><span class="pre">()</span></code>の中に直接式を書くことが可能となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1208,9 +1311,9 @@ dtype: float64
 </div>
 </div>
 <p>この方法であれば、<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>に無い関数も直接書くことができる。</p>
-</div>
-<div class="section" id="def">
-<h3><code class="docutils literal notranslate"><span class="pre">def</span></code>を使う方法<a class="headerlink" href="#def" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="def">
+<h3><code class="docutils literal notranslate"><span class="pre">def</span></code>を使う方法<a class="headerlink" href="#def" title="Permalink to this headline">#</a></h3>
 <p>より複雑な関数であれば<code class="docutils literal notranslate"><span class="pre">def</span></code>を使い、関数を定義し、それを回帰式の中で使う方が良いかも知れない。<code class="docutils literal notranslate"><span class="pre">exper</span></code>の二乗を回帰式に入れるケースを考えよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1245,9 +1348,9 @@ dtype: float64
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="q">
-<h3><code class="docutils literal notranslate"><span class="pre">Q()</span></code>について<a class="headerlink" href="#q" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="q">
+<h3><code class="docutils literal notranslate"><span class="pre">Q()</span></code>について<a class="headerlink" href="#q" title="Permalink to this headline">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Q()</span></code>は変数の変換に使うわけではないが、その用途を覚えておくと役に立つだろう。</p>
 <p><code class="docutils literal notranslate"><span class="pre">Python</span></code>には予約語（reserved words）と呼ばれるものがり、変数名には使えない。以下がその例である。</p>
 <ul class="simple">
@@ -1266,10 +1369,10 @@ dtype: float64
 <span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="sec-9-interpretation">
-<span id="id6"></span><h2>係数の解釈<a class="headerlink" href="#sec-9-interpretation" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="sec-9-interpretation">
+<span id="id6"></span><h2>係数の解釈<a class="headerlink" href="#sec-9-interpretation" title="Permalink to this headline">#</a></h2>
 <p>次の推定式を考えよう。</p>
 <div class="math notranslate nohighlight">
 \[y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+u\]</div>
@@ -1321,11 +1424,11 @@ dtype: float64
 \]</div>
 <p>ここで，<span class="math notranslate nohighlight">\(\%\Delta\text{wage}=\)</span>％で表した
 <code class="docutils literal notranslate"><span class="pre">wage</span></code>の変化を意味する（<a class="reference internal" href="#equation-eq-9-approx2">(2)</a>を参照）。従って，教育期間が一単位（ここでは一年）増えると賃金は約9.2%増加することを示している。</p>
-</div>
-<div class="section" id="id7">
-<h2>ガウス・マルコフ定理<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id8">
-<h3>母集団回帰式と標本回帰式<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id7">
+<h2>ガウス・マルコフ定理<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h2>
+<section id="id8">
+<h3>母集団回帰式と標本回帰式<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h3>
 <p>今までは回帰式に基づいて<code class="docutils literal notranslate"><span class="pre">Python</span></code>を使い係数の推定方法を説明したが，ここではOLS推定量の望ましい性質とはなにか，望ましい性質の条件はなにかを考える。そのために，まず母集団回帰式と標本回帰式について説明する。</p>
 <p>計量経済学では，データを使い<strong>経済理論（経済学的な考え）</strong>
 に基づいた仮説を検証する。例として「消費は家計の所得<span class="math notranslate nohighlight">\(x_1\)</span>が高くなると増え，子どもの数<span class="math notranslate nohighlight">\(x_2\)</span>とも正比例する」という仮説を考えよう。所得と子どもの数に依存する消費の部分だけを<span class="math notranslate nohighlight">\(y^*\)</span>と書くと，一般型の消費関数は<span class="math notranslate nohighlight">\(y^*=f\left(x_1,x_2\right)\)</span>となる。更に，線形を仮定すると次式となる。</p>
@@ -1376,9 +1479,9 @@ dtype: float64
 <li><p>OLS推定量の「望ましい性質」とは何なのか？</p></li>
 </ol>
 <p>以下では１から考える。</p>
-</div>
-<div class="section" id="sec-9-assumptions">
-<span id="id9"></span><h3>仮定と望ましい性質<a class="headerlink" href="#sec-9-assumptions" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="sec-9-assumptions">
+<span id="id9"></span><h3>仮定と望ましい性質<a class="headerlink" href="#sec-9-assumptions" title="Permalink to this headline">#</a></h3>
 <ul>
 <li><p>仮定１：Linear in Parameters（母集団回帰式の線形性）</p>
 <ul>
@@ -1543,12 +1646,12 @@ dtype: float64
 </div>
 </div>
 <p>パラメータの標準誤差は<span class="math notranslate nohighlight">\(se\)</span>（standard error）だが属性は<code class="docutils literal notranslate"><span class="pre">bse</span></code>となっている。これはパラメータを<span class="math notranslate nohighlight">\(b\)</span>で表しており，<span class="math notranslate nohighlight">\(b\)</span>の<span class="math notranslate nohighlight">\(se\)</span>として覚えれば良いだろう。</p>
-</div>
-</div>
-<div class="section" id="id10">
-<h2>「手計算」<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id11">
-<h3>係数の推定値<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="id10">
+<h2>「手計算」<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h2>
+<section id="id11">
+<h3>係数の推定値<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>は非常に優れたパッケージであり，複雑な計算を簡単なコードで実行してくれる。しかしここでは<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の関数を使い，重回帰分析における推定値を「手計算」で求める。目的は２つある。第１に，<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の裏でどのような計算が行われているかを理解する。第２に，今後シミュレーションをおこなうが，「手計算」のコードを使うと<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使い計算速度を格段とアップすることが可能となる。</p>
 <p>次の回帰式を考えよう。</p>
 <div class="math notranslate nohighlight">
@@ -1653,7 +1756,7 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2.10466964, 1.94091732, 2.9034068 ])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.8883174 , 1.88733677, 3.11155818])
 </pre></div>
 </div>
 </div>
@@ -1675,17 +1778,17 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    2.104670
-X1           1.940917
-X2           2.903407
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.888317
+X1           1.887337
+X2           3.111558
 dtype: float64
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id12">
-<h3>推定値の標準誤差<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id12">
+<h3>推定値の標準誤差<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h3>
 <p>次に推定値の標準誤差を考えよう。推定値の分散共分散行列は次式で表される。</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1708,7 +1811,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20.687592481848117
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>27.101520042791595
 </pre></div>
 </div>
 </div>
@@ -1721,7 +1824,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20.687592481848124
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>27.101520042791524
 </pre></div>
 </div>
 </div>
@@ -1735,7 +1838,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7662071289573377
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.003760001584874
 </pre></div>
 </div>
 </div>
@@ -1748,7 +1851,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7662071289573379
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0037600015848713
 </pre></div>
 </div>
 </div>
@@ -1769,7 +1872,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.53744793, 0.07105256, 0.07084571])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.46159167, 0.0998766 , 0.06691427])
 </pre></div>
 </div>
 </div>
@@ -1782,19 +1885,19 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.537448
-X1           0.071053
-X2           0.070846
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.461592
+X1           0.099877
+X2           0.066914
 dtype: float64
 </pre></div>
 </div>
 </div>
 </div>
 <p>同じ結果である。</p>
-</div>
-</div>
-<div class="section" id="id13">
-<h2>シミュレーション：不偏性<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="id13">
+<h2>シミュレーション：不偏性<a class="headerlink" href="#id13" title="Permalink to this headline">#</a></h2>
 <p>不偏性をシミュレーションで考える。</p>
 <ul class="simple">
 <li><p>標本をランダム抽出するたびに<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>, <span class="math notranslate nohighlight">\(j=0,1\)</span>は異なる値を取るが，標本抽出を繰り返し<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>の平均を計算すると真の値と「等しい」ことを示す。</p></li>
@@ -1871,9 +1974,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 0.9982520102580915 
-b1: 2.0002208899057674 
-b1: 3.0001708020287974
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 0.9983524904185103 
+b1: 1.999862565181016 
+b1: 3.0004304190458644
 </pre></div>
 </div>
 </div>
@@ -1934,11 +2037,11 @@ b1: 3.0001708020287974
 <li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>を変化させて違いを確かめなさい。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">N</span></code>を変化させて違いを確かめなさい。</p></li>
 </ul>
-</div>
-<div class="section" id="sec-9-vif">
-<span id="id14"></span><h2>シミュレーション：多重共線性<a class="headerlink" href="#sec-9-vif" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id15">
-<h3>説明<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="sec-9-vif">
+<span id="id14"></span><h2>シミュレーション：多重共線性<a class="headerlink" href="#sec-9-vif" title="Permalink to this headline">#</a></h2>
+<section id="id15">
+<h3>説明<a class="headerlink" href="#id15" title="Permalink to this headline">#</a></h3>
 <p>多重共線性が高くなると，パラメータの推定値の正確性が低下する（即ち、パラメータの標準誤差<span class="math notranslate nohighlight">\(\text{se}\left(\hat{\beta}_j\right)\)</span>が大きくなる）。この点を確認するためにパラメータの分散の推定値にある</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1948,9 +2051,9 @@ b1: 3.0001708020287974
 <strong>分散拡大因子（variance inflation factor）</strong>
 と呼ばれる。以下では<code class="docutils literal notranslate"><span class="pre">vif</span></code>と呼ぶ。この値が１０以上になる説明変数どうしを使うと多重共線性の可能性が高いといわれる。</p>
 <p>例として回帰分析<code class="docutils literal notranslate"><span class="pre">res_1</span></code>を考える。</p>
-</div>
-<div class="section" id="id16">
-<h3>方法１：手計算<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id16">
+<h3>方法１：手計算<a class="headerlink" href="#id16" title="Permalink to this headline">#</a></h3>
 <p>まず説明変数だけから構成される<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2021,9 +2124,9 @@ dtype: float64
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id17">
-<h3>方法２：<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id17">
+<h3>方法２：<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code><a class="headerlink" href="#id17" title="Permalink to this headline">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>にある<code class="docutils literal notranslate"><span class="pre">variance_inflation_factor</span></code>を使い<code class="docutils literal notranslate"><span class="pre">vif</span></code>を計算することもできる。</p>
 <p>必ず<strong>定数項を含む</strong>説明変数だけから構成される<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作成する。</p>
 <div class="cell docutils container">
@@ -2057,9 +2160,9 @@ exper     1.4776177726317783
 <li><p><code class="docutils literal notranslate"><span class="pre">{name</span> <span class="pre">:</span> <span class="pre">&lt;10}</span></code>は、<code class="docutils literal notranslate"><span class="pre">name</span></code>の値を代入し、<code class="docutils literal notranslate"><span class="pre">10</span></code>という幅の中で左寄せしている。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{vif_val}</span></code>は、<code class="docutils literal notranslate"><span class="pre">vif_val</span></code>の値を代入している。</p></li>
 </ul>
-</div>
-<div class="section" id="id18">
-<h3>シミュレーション<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id18">
+<h3>シミュレーション<a class="headerlink" href="#id18" title="Permalink to this headline">#</a></h3>
 <p>シミュレーションをおこない、多重共線性により<code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定量の標準誤差が上昇し推定量の正確性が損なわれることを確認する。</p>
 <p>シミュレーションでは以下の回帰式を使う。</p>
 <div class="math notranslate nohighlight">
@@ -2177,7 +2280,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.038626240870130946, 0.20155601718240101)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.03777353275922365, 0.20286667731585897)
 </pre></div>
 </div>
 </div>
@@ -2260,21 +2363,21 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.1917913340185686, 0.4416373082568671)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19445002093744368, 0.43719271314300506)
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id19">
-<h3>図を使ってチェック<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id19">
+<h3>図を使ってチェック<a class="headerlink" href="#id19" title="Permalink to this headline">#</a></h3>
 <p>多重共線性は説明変数間の相関が高いと発生するが，ここでは相関度を図を使ってチェックする。色々な方法があるが，以下では２つ紹介する。</p>
 <ol class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">pandas</span></code>の関数<code class="docutils literal notranslate"><span class="pre">scatter_matrix</span></code>を使う方法</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">seaborn</span></code>というパッケージの関数<code class="docutils literal notranslate"><span class="pre">pairplot</span></code>を使う方法</p></li>
 </ol>
-<div class="section" id="pandas">
-<h4><code class="docutils literal notranslate"><span class="pre">pandas</span></code>を使う方法<a class="headerlink" href="#pandas" title="Permalink to this headline">¶</a></h4>
+<section id="pandas">
+<h4><code class="docutils literal notranslate"><span class="pre">pandas</span></code>を使う方法<a class="headerlink" href="#pandas" title="Permalink to this headline">#</a></h4>
 <p>まずコードの中で<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>を明示的に導入せずに<code class="docutils literal notranslate"><span class="pre">pandas</span></code>のみを使い図示する方法を紹介する。こちらの方が簡単と感じるかもしれない。散布図を描いてみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2415,9 +2518,9 @@ exper     1.4776177726317783
 </div></div></div>
 </div>
 <p>上の図と相関係数の値を見比べて，概ねどのような関係にあるのかを確かめよう。</p>
-</div>
-<div class="section" id="seaborn">
-<h4><code class="docutils literal notranslate"><span class="pre">seaborn</span></code>を使う方法<a class="headerlink" href="#seaborn" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="seaborn">
+<h4><code class="docutils literal notranslate"><span class="pre">seaborn</span></code>を使う方法<a class="headerlink" href="#seaborn" title="Permalink to this headline">#</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">seaborn</span></code>というパッケージを使うとより「見栄えがする」図を描くことができる。<code class="docutils literal notranslate"><span class="pre">seaborn</span></code>については<a class="reference external" href="https://seaborn.pydata.org">このリンク</a>を参照しよう。<code class="docutils literal notranslate"><span class="pre">seaborn</span></code>は<code class="docutils literal notranslate"><span class="pre">sns</span></code>としてインポートするのが慣例である。</p>
 <p>まず上で<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">corr()</span></code>を使い変数の相関係数を計算したが，<code class="docutils literal notranslate"><span class="pre">seaborn</span></code>の<code class="docutils literal notranslate"><span class="pre">heatmap()</span></code>関数を使うと相関係数を色に変換してより見やすい表示となる。</p>
 <div class="cell docutils container">
@@ -2466,10 +2569,10 @@ exper     1.4776177726317783
 <li><p><code class="docutils literal notranslate"><span class="pre">kind='reg'</span></code>を追加すると，散布図に回帰直線が追加され相関度の確認がより簡単になる。</p></li>
 </ol>
 <p><code class="docutils literal notranslate"><span class="pre">seaborn</span></code>の回帰分析に関係するプロットについては<a class="reference external" href="https://seaborn.pydata.org/tutorial/regression.html#regression-tutorial">このリンク</a>が役立つだろう。</p>
-</div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -2493,9 +2596,11 @@ exper     1.4776177726317783
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="8_Simple_Regression.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -2511,24 +2616,28 @@ exper     1.4776177726317783
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 春山 鉄源  Tetsugen HARUYAMA<br/>
+  
+      &copy; Copyright 2020-2022（公開開始日：2020年5月4日）.<br/>
+</p>
+        </footer>
+    </div>
     
-      著者 春山 鉄源  Tetsugen HARUYAMA<br/>
-    
-        &copy; Copyright 2020-2022（公開開始日：2020年5月4日）.<br/>
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>

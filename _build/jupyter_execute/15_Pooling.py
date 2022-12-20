@@ -97,7 +97,9 @@ wooldridge.data('CPS78_85', description=True)
 
 # 回帰分析
 
-formula = 'lwage ~ y85 + educ + female +                    y85:educ + y85:female +                    exper + I((exper**2)/100) + union'
+formula = 'lwage ~ y85 + educ + female + \
+                   y85:educ + y85:female + \
+                   exper + I((exper**2)/100) + union'
 
 result = ols(formula, cps).fit()
 
@@ -321,7 +323,8 @@ print(result_1.summary().tables[1])
 # In[13]:
 
 
-formula_2 = 'np.log(rprice) ~ nearinc * y81 + age + I(age**2) +             np.log(intst) + np.log(land) + np.log(area) + rooms + baths'
+formula_2 = 'np.log(rprice) ~ nearinc * y81 + age + I(age**2) + \
+            np.log(intst) + np.log(land) + np.log(area) + rooms + baths'
 
 result_2 = ols(formula_2, data=kielmc).fit()
 
@@ -721,7 +724,10 @@ crime4 = pd.merge(crime4, crime4_diff,
 # In[35]:
 
 
-formula_2 = 'lcrmrte_diff ~ d83 + d84 + d85 + d86 + d87 +                             lprbarr_diff + lprbconv_diff +                             lprbpris_diff + lavgsen_diff +                             lpolpc_diff'
+formula_2 = 'lcrmrte_diff ~ d83 + d84 + d85 + d86 + d87 + \
+                            lprbarr_diff + lprbconv_diff + \
+                            lprbpris_diff + lavgsen_diff + \
+                            lpolpc_diff'
 
 
 # In[36]:

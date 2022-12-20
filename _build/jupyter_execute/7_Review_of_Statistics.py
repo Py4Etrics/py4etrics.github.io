@@ -214,7 +214,7 @@
 
 # >**「標本の大きさは母集団より小さい」の含意**
 # >
-# >母集団のパラメータを推定するための標本の統計量には必ず**誤差**が存在する。
+# >母集団のパラメータを推定するための標本の統計量には必ず**誤差**が発生する。
 
 # ```{note}
 # 標本のそれぞれの観測値が，同じ母集団から独立に（他の観測値との何の関連性もなく）抽出された場合，それらは**独立同一分布**（Idependently Identically Distributed;　略して IID）に従うという。
@@ -224,6 +224,7 @@
 # 以下で使う記号
 # * 標本の大きさ：$n$
 # * $i$番目の確率変数：$X_i$
+# * $i$番目の確率変数の実現値：$x_i$
 
 # ---
 # **標本平均（sample mean）**
@@ -245,9 +246,9 @@
 #     * $n\rightarrow\infty\;\Rightarrow\;\text{Var}(\bar{X})=0$
 
 # ---
-# **標本分散（sample variance）**
-# * 確率変数の標本分散：$\hat{\sigma}_X^2=\dfrac{1}{n-1}\displaystyle\sum_{i=1}^n\left(X_i-\bar{X}\right)^2$
-# * 標本分散の実現値：$\hat{\sigma}_x^2=\dfrac{1}{n-1}\displaystyle\sum_{i=1}^n\left(x_i-\bar{x}\right)^2$
+# **不偏標本分散（unbiased sample variance）**
+# * 確率変数の不偏標本分散：$\hat{\sigma}_X^2=\dfrac{1}{n-1}\displaystyle\sum_{i=1}^n\left(X_i-\bar{X}\right)^2$
+# * 不偏標本分散の実現値：$\hat{\sigma}_x^2=\dfrac{1}{n-1}\displaystyle\sum_{i=1}^n\left(x_i-\bar{x}\right)^2$
 # 
 # （特徴）
 # * $\hat{\sigma}_X^2$は母集団分散の不偏推定量
@@ -255,6 +256,7 @@
 # 
 # （注意）
 # * 分母は $n-1$であり，これにより$\hat{\sigma}_X^2$は母集団分散の不偏推定量となる。
+# * $\hat{\sigma}_X^2=\dfrac{1}{n}\displaystyle\sum_{i=1}^n\left(X_i-\bar{X}\right)^2$は偏りのある標本分散（biased sample variance）となる。「標本分散」はbiased sample varianceを指す。
 
 # ---
 # **標本平均の分散**

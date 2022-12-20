@@ -356,7 +356,6 @@ print(res_trunc.summary().tables[1])
 # In[12]:
 
 
-
 see(res_trunc)
 
 

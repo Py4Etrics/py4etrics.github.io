@@ -246,7 +246,8 @@ wagepanp.shape
 # In[9]:
 
 
-formula_fe = 'lwage ~ married + union + expersq                       +d81+d82+d83+d84+d85+d86+d87 + EntityEffects'
+formula_fe = 'lwage ~ married + union + expersq \
+                      +d81+d82+d83+d84+d85+d86+d87 + EntityEffects'
 
 
 # * 固定効果モデルのインスタンスの作成
@@ -320,7 +321,8 @@ print(result_fe2)
 # In[15]:
 
 
-formula_dum = 'lwage ~  1 + married + union + expersq                         +d81+d82+d83+d84+d85+d86+d87 + C(nr)'
+formula_dum = 'lwage ~  1 + married + union + expersq \
+                        +d81+d82+d83+d84+d85+d86+d87 + C(nr)'
 
 
 # `PooledOLS`モジュールの関数`from_formula`を使って推定式を定義する。ここで`PooledOLS`とは，`statsmodels`で使う通常のOLS推定と同じである。
@@ -449,7 +451,9 @@ result_dum.params[filter]
 # In[18]:
 
 
-formula_re = 'lwage ~ 1 + married + union + expersq                         + exper + educ + black + hisp                         +d81+d82+d83+d84+d85+d86+d87'
+formula_re = 'lwage ~ 1 + married + union + expersq \
+                        + exper + educ + black + hisp \
+                        +d81+d82+d83+d84+d85+d86+d87'
 
 
 # `RandomEffects`のモジュールにある関数`from_formula`を使い計算する。
@@ -574,7 +578,9 @@ wagepan = add_col_mean(wagepan, 'expersq', 'expersq_mean')
 # In[25]:
 
 
-formula_cre = 'lwage ~ 1 + married + union + expersq                          + married_mean + union_mean + expersq_mean                          +d81+d82+d83+d84+d85+d86+d87'
+formula_cre = 'lwage ~ 1 + married + union + expersq \
+                         + married_mean + union_mean + expersq_mean \
+                         +d81+d82+d83+d84+d85+d86+d87'
 
 result_cre = RandomEffects.from_formula(formula_cre, data=wagepan).fit()
 
@@ -633,7 +639,10 @@ result_cre.wald_test(formula=restriction)
 # In[27]:
 
 
-formula_cre2 = 'lwage ~ 1 + married + union + expersq                           + exper + educ + black + hisp                           + married_mean + union_mean + expersq_mean                           +d81+d82+d83+d84+d85+d86+d87'
+formula_cre2 = 'lwage ~ 1 + married + union + expersq \
+                          + exper + educ + black + hisp \
+                          + married_mean + union_mean + expersq_mean \
+                          +d81+d82+d83+d84+d85+d86+d87'
 
 result_cre2 = RandomEffects.from_formula(formula_cre2, data=wagepan).fit()
 
@@ -663,7 +672,9 @@ result_cre2.wald_test(formula=restriction)
 # In[29]:
 
 
-formula_pool = 'lwage ~ 1 + married + union + expersq                         + exper + educ + black + hisp                         +d81+d82+d83+d84+d85+d86+d87'
+formula_pool = 'lwage ~ 1 + married + union + expersq \
+                        + exper + educ + black + hisp \
+                        +d81+d82+d83+d84+d85+d86+d87'
 
 result_pool = PooledOLS.from_formula(formula_pool, data=wagepan).fit()
 

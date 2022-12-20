@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>制限従属変数モデル &#8212; Pythonで学ぶ入門計量経済学</title>
     
-  <link href="_static/css/theme.css" rel="stylesheet">
-  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,31 +20,31 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="_static/my_style.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -73,7 +75,21 @@ const thebe_selector_output = ".output, .cell_output"
                     </script>
 
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -82,9 +98,10 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
       
@@ -94,7 +111,7 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="この本を検索..." aria-label="この本を検索..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <p aria-level="2" class="caption" role="heading">
@@ -269,96 +286,182 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  <a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="ナビゲーションを切り替え" aria-controls="site-navigation"
-                title="ナビゲーションを切り替え" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="このページをダウンロード"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/21_TruncregTobitHeckit.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="ソースファイルをダウンロード" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="PDFに印刷"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="全画面モード"
-        title="全画面モード"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/21_TruncregTobitHeckit.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="発売 Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/21_TruncregTobitHeckit.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="発売 Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> 目次
+            <div class="navbar_extra_footer">
+            <a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/21_TruncregTobitHeckit.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/21_TruncregTobitHeckit.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/21_TruncregTobitHeckit.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
    説明
@@ -504,12 +607,11 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1>制限従属変数モデル</h1>
@@ -518,7 +620,7 @@ const thebe_selector_output = ".output, .cell_output"
                     <div id="jb-print-toc">
                         
                         <div>
-                            <h2> 目次 </h2>
+                            <h2> Contents </h2>
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
@@ -671,11 +773,12 @@ const thebe_selector_output = ".output, .cell_output"
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="id1">
-<h1>制限従属変数モデル<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>制限従属変数モデル<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -693,16 +796,16 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<div class="section" id="id2">
-<h2>説明<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="margin sidebar">
+<section id="id2">
+<h2>説明<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<aside class="margin sidebar">
 <p class="sidebar-title"></p>
 <div name="html-admonition">
 Do you want to read in a differnt language? Open the 
 <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translated version" style="color:#ffffff;background-color:#008080;" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/>
 in English or the language of your choice.
 </div>
-</div>
+</aside>
 <p><strong>制限従属変数</strong>（Limited Dependent Variables; LDV）とは，被説明変数が取り得る値が大きく制限される場合を指す。<code class="docutils literal notranslate"><span class="pre">Logit</span></code>と<code class="docutils literal notranslate"><span class="pre">Probit</span></code>も制限従属変数の例であり，被説明変数は<span class="math notranslate nohighlight">\((0,1)\)</span>に制限されている。この章では，違ったタイプの制限従属変数を考える。</p>
 <p>データの性質上２つに分けることができる。</p>
 <ol class="simple">
@@ -739,11 +842,11 @@ in English or the language of your choice.
 <li><p>Tobitモデル：打ち切りデータ</p></li>
 <li><p>Heckitモデル：切断データで選択バイアス問題が発生する場合</p></li>
 </ul>
-</div>
-<div class="section" id="id3">
-<h2>切断回帰モデル<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id4">
-<h3>説明<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id3">
+<h2>切断回帰モデル<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
+<section id="id4">
+<h3>説明<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
 <p>無作為な形ではなく，ある特定の一部のデータが標本から欠らくしている切断データの分析を考える。例として，女性の労働供給を考えよう。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -769,9 +872,9 @@ in English or the language of your choice.
 </ul>
 <hr class="docutils" />
 <p>まずシミュレーションを使ってこの結果を直感的に確認する。</p>
-</div>
-<div class="section" id="id5">
-<h3>シミュレーション<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id5">
+<h3>シミュレーション<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 標本の大きさ </span>
@@ -820,8 +923,8 @@ in English or the language of your choice.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.473859
-X            0.901675
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.274254
+X            1.039061
 dtype: float64
 </pre></div>
 </div>
@@ -841,8 +944,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    3.019973
-X            0.457656
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    2.841052
+X            0.674016
 dtype: float64
 </pre></div>
 </div>
@@ -898,9 +1001,9 @@ dtype: float64
 <ul class="simple">
 <li><p>後にくる<code class="docutils literal notranslate"><span class="pre">plt.plot()</span></code>は前にある<code class="docutils literal notranslate"><span class="pre">plt.plot()</span></code>を上書きする。従って，切断データの観測値は母集団データの散布図上に重ねて表示されるため，引数<code class="docutils literal notranslate"><span class="pre">facecolors</span></code>を<code class="docutils literal notranslate"><span class="pre">gray</span></code>に設定することにより切断データだけをグレーの点として表示させることができる。</p></li>
 </ul>
-</div>
-<div class="section" id="id6">
-<h3>直感的な理解<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id6">
+<h3>直感的な理解<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h3>
 <p>上の図を見るだけでも切断データによって引き起こされる問題をイメージすることはできるが，以下ではもう一歩踏み込んで推定量のバイアスの理由を直感的に考えてみる。</p>
 <p><strong>＜母集団回帰＞</strong></p>
 <p>母集団回帰式は</p>
@@ -929,9 +1032,9 @@ dtype: float64
 y_i=\beta_0+\beta_1 x_i+\sigma_u\lambda\left(w_i\right)+\nu_i\qquad\text{(式５)}
 \]</div>
 <p>を推定する必要がある。しかし(式３)をOLS推定すると，<span class="math notranslate nohighlight">\(\lambda(x)\)</span>が欠落することになり，<strong>欠落変数バイアス</strong>が発生することになる。このバイアスは，上の図で黒と赤の回帰線の傾きの違いに現れている。OLS推定量はゼロ方向にバイアスが発生する事が知られている。</p>
-</div>
-<div class="section" id="truncreg">
-<h3><code class="docutils literal notranslate"><span class="pre">Truncreg</span></code>モジュールの使い方<a class="headerlink" href="#truncreg" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="truncreg">
+<h3><code class="docutils literal notranslate"><span class="pre">Truncreg</span></code>モジュールの使い方<a class="headerlink" href="#truncreg" title="Permalink to this headline">#</a></h3>
 <p>切断データを扱うために切断回帰モデルを展開する。ここでは具体的な内容は割愛するが，<code class="docutils literal notranslate"><span class="pre">Logit</span></code>と<code class="docutils literal notranslate"><span class="pre">Probit</span></code>と同じように最尤法をつかい推定する。</p>
 <ul class="simple">
 <li><p>切断回帰モデルの推定量は一致性を満たす。</p></li>
@@ -977,9 +1080,9 @@ y_i=\beta_0+\beta_1 x_i+\sigma_u\lambda\left(w_i\right)+\nu_i\qquad\text{(式５
 </ul>
 </li>
 </ul>
-</div>
-<div class="section" id="id7">
-<h3>切断回帰推定<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id7">
+<h3>切断回帰推定<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h3>
 <p>例として<code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>の<code class="docutils literal notranslate"><span class="pre">HTV</span></code>のデータを使い推定する。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
@@ -1234,8 +1337,8 @@ Log(Sigma)    -0.5433      0.039    -14.053      0.000      -0.619      -0.468
 Dep. Variable:                      y   Pseudo R-squ:                    0.000
 Model:                       Truncreg   Log-Likelihood:                 -619.9
 Method:            Maximum Likelihood   LL-Null:                        -619.9
-Date:                Sun, 08 May 2022   LL-Ratio:                         -0.0
-Time:                        17:34:47   LLR p-value:                       nan
+Date:                Tue, 20 Dec 2022   LL-Ratio:                         -0.0
+Time:                        22:26:31   LLR p-value:                       nan
 No. Observations:                1066   AIC:                            1241.8
 Df Residuals:                    1065   BIC:                            1246.7
 Df Model:                           0   Covariance Type:             nonrobust
@@ -1249,9 +1352,9 @@ Log(Sigma)    -0.3590      0.047     -7.677      0.000      -0.451      -0.267
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id8">
-<h3>検定<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id8">
+<h3>検定<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h3>
 <p>次に検定方法について説明する。</p>
 <p><strong>Wald検定の例１</strong></p>
 <p><span class="math notranslate nohighlight">\(H_0\)</span>：定数項以外の全てのスロープ係数は０</p>
@@ -1318,9 +1421,9 @@ Log(Sigma)    -0.3590      0.047     -7.677      0.000      -0.451      -0.267
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">1%</span></code>の有意水準でも帰無仮説を棄却できる。</p>
-</div>
-<div class="section" id="id9">
-<h3>予測値と残差<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id9">
+<h3>予測値と残差<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h3>
 <p>次に２つの属性を紹介する。</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">.fittedvalues</span></code>：以下の式で与えられる線形の予測値</p>
@@ -1365,9 +1468,9 @@ Log(Sigma)    -0.3590      0.047     -7.677      0.000      -0.451      -0.267
 </div>
 </div>
 <p>データの切断による影響が右上に見て取れる。</p>
-</div>
-<div class="section" id="id10">
-<h3>誤差項の仮定について<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id10">
+<h3>誤差項の仮定について<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h3>
 <p>切断回帰推定は最尤法を使っており，次の仮定が重要な役割を果たしている。</p>
 <div class="math notranslate nohighlight">
 \[u|x\sim N(0,\sigma^2)\]</div>
@@ -1405,12 +1508,12 @@ Log(Sigma)    -0.3590      0.047     -7.677      0.000      -0.451      -0.267
 </ul>
 </li>
 </ul>
-</div>
-</div>
-<div class="section" id="tobit">
-<h2>Tobitモデル<a class="headerlink" href="#tobit" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id11">
-<h3>説明<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="tobit">
+<h2>Tobitモデル<a class="headerlink" href="#tobit" title="Permalink to this headline">#</a></h2>
+<section id="id11">
+<h3>説明<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h3>
 <p>打ち切りデータを理解するために，切断データと比べて異なる点を説明する。</p>
 <ul class="simple">
 <li><p>切断データではデータセットに<span class="math notranslate nohighlight">\((x_i,y_i),\;i\in\cal{N}\)</span>が存在しないが，打ち切りデータには含まれる。しかし，<span class="math notranslate nohighlight">\(y_i\)</span>が打ち切りの下限や上限の値と等しくなる。</p></li>
@@ -1457,9 +1560,9 @@ Log(Sigma)    -0.3590      0.047     -7.677      0.000      -0.451      -0.267
 </ul>
 <hr class="docutils" />
 <p>以下ではまずこの結果をシミュレーションを使って示し，解決策について説明する。</p>
-</div>
-<div class="section" id="id12">
-<h3>シミュレーション<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id12">
+<h3>シミュレーション<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># データの大きさ </span>
@@ -1495,8 +1598,8 @@ Log(Sigma)    -0.3590      0.047     -7.677      0.000      -0.451      -0.267
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.598895
-X            1.162277
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept   -0.252830
+X            1.062792
 dtype: float64
 </pre></div>
 </div>
@@ -1516,8 +1619,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    2.040201
-X            0.601689
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.555586
+X            0.456895
 dtype: float64
 </pre></div>
 </div>
@@ -1562,9 +1665,9 @@ dtype: float64
 \end{align*}
 \end{split}\]</div>
 <p>であるが，<span class="math notranslate nohighlight">\(y\geq 0\)</span>の下での<span class="math notranslate nohighlight">\(y\)</span>の期待値 <span class="math notranslate nohighlight">\(\text{E}(y|y&gt;0,x)\)</span> は複雑な非線形式なり，線形を仮定するOLS推定方で捉えることは不可能である。</p>
-</div>
-<div class="section" id="id13">
-<h3><code class="docutils literal notranslate"><span class="pre">Tobit</span></code>モジュールの使い方<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id13">
+<h3><code class="docutils literal notranslate"><span class="pre">Tobit</span></code>モジュールの使い方<a class="headerlink" href="#id13" title="Permalink to this headline">#</a></h3>
 <p>残念ながら<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>と<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>にも<code class="docutils literal notranslate"><span class="pre">Tobit</span></code>推定のモジュールがない。その代わりに著者が作成した<code class="docutils literal notranslate"><span class="pre">py4etrics</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">tobit</span></code>モジュールを使い推定する。このモジュールは<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">GenericMaximumLikelihoodModel</span></code>を使い実装したものである。使用する上で<a class="reference external" href="https://www.statsmodels.org/devel/examples/notebooks/generated/generic_mle.html">このサイト</a>にある次の点に注意する必要がある。</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">R</span></code>の推定値と小数点第４位まで同じになるが，標準偏差は小数点第２位までが同じとなる。</p></li>
@@ -1602,9 +1705,9 @@ dtype: float64
 </div>
 <p>（コメント）</p>
 <p><code class="docutils literal notranslate"><span class="pre">Logit</span></code>や<code class="docutils literal notranslate"><span class="pre">Probit</span></code>と同じように，非線形モデルなため最尤法を使い推定する。</p>
-</div>
-<div class="section" id="id14">
-<h3>Tobitモデルの推定<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id14">
+<h3>Tobitモデルの推定<a class="headerlink" href="#id14" title="Permalink to this headline">#</a></h3>
 <p>以前使った<code class="docutils literal notranslate"><span class="pre">mroz</span></code>のデータを使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1740,9 +1843,9 @@ Log(Sigma)     7.0229      0.037    189.514      0.000       6.950       7.096
 </div>
 </div>
 <p>この中にあるメソッドを使って検定をおこなう。</p>
-</div>
-<div class="section" id="id15">
-<h3>検定と属性<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id15">
+<h3>検定と属性<a class="headerlink" href="#id15" title="Permalink to this headline">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Wald検定</span></code>を考えよう</p>
 <p><strong>Wald検定の例</strong></p>
 <p><span class="math notranslate nohighlight">\(H_0\)</span>：<code class="docutils literal notranslate"><span class="pre">exper</span></code> <span class="math notranslate nohighlight">\(=\)</span> <code class="docutils literal notranslate"><span class="pre">expersq</span></code> <span class="math notranslate nohighlight">\(=0\)</span> &amp; <code class="docutils literal notranslate"><span class="pre">kidslt6</span></code><span class="math notranslate nohighlight">\(=\)</span><code class="docutils literal notranslate"><span class="pre">kidsge6</span></code></p>
@@ -1790,9 +1893,9 @@ Log(Sigma)     7.0229      0.037    189.514      0.000       6.950       7.096
 </div>
 </div>
 <p>図の左下は切り打ちデータを反映している。</p>
-</div>
-<div class="section" id="id16">
-<h3>残差について<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id16">
+<h3>残差について<a class="headerlink" href="#id16" title="Permalink to this headline">#</a></h3>
 <p>切断回帰推定と同じように最尤法を使っているので，推定量の標準偏差の変化を使い残差の不均一について考えてみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1826,12 +1929,12 @@ Log(Sigma)     7.0229      0.037    189.514      0.000       6.950       7.096
 </ul>
 </li>
 </ul>
-</div>
-</div>
-<div class="section" id="heckit">
-<h2>Heckitモデル<a class="headerlink" href="#heckit" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id17">
-<h3>説明<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="heckit">
+<h2>Heckitモデル<a class="headerlink" href="#heckit" title="Permalink to this headline">#</a></h2>
+<section id="id17">
+<h3>説明<a class="headerlink" href="#id17" title="Permalink to this headline">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Heckit</span></code>モデルは切断回帰モデルの拡張版であり，選択バイアス問題が疑われる場合に威力を発揮する。例を使って選択バイアス問題を説明する。</p>
 <p>＜選択バイアス問題：例１＞</p>
 <p>日本全国の大学４年生にある試験（単位取得できるが必須ではない）を受けさせ，その平均点を使って卒業生全体の学力を測るとしよう。しかし，勉強時間が短い学生は受験しない傾向にあるとしよう。</p>
@@ -1922,9 +2025,9 @@ Log(Sigma)     7.0229      0.037    189.514      0.000       6.950       7.096
 <ul class="simple">
 <li><p>上の説明では，<span class="math notranslate nohighlight">\(k_i\)</span>も<span class="math notranslate nohighlight">\(x_i\)</span>も１変数として説明したが，実際には複数の変数を使うことになる。その際，第１段階の説明変数（上の例では，<span class="math notranslate nohighlight">\(k_i\)</span>）には第２段階の説明変数に<strong>ない</strong>変数を少なくとも１つ入れる必要がある。</p></li>
 </ul>
-</div>
-<div class="section" id="id18">
-<h3><code class="docutils literal notranslate"><span class="pre">Heckit</span></code>モジュールの使い方<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id18">
+<h3><code class="docutils literal notranslate"><span class="pre">Heckit</span></code>モジュールの使い方<a class="headerlink" href="#id18" title="Permalink to this headline">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>も<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>も<code class="docutils literal notranslate"><span class="pre">Heckit</span></code>推定の正式モジュールがない。その代わり<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>に正式にmergeされていない<code class="docutils literal notranslate"><span class="pre">Heckman</span></code>モジュールに基づいて著者が作成した<code class="docutils literal notranslate"><span class="pre">heckit</span></code>モジュールを使う。これにより上述の説明したステップに沿って自動で推定可能となる。</p>
 <hr class="docutils" />
 <p>＜使い方：ステップ１〜６＞</p>
@@ -1968,11 +2071,11 @@ $$</p>
 </div>
 </li>
 </ol>
-</div>
-<div class="section" id="id19">
-<h3>推定<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="mroz">
-<h4><code class="docutils literal notranslate"><span class="pre">mroz</span></code>を使った推定<a class="headerlink" href="#mroz" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id19">
+<h3>推定<a class="headerlink" href="#id19" title="Permalink to this headline">#</a></h3>
+<section id="mroz">
+<h4><code class="docutils literal notranslate"><span class="pre">mroz</span></code>を使った推定<a class="headerlink" href="#mroz" title="Permalink to this headline">#</a></h4>
 <p>上で使った<code class="docutils literal notranslate"><span class="pre">mroz</span></code>のデータセットを使い推定する。</p>
 <ul class="simple">
 <li><p>第１段階の説明変数：<code class="docutils literal notranslate"><span class="pre">educ</span></code>，<code class="docutils literal notranslate"><span class="pre">exper</span></code>，<code class="docutils literal notranslate"><span class="pre">expersq</span></code>，<code class="docutils literal notranslate"><span class="pre">nwifeinc</span></code>，<code class="docutils literal notranslate"><span class="pre">age</span></code>，<code class="docutils literal notranslate"><span class="pre">kidslt6</span></code>，<code class="docutils literal notranslate"><span class="pre">kidsge6</span></code></p></li>
@@ -2058,8 +2161,8 @@ $$</p>
 Dep. Variable:                    lwage   R-squared:                       0.156
 Model:                           Heckit   Adj. R-squared:                  0.150
 Method:                Heckman Two-Step   F-statistics:                   26.148
-Date:                  Sun, 08 May 2022   Prob (F-statistic):              0.000
-Time:                          17:36:08   Cov in 1st Stage:            nonrobust
+Date:                  Tue, 20 Dec 2022   Prob (F-statistic):              0.000
+Time:                          22:27:53   Cov in 1st Stage:            nonrobust
 No. Total Obs.:                     753   Cov in 2nd Stage:                  HC1
 No. Censored Obs.:                  325                                         
 No. Uncensored Obs.:                428                                         
@@ -2183,8 +2286,8 @@ Third table is the estimate for the coef of the inverse Mills ratio (Heckman&#39
 Dep. Variable:                      y   No. Observations:                  753
 Model:                         Probit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Sun, 08 May 2022   Pseudo R-squ.:                  0.2206
-Time:                        17:36:08   Log-Likelihood:                -401.30
+Date:                Tue, 20 Dec 2022   Pseudo R-squ.:                  0.2206
+Time:                        22:27:53   Log-Likelihood:                -401.30
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
 ==============================================================================
@@ -2193,9 +2296,9 @@ Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
 </div>
 </div>
 <p>この表にある<code class="docutils literal notranslate"><span class="pre">Dep.</span> <span class="pre">Variable:</span> <span class="pre">y</span></code>の<code class="docutils literal notranslate"><span class="pre">y</span></code>は第１段階の被説明変数を表しているが，第２段階の被説明変数<code class="docutils literal notranslate"><span class="pre">lwage</span></code>を使っているためこのような表記になっている。</p>
-</div>
-<div class="section" id="id20">
-<h4>結果の解釈<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id20">
+<h4>結果の解釈<a class="headerlink" href="#id20" title="Permalink to this headline">#</a></h4>
 <ul class="simple">
 <li><p>第２段階推定の<code class="docutils literal notranslate"><span class="pre">educ</span></code>の係数は<code class="docutils literal notranslate"><span class="pre">0.1091</span></code>であり統計的に有意。</p></li>
 </ul>
@@ -2293,10 +2396,10 @@ df freedom:  7.
 </div>
 </div>
 <p>帰無仮説は棄却できない。</p>
-</div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -2320,9 +2423,11 @@ df freedom:  7.
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="20_LogitProbit.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -2338,24 +2443,28 @@ df freedom:  7.
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 春山 鉄源  Tetsugen HARUYAMA<br/>
+  
+      &copy; Copyright 2020-2022（公開開始日：2020年5月4日）.<br/>
+</p>
+        </footer>
+    </div>
     
-      著者 春山 鉄源  Tetsugen HARUYAMA<br/>
-    
-        &copy; Copyright 2020-2022（公開開始日：2020年5月4日）.<br/>
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>

@@ -54,6 +54,13 @@ warnings.filterwarnings("ignore")
 # 
 # 以下では`.fit()`のオプションは指定せず，デフォルトのまま議論を続ける。
 
+# ````{note}
+# `linearmodels`を事前にインストールする必要があるが，次のコマンドでインストールすることができる。
+# ```
+# pip install linearmodels
+# ```
+# ````
+
 # ---
 # 以下では`linearmodels`を使うが，そのためには`DataFrame`を`MultiIndex`に変換する必要がある。以下では，まず`MultiIndex`について説明し，その後に`linearmodel`にある`PanelData`関数について説明する
 
@@ -413,7 +420,8 @@ crime4p.shape
 # In[34]:
 
 
-formula = 'lcrmrte ~ d82 + d83 + d84 + d85 + d86 + d87 + lprbarr +                 lprbconv + lprbpris + lavgsen + lpolpc'
+formula = 'lcrmrte ~ d82 + d83 + d84 + d85 + d86 + d87 + lprbarr + \
+                lprbconv + lprbpris + lavgsen + lpolpc'
 
 
 # １階差分モデルの設定（インスタンスの作成）

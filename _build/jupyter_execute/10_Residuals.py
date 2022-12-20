@@ -225,7 +225,11 @@ def resid_ideal(n, u_sd):
     xx = list(range(n))  # 0から始まるｎ個の整数のリスト
     u = norm.rvs(scale=u_sd, size=n)   # 正規分布に従うn個の「残差」
     
-    return plt.scatter(xx,u),            plt.axhline(y=0,color='red'),            plt.xlabel('n'),            plt.ylabel('Residuals'),            plt.title('Ideal Residuals')
+    return plt.scatter(xx,u), \
+           plt.axhline(y=0,color='red'), \
+           plt.xlabel('n'), \
+           plt.ylabel('Residuals'), \
+           plt.title('Ideal Residuals')
 
 
 # この関数の返り値は`matplotlib`のコードである。返り値として図が表示されることになる。

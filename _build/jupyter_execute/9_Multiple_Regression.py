@@ -7,17 +7,17 @@
 # In[1]:
 
 
-import numpy as np
-from scipy.stats import norm, uniform, gaussian_kde, multivariate_normal
-import pandas as pd
-from pandas.plotting import scatter_matrix
 import matplotlib.pyplot as plt
-from statsmodels.formula.api import ols
-from statsmodels.stats.outliers_influence import variance_inflation_factor as vif
+import numpy as np
+import pandas as pd
+import seaborn as sns
 import wooldridge
 from numba import njit
-import seaborn as sns
+from pandas.plotting import scatter_matrix
+from scipy.stats import norm, uniform, gaussian_kde, multivariate_normal
 from see import see
+from statsmodels.formula.api import ols
+from statsmodels.stats.outliers_influence import variance_inflation_factor as vif
 
 
 # ## 説明
