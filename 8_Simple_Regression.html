@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>単回帰分析 &#8212; Pythonで学ぶ入門計量経済学</title>
     
-  <link href="_static/css/theme.css" rel="stylesheet">
-  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,21 +20,17 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="_static/my_style.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -40,12 +38,13 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -76,7 +75,21 @@ const thebe_selector_output = ".output, .cell_output"
                     </script>
 
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -85,9 +98,10 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
       
@@ -272,96 +286,182 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  <a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/8_Simple_Regression.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/8_Simple_Regression.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/8_Simple_Regression.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            <a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/8_Simple_Regression.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/8_Simple_Regression.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/8_Simple_Regression.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
    説明
@@ -440,12 +540,11 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1>単回帰分析</h1>
@@ -540,35 +639,36 @@ const thebe_selector_output = ".output, .cell_output"
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="chap-8-simple">
-<span id="id1"></span><h1>単回帰分析<a class="headerlink" href="#chap-8-simple" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="chap-8-simple">
+<span id="id1"></span><h1>単回帰分析<a class="headerlink" href="#chap-8-simple" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">wooldridge</span>  <span class="c1"># wooldridgeのデータ・パッケージ</span>
-<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>  <span class="c1"># 回帰分析のパッケージ</span>
-<span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="n">see</span>  <span class="c1"># 属性を調べるパッケージ</span>
-<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span>  <span class="c1"># シミュレーションの計算を高速化する</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+import pandas as pd
+from scipy.stats import norm
+import matplotlib.pyplot as plt
+import wooldridge  # wooldridgeのデータ・パッケージ
+from statsmodels.formula.api import ols  # 回帰分析のパッケージ
+from see import see  # 属性を調べるパッケージ
+from numba import njit  # シミュレーションの計算を高速化する
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="id2">
-<h2>説明<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="margin sidebar">
+<section id="id2">
+<h2>説明<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<aside class="margin sidebar">
 <p class="sidebar-title"></p>
 <div name="html-admonition">
 Do you want to read in a differnt language? Open the 
 <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translated version" style="color:#ffffff;background-color:#008080;" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/>
 in English or the language of your choice.
 </div>
-</div>
+</aside>
 <p>説明変数が１つの単回帰（Simple Regression）を考える。</p>
 <div class="math notranslate nohighlight">
 \[y_i=\beta_0+\beta_1 x_i + u_i\]</div>
@@ -624,9 +724,9 @@ in English or the language of your choice.
 </ul>
 <div class="math notranslate nohighlight">
 \[\hat{u}_i=y_i-\hat{y}_i\]</div>
-</div>
-<div class="section" id="id3">
-<h2>データ<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id3">
+<h2>データ<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
 <p>Wooldridge (2019)で使われるデータセットは全て<code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>のパッケージに含まれている。そのパッケージからからデータを読み込んで使うことにする。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -638,7 +738,7 @@ in English or the language of your choice.
 <p>使う関数は<code class="docutils literal notranslate"><span class="pre">data()</span></code>であり，引数なしで実行するとデータセットのリストが表示される。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wooldridge.data()
 </pre></div>
 </div>
 </div>
@@ -677,7 +777,7 @@ in English or the language of your choice.
 回帰分析に使うために<code class="docutils literal notranslate"><span class="pre">df</span></code>に割り当てる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = wooldridge.data(&#39;wage1&#39;)
 </pre></div>
 </div>
 </div>
@@ -685,7 +785,7 @@ in English or the language of your choice.
 <p>オプション<code class="docutils literal notranslate"><span class="pre">description=True</span></code>を追加するとデータの説明を表示することができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wooldridge.data(&#39;wage1&#39;,description=True)
 </pre></div>
 </div>
 </div>
@@ -740,7 +840,7 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 <p>まず関係する変数だけを取り出してみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;wage&#39;</span><span class="p">,</span><span class="s1">&#39;educ&#39;</span><span class="p">]]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = df.loc[:,[&#39;wage&#39;,&#39;educ&#39;]]
 </pre></div>
 </div>
 </div>
@@ -748,7 +848,7 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 <p>最初の3行の表示をしてみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.head(3)
 </pre></div>
 </div>
 </div>
@@ -798,7 +898,7 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 <p>次に<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の特徴を確認する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.info()
 </pre></div>
 </div>
 </div>
@@ -819,7 +919,7 @@ memory usage: 8.3 KB
 <p>また記述統計も必ず確認するように。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.describe()
 </pre></div>
 </div>
 </div>
@@ -892,14 +992,14 @@ memory usage: 8.3 KB
 </div></div></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">.head()</span></code>，<code class="docutils literal notranslate"><span class="pre">.tail()</span></code>，<code class="docutils literal notranslate"><span class="pre">.info()</span></code>そして<code class="docutils literal notranslate"><span class="pre">.describe()</span></code>を使い<code class="docutils literal notranslate"><span class="pre">df</span></code>の情報を確認し，データのイメージ作りをすることは回帰分析に役立つだろう。</p>
-</div>
-<div class="section" id="id4">
-<h2>「手計算」<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id4">
+<h2>「手計算」<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Python</span></code>では回帰分析の計算を自動化するパッケージが提供されており、後ほどその１つを紹介する。その前に、自動計算にはどのようなコードが使われているかを感じてもらうために「手計算」で、即ち、上で示した<span class="math notranslate nohighlight">\(\hat{\beta}_0\)</span>と<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の式を使い係数の推定値を計算してみる。まず分散共分散行列を計算する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mat_wage_educ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;wage&#39;</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">])</span>
-<span class="n">mat_wage_educ</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mat_wage_educ = np.cov(df[&#39;wage&#39;],df[&#39;educ&#39;])
+mat_wage_educ
 </pre></div>
 </div>
 </div>
@@ -913,8 +1013,8 @@ memory usage: 8.3 KB
 <p>共分散の値を<code class="docutils literal notranslate"><span class="pre">cov_wage_edu</span></code>に割り当てる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cov_wage_educ</span> <span class="o">=</span> <span class="n">mat_wage_educ</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-<span class="n">cov_wage_educ</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cov_wage_educ = mat_wage_educ[0, 1]
+cov_wage_educ
 </pre></div>
 </div>
 </div>
@@ -927,7 +1027,7 @@ memory usage: 8.3 KB
 <p><code class="docutils literal notranslate"><span class="pre">wage</span></code>と<code class="docutils literal notranslate"><span class="pre">educ</span></code>の分散は次のコードで取得できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mat_wage_educ</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">mat_wage_educ</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mat_wage_educ[0,0], mat_wage_educ[1,1]
 </pre></div>
 </div>
 </div>
@@ -940,9 +1040,9 @@ memory usage: 8.3 KB
 <p>次のように計算しても同じ値となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">var_wage</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">var_educ</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">var_wage</span><span class="p">,</span> <span class="n">var_educ</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>var_wage = df[&#39;wage&#39;].var(ddof=1)
+var_educ = df[&#39;educ&#39;].var(ddof=1)
+var_wage, var_educ
 </pre></div>
 </div>
 </div>
@@ -955,8 +1055,8 @@ memory usage: 8.3 KB
 <p>それぞれの変数の平均を計算する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_wage</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-<span class="n">mean_educ</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mean_wage = df[&#39;wage&#39;].mean()
+mean_educ = df[&#39;educ&#39;].mean()
 </pre></div>
 </div>
 </div>
@@ -964,8 +1064,8 @@ memory usage: 8.3 KB
 <p>上の式に従って<span class="math notranslate nohighlight">\(\beta_1\)</span>の推定値 <span class="math notranslate nohighlight">\(\left(\hat{\beta}_1\right)\)</span>を計算する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b1hat</span> <span class="o">=</span> <span class="n">cov_wage_educ</span> <span class="o">/</span> <span class="n">var_educ</span>
-<span class="n">b1hat</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>b1hat = cov_wage_educ / var_educ
+b1hat
 </pre></div>
 </div>
 </div>
@@ -997,8 +1097,8 @@ memory usage: 8.3 KB
 <p>同様に<span class="math notranslate nohighlight">\(\beta_0\)</span>の推定値 <span class="math notranslate nohighlight">\(\left(\hat{\beta}_0\right)\)</span>も計算する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0hat</span> <span class="o">=</span> <span class="n">mean_wage</span> <span class="o">-</span> <span class="n">b1hat</span> <span class="o">*</span> <span class="n">mean_educ</span>
-<span class="n">b0hat</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>b0hat = mean_wage - b1hat * mean_educ
+b0hat
 </pre></div>
 </div>
 </div>
@@ -1008,9 +1108,9 @@ memory usage: 8.3 KB
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="statsmodels">
-<span id="sec-8-statsmodels"></span><h2><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使う<a class="headerlink" href="#statsmodels" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="statsmodels">
+<span id="sec-8-statsmodels"></span><h2><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使う<a class="headerlink" href="#statsmodels" title="Permalink to this headline">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Python</span></code>では簡単なコードで回帰分析に関する多くの計算を行うことができるパッケージが提供されている。その内、代表的なパッケージが<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>である。次の順番で使い方を説明する。</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">ols</span></code>サブパッケージを読み込む</p></li>
@@ -1045,7 +1145,7 @@ memory usage: 8.3 KB
 <p><code class="docutils literal notranslate"><span class="pre">wage</span></code>を被説明変数にし，定数項を加えて<code class="docutils literal notranslate"><span class="pre">educ</span></code>を説明変数をする場合，次のように書くことになる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;wage ~ educ&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula = &#39;wage ~ educ&#39;
 </pre></div>
 </div>
 </div>
@@ -1054,7 +1154,7 @@ memory usage: 8.3 KB
 <p>まず自動計算の準備として計算の対象となるもの（インスタンスと呼ばれるオブジェクト）を生成し、ここでは”model”の省略形の変数<code class="docutils literal notranslate"><span class="pre">mod</span></code>に割り当てる（<code class="docutils literal notranslate"><span class="pre">mod</span></code>でなくとも好きな変数名でOK）。ここで第１引数は上で定義した回帰式，第２引数<code class="docutils literal notranslate"><span class="pre">data</span></code>は使用するデータをを指定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mod</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mod = ols(formula, data=df)
 </pre></div>
 </div>
 </div>
@@ -1062,7 +1162,7 @@ memory usage: 8.3 KB
 <p><code class="docutils literal notranslate"><span class="pre">mod</span></code>の属性を調べてみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>see(mod)
 </pre></div>
 </div>
 </div>
@@ -1084,7 +1184,7 @@ memory usage: 8.3 KB
 <p>この中にOLS関連の計算を一瞬で実行するメソッド<code class="docutils literal notranslate"><span class="pre">fit()</span></code>が準備されており、それを使い結果を<code class="docutils literal notranslate"><span class="pre">res</span></code>に割り当てる（<code class="docutils literal notranslate"><span class="pre">res</span></code>はresultの略）。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">mod</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res = mod.fit()
 </pre></div>
 </div>
 </div>
@@ -1096,7 +1196,7 @@ memory usage: 8.3 KB
 <p><code class="docutils literal notranslate"><span class="pre">res</span></code>の属性を確認してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>see(res)
 </pre></div>
 </div>
 </div>
@@ -1131,7 +1231,7 @@ memory usage: 8.3 KB
 <p>例えば，上のリストの中に<code class="docutils literal notranslate"><span class="pre">.params</span></code>とあるが，この属性を使い係数の推定値を取り出すことができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">params</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res.params
 </pre></div>
 </div>
 </div>
@@ -1149,7 +1249,7 @@ dtype: float64
 <p>この中にあるメソッド<code class="docutils literal notranslate"><span class="pre">summary()</span></code>を使うと，主な結果がまとめられた表を出力することができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res.summary())
 </pre></div>
 </div>
 </div>
@@ -1159,8 +1259,8 @@ dtype: float64
 Dep. Variable:                   wage   R-squared:                       0.165
 Model:                            OLS   Adj. R-squared:                  0.163
 Method:                 Least Squares   F-statistic:                     103.4
-Date:                Sun, 08 May 2022   Prob (F-statistic):           2.78e-22
-Time:                        08:53:21   Log-Likelihood:                -1385.7
+Date:                Tue, 20 Dec 2022   Prob (F-statistic):           2.78e-22
+Time:                        13:39:40   Log-Likelihood:                -1385.7
 No. Observations:                 526   AIC:                             2775.
 Df Residuals:                     524   BIC:                             2784.
 Df Model:                           1                                         
@@ -1193,7 +1293,7 @@ Notes:
 <p>例えば，係数の推定値に関する基本的な統計量だけを表示するには以下のようにすれば良い。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res.summary().tables[1])
 </pre></div>
 </div>
 </div>
@@ -1287,13 +1387,13 @@ educ           0.5414      0.053     10.167      0.000       0.437       0.646
 </li>
 </ul>
 <p>OLS推定結果を割り当てた<code class="docutils literal notranslate"><span class="pre">res</span></code>には，ここで説明した以外に数多くの属性が存在する。それらに関する説明は<a class="reference external" href="https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.RegressionResults.html">このサイト</a>を参照すること。</p>
-</div>
-<div class="section" id="id5">
-<h2>図<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id5">
+<h2>図<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h2>
 <p>回帰分析の結果を図示するために、まず予測値の取得する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage_hat</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">fittedvalues</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wage_hat = res.fittedvalues
 </pre></div>
 </div>
 </div>
@@ -1301,12 +1401,12 @@ educ           0.5414      0.053     10.167      0.000       0.437       0.646
 <p>データの散布図と回帰直線を図示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage_hat</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">fittedvalues</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s1">&#39;educ&#39;</span><span class="p">,</span> <span class="s1">&#39;wage&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">],</span><span class="n">wage_hat</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Education&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Wage&#39;</span><span class="p">)</span>
-<span class="k">pass</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wage_hat = res.fittedvalues
+plt.scatter(&#39;educ&#39;, &#39;wage&#39;, data=df)
+plt.plot(df[&#39;educ&#39;],wage_hat, &#39;r&#39;)
+plt.xlabel(&#39;Education&#39;)
+plt.ylabel(&#39;Wage&#39;)
+pass
 </pre></div>
 </div>
 </div>
@@ -1314,9 +1414,9 @@ educ           0.5414      0.053     10.167      0.000       0.437       0.646
 <img alt="_images/8_Simple_Regression_68_0.png" src="_images/8_Simple_Regression_68_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="id6">
-<h2>モデルの適合度<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id6">
+<h2>モデルの適合度<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
 <p>モデルの適合度を確認するために次を定義する。</p>
 <ul class="simple">
 <li><p>SST（Total Sum of Squares; 全変動の平方和）</p></li>
@@ -1369,12 +1469,12 @@ R^2
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">nobs</span>
-<span class="n">k</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">df_model</span>
-<span class="c1"># n-k-1 = res.df_resid</span>
-<span class="n">SST</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">centered_tss</span>
-<span class="n">SSE</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">ess</span>
-<span class="n">SSR</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">ssr</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n = res.nobs
+k = res.df_model
+# n-k-1 = res.df_resid
+SST = res.centered_tss
+SSE = res.ess
+SSR = res.ssr
 </pre></div>
 </div>
 </div>
@@ -1383,7 +1483,7 @@ R^2
 <p>上の定義を使うと次のように計算できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="n">SSR</span><span class="o">/</span><span class="n">SST</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>1-SSR/SST
 </pre></div>
 </div>
 </div>
@@ -1396,10 +1496,10 @@ R^2
 <p>また次のように計算することも可能である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_hat</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">resid</span>  <span class="c1"># 残差</span>
-<span class="n">wage</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span>  <span class="c1"># 被説明変数</span>
-<span class="n">R2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">u_hat</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">wage</span><span class="p">)</span>
-<span class="n">R2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>u_hat = res.resid  # 残差
+wage = df[&#39;wage&#39;]  # 被説明変数
+R2 = 1 - np.var(u_hat) / np.var(wage)
+R2
 </pre></div>
 </div>
 </div>
@@ -1412,7 +1512,7 @@ R^2
 <p>しかし「手計算」よりも<code class="docutils literal notranslate"><span class="pre">res</span></code>の属性<code class="docutils literal notranslate"><span class="pre">.rsquared</span></code>を使う方がより簡単である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">rsquared</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res.rsquared
 </pre></div>
 </div>
 </div>
@@ -1426,8 +1526,8 @@ R^2
 <p>上の定義を使うと次のように計算できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adjR2</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">R2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">adjR2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>adjR2 = 1-(1-R2)*(n-1)/(n-k-1)
+adjR2
 </pre></div>
 </div>
 </div>
@@ -1440,7 +1540,7 @@ R^2
 <p>一方で修正済み決定係数を取得するメソッドは<code class="docutils literal notranslate"><span class="pre">.rsquared_adj</span></code>である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">rsquared_adj</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res.rsquared_adj
 </pre></div>
 </div>
 </div>
@@ -1450,34 +1550,34 @@ R^2
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id7">
-<h2>賃金の対数化<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id7">
+<h2>賃金の対数化<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h2>
 <p>上の回帰分析では被説明変数<code class="docutils literal notranslate"><span class="pre">wage</span></code>をそのまま使ったが，労働経済学では賃金の対数をとり推定するのが一般的である。そのような式を賃金方程式と呼ぶ。その考えに沿って，ここでは<code class="docutils literal notranslate"><span class="pre">wage</span></code>の自然対数変換をおこない回帰分析をおこなう。まず対数化賃金お変数を作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;wage_log&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;wage&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df[&#39;wage_log&#39;] = np.log(df[&#39;wage&#39;])
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;wage_log ~ educ&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula = &#39;wage_log ~ educ&#39;
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res = ols(formula, data=df).fit()
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res.summary().tables[1])
 </pre></div>
 </div>
 </div>
@@ -1507,15 +1607,15 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 <p>結果を図示しよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 予測値の取得</span>
-<span class="n">wage_log_hat</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">fittedvalues</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># 予測値の取得
+wage_log_hat = res.fittedvalues
 
-<span class="c1"># 散布図と回帰曲線</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s1">&#39;educ&#39;</span><span class="p">,</span> <span class="s1">&#39;wage_log&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">],</span> <span class="n">wage_log_hat</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Education&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Log of Wage&#39;</span><span class="p">)</span>
-<span class="k">pass</span>
+# 散布図と回帰曲線
+plt.scatter(&#39;educ&#39;, &#39;wage_log&#39;, data=df)
+plt.plot(df[&#39;educ&#39;], wage_log_hat, &#39;r&#39;)
+plt.xlabel(&#39;Education&#39;)
+plt.ylabel(&#39;Log of Wage&#39;)
+pass
 </pre></div>
 </div>
 </div>
@@ -1523,12 +1623,12 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 <img alt="_images/8_Simple_Regression_92_0.png" src="_images/8_Simple_Regression_92_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="ols">
-<h2>シミュレーション：<span class="math notranslate nohighlight">\(OLS\)</span>推定<a class="headerlink" href="#ols" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="ols">
+<h2>シミュレーション：<span class="math notranslate nohighlight">\(OLS\)</span>推定<a class="headerlink" href="#ols" title="Permalink to this headline">#</a></h2>
 <p>上ではデータを使い「手計算」と<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使い係数を計算したが，ここではOLS推定の「意味」をシミュレーションを使って考えてみることにする。</p>
-<div class="section" id="id8">
-<h3>母集団の考え方<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<section id="id8">
+<h3>母集団の考え方<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h3>
 <p>母集団とは分析の対象となる共通の属性などを持つ個人・企業・産業・地域・国などの集合体といえる。ここで重要な点は母集団の大きさとランダム抽出の関係を理解することである。次の２つの例を使って考えてみよう。</p>
 <ul class="simple">
 <li><p>「今年の人間の平均身長」を知りたいとしよう。この場合の母集団は地球上の全ての人間である。しかし，全員の身長を測るのはあまりにも費用が高いため，標本を集め，その平均から「人間の平均身長」を推定することが可能である（<a class="reference external" href="https://ja.wikipedia.org/wiki/%E5%A4%A7%E6%95%B0%E3%81%AE%E6%B3%95%E5%89%87">参照</a>）。この場合「標本の大きさ<span class="math notranslate nohighlight">\(&lt;\)</span>母集団の大きさ」となる。</p></li>
@@ -1539,9 +1639,9 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </ol>
 </li>
 </ul>
-</div>
-<div class="section" id="id9">
-<h3>プラン<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id9">
+<h3>プラン<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h3>
 <p><strong>＜Step 1＞</strong></p>
 <ul>
 <li><p>母集団の大きさは指定しない。</p></li>
@@ -1581,15 +1681,15 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </ul>
 </li>
 </ul>
-</div>
-<div class="section" id="id10">
-<h3>シミュレーション<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id10">
+<h3>シミュレーション<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h3>
 <p>母集団のパラメータを設定する。これはパラメータの真の値であり、この値を推定するのが回帰分析となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># 定数項</span>
-<span class="n">b1</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># 説明変数の係数</span>
-<span class="n">su</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># 誤差項の標準偏差</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>b0 = 1.0  # 定数項
+b1 = 1.0  # 説明変数の係数
+su = 1.0  # 誤差項の標準偏差
 </pre></div>
 </div>
 </div>
@@ -1597,7 +1697,7 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 <p>標本の大きさ</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">30</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n = 30
 </pre></div>
 </div>
 </div>
@@ -1605,9 +1705,9 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 <p>標本を抽出するが、次の無作為なプロセスを通して生成されるとする。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
-<span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">su</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">u</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>x = norm.rvs(4, 1, size=n)
+u = norm.rvs(0, su, size=n)
+y = b0 + b1 * x + u
 </pre></div>
 </div>
 </div>
@@ -1615,7 +1715,7 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 <p>このデータから<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作成する。<code class="docutils literal notranslate"><span class="pre">()</span></code>の中の<code class="docutils literal notranslate"><span class="pre">{}</span></code>は辞書である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_sim</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">})</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_sim = pd.DataFrame({&#39;X&#39;:x, &#39;Y&#39;:y})
 </pre></div>
 </div>
 </div>
@@ -1623,8 +1723,8 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 <p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使って<code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;Y ~ X&#39;</span>
-<span class="n">res_sim</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula = &#39;Y ~ X&#39;
+res_sim = ols(formula, data=df_sim).fit()
 </pre></div>
 </div>
 </div>
@@ -1632,13 +1732,13 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 <p>係数の推定値を表示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_sim</span><span class="o">.</span><span class="n">params</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_sim.params
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.676489
-X            0.849423
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.408430
+X            1.059128
 dtype: float64
 </pre></div>
 </div>
@@ -1649,9 +1749,9 @@ dtype: float64
 <p class="admonition-title">Note</p>
 <p>ランダム変数を発生させ回帰分析を行っていることに注意しよう。ここで生成したランダム変数は、読者が生成したランダム変数とは異なる。従って，係数の推定値も異なることになる。</p>
 </div>
-</div>
-<div class="section" id="id11">
-<h3>関数化<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id11">
+<h3>関数化<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h3>
 <p>次に，上で行ったシミュレーションのコードを関数にまとめることにする。</p>
 <p><code class="docutils literal notranslate"><span class="pre">def</span></code>を使い<code class="docutils literal notranslate"><span class="pre">my_sim</span></code>という名前の関数を作成する。</p>
 <ul class="simple">
@@ -1671,18 +1771,18 @@ dtype: float64
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_sim</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">b0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">b1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">su</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>  <span class="c1"># nを指定する，　他はデフォルトを設定</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def my_sim(n,b0=1,b1=1,su=1):  # nを指定する，　他はデフォルトを設定
     
-    <span class="n">x</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
-    <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">su</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">u</span>
+    x = norm.rvs(4, 1, size=n)
+    u = norm.rvs(0, su, size=n)
+    y = b0 + b1 * x + u
     
-    <span class="n">df_sim</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">})</span>
+    df_sim = pd.DataFrame({&#39;X&#39;:x, &#39;Y&#39;:y})
     
-    <span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;Y ~ X&#39;</span>
-    <span class="n">res_sim</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+    formula = &#39;Y ~ X&#39;
+    res_sim = ols(formula, data=df_sim).fit()
     
-    <span class="k">return</span> <span class="n">res_sim</span><span class="o">.</span><span class="n">params</span>
+    return res_sim.params
 </pre></div>
 </div>
 </div>
@@ -1691,13 +1791,13 @@ dtype: float64
 <p>標本の大きさを指定して関数を実行してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_sim</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>my_sim(100)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.512721
-X            1.096506
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.005947
+X            1.003719
 dtype: float64
 </pre></div>
 </div>
@@ -1708,23 +1808,23 @@ dtype: float64
 <p>シミュレーションで同じ計算を数十万回おこなう場合，１回のシミュレーションに時間がかかり，それをどのように高速化するかが問題になる。その際に役に立つパッケージが<code class="docutils literal notranslate"><span class="pre">Numba</span></code>であり，１行のコードを追加するだけで計算を驚く程高速化できる。しかし<code class="docutils literal notranslate"><span class="pre">Numba</span></code>には「相性」の問題がある。例えば，上の関数<code class="docutils literal notranslate"><span class="pre">my_sim()</span></code>で使った<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>，<code class="docutils literal notranslate"><span class="pre">pandas</span></code>，<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>は<code class="docutils literal notranslate"><span class="pre">Numba</span></code>と相性が悪いが，<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>は非常に相性が良い。また，<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使う際，リストよりも<code class="docutils literal notranslate"><span class="pre">array</span></code>を使う方が少しでも高速化を図ることができることも覚えておくと良いだろう。以下では，<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使う準備として，<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>を使う「手計算」関数を考えることにする。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_sim_manual</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">b0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">b1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">su</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>  <span class="c1"># nは標本の大きさ，　他はデフォルトを設定</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def my_sim_manual(n,b0=1,b1=1,su=1):  # nは標本の大きさ，　他はデフォルトを設定
     
-    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>   <span class="c1"># 以下を参照</span>
-    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">su</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 以下を参照</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">u</span>
+    x = np.random.normal(loc=4, scale=1, size=n)   # 以下を参照
+    u = np.random.normal(loc=0, scale=su, size=n)  # 以下を参照
+    y = b0 + b1 * x + u
     
-    <span class="n">var_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>   <span class="c1"># 分散共分散行列</span>
-    <span class="n">cov_yx</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>   <span class="c1"># 共分散</span>
-    <span class="n">var_y</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>    <span class="c1"># yの分散</span>
-    <span class="n">var_x</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>    <span class="c1"># xの分散        </span>
-    <span class="n">avr_y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>        <span class="c1"># yの平均</span>
-    <span class="n">avr_x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>        <span class="c1"># xの平均</span>
+    var_cov = np.cov(y,x)   # 分散共分散行列
+    cov_yx = var_cov[0,1]   # 共分散
+    var_y = var_cov[0,0]    # yの分散
+    var_x = var_cov[1,1]    # xの分散        
+    avr_y = y.mean()        # yの平均
+    avr_x = x.mean()        # xの平均
     
-    <span class="n">b1hat</span> <span class="o">=</span> <span class="n">cov_yx</span> <span class="o">/</span> <span class="n">var_x</span>  <span class="c1"># スロープ係数の推定値</span>
-    <span class="n">b0hat</span> <span class="o">=</span> <span class="n">avr_y</span> <span class="o">-</span> <span class="n">b1hat</span><span class="o">*</span><span class="n">avr_x</span>  <span class="c1"># 定数項の推定値</span>
+    b1hat = cov_yx / var_x  # スロープ係数の推定値
+    b0hat = avr_y - b1hat*avr_x  # 定数項の推定値
     
-    <span class="k">return</span> <span class="n">b0hat</span><span class="p">,</span> <span class="n">b1hat</span>     <span class="c1"># 推定値</span>
+    return b0hat, b1hat     # 推定値
 </pre></div>
 </div>
 </div>
@@ -1732,20 +1832,20 @@ dtype: float64
 <p>ここで使った<code class="docutils literal notranslate"><span class="pre">np.random.normal()</span></code>について簡単に説明する。<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>にはランダム変数を生成する<code class="docutils literal notranslate"><span class="pre">random</span></code>というサブパッケージがあり，その中の<code class="docutils literal notranslate"><span class="pre">normal()</span></code>を使う。これは<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>の<code class="docutils literal notranslate"><span class="pre">norm.rvs()</span></code>と同じ引数を取り，同じ役割を果たす。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_sim_manual</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>my_sim_manual(100)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.7946213790674204, 1.0421191833803558)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.4707834149874777, 0.9103857832036419)
 </pre></div>
 </div>
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">my_sim()</span></code>と<code class="docutils literal notranslate"><span class="pre">my_sim_manual()</span></code>の推定値が異なるのはランダム変数（<code class="docutils literal notranslate"><span class="pre">y</span></code>，<code class="docutils literal notranslate"><span class="pre">x</span></code>）の値が異なるためであり，それが推定誤差による影響である。</p>
-</div>
-<div class="section" id="id12">
-<h3>ループを使ってシミュレーション<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id12">
+<h3>ループを使ってシミュレーション<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h3>
 <p>標本による推定は誤差が発生する。その誤差はどれだけ大きく（小さく）何に依存するかを確認するために<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを使い次のシミュレーションを行うことにする。</p>
 <ul class="simple">
 <li><p>標本の大きさ<code class="docutils literal notranslate"><span class="pre">n</span></code>のデータを<code class="docutils literal notranslate"><span class="pre">N</span></code>組用意し（<code class="docutils literal notranslate"><span class="pre">N</span></code>は標本数），<code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定を<code class="docutils literal notranslate"><span class="pre">N</span></code>回おこなう。</p></li>
@@ -1754,24 +1854,24 @@ dtype: float64
 <p>まず<code class="docutils literal notranslate"><span class="pre">def</span></code>を使いシミュレーションの関数を作成するが，パラメータの推定値の計算には<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使わずに，<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の関数を使い「手計算」とする。これにより計算を高速化するパッケージ<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使うことが可能となる。使い方は簡単でデコレーターと呼ばれる<code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code>（又は<code class="docutils literal notranslate"><span class="pre">&#64;jit</span></code>）を関数の上に加えるだけである。これだけで計算速度が数十倍早くなる場合もある。そのために、まず上で使った<code class="docutils literal notranslate"><span class="pre">my_sim_manual</span></code>に<code class="docutils literal notranslate"><span class="pre">&#64;njit</span></code>を加えて実行する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>
-<span class="k">def</span> <span class="nf">my_sim_manual</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">su</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>@njit
+def my_sim_manual(n,b0,b1,su):
     
-    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
-    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">su</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">u</span>
+    x = np.random.normal(loc=4, scale=1, size=n)
+    u = np.random.normal(loc=0, scale=su, size=n)
+    y = b0 + b1 * x + u
     
-    <span class="n">var_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">cov_yx</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">var_y</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">var_x</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">avr_y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-    <span class="n">avr_x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    var_cov = np.cov(y,x)
+    cov_yx = var_cov[0,1]
+    var_y = var_cov[0,0]
+    var_x = var_cov[1,1]
+    avr_y = y.mean()
+    avr_x = x.mean()
     
-    <span class="n">b1hat</span> <span class="o">=</span> <span class="n">cov_yx</span> <span class="o">/</span> <span class="n">var_x</span>
-    <span class="n">b0hat</span> <span class="o">=</span> <span class="n">avr_y</span> <span class="o">-</span> <span class="n">b1hat</span><span class="o">*</span><span class="n">avr_x</span>
+    b1hat = cov_yx / var_x
+    b0hat = avr_y - b1hat*avr_x
     
-    <span class="k">return</span> <span class="n">b0hat</span><span class="p">,</span> <span class="n">b1hat</span>
+    return b0hat, b1hat
 </pre></div>
 </div>
 </div>
@@ -1780,21 +1880,21 @@ dtype: float64
 <p>次に<code class="docutils literal notranslate"><span class="pre">my_sim_manual()</span></code>を<code class="docutils literal notranslate"><span class="pre">for</span></code>ループで計算するシミュレーション用の関数を用意する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>
-<span class="k">def</span> <span class="nf">my_sim_loop</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">b0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">b1</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">su</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>  <span class="c1"># nとN以外はデフォルトを指定</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>@njit
+def my_sim_loop(n,N,b0=1.0,b1=1.0,su=1.0):  # nとN以外はデフォルトを指定
     
-    <span class="n">b0hat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># OLS推定量を入れるarray（0がN個並んでいる）</span>
-    <span class="n">b1hat_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># OLS推定量を入れるarray（0がN個並んでいる）</span>
+    b0hat_arr = np.zeros(N)  # OLS推定量を入れるarray（0がN個並んでいる）
+    b1hat_arr = np.zeros(N)  # OLS推定量を入れるarray（0がN個並んでいる）
 
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># N 回のループ</span>
+    for i in range(N):  # N 回のループ
         
-        <span class="c1"># 返り値が２つあるので、割り当てる場合には左辺の変数を &#39;,&#39; で区切る </span>
-        <span class="n">b0hat</span><span class="p">,</span> <span class="n">b1hat</span> <span class="o">=</span> <span class="n">my_sim_manual</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">b0</span><span class="o">=</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="o">=</span><span class="n">b1</span><span class="p">,</span><span class="n">su</span><span class="o">=</span><span class="n">su</span><span class="p">)</span>
+        # 返り値が２つあるので、割り当てる場合には左辺の変数を &#39;,&#39; で区切る 
+        b0hat, b1hat = my_sim_manual(n,b0=b0,b1=b1,su=su)
 
-        <span class="n">b0hat_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">b0hat</span>  <span class="c1"># i番目に定数項の推定値をarrに追加</span>
-        <span class="n">b1hat_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">b1hat</span>  <span class="c1"># i番目にスロープ係数の推定値をarrに追加</span>
+        b0hat_arr[i] = b0hat  # i番目に定数項の推定値をarrに追加
+        b1hat_arr[i] = b1hat  # i番目にスロープ係数の推定値をarrに追加
         
-    <span class="k">return</span> <span class="n">b0hat_arr</span><span class="p">,</span> <span class="n">b1hat_arr</span>  <span class="c1"># N回ループ終了後にarrayをタプルとして返すオブジェクト</span>
+    return b0hat_arr, b1hat_arr  # N回ループ終了後にarrayをタプルとして返すオブジェクト
 </pre></div>
 </div>
 </div>
@@ -1802,7 +1902,7 @@ dtype: float64
 <p>標本の大きさを<code class="docutils literal notranslate"><span class="pre">50</span></code>，シミュレーションの回数を<code class="docutils literal notranslate"><span class="pre">100_000</span></code>としてシミュレーションを始める。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0hat</span><span class="p">,</span> <span class="n">b1hat</span> <span class="o">=</span> <span class="n">my_sim_loop</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">N</span><span class="o">=</span><span class="mi">100_000</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>b0hat, b1hat = my_sim_loop(n=50,N=100_000)
 </pre></div>
 </div>
 </div>
@@ -1856,8 +1956,8 @@ dtype: float64
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_0\)</span>の分布を図示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">b0hat</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
-<span class="k">pass</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.hist(b0hat,bins=60, edgecolor=&#39;white&#39;)
+pass
 </pre></div>
 </div>
 </div>
@@ -1868,8 +1968,8 @@ dtype: float64
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布を図示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">b1hat</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
-<span class="k">pass</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.hist(b1hat,bins=60, edgecolor=&#39;white&#39;)
+pass
 </pre></div>
 </div>
 </div>
@@ -1880,7 +1980,7 @@ dtype: float64
 <p><code class="docutils literal notranslate"><span class="pre">y</span></code>の理論値を図示するが，図示の時間短縮のために<code class="docutils literal notranslate"><span class="pre">N</span></code>回のシミュレーション中の最初の<code class="docutils literal notranslate"><span class="pre">r</span></code>回の回帰線だけを表示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="mi">1000</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>r = 1000
 </pre></div>
 </div>
 </div>
@@ -1888,17 +1988,17 @@ dtype: float64
 <p><code class="docutils literal notranslate"><span class="pre">r</span></code>回の回帰線を<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを使って重ねて図示してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">50</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>xx = np.linspace(2,6,50)
 
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>  <span class="c1"># r回のループで図示</span>
-    <span class="n">yhat</span> <span class="o">=</span> <span class="n">b0hat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">b1hat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">xx</span>  <span class="c1"># yの予測値</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yhat</span><span class="p">,</span> <span class="s1">&#39;grey&#39;</span><span class="p">)</span>  <span class="c1"># yの予測値を図示</span>
+for i in range(r):  # r回のループで図示
+    yhat = b0hat[i] + b1hat[i]*xx  # yの予測値
+    plt.plot(xx, yhat, &#39;grey&#39;)  # yの予測値を図示
     
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># 縦軸の表示範囲を設定</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s1"> rounds of OLS simulation&#39;</span><span class="p">)</span>
-<span class="k">pass</span>
+plt.xlabel(&#39;x&#39;)
+plt.ylabel(&#39;y&#39;)
+plt.ylim(0,10) # 縦軸の表示範囲を設定
+plt.title(f&#39;{r} rounds of OLS simulation&#39;)
+pass
 </pre></div>
 </div>
 </div>
@@ -1923,9 +2023,9 @@ dtype: float64
 </div>
 <p>—– Give it a try! —–</p>
 <p>標本の大きさ<code class="docutils literal notranslate"><span class="pre">n</span></code>を変えて試してみよう。例えば，10, 30, 100, 500, 1000。</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1949,9 +2049,11 @@ dtype: float64
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="list_of_terms.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -1967,24 +2069,28 @@ dtype: float64
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 春山 鉄源  Tetsugen HARUYAMA<br/>
+  
+      &copy; Copyright 2020-2022（公開開始日：2020年5月4日）.<br/>
+</p>
+        </footer>
+    </div>
     
-      By 春山 鉄源  Tetsugen HARUYAMA<br/>
-    
-        &copy; Copyright 2020-2022（公開開始日：2020年5月4日）.<br/>
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>

@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>推論 &#8212; Pythonで学ぶ入門計量経済学</title>
     
-  <link href="_static/css/theme.css" rel="stylesheet">
-  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,21 +20,17 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="_static/my_style.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -40,12 +38,13 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -76,7 +75,21 @@ const thebe_selector_output = ".output, .cell_output"
                     </script>
 
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -85,9 +98,10 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
       
@@ -272,96 +286,182 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  <a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/11_Inference.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/11_Inference.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/11_Inference.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            <a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/11_Inference.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/11_Inference.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/11_Inference.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
    説明：仮説検定
@@ -492,12 +592,11 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1>推論</h1>
@@ -644,33 +743,34 @@ const thebe_selector_output = ".output, .cell_output"
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="id1">
-<h1>推論<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>推論<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">t</span><span class="p">,</span> <span class="n">f</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">wooldridge</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from scipy.stats import t, f
+import numpy as np
+import pandas as pd
+from statsmodels.formula.api import ols
+import matplotlib.pyplot as plt
+import wooldridge
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="id2">
-<h2>説明：仮説検定<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="margin sidebar">
+<section id="id2">
+<h2>説明：仮説検定<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<aside class="margin sidebar">
 <p class="sidebar-title"></p>
 <div name="html-admonition">
 Do you want to read in a differnt language? Open the 
 <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translated version" style="color:#ffffff;background-color:#008080;" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/>
 in English or the language of your choice.
 </div>
-</div>
+</aside>
 <p>仮説検定は以下の手順でおこなう。</p>
 <ol class="simple">
 <li><p>母集団のパラメータについて帰無仮説（Null Hypothesis）と対立仮説（Alternative Hypothesis）を設定する。</p>
@@ -744,11 +844,11 @@ in English or the language of your choice.
 <li><p>統計的優位性とは，帰無仮説が正しい場合，帰無仮説の内容が発生した確率が非常に低い場合を指す。即ち，発生イベントが非常に起こりにくく，偶然のの可能性が非常に高い場合である。</p></li>
 <li><p>第一種過誤は，帰無仮説が正しい場合に棄却すると発生する。慣例でその確率を<span class="math notranslate nohighlight">\(\alpha\)</span>で表す。<span class="math notranslate nohighlight">\(\alpha=0.05\)</span>がよく使われるが，これを使う場合，間違って正しい帰無仮説を棄却する確率は最大5%まで許容するという意味になる。</p></li>
 </ul>
-</div>
-<div class="section" id="t">
-<h2><span class="math notranslate nohighlight">\(t\)</span>検定<a class="headerlink" href="#t" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="tp">
-<h3>説明：<span class="math notranslate nohighlight">\(t\)</span>値と<span class="math notranslate nohighlight">\(p\)</span>値<a class="headerlink" href="#tp" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="t">
+<h2><span class="math notranslate nohighlight">\(t\)</span>検定<a class="headerlink" href="#t" title="Permalink to this headline">#</a></h2>
+<section id="tp">
+<h3>説明：<span class="math notranslate nohighlight">\(t\)</span>値と<span class="math notranslate nohighlight">\(p\)</span>値<a class="headerlink" href="#tp" title="Permalink to this headline">#</a></h3>
 <p>新たな仮定を導入する。</p>
 <ul class="simple">
 <li><p>仮定６：誤差項は説明変数は独立であり正規分布に従う（誤差項の正規性）</p></li>
@@ -818,9 +918,9 @@ in English or the language of your choice.
 <li><p>棄却するための有意水準 <span class="math notranslate nohighlight">\(\alpha\)</span>を決める（例えば，0.05）</p></li>
 <li><p><span class="math notranslate nohighlight">\(p値\leq \alpha\)</span>の場合，<span class="math notranslate nohighlight">\(\text{H}_0\)</span>を棄却</p></li>
 </ul>
-</div>
-<div class="section" id="id3">
-<h3><span class="math notranslate nohighlight">\(t\)</span>値と<span class="math notranslate nohighlight">\(p\)</span>値の例<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id3">
+<h3><span class="math notranslate nohighlight">\(t\)</span>値と<span class="math notranslate nohighlight">\(p\)</span>値の例<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
 <p>定数項があり</p>
 <ul class="simple">
 <li><p>有意水準：<span class="math notranslate nohighlight">\(\alpha=0.05\)</span></p></li>
@@ -828,16 +928,16 @@ in English or the language of your choice.
 <li><p>説明変数の数（定数項以外）：<span class="math notranslate nohighlight">\(k=5\)</span></p></li>
 </ul>
 <p>の場合を考えよう。</p>
-<div class="section" id="id4">
-<h4><span class="math notranslate nohighlight">\(t\)</span>値<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<section id="id4">
+<h4><span class="math notranslate nohighlight">\(t\)</span>値<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h4>
 <p>右側検定の場合の<span class="math notranslate nohighlight">\(t_c(0.05)\)</span>は次の値となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">0.05</span>
-<span class="n">dof</span> <span class="o">=</span> <span class="mi">30</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>a = 0.05
+dof = 30-5-1
 
-<span class="n">t_right</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>  <span class="c1"># t.ppfについてはscipy.statsを参照</span>
-<span class="n">t_right</span>
+t_right = t.ppf(1-a, dof)  # t.ppfについてはscipy.statsを参照
+t_right
 </pre></div>
 </div>
 </div>
@@ -850,8 +950,8 @@ in English or the language of your choice.
 <p>左側検定の場合の<span class="math notranslate nohighlight">\(t_c(0.05)\)</span>は次の値となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_left</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
-<span class="n">t_left</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>t_left = t.ppf(a, dof)
+t_left
 </pre></div>
 </div>
 </div>
@@ -864,8 +964,8 @@ in English or the language of your choice.
 <p>両側検定の場合の<span class="math notranslate nohighlight">\(t_c(0.05)\)</span>は、<span class="math notranslate nohighlight">\(1-a/2\)</span>を使うと次のコードとなる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_both</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
-<span class="n">t_both</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>t_both = t.ppf(1-a/2, dof)
+t_both
 </pre></div>
 </div>
 </div>
@@ -878,7 +978,7 @@ in English or the language of your choice.
 <p><span class="math notranslate nohighlight">\(a/2\)</span>を使うと次のコードで同じ値を計算できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">abs</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">dof</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>abs(t.ppf(a/2,dof))
 </pre></div>
 </div>
 </div>
@@ -889,15 +989,15 @@ in English or the language of your choice.
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">abs()</span></code>は絶対値を計算する関数である。</p>
-</div>
-<div class="section" id="p">
-<h4><span class="math notranslate nohighlight">\(p\)</span>値<a class="headerlink" href="#p" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="p">
+<h4><span class="math notranslate nohighlight">\(p\)</span>値<a class="headerlink" href="#p" title="Permalink to this headline">#</a></h4>
 <p><span class="math notranslate nohighlight">\(p\)</span>値の計算の例として上の<code class="docutils literal notranslate"><span class="pre">t_right</span></code>、<code class="docutils literal notranslate"><span class="pre">t_left</span></code>、<code class="docutils literal notranslate"><span class="pre">t_both</span></code>を使ってみる。</p>
 <p>右側検定で<span class="math notranslate nohighlight">\(t_{\hat{\beta}_j}=\)</span>
 <code class="docutils literal notranslate"><span class="pre">t_right</span></code>の場合，<span class="math notranslate nohighlight">\(p\)</span>値は次の値になる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_right</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>   <span class="c1"># t.cdfについてはscipy.statsを参照</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>1-t.cdf(t_right, dof)   # t.cdfについてはscipy.statsを参照
 </pre></div>
 </div>
 </div>
@@ -911,7 +1011,7 @@ in English or the language of your choice.
 <code class="docutils literal notranslate"><span class="pre">t_left</span></code>の場合，<span class="math notranslate nohighlight">\(p\)</span>値は次の値になる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_left</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>t.cdf(t_left, dof)
 </pre></div>
 </div>
 </div>
@@ -925,7 +1025,7 @@ in English or the language of your choice.
 <code class="docutils literal notranslate"><span class="pre">t_both</span></code>の場合，<span class="math notranslate nohighlight">\(p\)</span>値は次の値になる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span><span class="o">*</span><span class="p">(</span> <span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_both</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span> <span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>2*( 1-t.cdf(t_both, dof) )
 </pre></div>
 </div>
 </div>
@@ -935,19 +1035,21 @@ in English or the language of your choice.
 </div>
 </div>
 </div>
-<div class="figure align-center" id="id15">
+<figure class="align-center" id="id15">
 <img alt="_images/t_p_values.jpeg" src="_images/t_p_values.jpeg" />
-<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">上で計算した数値の図示（累積分布関数と確率密度関数は<span class="math notranslate nohighlight">\(t\)</span>分布）。</span><a class="headerlink" href="#id15" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-</div>
-<div class="section" id="id5">
-<h3>回帰分析と<span class="math notranslate nohighlight">\(t\)</span>検定<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<figcaption>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">上で計算した数値の図示（累積分布関数と確率密度関数は<span class="math notranslate nohighlight">\(t\)</span>分布）。</span><a class="headerlink" href="#id15" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="id5">
+<h3>回帰分析と<span class="math notranslate nohighlight">\(t\)</span>検定<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">gpa1</span></code>のデータを使った回帰分析を考えよう。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpa</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;gpa1&#39;</span><span class="p">)</span>
-<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;gpa1&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>gpa = wooldridge.data(&#39;gpa1&#39;)
+wooldridge.data(&#39;gpa1&#39;,description=True)
 </pre></div>
 </div>
 </div>
@@ -1004,8 +1106,8 @@ from a survey he took of MSU students in Fall 1994.
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_gpa</span> <span class="o">=</span> <span class="s1">&#39;colGPA ~ hsGPA + ACT + skipped&#39;</span>
-<span class="n">res_gpa</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_gpa</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">gpa</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_gpa = &#39;colGPA ~ hsGPA + ACT + skipped&#39;
+res_gpa = ols(formula_gpa, data=gpa).fit()
 </pre></div>
 </div>
 </div>
@@ -1013,7 +1115,7 @@ from a survey he took of MSU students in Fall 1994.
 <p><code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性<code class="docutils literal notranslate"><span class="pre">tvalues</span></code>を使い<span class="math notranslate nohighlight">\(t\)</span>値を表示してみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">tvalues</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_gpa.tvalues
 </pre></div>
 </div>
 </div>
@@ -1030,21 +1132,21 @@ dtype: float64
 <p>この値を１つ１つ棄却臨界値と比べるのも手間がかかるので、次のような関数を作成し、任意の棄却臨界値に基づき両側検定を行うことも簡単にできる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">significance_check</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    定数項がある場合のt検定をおこなう。</span>
-<span class="sd">    </span>
-<span class="sd">    引数：</span>
-<span class="sd">        res = statsmodelsによるOLS推定結果</span>
-<span class="sd">        a = 有意水準（デフォルト：0.05）</span>
-<span class="sd">    返り値：</span>
-<span class="sd">        帰無仮説を棄却する場合はTrueを返す。</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def significance_check(res, a=0.05):
+    &quot;&quot;&quot;
+    定数項がある場合のt検定をおこなう。
     
-    <span class="n">dof</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">nobs</span><span class="o">-</span><span class="n">res</span><span class="o">.</span><span class="n">df_model</span><span class="o">-</span><span class="mi">1</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+    引数：
+        res = statsmodelsによるOLS推定結果
+        a = 有意水準（デフォルト：0.05）
+    返り値：
+        帰無仮説を棄却する場合はTrueを返す。
+    &quot;&quot;&quot;
     
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    dof = res.nobs-res.df_model-1
+    result = abs(res.tvalues) &gt; t.ppf(1-a/2, dof)
+    
+    return pd.Series(result, index=res.tvalues.index)
 </pre></div>
 </div>
 </div>
@@ -1055,7 +1157,7 @@ dtype: float64
 </div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">significance_check</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>help(significance_check)
 </pre></div>
 </div>
 </div>
@@ -1081,7 +1183,7 @@ significance_check(res, a=0.05)
 <p>関数を実行してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">significance_check</span><span class="p">(</span><span class="n">res_gpa</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>significance_check(res_gpa, 0.05)
 </pre></div>
 </div>
 </div>
@@ -1098,7 +1200,7 @@ dtype: bool
 <p><code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性<code class="docutils literal notranslate"><span class="pre">pvalues</span></code>から<span class="math notranslate nohighlight">\(p\)</span>値を表示してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">pvalues</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_gpa.pvalues
 </pre></div>
 </div>
 </div>
@@ -1114,7 +1216,7 @@ dtype: float64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_gpa</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res_gpa.summary().tables[1])
 </pre></div>
 </div>
 </div>
@@ -1141,7 +1243,7 @@ skipped       -0.0831      0.026     -3.197      0.002      -0.135      -0.032
 <p>OLS推定量の標準誤差は属性<code class="docutils literal notranslate"><span class="pre">.bse</span></code>として取得できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">bse</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_gpa.bse
 </pre></div>
 </div>
 </div>
@@ -1155,12 +1257,12 @@ dtype: float64
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="id6">
-<h2>信頼区間<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id7">
-<h3>信頼区間の計算<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="id6">
+<h2>信頼区間<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
+<section id="id7">
+<h3>信頼区間の計算<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h3>
 <p>信頼区間は次のように定義される。</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1176,7 +1278,7 @@ dtype: float64
 <p>では<code class="docutils literal notranslate"><span class="pre">gpa</span></code>の例を考えよう。<code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">conf_int()</span></code>を使い信頼区間を取得できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_gpa</span><span class="o">.</span><span class="n">conf_int</span><span class="p">())</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res_gpa.conf_int())
 </pre></div>
 </div>
 </div>
@@ -1193,7 +1295,7 @@ skipped   -0.134523 -0.031703
 <p>有意水準のオプション<code class="docutils literal notranslate"><span class="pre">alpha=</span></code>を指定することもできる（デフォルトは<code class="docutils literal notranslate"><span class="pre">0.05</span></code>）。有意水準が1％の場合は次のように指定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_gpa</span><span class="o">.</span><span class="n">conf_int</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res_gpa.conf_int(alpha=0.01))
 </pre></div>
 </div>
 </div>
@@ -1208,20 +1310,20 @@ skipped   -0.151026 -0.015200
 </div>
 </div>
 <p>OLS推定値は1つの値を返す「点推定」だが，信頼区間は有意水準に基づく「区間推定」である。両方を確認することが大事である。例えば、<code class="docutils literal notranslate"><span class="pre">ACT</span></code>の信頼区間を考えよう。100回推定をした場合，母集団の<span class="math notranslate nohighlight">\(\beta_{ACT}\)</span>の値は95回この区間に入ることになるが，有意水準が1%でも5%でも<code class="docutils literal notranslate"><span class="pre">0</span></code>が含まれている。0の可能性が高いことを示している。</p>
-</div>
-<div class="section" id="id8">
-<h3>信頼区間の図示<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id8">
+<h3>信頼区間の図示<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>の<code class="docutils literal notranslate"><span class="pre">errorbar</span></code>を使い図示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coef</span> <span class="o">=</span> <span class="n">res_gpa</span><span class="o">.</span><span class="n">params</span>      <span class="c1"># 推定値</span>
-<span class="n">varname</span> <span class="o">=</span> <span class="n">coef</span><span class="o">.</span><span class="n">index</span>       <span class="c1"># 変数名</span>
-<span class="n">ci</span> <span class="o">=</span> <span class="n">res_gpa</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span>    <span class="c1"># 信頼区間を　ci　に入れる</span>
-<span class="n">error</span> <span class="o">=</span> <span class="n">ci</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">coef</span>  <span class="c1"># 信頼区間の幅の半分</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>coef = res_gpa.params      # 推定値
+varname = coef.index       # 変数名
+ci = res_gpa.conf_int()    # 信頼区間を　ci　に入れる
+error = ci.iloc[:,1]-coef  # 信頼区間の幅の半分
 
-<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">coef</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">y</span><span class="o">=</span><span class="n">varname</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">xerr</span><span class="o">=</span><span class="n">error</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">capsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># 切片以外のエラーバー</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>  <span class="c1"># 垂直線</span>
-<span class="k">pass</span>
+plt.errorbar(x=coef[1:], y=varname[1:], xerr=error[1:], fmt=&#39;o&#39;,capsize=5)  # 切片以外のエラーバー
+plt.axvline(0, color=&#39;red&#39;)  # 垂直線
+pass
 </pre></div>
 </div>
 </div>
@@ -1230,12 +1332,12 @@ skipped   -0.151026 -0.015200
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">ACT</span></code>の信頼区間に<code class="docutils literal notranslate"><span class="pre">0</span></code>が含まれることが分かる。</p>
-</div>
-</div>
-<div class="section" id="f">
-<h2><span class="math notranslate nohighlight">\(F\)</span>検定<a class="headerlink" href="#f" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id9">
-<h3>説明<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="f">
+<h2><span class="math notranslate nohighlight">\(F\)</span>検定<a class="headerlink" href="#f" title="Permalink to this headline">#</a></h2>
+<section id="id9">
+<h3>説明<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h3>
 <p>回帰分析において複数のOLS推定量に何らかの制約が妥当かどうかを調べる際に使うのが<span class="math notranslate nohighlight">\(F\)</span>検定である。例えば，次の回帰式の場合</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1294,14 +1396,14 @@ y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+u
 <li><p>棄却するための有意水準 <span class="math notranslate nohighlight">\(a\)</span>を決める（例えば，0.05）</p></li>
 <li><p><span class="math notranslate nohighlight">\(p値&lt;a\)</span>の場合，<span class="math notranslate nohighlight">\(\text{H}_0\)</span>を棄却</p></li>
 </ul>
-</div>
-<div class="section" id="id10">
-<h3>回帰分析<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id10">
+<h3>回帰分析<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h3>
 <p>例として米国野球選手（メジャーリーグ）に関するデータ<code class="docutils literal notranslate"><span class="pre">mlb1</span></code>を使う。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mlb1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mlb1&#39;</span><span class="p">)</span>
-<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mlb1&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mlb1 = wooldridge.data(&#39;mlb1&#39;)
+wooldridge.data(&#39;mlb1&#39;,description=True)
 </pre></div>
 </div>
 </div>
@@ -1382,14 +1484,14 @@ Abstract of the United States.
 <p>まず制約がない回帰分析をおこなう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_0</span> <span class="o">=</span> <span class="s1">&#39;np.log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr&#39;</span>
-<span class="n">res_0</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_0</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mlb1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_0 = &#39;np.log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr&#39;
+res_0 = ols(formula_0, data=mlb1).fit()
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="id11">
-<h4>例１<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<section id="id11">
+<h4>例１<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h4>
 <p><strong>＜制約＞</strong>
 <code class="docutils literal notranslate"><span class="pre">bavg</span></code>, <code class="docutils literal notranslate"><span class="pre">hrunsyr</span></code>, <code class="docutils literal notranslate"><span class="pre">rbisyr</span></code>は<code class="docutils literal notranslate"><span class="pre">salary</span></code>に影響を与えない。</p>
 <p><span class="math notranslate nohighlight">\(H_0:\;\beta_{\text{bavg}}=\beta_{\text{hrunsyr}}=\beta_{\text{rbisyr}}=0\)</span></p>
@@ -1397,28 +1499,28 @@ Abstract of the United States.
 <p>制約がある場合の回帰分析</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_1</span> <span class="o">=</span> <span class="s1">&#39;np.log(salary) ~ years + gamesyr&#39;</span>
-<span class="n">res_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mlb1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_1 = &#39;np.log(salary) ~ years + gamesyr&#39;
+res_1 = ols(formula_1, data=mlb1).fit()
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="id12">
-<h5>手計算<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h5>
+<section id="id12">
+<h5>手計算<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h5>
 <p><span class="math notranslate nohighlight">\(F\)</span>値の計算</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 決定係数</span>
-<span class="n">r2_0</span> <span class="o">=</span> <span class="n">res_0</span><span class="o">.</span><span class="n">rsquared</span>
-<span class="n">r2_1</span> <span class="o">=</span> <span class="n">res_1</span><span class="o">.</span><span class="n">rsquared</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># 決定係数
+r2_0 = res_0.rsquared
+r2_1 = res_1.rsquared
 
-<span class="n">n</span> <span class="o">=</span> <span class="n">res_0</span><span class="o">.</span><span class="n">nobs</span>  <span class="c1"># 標本の大きさ</span>
-<span class="n">k</span> <span class="o">=</span> <span class="n">res_0</span><span class="o">.</span><span class="n">df_model</span>  <span class="c1"># 定数項以外の説明変数の数</span>
-<span class="n">q</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># 制約式の数</span>
+n = res_0.nobs  # 標本の大きさ
+k = res_0.df_model  # 定数項以外の説明変数の数
+q = 3  # 制約式の数
 
-<span class="c1"># F値:</span>
-<span class="n">F</span> <span class="o">=</span> <span class="p">(</span><span class="n">r2_0</span> <span class="o">-</span> <span class="n">r2_1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">r2_0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">q</span>
-<span class="n">F</span>
+# F値:
+F = (r2_0 - r2_1) / (1 - r2_0) * (n - k - 1) / q
+F
 </pre></div>
 </div>
 </div>
@@ -1431,8 +1533,8 @@ Abstract of the United States.
 <p><span class="math notranslate nohighlight">\(a=0.05\)</span>の場合の棄却臨界値</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">0.05</span>
-<span class="n">f</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="p">,</span> <span class="n">dfn</span><span class="o">=</span><span class="n">q</span><span class="p">,</span> <span class="n">dfd</span><span class="o">=</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># f.ppfについてはscipy.statsを参照</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>a = 0.05
+f.ppf(1-a, dfn=q, dfd=n-k-1)   # f.ppfについてはscipy.statsを参照
 </pre></div>
 </div>
 </div>
@@ -1446,7 +1548,7 @@ Abstract of the United States.
 <p><span class="math notranslate nohighlight">\(p\)</span>値</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="n">f</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">dfn</span><span class="o">=</span><span class="n">q</span><span class="p">,</span> <span class="n">dfd</span><span class="o">=</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>1-f.cdf(F, dfn=q, dfd=n-k-1)
 </pre></div>
 </div>
 </div>
@@ -1456,13 +1558,13 @@ Abstract of the United States.
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id13">
-<h5>メソッドを使う<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h5>
+</section>
+<section id="id13">
+<h5>メソッドを使う<a class="headerlink" href="#id13" title="Permalink to this headline">#</a></h5>
 <p>制約式の定義</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hypotheses</span> <span class="o">=</span> <span class="s1">&#39;bavg = 0, hrunsyr = 0, rbisyr = 0&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hypotheses = &#39;bavg = 0, hrunsyr = 0, rbisyr = 0&#39;
 </pre></div>
 </div>
 </div>
@@ -1470,7 +1572,7 @@ Abstract of the United States.
 <p><code class="docutils literal notranslate"><span class="pre">res_0</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">f_test</span></code>を使い、引数に上のセルで定義した制約式<code class="docutils literal notranslate"><span class="pre">hypotheses</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_f_test</span> <span class="o">=</span> <span class="n">res_0</span><span class="o">.</span><span class="n">f_test</span><span class="p">(</span><span class="n">hypotheses</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_f_test = res_0.f_test(hypotheses)
 </pre></div>
 </div>
 </div>
@@ -1478,7 +1580,7 @@ Abstract of the United States.
 <p><code class="docutils literal notranslate"><span class="pre">res_f_test</span></code>に<code class="docutils literal notranslate"><span class="pre">F</span></code>検定の結果を割り当てたが、そのメソッド<code class="docutils literal notranslate"><span class="pre">summary()</span></code>を使い結果を表示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_f_test</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_f_test.summary()
 </pre></div>
 </div>
 </div>
@@ -1496,10 +1598,10 @@ Abstract of the United States.
 <li><p><code class="docutils literal notranslate"><span class="pre">df_num</span></code>：分子の自由度</p></li>
 </ul>
 <p>手計算と同じ結果である。</p>
-</div>
-</div>
-<div class="section" id="id14">
-<h4>例２<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="id14">
+<h4>例２<a class="headerlink" href="#id14" title="Permalink to this headline">#</a></h4>
 <p><strong>＜制約＞</strong>
 定数項以外の全ての説明変数は<code class="docutils literal notranslate"><span class="pre">salary</span></code>に影響を与えない。</p>
 <p><span class="math notranslate nohighlight">\(H_0:\;\beta_{\text{years}}=\beta_{\text{gamesyr}}=\beta_{\text{bavg}}=\beta_{\text{hrunsyr}}=\beta_{\text{rbisyr}}=0\)</span></p>
@@ -1507,7 +1609,7 @@ Abstract of the United States.
 <p>この場合，<code class="docutils literal notranslate"><span class="pre">res_0</span></code>の<code class="docutils literal notranslate"><span class="pre">fvalue</span></code>から<span class="math notranslate nohighlight">\(F\)</span>値，<code class="docutils literal notranslate"><span class="pre">f_pvalue</span></code>から<span class="math notranslate nohighlight">\(p\)</span>値を属性として取得できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_0</span><span class="o">.</span><span class="n">fvalue</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_0.fvalue
 </pre></div>
 </div>
 </div>
@@ -1519,7 +1621,7 @@ Abstract of the United States.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_0</span><span class="o">.</span><span class="n">f_pvalue</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_0.f_pvalue
 </pre></div>
 </div>
 </div>
@@ -1533,7 +1635,7 @@ Abstract of the United States.
 <p>例２の結果はOLS推定結果のメソッド<code class="docutils literal notranslate"><span class="pre">summary()</span></code>で表示される表の中にある<code class="docutils literal notranslate"><span class="pre">F-statistic</span></code>と<code class="docutils literal notranslate"><span class="pre">Prob(F-statistic)</span></code>で確認することもできる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_0</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res_0.summary())
 </pre></div>
 </div>
 </div>
@@ -1543,8 +1645,8 @@ Abstract of the United States.
 Dep. Variable:         np.log(salary)   R-squared:                       0.628
 Model:                            OLS   Adj. R-squared:                  0.622
 Method:                 Least Squares   F-statistic:                     117.1
-Date:                Sun, 08 May 2022   Prob (F-statistic):           2.94e-72
-Time:                        08:41:43   Log-Likelihood:                -385.11
+Date:                Tue, 20 Dec 2022   Prob (F-statistic):           2.94e-72
+Time:                        13:35:18   Log-Likelihood:                -385.11
 No. Observations:                 353   AIC:                             782.2
 Df Residuals:                     347   BIC:                             805.4
 Df Model:                           5                                         
@@ -1573,10 +1675,10 @@ strong multicollinearity or other numerical problems.
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1600,9 +1702,11 @@ strong multicollinearity or other numerical problems.
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="10_Residuals.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -1618,24 +1722,28 @@ strong multicollinearity or other numerical problems.
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 春山 鉄源  Tetsugen HARUYAMA<br/>
+  
+      &copy; Copyright 2020-2022（公開開始日：2020年5月4日）.<br/>
+</p>
+        </footer>
+    </div>
     
-      By 春山 鉄源  Tetsugen HARUYAMA<br/>
-    
-        &copy; Copyright 2020-2022（公開開始日：2020年5月4日）.<br/>
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>
