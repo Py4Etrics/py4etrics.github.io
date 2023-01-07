@@ -87,7 +87,7 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="visually-hidden">Toggle in-page Table of Contents</div>
 </label>
 <!-- Headers at the top -->
-<div class="announcement header-item noprint"><p><a href='http://www.econ.kobe-u.ac.jp/topics/pdf/221212-2.pdf'>✴️<<font color='white'>特別講演「UCバークレー校における経済学とデータサイエンス教育」(2023年1月6日) ← クリック！✴️</font></a></p></div>
+<div class="announcement header-item noprint"></div>
 <div class="header header-item noprint"></div>
 
     
@@ -657,11 +657,11 @@ title="Print to PDF"
 <h1>プーリング・データとパネル・データ<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
-import pandas as pd
-from statsmodels.formula.api import ols
-import wooldridge
-from scipy.stats import t
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">t</span>
 </pre></div>
 </div>
 </div>
@@ -727,16 +727,16 @@ in English or the language of your choice.
 <p><code class="docutils literal notranslate"><span class="pre">CPS78_85</span></code>のデータを使い推定方法を説明する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># データの読み込み
-cps = wooldridge.data(&#39;CPS78_85&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># データの読み込み</span>
+<span class="n">cps</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;CPS78_85&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># データの内容の確認
-wooldridge.data(&#39;CPS78_85&#39;, description=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># データの内容の確認</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;CPS78_85&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -781,13 +781,13 @@ Farber kindly provided these data when we were colleagues at MIT.
 <p>これを使い，賃金と教育の関係を検証する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># 回帰分析
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 回帰分析</span>
 
-formula = &#39;lwage ~ y85 + educ + female + \
-                   y85:educ + y85:female + \
-                   exper + I((exper**2)/100) + union&#39;
+<span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ y85 + educ + female + </span><span class="se">\</span>
+<span class="s1">                   y85:educ + y85:female + </span><span class="se">\</span>
+<span class="s1">                   exper + I((exper**2)/100) + union&#39;</span>
 
-result = ols(formula, cps).fit()
+<span class="n">result</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">cps</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -805,7 +805,7 @@ result = ols(formula, cps).fit()
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(result.summary().tables[1])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -846,9 +846,9 @@ union                     0.2021      0.030      6.672      0.000       0.143   
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>t_value = result.tvalues[&#39;y85:female&#39;]  # y85:femaleのt値
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_value</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">tvalues</span><span class="p">[</span><span class="s1">&#39;y85:female&#39;</span><span class="p">]</span>  <span class="c1"># y85:femaleのt値</span>
 
-dof = result.df_resid  # 自由度 n-k-1
+<span class="n">dof</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">df_resid</span>  <span class="c1"># 自由度 n-k-1</span>
 </pre></div>
 </div>
 </div>
@@ -856,7 +856,7 @@ dof = result.df_resid  # 自由度 n-k-1
 <p><code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>を使い計算する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>1-t.cdf(t_value, dof)  # p値の計算
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_value</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>  <span class="c1"># p値の計算</span>
 </pre></div>
 </div>
 </div>
@@ -987,9 +987,9 @@ dof = result.df_resid  # 自由度 n-k-1
 <p><code class="docutils literal notranslate"><span class="pre">keilmc</span></code>のデータを使いゴミ焼却場建設の近隣住宅価格に対する効果を実際に推計する。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>kielmc = wooldridge.data(&#39;kielmc&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kielmc</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;kielmc&#39;</span><span class="p">)</span>
 
-wooldridge.data(&#39;kielmc&#39;, description=True)
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;kielmc&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1039,9 +1039,9 @@ only a subset.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula = &#39;rprice ~ nearinc + y81 + nearinc:y81&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;rprice ~ nearinc + y81 + nearinc:y81&#39;</span>
 
-result = ols(formula, data=kielmc).fit()
+<span class="n">result</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">kielmc</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1052,7 +1052,7 @@ result = ols(formula, data=kielmc).fit()
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(result.summary().tables[1])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1080,11 +1080,11 @@ nearinc:y81 -1.186e+04   7456.646     -1.591      0.113   -2.65e+04    2806.867
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>t_value = result.tvalues[&#39;nearinc:y81&#39;]  # t値
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_value</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">tvalues</span><span class="p">[</span><span class="s1">&#39;nearinc:y81&#39;</span><span class="p">]</span>  <span class="c1"># t値</span>
 
-dof = result.df_resid  # 自由度 n-k-1
+<span class="n">dof</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">df_resid</span>  <span class="c1"># 自由度 n-k-1</span>
 
-t.cdf(t_value, dof)  # p値の計算
+<span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_value</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>  <span class="c1"># p値の計算</span>
 </pre></div>
 </div>
 </div>
@@ -1104,11 +1104,11 @@ t.cdf(t_value, dof)  # p値の計算
 <p>まず，<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>を使い住宅価格に対数をとり推計する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_1 = &#39;np.log(rprice) ~ nearinc * y81&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_1</span> <span class="o">=</span> <span class="s1">&#39;np.log(rprice) ~ nearinc * y81&#39;</span>
 
-result_1 = ols(formula_1, data=kielmc).fit()
+<span class="n">result_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">kielmc</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(result_1.summary().tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">result_1</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1132,12 +1132,12 @@ nearinc:y81    -0.0626      0.083     -0.751      0.453      -0.227       0.102
 <p>次に，住宅価格に影響を及ぼしそうな変数を追加する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_2 = &#39;np.log(rprice) ~ nearinc * y81 + age + I(age**2) + \
-            np.log(intst) + np.log(land) + np.log(area) + rooms + baths&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_2</span> <span class="o">=</span> <span class="s1">&#39;np.log(rprice) ~ nearinc * y81 + age + I(age**2) + </span><span class="se">\</span>
+<span class="s1">            np.log(intst) + np.log(land) + np.log(area) + rooms + baths&#39;</span>
 
-result_2 = ols(formula_2, data=kielmc).fit()
+<span class="n">result_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">kielmc</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(result_2.summary().tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">result_2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1241,13 +1241,13 @@ y_{it}= \beta_0 + \delta_0D_t + \beta_1x_{it}+e_{it}\qquad e_{it}=a_i+u_{it}
 <p>例として使うデータを読み込む。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># url の設定
-url = &#39;https://raw.githubusercontent.com/Haruyama-KobeU/Haruyama-KobeU.github.io/master/data/data4.csv&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># url の設定</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/Haruyama-KobeU/Haruyama-KobeU.github.io/master/data/data4.csv&#39;</span>
 
-# 読み込み
-df = pd.read_csv(url)
+<span class="c1"># 読み込み</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 
-df
+<span class="n">df</span>
 </pre></div>
 </div>
 </div>
@@ -1370,9 +1370,9 @@ df
 <p>以下のコードには<code class="docutils literal notranslate"><span class="pre">.reset_index(drop=True)</span></code>が追加されているが，これは行のインデックスを0,1,2,..と振り直すメソッドである。引数<code class="docutils literal notranslate"><span class="pre">drop=True</span></code>がなければ，元々あったインデックスが新たな列として追加される。試しに，最初から<code class="docutils literal notranslate"><span class="pre">df</span></code>を読み直して<code class="docutils literal notranslate"><span class="pre">.reset_index(drop=True)</span></code>を省いて下のコードを実行してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = df.sort_values([&#39;country&#39;,&#39;year&#39;]).reset_index(drop=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">&#39;country&#39;</span><span class="p">,</span><span class="s1">&#39;year&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-df
+<span class="n">df</span>
 </pre></div>
 </div>
 </div>
@@ -1492,14 +1492,14 @@ df
 <p><code class="docutils literal notranslate"><span class="pre">country</span></code>でグループ化した<code class="docutils literal notranslate"><span class="pre">df_group</span></code>を作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_group = df.groupby(&#39;country&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_group</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;country&#39;</span><span class="p">)</span>
 
-df_group
+<span class="n">df_group</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x11eaf1b20&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x122528ac0&gt;
 </pre></div>
 </div>
 </div>
@@ -1508,7 +1508,7 @@ df_group
 <p>例えば，次のコードを使いそれぞれの経済の<code class="docutils literal notranslate"><span class="pre">gdp</span></code>の平均を計算することができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_group[&#39;gdp&#39;].mean()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_group</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1526,11 +1526,11 @@ Name: gdp, dtype: float64
 <p><code class="docutils literal notranslate"><span class="pre">df_group</span></code>にある変数の差分をとるためにメソッド<code class="docutils literal notranslate"><span class="pre">diff()</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>var = [&#39;gdp&#39;, &#39;inv&#39;]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="s1">&#39;inv&#39;</span><span class="p">]</span>
 
-df_diff = df_group[var].diff()
+<span class="n">df_diff</span> <span class="o">=</span> <span class="n">df_group</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
 
-df_diff
+<span class="n">df_diff</span>
 </pre></div>
 </div>
 </div>
@@ -1615,9 +1615,9 @@ df_diff
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_diff_1 = df_diff.rename(columns={&#39;gdp&#39;:&#39;gdp_diff&#39;,&#39;inv&#39;:&#39;inv_diff&#39;})
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_diff_1</span> <span class="o">=</span> <span class="n">df_diff</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;gdp&#39;</span><span class="p">:</span><span class="s1">&#39;gdp_diff&#39;</span><span class="p">,</span><span class="s1">&#39;inv&#39;</span><span class="p">:</span><span class="s1">&#39;inv_diff&#39;</span><span class="p">})</span>
 
-df_diff_1
+<span class="n">df_diff_1</span>
 </pre></div>
 </div>
 </div>
@@ -1696,7 +1696,7 @@ df_diff_1
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pd.concat([df, df_diff_1], axis=&#39;columns&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">df_diff_1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1856,7 +1856,7 @@ df_diff_1
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pd.merge(df, df_diff, left_index=True, right_index=True, suffixes=(&#39;&#39;, &#39;_diff&#39;))
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">df_diff</span><span class="p">,</span> <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">suffixes</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;_diff&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -2041,7 +2041,7 @@ df_diff_1
 <p>データの読み込み。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>crime2 = wooldridge.data(&#39;crime2&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crime2</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime2&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2049,7 +2049,7 @@ df_diff_1
 <p>変数の説明。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wooldridge.data(&#39;crime2&#39;, description=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime2&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2114,7 +2114,7 @@ Unfortunately, I do not have the list of cities.
 <p>データセットにはこの2つの変数の差分（<code class="docutils literal notranslate"><span class="pre">cunem</span></code>と<code class="docutils literal notranslate"><span class="pre">ccrmrte</span></code>）も用意されているが，以下では<code class="docutils literal notranslate"><span class="pre">groupby</span></code>を使って変数を作成する。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>crime2.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crime2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2289,14 +2289,14 @@ Unfortunately, I do not have the list of cities.
 <p>このデータセットには，観察単位識別用の変数がない。しかし，行0と1が1つの地域のデータ，行2と3が別の地域のデータをなっていることがわかる（<code class="docutils literal notranslate"><span class="pre">year</span></code>を見るとわかる）。まず観察単位識別用のの列を作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># 観察単位の数
-n = len(crime2)/2
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 観察単位の数</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">crime2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
 
-# 観察単位ID用のリスト作成 [1,2,3,4....]
-lst = [i for i in range(1,int(n)+1)]
+<span class="c1"># 観察単位ID用のリスト作成 [1,2,3,4....]</span>
+<span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
 
-# 観察単位ID用のリスト作成 [1,1,2,2,3,3,4,4....]
-country_list = pd.Series(lst).repeat(2).to_list()
+<span class="c1"># 観察単位ID用のリスト作成 [1,1,2,2,3,3,4,4....]</span>
+<span class="n">country_list</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2309,9 +2309,9 @@ country_list = pd.Series(lst).repeat(2).to_list()
 <p>データセットに列<code class="docutils literal notranslate"><span class="pre">county</span></code>を追加し確認する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>crime2[&#39;county&#39;] = country_list  # 追加
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crime2</span><span class="p">[</span><span class="s1">&#39;county&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">country_list</span>  <span class="c1"># 追加</span>
 
-crime2.loc[:,[&#39;county&#39;,&#39;year&#39;]].head()  # 確認
+<span class="n">crime2</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;county&#39;</span><span class="p">,</span><span class="s1">&#39;year&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>  <span class="c1"># 確認</span>
 </pre></div>
 </div>
 </div>
@@ -2371,13 +2371,13 @@ crime2.loc[:,[&#39;county&#39;,&#39;year&#39;]].head()  # 確認
 <p><code class="docutils literal notranslate"><span class="pre">unem</span></code>と<code class="docutils literal notranslate"><span class="pre">crmrte</span></code>の差分を求める。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>var = [&#39;unem&#39;, &#39;crmrte&#39;]  # groupbyで差分を取る列の指定
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;unem&#39;</span><span class="p">,</span> <span class="s1">&#39;crmrte&#39;</span><span class="p">]</span>  <span class="c1"># groupbyで差分を取る列の指定</span>
 
-names = {&#39;unem&#39;:&#39;unem_diff&#39;, &#39;crmrte&#39;:&#39;crmrte_diff&#39;}  # 差分の列のラベル
+<span class="n">names</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;unem&#39;</span><span class="p">:</span><span class="s1">&#39;unem_diff&#39;</span><span class="p">,</span> <span class="s1">&#39;crmrte&#39;</span><span class="p">:</span><span class="s1">&#39;crmrte_diff&#39;</span><span class="p">}</span>  <span class="c1"># 差分の列のラベル</span>
 
-crime2_diff = crime2.groupby(&#39;county&#39;)[var].diff().rename(columns=names)
+<span class="n">crime2_diff</span> <span class="o">=</span> <span class="n">crime2</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">)[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">names</span><span class="p">)</span>
 
-crime2_diff.head()
+<span class="n">crime2_diff</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2439,11 +2439,11 @@ crime2_diff.head()
 <p>以下の計算では<code class="docutils literal notranslate"><span class="pre">NaN</span></code>は自動的に無視される。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_1 = &#39;crmrte_diff ~ unem_diff&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_1</span> <span class="o">=</span> <span class="s1">&#39;crmrte_diff ~ unem_diff&#39;</span>
 
-result_1 = ols(formula_1, crime2_diff).fit()
+<span class="n">result_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_1</span><span class="p">,</span> <span class="n">crime2_diff</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(result_1.summary().tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">result_1</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2475,11 +2475,11 @@ unem_diff      2.2180      0.878      2.527      0.015       0.449       3.987
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>t_value = result_1.tvalues[&#39;unem_diff&#39;]  # t値
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_value</span> <span class="o">=</span> <span class="n">result_1</span><span class="o">.</span><span class="n">tvalues</span><span class="p">[</span><span class="s1">&#39;unem_diff&#39;</span><span class="p">]</span>  <span class="c1"># t値</span>
 
-dof = result_1.df_resid  # 自由度 n-k-1
+<span class="n">dof</span> <span class="o">=</span> <span class="n">result_1</span><span class="o">.</span><span class="n">df_resid</span>  <span class="c1"># 自由度 n-k-1</span>
 
-1-t.cdf(t_value, dof)  # p値の計算
+<span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_value</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>  <span class="c1"># p値の計算</span>
 </pre></div>
 </div>
 </div>
@@ -2495,11 +2495,11 @@ dof = result_1.df_resid  # 自由度 n-k-1
 <p>１階差分推定を使わずに直接OLS推定するとどうなるかを確かめてみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_ols_1 = &#39;crmrte ~ d87 + unem&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_ols_1</span> <span class="o">=</span> <span class="s1">&#39;crmrte ~ d87 + unem&#39;</span>
 
-result_ols_1 = ols(formula_ols_1, crime2).fit()
+<span class="n">result_ols_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_ols_1</span><span class="p">,</span> <span class="n">crime2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(result_ols_1.summary().tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">result_ols_1</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2528,11 +2528,11 @@ unem           0.4265      1.188      0.359      0.720      -1.935       2.788
 <p>参考１の回帰式にはダミー変数<code class="docutils literal notranslate"><span class="pre">d87</span></code>が入っており、年によって失業と犯罪の関係は異なることを捉えている。もしこのダミーが入らないと通常考えられる関係と逆の相関が発生する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_ols_2 = &#39;crmrte ~ unem&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_ols_2</span> <span class="o">=</span> <span class="s1">&#39;crmrte ~ unem&#39;</span>
 
-result_ols_2 = ols(formula_ols_2, crime2).fit()
+<span class="n">result_ols_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_ols_2</span><span class="p">,</span> <span class="n">crime2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(result_ols_2.summary().tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">result_ols_2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2553,8 +2553,8 @@ unem          -0.3077      0.932     -0.330      0.742      -2.159       1.543
 <p><code class="docutils literal notranslate"><span class="pre">crime4</span></code>のデータセットを使い，犯罪の決定要因について推定する。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>crime4 = wooldridge.data(&#39;crime4&#39;)
-crime4.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crime4</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime4&#39;</span><span class="p">)</span>
+<span class="n">crime4</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2728,7 +2728,7 @@ crime4.head()
 </div>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wooldridge.data(&#39;crime4&#39;, description=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime4&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2828,19 +2828,19 @@ Model of Crime with Panel Data,” Review of Economics and Statistics
 <p>それぞれの変数の差分も用意されているが，以下では列<code class="docutils literal notranslate"><span class="pre">county</span></code>をグループ化しそれらの値を計算する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># グループ化
-crime4_group = crime4.groupby(&#39;county&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># グループ化</span>
+<span class="n">crime4_group</span> <span class="o">=</span> <span class="n">crime4</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">)</span>
 
-# 差分を計算したい変数
-var = [&#39;lcrmrte&#39;, &#39;lprbarr&#39;, &#39;lprbconv&#39;, &#39;lprbpris&#39;, &#39;lavgsen&#39;, &#39;lpolpc&#39;]
+<span class="c1"># 差分を計算したい変数</span>
+<span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;lcrmrte&#39;</span><span class="p">,</span> <span class="s1">&#39;lprbarr&#39;</span><span class="p">,</span> <span class="s1">&#39;lprbconv&#39;</span><span class="p">,</span> <span class="s1">&#39;lprbpris&#39;</span><span class="p">,</span> <span class="s1">&#39;lavgsen&#39;</span><span class="p">,</span> <span class="s1">&#39;lpolpc&#39;</span><span class="p">]</span>
 
-# 差分のDataFrame
-crime4_diff = crime4_group[var].diff()
+<span class="c1"># 差分のDataFrame</span>
+<span class="n">crime4_diff</span> <span class="o">=</span> <span class="n">crime4_group</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
 
-# DataFrameの結合
-crime4 = pd.merge(crime4, crime4_diff, 
-                  left_index=True, right_index=True,
-                  suffixes=(&#39;&#39;,&#39;_diff&#39;))
+<span class="c1"># DataFrameの結合</span>
+<span class="n">crime4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">crime4</span><span class="p">,</span> <span class="n">crime4_diff</span><span class="p">,</span> 
+                  <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                  <span class="n">suffixes</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="s1">&#39;_diff&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -2849,19 +2849,19 @@ crime4 = pd.merge(crime4, crime4_diff,
 <p>推定式については，2期間モデルと同じように考える。違う点は，7年間の年次データであるため，６つの時間ダミー変数を入れることだけである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_2 = &#39;lcrmrte_diff ~ d83 + d84 + d85 + d86 + d87 + \
-                            lprbarr_diff + lprbconv_diff + \
-                            lprbpris_diff + lavgsen_diff + \
-                            lpolpc_diff&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_2</span> <span class="o">=</span> <span class="s1">&#39;lcrmrte_diff ~ d83 + d84 + d85 + d86 + d87 + </span><span class="se">\</span>
+<span class="s1">                            lprbarr_diff + lprbconv_diff + </span><span class="se">\</span>
+<span class="s1">                            lprbpris_diff + lavgsen_diff + </span><span class="se">\</span>
+<span class="s1">                            lpolpc_diff&#39;</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>result_2 = ols(formula_2, crime4).fit()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_2</span><span class="p">,</span> <span class="n">crime4</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(result_2.summary().tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">result_2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2881,6 +2881,9 @@ lprbpris_diff    -0.1650      0.026     -6.356      0.000      -0.216      -0.11
 lavgsen_diff     -0.0218      0.022     -0.985      0.325      -0.065       0.022
 lpolpc_diff       0.3984      0.027     14.821      0.000       0.346       0.451
 =================================================================================
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>

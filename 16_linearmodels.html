@@ -87,7 +87,7 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="visually-hidden">Toggle in-page Table of Contents</div>
 </label>
 <!-- Headers at the top -->
-<div class="announcement header-item noprint"><p><a href='http://www.econ.kobe-u.ac.jp/topics/pdf/221212-2.pdf'>✴️<<font color='white'>特別講演「UCバークレー校における経済学とデータサイエンス教育」(2023年1月6日) ← クリック！✴️</font></a></p></div>
+<div class="announcement header-item noprint"></div>
 <div class="header header-item noprint"></div>
 
     
@@ -677,15 +677,15 @@ title="Print to PDF"
 <h1><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code><a class="headerlink" href="#linearmodels" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
-from linearmodels.panel.data import PanelData
-from linearmodels.panel import FirstDifferenceOLS
-import wooldridge
-from see import see
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">linearmodels.panel.data</span> <span class="kn">import</span> <span class="n">PanelData</span>
+<span class="kn">from</span> <span class="nn">linearmodels.panel</span> <span class="kn">import</span> <span class="n">FirstDifferenceOLS</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
+<span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="n">see</span>
 
-# 警告メッセージを非表示
-import warnings
-warnings.filterwarnings(&quot;ignore&quot;)
+<span class="c1"># 警告メッセージを非表示</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -773,12 +773,12 @@ in English or the language of your choice.
 <p>まずデータを読み込む。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># url の設定
-url = &#39;https://raw.githubusercontent.com/Haruyama-KobeU/Haruyama-KobeU.github.io/master/data/data4.csv&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># url の設定</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/Haruyama-KobeU/Haruyama-KobeU.github.io/master/data/data4.csv&#39;</span>
 
-# 読み込み
-df = pd.read_csv(url)
-df
+<span class="c1"># 読み込み</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">df</span>
 </pre></div>
 </div>
 </div>
@@ -906,8 +906,8 @@ df
 <p>次の例では<code class="docutils literal notranslate"><span class="pre">country</span></code>と<code class="docutils literal notranslate"><span class="pre">year</span></code>の行をそれぞれ第０インデックス，第１インデックスに指定する。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = df.set_index([&#39;country&#39;, &#39;year&#39;])#.sort_index()
-df
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;country&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">])</span><span class="c1">#.sort_index()</span>
+<span class="n">df</span>
 </pre></div>
 </div>
 </div>
@@ -1021,7 +1021,7 @@ df
 <p><code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>を解除するにはメソッド<code class="docutils literal notranslate"><span class="pre">.reset_index()</span></code>を使う。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.reset_index()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1152,7 +1152,7 @@ df
 <p>１つの要素を抽出する場合はタプルを使う。例えば，日本の2001年の<code class="docutils literal notranslate"><span class="pre">gdp</span></code>を抽出したい場合。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.loc[(&#39;Japan&#39;,2001), &#39;gdp&#39;]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="s1">&#39;Japan&#39;</span><span class="p">,</span><span class="mi">2001</span><span class="p">),</span> <span class="s1">&#39;gdp&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1168,7 +1168,7 @@ df
 <p>上の例で列の指定を<code class="docutils literal notranslate"><span class="pre">:</span></code>にすると，指定した行に対して全ての列を抽出できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.loc[(&#39;Japan&#39;,2001), :]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="s1">&#39;Japan&#39;</span><span class="p">,</span><span class="mi">2001</span><span class="p">),</span> <span class="p">:]</span>
 </pre></div>
 </div>
 </div>
@@ -1185,7 +1185,7 @@ Name: (Japan, 2001), dtype: float64
 <p>この場合，特定の列に対してスライシングも可能。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.loc[(&#39;Japan&#39;,2001), &#39;gdp&#39;:&#39;con&#39;]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="s1">&#39;Japan&#39;</span><span class="p">,</span><span class="mi">2001</span><span class="p">),</span> <span class="s1">&#39;gdp&#39;</span><span class="p">:</span><span class="s1">&#39;con&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1201,7 +1201,7 @@ Name: (Japan, 2001), dtype: float64
 <p>指定した行に対して個別に複数列を抽出したい場合は，タプルを使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.loc[(&#39;Japan&#39;,2001), (&#39;gdp&#39;,&#39;con&#39;)]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="s1">&#39;Japan&#39;</span><span class="p">,</span><span class="mi">2001</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span><span class="s1">&#39;con&#39;</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
@@ -1216,7 +1216,7 @@ Name: (Japan, 2001), dtype: float64
 <p>複数行の抽出にはリストで指定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.loc[([&#39;Japan&#39;,&#39;UK&#39;],[2001,2002]), :]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[([</span><span class="s1">&#39;Japan&#39;</span><span class="p">,</span><span class="s1">&#39;UK&#39;</span><span class="p">],[</span><span class="mi">2001</span><span class="p">,</span><span class="mi">2002</span><span class="p">]),</span> <span class="p">:]</span>
 </pre></div>
 </div>
 </div>
@@ -1295,7 +1295,7 @@ Name: (Japan, 2001), dtype: float64
 <p>第０インデックスにある，ある観察単位の全てのデータだけを抽出したい場合は，通常の<code class="docutils literal notranslate"><span class="pre">Pandas</span></code>の場合と同じ。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.loc[&#39;Japan&#39;, :]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Japan&#39;</span><span class="p">,</span> <span class="p">:]</span>
 </pre></div>
 </div>
 </div>
@@ -1360,7 +1360,7 @@ Name: (Japan, 2001), dtype: float64
 <p>複数の場合。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.loc[[&#39;Japan&#39;,&#39;UK&#39;], :]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;Japan&#39;</span><span class="p">,</span><span class="s1">&#39;UK&#39;</span><span class="p">],</span> <span class="p">:]</span>
 </pre></div>
 </div>
 </div>
@@ -1453,7 +1453,7 @@ Name: (Japan, 2001), dtype: float64
 <p>通常の<code class="docutils literal notranslate"><span class="pre">Pandas</span></code>と同じ。<code class="docutils literal notranslate"><span class="pre">Series</span></code>を返す場合。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.loc[:,&#39;gdp&#39;]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;gdp&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1476,7 +1476,7 @@ Name: gdp, dtype: int64
 <p><code class="docutils literal notranslate"><span class="pre">[]</span></code>を使うと，<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>として抽出できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.loc[:,[&#39;gdp&#39;]]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;gdp&#39;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -1555,7 +1555,7 @@ Name: gdp, dtype: int64
 <p>複数列抽出の場合。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.loc[:,[&#39;gdp&#39;,&#39;inv&#39;]]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span><span class="s1">&#39;inv&#39;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -1645,7 +1645,7 @@ Name: gdp, dtype: int64
 <p>スライシングも使える。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.loc[:,&#39;gdp&#39;:&#39;con&#39;]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;gdp&#39;</span><span class="p">:</span><span class="s1">&#39;con&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1749,7 +1749,7 @@ Name: gdp, dtype: int64
 <p>一番簡単な方法は<code class="docutils literal notranslate"><span class="pre">reset_index()</span></code>を使い今まで習った関数を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.reset_index().query(&#39;year == 2000&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;year == 2000&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1815,7 +1815,7 @@ Name: gdp, dtype: int64
 <p>複数年の場合。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.reset_index().query(&#39;year in [2000,2002]&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;year in [2000,2002]&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1908,7 +1908,7 @@ Name: gdp, dtype: int64
 <p>上と同じ結果。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.reset_index().query(&#39;year not in [2001]&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;year not in [2001]&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2007,8 +2007,8 @@ Name: gdp, dtype: int64
 <p>まず<code class="docutils literal notranslate"><span class="pre">df</span></code>を<code class="docutils literal notranslate"><span class="pre">PanelData</span></code>オブジェクトに変換する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfp = PanelData(df)
-dfp
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span> <span class="o">=</span> <span class="n">PanelData</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">dfp</span>
 </pre></div>
 </div>
 </div>
@@ -2122,7 +2122,7 @@ dfp
 <p>まず<code class="docutils literal notranslate"><span class="pre">dfp</span></code>の属性とメソッドに何があるかを確認する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>see(dfp)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">dfp</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2146,7 +2146,7 @@ dfp
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfp.shape
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
@@ -2164,7 +2164,7 @@ dfp
 <p>メソッド<code class="docutils literal notranslate"><span class="pre">.mean()</span></code>を使うと、変数の観察単位毎の平均の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>が返される。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfp.mean()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2229,7 +2229,7 @@ dfp
 <p>引数に<code class="docutils literal notranslate"><span class="pre">time</span></code>を指定すると、変数の時間毎の平均が返される。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfp.mean(&#39;time&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2294,7 +2294,7 @@ dfp
 <p>メソッド<code class="docutils literal notranslate"><span class="pre">demean()</span></code>は、変数の平均からの乖離が返される。即ち、変数<span class="math notranslate nohighlight">\(x\)</span>の平均が<span class="math notranslate nohighlight">\(\bar{x}\)</span>とすると、<span class="math notranslate nohighlight">\(x-\bar{x}\)</span>が返される。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfp.demean()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">demean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2406,7 +2406,7 @@ dfp
 <p><code class="docutils literal notranslate"><span class="pre">first_difference()</span></code>は変数の１階差分（<span class="math notranslate nohighlight">\(x_t-x_{t-1}\)</span>）が返される。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfp.first_difference()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">first_difference</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2487,7 +2487,7 @@ dfp
 <p>従って，<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>のメソッド（例えば，行や列の抽出）を使う場合，<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>に変換する必要がある。その場合，<code class="docutils literal notranslate"><span class="pre">PanelData</span></code>オブジェクトの属性<code class="docutils literal notranslate"><span class="pre">.dataframe</span></code>を使うことができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfp.dataframe.loc[&#39;Japan&#39;,:]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">dataframe</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Japan&#39;</span><span class="p">,:]</span>
 </pre></div>
 </div>
 </div>
@@ -2560,7 +2560,7 @@ dfp
 <p>balanced か unbalancedかは以下のコードで確認できる。まず，属性<code class="docutils literal notranslate"><span class="pre">isnull</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dfp.isnull
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span><span class="o">.</span><span class="n">isnull</span>
 </pre></div>
 </div>
 </div>
@@ -2583,7 +2583,7 @@ dtype: bool
 <p>それぞれの行に<code class="docutils literal notranslate"><span class="pre">NaN</span></code>があれば<code class="docutils literal notranslate"><span class="pre">True</span></code>を、なければ<code class="docutils literal notranslate"><span class="pre">False</span></code>を返す。次に<code class="docutils literal notranslate"><span class="pre">True/False</span></code>を逆転させるために<code class="docutils literal notranslate"><span class="pre">~</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>~dfp.isnull
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">~</span><span class="n">dfp</span><span class="o">.</span><span class="n">isnull</span>
 </pre></div>
 </div>
 </div>
@@ -2606,7 +2606,7 @@ dtype: bool
 <p><code class="docutils literal notranslate"><span class="pre">True</span></code>の行には<code class="docutils literal notranslate"><span class="pre">NaN</span></code>はなく、<code class="docutils literal notranslate"><span class="pre">False</span></code>の行に<code class="docutils literal notranslate"><span class="pre">NaN</span></code>がある。行数が多い場合はメソッド<code class="docutils literal notranslate"><span class="pre">all()</span></code>が便利である。<code class="docutils literal notranslate"><span class="pre">all()</span></code>は列に対して全ての要素が<code class="docutils literal notranslate"><span class="pre">True</span></code>の場合のみ<code class="docutils literal notranslate"><span class="pre">True</span></code>を返す。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(~dfp.isnull).all()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">~</span><span class="n">dfp</span><span class="o">.</span><span class="n">isnull</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2624,8 +2624,8 @@ dtype: bool
 <p>ここでは<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>を使い，以前行った１階差分推定を再考する。データ<code class="docutils literal notranslate"><span class="pre">crime4</span></code>を使う。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>crime4 = wooldridge.data(&#39;crime4&#39;)
-crime4.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crime4</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime4&#39;</span><span class="p">)</span>
+<span class="n">crime4</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2800,8 +2800,8 @@ crime4.head()
 <p><code class="docutils literal notranslate"><span class="pre">county</span></code>と<code class="docutils literal notranslate"><span class="pre">year</span></code>を使い<code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>化する。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>crime4 = crime4.set_index([&#39;county&#39;,&#39;year&#39;])
-crime4.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crime4</span> <span class="o">=</span> <span class="n">crime4</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;county&#39;</span><span class="p">,</span><span class="s1">&#39;year&#39;</span><span class="p">])</span>
+<span class="n">crime4</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -3003,8 +3003,8 @@ crime4.head()
 <p>次に<code class="docutils literal notranslate"><span class="pre">PanelData</span></code>オブジェクトに変換しデータの特徴を調べる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>crime4p = PanelData(crime4)
-crime4p.shape
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crime4p</span> <span class="o">=</span> <span class="n">PanelData</span><span class="p">(</span><span class="n">crime4</span><span class="p">)</span>
+<span class="n">crime4p</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
@@ -3022,7 +3022,7 @@ crime4p.shape
 <p>次にbalanced もしくは unbalanced data set かを確認する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(~crime4p.isnull).all()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">~</span><span class="n">crime4p</span><span class="o">.</span><span class="n">isnull</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -3046,8 +3046,8 @@ crime4p.shape
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula = &#39;lcrmrte ~ d82 + d83 + d84 + d85 + d86 + d87 + lprbarr + \
-                lprbconv + lprbpris + lavgsen + lpolpc&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;lcrmrte ~ d82 + d83 + d84 + d85 + d86 + d87 + lprbarr + </span><span class="se">\</span>
+<span class="s1">                lprbconv + lprbpris + lavgsen + lpolpc&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -3055,7 +3055,7 @@ crime4p.shape
 <p>１階差分モデルの設定（インスタンスの作成）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mod_dif = FirstDifferenceOLS.from_formula(formula, data=crime4)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mod_dif</span> <span class="o">=</span> <span class="n">FirstDifferenceOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">crime4</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -3063,7 +3063,7 @@ crime4p.shape
 <p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>と同じように，そこから得た結果にメソッド<code class="docutils literal notranslate"><span class="pre">.fit()</span></code>を使い計算し結果が返される。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_dif = mod_dif.fit()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_dif</span> <span class="o">=</span> <span class="n">mod_dif</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -3081,7 +3081,7 @@ crime4p.shape
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res_dif.summary.tables[1])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_dif</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>

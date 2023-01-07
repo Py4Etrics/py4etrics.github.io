@@ -87,7 +87,7 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="visually-hidden">Toggle in-page Table of Contents</div>
 </label>
 <!-- Headers at the top -->
-<div class="announcement header-item noprint"><p><a href='http://www.econ.kobe-u.ac.jp/topics/pdf/221212-2.pdf'>✴️<<font color='white'>特別講演「UCバークレー校における経済学とデータサイエンス教育」(2023年1月6日) ← クリック！✴️</font></a></p></div>
+<div class="announcement header-item noprint"></div>
 <div class="header header-item noprint"></div>
 
     
@@ -623,14 +623,14 @@ title="Print to PDF"
 <h1>離散選択モデル<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from scipy.stats import logistic, norm, chi2
-import numpy as np
-import matplotlib.pyplot as plt
-from see import *
-import pandas as pd
-from statsmodels.formula.api import ols, logit, probit
-import wooldridge
-from py4etrics.hetero_test import *
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">logistic</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="n">chi2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span><span class="p">,</span> <span class="n">logit</span><span class="p">,</span> <span class="n">probit</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
+<span class="kn">from</span> <span class="nn">py4etrics.hetero_test</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 </div>
 </div>
@@ -710,17 +710,17 @@ in English or the language of your choice.
 <p>下の図はロジスティクス分布と標準正規分布の累積密度関数を表している。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>x = np.linspace(-4,4,100)
-y_logistic = logistic.cdf(x)
-y_norm = norm.cdf(x)
-plt.plot(x, y_logistic,label=&#39;Logistic&#39;)
-plt.plot(x, y_norm, label=&#39;Normal&#39;)
-plt.hlines(y=0.5,xmin=-4,xmax=4,linestyles=&#39;--&#39;)
-plt.xlabel(&#39;z&#39;)
-plt.title(r&#39;Cumulative Distribution Functions: $G(z)$&#39;)
-plt.legend()
-plt.grid()
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">y_logistic</span> <span class="o">=</span> <span class="n">logistic</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y_norm</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_logistic</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Logistic&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_norm</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Normal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">xmin</span><span class="o">=-</span><span class="mi">4</span><span class="p">,</span><span class="n">xmax</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Cumulative Distribution Functions: $G(z)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -806,8 +806,8 @@ pass
 <p>以下では，<code class="docutils literal notranslate"><span class="pre">mroz</span></code>のデータを使って女性の労働市場参加について考える。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mroz = wooldridge.data(&#39;mroz&#39;)
-wooldridge.data(&#39;mroz&#39;, description=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mroz</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mroz&#39;</span><span class="p">)</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mroz&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -881,7 +881,7 @@ provided the data, which he obtained from Professor Mroz.
 <p>回帰式の設定</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula = &#39;inlf ~ nwifeinc + educ + exper + expersq + age + kidslt6 + kidsge6&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;inlf ~ nwifeinc + educ + exper + expersq + age + kidslt6 + kidsge6&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -889,7 +889,7 @@ provided the data, which he obtained from Professor Mroz.
 <p>推定の計算には<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">logit</span></code>関数を使う。使い方は<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">ols</span></code>と同じである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_logit = logit(formula, data=mroz).fit()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_logit</span> <span class="o">=</span> <span class="n">logit</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -904,7 +904,7 @@ provided the data, which he obtained from Professor Mroz.
 <p>結果の表示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res_logit.summary())
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_logit</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -914,8 +914,8 @@ provided the data, which he obtained from Professor Mroz.
 Dep. Variable:                   inlf   No. Observations:                  753
 Model:                          Logit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Thu, 22 Dec 2022   Pseudo R-squ.:                  0.2197
-Time:                        03:29:27   Log-Likelihood:                -401.77
+Date:                Sat, 07 Jan 2023   Pseudo R-squ.:                  0.2197
+Time:                        14:25:59   Log-Likelihood:                -401.77
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 3.159e-45
 ==============================================================================
@@ -937,7 +937,7 @@ kidsge6        0.0601      0.075      0.804      0.422      -0.086       0.207
 <p><code class="docutils literal notranslate"><span class="pre">dir()</span></code>や<code class="docutils literal notranslate"><span class="pre">see()</span></code>を使うと，推定結果の属性やメソッドを確認できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>see(res_logit)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">res_logit</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -982,14 +982,14 @@ kidsge6        0.0601      0.075      0.804      0.422      -0.086       0.207
 <p>方法１を考えよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># 上で推定した係数の標準誤差。
-l0=res_logit.bse
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 上で推定した係数の標準誤差。</span>
+<span class="n">l0</span><span class="o">=</span><span class="n">res_logit</span><span class="o">.</span><span class="n">bse</span>
 
-# 不均一分散頑健標準誤差
-l1=logit(formula, data=mroz).fit(cov_type=&#39;HC1&#39;,disp=False).bse
+<span class="c1"># 不均一分散頑健標準誤差</span>
+<span class="n">l1</span><span class="o">=</span><span class="n">logit</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC1&#39;</span><span class="p">,</span><span class="n">disp</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">bse</span>
 
-# `HC1`を使うことによる標準誤差の変化率（％）
-100*(l1-l0)/l0
+<span class="c1"># `HC1`を使うことによる標準誤差の変化率（％）</span>
+<span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="n">l1</span><span class="o">-</span><span class="n">l0</span><span class="p">)</span><span class="o">/</span><span class="n">l0</span>
 </pre></div>
 </div>
 </div>
@@ -1019,7 +1019,7 @@ dtype: float64
 <p>引数に推定結果のインスタンスを指定することにより，不均一分散のWald検定をおこなうことができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>het_test_logit(res_logit)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">het_test_logit</span><span class="p">(</span><span class="n">res_logit</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1045,7 +1045,7 @@ df freedom:  7.
 <p>推定の計算には<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">probit</span></code>関数を使う。使い方は<code class="docutils literal notranslate"><span class="pre">logit</span></code>と同じである。上と同じデータと同じ<code class="docutils literal notranslate"><span class="pre">formula</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_probit = probit(formula, data=mroz).fit()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_probit</span> <span class="o">=</span> <span class="n">probit</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1059,7 +1059,7 @@ df freedom:  7.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res_probit.summary())
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_probit</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -1069,8 +1069,8 @@ df freedom:  7.
 Dep. Variable:                   inlf   No. Observations:                  753
 Model:                         Probit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Thu, 22 Dec 2022   Pseudo R-squ.:                  0.2206
-Time:                        03:29:27   Log-Likelihood:                -401.30
+Date:                Sat, 07 Jan 2023   Pseudo R-squ.:                  0.2206
+Time:                        14:25:59   Log-Likelihood:                -401.30
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
 ==============================================================================
@@ -1092,7 +1092,7 @@ kidsge6        0.0360      0.043      0.828      0.408      -0.049       0.121
 <p><code class="docutils literal notranslate"><span class="pre">dir()</span></code>や<code class="docutils literal notranslate"><span class="pre">see()</span></code>を使うと，推定結果の属性やメソッドを確認できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>see(res_probit)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">res_probit</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1121,14 +1121,14 @@ kidsge6        0.0360      0.043      0.828      0.408      -0.049       0.121
 <p>不均一分散について考察する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># 上で推定した係数の標準誤差。
-p0=res_probit.bse
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 上で推定した係数の標準誤差。</span>
+<span class="n">p0</span><span class="o">=</span><span class="n">res_probit</span><span class="o">.</span><span class="n">bse</span>
 
-# 不均一分散頑健標準誤差
-p1=probit(formula, data=mroz).fit(cov_type=&#39;HC1&#39;,disp=False).bse
+<span class="c1"># 不均一分散頑健標準誤差</span>
+<span class="n">p1</span><span class="o">=</span><span class="n">probit</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC1&#39;</span><span class="p">,</span><span class="n">disp</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">bse</span>
 
-# `HC1`を使うことによる標準誤差の変化率（％）
-100*(p1-p0)/p0
+<span class="c1"># `HC1`を使うことによる標準誤差の変化率（％）</span>
+<span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="n">p1</span><span class="o">-</span><span class="n">p0</span><span class="p">)</span><span class="o">/</span><span class="n">p0</span>
 </pre></div>
 </div>
 </div>
@@ -1150,7 +1150,7 @@ dtype: float64
 <p>次に検定をおこなう。<code class="docutils literal notranslate"><span class="pre">py4etrics</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">hetero_test</span></code>モジュールにある<code class="docutils literal notranslate"><span class="pre">het_test_probit()</span></code>という関数を使う。使い方は<code class="docutils literal notranslate"><span class="pre">het_test_probit()</span></code>とおなじである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>het_test_probit(res_probit)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">het_test_probit</span><span class="p">(</span><span class="n">res_probit</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1218,8 +1218,8 @@ df freedom:  7.
 <p>また，<code class="docutils literal notranslate"><span class="pre">get_margeff()</span></code>は計算するだけなので，メソッド<code class="docutils literal notranslate"><span class="pre">summary()</span></code>を使って結果を表示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res_logit.get_margeff().summary())
-print(res_logit.get_margeff(at=&#39;mean&#39;).summary())
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_logit</span><span class="o">.</span><span class="n">get_margeff</span><span class="p">()</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res_logit</span><span class="o">.</span><span class="n">get_margeff</span><span class="p">(</span><span class="n">at</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -1262,8 +1262,8 @@ kidsge6        0.0146      0.018      0.804      0.422      -0.021       0.050
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res_probit.get_margeff().summary())
-print(res_probit.get_margeff(at=&#39;mean&#39;).summary())
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_probit</span><span class="o">.</span><span class="n">get_margeff</span><span class="p">()</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res_probit</span><span class="o">.</span><span class="n">get_margeff</span><span class="p">(</span><span class="n">at</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -1307,7 +1307,7 @@ kidsge6        0.0141      0.017      0.828      0.408      -0.019       0.047
 <p>APEとPEAの値だけを取り題したい場合は，属性<code class="docutils literal notranslate"><span class="pre">margeff</span></code>を使うと良いだろう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_probit.get_margeff(at=&#39;mean&#39;).margeff
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_probit</span><span class="o">.</span><span class="n">get_margeff</span><span class="p">(</span><span class="n">at</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">margeff</span>
 </pre></div>
 </div>
 </div>
@@ -1324,7 +1324,7 @@ kidsge6        0.0141      0.017      0.828      0.408      -0.019       0.047
 <p>推定結果の表を説明するために<code class="docutils literal notranslate"><span class="pre">logit</span></code>の結果を再度表示する。（<code class="docutils literal notranslate"><span class="pre">probit</span></code>も同じ項目が表示されている）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res_logit.summary().tables[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_logit</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1334,8 +1334,8 @@ kidsge6        0.0141      0.017      0.828      0.408      -0.019       0.047
 Dep. Variable:                   inlf   No. Observations:                  753
 Model:                          Logit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Thu, 22 Dec 2022   Pseudo R-squ.:                  0.2197
-Time:                        03:29:27   Log-Likelihood:                -401.77
+Date:                Sat, 07 Jan 2023   Pseudo R-squ.:                  0.2197
+Time:                        14:26:00   Log-Likelihood:                -401.77
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 3.159e-45
 ==============================================================================
@@ -1403,15 +1403,15 @@ Covariance Type:            nonrobust   LLR p-value:                 3.159e-45
 <p><span class="math notranslate nohighlight">\(\text{H}_A\)</span>：<span class="math notranslate nohighlight">\(\text{H}_0\)</span>は成立しない</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ll_ur = res_probit.llf  # 制限を課さない場合の対数尤度
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ll_ur</span> <span class="o">=</span> <span class="n">res_probit</span><span class="o">.</span><span class="n">llf</span>  <span class="c1"># 制限を課さない場合の対数尤度</span>
 
-ll_r = res_probit.llnull  # 制限を課す場合の対数尤度
+<span class="n">ll_r</span> <span class="o">=</span> <span class="n">res_probit</span><span class="o">.</span><span class="n">llnull</span>  <span class="c1"># 制限を課す場合の対数尤度</span>
 
-LR = 2*(ll_ur-ll_r)  # LR統計量
+<span class="n">LR</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">ll_ur</span><span class="o">-</span><span class="n">ll_r</span><span class="p">)</span>  <span class="c1"># LR統計量</span>
 
-dof = res_probit.df_model  #  自由度＝制限を課すパラメータの数
+<span class="n">dof</span> <span class="o">=</span> <span class="n">res_probit</span><span class="o">.</span><span class="n">df_model</span>  <span class="c1">#  自由度＝制限を課すパラメータの数</span>
 
-1- chi2.cdf(LR, dof)
+<span class="mi">1</span><span class="o">-</span> <span class="n">chi2</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">LR</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1425,7 +1425,7 @@ dof = res_probit.df_model  #  自由度＝制限を課すパラメータの数
 <p>この結果は推定結果の表にある<code class="docutils literal notranslate"><span class="pre">LLR</span> <span class="pre">p-value</span></code>と同じであり，<code class="docutils literal notranslate"><span class="pre">res_probit</span></code>の属性<code class="docutils literal notranslate"><span class="pre">.llr_pvalue</span></code>を使って直接表示することも可能である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_probit.llr_pvalue
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_probit</span><span class="o">.</span><span class="n">llr_pvalue</span>
 </pre></div>
 </div>
 </div>
@@ -1444,9 +1444,9 @@ dof = res_probit.df_model  #  自由度＝制限を課すパラメータの数
 <p>帰無仮説の下での推定をおこなう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_0 = &#39;inlf ~ nwifeinc + educ + kidslt6 + kidsge6&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_0</span> <span class="o">=</span> <span class="s1">&#39;inlf ~ nwifeinc + educ + kidslt6 + kidsge6&#39;</span>
 
-res_probit_0 = probit(formula_0, data=mroz).fit(cov_type=&#39;HC1&#39;)
+<span class="n">res_probit_0</span> <span class="o">=</span> <span class="n">probit</span><span class="p">(</span><span class="n">formula_0</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC1&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1460,15 +1460,15 @@ res_probit_0 = probit(formula_0, data=mroz).fit(cov_type=&#39;HC1&#39;)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ll_ur = res_probit.llf  # 制限を課さない場合の対数尤度
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ll_ur</span> <span class="o">=</span> <span class="n">res_probit</span><span class="o">.</span><span class="n">llf</span>  <span class="c1"># 制限を課さない場合の対数尤度</span>
 
-ll_r = res_probit_0.llf  # 制限を課す場合の対数尤度
+<span class="n">ll_r</span> <span class="o">=</span> <span class="n">res_probit_0</span><span class="o">.</span><span class="n">llf</span>  <span class="c1"># 制限を課す場合の対数尤度</span>
 
-LR = 2*(ll_ur-ll_r)  # LR統計量
+<span class="n">LR</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">ll_ur</span><span class="o">-</span><span class="n">ll_r</span><span class="p">)</span>  <span class="c1"># LR統計量</span>
 
-dof = 3  #  自由度＝制限を課すパラメータの数
+<span class="n">dof</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1">#  自由度＝制限を課すパラメータの数</span>
 
-1- chi2.cdf(LR, dof)
+<span class="mi">1</span><span class="o">-</span> <span class="n">chi2</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">LR</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1491,9 +1491,9 @@ G(z) = z
 <p>線形確率モデルの利点は，通常のOLS推定が可能だということである。しかし，誤差項は不均一分散となるため以下では不均一分散頑健標準誤差を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_lin = ols(formula, mroz).fit(cov_type=&#39;HC1&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_lin</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC1&#39;</span><span class="p">)</span>
 
-print(res_lin.summary())
+<span class="nb">print</span><span class="p">(</span><span class="n">res_lin</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -1503,8 +1503,8 @@ print(res_lin.summary())
 Dep. Variable:                   inlf   R-squared:                       0.264
 Model:                            OLS   Adj. R-squared:                  0.257
 Method:                 Least Squares   F-statistic:                     62.48
-Date:                Thu, 22 Dec 2022   Prob (F-statistic):           1.30e-70
-Time:                        03:29:27   Log-Likelihood:                -423.89
+Date:                Sat, 07 Jan 2023   Prob (F-statistic):           1.30e-70
+Time:                        14:26:00   Log-Likelihood:                -423.89
 No. Observations:                 753   AIC:                             863.8
 Df Residuals:                     745   BIC:                             900.8
 Df Model:                           7                                         
@@ -1560,11 +1560,11 @@ strong multicollinearity or other numerical problems.
 <p>線形確率モデルでは，労働参加の確率は１以上もしくは０以下になり得る。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>no_1 = (res_lin.fittedvalues&gt;1).sum()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">no_1</span> <span class="o">=</span> <span class="p">(</span><span class="n">res_lin</span><span class="o">.</span><span class="n">fittedvalues</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
-no_0 = (res_lin.fittedvalues&lt;0).sum()
+<span class="n">no_0</span> <span class="o">=</span> <span class="p">(</span><span class="n">res_lin</span><span class="o">.</span><span class="n">fittedvalues</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
-print(f&#39;1を上回る予測値の数：{no_1}\n0を下回る予測値の数：{no_0}&#39;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;1を上回る予測値の数：</span><span class="si">{</span><span class="n">no_1</span><span class="si">}</span><span class="se">\n</span><span class="s1">0を下回る予測値の数：</span><span class="si">{</span><span class="n">no_0</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1579,18 +1579,18 @@ print(f&#39;1を上回る予測値の数：{no_1}\n0を下回る予測値の数�
 <p>LogitモデルとProbitモデルの予測値を図を使って比べてみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>xx = np.linspace(0,1,100)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
 
-y_logit = res_logit.predict()
-y_probit = res_probit.predict()
+<span class="n">y_logit</span> <span class="o">=</span> <span class="n">res_logit</span><span class="o">.</span><span class="n">predict</span><span class="p">()</span>
+<span class="n">y_probit</span> <span class="o">=</span> <span class="n">res_probit</span><span class="o">.</span><span class="n">predict</span><span class="p">()</span>
 
-plt.figure(figsize=(4,4))  # 図のサイズ
-plt.scatter(y_logit,y_probit, label=&#39;comparison&#39;)
-plt.plot(xx, xx, color=&#39;red&#39;, linewidth = 2, label=&#39;45 degree line&#39;)
-plt.xlabel(&#39;Predicted Probability of Logistic Model&#39;)
-plt.ylabel(&#39;Predicted Probability of Probit Model&#39;)
-plt.legend()
-pass
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>  <span class="c1"># 図のサイズ</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y_logit</span><span class="p">,</span><span class="n">y_probit</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;comparison&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;45 degree line&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted Probability of Logistic Model&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Predicted Probability of Probit Model&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1605,7 +1605,7 @@ pass
 <p>確認するために，それぞれの結果の属性<code class="docutils literal notranslate"><span class="pre">.llf</span></code>を比べる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_logit.llf, res_probit.llf
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_logit</span><span class="o">.</span><span class="n">llf</span><span class="p">,</span> <span class="n">res_probit</span><span class="o">.</span><span class="n">llf</span>
 </pre></div>
 </div>
 </div>

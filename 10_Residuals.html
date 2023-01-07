@@ -87,7 +87,7 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="visually-hidden">Toggle in-page Table of Contents</div>
 </label>
 <!-- Headers at the top -->
-<div class="announcement header-item noprint"><p><a href='http://www.econ.kobe-u.ac.jp/topics/pdf/221212-2.pdf'>✴️<<font color='white'>特別講演「UCバークレー校における経済学とデータサイエンス教育」(2023年1月6日) ← クリック！✴️</font></a></p></div>
+<div class="announcement header-item noprint"></div>
 <div class="header header-item noprint"></div>
 
     
@@ -793,13 +793,13 @@ title="Print to PDF"
 <h1>残差診断<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-from statsmodels.formula.api import ols
-from scipy.stats import norm, uniform
-import lmdiag
-import statsmodels.api as sm
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">uniform</span>
+<span class="kn">import</span> <span class="nn">lmdiag</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
 </pre></div>
 </div>
 </div>
@@ -878,18 +878,18 @@ in English or the language of your choice.
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def ols_sim(n, u_sd):  # n=標本の大きさ，　u_sd=誤差項の標準偏差
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ols_sim</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">u_sd</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ，　u_sd=誤差項の標準偏差</span>
     
-    x = uniform.rvs(1, 10, size=n)  # 説明変数
-    u = norm.rvs(scale=u_sd, size=n)  # 誤差項
-    y = 1.0 + 0.5*x + u               # 被説明変数
+    <span class="n">x</span> <span class="o">=</span> <span class="n">uniform</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 説明変数</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="n">u_sd</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 誤差項</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">u</span>               <span class="c1"># 被説明変数</span>
     
-    df = pd.DataFrame({&#39;Y&#39;:y, &#39;X&#39;:x})  # DataFrame
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>  <span class="c1"># DataFrame</span>
     
-    res = ols(formula=&#39;Y ~ X&#39;, data=df).fit()  # OLSの計算
-    u_standardized = res.get_influence().resid_studentized_internal  # 標準化残差
+    <span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLSの計算</span>
+    <span class="n">u_standardized</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">get_influence</span><span class="p">()</span><span class="o">.</span><span class="n">resid_studentized_internal</span>  <span class="c1"># 標準化残差</span>
     
-    return x, y, res.fittedvalues, res.resid, u_standardized, res.rsquared  # 返り値の設定
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">u_standardized</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">rsquared</span>  <span class="c1"># 返り値の設定</span>
 </pre></div>
 </div>
 </div>
@@ -897,11 +897,11 @@ in English or the language of your choice.
 <p>この関数を使い<span class="math notranslate nohighlight">\(R^2\)</span>が高いケースと低いケースを別々にシミュレーションを行う。返り値の順番に合わせて代入する変数を並べる。（添え字の<code class="docutils literal notranslate"><span class="pre">high</span></code>と<code class="docutils literal notranslate"><span class="pre">low</span></code>は「高いケース」と「低いケース」を表す。）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># R^2が高いケース
-x_high, y_high, y_fit_high, resid_high, resid_st_high, r2_high = ols_sim(50, 0.5)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># R^2が高いケース</span>
+<span class="n">x_high</span><span class="p">,</span> <span class="n">y_high</span><span class="p">,</span> <span class="n">y_fit_high</span><span class="p">,</span> <span class="n">resid_high</span><span class="p">,</span> <span class="n">resid_st_high</span><span class="p">,</span> <span class="n">r2_high</span> <span class="o">=</span> <span class="n">ols_sim</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
 
-# R^2が低いケース
-x_low, y_low, y_fit_low, resid_low, resid_st_low, r2_low = ols_sim(50, 1.5)
+<span class="c1"># R^2が低いケース</span>
+<span class="n">x_low</span><span class="p">,</span> <span class="n">y_low</span><span class="p">,</span> <span class="n">y_fit_low</span><span class="p">,</span> <span class="n">resid_low</span><span class="p">,</span> <span class="n">resid_st_low</span><span class="p">,</span> <span class="n">r2_low</span> <span class="o">=</span> <span class="n">ols_sim</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -919,13 +919,13 @@ x_low, y_low, y_fit_low, resid_low, resid_st_low, r2_low = ols_sim(50, 1.5)
 <p>まず決定係数の値を確認する。（注意）以前説明した<code class="docutils literal notranslate"><span class="pre">f-string</span></code>を使っている。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&#39;決定係数が高いケース: {r2_high:.3f}\n決定係数が高いケース: {r2_low:.3f}&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;決定係数が高いケース: </span><span class="si">{</span><span class="n">r2_high</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="se">\n</span><span class="s1">決定係数が高いケース: </span><span class="si">{</span><span class="n">r2_low</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>決定係数が高いケース: 0.872
-決定係数が高いケース: 0.554
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>決定係数が高いケース: 0.858
+決定係数が高いケース: 0.589
 </pre></div>
 </div>
 </div>
@@ -937,27 +937,27 @@ x_low, y_low, y_fit_low, resid_low, resid_st_low, r2_low = ols_sim(50, 1.5)
 <p>図を並べて描くために，<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>の<code class="docutils literal notranslate"><span class="pre">subplots()</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(8,3))  # figsizeは左右２つの図を合わせた大きさ
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>  <span class="c1"># figsizeは左右２つの図を合わせた大きさ</span>
 
-# 左の図
-plt.subplot(121)
-plt.scatter(x_high,y_high)  # 散布図
-plt.plot(x_high, y_fit_high,color=&#39;red&#39;)  # 回帰線
-plt.ylim(-1,10)  # 縦軸の表示幅を設定
-plt.xlabel(&#39;x&#39;)  # 横軸のラベル
-plt.ylabel(&#39;y&#39;)  # 縦軸のラベル
-plt.title(&#39;High R^2&#39;)  # タイトル
+<span class="c1"># 左の図</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_high</span><span class="p">,</span><span class="n">y_high</span><span class="p">)</span>  <span class="c1"># 散布図</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_high</span><span class="p">,</span> <span class="n">y_fit_high</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>  <span class="c1"># 回帰線</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># 縦軸の表示幅を設定</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>  <span class="c1"># 横軸のラベル</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>  <span class="c1"># 縦軸のラベル</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;High R^2&#39;</span><span class="p">)</span>  <span class="c1"># タイトル</span>
 
-# 右の図
-plt.subplot(122)
-plt.scatter(x_low,y_low)
-plt.plot(x_low, y_fit_low, color=&#39;red&#39;)
-plt.ylim(-1,10)
-plt.xlabel(&#39;x&#39;)
-plt.ylabel(&#39;y&#39;)
-plt.title(&#39;Low R^2&#39;)
+<span class="c1"># 右の図</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_low</span><span class="p">,</span><span class="n">y_low</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_low</span><span class="p">,</span> <span class="n">y_fit_low</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Low R^2&#39;</span><span class="p">)</span>
 
-plt.tight_layout();  # 左右の間に余裕も持たせる
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>  <span class="c1"># 左右の間に余裕も持たせる</span>
 </pre></div>
 </div>
 </div>
@@ -972,25 +972,25 @@ plt.tight_layout();  # 左右の間に余裕も持たせる
 <p>次に予測値<span class="math notranslate nohighlight">\(\hat{y}\)</span>と残差<span class="math notranslate nohighlight">\(\hat{u}\)</span>の散布図を描いてみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(8,3))
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
 
-# 左の図
-plt.subplot(121)
-plt.scatter(y_fit_high,resid_high)
-plt.axhline(y=0, color=&#39;red&#39;)  # 縦軸の値が0での平行線
-plt.ylim(-5,5)  # 縦軸の表示幅を指定
-plt.xlabel(&#39;Fitted Values&#39;)
-plt.ylabel(&#39;Residuals&#39;)
+<span class="c1"># 左の図</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y_fit_high</span><span class="p">,</span><span class="n">resid_high</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>  <span class="c1"># 縦軸の値が0での平行線</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># 縦軸の表示幅を指定</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fitted Values&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Residuals&#39;</span><span class="p">)</span>
 
-# 右の図
-plt.subplot(122)
-plt.scatter(y_fit_low,resid_low)
-plt.axhline(y=0, color=&#39;red&#39;)
-plt.ylim(-5,5)
-plt.xlabel(&#39;Fitted Values&#39;)
-plt.ylabel(&#39;Residuals&#39;)
+<span class="c1"># 右の図</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y_fit_low</span><span class="p">,</span><span class="n">resid_low</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fitted Values&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Residuals&#39;</span><span class="p">)</span>
 
-plt.tight_layout();
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
@@ -1005,25 +1005,25 @@ plt.tight_layout();
 <p>予測値と標準化残差の散布図を図示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(8,3))
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
 
-# 左の図
-plt.subplot(121)
-plt.scatter(y_fit_high,resid_st_high)
-plt.axhline(y=0, color=&#39;red&#39;)  # 縦軸の値が0での平行線
-plt.ylim(-5,5)  # 縦軸の表示幅を指定
-plt.xlabel(&#39;Fitted Values&#39;)
-plt.ylabel(&#39;Standardized Residuals&#39;)
+<span class="c1"># 左の図</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y_fit_high</span><span class="p">,</span><span class="n">resid_st_high</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>  <span class="c1"># 縦軸の値が0での平行線</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># 縦軸の表示幅を指定</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fitted Values&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Standardized Residuals&#39;</span><span class="p">)</span>
 
-# 右の図
-plt.subplot(122)
-plt.scatter(y_fit_low,resid_st_low)
-plt.axhline(y=0, color=&#39;red&#39;)
-plt.ylim(-5,5)
-plt.xlabel(&#39;Fitted Values&#39;)
-plt.ylabel(&#39;Standardized Residuals&#39;)
+<span class="c1"># 右の図</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y_fit_low</span><span class="p">,</span><span class="n">resid_st_low</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fitted Values&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Standardized Residuals&#39;</span><span class="p">)</span>
 
-plt.tight_layout();
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
@@ -1053,16 +1053,16 @@ plt.tight_layout();
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def resid_ideal(n, u_sd):
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">resid_ideal</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">u_sd</span><span class="p">):</span>
     
-    xx = list(range(n))  # 0から始まるｎ個の整数のリスト
-    u = norm.rvs(scale=u_sd, size=n)   # 正規分布に従うn個の「残差」
+    <span class="n">xx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>  <span class="c1"># 0から始まるｎ個の整数のリスト</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="n">u_sd</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>   <span class="c1"># 正規分布に従うn個の「残差」</span>
     
-    return plt.scatter(xx,u), \
-           plt.axhline(y=0,color=&#39;red&#39;), \
-           plt.xlabel(&#39;n&#39;), \
-           plt.ylabel(&#39;Residuals&#39;), \
-           plt.title(&#39;Ideal Residuals&#39;)
+    <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">u</span><span class="p">),</span> \
+           <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">),</span> \
+           <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">),</span> \
+           <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Residuals&#39;</span><span class="p">),</span> \
+           <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Ideal Residuals&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1072,7 +1072,7 @@ plt.tight_layout();
 <p>標準偏差<code class="docutils literal notranslate"><span class="pre">1</span></code>の<span class="math notranslate nohighlight">\(n=2000\)</span>の残差</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>resid_ideal(2000, 1);
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">resid_ideal</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1085,7 +1085,7 @@ plt.tight_layout();
 <p>標準偏差<code class="docutils literal notranslate"><span class="pre">1</span></code>の<span class="math notranslate nohighlight">\(n=500\)</span>の残差</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>resid_ideal(500, 1);
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">resid_ideal</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1098,7 +1098,7 @@ plt.tight_layout();
 <p>標準偏差<code class="docutils literal notranslate"><span class="pre">1</span></code>の<span class="math notranslate nohighlight">\(n=100\)</span>の残差</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>resid_ideal(100, 1);
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">resid_ideal</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1111,7 +1111,7 @@ plt.tight_layout();
 <p>標準偏差<code class="docutils literal notranslate"><span class="pre">1</span></code>の<span class="math notranslate nohighlight">\(n=30\)</span>の残差</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>resid_ideal(30, 1);
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">resid_ideal</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1124,7 +1124,7 @@ plt.tight_layout();
 <p>標準偏差<code class="docutils literal notranslate"><span class="pre">1</span></code>の<span class="math notranslate nohighlight">\(n=20\)</span>の残差</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>resid_ideal(20, 1);
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">resid_ideal</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1143,15 +1143,15 @@ plt.tight_layout();
 <p>次のシミュレーションを考えよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n = 50  # 標本の大きさ
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">50</span>  <span class="c1"># 標本の大きさ</span>
 
-x = norm.rvs(loc=4, scale=1, size=n)  # 説明変数
-u = norm.rvs(size=n)  # 誤差項（標準正規分布）
-y = 1 + 0.5*x + u  # 説明変数
+<span class="n">x</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 説明変数</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 誤差項（標準正規分布）</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># 説明変数</span>
 
-df_diag = pd.DataFrame({&#39;Y&#39;:y, &#39;X&#39;:x})  # DataFrameの作成
+<span class="n">df_diag</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>  <span class="c1"># DataFrameの作成</span>
 
-res_diag = ols(formula=&#39;Y ~ X&#39;, data=df_diag).fit()  # OLS推定
+<span class="n">res_diag</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_diag</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLS推定</span>
 </pre></div>
 </div>
 </div>
@@ -1175,8 +1175,8 @@ res_diag = ols(formula=&#39;Y ~ X&#39;, data=df_diag).fit()  # OLS推定
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>lmdiag.resid_fit(res_diag)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lmdiag</span><span class="o">.</span><span class="n">resid_fit</span><span class="p">(</span><span class="n">res_diag</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1211,8 +1211,8 @@ pass
 <p>残差が正規分布に従っているかを確認する。データが正規分布に従っている場合，データは45度線（赤の点線）に沿って分布することになる。多くの残差が概ね45度線近傍にあれば他の図を確認する程度でよい。しかし多くの残差が45度線から外れている場合は，正規分布ではない可能性が大きくなる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>lmdiag.q_q(res_diag)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lmdiag</span><span class="o">.</span><span class="n">q_q</span><span class="p">(</span><span class="n">res_diag</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1243,8 +1243,8 @@ pass
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>lmdiag.scale_loc(res_diag)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lmdiag</span><span class="o">.</span><span class="n">scale_loc</span><span class="p">(</span><span class="n">res_diag</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1302,8 +1302,8 @@ pass
 <p>下の図では<code class="docutils literal notranslate"><span class="pre">CD</span></code>の赤い点線は出ていない。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>lmdiag.resid_lev(res_diag)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lmdiag</span><span class="o">.</span><span class="n">resid_lev</span><span class="p">(</span><span class="n">res_diag</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1316,9 +1316,9 @@ pass
 <h3><code class="docutils literal notranslate"><span class="pre">plot()</span></code>：４つの図を同時に表示<a class="headerlink" href="#plot-4" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(8,7))
-lmdiag.plot(res_diag)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">lmdiag</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res_diag</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1343,8 +1343,8 @@ pass
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sm.qqplot(res_diag.resid, fit=True, line=&#39;45&#39;)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sm</span><span class="o">.</span><span class="n">qqplot</span><span class="p">(</span><span class="n">res_diag</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1372,22 +1372,22 @@ pass
 <p><span class="math notranslate nohighlight">\(y\)</span>を対数変換する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n = 100  # 標本の大きさ
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># 標本の大きさ</span>
 
-x = uniform.rvs(1, 10, size=n)  # 説明変数
-u = norm.rvs(scale=1, size=n)  # 誤差項
-y = np.exp(100.0 + .1*x + u)   # 被説明変数
+<span class="n">x</span> <span class="o">=</span> <span class="n">uniform</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 説明変数</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 誤差項</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">100.0</span> <span class="o">+</span> <span class="mf">.1</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">u</span><span class="p">)</span>   <span class="c1"># 被説明変数</span>
 
-df = pd.DataFrame({&#39;Y&#39;:y, &#39;X&#39;:x})  # DataFrame
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>  <span class="c1"># DataFrame</span>
 
-res = ols(formula=&#39;Y ~ X&#39;, data=df).fit()  # OLSの計算
-resid_std = res.get_influence().resid_studentized_internal  # 標準化残差
+<span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLSの計算</span>
+<span class="n">resid_std</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">get_influence</span><span class="p">()</span><span class="o">.</span><span class="n">resid_studentized_internal</span>  <span class="c1"># 標準化残差</span>
 
-plt.scatter(res.fittedvalues,resid_std)  # 散布図
-plt.axhline(y=0, color=&#39;red&#39;)          # 赤い平行線
-plt.xlabel(&#39;Fitted Values&#39;)
-plt.ylabel(&#39;Standardized Residuals&#39;)
-pass
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span><span class="n">resid_std</span><span class="p">)</span>  <span class="c1"># 散布図</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>          <span class="c1"># 赤い平行線</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fitted Values&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Standardized Residuals&#39;</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1398,9 +1398,9 @@ pass
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(8,7))
-lmdiag.plot(res)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">lmdiag</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1426,21 +1426,21 @@ pass
 <p>標本回帰式に<span class="math notranslate nohighlight">\(x^2\)</span>を加える。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n = 100
-x = np.linspace(0,16,n)
-x2 = x**2
-u = norm.rvs(scale=1, size=n)
-y = 1.0 + 0.1*x +0.1*x2+ u
-df = pd.DataFrame({&#39;Y&#39;:y, &#39;X&#39;:x})
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span><span class="mf">0.1</span><span class="o">*</span><span class="n">x2</span><span class="o">+</span> <span class="n">u</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>
 
-res = ols(formula=&#39;Y ~ X&#39;, data=df).fit()
-resid_std = res.get_influence().resid_studentized_internal
+<span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">resid_std</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">get_influence</span><span class="p">()</span><span class="o">.</span><span class="n">resid_studentized_internal</span>
 
-plt.scatter(res.fittedvalues,resid_std)
-plt.axhline(y=0, color=&#39;red&#39;)
-plt.xlabel(&#39;Fitted Values&#39;)
-plt.ylabel(&#39;Standardized Residuals&#39;)
-pass
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span><span class="n">resid_std</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fitted Values&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Standardized Residuals&#39;</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1451,9 +1451,9 @@ pass
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(8,7))
-lmdiag.plot(res)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">lmdiag</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1487,23 +1487,23 @@ pass
 <p>ダミー変数を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n = 100
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
 
-b0 = np.random.choice([1,7], n, p=[0.5,0.5])
-x = uniform.rvs(0,10,size=n)
-u = norm.rvs(scale=1, size=n)
-y = b0 + 0.1*x + u
+<span class="n">b0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">])</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">uniform</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">u</span>
 
-df = pd.DataFrame({&#39;Y&#39;:y, &#39;X&#39;:x})
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>
 
-res = ols(formula=&#39;Y ~ X&#39;, data=df).fit()
-resid_std = res.get_influence().resid_studentized_internal
+<span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">resid_std</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">get_influence</span><span class="p">()</span><span class="o">.</span><span class="n">resid_studentized_internal</span>
 
-plt.scatter(res.fittedvalues,resid_std)
-plt.axhline(y=0, color=&#39;red&#39;)
-plt.xlabel(&#39;Fitted Values&#39;)
-plt.ylabel(&#39;Standardized Residuals&#39;)
-pass
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span><span class="n">resid_std</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fitted Values&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Standardized Residuals&#39;</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1514,9 +1514,9 @@ pass
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(8,7))
-lmdiag.plot(res)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">lmdiag</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1556,20 +1556,20 @@ pass
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n = 100
-x = uniform.rvs(0,10,size=n)
-u = norm.rvs(scale=1, size=n)
-y = 1 + 0.1*x + x**0.6*u
-df = pd.DataFrame({&#39;Y&#39;:y, &#39;X&#39;:x})
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">uniform</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mf">0.6</span><span class="o">*</span><span class="n">u</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>
 
-res = ols(formula=&#39;Y ~ X&#39;, data=df).fit()
-resid_std = res.get_influence().resid_studentized_internal
+<span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">resid_std</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">get_influence</span><span class="p">()</span><span class="o">.</span><span class="n">resid_studentized_internal</span>
 
-plt.scatter(res.fittedvalues,resid_std)
-plt.axhline(y=0, color=&#39;red&#39;)
-plt.xlabel(&#39;Fitted Values&#39;)
-plt.ylabel(&#39;Standardized Residuals&#39;)
-pass
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span><span class="n">resid_std</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fitted Values&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Standardized Residuals&#39;</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1580,9 +1580,9 @@ pass
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(8,7))
-lmdiag.plot(res)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">lmdiag</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1596,23 +1596,23 @@ pass
 <p>ここでは推定値が１つの観測値に大きく左右される場合を考える。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>np.random.seed(123)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
 
-n = 20
-x = norm.rvs(loc=20, scale=3, size=n)
-u = norm.rvs(size=n)
-y = 5 + 0.5*x + u
+<span class="n">n</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">u</span>
 
-# 外れ値を追加する
-x = np.append(x, 30)
-y = np.append(y, 10)
-df_cd = pd.DataFrame({&#39;Y&#39;:y, &#39;X&#39;:x})
+<span class="c1"># 外れ値を追加する</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">df_cd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>
 
-# 外れ値がない場合のOLS
-res_no = ols(formula=&#39;Y ~ X&#39;, data=df_cd.loc[0:19,:]).fit()
+<span class="c1"># 外れ値がない場合のOLS</span>
+<span class="n">res_no</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_cd</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">19</span><span class="p">,:])</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-# 外れ値がある場合のOLS
-res_cd = ols(formula=&#39;Y ~ X&#39;, data=df_cd).fit()
+<span class="c1"># 外れ値がある場合のOLS</span>
+<span class="n">res_cd</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_cd</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1620,12 +1620,12 @@ res_cd = ols(formula=&#39;Y ~ X&#39;, data=df_cd).fit()
 <p>回帰曲線の図示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.scatter(x,y)
-plt.scatter(30,10, color=&#39;red&#39;)  # 外れ値
-plt.plot(x[:20],res_no.fittedvalues, label=&#39;No Outlier&#39;)
-plt.plot(x,res_cd.fittedvalues, label=&#39;With Outlier&#39;)
-plt.legend()
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>  <span class="c1"># 外れ値</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="mi">20</span><span class="p">],</span><span class="n">res_no</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;No Outlier&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">res_cd</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;With Outlier&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1636,9 +1636,9 @@ pass
 <p>外れ値（赤の観測値）がない場合の回帰診断</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(8,7))
-lmdiag.plot(res_no)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">lmdiag</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res_no</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1649,9 +1649,9 @@ pass
 <p>外れ値（赤の観測値）がある場合の回帰診断</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(8,7))
-lmdiag.plot(res_cd)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">lmdiag</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res_cd</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1665,7 +1665,7 @@ pass
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_cd.iloc[20,:]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_cd</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">20</span><span class="p">,:]</span>
 </pre></div>
 </div>
 </div>

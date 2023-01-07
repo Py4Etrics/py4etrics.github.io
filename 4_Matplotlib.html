@@ -85,7 +85,7 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="visually-hidden">Toggle in-page Table of Contents</div>
 </label>
 <!-- Headers at the top -->
-<div class="announcement header-item noprint"><p><a href='http://www.econ.kobe-u.ac.jp/topics/pdf/221212-2.pdf'>✴️<<font color='white'>特別講演「UCバークレー校における経済学とデータサイエンス教育」(2023年1月6日) ← クリック！✴️</font></a></p></div>
+<div class="announcement header-item noprint"></div>
 <div class="header header-item noprint"></div>
 
     
@@ -559,9 +559,9 @@ title="Print to PDF"
 <p>通常，<code class="docutils literal notranslate"><span class="pre">plt</span></code>として読み込む。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 </pre></div>
 </div>
 </div>
@@ -579,9 +579,9 @@ in English or the language of your choice.
 <p><code class="docutils literal notranslate"><span class="pre">df</span></code>を再度読み直す。今回は<code class="docutils literal notranslate"><span class="pre">year</span></code>を行ラベルにせず，インデックス番号をそのまま使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>url = &#39;https://raw.githubusercontent.com/Haruyama-KobeU/Haruyama-KobeU.github.io/master/data/data1.csv&#39;
-df = pd.read_csv(url).dropna()
-df.head(3)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/Haruyama-KobeU/Haruyama-KobeU.github.io/master/data/data1.csv&#39;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -647,7 +647,7 @@ df.head(3)
 <p><code class="docutils literal notranslate"><span class="pre">gdp</span></code>を縦軸にした図を描く。<strong>Jupyter Notebook</strong>を使うと最小限必要なコードは１行となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.plot(&#39;gdp&#39;, data=df);
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -691,7 +691,7 @@ df.head(3)
 <p>横軸の変数を指定するには，<code class="docutils literal notranslate"><span class="pre">()</span></code>内に該当する変数を追加するだけである。ただ順番に気をつけること。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.plot(&#39;year&#39;, &#39;gdp&#39;, data=df);
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -706,7 +706,7 @@ df.head(3)
 <p>３番目のデータ指定は「このデータの中にある<code class="docutils literal notranslate"><span class="pre">year</span></code>と<code class="docutils literal notranslate"><span class="pre">gdp</span></code>を使う」ことを意味しており，データ指定がなければ<code class="docutils literal notranslate"><span class="pre">Python</span></code>はどの<code class="docutils literal notranslate"><span class="pre">year</span></code>と<code class="docutils literal notranslate"><span class="pre">gdp</span></code>か分からずにエラーとなる。一方で，データ指定をせずに，直接横軸・縦軸の変数を指定することも可能である。以下がその例：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.plot(df[&#39;year&#39;], df[&#39;gdp&#39;]);
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 </div>
@@ -717,15 +717,15 @@ df.head(3)
 <p>上の図で何をプロットしているかを分かっている場合はこれで十分だが，論文などに使う場合は不十分である。以下では「飾り付け」をする。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.plot(&#39;year&#39;, &#39;gdp&#39;,       # 横軸の変数，　　縦軸の変数
-         color=&#39;red&#39;,         # 色 ：　赤
-         linestyle=&#39;dashed&#39;,  # 線のタイプ：点線
-         marker=&#39;o&#39;,          # マーカー：点
-         data=df)             # データの指定
-plt.xlabel(&#39;year&#39;)            # 横軸のラベル
-plt.ylabel(&#39;GDP&#39;)             # 縦軸のラベル
-plt.title(&#39;Gross Domestic Product&#39;, size=20)  # 図のタイトル   size=は省略可能
-plt.grid()                    # グリッドの表示
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;gdp&#39;</span><span class="p">,</span>       <span class="c1"># 横軸の変数，　　縦軸の変数</span>
+         <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span>         <span class="c1"># 色 ：　赤</span>
+         <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span>  <span class="c1"># 線のタイプ：点線</span>
+         <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span>          <span class="c1"># マーカー：点</span>
+         <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>             <span class="c1"># データの指定</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)</span>            <span class="c1"># 横軸のラベル</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;GDP&#39;</span><span class="p">)</span>             <span class="c1"># 縦軸のラベル</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gross Domestic Product&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>  <span class="c1"># 図のタイトル   size=は省略可能</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>                    <span class="c1"># グリッドの表示</span>
 </pre></div>
 </div>
 </div>
@@ -833,10 +833,10 @@ plt.grid()                    # グリッドの表示
 <p>単に<code class="docutils literal notranslate"><span class="pre">plt.plot()</span></code>を並べるだけである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.plot(&#39;year&#39;, &#39;gdp&#39;, data=df)
-plt.plot(&#39;year&#39;, &#39;con&#39;, data=df)
-plt.plot(&#39;year&#39;, &#39;inv&#39;, data=df)
-plt.legend();   # 凡例
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;con&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;inv&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>   <span class="c1"># 凡例</span>
 </pre></div>
 </div>
 </div>
@@ -847,9 +847,9 @@ plt.legend();   # 凡例
 <p><strong>散布図の描画</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.scatter(&#39;gdp&#39;, &#39;con&#39;, data=df)  # 横軸の変数　　縦軸の変数
-plt.xlabel(&#39;GDP&#39;)                   #　横軸のラベル （省略可）
-plt.ylabel(&#39;Consumption&#39;);          # 縦軸のラベル（省略可）
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="s1">&#39;con&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>  <span class="c1"># 横軸の変数　　縦軸の変数</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;GDP&#39;</span><span class="p">)</span>                   <span class="c1">#　横軸のラベル （省略可）</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Consumption&#39;</span><span class="p">);</span>          <span class="c1"># 縦軸のラベル（省略可）</span>
 </pre></div>
 </div>
 </div>
@@ -860,9 +860,9 @@ plt.ylabel(&#39;Consumption&#39;);          # 縦軸のラベル（省略可）
 <p>次のコードでも同じ結果となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.plot(&#39;gdp&#39;, &#39;con&#39;, &#39;o&#39;,  data=df)
-plt.xlabel(&#39;GDP&#39;)
-plt.ylabel(&#39;Consumption&#39;);
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="s1">&#39;con&#39;</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span>  <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;GDP&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Consumption&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -874,9 +874,9 @@ plt.ylabel(&#39;Consumption&#39;);
 <p><strong>ヒストグラム</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.hist(df[&#39;gdp&#39;])
-plt.title(&#39;GDP&#39;)   # 省略可
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;GDP&#39;</span><span class="p">)</span>   <span class="c1"># 省略可</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -887,13 +887,13 @@ pass
 <p><strong>パイチャート</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>lab = [&#39;Investment&#39;, &#39;Consumption&#39;]  # ラベルの作成
-dt = df.loc[1,[&#39;inv&#39;,&#39;con&#39;]]         # 2001年のデータを取り出す
-plt.pie(dt,                          # データの指定
-        labels=lab,                  # ラベルの指定 （省略可だが，ある方がわかりやすい）
-        autopct=&#39;%.2f&#39;)              # ％表示  （省略可）
-plt.title(&#39;GDP Share in 2001&#39;)       # タイトル （省略可）
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lab</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Investment&#39;</span><span class="p">,</span> <span class="s1">&#39;Consumption&#39;</span><span class="p">]</span>  <span class="c1"># ラベルの作成</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">,[</span><span class="s1">&#39;inv&#39;</span><span class="p">,</span><span class="s1">&#39;con&#39;</span><span class="p">]]</span>         <span class="c1"># 2001年のデータを取り出す</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span>                          <span class="c1"># データの指定</span>
+        <span class="n">labels</span><span class="o">=</span><span class="n">lab</span><span class="p">,</span>                  <span class="c1"># ラベルの指定 （省略可だが，ある方がわかりやすい）</span>
+        <span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.2f</span><span class="s1">&#39;</span><span class="p">)</span>              <span class="c1"># ％表示  （省略可）</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;GDP Share in 2001&#39;</span><span class="p">)</span>       <span class="c1"># タイトル （省略可）</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -905,9 +905,9 @@ pass
 <p>解釈については<a class="reference external" href="https://towardsdatascience.com/understanding-boxplots-5e2df7bcbd51">このサイト</a>を参照。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.boxplot(df[&#39;gdp&#39;])
-plt.title(&#39;GDP&#39;)   # 省略可
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;GDP&#39;</span><span class="p">)</span>   <span class="c1"># 省略可</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -932,7 +932,7 @@ pass
 <p>次の例では線形関数と２次関数を描くが，まず横軸の変数<code class="docutils literal notranslate"><span class="pre">x</span></code>のデータを作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>x = np.linspace(-2,2,100)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -940,28 +940,28 @@ pass
 <p>図の作成</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(10, 8))  # 図の大きさを設定（省略可）
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>  <span class="c1"># 図の大きさを設定（省略可）</span>
 
-# n = 5
-plt.subplot(221)
-plt.plot(x, x)
-plt.title(&#39;A Positive Slope&#39;)
+<span class="c1"># n = 5</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;A Positive Slope&#39;</span><span class="p">)</span>
 
-# n = 10
-plt.subplot(222)
-plt.plot(x, -x)
-plt.title(&#39;A Negative Slope&#39;)
+<span class="c1"># n = 10</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;A Negative Slope&#39;</span><span class="p">)</span>
 
-# n = 100
-plt.subplot(223)
-plt.plot(x, x**2)
-plt.title(&#39;A U Shape&#39;)
+<span class="c1"># n = 100</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;A U Shape&#39;</span><span class="p">)</span>
 
-# n = 1000
-plt.subplot(224)
-plt.plot(x, -x**2)
-plt.title(&#39;An Inverted U Shape&#39;)
-pass
+<span class="c1"># n = 1000</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;An Inverted U Shape&#39;</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -982,8 +982,8 @@ pass
 <p>を使う。この場合<code class="docutils literal notranslate"><span class="pre">;</span></code>や<code class="docutils literal notranslate"><span class="pre">pass</span></code>を使を必要はない。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.plot(&#39;gdp&#39;, data=df)
-plt.savefig(&#39;gdp.png&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;gdp.png&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

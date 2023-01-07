@@ -87,7 +87,7 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="visually-hidden">Toggle in-page Table of Contents</div>
 </label>
 <!-- Headers at the top -->
-<div class="announcement header-item noprint"><p><a href='http://www.econ.kobe-u.ac.jp/topics/pdf/221212-2.pdf'>✴️<<font color='white'>特別講演「UCバークレー校における経済学とデータサイエンス教育」(2023年1月6日) ← クリック！✴️</font></a></p></div>
+<div class="announcement header-item noprint"></div>
 <div class="header header-item noprint"></div>
 
     
@@ -727,18 +727,18 @@ Do you want to read in a differnt language? Open the
 <h3>例１<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>s = &quot;Kobe University&quot;  # globalスコープ
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Kobe University&quot;</span>  <span class="c1"># globalスコープ</span>
 
-def func_1():
-    s = &quot;神戸大学&quot;  # localスコープ
-    print(s)
+<span class="k">def</span> <span class="nf">func_1</span><span class="p">():</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;神戸大学&quot;</span>  <span class="c1"># localスコープ</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(s)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -750,7 +750,7 @@ def func_1():
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>func_1()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">func_1</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -765,11 +765,11 @@ def func_1():
 <h3>例２<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def func_2():
-    a_local = 3
-    print(a_local)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_2</span><span class="p">():</span>
+    <span class="n">a_local</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a_local</span><span class="p">)</span>
 
-func_2()
+<span class="n">func_2</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -782,7 +782,7 @@ func_2()
 <p><code class="docutils literal notranslate"><span class="pre">globalスコープ</span></code>から<code class="docutils literal notranslate"><span class="pre">a_local</span></code>をアクセスすると次のエラーが発生する。</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>a_local
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a_local</span>
 </pre></div>
 </div>
 </div>
@@ -803,12 +803,12 @@ func_2()
 <p>関数内で使う変数は関数内で定義する方が意図しない結果につながるリスクを軽減できる。この点を説明するために次の例を考えよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>a = 10
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>
 
-def func_3(x):
-    return a + x
+<span class="k">def</span> <span class="nf">func_3</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">x</span>
 
-func_3(2)
+<span class="n">func_3</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -821,14 +821,14 @@ func_3(2)
 <p><strong>知らずに</strong>以下を設定していたとしよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>a = 1000
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">1000</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>func_3(2)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">func_3</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -841,11 +841,11 @@ func_3(2)
 <p>このような間違いは関数内で変数を定義することで回避できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def func_4(x):
-    a = 10
-    return a + x
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_4</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">x</span>
 
-func_4(2)
+<span class="n">func_4</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -873,7 +873,7 @@ func_4(2)
 <p>となり永遠に3が続く。コンピュータのメモリの容量は有限であるため、無限に続く3をメモリに保存しすることは不可能である。従って、どこかで切断して<span class="math notranslate nohighlight">\(1/3\)</span>の近似値を保存する必要がある。これと同じようなことをPythonは行っている。10進法の数字を2進法に変換し、計算結果を10進法に変換し表示する。その際、多くの数字は<span class="math notranslate nohighlight">\(1/3\)</span>と同じように近似値となる。その結果、誰でもおかしいと思う結果が発生することになる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>0.3 == 0.1 + 0.1 + 0.1
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mf">0.3</span> <span class="o">==</span> <span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.1</span>
 </pre></div>
 </div>
 </div>
@@ -886,7 +886,7 @@ func_4(2)
 <p><code class="docutils literal notranslate"><span class="pre">0.3</span></code>と<code class="docutils literal notranslate"><span class="pre">0.1</span></code>と表示されているが、実際には近似値で計算している。その近似値を表示すると</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>format(0.3, &#39;.55f&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">format</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="s1">&#39;.55f&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -899,7 +899,7 @@ func_4(2)
 <p>ここで<code class="docutils literal notranslate"><span class="pre">'.55f'</span></code>は小数点以下55桁を表示させる引数。同様に、</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>format(0.1, &#39;.55f&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">format</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;.55f&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -912,7 +912,7 @@ func_4(2)
 <p>また、この問題は値が小さな場合だけではなく、大きい値の場合にも類似する問題がある。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>2.0**52
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mf">2.0</span><span class="o">**</span><span class="mi">52</span>
 </pre></div>
 </div>
 </div>
@@ -924,7 +924,7 @@ func_4(2)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>2.0**52 == 2.0**52 + 1
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mf">2.0</span><span class="o">**</span><span class="mi">52</span> <span class="o">==</span> <span class="mf">2.0</span><span class="o">**</span><span class="mi">52</span> <span class="o">+</span> <span class="mi">1</span>
 </pre></div>
 </div>
 </div>
@@ -937,7 +937,7 @@ func_4(2)
 <p>この結果は期待どおりであるが、次の例はそうではない。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>2.0**53
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mf">2.0</span><span class="o">**</span><span class="mi">53</span>
 </pre></div>
 </div>
 </div>
@@ -949,7 +949,7 @@ func_4(2)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>2.0**53 == 2.0**53 + 1
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mf">2.0</span><span class="o">**</span><span class="mi">53</span> <span class="o">==</span> <span class="mf">2.0</span><span class="o">**</span><span class="mi">53</span> <span class="o">+</span> <span class="mi">1</span>
 </pre></div>
 </div>
 </div>
@@ -963,8 +963,8 @@ func_4(2)
 <p>解決策として<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の<code class="docutils literal notranslate"><span class="pre">isclose()</span></code>関数を使うことができる。この関数は２つの値が十分に近い場合は<code class="docutils literal notranslate"><span class="pre">True</span></code>を返す。では、どれだけ近い場合に<code class="docutils literal notranslate"><span class="pre">True</span></code>を返すのか？詳細は<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.isclose.html">マニュアル</a>を参照。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
-np.isclose(0.3, 0.1+0.1+0.1)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="o">+</span><span class="mf">0.1</span><span class="o">+</span><span class="mf">0.1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -977,7 +977,7 @@ np.isclose(0.3, 0.1+0.1+0.1)
 <p>一方、<code class="docutils literal notranslate"><span class="pre">2.0**53</span></code>の例は桁の制限に達しているため対応不可能である。ちなみに、整数だとこのような問題は発生しない。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>2**53 == 2**53 + 1
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span><span class="o">**</span><span class="mi">53</span> <span class="o">==</span> <span class="mi">2</span><span class="o">**</span><span class="mi">53</span> <span class="o">+</span> <span class="mi">1</span>
 </pre></div>
 </div>
 </div>
@@ -996,7 +996,7 @@ np.isclose(0.3, 0.1+0.1+0.1)
 <p><code class="docutils literal notranslate"><span class="pre">Python</span></code>では「全てがオブジェクト」と言われるが、ここでのオブジェクトとは<strong>属性</strong>（<strong>データ</strong>（値や性質など）と<strong>メソッド</strong>（変数特有の関数））から構成される集合体（「塊り」）を指す。例えば、数値<code class="docutils literal notranslate"><span class="pre">0.1</span></code>のオブジェクトを考えよう。<code class="docutils literal notranslate"><span class="pre">dir()</span></code>を使うとどのような属性から構成されているか表示される。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dir(0.1)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">dir</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1071,7 +1071,7 @@ np.isclose(0.3, 0.1+0.1+0.1)
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(0.1).real
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
 </pre></div>
 </div>
 </div>
@@ -1083,7 +1083,7 @@ np.isclose(0.3, 0.1+0.1+0.1)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(0.1).as_integer_ratio()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span><span class="o">.</span><span class="n">as_integer_ratio</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1096,8 +1096,8 @@ np.isclose(0.3, 0.1+0.1+0.1)
 <p>上の例では、<code class="docutils literal notranslate"><span class="pre">=</span></code>を使い<code class="docutils literal notranslate"><span class="pre">a</span></code>や<code class="docutils literal notranslate"><span class="pre">x</span></code>などの変数に「代入」していないことに注意しよう。これは変数がなくても<code class="docutils literal notranslate"><span class="pre">0.1</span></code>はオブジェクトとして存在していることを示している。では、変数とオブジェクトにはどのような関係があるのだろう。変数<code class="docutils literal notranslate"><span class="pre">a</span></code>を導入するために次のように書いてみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>a = 0.1
-a.real, a.as_integer_ratio()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">a</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">as_integer_ratio</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1124,7 +1124,7 @@ a.real, a.as_integer_ratio()
 <p>Pythonのオブジェクトをもう少し考えてみよう。オブジェクトはコンピューター内のメモリに保存され、直ぐに計算などに使えるように準備されている。例えば、<code class="docutils literal notranslate"><span class="pre">0.1</span></code>というオブジェクトを生成してみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>a = 0.1
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">0.1</span>
 </pre></div>
 </div>
 </div>
@@ -1132,12 +1132,12 @@ a.real, a.as_integer_ratio()
 <p>コンピューター・メモリーには住所のようにロケーションを示すメモリー・アドレス（以下では「アドレス」と呼ぶ）があり、<code class="docutils literal notranslate"><span class="pre">id()</span></code>関数を使うとそれを表示することができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>id(a)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4399834928
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4467100816
 </pre></div>
 </div>
 </div>
@@ -1145,19 +1145,19 @@ a.real, a.as_integer_ratio()
 <p>２つのオブジェクトが同一のものかどうかを確認するには、このアドレスを比べれば良い。例えば、<code class="docutils literal notranslate"><span class="pre">a</span></code>と同じオブジェクトを示す別の参照記号<code class="docutils literal notranslate"><span class="pre">b</span></code>を生成しよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>b = a
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>id(b)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4399834928
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4467100816
 </pre></div>
 </div>
 </div>
@@ -1165,7 +1165,7 @@ a.real, a.as_integer_ratio()
 <p>アドレスが同じなので同じオブジェクトであることが確認できる。また、アドレスが等しいかどうかは<code class="docutils literal notranslate"><span class="pre">is</span></code>を使って確認することもできる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>a is b
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="ow">is</span> <span class="n">b</span>
 </pre></div>
 </div>
 </div>
@@ -1178,20 +1178,20 @@ a.real, a.as_integer_ratio()
 <p><code class="docutils literal notranslate"><span class="pre">==</span></code>ではないことに注意しよう。<code class="docutils literal notranslate"><span class="pre">==</span></code>は<code class="docutils literal notranslate"><span class="pre">10</span></code>という値が同じかどうかを確認するだけで、アドレスとは無関係である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>c = 0.1
-id(c)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="nb">id</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4397591184
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4469381360
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>c is a, c == a
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="ow">is</span> <span class="n">a</span><span class="p">,</span> <span class="n">c</span> <span class="o">==</span> <span class="n">a</span>
 </pre></div>
 </div>
 </div>
@@ -1204,9 +1204,9 @@ id(c)
 <p>整数では<span class="math notranslate nohighlight">\([-5,256]\)</span>以外この結果が成り立つ。<span class="math notranslate nohighlight">\([-5,256]\)</span>は処理速度を最適化するために、Pythonのセッションが始まると同時に自動でメモリーにキャッシュ（保存）されるためアドレスは同じになる。例えば、次の<code class="docutils literal notranslate"><span class="pre">d</span></code>と<code class="docutils literal notranslate"><span class="pre">e</span></code>は値もアドレスも同じである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>d = 1
-e = 1
-d is e, d == e
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">e</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">d</span> <span class="ow">is</span> <span class="n">e</span><span class="p">,</span> <span class="n">d</span> <span class="o">==</span> <span class="n">e</span>
 </pre></div>
 </div>
 </div>
@@ -1219,10 +1219,10 @@ d is e, d == e
 <p>次に関数を考えてみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def func(x):
-    return x**2
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
 
-func(2)
+<span class="n">func</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1235,12 +1235,12 @@ func(2)
 <p>この関数のアドレスも<code class="docutils literal notranslate"><span class="pre">id()</span></code>を使い確認できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>id(func)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4449768928
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4519341792
 </pre></div>
 </div>
 </div>
@@ -1257,8 +1257,8 @@ func(2)
 <p>オブジェクトと変数の関係は、倉庫に保管されている商品と参照番号の関係と同じだと説明した。このような関係により、次のような問題が発生する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>f = [1,2,3]
-f
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">f</span>
 </pre></div>
 </div>
 </div>
@@ -1271,7 +1271,7 @@ f
 <p>リスト<code class="docutils literal notranslate"><span class="pre">f</span></code>のコピーである<code class="docutils literal notranslate"><span class="pre">g</span></code>を作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>g = f
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">f</span>
 </pre></div>
 </div>
 </div>
@@ -1279,12 +1279,12 @@ f
 <p><code class="docutils literal notranslate"><span class="pre">g</span></code>と<code class="docutils literal notranslate"><span class="pre">f</span></code>は同じオブジェクトであり、<code class="docutils literal notranslate"><span class="pre">is</span></code>で確認できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>g is f, id(g), id(f)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="ow">is</span> <span class="n">f</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">g</span><span class="p">),</span> <span class="nb">id</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(True, 4449845312, 4449845312)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(True, 4520148352, 4520148352)
 </pre></div>
 </div>
 </div>
@@ -1292,8 +1292,8 @@ f
 <p>即ち、<code class="docutils literal notranslate"><span class="pre">g</span></code>と<code class="docutils literal notranslate"><span class="pre">f</span></code>は別の参照記号ではあるが同じ品物を指している。ここで、<code class="docutils literal notranslate"><span class="pre">f</span></code>にメソッド<code class="docutils literal notranslate"><span class="pre">append()</span></code>を使って<code class="docutils literal notranslate"><span class="pre">100</span></code>を追加しよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>f.append(100)
-f
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">f</span>
 </pre></div>
 </div>
 </div>
@@ -1306,7 +1306,7 @@ f
 <p><code class="docutils literal notranslate"><span class="pre">g</span></code>はどうなっているかというと</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>g
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span>
 </pre></div>
 </div>
 </div>
@@ -1320,12 +1320,12 @@ f
 <p><code class="docutils literal notranslate"><span class="pre">100</span></code>が追加された後のアドレスを表示してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>f is g, id(f), id(g)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="ow">is</span> <span class="n">g</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="nb">id</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(True, 4449845312, 4449845312)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(True, 4520148352, 4520148352)
 </pre></div>
 </div>
 </div>
@@ -1333,8 +1333,8 @@ f
 <p><code class="docutils literal notranslate"><span class="pre">100</span></code>が追加される前のアドレスと同じである。即ち、<code class="docutils literal notranslate"><span class="pre">append()</span></code>は元のオブジェクトを変化させている。このようなことが発生することを念頭に置いて<code class="docutils literal notranslate"><span class="pre">f=g</span></code>のようなコードを書くべきであり、このことを忘れると意図しない結果につながる。このようなリスクを回避するためには、同じ数値のコピーを異なるオブジェクトとして生成する必要がある。そのためにはメソッド<code class="docutils literal notranslate"><span class="pre">.copy()</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>f_copy = f.copy()
-f_copy
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f_copy</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">f_copy</span>
 </pre></div>
 </div>
 </div>
@@ -1346,7 +1346,7 @@ f_copy
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>f_copy is f
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f_copy</span> <span class="ow">is</span> <span class="n">f</span>
 </pre></div>
 </div>
 </div>
@@ -1363,9 +1363,9 @@ f_copy
 （deep copy）呼ぶ。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from copy import deepcopy
-f_deep = deepcopy(f)
-f_deep
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="n">f_deep</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">f_deep</span>
 </pre></div>
 </div>
 </div>
@@ -1383,9 +1383,9 @@ f_deep
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># list()による浅いコピー
-ff1 = list(f)
-ff1, ff1 is f
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># list()による浅いコピー</span>
+<span class="n">ff1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">ff1</span><span class="p">,</span> <span class="n">ff1</span> <span class="ow">is</span> <span class="n">f</span>
 </pre></div>
 </div>
 </div>
@@ -1397,9 +1397,9 @@ ff1, ff1 is f
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># インデクシング
-ff2 = f[1]
-ff2, ff2 is f
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># インデクシング</span>
+<span class="n">ff2</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ff2</span><span class="p">,</span> <span class="n">ff2</span> <span class="ow">is</span> <span class="n">f</span>
 </pre></div>
 </div>
 </div>
@@ -1411,9 +1411,9 @@ ff2, ff2 is f
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># スライシング
-ff3 = f[:]
-ff3, ff3 is f
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># スライシング</span>
+<span class="n">ff3</span> <span class="o">=</span> <span class="n">f</span><span class="p">[:]</span>
+<span class="n">ff3</span><span class="p">,</span> <span class="n">ff3</span> <span class="ow">is</span> <span class="n">f</span>
 </pre></div>
 </div>
 </div>
@@ -1430,15 +1430,15 @@ ff3, ff3 is f
 <p>リストの「浅いコピー」と「深いコピー」の問題は<code class="docutils literal notranslate"><span class="pre">NumPy</span></code>にも存在する。しかし、これも<code class="docutils literal notranslate"><span class="pre">np.copy()</span></code>関数や<code class="docutils literal notranslate"><span class="pre">array</span></code>型のメソッド<code class="docutils literal notranslate"><span class="pre">.copy()</span></code>で回避することができる。また類似する問題としてコピー（copy）とビュー（view）の違いがある。以下ではこの問題を説明する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>arr = np.array([1,2,3,4,5])
-arr
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">arr</span>
 </pre></div>
 </div>
 </div>
@@ -1451,8 +1451,8 @@ arr
 <p>これをスライスして異なる変数を参照記号として使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>arr_slice = arr[1:3]
-arr_slice
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr_slice</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">arr_slice</span>
 </pre></div>
 </div>
 </div>
@@ -1465,8 +1465,8 @@ arr_slice
 <p><code class="docutils literal notranslate"><span class="pre">arr_slice</span></code>の<code class="docutils literal notranslate"><span class="pre">2</span></code>を<code class="docutils literal notranslate"><span class="pre">200</span></code>に入れ替える。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>arr_slice[0] = 200
-arr_slice
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr_slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">arr_slice</span>
 </pre></div>
 </div>
 </div>
@@ -1479,7 +1479,7 @@ arr_slice
 <p><code class="docutils literal notranslate"><span class="pre">arr</span></code>を表示しよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>arr
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span>
 </pre></div>
 </div>
 </div>
@@ -1498,8 +1498,8 @@ arr_slice
 <p>ではどのような場合に<code class="docutils literal notranslate"><span class="pre">views</span></code>になるのか。残念ながら、複雑な場合分けが必要になり、それを覚え使いこなすにはある程度の慣れが必要だる。従って、<code class="docutils literal notranslate"><span class="pre">view</span></code>をどうしても使わなくてはならない状況を除いては、以下のようにメソッド<code class="docutils literal notranslate"><span class="pre">.copy()</span></code>を使い、コピーを生成して作業することを強く推奨する。<code class="docutils literal notranslate"><span class="pre">.copy()</span></code>は「深いコピー」を生成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>arr_copy = arr[1:3].copy()
-arr_copy
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr_copy</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">arr_copy</span>
 </pre></div>
 </div>
 </div>
@@ -1512,8 +1512,8 @@ arr_copy
 <p><code class="docutils literal notranslate"><span class="pre">arr_copy</span></code>の<code class="docutils literal notranslate"><span class="pre">3</span></code>を<code class="docutils literal notranslate"><span class="pre">300</span></code>に入れ替える。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>arr_copy[1] = 300
-arr_copy
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr_copy</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">300</span>
+<span class="n">arr_copy</span>
 </pre></div>
 </div>
 </div>
@@ -1525,7 +1525,7 @@ arr_copy
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>arr
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span>
 </pre></div>
 </div>
 </div>
@@ -1544,9 +1544,9 @@ arr_copy
 <p><code class="docutils literal notranslate"><span class="pre">NumPy</span></code>と同じように<code class="docutils literal notranslate"><span class="pre">Pandas</span></code>もビュー（view）とコピー（copy）の問題が存在する。確認するために、次のコードを考えよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
-df = pd.DataFrame({&#39;a&#39;:np.arange(4), &#39;b&#39;:np.arange(4)})
-df
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">)})</span>
+<span class="n">df</span>
 </pre></div>
 </div>
 </div>
@@ -1600,8 +1600,8 @@ df
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_slice = df.iloc[1:3,:]
-df_slice
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_slice</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,:]</span>
+<span class="n">df_slice</span>
 </pre></div>
 </div>
 </div>
@@ -1647,8 +1647,8 @@ df_slice
 <p>それを確認するために元の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>である<code class="docutils literal notranslate"><span class="pre">df</span></code>の要素を変更する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.iloc[1,1] = 100
-df
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">df</span>
 </pre></div>
 </div>
 </div>
@@ -1702,7 +1702,7 @@ df
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_slice
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_slice</span>
 </pre></div>
 </div>
 </div>
@@ -1759,8 +1759,8 @@ df
 <p>この警告が出る場合は、<code class="docutils literal notranslate"><span class="pre">view</span></code>の疑いが高い（確定ではない）ので、<code class="docutils literal notranslate"><span class="pre">df</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">.copy()</span></code>を使って「深いコピー」を生成することを薦める。以下の例を考えよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_copy = df.copy().iloc[1:3,:]
-df_copy
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_copy</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,:]</span>
+<span class="n">df_copy</span>
 </pre></div>
 </div>
 </div>
@@ -1804,8 +1804,8 @@ df_copy
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.iloc[2,1] = 2000
-df
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2000</span>
+<span class="n">df</span>
 </pre></div>
 </div>
 </div>
@@ -1859,7 +1859,7 @@ df
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_copy
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_copy</span>
 </pre></div>
 </div>
 </div>
@@ -1903,7 +1903,7 @@ df
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_slice
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_slice</span>
 </pre></div>
 </div>
 </div>

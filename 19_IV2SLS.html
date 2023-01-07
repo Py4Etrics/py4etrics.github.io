@@ -87,7 +87,7 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="visually-hidden">Toggle in-page Table of Contents</div>
 </label>
 <!-- Headers at the top -->
-<div class="announcement header-item noprint"><p><a href='http://www.econ.kobe-u.ac.jp/topics/pdf/221212-2.pdf'>✴️<<font color='white'>特別講演「UCバークレー校における経済学とデータサイエンス教育」(2023年1月6日) ← クリック！✴️</font></a></p></div>
+<div class="announcement header-item noprint"></div>
 <div class="header header-item noprint"></div>
 
     
@@ -1009,17 +1009,17 @@ title="Print to PDF"
 <h1>操作変数法と２段階OLS<a class="headerlink" href="#ols" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
-import pandas as pd
-from linearmodels.iv import IV2SLS
-import wooldridge
-from scipy.stats import gaussian_kde, multivariate_normal, norm, uniform
-import matplotlib.pyplot as plt
-from scipy.stats import chi2
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">linearmodels.iv</span> <span class="kn">import</span> <span class="n">IV2SLS</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">gaussian_kde</span><span class="p">,</span> <span class="n">multivariate_normal</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="n">uniform</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">chi2</span>
 
-# 警告メッセージを非表示
-import warnings
-warnings.filterwarnings(&quot;ignore&quot;)
+<span class="c1"># 警告メッセージを非表示</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1149,9 +1149,9 @@ in English or the language of your choice.
 <p>既婚女性の教育の収益率に関するデータ<code class="docutils literal notranslate"><span class="pre">mroz</span></code>を利用して使い方を説明する。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mroz = wooldridge.data(&#39;mroz&#39;).dropna(subset=[&#39;lwage&#39;])  # 列&#39;lwage&#39;にNaNがある行は削除する
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mroz</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mroz&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lwage&#39;</span><span class="p">])</span>  <span class="c1"># 列&#39;lwage&#39;にNaNがある行は削除する</span>
 
-wooldridge.data(&#39;mroz&#39;,description=True)
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mroz&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1211,7 +1211,7 @@ provided the data, which he obtained from Professor Mroz.
 <p>まず回帰式を決める。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_1 = &#39;lwage ~ 1 + [educ ~ fatheduc]&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_1</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + [educ ~ fatheduc]&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -1219,7 +1219,7 @@ provided the data, which he obtained from Professor Mroz.
 <p><code class="docutils literal notranslate"><span class="pre">IV2SLS</span></code>モジュールの<code class="docutils literal notranslate"><span class="pre">from_formula</span></code>を使うことにより，<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">ols</span></code>のように回帰式を文字列で指定できる。次式では推定するモデルを設定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mod_1 = IV2SLS.from_formula(form_1, data=mroz)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mod_1</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1227,7 +1227,7 @@ provided the data, which he obtained from Professor Mroz.
 <p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">ols</span></code>のようにメソッド<code class="docutils literal notranslate"><span class="pre">.fit()</span></code>を使い推定する。（以前説明したオプションについての説明を参照）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_1 = mod_1.fit(cov_type=&#39;unadjusted&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_1</span> <span class="o">=</span> <span class="n">mod_1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1235,7 +1235,7 @@ provided the data, which he obtained from Professor Mroz.
 <p><code class="docutils literal notranslate"><span class="pre">res_1</span></code>の属性<code class="docutils literal notranslate"><span class="pre">.summary</span></code>，さらに<code class="docutils literal notranslate"><span class="pre">summary</span></code>の属性<code class="docutils literal notranslate"><span class="pre">tables</span></code>を使ってパラメータの部分だけを表示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res_1.summary.tables[1])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_1</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1260,11 +1260,11 @@ educ           0.0592     0.0351     1.6878     0.0914     -0.0095      0.1279
 <p><strong>第１段階のOLS</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>stage_1 = &#39;educ ~ 1 + fatheduc&#39;  # 回帰式
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stage_1</span> <span class="o">=</span> <span class="s1">&#39;educ ~ 1 + fatheduc&#39;</span>  <span class="c1"># 回帰式</span>
 
-res_stage_1 =IV2SLS.from_formula(stage_1, data=mroz).fit(cov_type=&#39;unadjusted&#39;)  # OLS推定
+<span class="n">res_stage_1</span> <span class="o">=</span><span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">stage_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>  <span class="c1"># OLS推定</span>
 
-mroz[&#39;educ_fit&#39;] = res_stage_1.fitted_values  # educの予測値を取得
+<span class="n">mroz</span><span class="p">[</span><span class="s1">&#39;educ_fit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">res_stage_1</span><span class="o">.</span><span class="n">fitted_values</span>  <span class="c1"># educの予測値を取得</span>
 </pre></div>
 </div>
 </div>
@@ -1274,11 +1274,11 @@ mroz[&#39;educ_fit&#39;] = res_stage_1.fitted_values  # educの予測値を取�
 <p><strong>第２段階のOLS</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>stage_2 = &#39;lwage ~ 1 + educ_fit&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stage_2</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ_fit&#39;</span>
 
-res_stage_2 =IV2SLS.from_formula(stage_2, data=mroz).fit(cov_type=&#39;unadjusted&#39;)  # OLS推定
+<span class="n">res_stage_2</span> <span class="o">=</span><span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">stage_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>  <span class="c1"># OLS推定</span>
 
-print(res_stage_2.summary.tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res_stage_2</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1301,11 +1301,11 @@ educ_fit       0.0592     0.0367     1.6119     0.1070     -0.0128      0.1311
 <p>確認のために，操作変数法を使わずに直接OLS推定をおこなうとどうなるかを確認しよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_ols = &#39;lwage ~ 1 + educ&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_ols</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ&#39;</span>
 
-res_ols =IV2SLS.from_formula(form_ols, data=mroz).fit()  # OLS推定
+<span class="n">res_ols</span> <span class="o">=</span><span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_ols</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLS推定</span>
 
-print(res_ols.summary.tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res_ols</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1406,11 +1406,11 @@ educ           0.1086     0.0134     8.1178     0.0000      0.0824      0.1349
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_check = &#39;educ ~ 1 + fatheduc + motheduc&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_check</span> <span class="o">=</span> <span class="s1">&#39;educ ~ 1 + fatheduc + motheduc&#39;</span>
 
-res_check =IV2SLS.from_formula(form_check, data=mroz).fit(cov_type=&#39;unadjusted&#39;)
+<span class="n">res_check</span> <span class="o">=</span><span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_check</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>
 
-print(res_check.summary)
+<span class="nb">print</span><span class="p">(</span><span class="n">res_check</span><span class="o">.</span><span class="n">summary</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1420,8 +1420,8 @@ print(res_check.summary)
 Dep. Variable:                   educ   R-squared:                      0.2081
 Estimator:                        OLS   Adj. R-squared:                 0.2043
 No. Observations:                 428   F-statistic:                    112.45
-Date:                Thu, Dec 22 2022   P-value (F-stat)                0.0000
-Time:                        03:28:38   Distribution:                  chi2(2)
+Date:                Sat, Jan 07 2023   P-value (F-stat)                0.0000
+Time:                        14:25:17   Distribution:                  chi2(2)
 Cov. Estimator:            unadjusted                                         
                                                                               
                              Parameter Estimates                              
@@ -1432,6 +1432,9 @@ Intercept      9.4801     0.3200     29.627     0.0000      8.8530      10.107
 fatheduc       0.1881     0.0335     5.6122     0.0000      0.1224      0.2538
 motheduc       0.1564     0.0357     4.3805     0.0000      0.0864      0.2263
 ==============================================================================
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>
@@ -1457,7 +1460,7 @@ motheduc       0.1564     0.0357     4.3805     0.0000      0.0864      0.2263
 <p>上述した<code class="docutils literal notranslate"><span class="pre">IV2SLS</span></code>回帰式の一般形に基づいて回帰式を設定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_2 = &#39;lwage ~ 1 + exper + expersq +[educ ~ fatheduc + motheduc]&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_2</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + exper + expersq +[educ ~ fatheduc + motheduc]&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -1465,9 +1468,9 @@ motheduc       0.1564     0.0357     4.3805     0.0000      0.0864      0.2263
 <p>操作変数法を使い推定</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_2 =IV2SLS.from_formula(form_2, data=mroz).fit(cov_type=&#39;unadjusted&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span> <span class="o">=</span><span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>
 
-print(res_2.summary.tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res_2</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1514,7 +1517,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <p>標本数（ループの回数）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>N = 10_000
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">10_000</span>
 </pre></div>
 </div>
 </div>
@@ -1522,9 +1525,9 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <p>母集団のパラメータ</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>b0 = 0.5
-b1 = 1
-b2 = 0.5
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b2</span> <span class="o">=</span> <span class="mf">0.5</span>
 </pre></div>
 </div>
 </div>
@@ -1549,58 +1552,58 @@ b2 = 0.5
 <p>計算の速度を早めるために下の関数の中では<code class="docutils literal notranslate"><span class="pre">IV2SLS</span></code>は使わず<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の関数を使いIVとOLS推定値を計算している。<code class="docutils literal notranslate"><span class="pre">IV2SLS</span></code>は係数の推定値だけではなく他の多くの統計値も自動的に計算するために一回の計算に比較的に長い時間を要するためである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def sim_iv(n,m,ols=False):  # n=標本の大きさ, m=x1とｚの共分散
-    &quot;&quot;&quot;
-    n: 標本の大きさ
-    m: 説明変数と対応する操作変数の相関性の度合い
-    ols: Boolean（デフォルト：False） 
-        False: OLS推定とIV推定も一緒におこなう
-            返り値：２つのリスト（OLSとIV推定量）
-        True: IV推定のみ
-            返り値：１つのリストのみ
-    &quot;&quot;&quot;
-    rv_mean = [0, 0, 0]  # x1, x2, z1の平均
-    rv_cov = [[1.0, 0.3, m],  # x1, x2, z1の共分散行列
-              [0.3, 1.0, 0.0],  # 全ての変数の分散は１（対角成分）
-              [m,   0.0, 1.0]]  # Cov(x1,x2)=0.3,  Cov(x2,z)=0, Cov(x1,z)=m,
-    rv = multivariate_normal.rvs(rv_mean, rv_cov, size=n)  # x1, x2, z1をnセット抽出
-    x1 = rv[:,0]  # 説明変数
-    x2 = rv[:,1]  # 欠落変数
-    z = rv[:,2]  # 操作変数
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sim_iv</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">ols</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ, m=x1とｚの共分散</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    n: 標本の大きさ</span>
+<span class="sd">    m: 説明変数と対応する操作変数の相関性の度合い</span>
+<span class="sd">    ols: Boolean（デフォルト：False） </span>
+<span class="sd">        False: OLS推定とIV推定も一緒におこなう</span>
+<span class="sd">            返り値：２つのリスト（OLSとIV推定量）</span>
+<span class="sd">        True: IV推定のみ</span>
+<span class="sd">            返り値：１つのリストのみ</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rv_mean</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># x1, x2, z1の平均</span>
+    <span class="n">rv_cov</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">m</span><span class="p">],</span>  <span class="c1"># x1, x2, z1の共分散行列</span>
+              <span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>  <span class="c1"># 全ての変数の分散は１（対角成分）</span>
+              <span class="p">[</span><span class="n">m</span><span class="p">,</span>   <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]]</span>  <span class="c1"># Cov(x1,x2)=0.3,  Cov(x2,z)=0, Cov(x1,z)=m,</span>
+    <span class="n">rv</span> <span class="o">=</span> <span class="n">multivariate_normal</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">rv_mean</span><span class="p">,</span> <span class="n">rv_cov</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># x1, x2, z1をnセット抽出</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 説明変数</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 欠落変数</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># 操作変数</span>
 
-    b1_iv_list = []  # IV推定量を入れる空のリスト
-    b1_ols_list = []  # OLS推定量を入れる空のリスト
+    <span class="n">b1_iv_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># IV推定量を入れる空のリスト</span>
+    <span class="n">b1_ols_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># OLS推定量を入れる空のリスト</span>
     
-    c = np.ones(n)
+    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
     
-    for j in range(N):  # N回のループ
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># N回のループ</span>
         
-        u = norm.rvs(size=n)  # 母集団の誤差項
-        y = b0 + b1*x1 + b2*x2 + u  # 母集団回帰式
+        <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 母集団の誤差項</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="n">b2</span><span class="o">*</span><span class="n">x2</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># 母集団回帰式</span>
         
-        # IV 第１ステージ
-        Xiv1 = np.stack([c,z],axis=1)
-        pihat = np.linalg.inv((Xiv1.T)@Xiv1)@(Xiv1.T)@x1  # IV推定
-        x1hat = Xiv1@pihat  # x1の予測値
-        # IV 第２ステージ
-        Xiv2 = np.stack([c,x1hat],axis=1)        
-        beta_iv = np.linalg.inv((Xiv2.T)@Xiv2)@(Xiv2.T)@y  # IV推定
-        b1_iv_list.append(beta_iv[1])  # IV推定量をリストに追加
+        <span class="c1"># IV 第１ステージ</span>
+        <span class="n">Xiv1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">c</span><span class="p">,</span><span class="n">z</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">pihat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">((</span><span class="n">Xiv1</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@Xiv1</span><span class="p">)</span><span class="o">@</span><span class="p">(</span><span class="n">Xiv1</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@x1</span>  <span class="c1"># IV推定</span>
+        <span class="n">x1hat</span> <span class="o">=</span> <span class="n">Xiv1</span><span class="nd">@pihat</span>  <span class="c1"># x1の予測値</span>
+        <span class="c1"># IV 第２ステージ</span>
+        <span class="n">Xiv2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">c</span><span class="p">,</span><span class="n">x1hat</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>        
+        <span class="n">beta_iv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">((</span><span class="n">Xiv2</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@Xiv2</span><span class="p">)</span><span class="o">@</span><span class="p">(</span><span class="n">Xiv2</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@y</span>  <span class="c1"># IV推定</span>
+        <span class="n">b1_iv_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">beta_iv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># IV推定量をリストに追加</span>
 
-        if ols==True:  # オプションols=Trueの場合はOLS推定もおこなう
+        <span class="k">if</span> <span class="n">ols</span><span class="o">==</span><span class="kc">True</span><span class="p">:</span>  <span class="c1"># オプションols=Trueの場合はOLS推定もおこなう</span>
             
-            X = np.stack([c,x1],axis=1)
-            beta_ols = np.linalg.inv((X.T)@X)@(X.T)@y  # OLS推定
-            b1_ols_list.append(beta_ols[1])  # OLS推定量をリストに追加
+            <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">c</span><span class="p">,</span><span class="n">x1</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">beta_ols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@X</span><span class="p">)</span><span class="o">@</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@y</span>  <span class="c1"># OLS推定</span>
+            <span class="n">b1_ols_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">beta_ols</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># OLS推定量をリストに追加</span>
 
-        else:  # ols=Falseの場合はOLS推定をおこなわない
-            pass
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># ols=Falseの場合はOLS推定をおこなわない</span>
+            <span class="k">pass</span>
 
-    if ols==True:  # ols=True の場合の返り値の設定
-        return b1_iv_list, b1_ols_list
+    <span class="k">if</span> <span class="n">ols</span><span class="o">==</span><span class="kc">True</span><span class="p">:</span>  <span class="c1"># ols=True の場合の返り値の設定</span>
+        <span class="k">return</span> <span class="n">b1_iv_list</span><span class="p">,</span> <span class="n">b1_ols_list</span>
     
-    else:  # ols=False の場合の返り値の設定
-        return b1_iv_list
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># ols=False の場合の返り値の設定</span>
+        <span class="k">return</span> <span class="n">b1_iv_list</span>
 </pre></div>
 </div>
 </div>
@@ -1608,7 +1611,7 @@ b2 = 0.5
 <p>シミュレーションの開始</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>b1hat_iv, b1hat_ols = sim_iv(1000,0.9,ols=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b1hat_iv</span><span class="p">,</span> <span class="n">b1hat_ols</span> <span class="o">=</span> <span class="n">sim_iv</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mf">0.9</span><span class="p">,</span><span class="n">ols</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1616,18 +1619,18 @@ b2 = 0.5
 <p>図示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>xx=np.linspace(0.8,1.3,num=100)  # 図を作成するために横軸の値を設定
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">1.3</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
 
-kde_model_ols=gaussian_kde(b1hat_ols)  # OLS推定量のカーネル密度関数を計算
+<span class="n">kde_model_ols</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b1hat_ols</span><span class="p">)</span>  <span class="c1"># OLS推定量のカーネル密度関数を計算</span>
 
-kde_model_iv=gaussian_kde(b1hat_iv)  # IV推定量のカーネル密度関数を計算
+<span class="n">kde_model_iv</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b1hat_iv</span><span class="p">)</span>  <span class="c1"># IV推定量のカーネル密度関数を計算</span>
 
-plt.plot(xx, kde_model_ols(xx), &#39;g-&#39;, label=&#39;OLS&#39;)  # OLS推定量の分布プロット
-plt.plot(xx, kde_model_iv(xx),&#39;r-&#39;, label=&#39;IV&#39;)  # IV推定量の分布プロット
-plt.axvline(x=b1,linestyle=&#39;dashed&#39;)
-plt.ylabel(&#39;Kernel Density&#39;)  # 縦軸のラベル
-plt.legend()  # 凡例
-pass
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_ols</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="s1">&#39;g-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;OLS&#39;</span><span class="p">)</span>  <span class="c1"># OLS推定量の分布プロット</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_iv</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span><span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;IV&#39;</span><span class="p">)</span>  <span class="c1"># IV推定量の分布プロット</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">b1</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Kernel Density&#39;</span><span class="p">)</span>  <span class="c1"># 縦軸のラベル</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>  <span class="c1"># 凡例</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1656,9 +1659,9 @@ pass
 <p>上で使った関数<code class="docutils literal notranslate"><span class="pre">sim_iv()</span></code>をデフォルト（<code class="docutils literal notranslate"><span class="pre">ols=False</span></code>）で使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>b1hat_iv_30 = sim_iv(30,0.8)
-b1hat_iv_100 = sim_iv(100,0.8)
-b1hat_iv_1000 = sim_iv(1000,0.8)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b1hat_iv_30</span> <span class="o">=</span> <span class="n">sim_iv</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">b1hat_iv_100</span> <span class="o">=</span> <span class="n">sim_iv</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">b1hat_iv_1000</span> <span class="o">=</span> <span class="n">sim_iv</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mf">0.8</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1666,21 +1669,21 @@ b1hat_iv_1000 = sim_iv(1000,0.8)
 <p>図示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>xx=np.linspace(0.5,1.5,num=100)  # 図を作成するために横軸の値を設定
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
 
-b1hat_iv_n_list = [b1hat_iv_30, b1hat_iv_100, b1hat_iv_1000]
-color_list = [&#39;g-&#39;, &#39;r-&#39;, &#39;k-&#39;]
-label_list = [&#39;n=30&#39;, &#39;n=100&#39;, &#39;n=1000&#39;]
+<span class="n">b1hat_iv_n_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">b1hat_iv_30</span><span class="p">,</span> <span class="n">b1hat_iv_100</span><span class="p">,</span> <span class="n">b1hat_iv_1000</span><span class="p">]</span>
+<span class="n">color_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;g-&#39;</span><span class="p">,</span> <span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">]</span>
+<span class="n">label_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;n=30&#39;</span><span class="p">,</span> <span class="s1">&#39;n=100&#39;</span><span class="p">,</span> <span class="s1">&#39;n=1000&#39;</span><span class="p">]</span>
 
-for (i, j, k) in zip(b1hat_iv_n_list, color_list, label_list):
-    kde_model_iv=gaussian_kde(i)  # IV推定量のカーネル密度推定を設定
-    b1_dist = kde_model_iv(xx)  # IV推定量のカーネル密度関数を計算
-    plt.plot(xx, b1_dist, j, label=k)  # IV推定量の分布プロット
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">b1hat_iv_n_list</span><span class="p">,</span> <span class="n">color_list</span><span class="p">,</span> <span class="n">label_list</span><span class="p">):</span>
+    <span class="n">kde_model_iv</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>  <span class="c1"># IV推定量のカーネル密度推定を設定</span>
+    <span class="n">b1_dist</span> <span class="o">=</span> <span class="n">kde_model_iv</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>  <span class="c1"># IV推定量のカーネル密度関数を計算</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">b1_dist</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>  <span class="c1"># IV推定量の分布プロット</span>
 
-plt.axvline(x=b1,linestyle=&#39;dashed&#39;)
-plt.ylabel(&#39;Kernel Density&#39;)  # 縦軸のラベル
-plt.legend()  # 凡例
-pass
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">b1</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Kernel Density&#39;</span><span class="p">)</span>  <span class="c1"># 縦軸のラベル</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>  <span class="c1"># 凡例</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1710,9 +1713,9 @@ pass
 <p>シミュレーションの開始</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>b1hat_iv_weak = sim_iv(2000,0.1)
-b1hat_iv_mid = sim_iv(2000,0.4)
-b1hat_iv_strong = sim_iv(2000,0.8)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b1hat_iv_weak</span> <span class="o">=</span> <span class="n">sim_iv</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">b1hat_iv_mid</span> <span class="o">=</span> <span class="n">sim_iv</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="n">b1hat_iv_strong</span> <span class="o">=</span> <span class="n">sim_iv</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span><span class="mf">0.8</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1720,21 +1723,21 @@ b1hat_iv_strong = sim_iv(2000,0.8)
 <p>図示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>xx=np.linspace(0.5,1.5,num=100)  # 図を作成するために横軸の値を設定
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
 
-b1hat_iv_n_list = [b1hat_iv_weak, b1hat_iv_mid, b1hat_iv_strong]
-color_list = [&#39;g-&#39;, &#39;r-&#39;, &#39;k-&#39;]
-label_list = [&#39;Cov(x1,z)=0.1&#39;, &#39;Cov(x1,z)=0.4&#39;, &#39;Cov(x1,z)=0.8&#39;]
+<span class="n">b1hat_iv_n_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">b1hat_iv_weak</span><span class="p">,</span> <span class="n">b1hat_iv_mid</span><span class="p">,</span> <span class="n">b1hat_iv_strong</span><span class="p">]</span>
+<span class="n">color_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;g-&#39;</span><span class="p">,</span> <span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">]</span>
+<span class="n">label_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Cov(x1,z)=0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;Cov(x1,z)=0.4&#39;</span><span class="p">,</span> <span class="s1">&#39;Cov(x1,z)=0.8&#39;</span><span class="p">]</span>
 
-for (i, j, k) in zip(b1hat_iv_n_list, color_list, label_list):
-    kde_model_iv=gaussian_kde(i)  # OLS推定量のカーネル密度推定を設定
-    b1_dist = kde_model_iv(xx)  # OLS推定量のカーネル密度関数を計算
-    plt.plot(xx, b1_dist, j, label=k)  # OLS推定量の分布プロット
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">b1hat_iv_n_list</span><span class="p">,</span> <span class="n">color_list</span><span class="p">,</span> <span class="n">label_list</span><span class="p">):</span>
+    <span class="n">kde_model_iv</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>  <span class="c1"># OLS推定量のカーネル密度推定を設定</span>
+    <span class="n">b1_dist</span> <span class="o">=</span> <span class="n">kde_model_iv</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>  <span class="c1"># OLS推定量のカーネル密度関数を計算</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">b1_dist</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>  <span class="c1"># OLS推定量の分布プロット</span>
 
-plt.axvline(x=b1,linestyle=&#39;dashed&#39;)
-plt.ylabel(&#39;Kernel Density&#39;)  # 縦軸のラベル
-plt.legend()  # 凡例
-pass
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">b1</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Kernel Density&#39;</span><span class="p">)</span>  <span class="c1"># 縦軸のラベル</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>  <span class="c1"># 凡例</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1786,7 +1789,7 @@ pass
 <p>（注意）<code class="docutils literal notranslate"><span class="pre">.wu_hauseman()</span></code>であって<code class="docutils literal notranslate"><span class="pre">.wu_hauseman</span></code>ではない。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_2.wu_hausman()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span><span class="o">.</span><span class="n">wu_hausman</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1796,7 +1799,7 @@ H0: All endogenous variables are exogenous
 Statistic: 2.8035
 P-value: 0.0948
 Distributed: F(1,423)
-WaldTestStatistic, id: 0x121890a00
+WaldTestStatistic, id: 0x12d6c5e20
 </pre></div>
 </div>
 </div>
@@ -1865,11 +1868,11 @@ WaldTestStatistic, id: 0x121890a00
 <p><strong>第１段階</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_2a = &#39;educ ~ 1 + exper + expersq + motheduc + fatheduc&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_2a</span> <span class="o">=</span> <span class="s1">&#39;educ ~ 1 + exper + expersq + motheduc + fatheduc&#39;</span>
 
-mod_2a = IV2SLS.from_formula(form_2a, data=mroz)
+<span class="n">mod_2a</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_2a</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
 
-res_2a = mod_2a.fit(cov_type=&#39;unadjusted&#39;)
+<span class="n">res_2a</span> <span class="o">=</span> <span class="n">mod_2a</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1881,13 +1884,13 @@ res_2a = mod_2a.fit(cov_type=&#39;unadjusted&#39;)
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_2b = &#39;lwage ~ 1 + educ + exper + expersq + I(res_2a.resids)&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_2b</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ + exper + expersq + I(res_2a.resids)&#39;</span>
 
-mod_2b = IV2SLS.from_formula(form_2b, data=mroz)
+<span class="n">mod_2b</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_2b</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
 
-res_2b = mod_2b.fit(cov_type=&#39;unadjusted&#39;)
+<span class="n">res_2b</span> <span class="o">=</span> <span class="n">mod_2b</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>
 
-print(res_2b.summary.tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res_2b</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1913,7 +1916,7 @@ expersq             -0.0009     0.0004    -2.2840     0.0224     -0.0017     -0.
 <p><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>には上の計算を自動でおこなった結果を示すメソッドが用意されている。<code class="docutils literal notranslate"><span class="pre">res_2</span></code>の<code class="docutils literal notranslate"><span class="pre">.wooldridge_regression</span></code>である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_2.wooldridge_regression
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span><span class="o">.</span><span class="n">wooldridge_regression</span>
 </pre></div>
 </div>
 </div>
@@ -1923,7 +1926,7 @@ H0: Endogenous variables are exogenous
 Statistic: 2.8256
 P-value: 0.0928
 Distributed: chi2(1)
-WaldTestStatistic, id: 0x123d7dc10
+WaldTestStatistic, id: 0x12d740f40
 </pre></div>
 </div>
 </div>
@@ -2009,11 +2012,11 @@ WaldTestStatistic, id: 0x123d7dc10
 <p>第２段階の計算のために<code class="docutils literal notranslate"><span class="pre">res_2</span></code>の属性<code class="docutils literal notranslate"><span class="pre">.resids</span></code>を使い回帰残差を取得し，直接以下の回帰式に入れる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_aux = &#39;I(res_2.resids) ~ 1 + motheduc + fatheduc + exper + expersq&#39; # 外生的説明変数を省いてもよい
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_aux</span> <span class="o">=</span> <span class="s1">&#39;I(res_2.resids) ~ 1 + motheduc + fatheduc + exper + expersq&#39;</span> <span class="c1"># 外生的説明変数を省いてもよい</span>
 
-mod_aux = IV2SLS.from_formula(form_aux, data=mroz)
+<span class="n">mod_aux</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_aux</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
 
-res_aux = mod_aux.fit(cov_type=&#39;unadjusted&#39;)
+<span class="n">res_aux</span> <span class="o">=</span> <span class="n">mod_aux</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2021,11 +2024,11 @@ res_aux = mod_aux.fit(cov_type=&#39;unadjusted&#39;)
 <p>検定統計量の計算</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>r2 = res_aux.rsquared  # 決定係数
-n = res_aux.nobs    # 標本の大きさ
-teststat = n * r2      # 検定統計量
-pval = 1 - chi2.cdf(teststat, 1)  # p値の計算
-print(pval)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r2</span> <span class="o">=</span> <span class="n">res_aux</span><span class="o">.</span><span class="n">rsquared</span>  <span class="c1"># 決定係数</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">res_aux</span><span class="o">.</span><span class="n">nobs</span>    <span class="c1"># 標本の大きさ</span>
+<span class="n">teststat</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">r2</span>      <span class="c1"># 検定統計量</span>
+<span class="n">pval</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">chi2</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">teststat</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># p値の計算</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pval</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2042,7 +2045,7 @@ print(pval)
 <p><code class="docutils literal notranslate"><span class="pre">res_2</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">.sargan</span></code>を使うと上と同じ計算結果を表示できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_2.sargan
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span><span class="o">.</span><span class="n">sargan</span>
 </pre></div>
 </div>
 </div>
@@ -2052,7 +2055,7 @@ H0: The model is not overidentified.
 Statistic: 0.3781
 P-value: 0.5386
 Distributed: chi2(1)
-WaldTestStatistic, id: 0x1218964c0
+WaldTestStatistic, id: 0x12d57d250
 </pre></div>
 </div>
 </div>
@@ -2149,13 +2152,13 @@ WaldTestStatistic, id: 0x1218964c0
 <p><strong><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_L = &#39;hours ~ 1 + educ + age + kidslt6 + nwifeinc + [lwage ~ exper + expersq]&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_L</span> <span class="o">=</span> <span class="s1">&#39;hours ~ 1 + educ + age + kidslt6 + nwifeinc + [lwage ~ exper + expersq]&#39;</span>
 
-mod_L = IV2SLS.from_formula(form_L, data=mroz)
+<span class="n">mod_L</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_L</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
 
-res_L = mod_L.fit(cov_type=&#39;unadjusted&#39;)
+<span class="n">res_L</span> <span class="o">=</span> <span class="n">mod_L</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>
 
-print(res_L.summary.tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res_L</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2178,13 +2181,13 @@ lwage          1639.6     467.27     3.5088     0.0005      723.73      2555.4
 <p><strong><code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_L_ols = &#39;hours ~ 1 + educ + age + kidslt6 + nwifeinc + lwage &#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_L_ols</span> <span class="o">=</span> <span class="s1">&#39;hours ~ 1 + educ + age + kidslt6 + nwifeinc + lwage &#39;</span>
 
-mod_L_ols = IV2SLS.from_formula(form_L_ols, data=mroz)
+<span class="n">mod_L_ols</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_L_ols</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
 
-res_L_ols = mod_L_ols.fit(cov_type=&#39;unadjusted&#39;)
+<span class="n">res_L_ols</span> <span class="o">=</span> <span class="n">mod_L_ols</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>
 
-print(res_L_ols.summary.tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res_L_ols</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2211,13 +2214,13 @@ nwifeinc      -5.9185     3.6574    -1.6182     0.1056     -13.087      1.2500
 <p><strong><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_P = &#39;lwage ~ 1 + educ + exper + expersq + [hours ~ age + kidslt6 + nwifeinc]&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_P</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ + exper + expersq + [hours ~ age + kidslt6 + nwifeinc]&#39;</span>
 
-mod_P = IV2SLS.from_formula(form_P, data=mroz)
+<span class="n">mod_P</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_P</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
 
-res_P = mod_P.fit(cov_type=&#39;unadjusted&#39;)
+<span class="n">res_P</span> <span class="o">=</span> <span class="n">mod_P</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>
 
-print(res_P.summary.tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res_P</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2234,21 +2237,18 @@ hours          0.0001     0.0003     0.4974     0.6189     -0.0004      0.0006
 ==============================================================================
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
 </div>
 </div>
 <p><strong><code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_W_ols = &#39;lwage ~ 1 + educ + exper + expersq + hours&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_W_ols</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ + exper + expersq + hours&#39;</span>
 
-mod_W_ols = IV2SLS.from_formula(form_W_ols, data=mroz)
+<span class="n">mod_W_ols</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_W_ols</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
 
-res_W_ols = mod_W_ols.fit(cov_type=&#39;unadjusted&#39;)
+<span class="n">res_W_ols</span> <span class="o">=</span> <span class="n">mod_W_ols</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>
 
-print(res_W_ols.summary.tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res_W_ols</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2348,8 +2348,8 @@ hours      -5.655e-05  4.353e-05    -1.2992     0.1939     -0.0001   2.876e-05
 <p>標本の大きさと標本数（ループの回数）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n = 1000
-N = 10_000
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">10_000</span>
 </pre></div>
 </div>
 </div>
@@ -2357,17 +2357,17 @@ N = 10_000
 <p>母集団のパラメータの真の値</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>b0 = 1.0
-b1 = 1.0
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="mf">1.0</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>x_pop = uniform.rvs(1,10,size=n)  # 母集団の説明変数
-u = norm.rvs(scale=1, size=n)  # 母集団の誤差項
-y = b0 + b1*x_pop + u  # 母集団回帰式
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_pop</span> <span class="o">=</span> <span class="n">uniform</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 母集団の説明変数</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 母集団の誤差項</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">x_pop</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># 母集団回帰式</span>
 </pre></div>
 </div>
 </div>
@@ -2375,7 +2375,7 @@ y = b0 + b1*x_pop + u  # 母集団回帰式
 <p>測定誤差の標準偏差</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>error_sd = 3
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error_sd</span> <span class="o">=</span> <span class="mi">3</span>
 </pre></div>
 </div>
 </div>
@@ -2383,29 +2383,29 @@ y = b0 + b1*x_pop + u  # 母集団回帰式
 <p>シミュレーション開始</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># シミュレーションで計算した推定量を入れる空のリストの作成
-b1_ols_list = []  # OLS推定量
-b1_iv_list = []  # IV推定量
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># シミュレーションで計算した推定量を入れる空のリストの作成</span>
+<span class="n">b1_ols_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># OLS推定量</span>
+<span class="n">b1_iv_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># IV推定量</span>
 
-for j in range(N):  # N回のループ
-    x = x_pop + norm.rvs(scale=error_sd, size=n)  # 測定誤差
-    z = x_pop + norm.rvs(scale=error_sd, size=n)  # 操作変数
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># N回のループ</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x_pop</span> <span class="o">+</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="n">error_sd</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 測定誤差</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">x_pop</span> <span class="o">+</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="n">error_sd</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 操作変数</span>
     
-    c = np.ones(n)  # 定数項
+    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 定数項</span>
     
-    # IV 第１ステージ
-    Xiv1 = np.stack([c,z],axis=1)
-    pihat = np.linalg.inv((Xiv1.T)@Xiv1)@(Xiv1.T)@x  # IV推定
-    xhat = Xiv1@pihat  # x1の予測値
-    # IV 第２ステージ
-    Xiv2 = np.stack([c,xhat],axis=1)        
-    beta_iv = np.linalg.inv((Xiv2.T)@Xiv2)@(Xiv2.T)@y  # IV推定
-    b1_iv_list.append(beta_iv[1])  # b1のIV推定量をリストに追加
+    <span class="c1"># IV 第１ステージ</span>
+    <span class="n">Xiv1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">c</span><span class="p">,</span><span class="n">z</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">pihat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">((</span><span class="n">Xiv1</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@Xiv1</span><span class="p">)</span><span class="o">@</span><span class="p">(</span><span class="n">Xiv1</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@x</span>  <span class="c1"># IV推定</span>
+    <span class="n">xhat</span> <span class="o">=</span> <span class="n">Xiv1</span><span class="nd">@pihat</span>  <span class="c1"># x1の予測値</span>
+    <span class="c1"># IV 第２ステージ</span>
+    <span class="n">Xiv2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">c</span><span class="p">,</span><span class="n">xhat</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>        
+    <span class="n">beta_iv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">((</span><span class="n">Xiv2</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@Xiv2</span><span class="p">)</span><span class="o">@</span><span class="p">(</span><span class="n">Xiv2</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@y</span>  <span class="c1"># IV推定</span>
+    <span class="n">b1_iv_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">beta_iv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># b1のIV推定量をリストに追加</span>
 
-    # OLS
-    X = np.stack([c,x],axis=1)        
-    beta_ols = np.linalg.inv((X.T)@X)@(X.T)@y  # OLS推定
-    b1_ols_list.append(beta_ols[1])  # b1のOLS推定量
+    <span class="c1"># OLS</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">c</span><span class="p">,</span><span class="n">x</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>        
+    <span class="n">beta_ols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@X</span><span class="p">)</span><span class="o">@</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@y</span>  <span class="c1"># OLS推定</span>
+    <span class="n">b1_ols_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">beta_ols</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># b1のOLS推定量</span>
 </pre></div>
 </div>
 </div>
@@ -2413,20 +2413,20 @@ for j in range(N):  # N回のループ
 <p>結果の図示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>xx=np.linspace(0.4,1.2,num=100)  # 図を作成するために横軸の値を設定
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">1.2</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
 
-kde_model_ols=gaussian_kde(b1_ols_list)  # t値のカーネル密度推定を設定
-b1_ols_dist = kde_model_ols(xx)
+<span class="n">kde_model_ols</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b1_ols_list</span><span class="p">)</span>  <span class="c1"># t値のカーネル密度推定を設定</span>
+<span class="n">b1_ols_dist</span> <span class="o">=</span> <span class="n">kde_model_ols</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
 
-kde_model_iv=gaussian_kde(b1_iv_list)  # t値のカーネル密度推定を設定
-b1_iv_dist = kde_model_iv(xx)
+<span class="n">kde_model_iv</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b1_iv_list</span><span class="p">)</span>  <span class="c1"># t値のカーネル密度推定を設定</span>
+<span class="n">b1_iv_dist</span> <span class="o">=</span> <span class="n">kde_model_iv</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
 
-plt.plot(xx, b1_ols_dist, &#39;g-&#39;, label=&#39;OLS Estimates&#39;)  # t値の分布プロット
-plt.plot(xx, b1_iv_dist,&#39;r-&#39;, label=&#39;IV Estimates&#39;)  # t分布
-plt.axvline(x=b1,linestyle=&#39;dashed&#39;)
-plt.ylabel(&#39;Kernel Density&#39;)  # 縦軸のラベル
-plt.legend()
-pass
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">b1_ols_dist</span><span class="p">,</span> <span class="s1">&#39;g-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;OLS Estimates&#39;</span><span class="p">)</span>  <span class="c1"># t値の分布プロット</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">b1_iv_dist</span><span class="p">,</span><span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;IV Estimates&#39;</span><span class="p">)</span>  <span class="c1"># t分布</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">b1</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Kernel Density&#39;</span><span class="p">)</span>  <span class="c1"># 縦軸のラベル</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>

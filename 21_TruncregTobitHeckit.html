@@ -87,7 +87,7 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="visually-hidden">Toggle in-page Table of Contents</div>
 </label>
 <!-- Headers at the top -->
-<div class="announcement header-item noprint"><p><a href='http://www.econ.kobe-u.ac.jp/topics/pdf/221212-2.pdf'>✴️<<font color='white'>特別講演「UCバークレー校における経済学とデータサイエンス教育」(2023年1月6日) ← クリック！✴️</font></a></p></div>
+<div class="announcement header-item noprint"></div>
 <div class="header header-item noprint"></div>
 
     
@@ -781,17 +781,17 @@ title="Print to PDF"
 <h1>制限従属変数モデル<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
-import pandas as pd
-from scipy.stats import norm
-from statsmodels.formula.api import ols
-import matplotlib.pyplot as plt
-import wooldridge
-from see import see
-from py4etrics.truncreg import Truncreg
-from py4etrics.tobit import Tobit
-from py4etrics.heckit import Heckit
-from py4etrics.hetero_test import het_test_probit
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
+<span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="n">see</span>
+<span class="kn">from</span> <span class="nn">py4etrics.truncreg</span> <span class="kn">import</span> <span class="n">Truncreg</span>
+<span class="kn">from</span> <span class="nn">py4etrics.tobit</span> <span class="kn">import</span> <span class="n">Tobit</span>
+<span class="kn">from</span> <span class="nn">py4etrics.heckit</span> <span class="kn">import</span> <span class="n">Heckit</span>
+<span class="kn">from</span> <span class="nn">py4etrics.hetero_test</span> <span class="kn">import</span> <span class="n">het_test_probit</span>
 </pre></div>
 </div>
 </div>
@@ -877,27 +877,27 @@ in English or the language of your choice.
 <h3>シミュレーション<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># 標本の大きさ 
-n = 100
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 標本の大きさ </span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
 
-# y*を決定するx
-x = np.sort(norm.rvs(0,3,size=n))  # ランダム変数を生成し昇順に並べる
+<span class="c1"># y*を決定するx</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">))</span>  <span class="c1"># ランダム変数を生成し昇順に並べる</span>
 
-# 被説明変数
-y = 1 + x + norm.rvs(0,3,size=n)
+<span class="c1"># 被説明変数</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
 
-# DataFrame
-df = pd.DataFrame({&#39;Y&#39;:y, &#39;Y_trunc&#39;:y, &#39;X&#39;:x})
+<span class="c1"># DataFrame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;Y_trunc&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>
 
-# 閾値
-left = 0
+<span class="c1"># 閾値</span>
+<span class="n">left</span> <span class="o">=</span> <span class="mi">0</span>
 
-# 切断データの作成
-cond = (df.loc[:,&#39;Y&#39;] &lt;= left)
-df.loc[cond,&#39;Y_trunc&#39;] = np.nan
+<span class="c1"># 切断データの作成</span>
+<span class="n">cond</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">left</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cond</span><span class="p">,</span><span class="s1">&#39;Y_trunc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
-# 切断された被説明変数
-y_trunc = df[&#39;Y_trunc&#39;]
+<span class="c1"># 切断された被説明変数</span>
+<span class="n">y_trunc</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Y_trunc&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -912,19 +912,19 @@ y_trunc = df[&#39;Y_trunc&#39;]
 <p>母集団回帰式</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_full = &#39;Y ~ X&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_full</span> <span class="o">=</span> <span class="s1">&#39;Y ~ X&#39;</span>
 
-result_full=  ols(formula_full, data=df).fit()
+<span class="n">result_full</span><span class="o">=</span>  <span class="n">ols</span><span class="p">(</span><span class="n">formula_full</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-b0_full,b1_full = result_full.params
+<span class="n">b0_full</span><span class="p">,</span><span class="n">b1_full</span> <span class="o">=</span> <span class="n">result_full</span><span class="o">.</span><span class="n">params</span>
 
-result_full.params
+<span class="n">result_full</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.003278
-X            0.997127
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.330727
+X            0.925234
 dtype: float64
 </pre></div>
 </div>
@@ -933,19 +933,19 @@ dtype: float64
 <p>切断データを使ったOLS回帰</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_trunc = &#39;Y_trunc ~ X&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_trunc</span> <span class="o">=</span> <span class="s1">&#39;Y_trunc ~ X&#39;</span>
 
-result_trunc = ols(formula_trunc, data=df).fit()
+<span class="n">result_trunc</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_trunc</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-b0_trunc, b1_trunc = result_trunc.params
+<span class="n">b0_trunc</span><span class="p">,</span> <span class="n">b1_trunc</span> <span class="o">=</span> <span class="n">result_trunc</span><span class="o">.</span><span class="n">params</span>
 
-result_trunc.params
+<span class="n">result_trunc</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    2.946445
-X            0.710036
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    3.179451
+X            0.482338
 dtype: float64
 </pre></div>
 </div>
@@ -954,9 +954,9 @@ dtype: float64
 <p>比較するために２つの結果を図示する。同じ図に描くために，先に切断データを整理する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>x_trunc = df.dropna(subset=[&#39;Y_trunc&#39;]).loc[:,&#39;X&#39;]  # 説明（１）
-x_min = min(x_trunc)  # 説明（２）
-x_max = max(x_trunc)  # 説明（３）
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_trunc</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Y_trunc&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;X&#39;</span><span class="p">]</span>  <span class="c1"># 説明（１）</span>
+<span class="n">x_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">x_trunc</span><span class="p">)</span>  <span class="c1"># 説明（２）</span>
+<span class="n">x_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_trunc</span><span class="p">)</span>  <span class="c1"># 説明（３）</span>
 </pre></div>
 </div>
 </div>
@@ -967,22 +967,22 @@ x_max = max(x_trunc)  # 説明（３）
 <p><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>を使って２つの図を重ねて図示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># （１）母集団データの散布図
-plt.scatter(x, y, facecolors=&#39;none&#39;, edgecolors=&#39;gray&#39;,label=r&#39;$y^{*}$&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># （１）母集団データの散布図</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$y^{*}$&#39;</span><span class="p">)</span>
 
-# （２）切断データの散布図
-plt.scatter(x, y_trunc, facecolors=&#39;gray&#39;, label=r&#39;$y$ and $y^{*}$&#39;)
+<span class="c1"># （２）切断データの散布図</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_trunc</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$y$ and $y^{*}$&#39;</span><span class="p">)</span>
 
-# 母集団OLS
-plt.plot(x, b0_full+b1_full*x, &#39;k&#39;, linewidth=3, label=&#39;Population: $y^*$&#39;)
+<span class="c1"># 母集団OLS</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">b0_full</span><span class="o">+</span><span class="n">b1_full</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Population: $y^*$&#39;</span><span class="p">)</span>
 
-# 切断回帰
-plt.plot(x_trunc, b0_trunc+b1_trunc*x_trunc, &#39;r&#39;, lw=3,label=r&#39;Sample: $y&gt; 0$&#39;)
+<span class="c1"># 切断回帰</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_trunc</span><span class="p">,</span> <span class="n">b0_trunc</span><span class="o">+</span><span class="n">b1_trunc</span><span class="o">*</span><span class="n">x_trunc</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;Sample: $y&gt; 0$&#39;</span><span class="p">)</span>
 
-plt.xlabel(&#39;x&#39;)
-plt.ylabel(r&#39;$y$ and $y^{*}$&#39;)
-plt.legend()
-pass
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y$ and $y^{*}$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1086,8 +1086,8 @@ y_i=\beta_0+\beta_1 x_i+\sigma_u\lambda\left(w_i\right)+\nu_i\qquad\text{(式５
 <p>例として<code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>の<code class="docutils literal notranslate"><span class="pre">HTV</span></code>のデータを使い推定する。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>htv = wooldridge.data(&#39;HTV&#39;)
-wooldridge.data(&#39;HTV&#39;,description=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">htv</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;HTV&#39;</span><span class="p">)</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;HTV&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1149,11 +1149,11 @@ variables used by the authors.
 <p>まずOLS推定を行う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_trunc = &#39;lwage ~ 1 + educ + abil + exper + nc + west + south + urban&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_trunc</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ + abil + exper + nc + west + south + urban&#39;</span>
 
-res_ols = ols(formula_trunc, data=htv).fit()
+<span class="n">res_ols</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_trunc</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">htv</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(res_ols.summary().tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res_ols</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1178,11 +1178,11 @@ urban          0.2268      0.041      5.589      0.000       0.147       0.306
 <p>次に，<code class="docutils literal notranslate"><span class="pre">wage</span></code>が<code class="docutils literal notranslate"><span class="pre">20</span></code>以上の観測値を取り除き，<code class="docutils literal notranslate"><span class="pre">20</span></code>未満のサンプルだけで推計する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>htv_20 = htv.query(&#39;wage &lt; 20&#39;)  # データの抽出
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">htv_20</span> <span class="o">=</span> <span class="n">htv</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;wage &lt; 20&#39;</span><span class="p">)</span>  <span class="c1"># データの抽出</span>
 
-print(f&#39;切断前の標本数：{len(htv)}&#39;)
-print(f&#39;切断前の標本数：{len(htv_20)}&#39;)
-print(f&#39;削除された標本数：{len(htv)-len(htv_20)}&#39;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;切断前の標本数：</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">htv</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;切断前の標本数：</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">htv_20</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;削除された標本数：</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">htv</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">htv_20</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1197,9 +1197,9 @@ print(f&#39;削除された標本数：{len(htv)-len(htv_20)}&#39;)
 <p>164のサンプルが取り除かれた。これにより，ランダムな標本ではなくなっていおり，GM仮定２が満たされていない。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_ols_20 = ols(formula_trunc,data=htv_20).fit()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_ols_20</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_trunc</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">htv_20</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(res_ols_20.summary().tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res_ols_20</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1229,9 +1229,9 @@ urban          0.1653      0.037      4.525      0.000       0.094       0.237
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_trunc = Truncreg.from_formula(formula_trunc,right=np.log(20),data=htv_20).fit()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_trunc</span> <span class="o">=</span> <span class="n">Truncreg</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_trunc</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="n">data</span><span class="o">=</span><span class="n">htv_20</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(res_trunc.summary().tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res_trunc</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1268,8 +1268,7 @@ Log(Sigma)    -0.5433      0.039    -14.053      0.000      -0.619      -0.468
 <p><code class="docutils literal notranslate"><span class="pre">dir()</span></code>もしくは<code class="docutils literal notranslate"><span class="pre">see()</span></code>を使い推定結果<code class="docutils literal notranslate"><span class="pre">res_trunc</span></code>の属性とメソッドを確認してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-see(res_trunc)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">res_trunc</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1300,7 +1299,7 @@ see(res_trunc)
 <p>対数最尤関数の値</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_trunc.llf
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_trunc</span><span class="o">.</span><span class="n">llf</span>
 </pre></div>
 </div>
 </div>
@@ -1313,7 +1312,7 @@ see(res_trunc)
 <p>疑似決定係数</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_trunc.prsquared
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_trunc</span><span class="o">.</span><span class="n">prsquared</span>
 </pre></div>
 </div>
 </div>
@@ -1326,7 +1325,7 @@ see(res_trunc)
 <p>全ての説明変数（定数項以外）が０の場合の推定結果</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res_trunc.result_null.summary())
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_trunc</span><span class="o">.</span><span class="n">result_null</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -1336,8 +1335,8 @@ see(res_trunc)
 Dep. Variable:                      y   Pseudo R-squ:                    0.000
 Model:                       Truncreg   Log-Likelihood:                 -619.9
 Method:            Maximum Likelihood   LL-Null:                        -619.9
-Date:                Thu, 22 Dec 2022   LL-Ratio:                         -0.0
-Time:                        03:29:35   LLR p-value:                       nan
+Date:                Sat, 07 Jan 2023   LL-Ratio:                         -0.0
+Time:                        14:26:06   LLR p-value:                       nan
 No. Observations:                1066   AIC:                            1241.8
 Df Residuals:                    1065   BIC:                            1246.7
 Df Model:                           0   Covariance Type:             nonrobust
@@ -1361,7 +1360,7 @@ Log(Sigma)    -0.3590      0.047     -7.677      0.000      -0.451      -0.267
 <p>この検定のために結果のメソッド<code class="docutils literal notranslate"><span class="pre">wald_test()</span></code>を使うが説明変数に含まれている<code class="docutils literal notranslate"><span class="pre">Log(Sigma)</span></code>は残る必要がある。従って，まず定数項と<code class="docutils literal notranslate"><span class="pre">Log(Sigma)</span></code>以外の係数名を<code class="docutils literal notranslate"><span class="pre">slopes_all</span></code>に割り当てる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>slopes_all = res_trunc.model.exog_names[1:-1]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">slopes_all</span> <span class="o">=</span> <span class="n">res_trunc</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">exog_names</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1369,8 +1368,8 @@ Log(Sigma)    -0.3590      0.047     -7.677      0.000      -0.451      -0.267
 <p>結果<code class="docutils literal notranslate"><span class="pre">res_trunc</span></code>に属性<code class="docutils literal notranslate"><span class="pre">model</span></code>があり，その中に説明変数名の属性<code class="docutils literal notranslate"><span class="pre">exog_names</span></code>を使っている。定数項と最後にくる<code class="docutils literal notranslate"><span class="pre">Log(Sigma)</span></code>を省くために<code class="docutils literal notranslate"><span class="pre">[1:-1]</span></code>を指定している。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Wald検定
-res_trunc.wald_test(slopes_all).summary()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wald検定</span>
+<span class="n">res_trunc</span><span class="o">.</span><span class="n">wald_test</span><span class="p">(</span><span class="n">slopes_all</span><span class="p">)</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1387,7 +1386,7 @@ res_trunc.wald_test(slopes_all).summary()
 <p><span class="math notranslate nohighlight">\(p\)</span>値は非常に低いので<code class="docutils literal notranslate"><span class="pre">1%</span></code>の有意水準でも帰無仮説を棄却できる。同じ結果は次のコードでも示すことができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_trunc.wald_test_all_slopes
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_trunc</span><span class="o">.</span><span class="n">wald_test_all_slopes</span>
 </pre></div>
 </div>
 </div>
@@ -1409,7 +1408,7 @@ res_trunc.wald_test(slopes_all).summary()
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_trunc.wald_test(&#39;educ+abil=exper&#39;).summary()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_trunc</span><span class="o">.</span><span class="n">wald_test</span><span class="p">(</span><span class="s1">&#39;educ+abil=exper&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1437,9 +1436,9 @@ res_trunc.wald_test(slopes_all).summary()
 <p>まず予測値の平均・最小値・最大値を計算してみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>y_hat = res_trunc.fittedvalues
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_hat</span> <span class="o">=</span> <span class="n">res_trunc</span><span class="o">.</span><span class="n">fittedvalues</span>
 
-print(f&#39;最小値：{y_hat.min()}\n平均：{y_hat.mean()}\n最大値：{y_hat.max()}&#39;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;最小値：</span><span class="si">{</span><span class="n">y_hat</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="se">\n</span><span class="s1">平均：</span><span class="si">{</span><span class="n">y_hat</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">}</span><span class="se">\n</span><span class="s1">最大値：</span><span class="si">{</span><span class="n">y_hat</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1454,11 +1453,11 @@ print(f&#39;最小値：{y_hat.min()}\n平均：{y_hat.mean()}\n最大値：{y_h
 <p>次に残差を図示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>u_hat = res_trunc.resid
-plt.scatter(y_hat,u_hat)
-plt.xlabel(&#39;y_hat&#39;)
-plt.ylabel(&#39;u_hat&#39;)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_hat</span> <span class="o">=</span> <span class="n">res_trunc</span><span class="o">.</span><span class="n">resid</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span><span class="n">u_hat</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;y_hat&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;u_hat&#39;</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1478,15 +1477,15 @@ pass
 <p>次に不均一分散について考える。確かめるためには検定をする必要があるが，<code class="docutils literal notranslate"><span class="pre">py4etrics</span></code>には実装されていない。その代わりに「目安」として，通常の係数の標準偏差と不均一分散頑健標準偏差の変化を調べてみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># 通常の標準偏差
-tr0 = res_trunc.bse
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 通常の標準偏差</span>
+<span class="n">tr0</span> <span class="o">=</span> <span class="n">res_trunc</span><span class="o">.</span><span class="n">bse</span>
 
-# 不均一分散頑健標準編
-tr1 = Truncreg.from_formula(formula_trunc,right=np.log(20),
-                            data=htv_20).fit(cov_type=&#39;HC1&#39;,disp=False).bse
+<span class="c1"># 不均一分散頑健標準編</span>
+<span class="n">tr1</span> <span class="o">=</span> <span class="n">Truncreg</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_trunc</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+                            <span class="n">data</span><span class="o">=</span><span class="n">htv_20</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC1&#39;</span><span class="p">,</span><span class="n">disp</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">bse</span>
 
-# 不均一分散頑健標準編を使った場合の標準偏差の変化率（％）
-(100*(tr1-tr0)/tr0)[:-1]   # 最後は Log(Sigma) なので省く
+<span class="c1"># 不均一分散頑健標準編を使った場合の標準偏差の変化率（％）</span>
+<span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="n">tr1</span><span class="o">-</span><span class="n">tr0</span><span class="p">)</span><span class="o">/</span><span class="n">tr0</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>   <span class="c1"># 最後は Log(Sigma) なので省く</span>
 </pre></div>
 </div>
 </div>
@@ -1564,21 +1563,21 @@ tr1 = Truncreg.from_formula(formula_trunc,right=np.log(20),
 <h3>シミュレーション<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># データの大きさ 
-n = 100
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># データの大きさ </span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
 
-# y*を決定するx
-x = np.sort(norm.rvs(0,3,size=n))  # ランダム変数を生成し昇順に並べる
+<span class="c1"># y*を決定するx</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">))</span>  <span class="c1"># ランダム変数を生成し昇順に並べる</span>
 
-# y*を生成
-y_star = x + norm.rvs(0,3,size=n)
+<span class="c1"># y*を生成</span>
+<span class="n">y_star</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
 
-# yを生成
-y = y_star.copy()  #  copy()はコピーを作るメソッド
-y[y_star &lt; 0] = 0  # y_star&lt;0の場合，０を代入する
+<span class="c1"># yを生成</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">y_star</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1">#  copy()はコピーを作るメソッド</span>
+<span class="n">y</span><span class="p">[</span><span class="n">y_star</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># y_star&lt;0の場合，０を代入する</span>
 
-# DataFrame
-df = pd.DataFrame({&#39;Y&#39;:y, &#39;Y_star&#39;:y_star, &#39;X&#39;:x})
+<span class="c1"># DataFrame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;Y_star&#39;</span><span class="p">:</span><span class="n">y_star</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>
 </pre></div>
 </div>
 </div>
@@ -1586,19 +1585,19 @@ df = pd.DataFrame({&#39;Y&#39;:y, &#39;Y_star&#39;:y_star, &#39;X&#39;:x})
 <p>母集団回帰式</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_star = &#39;Y_star ~ X&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_star</span> <span class="o">=</span> <span class="s1">&#39;Y_star ~ X&#39;</span>
 
-result_star= ols(formula_star, data=df).fit()
+<span class="n">result_star</span><span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_star</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-b0_star,b1_star = result_star.params
+<span class="n">b0_star</span><span class="p">,</span><span class="n">b1_star</span> <span class="o">=</span> <span class="n">result_star</span><span class="o">.</span><span class="n">params</span>
 
-print(result_star.params)
+<span class="nb">print</span><span class="p">(</span><span class="n">result_star</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.056137
-X            0.937316
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept   -0.104036
+X            1.030322
 dtype: float64
 </pre></div>
 </div>
@@ -1607,19 +1606,19 @@ dtype: float64
 <p><span class="math notranslate nohighlight">\(y\geq 0\)</span>を使ったOLS回帰</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_sample = &#39;Y ~ X&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_sample</span> <span class="o">=</span> <span class="s1">&#39;Y ~ X&#39;</span>
 
-result_corner = ols(formula_sample, data=df).fit()
+<span class="n">result_corner</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_sample</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-b0_corner, b1_corner = result_corner.params
+<span class="n">b0_corner</span><span class="p">,</span> <span class="n">b1_corner</span> <span class="o">=</span> <span class="n">result_corner</span><span class="o">.</span><span class="n">params</span>
 
-print(result_corner.params)
+<span class="nb">print</span><span class="p">(</span><span class="n">result_corner</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.633150
-X            0.370376
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.578381
+X            0.475713
 dtype: float64
 </pre></div>
 </div>
@@ -1628,22 +1627,22 @@ dtype: float64
 <p>図示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># y_starの散布図
-plt.scatter(x, y_star, facecolors=&#39;none&#39;, edgecolors=&#39;gray&#39;,label=r&#39;$y^{*}$&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># y_starの散布図</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_star</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$y^{*}$&#39;</span><span class="p">)</span>
 
-# yの散布図
-plt.scatter(x, y, facecolors=&#39;gray&#39;, label=r&#39;$y$ and $y^{*}$&#39;)
+<span class="c1"># yの散布図</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$y$ and $y^{*}$&#39;</span><span class="p">)</span>
 
-# 母集団OLS
-plt.plot(x, b0_star+b1_star*x, &#39;k&#39;, linewidth=3, label=&#39;Full Data: $y^*$&#39;)
+<span class="c1"># 母集団OLS</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">b0_star</span><span class="o">+</span><span class="n">b1_star</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Full Data: $y^*$&#39;</span><span class="p">)</span>
 
-# y&gt;=0のOLS
-plt.plot(x, b0_corner+b1_corner*x, &#39;r&#39;, lw=3,label=r&#39;Sample: $y\geq 0$&#39;)
+<span class="c1"># y&gt;=0のOLS</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">b0_corner</span><span class="o">+</span><span class="n">b1_corner</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;Sample: $y\geq 0$&#39;</span><span class="p">)</span>
 
-plt.xlabel(&#39;x&#39;)
-plt.ylabel(r&#39;$y$ and $y^{*}$&#39;)
-plt.legend()
-pass
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y$ and $y^{*}$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1710,7 +1709,7 @@ pass
 <p>以前使った<code class="docutils literal notranslate"><span class="pre">mroz</span></code>のデータを使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mroz = wooldridge.data(&#39;mroz&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mroz</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mroz&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1718,8 +1717,8 @@ pass
 <p>女性の労働供給のモデルを考え，供給量<code class="docutils literal notranslate"><span class="pre">hours</span></code>を被説明変数とする。特に，<code class="docutils literal notranslate"><span class="pre">hours</span></code>は<code class="docutils literal notranslate"><span class="pre">0</span></code>が下限となっているため<code class="docutils literal notranslate"><span class="pre">Tobit</span></code>モデルが妥当だと考えられる。労働時間<code class="docutils literal notranslate"><span class="pre">hours</span></code>を図示すると<code class="docutils literal notranslate"><span class="pre">0</span></code>に多くの観測値があることがわかる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.hist(mroz[&#39;hours&#39;],bins=20)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mroz</span><span class="p">[</span><span class="s1">&#39;hours&#39;</span><span class="p">],</span><span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1730,7 +1729,7 @@ pass
 <p>まず，下限の値を設定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>left = 0
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">left</span> <span class="o">=</span> <span class="mi">0</span>
 </pre></div>
 </div>
 </div>
@@ -1738,13 +1737,13 @@ pass
 <p>次に下限を示す<code class="docutils literal notranslate"><span class="pre">array</span></code>を作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cond = (mroz[&#39;hours&#39;] == left)  #  フィルターの作成
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cond</span> <span class="o">=</span> <span class="p">(</span><span class="n">mroz</span><span class="p">[</span><span class="s1">&#39;hours&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">left</span><span class="p">)</span>  <span class="c1">#  フィルターの作成</span>
 
-censor = np.zeros((len(mroz)))  # 0のarrayの作成
+<span class="n">censor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">mroz</span><span class="p">)))</span>  <span class="c1"># 0のarrayの作成</span>
 
-censor[cond] = -1  #  条件に合わせて-1を代入
+<span class="n">censor</span><span class="p">[</span><span class="n">cond</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1">#  条件に合わせて-1を代入</span>
 
-pd.Series(censor).value_counts()  # Serieに変換し，内訳の確認
+<span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">censor</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>  <span class="c1"># Serieに変換し，内訳の確認</span>
 </pre></div>
 </div>
 </div>
@@ -1759,7 +1758,7 @@ dtype: int64
 <p>次のコードでも同じ結果を得ることができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>censor = mroz[&#39;hours&#39;].apply(lambda x: -1 if x==left else 0)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">censor</span> <span class="o">=</span> <span class="n">mroz</span><span class="p">[</span><span class="s1">&#39;hours&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">x</span><span class="o">==</span><span class="n">left</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1767,11 +1766,11 @@ dtype: int64
 <p>推定</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula = &#39;hours ~ 1 + nwifeinc + educ + exper + expersq + age + kidslt6 + kidsge6&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;hours ~ 1 + nwifeinc + educ + exper + expersq + age + kidslt6 + kidsge6&#39;</span>
 
-res_tobit = Tobit.from_formula(formula,cens=censor,left=0,data=mroz).fit()
+<span class="n">res_tobit</span> <span class="o">=</span> <span class="n">Tobit</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span><span class="n">cens</span><span class="o">=</span><span class="n">censor</span><span class="p">,</span><span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(res_tobit.summary())
+<span class="nb">print</span><span class="p">(</span><span class="n">res_tobit</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -1814,7 +1813,7 @@ Log(Sigma)     7.0229      0.037    189.514      0.000       6.950       7.096
 <p><code class="docutils literal notranslate"><span class="pre">dir()</span></code>や<code class="docutils literal notranslate"><span class="pre">see()</span></code>を使うことにより属性とメソッドを確認できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>see(res_tobit)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">res_tobit</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1854,7 +1853,7 @@ Log(Sigma)     7.0229      0.037    189.514      0.000       6.950       7.096
 <p>検定方法は切断回帰の<code class="docutils literal notranslate"><span class="pre">Truncreg</span></code>モジュールと同じである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_tobit.wald_test(&#39;exper=expersq=0, kidslt6=kidsge6&#39;).summary()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_tobit</span><span class="o">.</span><span class="n">wald_test</span><span class="p">(</span><span class="s1">&#39;exper=expersq=0, kidslt6=kidsge6&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1880,12 +1879,12 @@ Log(Sigma)     7.0229      0.037    189.514      0.000       6.950       7.096
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>y_star_hat = res_tobit.fittedvalues
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_star_hat</span> <span class="o">=</span> <span class="n">res_tobit</span><span class="o">.</span><span class="n">fittedvalues</span>
 
-u_hat = res_tobit.resid
+<span class="n">u_hat</span> <span class="o">=</span> <span class="n">res_tobit</span><span class="o">.</span><span class="n">resid</span>
 
-plt.scatter(y_star_hat,u_hat)
-pass
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y_star_hat</span><span class="p">,</span><span class="n">u_hat</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1900,16 +1899,16 @@ pass
 <p>切断回帰推定と同じように最尤法を使っているので，推定量の標準偏差の変化を使い残差の不均一について考えてみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># 通常の標準偏差
-to0 = res_tobit.bse
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 通常の標準偏差</span>
+<span class="n">to0</span> <span class="o">=</span> <span class="n">res_tobit</span><span class="o">.</span><span class="n">bse</span>
 
-# 不均一分散標準偏差
-res_tobit_HC1 = Tobit.from_formula(formula,cens=censor,left=left,
-                         data=mroz).fit(cov_type=&#39;HC1&#39;,disp=False)
-to1 = res_tobit_HC1.bse
+<span class="c1"># 不均一分散標準偏差</span>
+<span class="n">res_tobit_HC1</span> <span class="o">=</span> <span class="n">Tobit</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span><span class="n">cens</span><span class="o">=</span><span class="n">censor</span><span class="p">,</span><span class="n">left</span><span class="o">=</span><span class="n">left</span><span class="p">,</span>
+                         <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC1&#39;</span><span class="p">,</span><span class="n">disp</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">to1</span> <span class="o">=</span> <span class="n">res_tobit_HC1</span><span class="o">.</span><span class="n">bse</span>
 
-# 不均一分算標準偏差を使った場合の標準偏差の変化（％）
-(100*(to1-to0)/to0)[:-1]     # Log(Sigma)を省く
+<span class="c1"># 不均一分算標準偏差を使った場合の標準偏差の変化（％）</span>
+<span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="n">to1</span><span class="o">-</span><span class="n">to0</span><span class="p">)</span><span class="o">/</span><span class="n">to0</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>     <span class="c1"># Log(Sigma)を省く</span>
 </pre></div>
 </div>
 </div>
@@ -2095,7 +2094,7 @@ $$</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mroz.query(&#39;inlf == 1&#39;)[&#39;lwage&#39;].isna().sum()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mroz</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;inlf == 1&#39;</span><span class="p">)[</span><span class="s1">&#39;lwage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2108,7 +2107,7 @@ $$</p>
 <p>このコードの<code class="docutils literal notranslate"><span class="pre">.isna()</span></code>は<code class="docutils literal notranslate"><span class="pre">lwage</span></code>が<code class="docutils literal notranslate"><span class="pre">NaN</span></code>であれば<code class="docutils literal notranslate"><span class="pre">True</span></code>を返す（<code class="docutils literal notranslate"><span class="pre">isnan()</span></code>ではないことに注意，また<code class="docutils literal notranslate"><span class="pre">isnull()</span></code>でも可）。その合計<code class="docutils literal notranslate"><span class="pre">.sum()</span></code>が<code class="docutils literal notranslate"><span class="pre">0</span></code>なので，「<code class="docutils literal notranslate"><span class="pre">inlf</span></code>=1の場合，<code class="docutils literal notranslate"><span class="pre">lwage</span></code>は<code class="docutils literal notranslate"><span class="pre">NaN</span></code>ではない」ことが確認できた。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>( ~mroz.query(&#39;inlf == 0&#39;)[&#39;lwage&#39;].isnull() ).sum()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span> <span class="o">~</span><span class="n">mroz</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;inlf == 0&#39;</span><span class="p">)[</span><span class="s1">&#39;lwage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span> <span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2121,19 +2120,19 @@ $$</p>
 <p>このコードの<code class="docutils literal notranslate"><span class="pre">()</span></code>の中を考えよう。上のコードと同じように，<code class="docutils literal notranslate"><span class="pre">mroz.query('inlf</span> <span class="pre">==</span> <span class="pre">0')['lwage'].isnull()</span></code>は<code class="docutils literal notranslate"><span class="pre">lwage</span></code>が<code class="docutils literal notranslate"><span class="pre">NaN</span></code>であれば<code class="docutils literal notranslate"><span class="pre">True</span></code>を返すが，その先頭に<code class="docutils literal notranslate"><span class="pre">~</span></code>をつけるとその逆の<code class="docutils literal notranslate"><span class="pre">False</span></code>を返すことになる。<code class="docutils literal notranslate"><span class="pre">~</span></code>は「反転」という意味である。その合計<code class="docutils literal notranslate"><span class="pre">.sum()</span></code>が<code class="docutils literal notranslate"><span class="pre">0</span></code>なので，「<code class="docutils literal notranslate"><span class="pre">inlf</span></code>=0の場合，<code class="docutils literal notranslate"><span class="pre">lwage</span></code>は<code class="docutils literal notranslate"><span class="pre">NaN</span></code>である」ことが確認できた。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># ステップ２：　mros
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ステップ２：　mros</span>
 
-# ステップ３：第２段階の被説明変数
-endog = mroz.loc[:,&#39;lwage&#39;]
+<span class="c1"># ステップ３：第２段階の被説明変数</span>
+<span class="n">endog</span> <span class="o">=</span> <span class="n">mroz</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;lwage&#39;</span><span class="p">]</span>
 
-# ステップ４：第２段階の説明変数
-exog = mroz.loc[:,[&#39;educ&#39;, &#39;exper&#39;, &#39;expersq&#39;]]
-exog[&#39;Intercept&#39;] = 1.0
+<span class="c1"># ステップ４：第２段階の説明変数</span>
+<span class="n">exog</span> <span class="o">=</span> <span class="n">mroz</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;educ&#39;</span><span class="p">,</span> <span class="s1">&#39;exper&#39;</span><span class="p">,</span> <span class="s1">&#39;expersq&#39;</span><span class="p">]]</span>
+<span class="n">exog</span><span class="p">[</span><span class="s1">&#39;Intercept&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
 
 
-# ステップ５：第１段階の説明変数
-exog_select = mroz.loc[:,[&#39;educ&#39;, &#39;exper&#39;, &#39;expersq&#39;,&#39;nwifeinc&#39;, &#39;age&#39;, &#39;kidslt6&#39;, &#39;kidsge6&#39;, ]]
-exog_select[&#39;Intercept&#39;] = 1.0
+<span class="c1"># ステップ５：第１段階の説明変数</span>
+<span class="n">exog_select</span> <span class="o">=</span> <span class="n">mroz</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;educ&#39;</span><span class="p">,</span> <span class="s1">&#39;exper&#39;</span><span class="p">,</span> <span class="s1">&#39;expersq&#39;</span><span class="p">,</span><span class="s1">&#39;nwifeinc&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;kidslt6&#39;</span><span class="p">,</span> <span class="s1">&#39;kidsge6&#39;</span><span class="p">,</span> <span class="p">]]</span>
+<span class="n">exog_select</span><span class="p">[</span><span class="s1">&#39;Intercept&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
 </pre></div>
 </div>
 </div>
@@ -2150,9 +2149,9 @@ exog_select[&#39;Intercept&#39;] = 1.0
 <p>ステップ６</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_heckit = Heckit(endog, exog, exog_select).fit(cov_type_2=&#39;HC1&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_heckit</span> <span class="o">=</span> <span class="n">Heckit</span><span class="p">(</span><span class="n">endog</span><span class="p">,</span> <span class="n">exog</span><span class="p">,</span> <span class="n">exog_select</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type_2</span><span class="o">=</span><span class="s1">&#39;HC1&#39;</span><span class="p">)</span>
 
-print(res_heckit.summary())
+<span class="nb">print</span><span class="p">(</span><span class="n">res_heckit</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -2162,8 +2161,8 @@ print(res_heckit.summary())
 Dep. Variable:                    lwage   R-squared:                       0.156
 Model:                           Heckit   Adj. R-squared:                  0.150
 Method:                Heckman Two-Step   F-statistics:                   26.148
-Date:                  Thu, 22 Dec 2022   Prob (F-statistic):              0.000
-Time:                          03:29:54   Cov in 1st Stage:            nonrobust
+Date:                  Sat, 07 Jan 2023   Prob (F-statistic):              0.000
+Time:                          14:26:22   Cov in 1st Stage:            nonrobust
 No. Total Obs.:                     753   Cov in 2nd Stage:                  HC1
 No. Censored Obs.:                  325                                         
 No. Uncensored Obs.:                428                                         
@@ -2217,7 +2216,7 @@ Third table is the estimate for the coef of the inverse Mills ratio (Heckman&#39
 <p>第２段階結果の属性とメソッドは<code class="docutils literal notranslate"><span class="pre">dir()</span></code>や<code class="docutils literal notranslate"><span class="pre">see()</span></code>で確認できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>see(res_heckit)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">res_heckit</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2249,7 +2248,7 @@ Third table is the estimate for the coef of the inverse Mills ratio (Heckman&#39
 <p>また，この中に<code class="docutils literal notranslate"><span class="pre">select_res</span></code>とあるが，この属性を使い第１段階推定のに関する属性・メソッドを確認できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>see(res_heckit.select_res)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">res_heckit</span><span class="o">.</span><span class="n">select_res</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2277,7 +2276,7 @@ Third table is the estimate for the coef of the inverse Mills ratio (Heckman&#39
 <p>例えば，<code class="docutils literal notranslate"><span class="pre">fittedvalues</span></code>は予測値を返す。次のコードでは基本統計量を表示できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res_heckit.select_res.summary().tables[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_heckit</span><span class="o">.</span><span class="n">select_res</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2287,8 +2286,8 @@ Third table is the estimate for the coef of the inverse Mills ratio (Heckman&#39
 Dep. Variable:                      y   No. Observations:                  753
 Model:                         Probit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Thu, 22 Dec 2022   Pseudo R-squ.:                  0.2206
-Time:                        03:29:54   Log-Likelihood:                -401.30
+Date:                Sat, 07 Jan 2023   Pseudo R-squ.:                  0.2206
+Time:                        14:26:23   Log-Likelihood:                -401.30
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
 ==============================================================================
@@ -2306,11 +2305,11 @@ Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
 <p>この結果を単純なOLSと比べよう。（<code class="docutils literal notranslate"><span class="pre">lwage</span></code>にある<code class="docutils literal notranslate"><span class="pre">NaN</span></code>は自動的に除外される。）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula = &#39;lwage ~ educ + exper + expersq&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ educ + exper + expersq&#39;</span>
 
-res = ols(formula, data=mroz).fit(cov_type=&#39;HC1&#39;)
+<span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC1&#39;</span><span class="p">)</span>
 
-print(res.summary().tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2331,8 +2330,8 @@ expersq       -0.0008      0.000     -1.931      0.053      -0.002    1.21e-05
 <p>次に切断回帰推定を考えてみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.hist(mroz[&#39;wage&#39;].dropna(),bins=20)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mroz</span><span class="p">[</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span><span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -2342,14 +2341,14 @@ pass
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>thresh = np.log(mroz[&#39;wage&#39;].min()*0.5)  # 左切断の下限
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">thresh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mroz</span><span class="p">[</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">*</span><span class="mf">0.5</span><span class="p">)</span>  <span class="c1"># 左切断の下限</span>
 
-formula = &#39;lwage ~ 1 + educ + exper + expersq&#39;
+<span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ + exper + expersq&#39;</span>
 
-res_trunc = Truncreg.from_formula(formula, left=thresh,
-                                  data=mroz.dropna(subset=[&#39;lwage&#39;])).fit()
+<span class="n">res_trunc</span> <span class="o">=</span> <span class="n">Truncreg</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">thresh</span><span class="p">,</span>
+                                  <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lwage&#39;</span><span class="p">]))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(res.summary().tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2375,7 +2374,7 @@ expersq       -0.0008      0.000     -1.931      0.053      -0.002    1.21e-05
 <p>第１段階推定では<code class="docutils literal notranslate"><span class="pre">Probit</span></code>モデルを使っているが，以下では不均一分散に関して検定を行う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>het_test_probit(res_heckit.select_res)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">het_test_probit</span><span class="p">(</span><span class="n">res_heckit</span><span class="o">.</span><span class="n">select_res</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

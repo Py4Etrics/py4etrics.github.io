@@ -87,7 +87,7 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="visually-hidden">Toggle in-page Table of Contents</div>
 </label>
 <!-- Headers at the top -->
-<div class="announcement header-item noprint"><p><a href='http://www.econ.kobe-u.ac.jp/topics/pdf/221212-2.pdf'>✴️<<font color='white'>特別講演「UCバークレー校における経済学とデータサイエンス教育」(2023年1月6日) ← クリック！✴️</font></a></p></div>
+<div class="announcement header-item noprint"></div>
 <div class="header header-item noprint"></div>
 
     
@@ -769,15 +769,15 @@ title="Print to PDF"
 <h1>不均一分散<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-from statsmodels.formula.api import ols
-import lmdiag
-import wooldridge
-from statsmodels.stats.api import het_breuschpagan, het_white
-from seaborn import residplot
-from statsmodels.stats.outliers_influence import reset_ramsey
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
+<span class="kn">import</span> <span class="nn">lmdiag</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
+<span class="kn">from</span> <span class="nn">statsmodels.stats.api</span> <span class="kn">import</span> <span class="n">het_breuschpagan</span><span class="p">,</span> <span class="n">het_white</span>
+<span class="kn">from</span> <span class="nn">seaborn</span> <span class="kn">import</span> <span class="n">residplot</span>
+<span class="kn">from</span> <span class="nn">statsmodels.stats.outliers_influence</span> <span class="kn">import</span> <span class="n">reset_ramsey</span>
 </pre></div>
 </div>
 </div>
@@ -860,8 +860,8 @@ in English or the language of your choice.
 <p><code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>パッケージのデータセット<code class="docutils literal notranslate"><span class="pre">gpa3</span></code>を使い説明する。この例では大学のGPAと高校の成績や性別，人種などがどのような関係にあるかを探る。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>gpa3 = wooldridge.data(&#39;gpa3&#39;).query(&#39;spring == 1&#39;)  # 春学期だけを抽出
-wooldridge.data(&#39;gpa3&#39;, description=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpa3</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;gpa3&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;spring == 1&#39;</span><span class="p">)</span>  <span class="c1"># 春学期だけを抽出</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;gpa3&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -906,7 +906,7 @@ See GPA2.RAW
 <p><code class="docutils literal notranslate"><span class="pre">gpa2</span></code>に一部の変数の説明が続いている。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wooldridge.data(&#39;gpa2&#39;, description=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;gpa2&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -957,12 +957,12 @@ level.
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_ols = &#39;cumgpa ~ sat + hsperc + tothrs + female + black + white&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_ols</span> <span class="o">=</span> <span class="s1">&#39;cumgpa ~ sat + hsperc + tothrs + female + black + white&#39;</span>
 
-mod_ols = ols(form_ols, data=gpa3)
-res_ols = mod_ols.fit()
+<span class="n">mod_ols</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_ols</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">gpa3</span><span class="p">)</span>
+<span class="n">res_ols</span> <span class="o">=</span> <span class="n">mod_ols</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(res_ols.summary().tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res_ols</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -992,9 +992,9 @@ white         -0.0587      0.141     -0.416      0.677      -0.336       0.219
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_robust = res_ols.get_robustcov_results(cov_type=&#39;HC3&#39;, use_t=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_robust</span> <span class="o">=</span> <span class="n">res_ols</span><span class="o">.</span><span class="n">get_robustcov_results</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC3&#39;</span><span class="p">,</span> <span class="n">use_t</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-print(res_robust.summary().tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res_robust</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1021,8 +1021,8 @@ white         -0.0587      0.120     -0.488      0.626      -0.296       0.178
 <p>誤差項を図示する方法として２つを紹介する。一つ目は，<code class="docutils literal notranslate"><span class="pre">res_ols</span></code>の属性<code class="docutils literal notranslate"><span class="pre">.resid</span></code>を使う。<code class="docutils literal notranslate"><span class="pre">res_ols.resid</span></code>は<code class="docutils literal notranslate"><span class="pre">Pandas</span></code>の<code class="docutils literal notranslate"><span class="pre">Series</span></code>（シリーズ）なので，そのメソッド<code class="docutils literal notranslate"><span class="pre">plot()</span></code>を使い図示する。<code class="docutils literal notranslate"><span class="pre">style</span></code>はマーカーを指定するオプション。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_ols.resid.plot(style=&#39;o&#39;)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_ols</span><span class="o">.</span><span class="n">resid</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1033,8 +1033,8 @@ pass
 <p>２つ目の方法は<code class="docutils literal notranslate"><span class="pre">plt.plot()</span></code>を使う。オップション<code class="docutils literal notranslate"><span class="pre">'o'</span></code>はマーカの指定である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.plot(res_ols.resid, &#39;o&#39;)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res_ols</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1045,8 +1045,8 @@ pass
 <p>３つ目は<code class="docutils literal notranslate"><span class="pre">scatter()</span></code>を使う。<code class="docutils literal notranslate"><span class="pre">.index</span></code>は<code class="docutils literal notranslate"><span class="pre">res_ols.resd</span></code>の属性でインデックスを示す。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.scatter(res_ols.resid.index, res_ols.resid)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res_ols</span><span class="o">.</span><span class="n">resid</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">res_ols</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1060,9 +1060,9 @@ pass
 <p>OLS推定をする際，<code class="docutils literal notranslate"><span class="pre">fit()</span></code>の関数に<code class="docutils literal notranslate"><span class="pre">.get_robustcov_results()</span></code>で使った同じオプションを追加すると頑健<span class="math notranslate nohighlight">\(t\)</span>値などを直接出力できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_HC3 = ols(form_ols, data=gpa3).fit(cov_type=&#39;HC3&#39;, use_t=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_HC3</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_ols</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">gpa3</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC3&#39;</span><span class="p">,</span> <span class="n">use_t</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-print(res_HC3.summary().tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res_HC3</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1089,7 +1089,7 @@ white         -0.0587      0.120     -0.488      0.626      -0.296       0.178
 <p>同じデータ<code class="docutils literal notranslate"><span class="pre">gpa3</span></code>を使い，黒人ダミーと白人ダミーの係数は両方とも<code class="docutils literal notranslate"><span class="pre">0</span></code>という仮説を検定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hypotheses = &#39;black = white = 0&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hypotheses</span> <span class="o">=</span> <span class="s1">&#39;black = white = 0&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -1097,9 +1097,9 @@ white         -0.0587      0.120     -0.488      0.626      -0.296       0.178
 <p>まず通常の<span class="math notranslate nohighlight">\(F\)</span>検定を考える。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>f_test_ols = res_ols.f_test(hypotheses)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f_test_ols</span> <span class="o">=</span> <span class="n">res_ols</span><span class="o">.</span><span class="n">f_test</span><span class="p">(</span><span class="n">hypotheses</span><span class="p">)</span>
 
-f_test_ols.summary()
+<span class="n">f_test_ols</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1119,9 +1119,9 @@ f_test_ols.summary()
 <p>次に頑健<span class="math notranslate nohighlight">\(F\)</span>検定の方法を説明する。上の不均一分散頑健推定の方法２で使った<code class="docutils literal notranslate"><span class="pre">f_test_HC3</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>f_test_HC3 = res_HC3.f_test(hypotheses)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f_test_HC3</span> <span class="o">=</span> <span class="n">res_HC3</span><span class="o">.</span><span class="n">f_test</span><span class="p">(</span><span class="n">hypotheses</span><span class="p">)</span>
 
-f_test_HC3.summary()
+<span class="n">f_test_HC3</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1144,8 +1144,8 @@ f_test_HC3.summary()
 <p>データ<code class="docutils literal notranslate"><span class="pre">hprice1</span></code>を使って，住宅価格の決定要因を検討する。ここで考える均一分散の検定にBreusch-Pagan検定と呼ばれるもので，<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>のサブパッケージ<code class="docutils literal notranslate"><span class="pre">stats</span></code>の関数<code class="docutils literal notranslate"><span class="pre">het_breuschpagan</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hprice1 = wooldridge.data(&#39;hprice1&#39;)
-wooldridge.data(&#39;hprice1&#39;, description=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hprice1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;hprice1&#39;</span><span class="p">)</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;hprice1&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1191,11 +1191,11 @@ These are homes that sold in the Boston, MA area.
 <p>まず変数の変換をしない場合を考える。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_h = &#39;price ~ lotsize + sqrft + bdrms&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_h</span> <span class="o">=</span> <span class="s1">&#39;price ~ lotsize + sqrft + bdrms&#39;</span>
 
-res_h = ols(form_h, data=hprice1).fit()
+<span class="n">res_h</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_h</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">hprice1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(res_h.summary().tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res_h</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1219,7 +1219,7 @@ bdrms         13.8525      9.010      1.537      0.128      -4.065      31.770
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>het_breuschpagan(res_h.resid, res_h.model.exog)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">het_breuschpagan</span><span class="p">(</span><span class="n">res_h</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">res_h</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">exog</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1247,11 +1247,11 @@ bdrms         13.8525      9.010      1.537      0.128      -4.065      31.770
 <p><code class="docutils literal notranslate"><span class="pre">bdrms</span></code>以外を対数変換する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_h_log = &#39;np.log(price) ~ np.log(lotsize) + np.log(sqrft) + bdrms&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_h_log</span> <span class="o">=</span> <span class="s1">&#39;np.log(price) ~ np.log(lotsize) + np.log(sqrft) + bdrms&#39;</span>
 
-res_h_log = ols(form_h_log, data=hprice1).fit()
+<span class="n">res_h_log</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_h_log</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">hprice1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(res_h_log.summary().tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res_h_log</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1270,7 +1270,7 @@ bdrms               0.0370      0.028      1.342      0.183      -0.018       0.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>het_breuschpagan(res_h_log.resid, res_h_log.model.exog)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">het_breuschpagan</span><span class="p">(</span><span class="n">res_h_log</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">res_h_log</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">exog</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1299,7 +1299,7 @@ bdrms               0.0370      0.028      1.342      0.183      -0.018       0.
 <h4>対数変換前<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>het_white(res_h.resid, res_h.model.exog)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">het_white</span><span class="p">(</span><span class="n">res_h</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">res_h</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">exog</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1326,7 +1326,7 @@ bdrms               0.0370      0.028      1.342      0.183      -0.018       0.
 <h4>対数変換後<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>het_white(res_h_log.resid, res_h_log.model.exog)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">het_white</span><span class="p">(</span><span class="n">res_h_log</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">res_h_log</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">exog</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1362,9 +1362,9 @@ bdrms               0.0370      0.028      1.342      0.183      -0.018       0.
 <p>対数変換前</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(8,7))
-lmdiag.plot(res_h)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">lmdiag</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res_h</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1375,9 +1375,9 @@ pass
 <p>対数変換後</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(8,7))
-lmdiag.plot(res_h_log)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">lmdiag</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res_h_log</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1392,8 +1392,8 @@ pass
 <p>対数変換前</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.scatter(res_h.fittedvalues, res_h.resid)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res_h</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">res_h</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1404,8 +1404,8 @@ pass
 <p>対数変換後</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.scatter(res_h_log.fittedvalues, res_h_log.resid)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res_h_log</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">res_h_log</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1441,8 +1441,8 @@ pass
 <p>対数変換前</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>residplot(x=res_h.fittedvalues, y=res_h.resid, lowess=True)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">residplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">res_h</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">res_h</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">lowess</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1453,8 +1453,8 @@ pass
 <p>対数変換後</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>residplot(x=res_h_log.fittedvalues, y=res_h_log.resid, lowess=True)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">residplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">res_h_log</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">res_h_log</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">lowess</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1492,7 +1492,7 @@ pass
 <p><strong>対数変換前</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>reset_ramsey(res_h,degree=3).summary()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reset_ramsey</span><span class="p">(</span><span class="n">res_h</span><span class="p">,</span><span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1512,7 +1512,7 @@ pass
 <p><strong>対数変換後</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>reset_ramsey(res_h_log,degree=3)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reset_ramsey</span><span class="p">(</span><span class="n">res_h_log</span><span class="p">,</span><span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

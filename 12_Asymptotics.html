@@ -87,7 +87,7 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="visually-hidden">Toggle in-page Table of Contents</div>
 </label>
 <!-- Headers at the top -->
-<div class="announcement header-item noprint"><p><a href='http://www.econ.kobe-u.ac.jp/topics/pdf/221212-2.pdf'>✴️<<font color='white'>特別講演「UCバークレー校における経済学とデータサイエンス教育」(2023年1月6日) ← クリック！✴️</font></a></p></div>
+<div class="announcement header-item noprint"></div>
 <div class="header header-item noprint"></div>
 
     
@@ -699,19 +699,19 @@ title="Print to PDF"
 <h1>大標本特性<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
-from scipy.stats import norm, chi2, gaussian_kde, t, uniform
-import matplotlib.pyplot as plt
-import pandas as pd
-from statsmodels.formula.api import ols
-from statsmodels.api import qqplot
-from statsmodels.stats.stattools import jarque_bera, omni_normtest
-import wooldridge
-from numba import njit
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">chi2</span><span class="p">,</span> <span class="n">gaussian_kde</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">uniform</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
+<span class="kn">from</span> <span class="nn">statsmodels.api</span> <span class="kn">import</span> <span class="n">qqplot</span>
+<span class="kn">from</span> <span class="nn">statsmodels.stats.stattools</span> <span class="kn">import</span> <span class="n">jarque_bera</span><span class="p">,</span> <span class="n">omni_normtest</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span>
 
-# 警告メッセージを非表示
-import warnings
-warnings.filterwarnings(&quot;ignore&quot;)
+<span class="c1"># 警告メッセージを非表示</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -787,7 +787,7 @@ u = pu_N+(1-p)u_c
 <p>ランダム変数の数</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n = 10_000
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">10_000</span>
 </pre></div>
 </div>
 </div>
@@ -795,8 +795,8 @@ u = pu_N+(1-p)u_c
 <p>このシミュレーションでは，<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の関数<code class="docutils literal notranslate"><span class="pre">zeros()</span></code>を使い<code class="docutils literal notranslate"><span class="pre">for</span></code>ループで生成される誤差項の値を格納する<code class="docutils literal notranslate"><span class="pre">array</span></code>を用意する。<code class="docutils literal notranslate"><span class="pre">zeros()</span></code>は<code class="docutils literal notranslate"><span class="pre">0</span></code>が並ぶ<code class="docutils literal notranslate"><span class="pre">array</span></code>を作成する関数であり，一回のループ毎に<code class="docutils literal notranslate"><span class="pre">0</span></code>が誤差項の値と置換されることになる。１行・<code class="docutils literal notranslate"><span class="pre">n</span></code>列の<code class="docutils literal notranslate"><span class="pre">array</span></code>を設定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>u = np.zeros(n)
-u
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">u</span>
 </pre></div>
 </div>
 </div>
@@ -809,21 +809,21 @@ u
 <p>正規分布の標準偏差の値。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>u_sd = 0.5
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_sd</span> <span class="o">=</span> <span class="mf">0.5</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for i in range(n):  # (1)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1"># (1)</span>
     
-    prob = 0.05     # (2)
-    dist_1 = norm.rvs(loc=0, scale=u_sd, size=1)     # (3)
-    dist_2 = (chi2.rvs(1, size=1) - 1) / np.sqrt(2)  # (4)
+    <span class="n">prob</span> <span class="o">=</span> <span class="mf">0.05</span>     <span class="c1"># (2)</span>
+    <span class="n">dist_1</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">u_sd</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>     <span class="c1"># (3)</span>
+    <span class="n">dist_2</span> <span class="o">=</span> <span class="p">(</span><span class="n">chi2</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># (4)</span>
     
-    error = prob*(dist_1)+(1-prob)*(dist_2)          # (5)
-    u[i] = error    # (6)
+    <span class="n">error</span> <span class="o">=</span> <span class="n">prob</span><span class="o">*</span><span class="p">(</span><span class="n">dist_1</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">prob</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">dist_2</span><span class="p">)</span>          <span class="c1"># (5)</span>
+    <span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">error</span>    <span class="c1"># (6)</span>
 </pre></div>
 </div>
 </div>
@@ -855,13 +855,13 @@ u
 <p><code class="docutils literal notranslate"><span class="pre">u</span></code>の最初の10の値を確認してみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>u[:10]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.18247463, -0.17189061, -0.39317285, -0.49289411, -0.49034103,
-       -0.34041863,  0.75481113,  0.64369098, -0.077201  , -0.6639254 ])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.7316292 , -0.66560966,  0.75757657,  1.08256782,  0.59981129,
+        0.52698412, -0.4094663 ,  0.58029563,  0.48999608,  0.39108219])
 </pre></div>
 </div>
 </div>
@@ -869,11 +869,11 @@ u
 <p>次に<code class="docutils literal notranslate"><span class="pre">u</span></code>を図示してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>x=np.linspace(-2.0,2.0,100)  # 図を作成するために-2から２までの横軸の値を設定
-kde_model=gaussian_kde(u)  # カーネル密度推定を設定
-ufunc = kde_model(x)  # カーネル密度推定を使い誤差項の分布を推定
-plt.plot(x, ufunc)  # 誤差項の分布をプロット
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">2.0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために-2から２までの横軸の値を設定</span>
+<span class="n">kde_model</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>  <span class="c1"># カーネル密度推定を設定</span>
+<span class="n">ufunc</span> <span class="o">=</span> <span class="n">kde_model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># カーネル密度推定を使い誤差項の分布を推定</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ufunc</span><span class="p">)</span>  <span class="c1"># 誤差項の分布をプロット</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -884,12 +884,12 @@ pass
 <p>確認のために、生成された<code class="docutils literal notranslate"><span class="pre">n</span></code>個のランダム変数（誤差項）の平均を計算してみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>u.mean()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.003239640303405355
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.01366519093963914
 </pre></div>
 </div>
 </div>
@@ -910,8 +910,8 @@ pass
 <p>母集団のパラメータ</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>b0 = 1  # 定数項
-b1 = 0.5  # 説明変数の係数
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 定数項</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># 説明変数の係数</span>
 </pre></div>
 </div>
 </div>
@@ -919,7 +919,7 @@ b1 = 0.5  # 説明変数の係数
 <p>標本数（シミュレーションの回数）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>N = 10_000
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">10_000</span>
 </pre></div>
 </div>
 </div>
@@ -931,35 +931,35 @@ b1 = 0.5  # 説明変数の係数
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>@njit  # 計算の高速化
-def sim_consistency(n):
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>  <span class="c1"># 計算の高速化</span>
+<span class="k">def</span> <span class="nf">sim_consistency</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     
-    b1_arr = np.zeros(N)  # b1の推定値を格納するarray
+    <span class="n">b1_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># b1の推定値を格納するarray</span>
 
-    for i in range(N):  #  forループで N回シミュレーション
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1">#  forループで N回シミュレーション</span>
         
-        x = np.random.normal(loc=4, scale=0.5, size=n)  # 説明変数
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 説明変数</span>
         
-        # 残差の生成（上で説明したもの）
-        u = np.zeros(n)
+        <span class="c1"># 残差の生成（上で説明したもの）</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
         
-        for j in range(n):
-            prob = 0.05  # 正規分布の確率
-            dist_1 = np.random.normal(loc=0, scale=u_sd)
-            dist_2 = (np.random.chisquare(1) - 1) / np.sqrt(2)
-            error = prob*(dist_1)+(1-prob)*(dist_2)
-            u[j] = error
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">prob</span> <span class="o">=</span> <span class="mf">0.05</span>  <span class="c1"># 正規分布の確率</span>
+            <span class="n">dist_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">u_sd</span><span class="p">)</span>
+            <span class="n">dist_2</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">chisquare</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="n">prob</span><span class="o">*</span><span class="p">(</span><span class="n">dist_1</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">prob</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">dist_2</span><span class="p">)</span>
+            <span class="n">u</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">error</span>
             
-        y = b0 + b1 * x + u  # yの抽出
+        <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># yの抽出</span>
         
-        var_cov = np.cov(y,x)  # 分散共分散行列
-        cov_yx = var_cov[0,1]  # 共分散
-        var_y = var_cov[0,0]  # yの分散
-        var_x = var_cov[1,1]  # xの分散        
-        b1hat = cov_yx / var_x  # スロープ係数       
-        b1_arr[i] = b1hat  # スロープ係数を b1_arrに格納
+        <span class="n">var_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># 分散共分散行列</span>
+        <span class="n">cov_yx</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 共分散</span>
+        <span class="n">var_y</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># yの分散</span>
+        <span class="n">var_x</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># xの分散        </span>
+        <span class="n">b1hat</span> <span class="o">=</span> <span class="n">cov_yx</span> <span class="o">/</span> <span class="n">var_x</span>  <span class="c1"># スロープ係数       </span>
+        <span class="n">b1_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">b1hat</span>  <span class="c1"># スロープ係数を b1_arrに格納</span>
 
-    return b1_arr   # 推定値のリストを返す
+    <span class="k">return</span> <span class="n">b1_arr</span>   <span class="c1"># 推定値のリストを返す</span>
 </pre></div>
 </div>
 </div>
@@ -981,10 +981,10 @@ def sim_consistency(n):
 <p>もちろん，この方法でも問題はないが，パターンが増えると書く行も増えていく。別の方法として辞書を使う方法を紹介する。<code class="docutils literal notranslate"><span class="pre">n</span></code>の値である<code class="docutils literal notranslate"><span class="pre">30</span></code>や<code class="docutils literal notranslate"><span class="pre">100</span></code>をキーに設定し，値にシミュレーションの結果を格納する方法である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data_consistency = {}  # 空の辞書の作成
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_consistency</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># 空の辞書の作成</span>
 
-for i in [30,100,250,500]:
-    data_consistency[str(i)] = sim_consistency(i)
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">250</span><span class="p">,</span><span class="mi">500</span><span class="p">]:</span>
+    <span class="n">data_consistency</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">sim_consistency</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -996,13 +996,13 @@ for i in [30,100,250,500]:
 <p>シミュレーションの結果にアクセスするにはキーを使う。例えば，<code class="docutils literal notranslate"><span class="pre">sim_consistency(30)</span></code>の結果にアクセスする場合は</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data_consistency[&#39;30&#39;]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;30&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.27598109, 1.4481374 , 0.65401378, ..., 1.27111036, 1.00837472,
-       0.95517279])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.61331657,  1.18584806,  0.53595632, ...,  0.56424164,
+        1.12836315,  1.1167133 ])
 </pre></div>
 </div>
 </div>
@@ -1010,32 +1010,32 @@ for i in [30,100,250,500]:
 <p>とする。次に図をプロットしよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># 図を作成するために横軸の値を設定
-xx=np.linspace(0.0,1.0,100)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 図を作成するために横軸の値を設定</span>
+<span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
 
-# n = 30
-kde_model_30=gaussian_kde(data_consistency[&#39;30&#39;])  # カーネル密度推定を使いOLS推定量の分布を推定
-plt.plot(xx, kde_model_30(xx), &#39;k&#39;, label=&#39;n=30&#39;)  # OLS推定量の分布プロット
+<span class="c1"># n = 30</span>
+<span class="n">kde_model_30</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;30&#39;</span><span class="p">])</span>  <span class="c1"># カーネル密度推定を使いOLS推定量の分布を推定</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_30</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;n=30&#39;</span><span class="p">)</span>  <span class="c1"># OLS推定量の分布プロット</span>
 
-# n = 100
-kde_model_100=gaussian_kde(data_consistency[&#39;100&#39;])
-plt.plot(xx, kde_model_100(xx), &#39;g&#39;, label=&#39;n=100&#39;)
+<span class="c1"># n = 100</span>
+<span class="n">kde_model_100</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;100&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_100</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;n=100&#39;</span><span class="p">)</span>
 
-# n = 250
-kde_model_250=gaussian_kde(data_consistency[&#39;250&#39;])
-plt.plot(xx, kde_model_250(xx), &#39;b&#39;, label=&#39;n=250&#39;)
+<span class="c1"># n = 250</span>
+<span class="n">kde_model_250</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;250&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_250</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;n=250&#39;</span><span class="p">)</span>
 
-# n = 500
-kde_model_500=gaussian_kde(data_consistency[&#39;500&#39;])
-plt.plot(xx, kde_model_500(xx), &#39;r&#39;, label=&#39;n=500&#39;)
+<span class="c1"># n = 500</span>
+<span class="n">kde_model_500</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;500&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_500</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;n=500&#39;</span><span class="p">)</span>
 
 
-# 母集団のパラメータの値に縦の線
-plt.axvline(x=b1,linestyle=&#39;dashed&#39;)
-plt.legend() # 凡例
-plt.ylabel(&#39;Kernel Density&#39;)
-plt.title(&#39;Consistency: N={0}&#39;.format(N))
-pass
+<span class="c1"># 母集団のパラメータの値に縦の線</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">b1</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span> <span class="c1"># 凡例</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Kernel Density&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Consistency: N=</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1046,28 +1046,28 @@ pass
 <p>上のコードには同じような行が複数あり，単純な間違いの可能性が高くなる。。<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを使うとよりコンパクトに書くことが可能となり，間違いも少なくなる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># OLS推定量のリスト
-b1hat_list = [data_consistency[&#39;30&#39;],data_consistency[&#39;100&#39;],data_consistency[&#39;250&#39;],data_consistency[&#39;500&#39;]]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># OLS推定量のリスト</span>
+<span class="n">b1hat_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;30&#39;</span><span class="p">],</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;100&#39;</span><span class="p">],</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;250&#39;</span><span class="p">],</span><span class="n">data_consistency</span><span class="p">[</span><span class="s1">&#39;500&#39;</span><span class="p">]]</span>
 
-# 色のリスト
-color_list = [&#39;k&#39;, &#39;g&#39;, &#39;b&#39;, &#39;r&#39;]
+<span class="c1"># 色のリスト</span>
+<span class="n">color_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">]</span>
 
-# ラベルのリスト
-label_list = [30, 100, 250, 500]
+<span class="c1"># ラベルのリスト</span>
+<span class="n">label_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">500</span><span class="p">]</span>
 
-#　横軸
-xx=np.linspace(0.0,1.0,100)
+<span class="c1">#　横軸</span>
+<span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
 
-#　下の説明（１）を参照 
-for (b, c, l) in zip(b1hat_list, color_list, label_list):
-    kde_model=gaussian_kde(b)
-    plt.plot(xx, kde_model(xx), c, label=&#39;n={}&#39;.format(l))  # 下の説明（２）
+<span class="c1">#　下の説明（１）を参照 </span>
+<span class="k">for</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">b1hat_list</span><span class="p">,</span> <span class="n">color_list</span><span class="p">,</span> <span class="n">label_list</span><span class="p">):</span>
+    <span class="n">kde_model</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="n">c</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;n=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>  <span class="c1"># 下の説明（２）</span>
 
-plt.axvline(x=b1,linestyle=&#39;dashed&#39;)
-plt.ylabel(&#39;Kernel Density&#39;)
-plt.title(&#39;Consistency: N={}&#39;.format(N))  # 下の説明（２）
-plt.legend()
-pass
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">b1</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Kernel Density&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Consistency: N=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>  <span class="c1"># 下の説明（２）</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1151,8 +1151,8 @@ pass
 <p>母集団のパラメータは一致性のシミュレーションと同じ値を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>b0 = 1  # 定数項
-b1 = 0.5  # 説明変数の係数
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 定数項</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># 説明変数の係数</span>
 </pre></div>
 </div>
 </div>
@@ -1160,7 +1160,7 @@ b1 = 0.5  # 説明変数の係数
 <p>誤差項は標準正規分布に従うと仮定する。<code class="docutils literal notranslate"><span class="pre">u_sd</span></code>は誤差項の標準偏差。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>u_sd = 1
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_sd</span> <span class="o">=</span> <span class="mi">1</span>
 </pre></div>
 </div>
 </div>
@@ -1168,7 +1168,7 @@ b1 = 0.5  # 説明変数の係数
 <p>標本数（シミュレーションの回数）は次の値とする。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>N = 100_000
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">100_000</span>
 </pre></div>
 </div>
 </div>
@@ -1181,39 +1181,39 @@ b1 = 0.5  # 説明変数の係数
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>@njit  # 関数の高速化
-def sim_norm(n):  # n=標本の大きさ
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>  <span class="c1"># 関数の高速化</span>
+<span class="k">def</span> <span class="nf">sim_norm</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ</span>
     
-    q1_arr = np.zeros(N)  # q1を入れる空array
+    <span class="n">q1_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># q1を入れる空array</span>
     
-    x = np.random.normal(loc=4, scale=1, size=n)  # N回の推定に同じ説明変数を使う
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># N回の推定に同じ説明変数を使う</span>
 
-    for j in range(N):  # N 回のループ
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># N 回のループ</span>
         
-        u = np.random.normal(loc=0, scale=u_sd, size=n)  # 誤差項
-        y = b0 + b1 * x + u  # 説明変数
+        <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">u_sd</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># 誤差項</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># 説明変数</span>
         
-        var_cov = np.cov(y,x)  # 分散共分散行列
-        cov_yx = var_cov[0,1]  # 共分散
-        var_y = var_cov[0,0]  # yの分散
-        var_x = var_cov[1,1]  # xの分散        
+        <span class="n">var_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># 分散共分散行列</span>
+        <span class="n">cov_yx</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 共分散</span>
+        <span class="n">var_y</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># yの分散</span>
+        <span class="n">var_x</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># xの分散        </span>
         
-        b1hat = cov_yx / var_x  # b1の推定値
-        b0hat = np.mean(y)-b1hat*np.mean(x)  #b0の推定値
-        yhat = b0hat + b1hat*x  # yの予測値
-        uhat = y - yhat  # 残差
+        <span class="n">b1hat</span> <span class="o">=</span> <span class="n">cov_yx</span> <span class="o">/</span> <span class="n">var_x</span>  <span class="c1"># b1の推定値</span>
+        <span class="n">b0hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">-</span><span class="n">b1hat</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1">#b0の推定値</span>
+        <span class="n">yhat</span> <span class="o">=</span> <span class="n">b0hat</span> <span class="o">+</span> <span class="n">b1hat</span><span class="o">*</span><span class="n">x</span>  <span class="c1"># yの予測値</span>
+        <span class="n">uhat</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yhat</span>  <span class="c1"># 残差</span>
         
-        rss = np.sum(uhat**2)  # 残差平方和
-        sigma2 = rss/(n-2)  # 回帰の残差（不偏）分散 
-        ser = np.sqrt(sigma2)  # 回帰の標準誤差
+        <span class="n">rss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">uhat</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 残差平方和</span>
+        <span class="n">sigma2</span> <span class="o">=</span> <span class="n">rss</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 回帰の残差（不偏）分散 </span>
+        <span class="n">ser</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma2</span><span class="p">)</span>  <span class="c1"># 回帰の標準誤差</span>
         
-        b1se = ser/np.sqrt(n*np.var(x))  # b1の標準誤差
+        <span class="n">b1se</span> <span class="o">=</span> <span class="n">ser</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># b1の標準誤差</span>
         
-        q1 = (b1hat - b1)/b1se  # q1の値
+        <span class="n">q1</span> <span class="o">=</span> <span class="p">(</span><span class="n">b1hat</span> <span class="o">-</span> <span class="n">b1</span><span class="p">)</span><span class="o">/</span><span class="n">b1se</span>  <span class="c1"># q1の値</span>
     
-        q1_arr[j] = q1  # t値をarrayに追加
+        <span class="n">q1_arr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">q1</span>  <span class="c1"># t値をarrayに追加</span>
     
-    return q1_arr  # 返り値の設定
+    <span class="k">return</span> <span class="n">q1_arr</span>  <span class="c1"># 返り値の設定</span>
 </pre></div>
 </div>
 </div>
@@ -1221,10 +1221,10 @@ def sim_norm(n):  # n=標本の大きさ
 <p><span class="math notranslate nohighlight">\(n=5,\;10,\;30,\;100\)</span>のシミュレーション</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>q1_norm = {}  # 空の辞書の作成
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q1_norm</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># 空の辞書の作成</span>
 
-for i in [5,10,30,100]:
-    q1_norm[str(i)] = sim_norm(i)
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">100</span><span class="p">]:</span>
+    <span class="n">q1_norm</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">sim_norm</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1232,18 +1232,18 @@ for i in [5,10,30,100]:
 <p><code class="docutils literal notranslate"><span class="pre">plot</span></code>するための関数を用意する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def plot_dist(n, q1_arr):  # n=標本の大きさ，q1_arr=q1値のarray
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_dist</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">q1_arr</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ，q1_arr=q1値のarray</span>
     
-    xx=np.linspace(-3,3,num=100)  # 図を作成するために横軸の値を設定
+    <span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
 
-    kde_model=gaussian_kde(q1_arr)  # カーネル密度推定を使いt値の分布を推定
+    <span class="n">kde_model</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">q1_arr</span><span class="p">)</span>  <span class="c1"># カーネル密度推定を使いt値の分布を推定</span>
     
-    t_dist = t.pdf(xx,df=n-2)  # 同じ自由度のt分布
+    <span class="n">t_dist</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 同じ自由度のt分布</span>
     
-    plt.plot(xx, kde_model(xx), &#39;g-&#39;)  # t値の分布プロット
-    plt.plot(xx, t_dist,&#39;b:&#39;)  # t分布
-    plt.ylabel(&#39;Kernel Density&#39;)  # 縦軸のラベル
-    plt.title(&#39;n = {0}&#39;.format(n))  # タイトル
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="s1">&#39;g-&#39;</span><span class="p">)</span>  <span class="c1"># t値の分布プロット</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">t_dist</span><span class="p">,</span><span class="s1">&#39;b:&#39;</span><span class="p">)</span>  <span class="c1"># t分布</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Kernel Density&#39;</span><span class="p">)</span>  <span class="c1"># 縦軸のラベル</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;n = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>  <span class="c1"># タイトル</span>
 </pre></div>
 </div>
 </div>
@@ -1255,24 +1255,24 @@ for i in [5,10,30,100]:
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(10, 8))
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 
-# n = 5
-plt.subplot(221)
-plot_dist(5, q1_norm[&#39;5&#39;])
+<span class="c1"># n = 5</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
+<span class="n">plot_dist</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">q1_norm</span><span class="p">[</span><span class="s1">&#39;5&#39;</span><span class="p">])</span>
 
-# n = 10
-plt.subplot(222)
-plot_dist(10, q1_norm[&#39;10&#39;])
+<span class="c1"># n = 10</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">)</span>
+<span class="n">plot_dist</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">q1_norm</span><span class="p">[</span><span class="s1">&#39;10&#39;</span><span class="p">])</span>
 
-# n = 30
-plt.subplot(223)
-plot_dist(30, q1_norm[&#39;30&#39;])
+<span class="c1"># n = 30</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
+<span class="n">plot_dist</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">q1_norm</span><span class="p">[</span><span class="s1">&#39;30&#39;</span><span class="p">])</span>
 
-# n = 100
-plt.subplot(224)
-plot_dist(100, q1_norm[&#39;100&#39;])
-pass
+<span class="c1"># n = 100</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">)</span>
+<span class="n">plot_dist</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">q1_norm</span><span class="p">[</span><span class="s1">&#39;100&#39;</span><span class="p">])</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1298,41 +1298,41 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>@njit  # 関数の高速化
-def sim_non_norm(n):  # n=標本の大きさ
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span>  <span class="c1"># 関数の高速化</span>
+<span class="k">def</span> <span class="nf">sim_non_norm</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ</span>
     
-    q1_arr = np.zeros(N)  # q1を入れる空array
+    <span class="n">q1_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># q1を入れる空array</span>
     
-    x = np.random.normal(loc=4, scale=1, size=n)  # N回の推定に同じ説明変数を使う
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># N回の推定に同じ説明変数を使う</span>
 
-    for j in range(N):  # N 回のループ
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  <span class="c1"># N 回のループ</span>
         
-        ###### 非正規分布の誤差項（次の行だけが異なる）######
-        u = (np.random.chisquare(1, size=n) - 1) / np.sqrt(2)
+        <span class="c1">###### 非正規分布の誤差項（次の行だけが異なる）######</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">chisquare</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
         
-        y = b0 + b1 * x + u  # 説明変数
+        <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># 説明変数</span>
         
-        var_cov = np.cov(y,x)  # 分散共分散行列
-        cov_yx = var_cov[0,1]  # 共分散
-        var_y = var_cov[0,0]  # yの分散
-        var_x = var_cov[1,1]  # xの分散        
+        <span class="n">var_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># 分散共分散行列</span>
+        <span class="n">cov_yx</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 共分散</span>
+        <span class="n">var_y</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># yの分散</span>
+        <span class="n">var_x</span> <span class="o">=</span> <span class="n">var_cov</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># xの分散        </span>
         
-        b1hat = cov_yx / var_x  # b1の推定値
-        b0hat = np.mean(y)-b1hat*np.mean(x)  #b0の推定値
-        yhat = b0hat + b1hat*x  # yの予測値
-        uhat = y - yhat  # 残差
+        <span class="n">b1hat</span> <span class="o">=</span> <span class="n">cov_yx</span> <span class="o">/</span> <span class="n">var_x</span>  <span class="c1"># b1の推定値</span>
+        <span class="n">b0hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">-</span><span class="n">b1hat</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1">#b0の推定値</span>
+        <span class="n">yhat</span> <span class="o">=</span> <span class="n">b0hat</span> <span class="o">+</span> <span class="n">b1hat</span><span class="o">*</span><span class="n">x</span>  <span class="c1"># yの予測値</span>
+        <span class="n">uhat</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yhat</span>  <span class="c1"># 残差</span>
         
-        rss = np.sum(uhat**2)  # 残差平方和
-        sigma2 = rss/(n-2)  # 回帰の残差（不偏）分散 
-        ser = np.sqrt(sigma2)  # 回帰の標準誤差
+        <span class="n">rss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">uhat</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 残差平方和</span>
+        <span class="n">sigma2</span> <span class="o">=</span> <span class="n">rss</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 回帰の残差（不偏）分散 </span>
+        <span class="n">ser</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma2</span><span class="p">)</span>  <span class="c1"># 回帰の標準誤差</span>
         
-        b1se = ser/np.sqrt(n*np.var(x))  # b1の標準誤差
+        <span class="n">b1se</span> <span class="o">=</span> <span class="n">ser</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># b1の標準誤差</span>
         
-        q1 = (b1hat - b1)/b1se  # q1の値
+        <span class="n">q1</span> <span class="o">=</span> <span class="p">(</span><span class="n">b1hat</span> <span class="o">-</span> <span class="n">b1</span><span class="p">)</span><span class="o">/</span><span class="n">b1se</span>  <span class="c1"># q1の値</span>
     
-        q1_arr[j] = q1  # t値をarrayに追加
+        <span class="n">q1_arr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">q1</span>  <span class="c1"># t値をarrayに追加</span>
     
-    return q1_arr  # 返り値の設定
+    <span class="k">return</span> <span class="n">q1_arr</span>  <span class="c1"># 返り値の設定</span>
 </pre></div>
 </div>
 </div>
@@ -1340,10 +1340,10 @@ def sim_non_norm(n):  # n=標本の大きさ
 <p><span class="math notranslate nohighlight">\(n=5,\;10,\;30,\;100\)</span>のシミュレーション</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>q1_non_norm = {}  # 空の辞書の作成
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q1_non_norm</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># 空の辞書の作成</span>
 
-for i in [5,10,30,100]:
-    q1_non_norm[str(i)] = sim_non_norm(i)
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">100</span><span class="p">]:</span>
+    <span class="n">q1_non_norm</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">sim_non_norm</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1355,24 +1355,24 @@ for i in [5,10,30,100]:
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(10, 8))
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 
-# n = 5
-plt.subplot(221)
-plot_dist(5, q1_non_norm[&#39;5&#39;])
+<span class="c1"># n = 5</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
+<span class="n">plot_dist</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">q1_non_norm</span><span class="p">[</span><span class="s1">&#39;5&#39;</span><span class="p">])</span>
 
-# n = 10
-plt.subplot(222)
-plot_dist(10, q1_non_norm[&#39;10&#39;])
+<span class="c1"># n = 10</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">)</span>
+<span class="n">plot_dist</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">q1_non_norm</span><span class="p">[</span><span class="s1">&#39;10&#39;</span><span class="p">])</span>
 
-# n = 30
-plt.subplot(223)
-plot_dist(30, q1_non_norm[&#39;30&#39;])
+<span class="c1"># n = 30</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
+<span class="n">plot_dist</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">q1_non_norm</span><span class="p">[</span><span class="s1">&#39;30&#39;</span><span class="p">])</span>
 
-# n = 100
-plt.subplot(224)
-plot_dist(100, q1_non_norm[&#39;100&#39;])
-pass
+<span class="c1"># n = 100</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">)</span>
+<span class="n">plot_dist</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">q1_non_norm</span><span class="p">[</span><span class="s1">&#39;100&#39;</span><span class="p">])</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1399,9 +1399,9 @@ pass
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data_norm = norm.rvs(scale=5, size=500)
-qqplot(data_norm, line=&#39;45&#39;, fit=True)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_norm</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">qqplot</span><span class="p">(</span><span class="n">data_norm</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">,</span> <span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1412,9 +1412,9 @@ pass
 <p><strong>一様分布</strong>から生成したデータの場合。45度線から乖離しているのが分かる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data_uniform = uniform.rvs(size=500)
-qqplot(data_uniform, line=&#39;45&#39;, fit=True)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_uniform</span> <span class="o">=</span> <span class="n">uniform</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">qqplot</span><span class="p">(</span><span class="n">data_uniform</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">,</span> <span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1426,11 +1426,11 @@ pass
 <p>誤差項は<code class="docutils literal notranslate"><span class="pre">res_wage</span></code>の属性である<code class="docutils literal notranslate"><span class="pre">.resid</span></code>から取得できるので，それを<code class="docutils literal notranslate"><span class="pre">qqplot()</span></code>に使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wage1 = wooldridge.data(&#39;wage1&#39;)
-formula_wage = &#39;wage ~ educ + exper+ tenure&#39;
-res_wage = ols(formula_wage, data=wage1).fit()
-qqplot(res_wage.resid, line=&#39;45&#39;,fit=True)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span>
+<span class="n">formula_wage</span> <span class="o">=</span> <span class="s1">&#39;wage ~ educ + exper+ tenure&#39;</span>
+<span class="n">res_wage</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_wage</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">qqplot</span><span class="p">(</span><span class="n">res_wage</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">,</span><span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1441,11 +1441,11 @@ pass
 <p>被説明変数の<code class="docutils literal notranslate"><span class="pre">wage</span></code>に対数を取ると、こちらの方が当てはまりが良いことが分かる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wage1 = wooldridge.data(&#39;wage1&#39;)
-formula_wage_log = &#39;np.log(wage) ~ educ + exper+ tenure&#39;
-res_wage_log = ols(formula_wage_log, data=wage1).fit()
-qqplot(res_wage_log.resid, line=&#39;45&#39;,fit=True)
-pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">)</span>
+<span class="n">formula_wage_log</span> <span class="o">=</span> <span class="s1">&#39;np.log(wage) ~ educ + exper+ tenure&#39;</span>
+<span class="n">res_wage_log</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_wage_log</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">qqplot</span><span class="p">(</span><span class="n">res_wage_log</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">,</span><span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1468,15 +1468,15 @@ pass
 <p>上で使った<code class="docutils literal notranslate"><span class="pre">data_norm</span></code>で試してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>jarque_bera(data_norm)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">jarque_bera</span><span class="p">(</span><span class="n">data_norm</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.05464172213121352,
- 0.9730489778984599,
- 0.02390932584188172,
- 3.0183351905756433)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.0862017303506981,
+ 0.5809440273871127,
+ -0.07246017051954046,
+ 2.823546669598021)
 </pre></div>
 </div>
 </div>
@@ -1494,15 +1494,15 @@ pass
 <p><span class="math notranslate nohighlight">\(p\)</span>値は非常に小さいため，1%有意水準でも<span class="math notranslate nohighlight">\(\text{H}_0\)</span>を棄却できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>jarque_bera(data_uniform)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">jarque_bera</span><span class="p">(</span><span class="n">data_uniform</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(28.549605710387546,
- 6.317305648161866e-07,
- 0.09991524400993504,
- 1.8465491557260263)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(30.615023911872854,
+ 2.249220462383473e-07,
+ 0.10279917410902954,
+ 1.8053241163479097)
 </pre></div>
 </div>
 </div>
@@ -1511,7 +1511,7 @@ pass
 <p>上で行った２つの回帰分析の結果を検定してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>jarque_bera(res_wage.resid)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">jarque_bera</span><span class="p">(</span><span class="n">res_wage</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1526,7 +1526,7 @@ pass
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>jarque_bera(res_wage_log.resid)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">jarque_bera</span><span class="p">(</span><span class="n">res_wage_log</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1547,7 +1547,7 @@ pass
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res_wage_log.summary().tables[2])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_wage_log</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1579,12 +1579,12 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>omni_normtest(data_norm)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">omni_normtest</span><span class="p">(</span><span class="n">data_norm</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=0.1081856257399336, pvalue=0.9473441766894675)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=0.9956252640154765, pvalue=0.6078588175193955)
 </pre></div>
 </div>
 </div>
@@ -1595,12 +1595,12 @@ Kurtosis:                       3.977   Cond. No.                         135.
 <p><span class="math notranslate nohighlight">\(p\)</span>値は非常に小さいため，1%有意水準でも<span class="math notranslate nohighlight">\(\text{H}_0\)</span>を棄却できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>omni_normtest(data_uniform)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">omni_normtest</span><span class="p">(</span><span class="n">data_uniform</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=233.0056965788096, pvalue=2.5319542953048425e-51)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=305.6585358969867, pvalue=4.237329695759778e-67)
 </pre></div>
 </div>
 </div>
@@ -1609,7 +1609,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 <p>上で行った２つの回帰分析の結果を検定してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>omni_normtest(res_wage.resid)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">omni_normtest</span><span class="p">(</span><span class="n">res_wage</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1621,7 +1621,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>omni_normtest(res_wage_log.resid)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">omni_normtest</span><span class="p">(</span><span class="n">res_wage_log</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1639,7 +1639,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res_wage_log.summary().tables[2])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_wage_log</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1661,8 +1661,8 @@ Kurtosis:                       3.977   Cond. No.                         135.
 <p>大標本の場合，<span class="math notranslate nohighlight">\(F\)</span>検定の代わりに<span class="math notranslate nohighlight">\(LM\)</span>検定も使える。ここでは<code class="docutils literal notranslate"><span class="pre">crime1</span></code>のデータを使って<span class="math notranslate nohighlight">\(LM\)</span>検定について説明する。<code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">crime1</span></code>データを使おう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>crime1 = wooldridge.data(&#39;crime1&#39;)
-wooldridge.data(&#39;crime1&#39;, description=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crime1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime1&#39;</span><span class="p">)</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;crime1&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1715,9 +1715,9 @@ data he used in his article.
 <p>制約がない場合の推定</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_0 = &#39;narr86 ~ pcnv + ptime86 + qemp86 + avgsen + tottime&#39;
-res_0 = ols(form_0, data=crime1).fit()
-res_0.params
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_0</span> <span class="o">=</span> <span class="s1">&#39;narr86 ~ pcnv + ptime86 + qemp86 + avgsen + tottime&#39;</span>
+<span class="n">res_0</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_0</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">crime1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_0</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 </div>
 </div>
@@ -1738,9 +1738,9 @@ dtype: float64
 <p>仮説が正しい（制約がある）場合の推定</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_1 = &#39;narr86 ~ pcnv + ptime86 + qemp86&#39;
-res_1 = ols(form_1, data=crime1).fit()
-res_1.params
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_1</span> <span class="o">=</span> <span class="s1">&#39;narr86 ~ pcnv + ptime86 + qemp86&#39;</span>
+<span class="n">res_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">crime1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_1</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 </div>
 </div>
@@ -1761,7 +1761,7 @@ dtype: float64
 <p><code class="docutils literal notranslate"><span class="pre">res_0</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">.compare_lm_test()</span></code>を使うと簡単に計算結果を表示できる。引き数は，仮説が正しい場合のOLS推定の結果<code class="docutils literal notranslate"><span class="pre">res_1</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_0.compare_lm_test(res_1)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_0</span><span class="o">.</span><span class="n">compare_lm_test</span><span class="p">(</span><span class="n">res_1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

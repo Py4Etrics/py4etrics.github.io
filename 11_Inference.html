@@ -87,7 +87,7 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="visually-hidden">Toggle in-page Table of Contents</div>
 </label>
 <!-- Headers at the top -->
-<div class="announcement header-item noprint"><p><a href='http://www.econ.kobe-u.ac.jp/topics/pdf/221212-2.pdf'>✴️<<font color='white'>特別講演「UCバークレー校における経済学とデータサイエンス教育」(2023年1月6日) ← クリック！✴️</font></a></p></div>
+<div class="announcement header-item noprint"></div>
 <div class="header header-item noprint"></div>
 
     
@@ -751,12 +751,12 @@ title="Print to PDF"
 <h1>推論<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from scipy.stats import t, f
-import numpy as np
-import pandas as pd
-from statsmodels.formula.api import ols
-import matplotlib.pyplot as plt
-import wooldridge
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">t</span><span class="p">,</span> <span class="n">f</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
 </pre></div>
 </div>
 </div>
@@ -933,11 +933,11 @@ in English or the language of your choice.
 <p>右側検定の場合の<span class="math notranslate nohighlight">\(t_c(0.05)\)</span>は次の値となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>a = 0.05
-dof = 30-5-1
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="n">dof</span> <span class="o">=</span> <span class="mi">30</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">1</span>
 
-t_right = t.ppf(1-a, dof)  # t.ppfについてはscipy.statsを参照
-t_right
+<span class="n">t_right</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>  <span class="c1"># t.ppfについてはscipy.statsを参照</span>
+<span class="n">t_right</span>
 </pre></div>
 </div>
 </div>
@@ -950,8 +950,8 @@ t_right
 <p>左側検定の場合の<span class="math notranslate nohighlight">\(t_c(0.05)\)</span>は次の値となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>t_left = t.ppf(a, dof)
-t_left
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_left</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+<span class="n">t_left</span>
 </pre></div>
 </div>
 </div>
@@ -964,8 +964,8 @@ t_left
 <p>両側検定の場合の<span class="math notranslate nohighlight">\(t_c(0.05)\)</span>は、<span class="math notranslate nohighlight">\(1-a/2\)</span>を使うと次のコードとなる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>t_both = t.ppf(1-a/2, dof)
-t_both
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_both</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+<span class="n">t_both</span>
 </pre></div>
 </div>
 </div>
@@ -978,7 +978,7 @@ t_both
 <p><span class="math notranslate nohighlight">\(a/2\)</span>を使うと次のコードで同じ値を計算できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>abs(t.ppf(a/2,dof))
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">abs</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">dof</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -997,7 +997,7 @@ t_both
 <code class="docutils literal notranslate"><span class="pre">t_right</span></code>の場合，<span class="math notranslate nohighlight">\(p\)</span>値は次の値になる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>1-t.cdf(t_right, dof)   # t.cdfについてはscipy.statsを参照
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_right</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>   <span class="c1"># t.cdfについてはscipy.statsを参照</span>
 </pre></div>
 </div>
 </div>
@@ -1011,7 +1011,7 @@ t_both
 <code class="docutils literal notranslate"><span class="pre">t_left</span></code>の場合，<span class="math notranslate nohighlight">\(p\)</span>値は次の値になる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>t.cdf(t_left, dof)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_left</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1025,7 +1025,7 @@ t_both
 <code class="docutils literal notranslate"><span class="pre">t_both</span></code>の場合，<span class="math notranslate nohighlight">\(p\)</span>値は次の値になる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>2*( 1-t.cdf(t_both, dof) )
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span><span class="o">*</span><span class="p">(</span> <span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_both</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span> <span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1048,8 +1048,8 @@ t_both
 <p><code class="docutils literal notranslate"><span class="pre">gpa1</span></code>のデータを使った回帰分析を考えよう。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>gpa = wooldridge.data(&#39;gpa1&#39;)
-wooldridge.data(&#39;gpa1&#39;,description=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpa</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;gpa1&#39;</span><span class="p">)</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;gpa1&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1106,8 +1106,8 @@ from a survey he took of MSU students in Fall 1994.
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_gpa = &#39;colGPA ~ hsGPA + ACT + skipped&#39;
-res_gpa = ols(formula_gpa, data=gpa).fit()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_gpa</span> <span class="o">=</span> <span class="s1">&#39;colGPA ~ hsGPA + ACT + skipped&#39;</span>
+<span class="n">res_gpa</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_gpa</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">gpa</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1115,7 +1115,7 @@ res_gpa = ols(formula_gpa, data=gpa).fit()
 <p><code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性<code class="docutils literal notranslate"><span class="pre">tvalues</span></code>を使い<span class="math notranslate nohighlight">\(t\)</span>値を表示してみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_gpa.tvalues
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">tvalues</span>
 </pre></div>
 </div>
 </div>
@@ -1132,21 +1132,21 @@ dtype: float64
 <p>この値を１つ１つ棄却臨界値と比べるのも手間がかかるので、次のような関数を作成し、任意の棄却臨界値に基づき両側検定を行うことも簡単にできる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def significance_check(res, a=0.05):
-    &quot;&quot;&quot;
-    定数項がある場合のt検定をおこなう。
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">significance_check</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    定数項がある場合のt検定をおこなう。</span>
+<span class="sd">    </span>
+<span class="sd">    引数：</span>
+<span class="sd">        res = statsmodelsによるOLS推定結果</span>
+<span class="sd">        a = 有意水準（デフォルト：0.05）</span>
+<span class="sd">    返り値：</span>
+<span class="sd">        帰無仮説を棄却する場合はTrueを返す。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     
-    引数：
-        res = statsmodelsによるOLS推定結果
-        a = 有意水準（デフォルト：0.05）
-    返り値：
-        帰無仮説を棄却する場合はTrueを返す。
-    &quot;&quot;&quot;
+    <span class="n">dof</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">nobs</span><span class="o">-</span><span class="n">res</span><span class="o">.</span><span class="n">df_model</span><span class="o">-</span><span class="mi">1</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
     
-    dof = res.nobs-res.df_model-1
-    result = abs(res.tvalues) &gt; t.ppf(1-a/2, dof)
-    
-    return pd.Series(result, index=res.tvalues.index)
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1157,7 +1157,7 @@ dtype: float64
 </div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>help(significance_check)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">significance_check</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1183,7 +1183,7 @@ significance_check(res, a=0.05)
 <p>関数を実行してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>significance_check(res_gpa, 0.05)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">significance_check</span><span class="p">(</span><span class="n">res_gpa</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1200,7 +1200,7 @@ dtype: bool
 <p><code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性<code class="docutils literal notranslate"><span class="pre">pvalues</span></code>から<span class="math notranslate nohighlight">\(p\)</span>値を表示してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_gpa.pvalues
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">pvalues</span>
 </pre></div>
 </div>
 </div>
@@ -1216,7 +1216,7 @@ dtype: float64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res_gpa.summary().tables[1])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_gpa</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1243,7 +1243,7 @@ skipped       -0.0831      0.026     -3.197      0.002      -0.135      -0.032
 <p>OLS推定量の標準誤差は属性<code class="docutils literal notranslate"><span class="pre">.bse</span></code>として取得できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_gpa.bse
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">bse</span>
 </pre></div>
 </div>
 </div>
@@ -1278,7 +1278,7 @@ dtype: float64
 <p>では<code class="docutils literal notranslate"><span class="pre">gpa</span></code>の例を考えよう。<code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">conf_int()</span></code>を使い信頼区間を取得できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res_gpa.conf_int())
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_gpa</span><span class="o">.</span><span class="n">conf_int</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -1295,7 +1295,7 @@ skipped   -0.134523 -0.031703
 <p>有意水準のオプション<code class="docutils literal notranslate"><span class="pre">alpha=</span></code>を指定することもできる（デフォルトは<code class="docutils literal notranslate"><span class="pre">0.05</span></code>）。有意水準が1％の場合は次のように指定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res_gpa.conf_int(alpha=0.01))
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_gpa</span><span class="o">.</span><span class="n">conf_int</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1316,14 +1316,14 @@ skipped   -0.151026 -0.015200
 <p><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>の<code class="docutils literal notranslate"><span class="pre">errorbar</span></code>を使い図示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>coef = res_gpa.params      # 推定値
-varname = coef.index       # 変数名
-ci = res_gpa.conf_int()    # 信頼区間を　ci　に入れる
-error = ci.iloc[:,1]-coef  # 信頼区間の幅の半分
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coef</span> <span class="o">=</span> <span class="n">res_gpa</span><span class="o">.</span><span class="n">params</span>      <span class="c1"># 推定値</span>
+<span class="n">varname</span> <span class="o">=</span> <span class="n">coef</span><span class="o">.</span><span class="n">index</span>       <span class="c1"># 変数名</span>
+<span class="n">ci</span> <span class="o">=</span> <span class="n">res_gpa</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span>    <span class="c1"># 信頼区間を　ci　に入れる</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">ci</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">coef</span>  <span class="c1"># 信頼区間の幅の半分</span>
 
-plt.errorbar(x=coef[1:], y=varname[1:], xerr=error[1:], fmt=&#39;o&#39;,capsize=5)  # 切片以外のエラーバー
-plt.axvline(0, color=&#39;red&#39;)  # 垂直線
-pass
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">coef</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">y</span><span class="o">=</span><span class="n">varname</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">xerr</span><span class="o">=</span><span class="n">error</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">capsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># 切片以外のエラーバー</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>  <span class="c1"># 垂直線</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -1402,8 +1402,8 @@ y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+u
 <p>例として米国野球選手（メジャーリーグ）に関するデータ<code class="docutils literal notranslate"><span class="pre">mlb1</span></code>を使う。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mlb1 = wooldridge.data(&#39;mlb1&#39;)
-wooldridge.data(&#39;mlb1&#39;,description=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mlb1</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mlb1&#39;</span><span class="p">)</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;mlb1&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1484,8 +1484,8 @@ Abstract of the United States.
 <p>まず制約がない回帰分析をおこなう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_0 = &#39;np.log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr&#39;
-res_0 = ols(formula_0, data=mlb1).fit()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_0</span> <span class="o">=</span> <span class="s1">&#39;np.log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr&#39;</span>
+<span class="n">res_0</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_0</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mlb1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1499,8 +1499,8 @@ res_0 = ols(formula_0, data=mlb1).fit()
 <p>制約がある場合の回帰分析</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_1 = &#39;np.log(salary) ~ years + gamesyr&#39;
-res_1 = ols(formula_1, data=mlb1).fit()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_1</span> <span class="o">=</span> <span class="s1">&#39;np.log(salary) ~ years + gamesyr&#39;</span>
+<span class="n">res_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mlb1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1510,17 +1510,17 @@ res_1 = ols(formula_1, data=mlb1).fit()
 <p><span class="math notranslate nohighlight">\(F\)</span>値の計算</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># 決定係数
-r2_0 = res_0.rsquared
-r2_1 = res_1.rsquared
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 決定係数</span>
+<span class="n">r2_0</span> <span class="o">=</span> <span class="n">res_0</span><span class="o">.</span><span class="n">rsquared</span>
+<span class="n">r2_1</span> <span class="o">=</span> <span class="n">res_1</span><span class="o">.</span><span class="n">rsquared</span>
 
-n = res_0.nobs  # 標本の大きさ
-k = res_0.df_model  # 定数項以外の説明変数の数
-q = 3  # 制約式の数
+<span class="n">n</span> <span class="o">=</span> <span class="n">res_0</span><span class="o">.</span><span class="n">nobs</span>  <span class="c1"># 標本の大きさ</span>
+<span class="n">k</span> <span class="o">=</span> <span class="n">res_0</span><span class="o">.</span><span class="n">df_model</span>  <span class="c1"># 定数項以外の説明変数の数</span>
+<span class="n">q</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># 制約式の数</span>
 
-# F値:
-F = (r2_0 - r2_1) / (1 - r2_0) * (n - k - 1) / q
-F
+<span class="c1"># F値:</span>
+<span class="n">F</span> <span class="o">=</span> <span class="p">(</span><span class="n">r2_0</span> <span class="o">-</span> <span class="n">r2_1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">r2_0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">q</span>
+<span class="n">F</span>
 </pre></div>
 </div>
 </div>
@@ -1533,8 +1533,8 @@ F
 <p><span class="math notranslate nohighlight">\(a=0.05\)</span>の場合の棄却臨界値</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>a = 0.05
-f.ppf(1-a, dfn=q, dfd=n-k-1)   # f.ppfについてはscipy.statsを参照
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="n">f</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="p">,</span> <span class="n">dfn</span><span class="o">=</span><span class="n">q</span><span class="p">,</span> <span class="n">dfd</span><span class="o">=</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># f.ppfについてはscipy.statsを参照</span>
 </pre></div>
 </div>
 </div>
@@ -1548,7 +1548,7 @@ f.ppf(1-a, dfn=q, dfd=n-k-1)   # f.ppfについてはscipy.statsを参照
 <p><span class="math notranslate nohighlight">\(p\)</span>値</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>1-f.cdf(F, dfn=q, dfd=n-k-1)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="n">f</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">dfn</span><span class="o">=</span><span class="n">q</span><span class="p">,</span> <span class="n">dfd</span><span class="o">=</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1564,7 +1564,7 @@ f.ppf(1-a, dfn=q, dfd=n-k-1)   # f.ppfについてはscipy.statsを参照
 <p>制約式の定義</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hypotheses = &#39;bavg = 0, hrunsyr = 0, rbisyr = 0&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hypotheses</span> <span class="o">=</span> <span class="s1">&#39;bavg = 0, hrunsyr = 0, rbisyr = 0&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -1572,7 +1572,7 @@ f.ppf(1-a, dfn=q, dfd=n-k-1)   # f.ppfについてはscipy.statsを参照
 <p><code class="docutils literal notranslate"><span class="pre">res_0</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">f_test</span></code>を使い、引数に上のセルで定義した制約式<code class="docutils literal notranslate"><span class="pre">hypotheses</span></code>を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_f_test = res_0.f_test(hypotheses)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_f_test</span> <span class="o">=</span> <span class="n">res_0</span><span class="o">.</span><span class="n">f_test</span><span class="p">(</span><span class="n">hypotheses</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1580,7 +1580,7 @@ f.ppf(1-a, dfn=q, dfd=n-k-1)   # f.ppfについてはscipy.statsを参照
 <p><code class="docutils literal notranslate"><span class="pre">res_f_test</span></code>に<code class="docutils literal notranslate"><span class="pre">F</span></code>検定の結果を割り当てたが、そのメソッド<code class="docutils literal notranslate"><span class="pre">summary()</span></code>を使い結果を表示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_f_test.summary()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_f_test</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1609,7 +1609,7 @@ f.ppf(1-a, dfn=q, dfd=n-k-1)   # f.ppfについてはscipy.statsを参照
 <p>この場合，<code class="docutils literal notranslate"><span class="pre">res_0</span></code>の<code class="docutils literal notranslate"><span class="pre">fvalue</span></code>から<span class="math notranslate nohighlight">\(F\)</span>値，<code class="docutils literal notranslate"><span class="pre">f_pvalue</span></code>から<span class="math notranslate nohighlight">\(p\)</span>値を属性として取得できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_0.fvalue
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_0</span><span class="o">.</span><span class="n">fvalue</span>
 </pre></div>
 </div>
 </div>
@@ -1621,7 +1621,7 @@ f.ppf(1-a, dfn=q, dfd=n-k-1)   # f.ppfについてはscipy.statsを参照
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_0.f_pvalue
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_0</span><span class="o">.</span><span class="n">f_pvalue</span>
 </pre></div>
 </div>
 </div>
@@ -1635,7 +1635,7 @@ f.ppf(1-a, dfn=q, dfd=n-k-1)   # f.ppfについてはscipy.statsを参照
 <p>例２の結果はOLS推定結果のメソッド<code class="docutils literal notranslate"><span class="pre">summary()</span></code>で表示される表の中にある<code class="docutils literal notranslate"><span class="pre">F-statistic</span></code>と<code class="docutils literal notranslate"><span class="pre">Prob(F-statistic)</span></code>で確認することもできる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(res_0.summary())
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_0</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -1645,8 +1645,8 @@ f.ppf(1-a, dfn=q, dfd=n-k-1)   # f.ppfについてはscipy.statsを参照
 Dep. Variable:         np.log(salary)   R-squared:                       0.628
 Model:                            OLS   Adj. R-squared:                  0.622
 Method:                 Least Squares   F-statistic:                     117.1
-Date:                Thu, 22 Dec 2022   Prob (F-statistic):           2.94e-72
-Time:                        03:26:30   Log-Likelihood:                -385.11
+Date:                Sat, 07 Jan 2023   Prob (F-statistic):           2.94e-72
+Time:                        14:23:35   Log-Likelihood:                -385.11
 No. Observations:                 353   AIC:                             782.2
 Df Residuals:                     347   BIC:                             805.4
 Df Model:                           5                                         

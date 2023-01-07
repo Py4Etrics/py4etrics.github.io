@@ -87,7 +87,7 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="visually-hidden">Toggle in-page Table of Contents</div>
 </label>
 <!-- Headers at the top -->
-<div class="announcement header-item noprint"><p><a href='http://www.econ.kobe-u.ac.jp/topics/pdf/221212-2.pdf'>✴️<<font color='white'>特別講演「UCバークレー校における経済学とデータサイエンス教育」(2023年1月6日) ← クリック！✴️</font></a></p></div>
+<div class="announcement header-item noprint"></div>
 <div class="header header-item noprint"></div>
 
     
@@ -807,19 +807,19 @@ title="Print to PDF"
 <h1>パネル・データ分析<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
-from scipy.stats import norm, gaussian_kde
-import matplotlib.pyplot as plt
-import pandas as pd
-from linearmodels.panel.data import PanelData
-from linearmodels.panel import PanelOLS, PooledOLS, RandomEffects, compare
-from collections import OrderedDict
-import wooldridge
-from statsmodels.formula.api import ols
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">gaussian_kde</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">linearmodels.panel.data</span> <span class="kn">import</span> <span class="n">PanelData</span>
+<span class="kn">from</span> <span class="nn">linearmodels.panel</span> <span class="kn">import</span> <span class="n">PanelOLS</span><span class="p">,</span> <span class="n">PooledOLS</span><span class="p">,</span> <span class="n">RandomEffects</span><span class="p">,</span> <span class="n">compare</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">import</span> <span class="nn">wooldridge</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
 
-# 警告メッセージを非表示
-import warnings
-warnings.filterwarnings(&quot;ignore&quot;)
+<span class="c1"># 警告メッセージを非表示</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -889,8 +889,8 @@ in English or the language of your choice.
 <p><code class="docutils literal notranslate"><span class="pre">wagepan</span></code>というデータセットを使い，賃金に対する労働組合などの変数の効果を推定する。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wagepan = wooldridge.data(&#39;wagepan&#39;)
-wooldridge.data(&#39;wagepan&#39;, description=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span> <span class="o">=</span> <span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wagepan&#39;</span><span class="p">)</span>
+<span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wagepan&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -990,32 +990,32 @@ undergraduates looking to replicate or extend a published study.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># 説明変数のリスト
-exog = [&#39;married&#39;,&#39;union&#39;,&#39;expersq&#39;,&#39;d81&#39;,&#39;d82&#39;,&#39;d83&#39;,&#39;d84&#39;,&#39;d85&#39;,&#39;d86&#39;,&#39;d87&#39;]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 説明変数のリスト</span>
+<span class="n">exog</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;married&#39;</span><span class="p">,</span><span class="s1">&#39;union&#39;</span><span class="p">,</span><span class="s1">&#39;expersq&#39;</span><span class="p">,</span><span class="s1">&#39;d81&#39;</span><span class="p">,</span><span class="s1">&#39;d82&#39;</span><span class="p">,</span><span class="s1">&#39;d83&#39;</span><span class="p">,</span><span class="s1">&#39;d84&#39;</span><span class="p">,</span><span class="s1">&#39;d85&#39;</span><span class="p">,</span><span class="s1">&#39;d86&#39;</span><span class="p">,</span><span class="s1">&#39;d87&#39;</span><span class="p">]</span>
 
-# 全ての変数のリスト
-var = [&#39;lwage&#39;]+exog
+<span class="c1"># 全ての変数のリスト</span>
+<span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;lwage&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">exog</span>
 
-# 使う変数だけで構成されるDataFrame
-df = wagepan.loc[:,[&#39;nr&#39;]+var]
+<span class="c1"># 使う変数だけで構成されるDataFrame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">wagepan</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;nr&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">var</span><span class="p">]</span>
 
-# varの平均からの乖離を計算（下の説明（１）を参照）
-df_g = df.groupby(&#39;nr&#39;)
-df_mean = df_g[var].transform(&#39;mean&#39;)
-df_md = df.loc[:,var]-df_mean
+<span class="c1"># varの平均からの乖離を計算（下の説明（１）を参照）</span>
+<span class="n">df_g</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;nr&#39;</span><span class="p">)</span>
+<span class="n">df_mean</span> <span class="o">=</span> <span class="n">df_g</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+<span class="n">df_md</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">var</span><span class="p">]</span><span class="o">-</span><span class="n">df_mean</span>
 
-# 説明変数の行列（下の説明（２）を参照）
-X = df_md.loc[:,exog].values
+<span class="c1"># 説明変数の行列（下の説明（２）を参照）</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df_md</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">exog</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
-# 被説明変数のベクトル
-Y = df_md.loc[:,&#39;lwage&#39;].values
+<span class="c1"># 被説明変数のベクトル</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">df_md</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;lwage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
-# OLSの計算
-params = np.linalg.inv((X.T)@X)@(X.T)@Y
+<span class="c1"># OLSの計算</span>
+<span class="n">params</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@X</span><span class="p">)</span><span class="o">@</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@Y</span>
 
-# 結果の表示（下の説明（３）を参照）
-for idx, name in enumerate(exog):
-    print(f&#39;{name}: {params[idx]:.4}&#39;)
+<span class="c1"># 結果の表示（下の説明（３）を参照）</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">exog</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">params</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">:</span><span class="s1">.4</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1096,14 +1096,14 @@ d87: 0.925
 <p>まず<code class="docutils literal notranslate"><span class="pre">wagepan</span></code>を<code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code>化する。これにより<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>を使いFD推定可能となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wagepan = wagepan.set_index([&#39;nr&#39;,&#39;year&#39;],drop=False)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span> <span class="o">=</span> <span class="n">wagepan</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;nr&#39;</span><span class="p">,</span><span class="s1">&#39;year&#39;</span><span class="p">],</span><span class="n">drop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wagepan.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1304,7 +1304,7 @@ d87: 0.925
 </div>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wagepan.info()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1367,8 +1367,8 @@ memory usage: 1.5 MB
 <p>次に<code class="docutils literal notranslate"><span class="pre">PanelData</span></code>オブジェクトに変換しデータの特徴を調べる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wagepanp = PanelData(wagepan)
-wagepanp.shape
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wagepanp</span> <span class="o">=</span> <span class="n">PanelData</span><span class="p">(</span><span class="n">wagepan</span><span class="p">)</span>
+<span class="n">wagepanp</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
@@ -1386,7 +1386,7 @@ wagepanp.shape
 <p>次に，balanced もしくは unbalanced data set かを確認する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(~wagepanp.isnull).all()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">~</span><span class="n">wagepanp</span><span class="o">.</span><span class="n">isnull</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1411,8 +1411,8 @@ wagepanp.shape
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_fe = &#39;lwage ~ married + union + expersq \
-                      +d81+d82+d83+d84+d85+d86+d87 + EntityEffects&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_fe</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ married + union + expersq </span><span class="se">\</span>
+<span class="s1">                      +d81+d82+d83+d84+d85+d86+d87 + EntityEffects&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -1422,7 +1422,7 @@ wagepanp.shape
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mod_fe = PanelOLS.from_formula(formula_fe, data=wagepan)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mod_fe</span> <span class="o">=</span> <span class="n">PanelOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_fe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1432,7 +1432,7 @@ wagepanp.shape
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>result_fe = mod_fe.fit()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_fe</span> <span class="o">=</span> <span class="n">mod_fe</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1451,7 +1451,7 @@ wagepanp.shape
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(result_fe.summary.tables[1])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result_fe</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1484,7 +1484,7 @@ union          0.0800     0.0193     4.1430     0.0000      0.0421      0.1179
 <p><span class="math notranslate nohighlight">\(R^2\)</span>を表示してみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(result_fe.summary.tables[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result_fe</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1494,8 +1494,8 @@ union          0.0800     0.0193     4.1430     0.0000      0.0421      0.1179
 Dep. Variable:                  lwage   R-squared:                        0.1806
 Estimator:                   PanelOLS   R-squared (Between):              0.2386
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Thu, Dec 22 2022   R-squared (Overall):              0.2361
-Time:                        03:27:40   Log-likelihood                   -1324.8
+Date:                Sat, Jan 07 2023   R-squared (Overall):              0.2361
+Time:                        14:24:33   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      83.851
 Entities:                         545   P-value                           0.0000
@@ -1525,9 +1525,9 @@ Max Obs:                       545.00
 <p>上の推定式では時間ダミー変数として使い，観察単位全てに共通な時間的な影響を捉えた。具体的には，インフレにより賃金は変化するが，その変化は全ての労働者には対して同じであり，その効果を時間ダミー変数が捉えている。それを<strong>時間効果</strong>と呼ぶ。このような時間ダミー変数を加えた理由は，時間効果が他の変数（例えば，<code class="docutils literal notranslate"><span class="pre">married</span></code>）の係数を「汚さない」ようにするためであり，よりピュアの効果を推定するためである。一方，<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>では，わざわざ時間ダミー変数を作らずとも<code class="docutils literal notranslate"><span class="pre">TimeEffects</span></code>を回帰式に追加することにより，時間効果を自動的に「排除」することができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_fe2 = &#39;lwage ~ married + union + expersq + TimeEffects + EntityEffects&#39;
-result_fe2 = PanelOLS.from_formula(formula_fe2, data=wagepan).fit()
-print(result_fe2)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_fe2</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ married + union + expersq + TimeEffects + EntityEffects&#39;</span>
+<span class="n">result_fe2</span> <span class="o">=</span> <span class="n">PanelOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_fe2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result_fe2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1537,8 +1537,8 @@ print(result_fe2)
 Dep. Variable:                  lwage   R-squared:                        0.0216
 Estimator:                   PanelOLS   R-squared (Between):             -0.2717
 No. Observations:                4360   R-squared (Within):              -0.4809
-Date:                Thu, Dec 22 2022   R-squared (Overall):             -0.2808
-Time:                        03:27:41   Log-likelihood                   -1324.8
+Date:                Sat, Jan 07 2023   R-squared (Overall):             -0.2808
+Time:                        14:24:33   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      27.959
 Entities:                         545   P-value                           0.0000
@@ -1567,9 +1567,6 @@ Distribution: F(551,3805)
 Included effects: Entity, Time
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">result_fe</span></code>と同じ結果を確認できる。<span class="math notranslate nohighlight">\(R^2\)</span>の値は少し変わっているが，これは時間ダミーを入れて計算している訳ではないためである。</p>
@@ -1582,8 +1579,8 @@ Included effects: Entity, Time
 <p>上で使った<code class="docutils literal notranslate"><span class="pre">wagepan</span></code>を使い推定する。まず，観察単位のダミー変数として推定式に<code class="docutils literal notranslate"><span class="pre">C(nr)</span></code>を追加する</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_dum = &#39;lwage ~  1 + married + union + expersq \
-                        +d81+d82+d83+d84+d85+d86+d87 + C(nr)&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_dum</span> <span class="o">=</span> <span class="s1">&#39;lwage ~  1 + married + union + expersq </span><span class="se">\</span>
+<span class="s1">                        +d81+d82+d83+d84+d85+d86+d87 + C(nr)&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -1591,7 +1588,7 @@ Included effects: Entity, Time
 <p><code class="docutils literal notranslate"><span class="pre">PooledOLS</span></code>モジュールの関数<code class="docutils literal notranslate"><span class="pre">from_formula</span></code>を使って推定式を定義する。ここで<code class="docutils literal notranslate"><span class="pre">PooledOLS</span></code>とは，<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>で使う通常のOLS推定と同じである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>result_dum = PooledOLS.from_formula(formula_dum, data=wagepan).fit()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_dum</span> <span class="o">=</span> <span class="n">PooledOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_dum</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1607,8 +1604,8 @@ Included effects: Entity, Time
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>filter = (result_dum.params.index.str.contains(&#39;nr&#39;) == False).tolist()
-result_dum.params[filter]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">filter</span> <span class="o">=</span> <span class="p">(</span><span class="n">result_dum</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;nr&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">result_dum</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1728,9 +1725,9 @@ Name: parameter, dtype: float64
 <p>時間ダミー変数の代わりに<code class="docutils literal notranslate"><span class="pre">TimeEffects</span></code>を使わないように。入れることができますが，そのような仕様になっていません。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_re = &#39;lwage ~ 1 + married + union + expersq \
-                        + exper + educ + black + hisp \
-                        +d81+d82+d83+d84+d85+d86+d87&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_re</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
+<span class="s1">                        + exper + educ + black + hisp </span><span class="se">\</span>
+<span class="s1">                        +d81+d82+d83+d84+d85+d86+d87&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -1738,7 +1735,7 @@ Name: parameter, dtype: float64
 <p><code class="docutils literal notranslate"><span class="pre">RandomEffects</span></code>のモジュールにある関数<code class="docutils literal notranslate"><span class="pre">from_formula</span></code>を使い計算する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>result_re = RandomEffects.from_formula(formula_re, data=wagepan).fit()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_re</span> <span class="o">=</span> <span class="n">RandomEffects</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_re</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1746,7 +1743,7 @@ Name: parameter, dtype: float64
 <p>結果の表示。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(result_re.summary.tables[1])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result_re</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1783,7 +1780,7 @@ union          0.1059     0.0179     5.9289     0.0000      0.0709      0.1409
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>result_re.theta.iloc[0,:]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_re</span><span class="o">.</span><span class="n">theta</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span>
 </pre></div>
 </div>
 </div>
@@ -1802,7 +1799,7 @@ Name: 13, dtype: float64
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>result_re.variance_decomposition
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_re</span><span class="o">.</span><span class="n">variance_decomposition</span>
 </pre></div>
 </div>
 </div>
@@ -1886,13 +1883,13 @@ Name: Variance Decomposition, dtype: float64
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def add_col_mean(dframe, ori_col, new_col):  # (1)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_col_mean</span><span class="p">(</span><span class="n">dframe</span><span class="p">,</span> <span class="n">ori_col</span><span class="p">,</span> <span class="n">new_col</span><span class="p">):</span>  <span class="c1"># (1)</span>
     
-    dict = dframe.groupby(level=0)[ori_col].mean().to_dict()  # (2)
-    mean = dframe.index.get_level_values(0).to_series().map(dict).tolist()  # (3)
-    dframe.loc[:,new_col] = mean  # (4)
+    <span class="nb">dict</span> <span class="o">=</span> <span class="n">dframe</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="n">ori_col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>  <span class="c1"># (2)</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">dframe</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">to_series</span><span class="p">()</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  <span class="c1"># (3)</span>
+    <span class="n">dframe</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">new_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean</span>  <span class="c1"># (4)</span>
     
-    return dframe   # (5)
+    <span class="k">return</span> <span class="n">dframe</span>   <span class="c1"># (5)</span>
 </pre></div>
 </div>
 </div>
@@ -1901,9 +1898,9 @@ Name: Variance Decomposition, dtype: float64
 <p>（コメント）<code class="docutils literal notranslate"><span class="pre">exper</span></code>は含めない。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wagepan = add_col_mean(wagepan, &#39;married&#39;, &#39;married_mean&#39;)
-wagepan = add_col_mean(wagepan, &#39;union&#39;, &#39;union_mean&#39;)
-wagepan = add_col_mean(wagepan, &#39;expersq&#39;, &#39;expersq_mean&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wagepan</span> <span class="o">=</span> <span class="n">add_col_mean</span><span class="p">(</span><span class="n">wagepan</span><span class="p">,</span> <span class="s1">&#39;married&#39;</span><span class="p">,</span> <span class="s1">&#39;married_mean&#39;</span><span class="p">)</span>
+<span class="n">wagepan</span> <span class="o">=</span> <span class="n">add_col_mean</span><span class="p">(</span><span class="n">wagepan</span><span class="p">,</span> <span class="s1">&#39;union&#39;</span><span class="p">,</span> <span class="s1">&#39;union_mean&#39;</span><span class="p">)</span>
+<span class="n">wagepan</span> <span class="o">=</span> <span class="n">add_col_mean</span><span class="p">(</span><span class="n">wagepan</span><span class="p">,</span> <span class="s1">&#39;expersq&#39;</span><span class="p">,</span> <span class="s1">&#39;expersq_mean&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1911,13 +1908,13 @@ wagepan = add_col_mean(wagepan, &#39;expersq&#39;, &#39;expersq_mean&#39;)
 <p>CRE推定と結果の表示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_cre = &#39;lwage ~ 1 + married + union + expersq \
-                         + married_mean + union_mean + expersq_mean \
-                         +d81+d82+d83+d84+d85+d86+d87&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_cre</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
+<span class="s1">                         + married_mean + union_mean + expersq_mean </span><span class="se">\</span>
+<span class="s1">                         +d81+d82+d83+d84+d85+d86+d87&#39;</span>
 
-result_cre = RandomEffects.from_formula(formula_cre, data=wagepan).fit()
+<span class="n">result_cre</span> <span class="o">=</span> <span class="n">RandomEffects</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_cre</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(result_cre)
+<span class="nb">print</span><span class="p">(</span><span class="n">result_cre</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1927,8 +1924,8 @@ print(result_cre)
 Dep. Variable:                  lwage   R-squared:                        0.1711
 Estimator:              RandomEffects   R-squared (Between):              0.0967
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Thu, Dec 22 2022   R-squared (Overall):              0.1355
-Time:                        03:27:42   Log-likelihood                   -1609.8
+Date:                Sat, Jan 07 2023   R-squared (Overall):              0.1355
+Time:                        14:24:35   Log-likelihood                   -1609.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      69.027
 Entities:                         545   P-value                           0.0000
@@ -1988,11 +1985,11 @@ union_mean       0.1612     0.0526     3.0653     0.0022      0.0581      0.2644
 <p><code class="docutils literal notranslate"><span class="pre">result_cre</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">wald_test()</span></code>を使う。引数には文字列で指定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># 検定する係数の値を設定する
-restriction = &#39;married_mean = union_mean = expersq_mean = 0&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 検定する係数の値を設定する</span>
+<span class="n">restriction</span> <span class="o">=</span> <span class="s1">&#39;married_mean = union_mean = expersq_mean = 0&#39;</span>
 
-# 検定結果を表示する
-result_cre.wald_test(formula=restriction)
+<span class="c1"># 検定結果を表示する</span>
+<span class="n">result_cre</span><span class="o">.</span><span class="n">wald_test</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="n">restriction</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2002,7 +1999,7 @@ H0: Linear equality constraint is valid
 Statistic: 35.6454
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x1210ac2b0
+WaldTestStatistic, id: 0x1256803d0
 </pre></div>
 </div>
 </div>
@@ -2033,14 +2030,14 @@ WaldTestStatistic, id: 0x1210ac2b0
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_cre2 = &#39;lwage ~ 1 + married + union + expersq \
-                          + exper + educ + black + hisp \
-                          + married_mean + union_mean + expersq_mean \
-                          +d81+d82+d83+d84+d85+d86+d87&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_cre2</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
+<span class="s1">                          + exper + educ + black + hisp </span><span class="se">\</span>
+<span class="s1">                          + married_mean + union_mean + expersq_mean </span><span class="se">\</span>
+<span class="s1">                          +d81+d82+d83+d84+d85+d86+d87&#39;</span>
 
-result_cre2 = RandomEffects.from_formula(formula_cre2, data=wagepan).fit()
+<span class="n">result_cre2</span> <span class="o">=</span> <span class="n">RandomEffects</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_cre2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(result_cre2.summary.tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">result_cre2</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2075,7 +2072,7 @@ union_mean       0.1907     0.0507     3.7591     0.0002      0.0912      0.2901
 <p>もう一度，FE対RE検定を行ってみよう。検定統計量（Statistics）は減少したが，以前帰無仮説は高い優位性で棄却できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>result_cre2.wald_test(formula=restriction)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_cre2</span><span class="o">.</span><span class="n">wald_test</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="n">restriction</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2085,7 +2082,7 @@ H0: Linear equality constraint is valid
 Statistic: 26.0233
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x11ef67e80
+WaldTestStatistic, id: 0x1257ff400
 </pre></div>
 </div>
 </div>
@@ -2107,13 +2104,13 @@ WaldTestStatistic, id: 0x11ef67e80
 <p><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>のモジュール<code class="docutils literal notranslate"><span class="pre">PooledOLS</span></code>では，観察単位や時間の区別なく全てのデータをプールしてOLS推定する。これは通常のOLSと同じ推定法と等しい。<code class="docutils literal notranslate"><span class="pre">PooledOLS</span></code>の関数<code class="docutils literal notranslate"><span class="pre">from_formula</span></code>を使い，以下のように推定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula_pool = &#39;lwage ~ 1 + married + union + expersq \
-                        + exper + educ + black + hisp \
-                        +d81+d82+d83+d84+d85+d86+d87&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_pool</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
+<span class="s1">                        + exper + educ + black + hisp </span><span class="se">\</span>
+<span class="s1">                        +d81+d82+d83+d84+d85+d86+d87&#39;</span>
 
-result_pool = PooledOLS.from_formula(formula_pool, data=wagepan).fit()
+<span class="n">result_pool</span> <span class="o">=</span> <span class="n">PooledOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_pool</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(result_pool.summary.tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">result_pool</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2153,13 +2150,13 @@ union          0.1825     0.0172     10.635     0.0000      0.1488      0.2161
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res = {&#39;Pooled OLS&#39;:result_pool,
-       &#39;FE&#39;: result_fe,
-       &#39;RE&#39;: result_re,
-       &#39;CRE&#39;: result_cre2
-      }
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Pooled OLS&#39;</span><span class="p">:</span><span class="n">result_pool</span><span class="p">,</span>
+       <span class="s1">&#39;FE&#39;</span><span class="p">:</span> <span class="n">result_fe</span><span class="p">,</span>
+       <span class="s1">&#39;RE&#39;</span><span class="p">:</span> <span class="n">result_re</span><span class="p">,</span>
+       <span class="s1">&#39;CRE&#39;</span><span class="p">:</span> <span class="n">result_cre2</span>
+      <span class="p">}</span>
 
-# compare(res)
+<span class="c1"># compare(res)</span>
 </pre></div>
 </div>
 </div>
@@ -2167,8 +2164,8 @@ union          0.1825     0.0172     10.635     0.0000      0.1488      0.2161
 <p>このままでも良いか，この方法では推定結果を表示する順番を指定できない。例えば，<code class="docutils literal notranslate"><span class="pre">OLS</span></code>，<code class="docutils literal notranslate"><span class="pre">FE</span></code>，<code class="docutils literal notranslate"><span class="pre">RE</span></code>，<code class="docutils literal notranslate"><span class="pre">CRE</span></code>の順番で左から並べたいとしよう。その場合，<code class="docutils literal notranslate"><span class="pre">collections</span></code>パッケージにある関数<code class="docutils literal notranslate"><span class="pre">OrderedDict</span></code>をつかう。<code class="docutils literal notranslate"><span class="pre">{}</span></code>の中で並べた順番をそのまま維持してくれる関数である。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res_ordered = OrderedDict(res)
-print(compare(res_ordered))
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_ordered</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">compare</span><span class="p">(</span><span class="n">res_ordered</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -2324,8 +2321,8 @@ T-stats reported in parentheses
 <p>単回帰を想定する。以下を真の値として設定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>b0 = 1  # 定数項
-b1 = 2  # スロープ係数
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 定数項</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># スロープ係数</span>
 </pre></div>
 </div>
 </div>
@@ -2335,9 +2332,9 @@ b1 = 2  # スロープ係数
 <p>シミュレーションの基本パラメータ等の設定</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>N = 100  # 観察単位の数
-T = 5  # 時間数
-ai = np.linspace(0,10,N)  # 観察単位の異質性
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># 観察単位の数</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># 時間数</span>
+<span class="n">ai</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># 観察単位の異質性</span>
 </pre></div>
 </div>
 </div>
@@ -2345,19 +2342,19 @@ ai = np.linspace(0,10,N)  # 観察単位の異質性
 <p><code class="docutils literal notranslate"><span class="pre">for</span></code>ループによる<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の作成。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_sim = pd.DataFrame()  # 空のDataFrame
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_sim</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>  <span class="c1"># 空のDataFrame</span>
 
-for (idx,a) in enumerate(ai):
+<span class="k">for</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span><span class="n">a</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ai</span><span class="p">):</span>
     
-    x = norm.rvs(a,1,size=T)  # T個のaが平均となるランダムな数
-    u = norm.rvs(0,1,size=T)  # 誤差項
-    y = b0 + b1*x + a + u  # 被説明変数
-    df_idx = pd.DataFrame({&#39;id&#39;:[idx]*T,    # 観察個体のID
-                         &#39;time&#39;:np.array(range(T))+2000,
-                         &#39;Y&#39;:y,
-                         &#39;X&#39;:x,
-                         &#39;ai&#39;:[a]*T})
-    df_sim = pd.concat([df_sim,df_idx])
+    <span class="n">x</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>  <span class="c1"># T個のaが平均となるランダムな数</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>  <span class="c1"># 誤差項</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># 被説明変数</span>
+    <span class="n">df_idx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:[</span><span class="n">idx</span><span class="p">]</span><span class="o">*</span><span class="n">T</span><span class="p">,</span>    <span class="c1"># 観察個体のID</span>
+                         <span class="s1">&#39;time&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">))</span><span class="o">+</span><span class="mi">2000</span><span class="p">,</span>
+                         <span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span>
+                         <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">,</span>
+                         <span class="s1">&#39;ai&#39;</span><span class="p">:[</span><span class="n">a</span><span class="p">]</span><span class="o">*</span><span class="n">T</span><span class="p">})</span>
+    <span class="n">df_sim</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_sim</span><span class="p">,</span><span class="n">df_idx</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2365,14 +2362,14 @@ for (idx,a) in enumerate(ai):
 <p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の微調整。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># id と time の列を 整数型に変換（省いても問題ない）
-df_sim[&#39;id&#39;] = df_sim[&#39;id&#39;].astype(int)
-df_sim[&#39;time&#39;] = df_sim[&#39;time&#39;].astype(int)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># id と time の列を 整数型に変換（省いても問題ない）</span>
+<span class="n">df_sim</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_sim</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">df_sim</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_sim</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
-# MultiIndex化
-df_sim = df_sim.set_index([&#39;id&#39;,&#39;time&#39;])
+<span class="c1"># MultiIndex化</span>
+<span class="n">df_sim</span> <span class="o">=</span> <span class="n">df_sim</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;time&#39;</span><span class="p">])</span>
 
-df_sim.head()
+<span class="n">df_sim</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2412,32 +2409,32 @@ df_sim.head()
     <tr>
       <th rowspan="5" valign="top">0</th>
       <th>2000</th>
-      <td>3.735466</td>
-      <td>0.984887</td>
+      <td>0.278474</td>
+      <td>-0.628304</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2001</th>
-      <td>-1.355775</td>
-      <td>-1.156572</td>
+      <td>0.538013</td>
+      <td>-1.439873</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2002</th>
-      <td>2.143552</td>
-      <td>0.508088</td>
+      <td>0.154961</td>
+      <td>-0.443711</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2003</th>
-      <td>-2.301194</td>
-      <td>-0.931938</td>
+      <td>-2.793154</td>
+      <td>-2.393290</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2004</th>
-      <td>-1.272696</td>
-      <td>-0.933998</td>
+      <td>3.855379</td>
+      <td>0.917738</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -2447,11 +2444,11 @@ df_sim.head()
 <p>固定効果モデルによる推定。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_sim_fe = &#39;Y ~ X + EntityEffects&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_sim_fe</span> <span class="o">=</span> <span class="s1">&#39;Y ~ X + EntityEffects&#39;</span>
 
-sim_fe = PanelOLS.from_formula(form_sim_fe, data=df_sim).fit()
+<span class="n">sim_fe</span> <span class="o">=</span> <span class="n">PanelOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_sim_fe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(sim_fe.summary.tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">sim_fe</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2460,7 +2457,7 @@ print(sim_fe.summary.tables[1])
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-X              1.9407     0.0503     38.609     0.0000      1.8419      2.0396
+X              1.9899     0.0525     37.929     0.0000      1.8868      2.0930
 ==============================================================================
 </pre></div>
 </div>
@@ -2469,12 +2466,12 @@ X              1.9407     0.0503     38.609     0.0000      1.8419      2.0396
 <p>ランダム効果モデルによる推定。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_sim_re = &#39;Y ~ 1 + X&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_sim_re</span> <span class="o">=</span> <span class="s1">&#39;Y ~ 1 + X&#39;</span>
 
-sim_re = RandomEffects.from_formula(form_sim_re, data=df_sim).fit()
+<span class="n">sim_re</span> <span class="o">=</span> <span class="n">RandomEffects</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_sim_re</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(sim_re.summary.tables[1])
-print(&#39;theta:&#39;, sim_re.theta.iloc[0,:].values)
+<span class="nb">print</span><span class="p">(</span><span class="n">sim_re</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;theta:&#39;</span><span class="p">,</span> <span class="n">sim_re</span><span class="o">.</span><span class="n">theta</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2483,10 +2480,10 @@ print(&#39;theta:&#39;, sim_re.theta.iloc[0,:].values)
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.8637     0.1492     12.489     0.0000      1.5705      2.1569
-X              2.8220     0.0252     111.87     0.0000      2.7724      2.8715
+Intercept      2.0082     0.1579     12.720     0.0000      1.6980      2.3184
+X              2.8102     0.0267     105.29     0.0000      2.7578      2.8626
 ==============================================================================
-theta: [0.30634207]
+theta: [0.31186628]
 </pre></div>
 </div>
 </div>
@@ -2496,18 +2493,18 @@ theta: [0.30634207]
 <p>まず，観察単位の<code class="docutils literal notranslate"><span class="pre">X</span></code>の平均の列を追加する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df_sim = add_col_mean(df_sim, &#39;X&#39;, &#39;X_mean&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_sim</span> <span class="o">=</span> <span class="n">add_col_mean</span><span class="p">(</span><span class="n">df_sim</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;X_mean&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_sim_cre = &#39;Y ~ 1 + X + X_mean&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_sim_cre</span> <span class="o">=</span> <span class="s1">&#39;Y ~ 1 + X + X_mean&#39;</span>
 
-sim_cre = RandomEffects.from_formula(form_sim_cre, data=df_sim).fit()
+<span class="n">sim_cre</span> <span class="o">=</span> <span class="n">RandomEffects</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_sim_cre</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(sim_cre.summary.tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">sim_cre</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2516,9 +2513,9 @@ print(sim_cre.summary.tables[1])
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.1126     0.1208     9.2089     0.0000      0.8752      1.3500
-X              1.9407     0.0502     38.639     0.0000      1.8421      2.0394
-X_mean         1.0323     0.0544     18.978     0.0000      0.9254      1.1391
+Intercept      1.2150     0.1341     9.0573     0.0000      0.9514      1.4785
+X              1.9899     0.0524     37.958     0.0000      1.8869      2.0929
+X_mean         0.9804     0.0573     17.096     0.0000      0.8678      1.0931
 ==============================================================================
 </pre></div>
 </div>
@@ -2527,11 +2524,11 @@ X_mean         1.0323     0.0544     18.978     0.0000      0.9254      1.1391
 <p>通常のOLS（Pooled OLS）による推定はバイアスが発生する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_sim_pool = &#39;Y ~ 1 + X&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_sim_pool</span> <span class="o">=</span> <span class="s1">&#39;Y ~ 1 + X&#39;</span>
 
-sim_pool = PooledOLS.from_formula(form_sim_pool, data=df_sim).fit()
+<span class="n">sim_pool</span> <span class="o">=</span> <span class="n">PooledOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_sim_pool</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(sim_pool.summary.tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">sim_pool</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2540,8 +2537,8 @@ print(sim_pool.summary.tables[1])
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.5037     0.1146     13.125     0.0000      1.2786      1.7288
-X              2.8944     0.0196     147.78     0.0000      2.8559      2.9328
+Intercept      1.6259     0.1215     13.384     0.0000      1.3872      1.8646
+X              2.8874     0.0208     138.78     0.0000      2.8465      2.9283
 ==============================================================================
 </pre></div>
 </div>
@@ -2553,10 +2550,10 @@ X              2.8944     0.0196     147.78     0.0000      2.8559      2.9328
 <p>基本的に上のシミュレーションのコードを応用する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>N = 100  # 観察単位数
-T = 5  # 年数
-R = 100  # シミュレーションの回数
-ai = np.linspace(0,10,N)  # 観察単位の異質性
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># 観察単位数</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># 年数</span>
+<span class="n">R</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># シミュレーションの回数</span>
+<span class="n">ai</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># 観察単位の異質性</span>
 </pre></div>
 </div>
 </div>
@@ -2567,45 +2564,45 @@ ai = np.linspace(0,10,N)  # 観察単位の異質性
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>bhat_fe_list = []  # FE推定値を入れるための空のリスト
-bhat_re_list = []  # RE推定値を入れるための空のリスト
-bhat_pool_list = []  # Pooled OLS推定値を入れるための空のリスト
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bhat_fe_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># FE推定値を入れるための空のリスト</span>
+<span class="n">bhat_re_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># RE推定値を入れるための空のリスト</span>
+<span class="n">bhat_pool_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Pooled OLS推定値を入れるための空のリスト</span>
 
-for _ in range(R):  # Rの値は下のコードで使わないので&quot;_&quot;に設定する
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>  <span class="c1"># Rの値は下のコードで使わないので&quot;_&quot;に設定する</span>
     
-    df = pd.DataFrame()  # 空のDataFrame
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>  <span class="c1"># 空のDataFrame</span>
 
-    # データの生成
-    for (idx,a) in enumerate(ai):
-        x = norm.rvs(a,1,size=T)  # T個のaが平均となるランダムな数
-        u = norm.rvs(0,1,size=T)  # T個の誤差項
-        y = b0 + b1*x + a + u  # T個の被説明変数
-        df_idx = pd.DataFrame({&#39;id&#39;:[idx]*T,      # DataFrameへ表の追加
-                             &#39;time&#39;:np.array(range(T))+2000,
-                             &#39;Y&#39;:y,
-                             &#39;X&#39;:x,
-                             &#39;ai&#39;:[a]*T})
-        df = pd.concat([df,df_idx])
+    <span class="c1"># データの生成</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span><span class="n">a</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ai</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>  <span class="c1"># T個のaが平均となるランダムな数</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>  <span class="c1"># T個の誤差項</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># T個の被説明変数</span>
+        <span class="n">df_idx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:[</span><span class="n">idx</span><span class="p">]</span><span class="o">*</span><span class="n">T</span><span class="p">,</span>      <span class="c1"># DataFrameへ表の追加</span>
+                             <span class="s1">&#39;time&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">))</span><span class="o">+</span><span class="mi">2000</span><span class="p">,</span>
+                             <span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span>
+                             <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">,</span>
+                             <span class="s1">&#39;ai&#39;</span><span class="p">:[</span><span class="n">a</span><span class="p">]</span><span class="o">*</span><span class="n">T</span><span class="p">})</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span><span class="n">df_idx</span><span class="p">])</span>
         
-    # RE推定
-    df_re = df.set_index([&#39;id&#39;,&#39;time&#39;])  # MultiIndex化
-    form_sim_re = &#39;Y ~ 1 + X&#39;
-    sim_re = RandomEffects.from_formula(form_sim_re, data=df_re).fit()
-    bhat_re_list.append(sim_re.params[1])
+    <span class="c1"># RE推定</span>
+    <span class="n">df_re</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;time&#39;</span><span class="p">])</span>  <span class="c1"># MultiIndex化</span>
+    <span class="n">form_sim_re</span> <span class="o">=</span> <span class="s1">&#39;Y ~ 1 + X&#39;</span>
+    <span class="n">sim_re</span> <span class="o">=</span> <span class="n">RandomEffects</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">form_sim_re</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_re</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+    <span class="n">bhat_re_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sim_re</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-    # FE推定
-    df_fe = df.loc[:,[&#39;Y&#39;,&#39;X&#39;]] - df.groupby(&#39;id&#39;)[[&#39;Y&#39;,&#39;X&#39;]].transform(&#39;mean&#39;)
-    Yfe = df_fe.loc[:,&#39;Y&#39;].values
-    Xfe = df_fe.loc[:,&#39;X&#39;].values[:,None]  # [:,None]は(N*T,1)の行列に変換
-    bhat_fe = (np.linalg.inv(Xfe.T@Xfe)@Xfe.T@Yfe)[0]
-    bhat_fe_list.append(bhat_fe)
+    <span class="c1"># FE推定</span>
+    <span class="n">df_fe</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span><span class="s1">&#39;X&#39;</span><span class="p">]]</span> <span class="o">-</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)[[</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span><span class="s1">&#39;X&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+    <span class="n">Yfe</span> <span class="o">=</span> <span class="n">df_fe</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">Xfe</span> <span class="o">=</span> <span class="n">df_fe</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;X&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span>  <span class="c1"># [:,None]は(N*T,1)の行列に変換</span>
+    <span class="n">bhat_fe</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">Xfe</span><span class="o">.</span><span class="n">T</span><span class="nd">@Xfe</span><span class="p">)</span><span class="nd">@Xfe</span><span class="o">.</span><span class="n">T</span><span class="nd">@Yfe</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">bhat_fe_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bhat_fe</span><span class="p">)</span>
     
-    # Pooled OLS推定
-    c = np.ones(N*T)
-    Xpool = np.stack([c, df.loc[:,&#39;X&#39;].values], axis=1)
-    Ypool = df.loc[:,&#39;Y&#39;].values
-    bhat_pool = (np.linalg.inv(Xpool.T@Xpool)@Xpool.T@Ypool)[1]
-    bhat_pool_list.append(bhat_pool)
+    <span class="c1"># Pooled OLS推定</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">Xpool</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">c</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;X&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">Ypool</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">bhat_pool</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">Xpool</span><span class="o">.</span><span class="n">T</span><span class="nd">@Xpool</span><span class="p">)</span><span class="nd">@Xpool</span><span class="o">.</span><span class="n">T</span><span class="nd">@Ypool</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">bhat_pool_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bhat_pool</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2613,21 +2610,21 @@ for _ in range(R):  # Rの値は下のコードで使わないので&quot;_&quot
 <p>分布の図示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>xx=np.linspace(1.6,3.1,num=100)  # 図を作成するために横軸の値を設定
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1.6</span><span class="p">,</span><span class="mf">3.1</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
 
-kde_model_fe=gaussian_kde(bhat_fe_list)  # FE推定量のカーネル密度関数を計算
+<span class="n">kde_model_fe</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">bhat_fe_list</span><span class="p">)</span>  <span class="c1"># FE推定量のカーネル密度関数を計算</span>
 
-kde_model_re=gaussian_kde(bhat_re_list)  # RE推定量のカーネル密度関数を計算
+<span class="n">kde_model_re</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">bhat_re_list</span><span class="p">)</span>  <span class="c1"># RE推定量のカーネル密度関数を計算</span>
 
-kde_model_pool=gaussian_kde(bhat_pool_list)  # Pooled OLS推定量のカーネル密度関数を計算
+<span class="n">kde_model_pool</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">bhat_pool_list</span><span class="p">)</span>  <span class="c1"># Pooled OLS推定量のカーネル密度関数を計算</span>
 
-plt.plot(xx, kde_model_fe(xx), &#39;g-&#39;, label=&#39;FE&#39;)  # FE推定量の分布プロット
-plt.plot(xx, kde_model_re(xx),&#39;r-&#39;, label=&#39;RE&#39;)  # RE推定量の分布プロット
-plt.plot(xx, kde_model_pool(xx),&#39;k-&#39;, label=&#39;Pooled OLS&#39;)  # RE推定量の分布プロット
-plt.axvline(x=b1,linestyle=&#39;dashed&#39;)  # 真の値での垂直線
-plt.ylabel(&#39;Kernel Density&#39;)  # 縦軸のラベル
-plt.legend()  # 凡例
-pass
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_fe</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="s1">&#39;g-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;FE&#39;</span><span class="p">)</span>  <span class="c1"># FE推定量の分布プロット</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_re</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span><span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;RE&#39;</span><span class="p">)</span>  <span class="c1"># RE推定量の分布プロット</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_pool</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span><span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Pooled OLS&#39;</span><span class="p">)</span>  <span class="c1"># RE推定量の分布プロット</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">b1</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>  <span class="c1"># 真の値での垂直線</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Kernel Density&#39;</span><span class="p">)</span>  <span class="c1"># 縦軸のラベル</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>  <span class="c1"># 凡例</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -2650,14 +2647,14 @@ pass
 <p><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>には残差の均一分散を調べるBreusch-Pagan検定やWhite検定をおこなうメソッドは用意されていない。ここでは<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使いWooldridge (2016,p.253)で説明されているWhite検定に基づく検定をおこなう。次に必要な変数を作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># 残差
-u_hat = result_fe.resids.values.flatten()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 残差</span>
+<span class="n">u_hat</span> <span class="o">=</span> <span class="n">result_fe</span><span class="o">.</span><span class="n">resids</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
 
-# 被説明変数の予測値
-y_hat = result_fe.fitted_values.values.flatten()
+<span class="c1"># 被説明変数の予測値</span>
+<span class="n">y_hat</span> <span class="o">=</span> <span class="n">result_fe</span><span class="o">.</span><span class="n">fitted_values</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
 
-# DataFrameの作成
-df_white = pd.DataFrame({&#39;u_hat&#39;:u_hat,&#39;y_hat&#39;:y_hat})
+<span class="c1"># DataFrameの作成</span>
+<span class="n">df_white</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;u_hat&#39;</span><span class="p">:</span><span class="n">u_hat</span><span class="p">,</span><span class="s1">&#39;y_hat&#39;</span><span class="p">:</span><span class="n">y_hat</span><span class="p">})</span>
 </pre></div>
 </div>
 </div>
@@ -2682,12 +2679,12 @@ df_white = pd.DataFrame({&#39;u_hat&#39;:u_hat,&#39;y_hat&#39;:y_hat})
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>form_white = &#39;I(u_hat**2) ~ y_hat + I(y_hat**2)&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_white</span> <span class="o">=</span> <span class="s1">&#39;I(u_hat**2) ~ y_hat + I(y_hat**2)&#39;</span>
 
-res_white = ols(form_white, data=df_white).fit()
+<span class="n">res_white</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_white</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_white</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-print(res_white.summary().tables[1])
-print(&#39;F検定のp値：&#39;,res_white.f_pvalue)
+<span class="nb">print</span><span class="p">(</span><span class="n">res_white</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;F検定のp値：&#39;</span><span class="p">,</span><span class="n">res_white</span><span class="o">.</span><span class="n">f_pvalue</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2708,18 +2705,18 @@ F検定のp値： 0.4354339447411021
 <p>次に図を使い確認する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>b0 = res_white.params[0] # beta0
-b1 = res_white.params[1] # beta1
-b2 = res_white.params[2] # beta2
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0</span> <span class="o">=</span> <span class="n">res_white</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># beta0</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="n">res_white</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># beta1</span>
+<span class="n">b2</span> <span class="o">=</span> <span class="n">res_white</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="c1"># beta2</span>
 
-xx = np.linspace(min(y_hat), max(y_hat), 100) # x軸の値
-z = b0 + b1*xx + b1*xx**2  # 検定に使った式
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">y_hat</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">y_hat</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span> <span class="c1"># x軸の値</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">xx</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">xx</span><span class="o">**</span><span class="mi">2</span>  <span class="c1"># 検定に使った式</span>
 
-plt.scatter(y_hat, u_hat**2)  # u_hat, y_hatの散布図
-plt.plot(xx, z, &#39;red&#39;, linewidth=3)  # 検定の式の曲線
-plt.xlabel(&#39;y_hat&#39;)
-plt.ylabel(&#39;u_hat^2&#39;)
-pass
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">u_hat</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># u_hat, y_hatの散布図</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># 検定の式の曲線</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;y_hat&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;u_hat^2&#39;</span><span class="p">)</span>
+<span class="k">pass</span>
 </pre></div>
 </div>
 </div>
@@ -2753,11 +2750,11 @@ pass
 <p>＜不均一分散かだけの場合＞</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mod_fe_clus1 = PanelOLS.from_formula(formula_fe, data=wagepan)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mod_fe_clus1</span> <span class="o">=</span> <span class="n">PanelOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_fe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span>
 
-res_fe_clus1 = mod_fe_clus1.fit(cov_type=&#39;clustered&#39;, cluster_entity=True)
+<span class="n">res_fe_clus1</span> <span class="o">=</span> <span class="n">mod_fe_clus1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;clustered&#39;</span><span class="p">,</span> <span class="n">cluster_entity</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-print(res_fe_clus1.summary.tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res_fe_clus1</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2784,11 +2781,11 @@ union          0.0800     0.0227     3.5209     0.0004      0.0355      0.1246
 <p>＜不均一分散と系列相関の場合＞</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mod_fe_clus2 = PanelOLS.from_formula(formula_fe, data=wagepan)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mod_fe_clus2</span> <span class="o">=</span> <span class="n">PanelOLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_fe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span>
 
-res_fe_clus2 = mod_fe_clus2.fit(cov_type=&#39;clustered&#39;, cluster_entity=True, cluster_time=True)
+<span class="n">res_fe_clus2</span> <span class="o">=</span> <span class="n">mod_fe_clus2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;clustered&#39;</span><span class="p">,</span> <span class="n">cluster_entity</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cluster_time</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-print(res_fe_clus2.summary.tables[1])
+<span class="nb">print</span><span class="p">(</span><span class="n">res_fe_clus2</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
