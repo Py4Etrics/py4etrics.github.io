@@ -1,50 +1,68 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>単回帰分析 &#8212; Pythonで学ぶ入門計量経済学</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="_static/my_style.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/design-tabs.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-6SP1Y69WEX"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-6SP1Y69WEX');
+            </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -53,596 +71,348 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '8_Simple_Regression';</script>
     <link rel="canonical" href="https://py4etrics.github.io/8_Simple_Regression.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="重回帰分析" href="9_Multiple_Regression.html" />
     <link rel="prev" title="計量経済学用語" href="list_of_terms.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-6SP1Y69WEX"></script>
-<script>
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){ dataLayer.push(arguments); }
-                    gtag('js', new Date());
-                    gtag('config', 'G-6SP1Y69WEX');
-                </script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
     
-    <div class="container-fluid" id="banner"></div>
-
     
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
 
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="index.html">
-      
-      
-      
-      <h1 class="site-logo" id="site-title">Pythonで学ぶ入門計量経済学</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Pythonの学習
- </span>
-</p>
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Pythonで学ぶ入門計量経済学</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Pythonの学習</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="part_1.html">
-   目次と内容
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="1_Python_Basics.html">
-   Pythonの基礎
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2_NumPy.html">
-   NumPy
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="3_Pandas.html">
-   Pandas
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="4_Matplotlib.html">
-   Matplotlib
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="5_SciPy_stats.html">
-   SciPy.stats
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="6_things_to_note.html">
-   Tipsと注意点
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="part_1.html">目次と内容</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_Python_Basics.html">Pythonの基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_NumPy.html">NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_Pandas.html">Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_Matplotlib.html">Matplotlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_SciPy_stats.html">SciPy.stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_things_to_note.html">Tipsと注意点</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Pythonを使った計量経済分析
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Pythonを使った計量経済分析</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="part_2.html">
-   目次と内容
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="7_Review_of_Statistics.html">
-   統計学の簡単な復習
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="list_of_terms.html">
-   計量経済学用語
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   単回帰分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="9_Multiple_Regression.html">
-   重回帰分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="10_Residuals.html">
-   残差診断
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="11_Inference.html">
-   推論
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="12_Asymptotics.html">
-   大標本特性
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="13_Dummies.html">
-   質的変数と回帰分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="14_Hetero.html">
-   不均一分散
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="15_Pooling.html">
-   プーリング・データとパネル・データ
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="16_linearmodels.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     linearmodels
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="17_Panel.html">
-   パネル・データ分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="18_Zero_Conditional_Mean.html">
-   GM仮定４が満たされない場合
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="19_IV2SLS.html">
-   操作変数法と２段階OLS
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="20_LogitProbit.html">
-   離散選択モデル
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="21_TruncregTobitHeckit.html">
-   制限従属変数モデル
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="part_2.html">目次と内容</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_Review_of_Statistics.html">統計学の簡単な復習</a></li>
+<li class="toctree-l1"><a class="reference internal" href="list_of_terms.html">計量経済学用語</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">単回帰分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_Multiple_Regression.html">重回帰分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Residuals.html">残差診断</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Inference.html">推論</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Asymptotics.html">大標本特性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Dummies.html">質的変数と回帰分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Hetero.html">不均一分散</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Pooling.html">プーリング・データとパネル・データ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_linearmodels.html"><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Panel.html">パネル・データ分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Zero_Conditional_Mean.html">GM仮定４が満たされない場合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_IV2SLS.html">操作変数法と２段階OLS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_LogitProbit.html">離散選択モデル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_TruncregTobitHeckit.html">制限従属変数モデル</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  番外編
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">番外編</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="part_3.html">
-   目次と内容
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Descriptive_stats_vs_Graphs.html">
-   記述統計とグラフ
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="data_source.html">
-   Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://py4macro.github.io">
-   Pythonで学ぶマクロ経済学 (中級＋レベル)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://py4basics.github.io">
-   経済学のためのPython入門
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="part_3.html">目次と内容</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Descriptive_stats_vs_Graphs.html">記述統計とグラフ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_source.html">Data</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://py4macro.github.io">Pythonで学ぶマクロ経済学 (中級＋レベル)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://py4basics.github.io">経済学のためのPython入門</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            <a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
-          
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
 <div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
 
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
   
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
     </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/8_Simple_Regression.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/8_Simple_Regression.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="_static/images/logo_binder.svg">
   </span>
-<span class="headerbtn__text-container">Binder</span>
+<span class="btn__text-container">Binder</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/8_Simple_Regression.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Colab"
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/8_Simple_Regression.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="_static/images/logo_colab.png">
   </span>
-<span class="headerbtn__text-container">Colab</span>
+<span class="btn__text-container">Colab</span>
 </a>
-
-      </li>
+</li>
       
-    </ul>
-  </div>
+  </ul>
 </div>
 
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/8_Simple_Regression.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="_sources/8_Simple_Regression.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
+`);
+</script>
 
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   説明
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
-   データ
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id4">
-   「手計算」
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#statsmodels">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     statsmodels
-    </span>
-   </code>
-   を使う
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id5">
-   図
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id6">
-   モデルの適合度
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id7">
-   賃金の対数化
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ols">
-   シミュレーション：
-   <span class="math notranslate nohighlight">
-    \(OLS\)
-   </span>
-   推定
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id8">
-     母集団の考え方
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id9">
-     プラン
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
-     シミュレーション
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
-     関数化
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id12">
-     ループを使ってシミュレーション
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>単回帰分析</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   説明
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
-   データ
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id4">
-   「手計算」
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#statsmodels">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     statsmodels
-    </span>
-   </code>
-   を使う
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id5">
-   図
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id6">
-   モデルの適合度
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id7">
-   賃金の対数化
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ols">
-   シミュレーション：
-   <span class="math notranslate nohighlight">
-    \(OLS\)
-   </span>
-   推定
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id8">
-     母集団の考え方
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id9">
-     プラン
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
-     シミュレーション
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
-     関数化
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id12">
-     ループを使ってシミュレーション
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>単回帰分析</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">説明</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">データ</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">「手計算」</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statsmodels"><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使う</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">図</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">モデルの適合度</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">賃金の対数化</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ols">シミュレーション：<span class="math notranslate nohighlight">\(OLS\)</span>推定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">母集団の考え方</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">プラン</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">シミュレーション</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">関数化</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">ループを使ってシミュレーション</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="chap-8-simple">
-<span id="id1"></span><h1>単回帰分析<a class="headerlink" href="#chap-8-simple" title="Permalink to this headline">#</a></h1>
+<span id="id1"></span><h1>単回帰分析<a class="headerlink" href="#chap-8-simple" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -658,7 +428,7 @@ title="Print to PDF"
 </div>
 </div>
 <section id="id2">
-<h2>説明<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<h2>説明<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
 <div name="html-admonition">
@@ -724,7 +494,7 @@ in English or the language of your choice.
 \[\hat{u}_i=y_i-\hat{y}_i\]</div>
 </section>
 <section id="id3">
-<h2>データ<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
+<h2>データ<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
 <p>Wooldridge (2019)で使われるデータセットは全て<code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>のパッケージに含まれている。そのパッケージからからデータを読み込んで使うことにする。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -992,7 +762,7 @@ memory usage: 8.3 KB
 <p><code class="docutils literal notranslate"><span class="pre">.head()</span></code>，<code class="docutils literal notranslate"><span class="pre">.tail()</span></code>，<code class="docutils literal notranslate"><span class="pre">.info()</span></code>そして<code class="docutils literal notranslate"><span class="pre">.describe()</span></code>を使い<code class="docutils literal notranslate"><span class="pre">df</span></code>の情報を確認し，データのイメージ作りをすることは回帰分析に役立つだろう。</p>
 </section>
 <section id="id4">
-<h2>「手計算」<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h2>
+<h2>「手計算」<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Python</span></code>では回帰分析の計算を自動化するパッケージが提供されており、後ほどその１つを紹介する。その前に、自動計算にはどのようなコードが使われているかを感じてもらうために「手計算」で、即ち、上で示した<span class="math notranslate nohighlight">\(\hat{\beta}_0\)</span>と<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の式を使い係数の推定値を計算してみる。まず分散共分散行列を計算する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1108,7 +878,7 @@ memory usage: 8.3 KB
 </div>
 </section>
 <section id="statsmodels">
-<span id="sec-8-statsmodels"></span><h2><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使う<a class="headerlink" href="#statsmodels" title="Permalink to this headline">#</a></h2>
+<span id="sec-8-statsmodels"></span><h2><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使う<a class="headerlink" href="#statsmodels" title="Permalink to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Python</span></code>では簡単なコードで回帰分析に関する多くの計算を行うことができるパッケージが提供されている。その内、代表的なパッケージが<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>である。次の順番で使い方を説明する。</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">ols</span></code>サブパッケージを読み込む</p></li>
@@ -1257,8 +1027,8 @@ dtype: float64
 Dep. Variable:                   wage   R-squared:                       0.165
 Model:                            OLS   Adj. R-squared:                  0.163
 Method:                 Least Squares   F-statistic:                     103.4
-Date:                Mon, 20 Feb 2023   Prob (F-statistic):           2.78e-22
-Time:                        13:16:10   Log-Likelihood:                -1385.7
+Date:                Wed, 08 Mar 2023   Prob (F-statistic):           2.78e-22
+Time:                        13:31:05   Log-Likelihood:                -1385.7
 No. Observations:                 526   AIC:                             2775.
 Df Residuals:                     524   BIC:                             2784.
 Df Model:                           1                                         
@@ -1387,7 +1157,7 @@ educ           0.5414      0.053     10.167      0.000       0.437       0.646
 <p>OLS推定結果を割り当てた<code class="docutils literal notranslate"><span class="pre">res</span></code>には，ここで説明した以外に数多くの属性が存在する。それらに関する説明は<a class="reference external" href="https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.RegressionResults.html">このサイト</a>を参照すること。</p>
 </section>
 <section id="id5">
-<h2>図<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h2>
+<h2>図<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
 <p>回帰分析の結果を図示するために、まず予測値の取得する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1409,12 +1179,12 @@ educ           0.5414      0.053     10.167      0.000       0.437       0.646
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_68_0.png" src="_images/8_Simple_Regression_68_0.png" />
+<img alt="_images/03d6afec4e4df458eba00375cbc9bef1b7431936ea8f0d93dec5bfd1b2f0df70.png" src="_images/03d6afec4e4df458eba00375cbc9bef1b7431936ea8f0d93dec5bfd1b2f0df70.png" />
 </div>
 </div>
 </section>
 <section id="id6">
-<h2>モデルの適合度<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
+<h2>モデルの適合度<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
 <p>モデルの適合度を確認するために次を定義する。</p>
 <ul class="simple">
 <li><p>SST（Total Sum of Squares; 全変動の平方和）</p></li>
@@ -1550,7 +1320,7 @@ R^2
 </div>
 </section>
 <section id="id7">
-<h2>賃金の対数化<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h2>
+<h2>賃金の対数化<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
 <p>上の回帰分析では被説明変数<code class="docutils literal notranslate"><span class="pre">wage</span></code>をそのまま使ったが，労働経済学では賃金の対数をとり推定するのが一般的である。そのような式を賃金方程式と呼ぶ。その考えに沿って，ここでは<code class="docutils literal notranslate"><span class="pre">wage</span></code>の自然対数変換をおこない回帰分析をおこなう。まず対数化賃金お変数を作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1618,20 +1388,20 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_92_0.png" src="_images/8_Simple_Regression_92_0.png" />
+<img alt="_images/eb54a2f9f1114dc2e10302d8940f8f7e020125cd3fc9adeac0ef4b2879214705.png" src="_images/eb54a2f9f1114dc2e10302d8940f8f7e020125cd3fc9adeac0ef4b2879214705.png" />
 </div>
 </div>
 </section>
 <section id="ols">
-<h2>シミュレーション：<span class="math notranslate nohighlight">\(OLS\)</span>推定<a class="headerlink" href="#ols" title="Permalink to this headline">#</a></h2>
+<h2>シミュレーション：<span class="math notranslate nohighlight">\(OLS\)</span>推定<a class="headerlink" href="#ols" title="Permalink to this heading">#</a></h2>
 <p>上ではデータを使い「手計算」と<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使い係数を計算したが，ここではOLS推定の「意味」をシミュレーションを使って考えてみることにする。</p>
 <section id="id8">
-<h3>母集団の考え方<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h3>
+<h3>母集団の考え方<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
 <p>母集団とは分析の対象となる共通の属性などを持つ個人・企業・産業・地域・国などの集合体といえる。ここで重要な点は母集団の大きさとランダム抽出の関係を理解することである。次の２つの例を使って考えてみよう。</p>
 <ul class="simple">
 <li><p>「今年の人間の平均身長」を知りたいとしよう。この場合の母集団は地球上の全ての人間である。しかし，全員の身長を測るのはあまりにも費用が高いため，標本を集め，その平均から「人間の平均身長」を推定することが可能である（<a class="reference external" href="https://ja.wikipedia.org/wiki/%E5%A4%A7%E6%95%B0%E3%81%AE%E6%B3%95%E5%89%87">参照</a>）。この場合「標本の大きさ<span class="math notranslate nohighlight">\(&lt;\)</span>母集団の大きさ」となる。</p></li>
 <li><p>「今年のOECD諸国のGDP」についての何らかの統計量を計算したいとしよう。2021年現在でOECDには38カ国のメンバー国があり，GDPのデータは簡単に入手可能である。これは「標本の大きさ<span class="math notranslate nohighlight">\(=\)</span>母集団の大きさ」という意味なのだろうか。そうだとすれば，標本ではなく母集団全てのデータを扱うことになり，標本の概念である標準誤差などは意味がなくなることになる。しかし「標本の大きさ<span class="math notranslate nohighlight">\(&lt;\)</span>母集団」と解釈できる２つの考え方がある。</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>時間は「無限」と考えることができる。この考えに従うと、38カ国のGDPデータも「無限」に存在することになる（OECDが存在する限りという意味での「無限」）。従って、ある時点の38カ国のGDPのデータは「無限」の母集団から抽出されたランダム変数と考えることができる。国と時間の概念で考えると母集団の大きさは非常に大きいと解釈できる。</p></li>
 <li><p>確率変数とは実現可能な数値から１つを実現させる関数である。またGDP自体は確率変数として解釈する方が自然である（<a class="reference internal" href="9_Multiple_Regression.html#sec-9-assumptions"><span class="std std-ref">「重回帰分析」</span></a>)で説明する仮定２を参照）。従って，38カ国の<strong>実現可能なGDPの値が母集団</strong>となる。今年度のみでの実現可能なGDPは無数にあるため，この解釈によると「標本の大きさ<span class="math notranslate nohighlight">\(&lt;\)</span>母集団の大きさ」となる。</p></li>
 </ol>
@@ -1639,7 +1409,7 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </ul>
 </section>
 <section id="id9">
-<h3>プラン<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h3>
+<h3>プラン<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
 <p><strong>＜Step 1＞</strong></p>
 <ul>
 <li><p>母集団の大きさは指定しない。</p></li>
@@ -1681,7 +1451,7 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </ul>
 </section>
 <section id="id10">
-<h3>シミュレーション<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h3>
+<h3>シミュレーション<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
 <p>母集団のパラメータを設定する。これはパラメータの真の値であり、この値を推定するのが回帰分析となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1735,8 +1505,8 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.198493
-X            0.871896
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.457196
+X            0.899698
 dtype: float64
 </pre></div>
 </div>
@@ -1749,7 +1519,7 @@ dtype: float64
 </div>
 </section>
 <section id="id11">
-<h3>関数化<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h3>
+<h3>関数化<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
 <p>次に，上で行ったシミュレーションのコードを関数にまとめることにする。</p>
 <p><code class="docutils literal notranslate"><span class="pre">def</span></code>を使い<code class="docutils literal notranslate"><span class="pre">my_sim</span></code>という名前の関数を作成する。</p>
 <ul class="simple">
@@ -1794,8 +1564,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.992060
-X            0.995113
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.530970
+X            1.124359
 dtype: float64
 </pre></div>
 </div>
@@ -1835,7 +1605,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.376491602312476, 1.2647858276421404)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.5195673607211475, 1.0915117291794576)
 </pre></div>
 </div>
 </div>
@@ -1843,7 +1613,7 @@ dtype: float64
 <p><code class="docutils literal notranslate"><span class="pre">my_sim()</span></code>と<code class="docutils literal notranslate"><span class="pre">my_sim_manual()</span></code>の推定値が異なるのはランダム変数（<code class="docutils literal notranslate"><span class="pre">y</span></code>，<code class="docutils literal notranslate"><span class="pre">x</span></code>）の値が異なるためであり，それが推定誤差による影響である。</p>
 </section>
 <section id="id12">
-<h3>ループを使ってシミュレーション<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h3>
+<h3>ループを使ってシミュレーション<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
 <p>標本による推定は誤差が発生する。その誤差はどれだけ大きく（小さく）何に依存するかを確認するために<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを使い次のシミュレーションを行うことにする。</p>
 <ul class="simple">
 <li><p>標本の大きさ<code class="docutils literal notranslate"><span class="pre">n</span></code>のデータを<code class="docutils literal notranslate"><span class="pre">N</span></code>組用意し（<code class="docutils literal notranslate"><span class="pre">N</span></code>は標本数），<code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定を<code class="docutils literal notranslate"><span class="pre">N</span></code>回おこなう。</p></li>
@@ -1960,7 +1730,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_133_0.png" src="_images/8_Simple_Regression_133_0.png" />
+<img alt="_images/196509a2723be3d09a155903a6364d6ce394d304b4b51f6ea8a6a9aed0d569bf.png" src="_images/196509a2723be3d09a155903a6364d6ce394d304b4b51f6ea8a6a9aed0d569bf.png" />
 </div>
 </div>
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布を図示する。</p>
@@ -1972,7 +1742,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_135_0.png" src="_images/8_Simple_Regression_135_0.png" />
+<img alt="_images/21c9afa24b68387010126853161ef13f24063e1089077a4a4ead2133a31ca9a1.png" src="_images/21c9afa24b68387010126853161ef13f24063e1089077a4a4ead2133a31ca9a1.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">y</span></code>の理論値を図示するが，図示の時間短縮のために<code class="docutils literal notranslate"><span class="pre">N</span></code>回のシミュレーション中の最初の<code class="docutils literal notranslate"><span class="pre">r</span></code>回の回帰線だけを表示する。</p>
@@ -2001,7 +1771,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8_Simple_Regression_139_0.png" src="_images/8_Simple_Regression_139_0.png" />
+<img alt="_images/b1a265fd1f5b7c708242eb5d66aac6d0f275e96aaf6f2674c1fca9ac7e3fc671.png" src="_images/b1a265fd1f5b7c708242eb5d66aac6d0f275e96aaf6f2674c1fca9ac7e3fc671.png" />
 </div>
 </div>
 <div class="admonition- admonition">
@@ -2045,50 +1815,113 @@ dtype: float64
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="list_of_terms.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">計量経済学用語</p>
-        </div>
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="list_of_terms.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">計量経済学用語</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="9_Multiple_Regression.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="9_Multiple_Regression.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">重回帰分析</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">説明</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">データ</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">「手計算」</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statsmodels"><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使う</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">図</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">モデルの適合度</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">賃金の対数化</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ols">シミュレーション：<span class="math notranslate nohighlight">\(OLS\)</span>推定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">母集団の考え方</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">プラン</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">シミュレーション</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">関数化</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">ループを使ってシミュレーション</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
   
-    By 春山 鉄源  Tetsugen HARUYAMA<br/>
-  
-      &copy; Copyright 2020-2023（公開開始日：2020年5月4日）.<br/>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
-</div>
+<p class="component-author">
+By 春山 鉄源  Tetsugen HARUYAMA
+</p>
 
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2020-2023（公開開始日：2020年5月4日）.
+      <br/>
+    
+  </p>
 
-      </div>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

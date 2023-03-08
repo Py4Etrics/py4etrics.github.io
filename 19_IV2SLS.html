@@ -1,50 +1,68 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>操作変数法と２段階OLS &#8212; Pythonで学ぶ入門計量経済学</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="_static/my_style.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/design-tabs.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-6SP1Y69WEX"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-6SP1Y69WEX');
+            </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -53,958 +71,390 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '19_IV2SLS';</script>
     <link rel="canonical" href="https://py4etrics.github.io/19_IV2SLS.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="離散選択モデル" href="20_LogitProbit.html" />
     <link rel="prev" title="GM仮定４が満たされない場合" href="18_Zero_Conditional_Mean.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-6SP1Y69WEX"></script>
-<script>
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){ dataLayer.push(arguments); }
-                    gtag('js', new Date());
-                    gtag('config', 'G-6SP1Y69WEX');
-                </script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
     
-    <div class="container-fluid" id="banner"></div>
-
     
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
 
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="index.html">
-      
-      
-      
-      <h1 class="site-logo" id="site-title">Pythonで学ぶ入門計量経済学</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Pythonの学習
- </span>
-</p>
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Pythonで学ぶ入門計量経済学</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Pythonの学習</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="part_1.html">
-   目次と内容
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="1_Python_Basics.html">
-   Pythonの基礎
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2_NumPy.html">
-   NumPy
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="3_Pandas.html">
-   Pandas
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="4_Matplotlib.html">
-   Matplotlib
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="5_SciPy_stats.html">
-   SciPy.stats
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="6_things_to_note.html">
-   Tipsと注意点
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="part_1.html">目次と内容</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_Python_Basics.html">Pythonの基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_NumPy.html">NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_Pandas.html">Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_Matplotlib.html">Matplotlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_SciPy_stats.html">SciPy.stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_things_to_note.html">Tipsと注意点</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Pythonを使った計量経済分析
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Pythonを使った計量経済分析</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="part_2.html">
-   目次と内容
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="7_Review_of_Statistics.html">
-   統計学の簡単な復習
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="list_of_terms.html">
-   計量経済学用語
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="8_Simple_Regression.html">
-   単回帰分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="9_Multiple_Regression.html">
-   重回帰分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="10_Residuals.html">
-   残差診断
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="11_Inference.html">
-   推論
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="12_Asymptotics.html">
-   大標本特性
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="13_Dummies.html">
-   質的変数と回帰分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="14_Hetero.html">
-   不均一分散
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="15_Pooling.html">
-   プーリング・データとパネル・データ
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="16_linearmodels.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     linearmodels
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="17_Panel.html">
-   パネル・データ分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="18_Zero_Conditional_Mean.html">
-   GM仮定４が満たされない場合
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   操作変数法と２段階OLS
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="20_LogitProbit.html">
-   離散選択モデル
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="21_TruncregTobitHeckit.html">
-   制限従属変数モデル
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="part_2.html">目次と内容</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_Review_of_Statistics.html">統計学の簡単な復習</a></li>
+<li class="toctree-l1"><a class="reference internal" href="list_of_terms.html">計量経済学用語</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8_Simple_Regression.html">単回帰分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_Multiple_Regression.html">重回帰分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Residuals.html">残差診断</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Inference.html">推論</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Asymptotics.html">大標本特性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Dummies.html">質的変数と回帰分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Hetero.html">不均一分散</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Pooling.html">プーリング・データとパネル・データ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_linearmodels.html"><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Panel.html">パネル・データ分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Zero_Conditional_Mean.html">GM仮定４が満たされない場合</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">操作変数法と２段階OLS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_LogitProbit.html">離散選択モデル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_TruncregTobitHeckit.html">制限従属変数モデル</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  番外編
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">番外編</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="part_3.html">
-   目次と内容
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Descriptive_stats_vs_Graphs.html">
-   記述統計とグラフ
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="data_source.html">
-   Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://py4macro.github.io">
-   Pythonで学ぶマクロ経済学 (中級＋レベル)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://py4basics.github.io">
-   経済学のためのPython入門
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="part_3.html">目次と内容</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Descriptive_stats_vs_Graphs.html">記述統計とグラフ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_source.html">Data</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://py4macro.github.io">Pythonで学ぶマクロ経済学 (中級＋レベル)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://py4basics.github.io">経済学のためのPython入門</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            <a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
-          
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
 <div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
 
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
   
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
     </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/19_IV2SLS.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/19_IV2SLS.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="_static/images/logo_binder.svg">
   </span>
-<span class="headerbtn__text-container">Binder</span>
+<span class="btn__text-container">Binder</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/19_IV2SLS.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Colab"
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/19_IV2SLS.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="_static/images/logo_colab.png">
   </span>
-<span class="headerbtn__text-container">Colab</span>
+<span class="btn__text-container">Colab</span>
 </a>
-
-      </li>
+</li>
       
-    </ul>
-  </div>
+  </ul>
 </div>
 
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/19_IV2SLS.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="_sources/19_IV2SLS.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
+`);
+</script>
 
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
-   説明
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id2">
-     基本的な考え方
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#linearmodels">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       linearmodels
-      </span>
-     </code>
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#iv">
-   ケース１：単純な
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     IV
-    </span>
-   </code>
-   推定
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
-     データ
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id4">
-     「自動計算」
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id5">
-     「手動計算」
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id6">
-     <span class="math notranslate nohighlight">
-      \(OLS\)
-     </span>
-     推定
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#iv-2sls">
-   ケース２：より複雑な
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     IV
-    </span>
-   </code>
-   推定（2SLS）
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id7">
-     説明
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#educ">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       educ
-      </span>
-     </code>
-     と操作変数の相関性チェック
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id8">
-     IV推定
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id9">
-   シミュレーション：３つの特徴
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
-     一致性
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
-     標本の大きさ
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id12">
-     操作変数との相関性（弱操作変数）
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id13">
-   説明変数の外生性の検定
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
-     説明
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#wu-hausman">
-     検定方法１：
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Wu-Hausman
-      </span>
-     </code>
-     検定
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id15">
-     検定方法２
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id16">
-       「手計算」
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id17">
-       自動計算
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id18">
-   操作変数の有効性検定
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id19">
-     説明
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id20">
-     「手計算」
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id21">
-     自動計算
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id22">
-   同時方程式モデルと
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     IV
-    </span>
-   </code>
-   推定
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id23">
-     同時性バイアス
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id24">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       IV
-      </span>
-     </code>
-     推定法の適用
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id25">
-     例
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id26">
-       データ
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id27">
-       供給曲線の推定
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id28">
-       需要曲線の推定
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id29">
-   測定誤差と
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     IV
-    </span>
-   </code>
-   推定
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id30">
-     測定誤差によるバイアス
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id31">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       IV
-      </span>
-     </code>
-     推定法の適用
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id32">
-     シミュレーション
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>操作変数法と２段階OLS</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
-   説明
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id2">
-     基本的な考え方
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#linearmodels">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       linearmodels
-      </span>
-     </code>
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#iv">
-   ケース１：単純な
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     IV
-    </span>
-   </code>
-   推定
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
-     データ
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id4">
-     「自動計算」
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id5">
-     「手動計算」
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id6">
-     <span class="math notranslate nohighlight">
-      \(OLS\)
-     </span>
-     推定
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#iv-2sls">
-   ケース２：より複雑な
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     IV
-    </span>
-   </code>
-   推定（2SLS）
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id7">
-     説明
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#educ">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       educ
-      </span>
-     </code>
-     と操作変数の相関性チェック
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id8">
-     IV推定
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id9">
-   シミュレーション：３つの特徴
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
-     一致性
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
-     標本の大きさ
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id12">
-     操作変数との相関性（弱操作変数）
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id13">
-   説明変数の外生性の検定
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
-     説明
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#wu-hausman">
-     検定方法１：
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Wu-Hausman
-      </span>
-     </code>
-     検定
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id15">
-     検定方法２
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id16">
-       「手計算」
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id17">
-       自動計算
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id18">
-   操作変数の有効性検定
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id19">
-     説明
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id20">
-     「手計算」
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id21">
-     自動計算
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id22">
-   同時方程式モデルと
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     IV
-    </span>
-   </code>
-   推定
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id23">
-     同時性バイアス
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id24">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       IV
-      </span>
-     </code>
-     推定法の適用
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id25">
-     例
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id26">
-       データ
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id27">
-       供給曲線の推定
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id28">
-       需要曲線の推定
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id29">
-   測定誤差と
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     IV
-    </span>
-   </code>
-   推定
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id30">
-     測定誤差によるバイアス
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id31">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       IV
-      </span>
-     </code>
-     推定法の適用
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id32">
-     シミュレーション
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>操作変数法と２段階OLS</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">説明</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">基本的な考え方</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linearmodels"><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iv">ケース１：単純な<code class="docutils literal notranslate"><span class="pre">IV</span></code>推定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">データ</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">「自動計算」</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">「手動計算」</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><span class="math notranslate nohighlight">\(OLS\)</span>推定</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iv-2sls">ケース２：より複雑な<code class="docutils literal notranslate"><span class="pre">IV</span></code>推定（2SLS）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">説明</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#educ"><code class="docutils literal notranslate"><span class="pre">educ</span></code>と操作変数の相関性チェック</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">IV推定</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">シミュレーション：３つの特徴</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">一致性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">標本の大きさ</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">操作変数との相関性（弱操作変数）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">説明変数の外生性の検定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">説明</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wu-hausman">検定方法１：<code class="docutils literal notranslate"><span class="pre">Wu-Hausman</span></code>検定</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">検定方法２</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">「手計算」</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">自動計算</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">操作変数の有効性検定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">説明</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">「手計算」</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">自動計算</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">同時方程式モデルと<code class="docutils literal notranslate"><span class="pre">IV</span></code>推定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">同時性バイアス</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id24"><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定法の適用</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">例</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">データ</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">供給曲線の推定</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">需要曲線の推定</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">測定誤差と<code class="docutils literal notranslate"><span class="pre">IV</span></code>推定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">測定誤差によるバイアス</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id31"><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定法の適用</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id32">シミュレーション</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="ols">
-<h1>操作変数法と２段階OLS<a class="headerlink" href="#ols" title="Permalink to this headline">#</a></h1>
+<h1>操作変数法と２段階OLS<a class="headerlink" href="#ols" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -1032,9 +482,9 @@ in English or the language of your choice.
 </div>
 </aside>
 <section id="id1">
-<h2>説明<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<h2>説明<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
 <section id="id2">
-<h3>基本的な考え方<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
+<h3>基本的な考え方<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
 <p>仮定４：Zero Conditional Mean <span class="math notranslate nohighlight">\(\text{E}(u|x)=0\)</span></p>
 <p>仮定４a：<span class="math notranslate nohighlight">\(\text{Cov}(x,u)=0\)</span></p>
 <p>この仮定が満たされない理由に次の３つがあり（他にもある），その対処法となる推定方法について説明する。</p>
@@ -1061,7 +511,7 @@ in English or the language of your choice.
 </ul>
 <p><strong>＜操作変数の３つの条件＞</strong></p>
 <p>更に，<span class="math notranslate nohighlight">\(w\)</span>に以下の条件を満たす<strong>操作変数</strong>（instruments）<span class="math notranslate nohighlight">\(z\)</span>があるとしよう。</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(z\)</span>は回帰式に含まれない（除外条件）</p></li>
 <li><p><span class="math notranslate nohighlight">\(\text{Cov}(z,w)\neq 0\)</span>（高い関係性; <span class="math notranslate nohighlight">\(w\)</span>と高い相関関係がある）</p></li>
 <li><p><span class="math notranslate nohighlight">\(\text{Cov}(z,u)=0\)</span>（操作変数の外生性; 回帰式の誤差項と無相関）</p></li>
@@ -1084,7 +534,7 @@ in English or the language of your choice.
 <li><p>これにより<span class="math notranslate nohighlight">\(w\)</span>を２つの要素（<span class="math notranslate nohighlight">\(\hat{w}\)</span>と<span class="math notranslate nohighlight">\(v\)</span>）に分解</p>
 <div class="math notranslate nohighlight">
 \[w=\hat{w}+v,\qquad\hat{w}=\hat{\pi}_0+\hat{\pi}_1z\]</div>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(\hat{w}\)</span>（予測値）：外生変数で説明できる<span class="math notranslate nohighlight">\(w\)</span>の部分（<span class="math notranslate nohighlight">\(z\)</span>と相関する部分）</p></li>
 <li><p><span class="math notranslate nohighlight">\(v\)</span>（残差）：残り全て（<span class="math notranslate nohighlight">\(u\)</span>と相関する<span class="math notranslate nohighlight">\(w\)</span>の部分は吸収される）</p></li>
 </ol>
@@ -1126,7 +576,7 @@ in English or the language of your choice.
 </ul>
 </section>
 <section id="linearmodels">
-<h3><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code><a class="headerlink" href="#linearmodels" title="Permalink to this headline">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code><a class="headerlink" href="#linearmodels" title="Permalink to this heading">#</a></h3>
 <p><strong>＜<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>の使い方＞</strong></p>
 <p>回帰式を文字列で表し操作変数法を使うためにはサブパッケージ<code class="docutils literal notranslate"><span class="pre">IV2SLS</span></code>の<code class="docutils literal notranslate"><span class="pre">from_formula</span></code>をインポートする。回帰式の文字列に関して上述した定数項についての違い以外は<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>と同じである。ただ，下の回帰式の一般型に沿って内生的変数と操作変数を<code class="docutils literal notranslate"><span class="pre">~</span></code>で挟んで<code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">]</span></code>の中に入れる。</p>
 <p><strong>＜<code class="docutils literal notranslate"><span class="pre">IV2SLS</span></code>回帰式の一般形＞</strong></p>
@@ -1141,9 +591,9 @@ in English or the language of your choice.
 </section>
 </section>
 <section id="iv">
-<h2>ケース１：単純な<code class="docutils literal notranslate"><span class="pre">IV</span></code>推定<a class="headerlink" href="#iv" title="Permalink to this headline">#</a></h2>
+<h2>ケース１：単純な<code class="docutils literal notranslate"><span class="pre">IV</span></code>推定<a class="headerlink" href="#iv" title="Permalink to this heading">#</a></h2>
 <section id="id3">
-<h3>データ<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
+<h3>データ<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
 <p>既婚女性の教育の収益率に関するデータ<code class="docutils literal notranslate"><span class="pre">mroz</span></code>を利用して使い方を説明する。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
@@ -1204,7 +654,7 @@ provided the data, which he obtained from Professor Mroz.
 <p>誤差項に既婚女性の能力が含まれている可能性があるため<code class="docutils literal notranslate"><span class="pre">educ</span></code>は内生変数の疑いがある。父親の教育年数<code class="docutils literal notranslate"><span class="pre">fatheduc</span></code>は既婚女性の教育年数<code class="docutils literal notranslate"><span class="pre">educ</span></code>と正の相関性があると思われる一方，能力自体とは無相関と仮定。</p>
 </section>
 <section id="id4">
-<h3>「自動計算」<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
+<h3>「自動計算」<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
 <p>IV推定法は2SLSの特殊なケースとして２ステップで推定することを説明したが，ここでは自動的に２ステップを計算する場合を紹介する。</p>
 <p>まず回帰式を決める。</p>
 <div class="cell docutils container">
@@ -1252,7 +702,7 @@ educ           0.0592     0.0351     1.6878     0.0914     -0.0095      0.1279
 <p><code class="docutils literal notranslate"><span class="pre">educ</span></code>の推定値などは，上で説明したように<code class="docutils literal notranslate"><span class="pre">fatheduc</span></code>を操作変数として計算した結果である。<span class="math notranslate nohighlight">\(p\)</span>値は<code class="docutils literal notranslate"><span class="pre">0.1</span></code>よりも低いため，<code class="docutils literal notranslate"><span class="pre">10%</span></code>有意水準では係数<code class="docutils literal notranslate"><span class="pre">0</span></code>の帰無仮説を棄却できないが，<code class="docutils literal notranslate"><span class="pre">5%</span></code>水準では棄却される。</p>
 </section>
 <section id="id5">
-<h3>「手動計算」<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h3>
+<h3>「手動計算」<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
 <p>第１・２段階のOLS推定を別々に試みる。</p>
 <hr class="docutils" />
 <p><strong>第１段階のOLS</strong></p>
@@ -1295,7 +745,7 @@ educ_fit       0.0592     0.0367     1.6119     0.1070     -0.0128      0.1311
 <p>「自動計算」の場合と比べると，<code class="docutils literal notranslate"><span class="pre">Parameter</span></code>は同じことが確認できる。しかし<code class="docutils literal notranslate"><span class="pre">Std.</span> <span class="pre">Err.</span></code>は異なり，それに基づく他の推定値も異なることに注意。</p>
 </section>
 <section id="id6">
-<h3><span class="math notranslate nohighlight">\(OLS\)</span>推定<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h3>
+<h3><span class="math notranslate nohighlight">\(OLS\)</span>推定<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
 <p>確認のために，操作変数法を使わずに直接OLS推定をおこなうとどうなるかを確認しよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1317,18 +767,15 @@ educ           0.1086     0.0134     8.1178     0.0000      0.0824      0.1349
 ==============================================================================
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
 </div>
 </div>
 <p>操作変数法の推定量と大きく異なることが分かる。操作変数法と比べて<code class="docutils literal notranslate"><span class="pre">educ</span></code>の<span class="math notranslate nohighlight">\(OLS\)</span>推定量は約２倍になり，既婚女性の教育の収益率を過大評価している。<code class="docutils literal notranslate"><span class="pre">educ</span></code>と誤差項に相関性がると推測できる。</p>
 </section>
 </section>
 <section id="iv-2sls">
-<h2>ケース２：より複雑な<code class="docutils literal notranslate"><span class="pre">IV</span></code>推定（2SLS）<a class="headerlink" href="#iv-2sls" title="Permalink to this headline">#</a></h2>
+<h2>ケース２：より複雑な<code class="docutils literal notranslate"><span class="pre">IV</span></code>推定（2SLS）<a class="headerlink" href="#iv-2sls" title="Permalink to this heading">#</a></h2>
 <section id="id7">
-<h3>説明<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h3>
+<h3>説明<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
 <p>ケース１を以下のように拡張する。</p>
 <ul class="simple">
 <li><p>複数の外生的説明変数の導入（<code class="docutils literal notranslate"><span class="pre">exper</span></code>，<code class="docutils literal notranslate"><span class="pre">expersq</span></code>）</p></li>
@@ -1363,7 +810,7 @@ educ           0.1086     0.0134     8.1178     0.0000      0.0824      0.1349
 <li><p><span class="math notranslate nohighlight">\(w\)</span>を２つの要素（<span class="math notranslate nohighlight">\(\hat{w}\)</span>と<span class="math notranslate nohighlight">\(v\)</span>）に分解</p>
 <div class="math notranslate nohighlight">
 \[w=\hat{w}+v,\qquad\hat{w}=\hat{\pi}_0+\hat{\pi}_1z_1+\hat{\pi}_2z_2+\hat{\pi}_3x_1+\hat{\pi}_4x_2\]</div>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(\hat{w}\)</span>（予測値）：外生変数だけで説明される<span class="math notranslate nohighlight">\(w\)</span>の部分（<span class="math notranslate nohighlight">\(x_1\)</span>，<span class="math notranslate nohighlight">\(x_2\)</span>，<span class="math notranslate nohighlight">\(z_1\)</span>，<span class="math notranslate nohighlight">\(z_2\)</span>と相関する部分）</p></li>
 <li><p><span class="math notranslate nohighlight">\(v\)</span>（残差）：残り全て（<span class="math notranslate nohighlight">\(u\)</span>と相関する<span class="math notranslate nohighlight">\(w\)</span>の部分はこれに吸収される）</p></li>
 </ol>
@@ -1390,7 +837,7 @@ educ           0.1086     0.0134     8.1178     0.0000      0.0824      0.1349
 </ul>
 </section>
 <section id="educ">
-<h3><code class="docutils literal notranslate"><span class="pre">educ</span></code>と操作変数の相関性チェック<a class="headerlink" href="#educ" title="Permalink to this headline">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">educ</span></code>と操作変数の相関性チェック<a class="headerlink" href="#educ" title="Permalink to this heading">#</a></h3>
 <p>内生的説明変数と操作変数のOLS推定を使い，相関性の検定をおこなう。</p>
 <p>上述のとおり，一般的に有効な操作変数は以下を満たす。</p>
 <ul class="simple">
@@ -1421,8 +868,8 @@ educ           0.1086     0.0134     8.1178     0.0000      0.0824      0.1349
 Dep. Variable:                   educ   R-squared:                      0.2081
 Estimator:                        OLS   Adj. R-squared:                 0.2043
 No. Observations:                 428   F-statistic:                    112.45
-Date:                Mon, Feb 20 2023   P-value (F-stat)                0.0000
-Time:                        13:13:39   Distribution:                  chi2(2)
+Date:                Wed, Mar 08 2023   P-value (F-stat)                0.0000
+Time:                        13:28:55   Distribution:                  chi2(2)
 Cov. Estimator:            unadjusted                                         
                                                                               
                              Parameter Estimates                              
@@ -1454,7 +901,7 @@ motheduc       0.1564     0.0357     4.3805     0.0000      0.0864      0.2263
 <p>従って，<code class="docutils literal notranslate"><span class="pre">educ</span></code>と操作変数の相関性は高い。</p>
 </section>
 <section id="id8">
-<h3>IV推定<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h3>
+<h3>IV推定<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
 <p>上述した<code class="docutils literal notranslate"><span class="pre">IV2SLS</span></code>回帰式の一般形に基づいて回帰式を設定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1490,9 +937,9 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 </section>
 </section>
 <section id="id9">
-<h2>シミュレーション：３つの特徴<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h2>
+<h2>シミュレーション：３つの特徴<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
 <section id="id10">
-<h3>一致性<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h3>
+<h3>一致性<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
 <p>（目的）</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定量の一致性を確認する。</p></li>
@@ -1633,7 +1080,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/19_IV2SLS_63_0.png" src="_images/19_IV2SLS_63_0.png" />
+<img alt="_images/8cc73c3a45d5215da1a0a49f9f9550e87b30d28e15ad4f458df0c7b8e5a527f4.png" src="_images/8cc73c3a45d5215da1a0a49f9f9550e87b30d28e15ad4f458df0c7b8e5a527f4.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1642,7 +1089,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 </ul>
 </section>
 <section id="id11">
-<h3>標本の大きさ<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h3>
+<h3>標本の大きさ<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
 <p>（目的）</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定量の一致性は大標本特性である。ここでは標本の大きさの効果を確認する。</p></li>
@@ -1686,7 +1133,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/19_IV2SLS_70_0.png" src="_images/19_IV2SLS_70_0.png" />
+<img alt="_images/f529e44a2d44b96ec0409952baa0f03552c015321c16e45591561a95a1330bc3.png" src="_images/f529e44a2d44b96ec0409952baa0f03552c015321c16e45591561a95a1330bc3.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1695,7 +1142,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 </ul>
 </section>
 <section id="id12">
-<h3>操作変数との相関性（弱操作変数）<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h3>
+<h3>操作変数との相関性（弱操作変数）<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
 <p>（目的）</p>
 <ul class="simple">
 <li><p>IV推定法で必須となるのが内生的説明変数と操作変数の相関性である。相関性が高い場合は推定量の標準ごさは低くなるが，逆に相関性が低い場合は推定量の標準誤差が大きくなることを確認する。</p></li>
@@ -1740,16 +1187,16 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/19_IV2SLS_77_0.png" src="_images/19_IV2SLS_77_0.png" />
+<img alt="_images/d65e5f54e1e55dbbc54af87d52f9ec07469b2e1a792eac9e99b657e79be183ab.png" src="_images/d65e5f54e1e55dbbc54af87d52f9ec07469b2e1a792eac9e99b657e79be183ab.png" />
 </div>
 </div>
 <p><span class="math notranslate nohighlight">\(\text{Cov}(x,z)\)</span>が低くなると分散が大きくなり，一致性を失うことも確認できる。</p>
 </section>
 </section>
 <section id="id13">
-<h2>説明変数の外生性の検定<a class="headerlink" href="#id13" title="Permalink to this headline">#</a></h2>
+<h2>説明変数の外生性の検定<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h2>
 <section id="id14">
-<h3>説明<a class="headerlink" href="#id14" title="Permalink to this headline">#</a></h3>
+<h3>説明<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h3>
 <p>次式を考えよう。</p>
 <div class="math notranslate nohighlight">
 \[y=\beta_0+\beta_1w+u\]</div>
@@ -1772,7 +1219,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <p>上で考えたケース２を使って確かめる。</p>
 </section>
 <section id="wu-hausman">
-<h3>検定方法１：<code class="docutils literal notranslate"><span class="pre">Wu-Hausman</span></code>検定<a class="headerlink" href="#wu-hausman" title="Permalink to this headline">#</a></h3>
+<h3>検定方法１：<code class="docutils literal notranslate"><span class="pre">Wu-Hausman</span></code>検定<a class="headerlink" href="#wu-hausman" title="Permalink to this heading">#</a></h3>
 <p>帰無仮説と対立仮説：</p>
 <p><span class="math notranslate nohighlight">\(\text{H}_0:\;\text{Cov}(w,u)=0\)</span></p>
 <p><span class="math notranslate nohighlight">\(\text{H}_A:\;\text{Cov}(w,u)\neq 0\)</span></p>
@@ -1797,7 +1244,7 @@ H0: All endogenous variables are exogenous
 Statistic: 2.8035
 P-value: 0.0948
 Distributed: F(1,423)
-WaldTestStatistic, id: 0x121ddb7c0
+WaldTestStatistic, id: 0x12423add0
 </pre></div>
 </div>
 </div>
@@ -1805,7 +1252,7 @@ WaldTestStatistic, id: 0x121ddb7c0
 <p><span class="math notranslate nohighlight">\(p\)</span>値は0.0948。5%の有意水準では帰無仮説を棄却できない（外生性を棄却できない）が，10%では棄却できる。</p>
 </section>
 <section id="id15">
-<h3>検定方法２<a class="headerlink" href="#id15" title="Permalink to this headline">#</a></h3>
+<h3>検定方法２<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h3>
 <p>まず検定方法について説明し，「考え方」については後述する。次の回帰式を考える。</p>
 <div class="math notranslate nohighlight">
 \[y=\beta_0+\beta_1x + \beta_2w+u\qquad\qquad (\text{式１})\]</div>
@@ -1862,7 +1309,7 @@ WaldTestStatistic, id: 0x121ddb7c0
 <li><p>もし<span class="math notranslate nohighlight">\(\gamma_u\)</span>が有意でなければ，<span class="math notranslate nohighlight">\(\text{H}_0\)</span>は棄却できない。<span class="math notranslate nohighlight">\(\hat{u}_w\)</span>は存在しないということになり，<span class="math notranslate nohighlight">\(w\)</span>は外生的説明変数と判断できる。</p></li>
 </ul>
 <section id="id16">
-<h4>「手計算」<a class="headerlink" href="#id16" title="Permalink to this headline">#</a></h4>
+<h4>「手計算」<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h4>
 <p><strong>第１段階</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1910,7 +1357,7 @@ expersq             -0.0009     0.0004    -2.2840     0.0224     -0.0017     -0.
 <p><span class="math notranslate nohighlight">\(p\)</span>値は0.0928で，5%の有意水準では帰無仮説を棄却できない（内生性を棄却できない）。</p>
 </section>
 <section id="id17">
-<h4>自動計算<a class="headerlink" href="#id17" title="Permalink to this headline">#</a></h4>
+<h4>自動計算<a class="headerlink" href="#id17" title="Permalink to this heading">#</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>には上の計算を自動でおこなった結果を示すメソッドが用意されている。<code class="docutils literal notranslate"><span class="pre">res_2</span></code>の<code class="docutils literal notranslate"><span class="pre">.wooldridge_regression</span></code>である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1924,7 +1371,7 @@ H0: Endogenous variables are exogenous
 Statistic: 2.8256
 P-value: 0.0928
 Distributed: chi2(1)
-WaldTestStatistic, id: 0x121e351e0
+WaldTestStatistic, id: 0x12439e080
 </pre></div>
 </div>
 </div>
@@ -1934,9 +1381,9 @@ WaldTestStatistic, id: 0x121e351e0
 </section>
 </section>
 <section id="id18">
-<h2>操作変数の有効性検定<a class="headerlink" href="#id18" title="Permalink to this headline">#</a></h2>
+<h2>操作変数の有効性検定<a class="headerlink" href="#id18" title="Permalink to this heading">#</a></h2>
 <section id="id19">
-<h3>説明<a class="headerlink" href="#id19" title="Permalink to this headline">#</a></h3>
+<h3>説明<a class="headerlink" href="#id19" title="Permalink to this heading">#</a></h3>
 <p>次の回帰式を考えよう。</p>
 <div class="math notranslate nohighlight">
 \[y=\beta_0+\beta_1x+\beta_2w+u\qquad\quad\text{(*)}\]</div>
@@ -2005,7 +1452,7 @@ WaldTestStatistic, id: 0x121e351e0
 <p>上で考えたケース２を使って確かめる。</p>
 </section>
 <section id="id20">
-<h3>「手計算」<a class="headerlink" href="#id20" title="Permalink to this headline">#</a></h3>
+<h3>「手計算」<a class="headerlink" href="#id20" title="Permalink to this heading">#</a></h3>
 <p>第１段階の計算結果として<code class="docutils literal notranslate"><span class="pre">res_2</span></code>を使う。</p>
 <p>第２段階の計算のために<code class="docutils literal notranslate"><span class="pre">res_2</span></code>の属性<code class="docutils literal notranslate"><span class="pre">.resids</span></code>を使い回帰残差を取得し，直接以下の回帰式に入れる。</p>
 <div class="cell docutils container">
@@ -2039,7 +1486,7 @@ WaldTestStatistic, id: 0x121e351e0
 <p>５％有意水準では帰無仮説を棄却できない。</p>
 </section>
 <section id="id21">
-<h3>自動計算<a class="headerlink" href="#id21" title="Permalink to this headline">#</a></h3>
+<h3>自動計算<a class="headerlink" href="#id21" title="Permalink to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">res_2</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">.sargan</span></code>を使うと上と同じ計算結果を表示できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2053,7 +1500,7 @@ H0: The model is not overidentified.
 Statistic: 0.3781
 P-value: 0.5386
 Distributed: chi2(1)
-WaldTestStatistic, id: 0x121c33880
+WaldTestStatistic, id: 0x121edb430
 </pre></div>
 </div>
 </div>
@@ -2061,9 +1508,9 @@ WaldTestStatistic, id: 0x121c33880
 </section>
 </section>
 <section id="id22">
-<h2>同時方程式モデルと<code class="docutils literal notranslate"><span class="pre">IV</span></code>推定<a class="headerlink" href="#id22" title="Permalink to this headline">#</a></h2>
+<h2>同時方程式モデルと<code class="docutils literal notranslate"><span class="pre">IV</span></code>推定<a class="headerlink" href="#id22" title="Permalink to this heading">#</a></h2>
 <section id="id23">
-<h3>同時性バイアス<a class="headerlink" href="#id23" title="Permalink to this headline">#</a></h3>
+<h3>同時性バイアス<a class="headerlink" href="#id23" title="Permalink to this heading">#</a></h3>
 <p>同時方程式モデルとは，均衡メカニズムなどを通して複数の内生変数が複数の式によって同時決定されるモデルである。例として労働の需給モデルを考えよう。均衡では需要量（<span class="math notranslate nohighlight">\(L_d\)</span>）と供給量（<span class="math notranslate nohighlight">\(L_s\)</span>）は等しくなり（<span class="math notranslate nohighlight">\(L=L_d=L_s\)</span>），需要と供給はそれぞれ均衡賃金（<span class="math notranslate nohighlight">\(W\)</span>）に依存する。</p>
 <ul>
 <li><p>供給関数</p>
@@ -2093,7 +1540,7 @@ WaldTestStatistic, id: 0x121c33880
 </ul>
 </section>
 <section id="id24">
-<h3><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定法の適用<a class="headerlink" href="#id24" title="Permalink to this headline">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定法の適用<a class="headerlink" href="#id24" title="Permalink to this heading">#</a></h3>
 <p>同時性バイアスは<code class="docutils literal notranslate"><span class="pre">IV</span></code>推定法で対処可能である。考え方は簡単である。</p>
 <p><strong>供給曲線（式A）の推定</strong></p>
 <ul class="simple">
@@ -2117,9 +1564,9 @@ WaldTestStatistic, id: 0x121c33880
 </ul>
 </section>
 <section id="id25">
-<h3>例<a class="headerlink" href="#id25" title="Permalink to this headline">#</a></h3>
+<h3>例<a class="headerlink" href="#id25" title="Permalink to this heading">#</a></h3>
 <section id="id26">
-<h4>データ<a class="headerlink" href="#id26" title="Permalink to this headline">#</a></h4>
+<h4>データ<a class="headerlink" href="#id26" title="Permalink to this heading">#</a></h4>
 <p>データセット<code class="docutils literal notranslate"><span class="pre">mroz</span></code>を使う。</p>
 <ul class="simple">
 <li><p>労働供給曲線：労働市場に参加する既婚女性の労働供給関数</p></li>
@@ -2146,7 +1593,7 @@ WaldTestStatistic, id: 0x121c33880
 </ul>
 </section>
 <section id="id27">
-<h4>供給曲線の推定<a class="headerlink" href="#id27" title="Permalink to this headline">#</a></h4>
+<h4>供給曲線の推定<a class="headerlink" href="#id27" title="Permalink to this heading">#</a></h4>
 <p><strong><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2203,12 +1650,15 @@ nwifeinc      -5.9185     3.6574    -1.6182     0.1056     -13.087      1.2500
 ==============================================================================
 </pre></div>
 </div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
 </div>
 </div>
 <p>２つの推定結果を比べると，推定値を含めて大きく異なることがわかる。２段回推定法により同時性バイアスを取り除いた結果と解釈できる。</p>
 </section>
 <section id="id28">
-<h4>需要曲線の推定<a class="headerlink" href="#id28" title="Permalink to this headline">#</a></h4>
+<h4>需要曲線の推定<a class="headerlink" href="#id28" title="Permalink to this heading">#</a></h4>
 <p><strong><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2270,9 +1720,9 @@ hours      -5.655e-05  4.353e-05    -1.2992     0.1939     -0.0001   2.876e-05
 </section>
 </section>
 <section id="id29">
-<h2>測定誤差と<code class="docutils literal notranslate"><span class="pre">IV</span></code>推定<a class="headerlink" href="#id29" title="Permalink to this headline">#</a></h2>
+<h2>測定誤差と<code class="docutils literal notranslate"><span class="pre">IV</span></code>推定<a class="headerlink" href="#id29" title="Permalink to this heading">#</a></h2>
 <section id="id30">
-<h3>測定誤差によるバイアス<a class="headerlink" href="#id30" title="Permalink to this headline">#</a></h3>
+<h3>測定誤差によるバイアス<a class="headerlink" href="#id30" title="Permalink to this heading">#</a></h3>
 <p>ここではシミュレーションを通して，測定誤差バイアスがある場合でもIV推定法を使うことで一致性を満たす推定量を得ることが可能であることを示す。</p>
 <p>次の母集団回帰式を考えよう。</p>
 <div class="math notranslate nohighlight">
@@ -2304,7 +1754,7 @@ hours      -5.655e-05  4.353e-05    -1.2992     0.1939     -0.0001   2.876e-05
 \]</div>
 </section>
 <section id="id31">
-<h3><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定法の適用<a class="headerlink" href="#id31" title="Permalink to this headline">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定法の適用<a class="headerlink" href="#id31" title="Permalink to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定法での対処方法を考える。<span class="math notranslate nohighlight">\(x^*\)</span>を測定する変数<span class="math notranslate nohighlight">\(z\)</span>があるとする。</p>
 <div class="math notranslate nohighlight">
 \[z=x^*+v\]</div>
@@ -2313,7 +1763,7 @@ hours      -5.655e-05  4.353e-05    -1.2992     0.1939     -0.0001   2.876e-05
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(x\)</span>の操作変数として<span class="math notranslate nohighlight">\(z\)</span>を使う</p></li>
 <li><p>以下の条件を満たすと仮定する。</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>もとの式に含まれていない。</p></li>
 <li><p><span class="math notranslate nohighlight">\(\text{Cov}(v,u)=0\;\;\Rightarrow\;\;\text{Cov}(z,u)=0\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\text{Cov}(z,x)\neq 0\)</span>（<span class="math notranslate nohighlight">\(z\)</span>も<span class="math notranslate nohighlight">\(x\)</span>も<span class="math notranslate nohighlight">\(x^*\)</span>を測定する変数）</p></li>
@@ -2322,7 +1772,7 @@ hours      -5.655e-05  4.353e-05    -1.2992     0.1939     -0.0001   2.876e-05
 </ul>
 </section>
 <section id="id32">
-<h3>シミュレーション<a class="headerlink" href="#id32" title="Permalink to this headline">#</a></h3>
+<h3>シミュレーション<a class="headerlink" href="#id32" title="Permalink to this heading">#</a></h3>
 <p>（目的）</p>
 <ul class="simple">
 <li><p>測定誤差によるバイアスを示す。</p></li>
@@ -2335,7 +1785,7 @@ hours      -5.655e-05  4.353e-05    -1.2992     0.1939     -0.0001   2.876e-05
 \[ y=\beta_0 + \beta_1 x + u\]</div>
 </li>
 <li><p>２つのケース</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(OLS\)</span>推定</p></li>
 <li><p><span class="math notranslate nohighlight">\(IV\)</span>推定</p></li>
 </ol>
@@ -2429,7 +1879,7 @@ hours      -5.655e-05  4.353e-05    -1.2992     0.1939     -0.0001   2.876e-05
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/19_IV2SLS_155_0.png" src="_images/19_IV2SLS_155_0.png" />
+<img alt="_images/c3a6b5c210df8373db695ba73fb398ee9f19245fd2cef1f834cd898b3117c6ae.png" src="_images/c3a6b5c210df8373db695ba73fb398ee9f19245fd2cef1f834cd898b3117c6ae.png" />
 </div>
 </div>
 <ul class="simple">
@@ -2460,50 +1910,155 @@ hours      -5.655e-05  4.353e-05    -1.2992     0.1939     -0.0001   2.876e-05
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="18_Zero_Conditional_Mean.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">GM仮定４が満たされない場合</p>
-        </div>
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="18_Zero_Conditional_Mean.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">GM仮定４が満たされない場合</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="20_LogitProbit.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="20_LogitProbit.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">離散選択モデル</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">説明</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">基本的な考え方</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linearmodels"><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iv">ケース１：単純な<code class="docutils literal notranslate"><span class="pre">IV</span></code>推定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">データ</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">「自動計算」</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">「手動計算」</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><span class="math notranslate nohighlight">\(OLS\)</span>推定</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iv-2sls">ケース２：より複雑な<code class="docutils literal notranslate"><span class="pre">IV</span></code>推定（2SLS）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">説明</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#educ"><code class="docutils literal notranslate"><span class="pre">educ</span></code>と操作変数の相関性チェック</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">IV推定</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">シミュレーション：３つの特徴</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">一致性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">標本の大きさ</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">操作変数との相関性（弱操作変数）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">説明変数の外生性の検定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">説明</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wu-hausman">検定方法１：<code class="docutils literal notranslate"><span class="pre">Wu-Hausman</span></code>検定</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">検定方法２</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">「手計算」</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">自動計算</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">操作変数の有効性検定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">説明</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">「手計算」</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">自動計算</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">同時方程式モデルと<code class="docutils literal notranslate"><span class="pre">IV</span></code>推定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">同時性バイアス</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id24"><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定法の適用</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">例</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">データ</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">供給曲線の推定</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">需要曲線の推定</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">測定誤差と<code class="docutils literal notranslate"><span class="pre">IV</span></code>推定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">測定誤差によるバイアス</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id31"><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定法の適用</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id32">シミュレーション</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
   
-    By 春山 鉄源  Tetsugen HARUYAMA<br/>
-  
-      &copy; Copyright 2020-2023（公開開始日：2020年5月4日）.<br/>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
-</div>
+<p class="component-author">
+By 春山 鉄源  Tetsugen HARUYAMA
+</p>
 
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2020-2023（公開開始日：2020年5月4日）.
+      <br/>
+    
+  </p>
 
-      </div>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

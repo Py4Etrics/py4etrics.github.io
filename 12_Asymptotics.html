@@ -1,50 +1,68 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>大標本特性 &#8212; Pythonで学ぶ入門計量経済学</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="_static/my_style.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/design-tabs.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-6SP1Y69WEX"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-6SP1Y69WEX');
+            </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -53,648 +71,360 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '12_Asymptotics';</script>
     <link rel="canonical" href="https://py4etrics.github.io/12_Asymptotics.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="質的変数と回帰分析" href="13_Dummies.html" />
     <link rel="prev" title="推論" href="11_Inference.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-6SP1Y69WEX"></script>
-<script>
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){ dataLayer.push(arguments); }
-                    gtag('js', new Date());
-                    gtag('config', 'G-6SP1Y69WEX');
-                </script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
     
-    <div class="container-fluid" id="banner"></div>
-
     
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
 
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="index.html">
-      
-      
-      
-      <h1 class="site-logo" id="site-title">Pythonで学ぶ入門計量経済学</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Pythonの学習
- </span>
-</p>
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Pythonで学ぶ入門計量経済学</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Pythonの学習</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="part_1.html">
-   目次と内容
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="1_Python_Basics.html">
-   Pythonの基礎
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2_NumPy.html">
-   NumPy
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="3_Pandas.html">
-   Pandas
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="4_Matplotlib.html">
-   Matplotlib
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="5_SciPy_stats.html">
-   SciPy.stats
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="6_things_to_note.html">
-   Tipsと注意点
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="part_1.html">目次と内容</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_Python_Basics.html">Pythonの基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_NumPy.html">NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_Pandas.html">Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_Matplotlib.html">Matplotlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_SciPy_stats.html">SciPy.stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_things_to_note.html">Tipsと注意点</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Pythonを使った計量経済分析
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Pythonを使った計量経済分析</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="part_2.html">
-   目次と内容
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="7_Review_of_Statistics.html">
-   統計学の簡単な復習
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="list_of_terms.html">
-   計量経済学用語
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="8_Simple_Regression.html">
-   単回帰分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="9_Multiple_Regression.html">
-   重回帰分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="10_Residuals.html">
-   残差診断
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="11_Inference.html">
-   推論
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   大標本特性
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="13_Dummies.html">
-   質的変数と回帰分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="14_Hetero.html">
-   不均一分散
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="15_Pooling.html">
-   プーリング・データとパネル・データ
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="16_linearmodels.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     linearmodels
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="17_Panel.html">
-   パネル・データ分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="18_Zero_Conditional_Mean.html">
-   GM仮定４が満たされない場合
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="19_IV2SLS.html">
-   操作変数法と２段階OLS
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="20_LogitProbit.html">
-   離散選択モデル
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="21_TruncregTobitHeckit.html">
-   制限従属変数モデル
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="part_2.html">目次と内容</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_Review_of_Statistics.html">統計学の簡単な復習</a></li>
+<li class="toctree-l1"><a class="reference internal" href="list_of_terms.html">計量経済学用語</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8_Simple_Regression.html">単回帰分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_Multiple_Regression.html">重回帰分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Residuals.html">残差診断</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Inference.html">推論</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">大標本特性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Dummies.html">質的変数と回帰分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Hetero.html">不均一分散</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Pooling.html">プーリング・データとパネル・データ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_linearmodels.html"><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Panel.html">パネル・データ分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Zero_Conditional_Mean.html">GM仮定４が満たされない場合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_IV2SLS.html">操作変数法と２段階OLS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_LogitProbit.html">離散選択モデル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_TruncregTobitHeckit.html">制限従属変数モデル</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  番外編
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">番外編</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="part_3.html">
-   目次と内容
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Descriptive_stats_vs_Graphs.html">
-   記述統計とグラフ
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="data_source.html">
-   Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://py4macro.github.io">
-   Pythonで学ぶマクロ経済学 (中級＋レベル)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://py4basics.github.io">
-   経済学のためのPython入門
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="part_3.html">目次と内容</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Descriptive_stats_vs_Graphs.html">記述統計とグラフ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_source.html">Data</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://py4macro.github.io">Pythonで学ぶマクロ経済学 (中級＋レベル)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://py4basics.github.io">経済学のためのPython入門</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            <a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
-          
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
 <div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
 
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
   
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
     </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/12_Asymptotics.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/12_Asymptotics.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="_static/images/logo_binder.svg">
   </span>
-<span class="headerbtn__text-container">Binder</span>
+<span class="btn__text-container">Binder</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/12_Asymptotics.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Colab"
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/12_Asymptotics.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="_static/images/logo_colab.png">
   </span>
-<span class="headerbtn__text-container">Colab</span>
+<span class="btn__text-container">Colab</span>
 </a>
-
-      </li>
+</li>
       
-    </ul>
-  </div>
+  </ul>
 </div>
 
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/12_Asymptotics.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="_sources/12_Asymptotics.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
+`);
+</script>
 
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#consistency">
-   一致性（Consistency）
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id2">
-     説明
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
-     シミュレーション：一致性
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id4">
-       誤差項のプロット
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id5">
-       一致性
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id6">
-   標本の大きさによる違い
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id7">
-     小標本特性
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id8">
-     大標本特性
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#t">
-   シミュレーション：大標本特性と
-   <span class="math notranslate nohighlight">
-    \(t\)
-   </span>
-   値の分布
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id9">
-     説明
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
-     誤差項の正規性が満たされる場合
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
-     誤差項の正規性が満たされない場合
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id12">
-   正規性の確認
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#qq">
-     qqプロット
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#jarque-bera">
-     Jarque-Bera検定
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#omnibus">
-     Omnibus検定
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#lm">
-   <span class="math notranslate nohighlight">
-    \(LM\)
-   </span>
-   検定
-  </a>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>大標本特性</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#consistency">
-   一致性（Consistency）
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id2">
-     説明
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
-     シミュレーション：一致性
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id4">
-       誤差項のプロット
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id5">
-       一致性
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id6">
-   標本の大きさによる違い
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id7">
-     小標本特性
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id8">
-     大標本特性
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#t">
-   シミュレーション：大標本特性と
-   <span class="math notranslate nohighlight">
-    \(t\)
-   </span>
-   値の分布
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id9">
-     説明
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
-     誤差項の正規性が満たされる場合
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
-     誤差項の正規性が満たされない場合
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id12">
-   正規性の確認
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#qq">
-     qqプロット
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#jarque-bera">
-     Jarque-Bera検定
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#omnibus">
-     Omnibus検定
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#lm">
-   <span class="math notranslate nohighlight">
-    \(LM\)
-   </span>
-   検定
-  </a>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>大標本特性</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#consistency">一致性（Consistency）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">説明</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">シミュレーション：一致性</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">誤差項のプロット</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">一致性</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">標本の大きさによる違い</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">小標本特性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">大標本特性</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#t">シミュレーション：大標本特性と<span class="math notranslate nohighlight">\(t\)</span>値の分布</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">説明</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">誤差項の正規性が満たされる場合</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">誤差項の正規性が満たされない場合</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">正規性の確認</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qq">qqプロット</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jarque-bera">Jarque-Bera検定</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#omnibus">Omnibus検定</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lm"><span class="math notranslate nohighlight">\(LM\)</span>検定</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1>大標本特性<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
+<h1>大標本特性<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -726,9 +456,9 @@ in English or the language of your choice.
 <p><strong>仮定６（正規性）が満たされない場合</strong></p>
 <p>に重要となる推定量の性質である。</p>
 <section id="consistency">
-<h2>一致性（Consistency）<a class="headerlink" href="#consistency" title="Permalink to this headline">#</a></h2>
+<h2>一致性（Consistency）<a class="headerlink" href="#consistency" title="Permalink to this heading">#</a></h2>
 <section id="id2">
-<h3>説明<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
+<h3>説明<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
 <p>不偏性は推定量の望ましい特性である。一方で，全ての推定量が不偏性を満たすわけではない。推定量について一般にいわれていることは，最低限<strong>一致性（consistency）</strong>
 は必要だということである。一致性を記号で表現すると</p>
 <div class="math notranslate nohighlight">
@@ -761,7 +491,7 @@ in English or the language of your choice.
 <p>仮定４より緩い仮定４aのもとでは，少なくとも一致性を満たす推定量としてより多くの状況に対応できるようになる。</p>
 </section>
 <section id="id3">
-<h3>シミュレーション：一致性<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
+<h3>シミュレーション：一致性<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
 <p>シミュレーションを使い一致性の分布収束を確かめる。仮定１〜４には誤差項の正規性や均一性は含まれていない。この点を捉えるために，誤差項は２つの異なる分布から確率的に発生すると仮定する。具体的には，確率<span class="math notranslate nohighlight">\(p\)</span>で誤差項は正規分布</p>
 <div class="math notranslate nohighlight">
 \[u_N\sim\text{Normal(0,0.25)}\]</div>
@@ -780,7 +510,7 @@ u = pu_N+(1-p)u_c
 <li><p><span class="math notranslate nohighlight">\(\text{E}(u_N)=\text{E}(u_c)\)</span>であるため<span class="math notranslate nohighlight">\(\text{E}(u)=0\)</span>。</p></li>
 </ul>
 <section id="id4">
-<h4>誤差項のプロット<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h4>
+<h4>誤差項のプロット<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h4>
 <p>実際に，ここで仮定する誤差項はどのような分布になるか図示する。</p>
 <p>ランダム変数の数</p>
 <div class="cell docutils container">
@@ -828,7 +558,7 @@ u = pu_N+(1-p)u_c
 </div>
 <p>＜上のコードの説明＞</p>
 <blockquote>
-<div><ol class="simple">
+<div><ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>回<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを宣言。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">dist_1</span></code>の割合</p></li>
 <li><p>正規分布に従う１つのランダム変数を生成。</p></li>
@@ -858,8 +588,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.47049131,  0.21117532, -0.01673381, -0.31561509,  0.77094629,
-        0.19476037, -0.60747685, -0.30578013, -0.63125334, -0.665592  ])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.59101623, -0.69172716, -0.12597231, -0.52892607, -0.62535337,
+       -0.64833818, -0.33668607, -0.30937724,  0.26685697, -0.54380097])
 </pre></div>
 </div>
 </div>
@@ -876,7 +606,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12_Asymptotics_24_0.png" src="_images/12_Asymptotics_24_0.png" />
+<img alt="_images/a22ce7618764e1e20b5a65dd81559be489c600ba00279da20603603890938233.png" src="_images/a22ce7618764e1e20b5a65dd81559be489c600ba00279da20603603890938233.png" />
 </div>
 </div>
 <p>確認のために、生成された<code class="docutils literal notranslate"><span class="pre">n</span></code>個のランダム変数（誤差項）の平均を計算してみる。</p>
@@ -887,14 +617,14 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.01000416584915179
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.013952884683774864
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="id5">
-<h4>一致性<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h4>
+<h4>一致性<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h4>
 <p>＜シミュレーションの内容＞</p>
 <ul>
 <li><p>母集団のパラメータを決める。</p></li>
@@ -999,8 +729,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.04980146, 0.59174857, 0.61650539, ..., 0.46701399, 0.82504454,
-       0.76567855])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.78469389, -0.38220475,  0.3099439 , ...,  0.12370228,
+        0.47780136, -0.21354497])
 </pre></div>
 </div>
 </div>
@@ -1038,7 +768,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12_Asymptotics_40_0.png" src="_images/12_Asymptotics_40_0.png" />
+<img alt="_images/aac6ceb6a2e06a97b10e6ec2f4630770a5d56fb70b76c3916e3001ea57f96e17.png" src="_images/aac6ceb6a2e06a97b10e6ec2f4630770a5d56fb70b76c3916e3001ea57f96e17.png" />
 </div>
 </div>
 <p>上のコードには同じような行が複数あり，単純な間違いの可能性が高くなる。。<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを使うとよりコンパクトに書くことが可能となり，間違いも少なくなる。</p>
@@ -1070,7 +800,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12_Asymptotics_42_0.png" src="_images/12_Asymptotics_42_0.png" />
+<img alt="_images/aac6ceb6a2e06a97b10e6ec2f4630770a5d56fb70b76c3916e3001ea57f96e17.png" src="_images/aac6ceb6a2e06a97b10e6ec2f4630770a5d56fb70b76c3916e3001ea57f96e17.png" />
 </div>
 </div>
 <p>＜コードの説明＞</p>
@@ -1093,11 +823,11 @@ u = pu_N+(1-p)u_c
 </section>
 </section>
 <section id="id6">
-<h2>標本の大きさによる違い<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
+<h2>標本の大きさによる違い<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
 <section id="id7">
-<h3>小標本特性<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h3>
+<h3>小標本特性<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
 <p>標本の大きさが <span class="math notranslate nohighlight">\(n&gt;k+1\)</span> であるかぎりどのような値（小さくても大きくても）であっても</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>仮定１〜４（GM仮定）の下でOLS推定量の<strong>不偏性</strong>は成立する。</p></li>
 <li><p>仮定１〜５（CLM仮定）の下でOLS推定量の<strong>B.L.U.E</strong>も成立する。</p></li>
 <li><p>仮定１〜６の下で，説明変数の値を所与とすると，OLS推定量<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>は正規分布に従う。これにより<span class="math notranslate nohighlight">\(t\)</span>検定と<span class="math notranslate nohighlight">\(F\)</span>検定は<strong>有効</strong>となる。</p></li>
@@ -1105,15 +835,15 @@ u = pu_N+(1-p)u_c
 <p>小標本特性３が成立する上で特に重要なのは仮定６（誤差項の正規性）である。標本の大きさ（<span class="math notranslate nohighlight">\(n\)</span>）が小さくても（もちろん，大きくても），仮定６によりOLS推定量は正規分布に従い<span class="math notranslate nohighlight">\(t\)</span>検定と<span class="math notranslate nohighlight">\(F\)</span>検定は有効である。換言すると，仮定６が成立しなければ<span class="math notranslate nohighlight">\(t\)</span>検定と<span class="math notranslate nohighlight">\(F\)</span>検定は無効になってしまう。そこで重要な役割を果たすのが「大標本特性」といわれるものである。</p>
 </section>
 <section id="id8">
-<h3>大標本特性<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h3>
+<h3>大標本特性<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
 <p>仮定６が満たされなくとも（仮定１〜５のもとで）標本の大きさが十分に大きい場合（<span class="math notranslate nohighlight">\(n\rightarrow\infty\)</span>），OLS推定量 <span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>は正規分布に従う。</p>
 <p>この特性により標本数が十分に大きい場合，<span class="math notranslate nohighlight">\(t\)</span>値と<span class="math notranslate nohighlight">\(F\)</span>値の分布はそれぞれ<span class="math notranslate nohighlight">\(t\)</span>分布と<span class="math notranslate nohighlight">\(F\)</span>分布で<strong>近似</strong>できる。この意味で<span class="math notranslate nohighlight">\(t\)</span>検定と<span class="math notranslate nohighlight">\(F\)</span>検定は有効となる。ではどれだけ<span class="math notranslate nohighlight">\(n\)</span>が大きければ大標本特性のもとで<span class="math notranslate nohighlight">\(t\)</span>検定と<span class="math notranslate nohighlight">\(F\)</span>検定が有効となるのであろう。残念なことに決まったルールはない。<strong>30</strong>とも言われるが，全てのケースでそうとは言いがたい。</p>
 </section>
 </section>
 <section id="t">
-<h2>シミュレーション：大標本特性と<span class="math notranslate nohighlight">\(t\)</span>値の分布<a class="headerlink" href="#t" title="Permalink to this headline">#</a></h2>
+<h2>シミュレーション：大標本特性と<span class="math notranslate nohighlight">\(t\)</span>値の分布<a class="headerlink" href="#t" title="Permalink to this heading">#</a></h2>
 <section id="id9">
-<h3>説明<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h3>
+<h3>説明<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
 <p>大標本特性を確認するためにシミュレーションをおこなうが、ここでは<span class="math notranslate nohighlight">\(t\)</span>値の分布を考える。</p>
 <p>＜シミュレーションの内容＞</p>
 <ul>
@@ -1122,7 +852,7 @@ u = pu_N+(1-p)u_c
 \[ y=\beta_0 + \beta_1 x + u\]</div>
 </li>
 <li><p>２つのケースに分ける。</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(u\)</span>が正規性を満たしている場合</p></li>
 <li><p><span class="math notranslate nohighlight">\(u\)</span>が正規性を満たしていない場合</p></li>
 </ol>
@@ -1145,7 +875,7 @@ u = pu_N+(1-p)u_c
 仮定６が成り立たない場合，<span class="math notranslate nohighlight">\(n\)</span>が小さいと<span class="math notranslate nohighlight">\(q_1\)</span>値は<span class="math notranslate nohighlight">\(t\)</span>分布に従わないが，<span class="math notranslate nohighlight">\(n\)</span>が十分に大きいと自由度<span class="math notranslate nohighlight">\(n-2\)</span>の<span class="math notranslate nohighlight">\(t\)</span>分布に従う。</p>
 </section>
 <section id="id10">
-<h3>誤差項の正規性が満たされる場合<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h3>
+<h3>誤差項の正規性が満たされる場合<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
 <p>母集団のパラメータは一致性のシミュレーションと同じ値を使う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1275,14 +1005,14 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12_Asymptotics_68_0.png" src="_images/12_Asymptotics_68_0.png" />
+<img alt="_images/1f6c1349f1b5090dbcf78ef103fa3009de1ed145a7642287e19112ca01e1fb76.png" src="_images/1f6c1349f1b5090dbcf78ef103fa3009de1ed145a7642287e19112ca01e1fb76.png" />
 </div>
 </div>
 <p>（結果：小標本特性）</p>
 <p>実線と点線は殆ど同じ。即ち，<span class="math notranslate nohighlight">\(q_1\)</span>は<span class="math notranslate nohighlight">\(t_{n-2}\)</span>分布に従っている。</p>
 </section>
 <section id="id11">
-<h3>誤差項の正規性が満たされない場合<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h3>
+<h3>誤差項の正規性が満たされない場合<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
 <p>上のシミュレーションと違う点は，<span class="math notranslate nohighlight">\(u\)</span>は次の分布関数から抽出されると仮定する点である。</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1375,7 +1105,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12_Asymptotics_76_0.png" src="_images/12_Asymptotics_76_0.png" />
+<img alt="_images/36b4ea465e89a135cd23cceeaf591ba6abbd7ba97df24b10b3d4e3b3383ba708.png" src="_images/36b4ea465e89a135cd23cceeaf591ba6abbd7ba97df24b10b3d4e3b3383ba708.png" />
 </div>
 </div>
 <p>（結果：大標本特性）</p>
@@ -1384,9 +1114,9 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </section>
 </section>
 <section id="id12">
-<h2>正規性の確認<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h2>
+<h2>正規性の確認<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h2>
 <section id="qq">
-<h3>qqプロット<a class="headerlink" href="#qq" title="Permalink to this headline">#</a></h3>
+<h3>qqプロット<a class="headerlink" href="#qq" title="Permalink to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">qq</span></code>プロットの<code class="docutils literal notranslate"><span class="pre">q</span></code>は<code class="docutils literal notranslate"><span class="pre">quantile</span></code>（分位数）のこと。横軸に正規分布の理論値を，縦軸にはデータの値を並べる。データが正規分布に従っている場合，データは45度線付近に分布することになる。</p>
 <p>以下では<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">qqplot</span></code>を使って説明する。（<code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージでもよい）</p>
 <p><strong>正規分布</strong>から生成したデータのケース。</p>
@@ -1404,7 +1134,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12_Asymptotics_82_0.png" src="_images/12_Asymptotics_82_0.png" />
+<img alt="_images/c956249338396572e7827d2efaf256a513f8b1697a220ea45510faaa0504d909.png" src="_images/c956249338396572e7827d2efaf256a513f8b1697a220ea45510faaa0504d909.png" />
 </div>
 </div>
 <p><strong>一様分布</strong>から生成したデータの場合。45度線から乖離しているのが分かる。</p>
@@ -1417,7 +1147,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12_Asymptotics_84_0.png" src="_images/12_Asymptotics_84_0.png" />
+<img alt="_images/cfba9609650a59057f66db016fecce65e1af9d15b5052b661edbfd6d718f03ae.png" src="_images/cfba9609650a59057f66db016fecce65e1af9d15b5052b661edbfd6d718f03ae.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>パッケージにある<code class="docutils literal notranslate"><span class="pre">wage1</span></code>のデータを使ってみる。</p>
@@ -1433,7 +1163,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12_Asymptotics_86_0.png" src="_images/12_Asymptotics_86_0.png" />
+<img alt="_images/920aa909a6c52e9ed9bb75967779f23fe5f4ed5f756cde398fcfe66dee8d8ae0.png" src="_images/920aa909a6c52e9ed9bb75967779f23fe5f4ed5f756cde398fcfe66dee8d8ae0.png" />
 </div>
 </div>
 <p>被説明変数の<code class="docutils literal notranslate"><span class="pre">wage</span></code>に対数を取ると、こちらの方が当てはまりが良いことが分かる。</p>
@@ -1448,12 +1178,12 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/12_Asymptotics_88_0.png" src="_images/12_Asymptotics_88_0.png" />
+<img alt="_images/9452385096e336407096fc7737ee39e870e61bba2dc286f5494951015703bc3a.png" src="_images/9452385096e336407096fc7737ee39e870e61bba2dc286f5494951015703bc3a.png" />
 </div>
 </div>
 </section>
 <section id="jarque-bera">
-<h3>Jarque-Bera検定<a class="headerlink" href="#jarque-bera" title="Permalink to this headline">#</a></h3>
+<h3>Jarque-Bera検定<a class="headerlink" href="#jarque-bera" title="Permalink to this heading">#</a></h3>
 <p>分布の正規性の確認によく使われる検定を紹介する。</p>
 <p><span class="math notranslate nohighlight">\(\text{H}_0\)</span>：正規分布である</p>
 <p><span class="math notranslate nohighlight">\(\text{H}_A\)</span>：<span class="math notranslate nohighlight">\(\text{H}_0\)</span>は成立しない</p>
@@ -1471,16 +1201,16 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.3266185873418209,
- 0.8493284558700034,
- -0.032199796183811955,
- 2.8926203711345058)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.8765152712920112,
+ 0.6451595453476177,
+ 0.02444303804426127,
+ 2.800794366076951)
 </pre></div>
 </div>
 </div>
 </div>
 <p>返り値</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>JB検定統計量</p></li>
 <li><p>JBの<span class="math notranslate nohighlight">\(p\)</span>値</p></li>
 <li><p>歪度の推定値（正規分布の場合は0）</p></li>
@@ -1497,10 +1227,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(30.49123416217614,
- 2.3928343166749686e-07,
- 0.026591158215563227,
- 1.7913847258107838)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(32.279562787691226,
+ 9.78547702312368e-08,
+ 0.06092775042182493,
+ 1.7612222754976088)
 </pre></div>
 </div>
 </div>
@@ -1562,7 +1292,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </section>
 <section id="omnibus">
-<h3>Omnibus検定<a class="headerlink" href="#omnibus" title="Permalink to this headline">#</a></h3>
+<h3>Omnibus検定<a class="headerlink" href="#omnibus" title="Permalink to this heading">#</a></h3>
 <p>正規性を確認するもう１つの検定を紹介する。</p>
 <p><span class="math notranslate nohighlight">\(\text{H}_0\)</span>：正規分布である</p>
 <p><span class="math notranslate nohighlight">\(\text{H}_A\)</span>：<span class="math notranslate nohighlight">\(\text{H}_0\)</span>は成立しない</p>
@@ -1582,7 +1312,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=0.22451482113725235, pvalue=0.8938141506768918)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=0.8039162819863142, pvalue=0.6690087491460526)
 </pre></div>
 </div>
 </div>
@@ -1598,7 +1328,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=336.7465827759318, pvalue=7.523304680262393e-74)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=425.4632374350654, pvalue=4.091022467695776e-93)
 </pre></div>
 </div>
 </div>
@@ -1655,7 +1385,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </section>
 </section>
 <section id="lm">
-<h2><span class="math notranslate nohighlight">\(LM\)</span>検定<a class="headerlink" href="#lm" title="Permalink to this headline">#</a></h2>
+<h2><span class="math notranslate nohighlight">\(LM\)</span>検定<a class="headerlink" href="#lm" title="Permalink to this heading">#</a></h2>
 <p>大標本の場合，<span class="math notranslate nohighlight">\(F\)</span>検定の代わりに<span class="math notranslate nohighlight">\(LM\)</span>検定も使える。ここでは<code class="docutils literal notranslate"><span class="pre">crime1</span></code>のデータを使って<span class="math notranslate nohighlight">\(LM\)</span>検定について説明する。<code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">crime1</span></code>データを使おう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1799,50 +1529,125 @@ dtype: float64
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="11_Inference.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">推論</p>
-        </div>
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="11_Inference.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">推論</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="13_Dummies.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="13_Dummies.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">質的変数と回帰分析</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#consistency">一致性（Consistency）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">説明</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">シミュレーション：一致性</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">誤差項のプロット</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">一致性</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">標本の大きさによる違い</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">小標本特性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">大標本特性</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#t">シミュレーション：大標本特性と<span class="math notranslate nohighlight">\(t\)</span>値の分布</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">説明</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">誤差項の正規性が満たされる場合</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">誤差項の正規性が満たされない場合</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">正規性の確認</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qq">qqプロット</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jarque-bera">Jarque-Bera検定</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#omnibus">Omnibus検定</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lm"><span class="math notranslate nohighlight">\(LM\)</span>検定</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
   
-    By 春山 鉄源  Tetsugen HARUYAMA<br/>
-  
-      &copy; Copyright 2020-2023（公開開始日：2020年5月4日）.<br/>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
-</div>
+<p class="component-author">
+By 春山 鉄源  Tetsugen HARUYAMA
+</p>
 
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2020-2023（公開開始日：2020年5月4日）.
+      <br/>
+    
+  </p>
 
-      </div>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

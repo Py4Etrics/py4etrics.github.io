@@ -1,50 +1,68 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>重回帰分析 &#8212; Pythonで学ぶ入門計量経済学</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="_static/my_style.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/design-tabs.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-6SP1Y69WEX"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-6SP1Y69WEX');
+            </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -53,798 +71,370 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '9_Multiple_Regression';</script>
     <link rel="canonical" href="https://py4etrics.github.io/9_Multiple_Regression.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="残差診断" href="10_Residuals.html" />
     <link rel="prev" title="単回帰分析" href="8_Simple_Regression.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-6SP1Y69WEX"></script>
-<script>
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){ dataLayer.push(arguments); }
-                    gtag('js', new Date());
-                    gtag('config', 'G-6SP1Y69WEX');
-                </script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
     
-    <div class="container-fluid" id="banner"></div>
-
     
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
 
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="index.html">
-      
-      
-      
-      <h1 class="site-logo" id="site-title">Pythonで学ぶ入門計量経済学</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Pythonの学習
- </span>
-</p>
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Pythonで学ぶ入門計量経済学</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Pythonの学習</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="part_1.html">
-   目次と内容
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="1_Python_Basics.html">
-   Pythonの基礎
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2_NumPy.html">
-   NumPy
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="3_Pandas.html">
-   Pandas
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="4_Matplotlib.html">
-   Matplotlib
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="5_SciPy_stats.html">
-   SciPy.stats
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="6_things_to_note.html">
-   Tipsと注意点
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="part_1.html">目次と内容</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_Python_Basics.html">Pythonの基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_NumPy.html">NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_Pandas.html">Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_Matplotlib.html">Matplotlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_SciPy_stats.html">SciPy.stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_things_to_note.html">Tipsと注意点</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Pythonを使った計量経済分析
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Pythonを使った計量経済分析</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="part_2.html">
-   目次と内容
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="7_Review_of_Statistics.html">
-   統計学の簡単な復習
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="list_of_terms.html">
-   計量経済学用語
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="8_Simple_Regression.html">
-   単回帰分析
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   重回帰分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="10_Residuals.html">
-   残差診断
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="11_Inference.html">
-   推論
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="12_Asymptotics.html">
-   大標本特性
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="13_Dummies.html">
-   質的変数と回帰分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="14_Hetero.html">
-   不均一分散
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="15_Pooling.html">
-   プーリング・データとパネル・データ
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="16_linearmodels.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     linearmodels
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="17_Panel.html">
-   パネル・データ分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="18_Zero_Conditional_Mean.html">
-   GM仮定４が満たされない場合
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="19_IV2SLS.html">
-   操作変数法と２段階OLS
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="20_LogitProbit.html">
-   離散選択モデル
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="21_TruncregTobitHeckit.html">
-   制限従属変数モデル
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="part_2.html">目次と内容</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_Review_of_Statistics.html">統計学の簡単な復習</a></li>
+<li class="toctree-l1"><a class="reference internal" href="list_of_terms.html">計量経済学用語</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8_Simple_Regression.html">単回帰分析</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">重回帰分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Residuals.html">残差診断</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Inference.html">推論</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Asymptotics.html">大標本特性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Dummies.html">質的変数と回帰分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Hetero.html">不均一分散</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Pooling.html">プーリング・データとパネル・データ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_linearmodels.html"><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Panel.html">パネル・データ分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Zero_Conditional_Mean.html">GM仮定４が満たされない場合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_IV2SLS.html">操作変数法と２段階OLS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_LogitProbit.html">離散選択モデル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_TruncregTobitHeckit.html">制限従属変数モデル</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  番外編
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">番外編</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="part_3.html">
-   目次と内容
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Descriptive_stats_vs_Graphs.html">
-   記述統計とグラフ
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="data_source.html">
-   Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://py4macro.github.io">
-   Pythonで学ぶマクロ経済学 (中級＋レベル)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://py4basics.github.io">
-   経済学のためのPython入門
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="part_3.html">目次と内容</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Descriptive_stats_vs_Graphs.html">記述統計とグラフ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_source.html">Data</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://py4macro.github.io">Pythonで学ぶマクロ経済学 (中級＋レベル)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://py4basics.github.io">経済学のためのPython入門</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            <a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
-          
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
 <div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
 
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
   
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
     </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/9_Multiple_Regression.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/9_Multiple_Regression.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="_static/images/logo_binder.svg">
   </span>
-<span class="headerbtn__text-container">Binder</span>
+<span class="btn__text-container">Binder</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/9_Multiple_Regression.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Colab"
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/9_Multiple_Regression.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="_static/images/logo_colab.png">
   </span>
-<span class="headerbtn__text-container">Colab</span>
+<span class="btn__text-container">Colab</span>
 </a>
-
-      </li>
+</li>
       
-    </ul>
-  </div>
+  </ul>
 </div>
 
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/9_Multiple_Regression.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="_sources/9_Multiple_Regression.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
+`);
+</script>
 
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   説明
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#statsmodels">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     statsmodels
-    </span>
-   </code>
-   を使う
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
-     推定
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id4">
-     属性とメソッド
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id5">
-   変数の変換
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#numpy">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Numpy
-      </span>
-     </code>
-     の関数を使う方法
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#i">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       I()
-      </span>
-     </code>
-     を使う方法
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#def">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       def
-      </span>
-     </code>
-     を使う方法
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#q">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Q()
-      </span>
-     </code>
-     について
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#sec-9-interpretation">
-   係数の解釈
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id7">
-   ガウス・マルコフ定理
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id8">
-     母集団回帰式と標本回帰式
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#sec-9-assumptions">
-     仮定と望ましい性質
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id10">
-   「手計算」
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
-     係数の推定値
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id12">
-     推定値の標準誤差
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id13">
-   シミュレーション：不偏性
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#sec-9-vif">
-   シミュレーション：多重共線性
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id15">
-     説明
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id16">
-     方法１：手計算
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id17">
-     方法２：
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       statsmodels
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id18">
-     シミュレーション
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id19">
-     図を使ってチェック
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#pandas">
-       <code class="docutils literal notranslate">
-        <span class="pre">
-         pandas
-        </span>
-       </code>
-       を使う方法
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#seaborn">
-       <code class="docutils literal notranslate">
-        <span class="pre">
-         seaborn
-        </span>
-       </code>
-       を使う方法
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>重回帰分析</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   説明
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#statsmodels">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     statsmodels
-    </span>
-   </code>
-   を使う
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
-     推定
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id4">
-     属性とメソッド
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id5">
-   変数の変換
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#numpy">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Numpy
-      </span>
-     </code>
-     の関数を使う方法
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#i">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       I()
-      </span>
-     </code>
-     を使う方法
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#def">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       def
-      </span>
-     </code>
-     を使う方法
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#q">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Q()
-      </span>
-     </code>
-     について
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#sec-9-interpretation">
-   係数の解釈
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id7">
-   ガウス・マルコフ定理
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id8">
-     母集団回帰式と標本回帰式
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#sec-9-assumptions">
-     仮定と望ましい性質
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id10">
-   「手計算」
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
-     係数の推定値
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id12">
-     推定値の標準誤差
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id13">
-   シミュレーション：不偏性
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#sec-9-vif">
-   シミュレーション：多重共線性
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id15">
-     説明
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id16">
-     方法１：手計算
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id17">
-     方法２：
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       statsmodels
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id18">
-     シミュレーション
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id19">
-     図を使ってチェック
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#pandas">
-       <code class="docutils literal notranslate">
-        <span class="pre">
-         pandas
-        </span>
-       </code>
-       を使う方法
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#seaborn">
-       <code class="docutils literal notranslate">
-        <span class="pre">
-         seaborn
-        </span>
-       </code>
-       を使う方法
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>重回帰分析</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">説明</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statsmodels"><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使う</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">推定</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">属性とメソッド</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">変数の変換</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy"><code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の関数を使う方法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#i"><code class="docutils literal notranslate"><span class="pre">I()</span></code>を使う方法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#def"><code class="docutils literal notranslate"><span class="pre">def</span></code>を使う方法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q"><code class="docutils literal notranslate"><span class="pre">Q()</span></code>について</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sec-9-interpretation">係数の解釈</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">ガウス・マルコフ定理</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">母集団回帰式と標本回帰式</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sec-9-assumptions">仮定と望ましい性質</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">「手計算」</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">係数の推定値</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">推定値の標準誤差</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">シミュレーション：不偏性</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sec-9-vif">シミュレーション：多重共線性</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">説明</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">方法１：手計算</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">方法２：<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">シミュレーション</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">図を使ってチェック</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas"><code class="docutils literal notranslate"><span class="pre">pandas</span></code>を使う方法</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seaborn"><code class="docutils literal notranslate"><span class="pre">seaborn</span></code>を使う方法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="chap-9-multiple">
-<span id="id1"></span><h1>重回帰分析<a class="headerlink" href="#chap-9-multiple" title="Permalink to this headline">#</a></h1>
+<span id="id1"></span><h1>重回帰分析<a class="headerlink" href="#chap-9-multiple" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -863,7 +453,7 @@ title="Print to PDF"
 </div>
 </div>
 <section id="id2">
-<h2>説明<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<h2>説明<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
 <div name="html-admonition">
@@ -884,9 +474,9 @@ in English or the language of your choice.
 <p>一般的に<span class="math notranslate nohighlight">\(x_j\)</span>と書く場合，<span class="math notranslate nohighlight">\(x_{ij},x_{ij},...x_{nj}\)</span>を表す（第<span class="math notranslate nohighlight">\(j\)</span>番目の説明変数）。</p>
 </section>
 <section id="statsmodels">
-<h2><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使う<a class="headerlink" href="#statsmodels" title="Permalink to this headline">#</a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使う<a class="headerlink" href="#statsmodels" title="Permalink to this heading">#</a></h2>
 <section id="id3">
-<h3>推定<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
+<h3>推定<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
 <p>単回帰分析で使った同じデータセット<code class="docutils literal notranslate"><span class="pre">wage1</span></code>を使い，賃金と教育の関係を再考する。<a class="reference internal" href="8_Simple_Regression.html#chap-8-simple"><span class="std std-ref">前章</span></a>と異なる点は，複数の説明変数を導入し重回帰分析をおこなうことである。追加的な説明変数として次の変数を加える。</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">exper</span></code>：潜在的な経験年数（＝年齢ー最高学歴までの年数ー６）</p></li>
@@ -984,8 +574,8 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 Dep. Variable:               wage_log   R-squared:                       0.316
 Model:                            OLS   Adj. R-squared:                  0.312
 Method:                 Least Squares   F-statistic:                     80.39
-Date:                Mon, 20 Feb 2023   Prob (F-statistic):           9.13e-43
-Time:                        13:16:31   Log-Likelihood:                -313.55
+Date:                Wed, 08 Mar 2023   Prob (F-statistic):           9.13e-43
+Time:                        13:31:21   Log-Likelihood:                -313.55
 No. Observations:                 526   AIC:                             635.1
 Df Residuals:                     522   BIC:                             652.2
 Df Model:                           3                                         
@@ -1012,7 +602,7 @@ Notes:
 </div>
 </section>
 <section id="id4">
-<h3>属性とメソッド<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
+<h3>属性とメソッド<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
 <p>推定結果<code class="docutils literal notranslate"><span class="pre">res_1</span></code>の属性とメソッドは<code class="docutils literal notranslate"><span class="pre">dir()</span></code>や<code class="docutils literal notranslate"><span class="pre">see()</span></code>で確認できる。以下では<code class="docutils literal notranslate"><span class="pre">see()</span></code>を使う。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
@@ -1110,13 +700,12 @@ dtype: float64
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">predict()</span></code>に渡す引数としては，説明変数の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作るのが一番簡単であろう。</p>
-<p>次のコードでは辞書の値が<code class="docutils literal notranslate"><span class="pre">wm['educ']</span></code>ではなく<code class="docutils literal notranslate"><span class="pre">[wm['educ']]</span></code>となっている点に注意しよう。これは<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作成する際，単なる値ではなく<code class="docutils literal notranslate"><span class="pre">list</span></code>や<code class="docutils literal notranslate"><span class="pre">array</span></code>にして値として使う必要があるためである。</p>
+<p><code class="docutils literal notranslate"><span class="pre">predict()</span></code>に渡す引数としては，説明変数の辞書を作るのが一番簡単であろう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;educ&#39;</span><span class="p">:[</span><span class="n">wm</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]],</span>
-                  <span class="s1">&#39;tenure&#39;</span><span class="p">:[</span><span class="n">wm</span><span class="p">[</span><span class="s1">&#39;tenure&#39;</span><span class="p">]],</span>
-                  <span class="s1">&#39;exper&#39;</span><span class="p">:[</span><span class="n">wm</span><span class="p">[</span><span class="s1">&#39;exper&#39;</span><span class="p">]]})</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;educ&#39;</span><span class="p">:</span><span class="n">wm</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">],</span>
+     <span class="s1">&#39;tenure&#39;</span><span class="p">:</span><span class="n">wm</span><span class="p">[</span><span class="s1">&#39;tenure&#39;</span><span class="p">],</span>
+     <span class="s1">&#39;exper&#39;</span><span class="p">:</span><span class="n">wm</span><span class="p">[</span><span class="s1">&#39;exper&#39;</span><span class="p">]}</span>
 </pre></div>
 </div>
 </div>
@@ -1135,16 +724,17 @@ dtype: float64
 </div>
 </div>
 <p>３つの変数が平均値を取る場合の平均時給の対数値は約1.62である。</p>
-<p>複数の予測値を計算するには、辞書の値にある<code class="docutils literal notranslate"><span class="pre">list</span></code>や<code class="docutils literal notranslate"><span class="pre">array</span></code>に複数の要素を書き込めば良い。次の例では、<code class="docutils literal notranslate"><span class="pre">tenure</span></code>と<code class="docutils literal notranslate"><span class="pre">exper</span></code>を平均値に固定し、<code class="docutils literal notranslate"><span class="pre">educ</span></code>を平均値、平均値-1、平均値+1に変化させて予測値を計算している。</p>
+<p>複数の予測値を計算するには、辞書の値に<code class="docutils literal notranslate"><span class="pre">list</span></code>や<code class="docutils literal notranslate"><span class="pre">array</span></code>を書き込めば良い。次の例では、<code class="docutils literal notranslate"><span class="pre">tenure</span></code>と<code class="docutils literal notranslate"><span class="pre">exper</span></code>を平均値に固定し、<code class="docutils literal notranslate"><span class="pre">educ</span></code>を平均値、平均値-1、平均値+1に変化させて予測値を計算している。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">educ_mean</span> <span class="o">=</span> <span class="n">wm</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span>
 <span class="n">tenure_mean</span> <span class="o">=</span> <span class="n">wm</span><span class="p">[</span><span class="s1">&#39;tenure&#39;</span><span class="p">]</span>
 <span class="n">exper_mean</span> <span class="o">=</span> <span class="n">wm</span><span class="p">[</span><span class="s1">&#39;exper&#39;</span><span class="p">]</span>
 
-<span class="n">z2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;educ&#39;</span><span class="p">:[</span><span class="n">educ_mean</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">educ_mean</span><span class="p">,</span> <span class="n">educ_mean</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span>
+<span class="n">z2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;educ&#39;</span><span class="p">:[</span><span class="n">educ_mean</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">educ_mean</span><span class="p">,</span> <span class="n">educ_mean</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span>
                   <span class="s1">&#39;tenure&#39;</span><span class="p">:[</span><span class="n">tenure_mean</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span>
-                  <span class="s1">&#39;exper&#39;</span><span class="p">:[</span><span class="n">exper_mean</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">})</span>
+                  <span class="s1">&#39;exper&#39;</span><span class="p">:[</span><span class="n">exper_mean</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">}</span>
+
 <span class="n">educ_return</span> <span class="o">=</span> <span class="n">res_1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">z2</span><span class="p">)</span>
 <span class="n">educ_return</span>
 </pre></div>
@@ -1244,10 +834,10 @@ dtype: float64
 </section>
 </section>
 <section id="id5">
-<h2>変数の変換<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h2>
+<h2>変数の変換<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
 <p>上の重回帰分析では，回帰式の<code class="docutils literal notranslate"><span class="pre">wage</span></code>を対数化した変数を新たに作成し計算を行なっているが、回帰式の中で変数の変換を直接指定することもできる。以下で説明する方法は被説明変数・説明変数の両方に使用可能である。</p>
 <section id="numpy">
-<h3><code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の関数を使う方法<a class="headerlink" href="#numpy" title="Permalink to this headline">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の関数を使う方法<a class="headerlink" href="#numpy" title="Permalink to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の対数関数を使って，回帰式の中で直接書き換えることができる。<code class="docutils literal notranslate"><span class="pre">wage</span></code>を対数化する例を考える。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1281,7 +871,7 @@ dtype: float64
 </div>
 </section>
 <section id="i">
-<h3><code class="docutils literal notranslate"><span class="pre">I()</span></code>を使う方法<a class="headerlink" href="#i" title="Permalink to this headline">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">I()</span></code>を使う方法<a class="headerlink" href="#i" title="Permalink to this heading">#</a></h3>
 <p>次に<code class="docutils literal notranslate"><span class="pre">exper</span></code>の二乗を回帰式に入れるケースを考えよう。この場合、<code class="docutils literal notranslate"><span class="pre">np.square(exper)</span></code>でも良いが、<code class="docutils literal notranslate"><span class="pre">I()</span></code>の<code class="docutils literal notranslate"><span class="pre">()</span></code>の中に直接式を書くことが可能となる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1311,7 +901,7 @@ dtype: float64
 <p>この方法であれば、<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>に無い関数も直接書くことができる。</p>
 </section>
 <section id="def">
-<h3><code class="docutils literal notranslate"><span class="pre">def</span></code>を使う方法<a class="headerlink" href="#def" title="Permalink to this headline">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">def</span></code>を使う方法<a class="headerlink" href="#def" title="Permalink to this heading">#</a></h3>
 <p>より複雑な関数であれば<code class="docutils literal notranslate"><span class="pre">def</span></code>を使い、関数を定義し、それを回帰式の中で使う方が良いかも知れない。<code class="docutils literal notranslate"><span class="pre">exper</span></code>の二乗を回帰式に入れるケースを考えよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1348,7 +938,7 @@ dtype: float64
 </div>
 </section>
 <section id="q">
-<h3><code class="docutils literal notranslate"><span class="pre">Q()</span></code>について<a class="headerlink" href="#q" title="Permalink to this headline">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">Q()</span></code>について<a class="headerlink" href="#q" title="Permalink to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Q()</span></code>は変数の変換に使うわけではないが、その用途を覚えておくと役に立つだろう。</p>
 <p><code class="docutils literal notranslate"><span class="pre">Python</span></code>には予約語（reserved words）と呼ばれるものがり、変数名には使えない。以下がその例である。</p>
 <ul class="simple">
@@ -1370,7 +960,7 @@ dtype: float64
 </section>
 </section>
 <section id="sec-9-interpretation">
-<span id="id6"></span><h2>係数の解釈<a class="headerlink" href="#sec-9-interpretation" title="Permalink to this headline">#</a></h2>
+<span id="id6"></span><h2>係数の解釈<a class="headerlink" href="#sec-9-interpretation" title="Permalink to this heading">#</a></h2>
 <p>次の推定式を考えよう。</p>
 <div class="math notranslate nohighlight">
 \[y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+u\]</div>
@@ -1424,9 +1014,9 @@ dtype: float64
 <code class="docutils literal notranslate"><span class="pre">wage</span></code>の変化を意味する（<a class="reference internal" href="#equation-eq-9-approx2">(2)</a>を参照）。従って，教育期間が一単位（ここでは一年）増えると賃金は約9.2%増加することを示している。</p>
 </section>
 <section id="id7">
-<h2>ガウス・マルコフ定理<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h2>
+<h2>ガウス・マルコフ定理<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
 <section id="id8">
-<h3>母集団回帰式と標本回帰式<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h3>
+<h3>母集団回帰式と標本回帰式<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
 <p>今までは回帰式に基づいて<code class="docutils literal notranslate"><span class="pre">Python</span></code>を使い係数の推定方法を説明したが，ここではOLS推定量の望ましい性質とはなにか，望ましい性質の条件はなにかを考える。そのために，まず母集団回帰式と標本回帰式について説明する。</p>
 <p>計量経済学では，データを使い<strong>経済理論（経済学的な考え）</strong>
 に基づいた仮説を検証する。例として「消費は家計の所得<span class="math notranslate nohighlight">\(x_1\)</span>が高くなると増え，子どもの数<span class="math notranslate nohighlight">\(x_2\)</span>とも正比例する」という仮説を考えよう。所得と子どもの数に依存する消費の部分だけを<span class="math notranslate nohighlight">\(y^*\)</span>と書くと，一般型の消費関数は<span class="math notranslate nohighlight">\(y^*=f\left(x_1,x_2\right)\)</span>となる。更に，線形を仮定すると次式となる。</p>
@@ -1472,14 +1062,14 @@ dtype: float64
 <p>通常，標本の大きさは母集団のそれよりも小さい。従って，パラメータのOLS推定値<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>には誤差が発生する。即ち，必ずしも<span class="math notranslate nohighlight">\(\hat{\beta}_j=\beta_j\)</span>, <span class="math notranslate nohighlight">\(j=0,1,2\)</span>とはならない。</p>
 </div>
 <p>一方で，上で述べたようにOLS推定量には何らかの「望ましい性質」がある。</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>「望ましい性質」の前提となる条件は何なのか？</p></li>
 <li><p>OLS推定量の「望ましい性質」とは何なのか？</p></li>
 </ol>
 <p>以下では１から考える。</p>
 </section>
 <section id="sec-9-assumptions">
-<span id="id9"></span><h3>仮定と望ましい性質<a class="headerlink" href="#sec-9-assumptions" title="Permalink to this headline">#</a></h3>
+<span id="id9"></span><h3>仮定と望ましい性質<a class="headerlink" href="#sec-9-assumptions" title="Permalink to this heading">#</a></h3>
 <ul>
 <li><p>仮定１：Linear in Parameters（母集団回帰式の線形性）</p>
 <ul>
@@ -1542,7 +1132,7 @@ dtype: float64
 \[\text{Var}\left(u|X\right)=\sigma^2\]</div>
 <hr class="docutils" />
 <p>仮定１〜５をガウス・マルコフ仮定（横断回帰分析のGM仮定）と呼び，この仮定の下では以下が成立する。</p>
-<ol>
+<ol class="arabic">
 <li><p>誤差分散の推定量 <span class="math notranslate nohighlight">\(\hat{\sigma}^2\)</span>の平均は母集団の値と等しい（誤差分散の不偏推定量）。</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1647,9 +1237,9 @@ dtype: float64
 </section>
 </section>
 <section id="id10">
-<h2>「手計算」<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h2>
+<h2>「手計算」<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h2>
 <section id="id11">
-<h3>係数の推定値<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h3>
+<h3>係数の推定値<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>は非常に優れたパッケージであり，複雑な計算を簡単なコードで実行してくれる。しかしここでは<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の関数を使い，重回帰分析における推定値を「手計算」で求める。目的は２つある。第１に，<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の裏でどのような計算が行われているかを理解する。第２に，今後シミュレーションをおこなうが，「手計算」のコードを使うと<code class="docutils literal notranslate"><span class="pre">Numba</span></code>を使い計算速度を格段とアップすることが可能となる。</p>
 <p>次の回帰式を考えよう。</p>
 <div class="math notranslate nohighlight">
@@ -1725,7 +1315,7 @@ u_n
 </div>
 </div>
 </div>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Numpy</span></code>には乱数用のモジュール<code class="docutils literal notranslate"><span class="pre">random</span></code>があり，<code class="docutils literal notranslate"><span class="pre">normal</span></code>は標準正規分布からの乱数を発生させる関数である。引数の設定方法は<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>の<code class="docutils literal notranslate"><span class="pre">norm.rvs()</span></code>と同じである。<code class="docutils literal notranslate"><span class="pre">x1</span></code>は平均<code class="docutils literal notranslate"><span class="pre">4.0</span></code>と標準偏差<code class="docutils literal notranslate"><span class="pre">2.0</span></code>の正規分布に従うことがわかる。</p></li>
 <li><p>同じ<code class="docutils literal notranslate"><span class="pre">np.random</span></code>にある<code class="docutils literal notranslate"><span class="pre">uniform</span></code>は<code class="docutils literal notranslate"><span class="pre">[0,1)</span></code>の一様分布から乱数を発生させる関数である。<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>の<code class="docutils literal notranslate"><span class="pre">uniform.rvs</span></code>と同じ役割を果たすが，引数の設定が異なる。<code class="docutils literal notranslate"><span class="pre">low</span></code>は最小値，<code class="docutils literal notranslate"><span class="pre">high</span></code>は最大値を指定する。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の関数である<code class="docutils literal notranslate"><span class="pre">ones()</span></code>は全ての要素が<code class="docutils literal notranslate"><span class="pre">1</span></code>になる<span class="math notranslate nohighlight">\((n\times 1)\)</span>の<code class="docutils literal notranslate"><span class="pre">array</span></code>を生成する。</p></li>
@@ -1754,7 +1344,7 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2.04206176, 1.78936239, 2.94958513])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.81707725, 2.06166941, 3.01975548])
 </pre></div>
 </div>
 </div>
@@ -1776,9 +1366,9 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    2.042062
-X1           1.789362
-X2           2.949585
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.817077
+X1           2.061669
+X2           3.019755
 dtype: float64
 </pre></div>
 </div>
@@ -1786,7 +1376,7 @@ dtype: float64
 </div>
 </section>
 <section id="id12">
-<h3>推定値の標準誤差<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h3>
+<h3>推定値の標準誤差<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
 <p>次に推定値の標準誤差を考えよう。推定値の分散共分散行列は次式で表される。</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1809,7 +1399,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>33.89975937588281
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>18.846663965875443
 </pre></div>
 </div>
 </div>
@@ -1822,7 +1412,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>33.899759375882816
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>18.84666396587543
 </pre></div>
 </div>
 </div>
@@ -1836,7 +1426,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.255546643551215
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6980245913287201
 </pre></div>
 </div>
 </div>
@@ -1849,7 +1439,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.2555466435512155
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6980245913287196
 </pre></div>
 </div>
 </div>
@@ -1870,7 +1460,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.54532111, 0.09668582, 0.08249324])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.48032308, 0.07293751, 0.06491307])
 </pre></div>
 </div>
 </div>
@@ -1883,9 +1473,9 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.545321
-X1           0.096686
-X2           0.082493
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.480323
+X1           0.072938
+X2           0.064913
 dtype: float64
 </pre></div>
 </div>
@@ -1895,7 +1485,7 @@ dtype: float64
 </section>
 </section>
 <section id="id13">
-<h2>シミュレーション：不偏性<a class="headerlink" href="#id13" title="Permalink to this headline">#</a></h2>
+<h2>シミュレーション：不偏性<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h2>
 <p>不偏性をシミュレーションで考える。</p>
 <ul class="simple">
 <li><p>標本をランダム抽出するたびに<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>, <span class="math notranslate nohighlight">\(j=0,1\)</span>は異なる値を取るが，標本抽出を繰り返し<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>の平均を計算すると真の値と「等しい」ことを示す。</p></li>
@@ -1972,9 +1562,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 1.0039609849746323 
-b1: 1.9998022075646726 
-b1: 2.999369937115556
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 0.998676146644242 
+b1: 2.0001147487844078 
+b1: 3.000201175622158
 </pre></div>
 </div>
 </div>
@@ -1990,7 +1580,7 @@ b1: 2.999369937115556
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_131_0.png" src="_images/9_Multiple_Regression_131_0.png" />
+<img alt="_images/10dee935cb046e1bddf96e6c82f311dcfab2deb27a459c79578f24c97b1dddf4.png" src="_images/10dee935cb046e1bddf96e6c82f311dcfab2deb27a459c79578f24c97b1dddf4.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">b1</span></code>の真の値<code class="docutils literal notranslate"><span class="pre">2.0</span></code>を中心に概ね左右対象に分布していることが分かる。</p>
@@ -2007,7 +1597,7 @@ b1: 2.999369937115556
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_133_0.png" src="_images/9_Multiple_Regression_133_0.png" />
+<img alt="_images/c9bc6b63fd44ae92d122876e4a76a2c8ea0fefada0d1e537205d67ce7b2c2906.png" src="_images/c9bc6b63fd44ae92d122876e4a76a2c8ea0fefada0d1e537205d67ce7b2c2906.png" />
 </div>
 </div>
 <p>２つの図を重ねる。</p>
@@ -2025,7 +1615,7 @@ b1: 2.999369937115556
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_135_0.png" src="_images/9_Multiple_Regression_135_0.png" />
+<img alt="_images/75c8c91f04dcc513e121faa387282c6e6439cdf79b075944e939ce02bdae6f88.png" src="_images/75c8c91f04dcc513e121faa387282c6e6439cdf79b075944e939ce02bdae6f88.png" />
 </div>
 </div>
 <p>＜Give it a try!＞</p>
@@ -2037,9 +1627,9 @@ b1: 2.999369937115556
 </ul>
 </section>
 <section id="sec-9-vif">
-<span id="id14"></span><h2>シミュレーション：多重共線性<a class="headerlink" href="#sec-9-vif" title="Permalink to this headline">#</a></h2>
+<span id="id14"></span><h2>シミュレーション：多重共線性<a class="headerlink" href="#sec-9-vif" title="Permalink to this heading">#</a></h2>
 <section id="id15">
-<h3>説明<a class="headerlink" href="#id15" title="Permalink to this headline">#</a></h3>
+<h3>説明<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h3>
 <p>多重共線性が高くなると，パラメータの推定値の正確性が低下する（即ち、パラメータの標準誤差<span class="math notranslate nohighlight">\(\text{se}\left(\hat{\beta}_j\right)\)</span>が大きくなる）。この点を確認するためにパラメータの分散の推定値にある</p>
 <div class="math notranslate nohighlight">
 \[
@@ -2051,7 +1641,7 @@ b1: 2.999369937115556
 <p>例として回帰分析<code class="docutils literal notranslate"><span class="pre">res_1</span></code>を考える。</p>
 </section>
 <section id="id16">
-<h3>方法１：手計算<a class="headerlink" href="#id16" title="Permalink to this headline">#</a></h3>
+<h3>方法１：手計算<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h3>
 <p>まず説明変数だけから構成される<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2124,7 +1714,7 @@ dtype: float64
 </div>
 </section>
 <section id="id17">
-<h3>方法２：<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code><a class="headerlink" href="#id17" title="Permalink to this headline">#</a></h3>
+<h3>方法２：<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code><a class="headerlink" href="#id17" title="Permalink to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>にある<code class="docutils literal notranslate"><span class="pre">variance_inflation_factor</span></code>を使い<code class="docutils literal notranslate"><span class="pre">vif</span></code>を計算することもできる。</p>
 <p>必ず<strong>定数項を含む</strong>説明変数だけから構成される<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>を作成する。</p>
 <div class="cell docutils container">
@@ -2160,7 +1750,7 @@ exper     1.4776177726317783
 </ul>
 </section>
 <section id="id18">
-<h3>シミュレーション<a class="headerlink" href="#id18" title="Permalink to this headline">#</a></h3>
+<h3>シミュレーション<a class="headerlink" href="#id18" title="Permalink to this heading">#</a></h3>
 <p>シミュレーションをおこない、多重共線性により<code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定量の標準誤差が上昇し推定量の正確性が損なわれることを確認する。</p>
 <p>シミュレーションでは以下の回帰式を使う。</p>
 <div class="math notranslate nohighlight">
@@ -2266,7 +1856,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_165_0.png" src="_images/9_Multiple_Regression_165_0.png" />
+<img alt="_images/b53419ecac42c09085da985cb18e92cfa3c7282ade94024b6f3a76425ff02144.png" src="_images/b53419ecac42c09085da985cb18e92cfa3c7282ade94024b6f3a76425ff02144.png" />
 </div>
 </div>
 <p>多重共線性が強いと推定値の分布は，真の値（<span class="math notranslate nohighlight">\(\beta_1=\)</span>
@@ -2278,14 +1868,14 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.03796129185443893, 0.1997456552180865)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.038450081254107905, 0.20012825314069546)
 </pre></div>
 </div>
 </div>
 </div>
 <p>＜Give it a try!＞</p>
 <p>以下のシミュレーションをおこない，違いは何か確認しなさい。</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(\hat{\beta}_0\)</span>と<span class="math notranslate nohighlight">\(\hat{\beta}_2\)</span>の分布も図示しなさい。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>を変化させて違いを確かめなさい。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">N</span></code>を変化させて違いを確かめなさい。</p></li>
@@ -2293,6 +1883,11 @@ exper     1.4776177726317783
 </ol>
 <p>問4の答え：<span class="math notranslate nohighlight">\(+\)</span>を押すと答えが表示される。</p>
 <div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sim_se</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">b0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">b1</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">b2</span><span class="o">=</span><span class="mf">3.0</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ, N=標本数, m=共分散</span>
     
@@ -2347,11 +1942,17 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_170_0.png" src="_images/9_Multiple_Regression_170_0.png" />
+<img alt="_images/f4ff16b568479f33723a48009d1f82aa7f1a406d74cf32875b9e7121c1192509.png" src="_images/f4ff16b568479f33723a48009d1f82aa7f1a406d74cf32875b9e7121c1192509.png" />
 </div>
+</details>
 </div>
 <p>問5の答え：<span class="math notranslate nohighlight">\(+\)</span>を押すと答えが表示される。</p>
 <div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span><span class="p">(</span><span class="n">se_x1_weak</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">se_x1_weak</span><span class="p">),</span> <span class="nb">sum</span><span class="p">(</span><span class="n">se_x1_strong</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">se_x1_strong</span><span class="p">)</span>
 
@@ -2361,21 +1962,22 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19213265340698718, 0.43764065672417973)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19352792810390732, 0.4430291756225435)
 </pre></div>
 </div>
 </div>
+</details>
 </div>
 </section>
 <section id="id19">
-<h3>図を使ってチェック<a class="headerlink" href="#id19" title="Permalink to this headline">#</a></h3>
+<h3>図を使ってチェック<a class="headerlink" href="#id19" title="Permalink to this heading">#</a></h3>
 <p>多重共線性は説明変数間の相関が高いと発生するが，ここでは相関度を図を使ってチェックする。色々な方法があるが，以下では２つ紹介する。</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">pandas</span></code>の関数<code class="docutils literal notranslate"><span class="pre">scatter_matrix</span></code>を使う方法</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">seaborn</span></code>というパッケージの関数<code class="docutils literal notranslate"><span class="pre">pairplot</span></code>を使う方法</p></li>
 </ol>
 <section id="pandas">
-<h4><code class="docutils literal notranslate"><span class="pre">pandas</span></code>を使う方法<a class="headerlink" href="#pandas" title="Permalink to this headline">#</a></h4>
+<h4><code class="docutils literal notranslate"><span class="pre">pandas</span></code>を使う方法<a class="headerlink" href="#pandas" title="Permalink to this heading">#</a></h4>
 <p>まずコードの中で<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>を明示的に導入せずに<code class="docutils literal notranslate"><span class="pre">pandas</span></code>のみを使い図示する方法を紹介する。こちらの方が簡単と感じるかもしれない。散布図を描いてみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2385,7 +1987,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_177_0.png" src="_images/9_Multiple_Regression_177_0.png" />
+<img alt="_images/4585eb9918a895d22c44a04876eb5507653875d9e7a5ba21e6df71af8b37ccd9.png" src="_images/4585eb9918a895d22c44a04876eb5507653875d9e7a5ba21e6df71af8b37ccd9.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">pandas</span></code>の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>や<code class="docutils literal notranslate"><span class="pre">Series</span></code>には図を作成するメソッド<code class="docutils literal notranslate"><span class="pre">plot()</span></code>が用意されている（裏では<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>が動いている）。例えば，<code class="docutils literal notranslate"><span class="pre">wage1</span></code>にある<code class="docutils literal notranslate"><span class="pre">educ</span></code>のヒストグラムであれば次のコードで図示することができる。</p>
@@ -2415,13 +2017,13 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_179_0.png" src="_images/9_Multiple_Regression_179_0.png" />
+<img alt="_images/469743feaa371592cba9f61d07996b8ff1a45ff5c9d8b3fd4ba24aa9d12aba89.png" src="_images/469743feaa371592cba9f61d07996b8ff1a45ff5c9d8b3fd4ba24aa9d12aba89.png" />
 </div>
 </div>
 <p>横軸と縦軸のラベルを確認すること。対角線上はそれぞれの変数のヒストグラム，対角線以外の図は縦横のペアの変数の散布図となっており，相関度をある程度目視で確認できる。</p>
 <hr class="docutils" />
 <p>次に主なオプションとして２つを紹介する。</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>図の大きさは<code class="docutils literal notranslate"><span class="pre">figsize=(9,</span> <span class="pre">6)</span></code>で指定する。この例では<code class="docutils literal notranslate"><span class="pre">9</span></code>が横幅，<code class="docutils literal notranslate"><span class="pre">6</span></code>が縦幅である。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">diagonal='kde'</span></code>を指定すると対角線上のヒストグラムをカーネル密度推定に変更できる。</p></li>
 </ol>
@@ -2433,7 +2035,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_181_0.png" src="_images/9_Multiple_Regression_181_0.png" />
+<img alt="_images/55b4d4c0a61c94cdd04cdd330c68119d994d44ba3517f63167e9fc9b8be8b385.png" src="_images/55b4d4c0a61c94cdd04cdd330c68119d994d44ba3517f63167e9fc9b8be8b385.png" />
 </div>
 </div>
 <p>次に相関係数を簡単に計算する方法を紹介する。<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">corr()</span></code>を使うと変数の相関係数を<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>として返す。</p>
@@ -2518,7 +2120,7 @@ exper     1.4776177726317783
 <p>上の図と相関係数の値を見比べて，概ねどのような関係にあるのかを確かめよう。</p>
 </section>
 <section id="seaborn">
-<h4><code class="docutils literal notranslate"><span class="pre">seaborn</span></code>を使う方法<a class="headerlink" href="#seaborn" title="Permalink to this headline">#</a></h4>
+<h4><code class="docutils literal notranslate"><span class="pre">seaborn</span></code>を使う方法<a class="headerlink" href="#seaborn" title="Permalink to this heading">#</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">seaborn</span></code>というパッケージを使うとより「見栄えがする」図を描くことができる。<code class="docutils literal notranslate"><span class="pre">seaborn</span></code>については<a class="reference external" href="https://seaborn.pydata.org">このリンク</a>を参照しよう。<code class="docutils literal notranslate"><span class="pre">seaborn</span></code>は<code class="docutils literal notranslate"><span class="pre">sns</span></code>としてインポートするのが慣例である。</p>
 <p>まず上で<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">corr()</span></code>を使い変数の相関係数を計算したが，<code class="docutils literal notranslate"><span class="pre">seaborn</span></code>の<code class="docutils literal notranslate"><span class="pre">heatmap()</span></code>関数を使うと相関係数を色に変換してより見やすい表示となる。</p>
 <div class="cell docutils container">
@@ -2529,7 +2131,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_188_0.png" src="_images/9_Multiple_Regression_188_0.png" />
+<img alt="_images/d47acf476a802331a5dae3c12b70b97c50be371071330d029d2019ef4fd932e5.png" src="_images/d47acf476a802331a5dae3c12b70b97c50be371071330d029d2019ef4fd932e5.png" />
 </div>
 </div>
 <p>赤はプラス，青はマイナスを示し，色の濃淡は絶対値に連動している。ここで使った３つのオプション（設定しなくても良い）の説明する。</p>
@@ -2551,12 +2153,12 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9_Multiple_Regression_191_0.png" src="_images/9_Multiple_Regression_191_0.png" />
+<img alt="_images/d37412642b83cd875c832e0dd24471c9b727cd79a803468668fe8d725d4261cf.png" src="_images/d37412642b83cd875c832e0dd24471c9b727cd79a803468668fe8d725d4261cf.png" />
 </div>
 </div>
 <p>図の解釈は<code class="docutils literal notranslate"><span class="pre">pandas</span></code>の場合と同じである。</p>
 <p><code class="docutils literal notranslate"><span class="pre">pairplot()</span></code>の主な引数：</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>それぞれの図（ファセット）のサイズ</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">height</span></code>は高さを指定</p></li>
@@ -2592,50 +2194,135 @@ exper     1.4776177726317783
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="8_Simple_Regression.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">単回帰分析</p>
-        </div>
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="8_Simple_Regression.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">単回帰分析</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="10_Residuals.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="10_Residuals.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">残差診断</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">説明</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statsmodels"><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使う</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">推定</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">属性とメソッド</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">変数の変換</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy"><code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の関数を使う方法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#i"><code class="docutils literal notranslate"><span class="pre">I()</span></code>を使う方法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#def"><code class="docutils literal notranslate"><span class="pre">def</span></code>を使う方法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q"><code class="docutils literal notranslate"><span class="pre">Q()</span></code>について</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sec-9-interpretation">係数の解釈</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">ガウス・マルコフ定理</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">母集団回帰式と標本回帰式</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sec-9-assumptions">仮定と望ましい性質</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">「手計算」</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">係数の推定値</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">推定値の標準誤差</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">シミュレーション：不偏性</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sec-9-vif">シミュレーション：多重共線性</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">説明</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">方法１：手計算</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">方法２：<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">シミュレーション</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">図を使ってチェック</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas"><code class="docutils literal notranslate"><span class="pre">pandas</span></code>を使う方法</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#seaborn"><code class="docutils literal notranslate"><span class="pre">seaborn</span></code>を使う方法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
   
-    By 春山 鉄源  Tetsugen HARUYAMA<br/>
-  
-      &copy; Copyright 2020-2023（公開開始日：2020年5月4日）.<br/>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
-</div>
+<p class="component-author">
+By 春山 鉄源  Tetsugen HARUYAMA
+</p>
 
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2020-2023（公開開始日：2020年5月4日）.
+      <br/>
+    
+  </p>
 
-      </div>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>
