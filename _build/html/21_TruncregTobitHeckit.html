@@ -1,36 +1,46 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html >
+
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>制限従属変数モデル &#8212; Pythonで学ぶ入門計量経済学</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/my_style.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="_static/myadmonitions.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -38,13 +48,20 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/design-tabs.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-6SP1Y69WEX"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-6SP1Y69WEX');
+            </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -53,728 +70,362 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '21_TruncregTobitHeckit';</script>
     <link rel="canonical" href="https://py4etrics.github.io/21_TruncregTobitHeckit.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="目次と内容" href="part_3.html" />
     <link rel="prev" title="離散選択モデル" href="20_LogitProbit.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-6SP1Y69WEX"></script>
-<script>
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){ dataLayer.push(arguments); }
-                    gtag('js', new Date());
-                    gtag('config', 'G-6SP1Y69WEX');
-                </script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
     
-    <div class="container-fluid" id="banner"></div>
-
     
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
 
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="index.html">
-      
-      
-      
-      <h1 class="site-logo" id="site-title">Pythonで学ぶ入門計量経済学</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Pythonの学習
- </span>
-</p>
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Pythonで学ぶ入門計量経済学</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Pythonの学習</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="part_1.html">
-   目次と内容
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="1_Python_Basics.html">
-   Pythonの基礎
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2_NumPy.html">
-   NumPy
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="3_Pandas.html">
-   Pandas
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="4_Matplotlib.html">
-   Matplotlib
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="5_SciPy_stats.html">
-   SciPy.stats
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="6_things_to_note.html">
-   Tipsと注意点
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="part_1.html">目次と内容</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_Python_Basics.html">Pythonの基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_NumPy.html">NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_Pandas.html">Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_Matplotlib.html">Matplotlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_SciPy_stats.html">SciPy.stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_things_to_note.html">Tipsと注意点</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Pythonを使った計量経済分析
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Pythonを使った計量経済分析</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="part_2.html">
-   目次と内容
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="7_Review_of_Statistics.html">
-   統計学の簡単な復習
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="list_of_terms.html">
-   計量経済学用語
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="8_Simple_Regression.html">
-   単回帰分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="9_Multiple_Regression.html">
-   重回帰分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="10_Residuals.html">
-   残差診断
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="11_Inference.html">
-   推論
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="12_Asymptotics.html">
-   大標本特性
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="13_Dummies.html">
-   質的変数と回帰分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="14_Hetero.html">
-   不均一分散
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="15_Pooling.html">
-   プーリング・データとパネル・データ
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="16_linearmodels.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     linearmodels
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="17_Panel.html">
-   パネル・データ分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="18_Zero_Conditional_Mean.html">
-   GM仮定４が満たされない場合
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="19_IV2SLS.html">
-   操作変数法と２段階OLS
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="20_LogitProbit.html">
-   離散選択モデル
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   制限従属変数モデル
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="part_2.html">目次と内容</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_Review_of_Statistics.html">統計学の簡単な復習</a></li>
+<li class="toctree-l1"><a class="reference internal" href="list_of_terms.html">計量経済学用語</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8_Simple_Regression.html">単回帰分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_Multiple_Regression.html">重回帰分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Residuals.html">残差診断</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Inference.html">推論</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Asymptotics.html">大標本特性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Dummies.html">質的変数と回帰分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Hetero.html">不均一分散</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Pooling.html">プーリング・データとパネル・データ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_linearmodels.html"><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Panel.html">パネル・データ分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Zero_Conditional_Mean.html">GM仮定４が満たされない場合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_IV2SLS.html">操作変数法と２段階OLS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_LogitProbit.html">離散選択モデル</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">制限従属変数モデル</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  番外編
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">番外編</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="part_3.html">
-   目次と内容
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Descriptive_stats_vs_Graphs.html">
-   記述統計とグラフ
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="data_source.html">
-   Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://py4macro.github.io">
-   Pythonで学ぶマクロ経済学 (中級＋レベル)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://py4basics.github.io">
-   経済学のためのPython入門
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="part_3.html">目次と内容</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Descriptive_stats_vs_Graphs.html">記述統計とグラフ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_source.html">Data</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://py4macro.github.io">Pythonで学ぶマクロ経済学 (中級＋レベル)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://py4basics.github.io">経済学のためのPython入門</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            <a  href="https://github.com/Py4Etrics/py4etrics.github.io">&#128200;&#127891;&#128202;<!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code --></a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
-          
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
 <div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
 
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
   
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
     </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/21_TruncregTobitHeckit.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/Py4Etrics/py4etrics.github.io/source?urlpath=tree/21_TruncregTobitHeckit.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="_static/images/logo_binder.svg">
   </span>
-<span class="headerbtn__text-container">Binder</span>
+<span class="btn__text-container">Binder</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/21_TruncregTobitHeckit.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Colab"
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/Py4Etrics/py4etrics.github.io/blob/source/21_TruncregTobitHeckit.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="_static/images/logo_colab.png">
   </span>
-<span class="headerbtn__text-container">Colab</span>
+<span class="btn__text-container">Colab</span>
 </a>
-
-      </li>
+</li>
       
-    </ul>
-  </div>
+  </ul>
 </div>
 
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="このページをダウンロード">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/21_TruncregTobitHeckit.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="ソースファイルをダウンロード"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="PDFに印刷"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全画面モード"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="_sources/21_TruncregTobitHeckit.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
+`);
+</script>
 
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   説明
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
-   切断回帰モデル
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id4">
-     説明
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id5">
-     シミュレーション
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id6">
-     直感的な理解
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#truncreg">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Truncreg
-      </span>
-     </code>
-     モジュールの使い方
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id7">
-     切断回帰推定
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id8">
-     検定
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id9">
-     予測値と残差
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
-     誤差項の仮定について
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#tobit">
-   Tobitモデル
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
-     説明
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id12">
-     シミュレーション
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id13">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Tobit
-      </span>
-     </code>
-     モジュールの使い方
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
-     Tobitモデルの推定
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id15">
-     検定と属性
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id16">
-     残差について
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#heckit">
-   Heckitモデル
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id17">
-     説明
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id18">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Heckit
-      </span>
-     </code>
-     モジュールの使い方
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id19">
-     推定
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#mroz">
-       <code class="docutils literal notranslate">
-        <span class="pre">
-         mroz
-        </span>
-       </code>
-       を使った推定
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id20">
-       結果の解釈
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>制限従属変数モデル</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   説明
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
-   切断回帰モデル
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id4">
-     説明
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id5">
-     シミュレーション
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id6">
-     直感的な理解
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#truncreg">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Truncreg
-      </span>
-     </code>
-     モジュールの使い方
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id7">
-     切断回帰推定
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id8">
-     検定
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id9">
-     予測値と残差
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
-     誤差項の仮定について
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#tobit">
-   Tobitモデル
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
-     説明
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id12">
-     シミュレーション
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id13">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Tobit
-      </span>
-     </code>
-     モジュールの使い方
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
-     Tobitモデルの推定
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id15">
-     検定と属性
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id16">
-     残差について
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#heckit">
-   Heckitモデル
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id17">
-     説明
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id18">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Heckit
-      </span>
-     </code>
-     モジュールの使い方
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id19">
-     推定
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#mroz">
-       <code class="docutils literal notranslate">
-        <span class="pre">
-         mroz
-        </span>
-       </code>
-       を使った推定
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id20">
-       結果の解釈
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>制限従属変数モデル</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目次 </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">説明</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">切断回帰モデル</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">説明</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">シミュレーション</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">直感的な理解</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#truncreg"><code class="docutils literal notranslate"><span class="pre">Truncreg</span></code>モジュールの使い方</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">切断回帰推定</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">検定</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">予測値と残差</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">誤差項の仮定について</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tobit">Tobitモデル</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">説明</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">シミュレーション</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13"><code class="docutils literal notranslate"><span class="pre">Tobit</span></code>モジュールの使い方</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Tobitモデルの推定</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">検定と属性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">残差について</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heckit">Heckitモデル</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">説明</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18"><code class="docutils literal notranslate"><span class="pre">Heckit</span></code>モジュールの使い方</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">推定</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mroz"><code class="docutils literal notranslate"><span class="pre">mroz</span></code>を使った推定</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">結果の解釈</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1>制限従属変数モデル<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
@@ -793,6 +444,11 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;frozen importlib._bootstrap&gt;:228: RuntimeWarning: scipy._lib.messagestream.MessageStream size changed, may indicate binary incompatibility. Expected 56 from C header, got 64 from PyObject
+</pre></div>
+</div>
+</div>
 </div>
 <section id="id2">
 <h2>説明<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
@@ -806,7 +462,7 @@ in English or the language of your choice.
 </aside>
 <p><strong>制限従属変数</strong>（Limited Dependent Variables; LDV）とは，被説明変数が取り得る値が大きく制限される場合を指す。<code class="docutils literal notranslate"><span class="pre">Logit</span></code>と<code class="docutils literal notranslate"><span class="pre">Probit</span></code>も制限従属変数の例であり，被説明変数は<span class="math notranslate nohighlight">\((0,1)\)</span>に制限されている。この章では，違ったタイプの制限従属変数を考える。</p>
 <p>データの性質上２つに分けることができる。</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>切断データ（Truncated Data）</p>
 <ul class="simple">
 <li><p>特定のデータが標本に含まれていない。</p></li>
@@ -814,7 +470,7 @@ in English or the language of your choice.
 </ul>
 </li>
 <li><p>打ち切りデータ（Censored Data）</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>端点解の場合</p>
 <ul class="simple">
 <li><p>募金の金額の例：募金しない場合は０円だが，募金する人の額は正の値を取る。（下からの打ち切りデータ）</p></li>
@@ -921,8 +577,8 @@ in English or the language of your choice.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.274254
-X            1.039061
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.837058
+X            1.003768
 dtype: float64
 </pre></div>
 </div>
@@ -942,8 +598,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    2.841052
-X            0.674016
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    2.530644
+X            0.659771
 dtype: float64
 </pre></div>
 </div>
@@ -985,7 +641,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/21_TruncregTobitHeckit_19_0.png" src="_images/21_TruncregTobitHeckit_19_0.png" />
+<img alt="_images/a7a052e45d58170f4ec73e825c6952b04bd88acdc53a9a0563038877b8268381.png" src="_images/a7a052e45d58170f4ec73e825c6952b04bd88acdc53a9a0563038877b8268381.png" />
 </div>
 </div>
 <p>＜<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>コードの説明＞</p>
@@ -1052,13 +708,13 @@ y_i=\beta_0+\beta_1 x_i+\sigma_u\lambda\left(w_i\right)+\nu_i\qquad\text{(式５
 <hr class="docutils" />
 <p>＜使い方＞</p>
 <p>基本的に<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">ols</span></code>と同じだが，追加的な操作とオプションがある。</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>推定式を決める</p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;y ~ 1 + x&#39;</span>
 </pre></div>
 </div>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Truncreg</span></code>の<code class="docutils literal notranslate"><span class="pre">from_formula</span></code>モジュールを使って推定</p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">Truncreg</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">left</span><span class="o">=&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">right</span><span class="o">=&lt;</span><span class="n">B</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">data</span><span class="o">=&lt;</span><span class="n">C</span><span class="o">&gt;</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
@@ -1335,8 +991,8 @@ Log(Sigma)    -0.5433      0.039    -14.053      0.000      -0.619      -0.468
 Dep. Variable:                      y   Pseudo R-squ:                    0.000
 Model:                       Truncreg   Log-Likelihood:                 -619.9
 Method:            Maximum Likelihood   LL-Null:                        -619.9
-Date:                Tue, 20 Dec 2022   LL-Ratio:                         -0.0
-Time:                        22:26:31   LLR p-value:                       nan
+Date:                Mon, 20 Mar 2023   LL-Ratio:                         -0.0
+Time:                        10:11:25   LLR p-value:                       nan
 No. Observations:                1066   AIC:                            1241.8
 Df Residuals:                    1065   BIC:                            1246.7
 Df Model:                           0   Covariance Type:             nonrobust
@@ -1402,7 +1058,7 @@ Log(Sigma)    -0.3590      0.047     -7.677      0.000      -0.451      -0.267
 <p><span class="math notranslate nohighlight">\(H_0\)</span>：<code class="docutils literal notranslate"><span class="pre">educ</span></code>+<code class="docutils literal notranslate"><span class="pre">abil</span></code><span class="math notranslate nohighlight">\(=\)</span><code class="docutils literal notranslate"><span class="pre">exper</span></code></p>
 <p><span class="math notranslate nohighlight">\(H_A\)</span>：<code class="docutils literal notranslate"><span class="pre">educ</span></code>+<code class="docutils literal notranslate"><span class="pre">abil</span></code><span class="math notranslate nohighlight">\(\neq\)</span><code class="docutils literal notranslate"><span class="pre">exper</span></code></p>
 <p>次の方法でおこなう。</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>制約式を文字列で設定する：<code class="docutils literal notranslate"><span class="pre">educ+abil=exper</span></code></p></li>
 <li><p>推定結果のメソッド<code class="docutils literal notranslate"><span class="pre">wald_test</span></code>に制約式を引数として実行する。</p></li>
 </ol>
@@ -1462,7 +1118,7 @@ Log(Sigma)    -0.3590      0.047     -7.677      0.000      -0.451      -0.267
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/21_TruncregTobitHeckit_64_0.png" src="_images/21_TruncregTobitHeckit_64_0.png" />
+<img alt="_images/91e2917858ec359824d159f0905a999441abca47f88e999c399442c62f3aef4c.png" src="_images/91e2917858ec359824d159f0905a999441abca47f88e999c399442c62f3aef4c.png" />
 </div>
 </div>
 <p>データの切断による影響が右上に見て取れる。</p>
@@ -1596,8 +1252,8 @@ Log(Sigma)    -0.3590      0.047     -7.677      0.000      -0.451      -0.267
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept   -0.252830
-X            1.062792
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept   -0.155515
+X            0.884277
 dtype: float64
 </pre></div>
 </div>
@@ -1617,8 +1273,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.555586
-X            0.456895
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.548311
+X            0.411423
 dtype: float64
 </pre></div>
 </div>
@@ -1647,7 +1303,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/21_TruncregTobitHeckit_83_0.png" src="_images/21_TruncregTobitHeckit_83_0.png" />
+<img alt="_images/eae5b0c3d1d2380455a34d9d09f3cf746ac1ae8578543b2102ce10f0e2d8f942.png" src="_images/eae5b0c3d1d2380455a34d9d09f3cf746ac1ae8578543b2102ce10f0e2d8f942.png" />
 </div>
 </div>
 <hr class="docutils" />
@@ -1673,7 +1329,7 @@ dtype: float64
 <hr class="docutils" />
 <p>＜使い方＞</p>
 <p>基本的に<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">ols</span></code>と同じだが，追加的な操作とオプションがある。</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>下限・上限の設定：被説明変数<code class="docutils literal notranslate"><span class="pre">y</span></code>の値に従って<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の<code class="docutils literal notranslate"><span class="pre">array</span></code>もしくは<code class="docutils literal notranslate"><span class="pre">Pandas</span></code>の<code class="docutils literal notranslate"><span class="pre">Series</span></code>を作る。</p>
 <ul class="simple">
 <li><p>下限がある場合：<code class="docutils literal notranslate"><span class="pre">-1</span></code></p></li>
@@ -1686,7 +1342,7 @@ dtype: float64
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;y ~ 1 + x&#39;</span>
 </pre></div>
 </div>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Tobit</span></code>の<code class="docutils literal notranslate"><span class="pre">from_formula</span></code>モジュールを使って推定</p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">Tobit</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">cens</span><span class="o">=&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">left</span><span class="o">=&lt;</span><span class="n">B</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">right</span><span class="o">=&lt;</span><span class="n">C</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">data</span><span class="o">=&lt;</span><span class="n">D</span><span class="o">&gt;</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
@@ -1723,7 +1379,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/21_TruncregTobitHeckit_92_0.png" src="_images/21_TruncregTobitHeckit_92_0.png" />
+<img alt="_images/16ea334ebe141b46ccbb719d85709369c20c98942dcd9ea8a822324e7fe3b856.png" src="_images/16ea334ebe141b46ccbb719d85709369c20c98942dcd9ea8a822324e7fe3b856.png" />
 </div>
 </div>
 <p>まず，下限の値を設定する。</p>
@@ -1887,7 +1543,7 @@ Log(Sigma)     7.0229      0.037    189.514      0.000       6.950       7.096
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/21_TruncregTobitHeckit_110_0.png" src="_images/21_TruncregTobitHeckit_110_0.png" />
+<img alt="_images/9cb5de6dee4340b9724481e1c6d06e66982856609ae8a653c506c3e23d78a8fa.png" src="_images/9cb5de6dee4340b9724481e1c6d06e66982856609ae8a653c506c3e23d78a8fa.png" />
 </div>
 </div>
 <p>図の左下は切り打ちデータを反映している。</p>
@@ -2030,7 +1686,7 @@ Log(Sigma)     7.0229      0.037    189.514      0.000       6.950       7.096
 <hr class="docutils" />
 <p>＜使い方：ステップ１〜６＞</p>
 <p>今まで<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使う場合，<code class="docutils literal notranslate"><span class="pre">from_formula</span></code>メソッドを使ったが，それを使わない方法もある。<code class="docutils literal notranslate"><span class="pre">Heckit</span></code>の使い方はその方法に沿っている。</p>
-<ol>
+<ol class="arabic">
 <li><p>変数を準備する前準備</p>
 <ul>
 <li><p>(式５)と(式６)を使った説明で，第１段階の被説明変数<span class="math notranslate nohighlight">\(z_i\)</span>と第２段階の被説明変数<span class="math notranslate nohighlight">\(y_i\)</span>は次のように連動していることに留意しよう。
@@ -2159,8 +1815,8 @@ $$</p>
 Dep. Variable:                    lwage   R-squared:                       0.156
 Model:                           Heckit   Adj. R-squared:                  0.150
 Method:                Heckman Two-Step   F-statistics:                   26.148
-Date:                  Tue, 20 Dec 2022   Prob (F-statistic):              0.000
-Time:                          22:27:53   Cov in 1st Stage:            nonrobust
+Date:                  Mon, 20 Mar 2023   Prob (F-statistic):              0.000
+Time:                          10:12:48   Cov in 1st Stage:            nonrobust
 No. Total Obs.:                     753   Cov in 2nd Stage:                  HC1
 No. Censored Obs.:                  325                                         
 No. Uncensored Obs.:                428                                         
@@ -2284,8 +1940,8 @@ Third table is the estimate for the coef of the inverse Mills ratio (Heckman&#39
 Dep. Variable:                      y   No. Observations:                  753
 Model:                         Probit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
-Date:                Tue, 20 Dec 2022   Pseudo R-squ.:                  0.2206
-Time:                        22:27:53   Log-Likelihood:                -401.30
+Date:                Mon, 20 Mar 2023   Pseudo R-squ.:                  0.2206
+Time:                        10:12:48   Log-Likelihood:                -401.30
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
 ==============================================================================
@@ -2334,7 +1990,7 @@ expersq       -0.0008      0.000     -1.931      0.053      -0.002    1.21e-05
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/21_TruncregTobitHeckit_149_0.png" src="_images/21_TruncregTobitHeckit_149_0.png" />
+<img alt="_images/5ade09a4e0e53f81683778544431410feb44bd4bdd95703a066a8645913a3ea9.png" src="_images/5ade09a4e0e53f81683778544431410feb44bd4bdd95703a066a8645913a3ea9.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2411,7 +2067,7 @@ df freedom:  7.
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./."
         },
         predefinedOutput: true
@@ -2419,50 +2075,132 @@ df freedom:  7.
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="20_LogitProbit.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">離散選択モデル</p>
-        </div>
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="20_LogitProbit.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">離散選択モデル</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="part_3.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="part_3.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">目次と内容</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目次
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">説明</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">切断回帰モデル</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">説明</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">シミュレーション</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">直感的な理解</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#truncreg"><code class="docutils literal notranslate"><span class="pre">Truncreg</span></code>モジュールの使い方</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">切断回帰推定</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">検定</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">予測値と残差</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">誤差項の仮定について</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tobit">Tobitモデル</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">説明</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">シミュレーション</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13"><code class="docutils literal notranslate"><span class="pre">Tobit</span></code>モジュールの使い方</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Tobitモデルの推定</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">検定と属性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">残差について</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heckit">Heckitモデル</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">説明</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18"><code class="docutils literal notranslate"><span class="pre">Heckit</span></code>モジュールの使い方</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">推定</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mroz"><code class="docutils literal notranslate"><span class="pre">mroz</span></code>を使った推定</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">結果の解釈</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
   
-    By 春山 鉄源  Tetsugen HARUYAMA<br/>
-  
-      &copy; Copyright 2020-2023（公開開始日：2020年5月4日）.<br/>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
+<p class="component-author">
+著者 春山 鉄源  Tetsugen HARUYAMA
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2020-2023（公開開始日：2020年5月4日）.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <!-- Default Statcounter code for Py4etrics https://py4etrics.github.io/ --> <script type="text/javascript"> var sc_project=12340470; var sc_invisible=1; var sc_security="72befddb"; </script> <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script> <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12340470/0/72befddb/1/" alt="Web Analytics"></a></div></noscript> <!-- End of Statcounter Code -->
 </div>
+  </div>
+  
+</div></div>
+          </footer>
+        
 
-
-      </div>
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

@@ -92,7 +92,7 @@ for pack, ver in zip(packages, versions):
 ```
 
 ## おまけ１
-神戸大学では学生を対象に経済学のトピックや講義内容を解説する[「学習のために」](https://www.rieb.kobe-u.ac.jp/kkg/study/index.html)という雑誌が発行されており、2021年度版の原稿として私が執筆した[「Pythonのすすめ」](https://github.com/Haruyama-KobeU/gakushu2021)をGitHub上で公開している。原稿で使ったコードとデータ作成に使ったコードも公開しているので、`Python`で何ができるかを手っ取り早く知りたい人にはオススメかも知れない。
+神戸大学経済経営学会が出版した「経済学の歩き方」は初学者を対象として経済学に関する59のトピックを厳選し解説している。私が執筆した章[「Pythonによるマクロ経済分析」](https://github.com/Haruyama-KobeU/arukikata2022)はGitHub上で公開している。原稿で使ったコードとデータ作成に使ったコードも公開しているので，`Python`で何ができるかを手っ取り早く知りたい人にはオススメかも知れない。
 
 ## おまけ２
 [これを](https://www.google.co.jp/search?source=univ&tbm=isch&q=paranormal+distribution&sa=X&ved=2ahUKEwis27624czrAhXIfd4KHR9JAzgQsAR6BAgLEAE&biw=1280&bih=689)`Python`コードで書いてみた。
