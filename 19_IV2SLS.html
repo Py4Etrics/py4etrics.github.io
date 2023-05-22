@@ -892,7 +892,7 @@ Dep. Variable:                   educ   R-squared:                      0.2081
 Estimator:                        OLS   Adj. R-squared:                 0.2043
 No. Observations:                 428   F-statistic:                    112.45
 Date:                Mon, May 22 2023   P-value (F-stat)                0.0000
-Time:                        10:05:10   Distribution:                  chi2(2)
+Time:                        13:00:49   Distribution:                  chi2(2)
 Cov. Estimator:            unadjusted                                         
                                                                               
                              Parameter Estimates                              
@@ -903,9 +903,6 @@ Intercept      9.4801     0.3200     29.627     0.0000      8.8530      10.107
 fatheduc       0.1881     0.0335     5.6122     0.0000      0.1224      0.2538
 motheduc       0.1564     0.0357     4.3805     0.0000      0.0864      0.2263
 ==============================================================================
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>
@@ -959,6 +956,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 </div>
 </div>
 </div>
+<p>IVが１つのケースと比べて<code class="docutils literal notranslate"><span class="pre">educ</span></code>の係数自体は大きく変わってはいないが，<code class="docutils literal notranslate"><span class="pre">5%</span></code>有意水準でも係数<code class="docutils literal notranslate"><span class="pre">0</span></code>の帰無仮説を棄却できるようになっている。</p>
 </section>
 </section>
 <section id="id9">
@@ -971,37 +969,38 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <li><p>母集団回帰式</p>
 <div class="math notranslate nohighlight" id="equation-eq-19-case3">
 <span class="eqno">(10)<a class="headerlink" href="#equation-eq-19-case3" title="Permalink to this equation">#</a></span>\[
-    y=\beta_0+\beta_1x_1+\beta_2x_2+\gamma_1w_1+\gamma_2w_2+e
+    y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\gamma_1w_1+\gamma_2w_2+e
     \]</div>
 <ul class="simple">
 <li><p>誤差項<span class="math notranslate nohighlight">\(e\)</span>は全ての説明変数と無相関</p></li>
 </ul>
 </li>
-<li><p><span class="math notranslate nohighlight">\(w_1\)</span>と<span class="math notranslate nohighlight">\(w_2\)</span>はそれぞれ<span class="math notranslate nohighlight">\(x_2\)</span>と相関する。</p>
+<li><p><span class="math notranslate nohighlight">\(w_1\)</span>は<span class="math notranslate nohighlight">\(x_1\)</span>と，<span class="math notranslate nohighlight">\(w_2\)</span>は<span class="math notranslate nohighlight">\(x_2\)</span>とそれぞれ相関する。</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\text{Cov}(w_1,x_2)=0.5\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{Cov}(w_1,x_1)=0.5\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\text{Cov}(w_2,x_2)=0.5\)</span></p></li>
 <li><p>説明変数の他の共分散は全て<code class="docutils literal notranslate"><span class="pre">0</span></code>とする。</p></li>
 </ul>
 </li>
-<li><p><span class="math notranslate nohighlight">\(x_2\)</span>は欠落変数として次の回帰式を推定する。</p>
+<li><p><span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>は欠落変数として次の回帰式を推定する。</p>
 <div class="math notranslate nohighlight" id="equation-eq-19-case3a">
 <span class="eqno">(11)<a class="headerlink" href="#equation-eq-19-case3a" title="Permalink to this equation">#</a></span>\[
-    y_i=\beta_0+\beta_1x_{i1}+\gamma_1w_{i1}+\gamma_2w_{i2}+u_i
+    y_i=\beta_0+\beta_3x_{i3}+\gamma_1w_{i1}+\gamma_2w_{i2}+u_i
     \]</div>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(u_i=e+\beta_2x_{i2}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(x_{i1}\)</span>は外生変数</p></li>
-<li><p><span class="math notranslate nohighlight">\(w_{ij}\)</span>，<span class="math notranslate nohighlight">\(j=1,2\)</span>，は内生変数，即ち，<span class="math notranslate nohighlight">\(\text{Cov}(w_{ij},u_i)=\text{Cov}(w_{ij},x_{i2})\neq0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(u_i=e+\beta_1x_{i1}+\beta_2x_{i2}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(x_{i3}\)</span>は外生変数</p></li>
+<li><p><span class="math notranslate nohighlight">\(w_{i1}\)</span>は内生変数，即ち，<span class="math notranslate nohighlight">\(\text{Cov}(w_{i1},u_i)=\text{Cov}(w_{i1},x_{i1})\neq0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(w_{i2}\)</span>は内生変数，即ち，<span class="math notranslate nohighlight">\(\text{Cov}(w_{i2},u_i)=\text{Cov}(w_{i2},x_{i2})\neq0\)</span></p></li>
 </ul>
 </li>
-<li><p><span class="math notranslate nohighlight">\(w_j\)</span>の操作変数は<span class="math notranslate nohighlight">\(z_j\)</span>，<span class="math notranslate nohighlight">\(j=1,2\)</span>とする。</p>
+<li><p><span class="math notranslate nohighlight">\(w_{ij}\)</span>の操作変数は<span class="math notranslate nohighlight">\(z_{ij}\)</span>，<span class="math notranslate nohighlight">\(j=1,2\)</span>とする。</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\text{Cov}(z_j,w_j)=0.8\neq 0\)</span>（妥当性）</p></li>
-<li><p><span class="math notranslate nohighlight">\(\text{Cov}(z_j,u)=0\)</span>（外生性）</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{Cov}(z_{ij},w_{ij})=0.8\neq 0\)</span>（妥当性）</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{Cov}(z_{ij},u_i)=0\)</span>（外生性）</p></li>
 </ul>
 </li>
-<li><p>ここでガウス・マルコフ定理の仮定４が満たされない理由は，欠落変数<span class="math notranslate nohighlight">\(x_2\)</span>の存在である。</p></li>
+<li><p>ここでガウス・マルコフ定理の仮定４が満たされない理由は，欠落変数<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>の存在である。</p></li>
 </ul>
 <hr class="docutils" />
 <p>内生変数が複数あっても推定の基本的な考え方は変わらない。違いは，第１段階において内生変数の数だけ（この例では２回）OLS推定をする必要がある点のみである。</p>
@@ -1011,8 +1010,8 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <div class="math notranslate nohighlight">
 \[\begin{split}
     \begin{align*}
-    w_1&amp;=a_{10}+a_{11}x_1+c_{11}z_1+c_{12}z_2+v_1\\
-    w_2&amp;=a_{20}+a_{21}x_1+c_{21}z_1+c_{22}z_2+v_2
+    w_1&amp;=a_{0}+a_{1}z_1+a_{2}z_2+a_{3}x_3+v_1\\
+    w_2&amp;=b_{0}+b_{1}z_1+b_{2}z_2+b_{3}x_3+v_2
     \end{align*}
     \end{split}\]</div>
 </li>
@@ -1021,8 +1020,8 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 \[\begin{split}
     \begin{align*}
     w_j&amp;=\hat{w}_j+\hat{v}_j,\quad j=1,2\\
-    \hat{w}_1&amp;=\hat{a}_{10}+\hat{a}_{11}x_1+\hat{c}_{11}z_1+\hat{c}_{12}z_2\\
-    \hat{w}_2&amp;=\hat{a}_{20}+\hat{a}_{21}x_1+\hat{c}_{21}z_1+\hat{c}_{22}z_2
+    \hat{w}_1&amp;=\hat{a}_{0}+\hat{a}_{1}z_1+\hat{a}_{2}z_2+\hat{a}_{3}x_3\\
+    \hat{w}_2&amp;=\hat{b}_{0}+\hat{b}_{1}z_1+\hat{b}_{2}z_2+\hat{b}_{3}x_3
     \end{align*}
     \end{split}\]</div>
 <ol class="arabic simple">
@@ -1030,7 +1029,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <li><p><span class="math notranslate nohighlight">\(\hat{v}_j\)</span>（残差）：残り全て（<span class="math notranslate nohighlight">\(u\)</span>と相関する<span class="math notranslate nohighlight">\(w\)</span>の部分は<span class="math notranslate nohighlight">\(\hat{v}_j\)</span>に吸収される）</p></li>
 </ol>
 </li>
-<li><p><span class="math notranslate nohighlight">\(\hat{c}_{11}\)</span>と<span class="math notranslate nohighlight">\(\hat{c}_{22}\)</span>の統計的優位性の確認</p>
+<li><p><span class="math notranslate nohighlight">\(\hat{a}_{1}\)</span>と<span class="math notranslate nohighlight">\(\hat{b}_{2}\)</span>の統計的優位性の確認</p>
 <ul class="simple">
 <li><p>一般的に有効な操作変数は以下を満たす</p>
 <ul>
@@ -1038,7 +1037,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <li><p>この目安を満たさなければ弱操作変数の可能性があり，その場合，推定量は不偏性・一致性を満たさない</p></li>
 </ul>
 </li>
-<li><p>帰無仮説 <span class="math notranslate nohighlight">\(\text{H}_0:\;\hat{c}_{11}=\hat{c}_{22}=0\)</span>が棄却され，上の基準をクリアすれば次のステップへ</p></li>
+<li><p>帰無仮説 <span class="math notranslate nohighlight">\(\text{H}_0:\;\hat{a}_{1}=\hat{b}_{2}=0\)</span>が棄却され，上の基準をクリアすれば次のステップへ</p></li>
 </ul>
 </li>
 </ul>
@@ -1047,10 +1046,10 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <li><p>予測値<span class="math notranslate nohighlight">\(\hat{w}_j\)</span>，<span class="math notranslate nohighlight">\(j=1,2\)</span>，を使い次式をOLS推定する。</p>
 <div class="math notranslate nohighlight">
 \[
-    y=\mu_0+\mu_1x_1+\theta_1\hat{w}_1+\theta_2\hat{w}_2+\varepsilon
+    y=\mu_0+\mu_1\hat{w}_1+\mu_2\hat{w}_2+\mu_3x_3+\varepsilon
     \]</div>
 </li>
-<li><p><span class="math notranslate nohighlight">\(\hat{\theta}_j\)</span>：IV（instrumentala variable）推定量</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{\mu}_1\)</span>と<span class="math notranslate nohighlight">\(\hat{\mu}_２\)</span>：IV（instrumentala variable）推定量</p></li>
 </ul>
 </section>
 <section id="id11">
@@ -1058,88 +1057,48 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <p>まずデータを作成するが，真のパラメターの値を次のように仮定する。</p>
 <div class="math notranslate nohighlight">
 \[
-\beta_0=\beta_1=\beta_2=\gamma_1=\gamma_2=1
+\beta_0=\beta_1=\beta_2=\beta_3=\gamma_1=\gamma_2=1
 \]</div>
+<p>データの大きさは<code class="docutils literal notranslate"><span class="pre">n_sample</span></code>とする。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># x1, x2, w1, w2, z1, z2の平均</span>
-<span class="n">rv_mean</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-
-<span class="c1"># 共分散行列　x1,  x2,  w1,  w2,  z1,  z2</span>
-<span class="n">rv_cov</span> <span class="o">=</span>  <span class="p">[[</span><span class="mi">1</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">],</span> <span class="c1"># x1</span>
-           <span class="p">[</span><span class="mi">0</span><span class="p">,</span>   <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">],</span> <span class="c1"># x2</span>
-           <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span>   <span class="mi">1</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span>   <span class="mi">0</span><span class="p">],</span> <span class="c1"># w1</span>
-           <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">1</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="c1"># w2</span>
-           <span class="p">[</span><span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">1</span><span class="p">,</span>   <span class="mi">0</span><span class="p">],</span> <span class="c1"># z1</span>
-           <span class="p">[</span><span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">1</span><span class="p">]]</span> <span class="c1"># z2</span>
-
-<span class="c1"># ランダム変数の生成</span>
-<span class="n">rv</span> <span class="o">=</span> <span class="n">multivariate_normal</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">rv_mean</span><span class="p">,</span> <span class="n">rv_cov</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
-
-<span class="c1"># 説明変数と操作変数の抽出</span>
-<span class="n">x1</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 外生変数</span>
-<span class="n">x2</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 外生変数（欠落）</span>
-<span class="n">w1</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># 内生変数</span>
-<span class="n">w2</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]</span>  <span class="c1"># 内生変数</span>
-<span class="n">z1</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">4</span><span class="p">]</span>  <span class="c1"># 操作変数</span>
-<span class="n">z2</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">5</span><span class="p">]</span>  <span class="c1"># 操作変数</span>
-
-<span class="c1"># yの生成</span>
-<span class="n">y</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">x1</span> <span class="o">+</span> <span class="n">x2</span> <span class="o">+</span> <span class="n">w1</span> <span class="o">+</span> <span class="n">w2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
-
-<span class="c1"># DataFrameの作成</span>
-<span class="n">var_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;x1&#39;</span><span class="p">:</span><span class="n">x1</span><span class="p">,</span><span class="s1">&#39;x2&#39;</span><span class="p">:</span><span class="n">x2</span><span class="p">,</span><span class="s1">&#39;w1&#39;</span><span class="p">:</span><span class="n">w1</span><span class="p">,</span><span class="s1">&#39;w2&#39;</span><span class="p">:</span><span class="n">w2</span><span class="p">,</span><span class="s1">&#39;z1&#39;</span><span class="p">:</span><span class="n">z1</span><span class="p">,</span><span class="s1">&#39;z2&#39;</span><span class="p">:</span><span class="n">z2</span><span class="p">}</span>
-<span class="n">df_endog2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">var_dict</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_sample</span> <span class="o">=</span> <span class="mi">10_000</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">13</span><span class="p">],</span> <span class="n">line</span> <span class="mi">13</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">rv_cov</span> <span class="o">=</span>  <span class="p">[[</span><span class="mi">1</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">],</span> <span class="c1"># x1</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span>            <span class="p">[</span><span class="mi">0</span><span class="p">,</span>   <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">],</span> <span class="c1"># x2</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span>            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span>   <span class="mi">1</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span>   <span class="mi">0</span><span class="p">],</span> <span class="c1"># w1</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span>            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">1</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="c1"># w2</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>            <span class="p">[</span><span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">1</span><span class="p">,</span>   <span class="mi">0</span><span class="p">],</span> <span class="c1"># z1</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span>            <span class="p">[</span><span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">1</span><span class="p">]]</span> <span class="c1"># z2</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="c1"># ランダム変数の生成</span>
-<span class="ne">---&gt; </span><span class="mi">13</span> <span class="n">rv</span> <span class="o">=</span> <span class="n">multivariate_normal</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">rv_mean</span><span class="p">,</span> <span class="n">rv_cov</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="c1"># 説明変数と操作変数の抽出</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 外生変数</span>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># x1, x2, x3, w1, w2, z1, z2の平均</span>
+<span class="n">rv_mean</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
-<span class="nn">File ~/hostedtoolcache/Python/3.10.11/x64/lib/python3.10/site-packages/scipy/stats/_multivariate.py:748,</span> in <span class="ni">multivariate_normal_gen.rvs</span><span class="nt">(self, mean, cov, size, random_state)</span>
-<span class="g g-Whitespace">    </span><span class="mi">727</span> <span class="k">def</span> <span class="nf">rvs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cov</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">728</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Draw random samples from a multivariate normal distribution.</span>
-<span class="g g-Whitespace">    </span><span class="mi">729</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">730</span><span class="sd">     Parameters</span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">746</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">747</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">748</span>     <span class="n">dim</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">cov_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_parameters</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">cov</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">749</span>     <span class="n">random_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_random_state</span><span class="p">(</span><span class="n">random_state</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">751</span>     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cov_object</span><span class="p">,</span> <span class="n">_covariance</span><span class="o">.</span><span class="n">CovViaPSD</span><span class="p">):</span>
+<span class="c1"># 共分散行列　  x1, x2,x3, w1, w2, z1, z2</span>
+<span class="n">rv_cov</span> <span class="o">=</span>  <span class="p">[[</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span> <span class="c1"># x1</span>
+           <span class="p">[</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span> <span class="c1"># x2</span>
+           <span class="p">[</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span> <span class="c1"># x3</span>
+           <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span><span class="mf">0.8</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span> <span class="c1"># w1</span>
+           <span class="p">[</span>  <span class="mi">0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span><span class="mf">0.8</span><span class="p">],</span> <span class="c1"># w2</span>
+           <span class="p">[</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mf">0.8</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span> <span class="c1"># z1</span>
+           <span class="p">[</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span><span class="mf">0.8</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">]]</span> <span class="c1"># z2</span>
 
-<span class="nn">File ~/hostedtoolcache/Python/3.10.11/x64/lib/python3.10/site-packages/scipy/stats/_multivariate.py:417,</span> in <span class="ni">multivariate_normal_gen._process_parameters</span><span class="nt">(self, mean, cov, allow_singular)</span>
-<span class="g g-Whitespace">    </span><span class="mi">410</span> <span class="n">dim</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">cov</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_parameters_psd</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">cov</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">411</span> <span class="c1"># After input validation, some methods then processed the arrays</span>
-<span class="g g-Whitespace">    </span><span class="mi">412</span> <span class="c1"># with a `_PSD` object and used that to perform computation.</span>
-<span class="g g-Whitespace">    </span><span class="mi">413</span> <span class="c1"># To avoid branching statements in each method depending on whether</span>
-<span class="g g-Whitespace">    </span><span class="mi">414</span> <span class="c1"># `cov` is an array or `Covariance` object, we always process the</span>
-<span class="g g-Whitespace">    </span><span class="mi">415</span> <span class="c1"># array with `_PSD`, and then use wrapper that satisfies the</span>
-<span class="g g-Whitespace">    </span><span class="mi">416</span> <span class="c1"># `Covariance` interface, `CovViaPSD`.</span>
-<span class="ne">--&gt; </span><span class="mi">417</span> <span class="n">psd</span> <span class="o">=</span> <span class="n">_PSD</span><span class="p">(</span><span class="n">cov</span><span class="p">,</span> <span class="n">allow_singular</span><span class="o">=</span><span class="n">allow_singular</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">418</span> <span class="n">cov_object</span> <span class="o">=</span> <span class="n">_covariance</span><span class="o">.</span><span class="n">CovViaPSD</span><span class="p">(</span><span class="n">psd</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">419</span> <span class="k">return</span> <span class="n">dim</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">cov_object</span>
+<span class="c1"># ランダム変数の生成</span>
+<span class="n">rv</span> <span class="o">=</span> <span class="n">multivariate_normal</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">rv_mean</span><span class="p">,</span> <span class="n">rv_cov</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_sample</span><span class="p">)</span>
 
-<span class="nn">File ~/hostedtoolcache/Python/3.10.11/x64/lib/python3.10/site-packages/scipy/stats/_multivariate.py:167,</span> in <span class="ni">_PSD.__init__</span><span class="nt">(self, M, cond, rcond, lower, check_finite, allow_singular)</span>
-<span class="g g-Whitespace">    </span><span class="mi">165</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">eps</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">166</span>     <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;The input matrix must be symmetric positive semidefinite.&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">167</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">168</span> <span class="n">d</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">s</span> <span class="o">&gt;</span> <span class="n">eps</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">169</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">allow_singular</span><span class="p">:</span>
+<span class="c1"># 説明変数と操作変数の抽出</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 外生変数（欠落）</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 外生変数（欠落）</span>
+<span class="n">x3</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># 外生変数</span>
+<span class="n">w1</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]</span>  <span class="c1"># 内生変数</span>
+<span class="n">w2</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">4</span><span class="p">]</span>  <span class="c1"># 内生変数</span>
+<span class="n">z1</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">5</span><span class="p">]</span>  <span class="c1"># 操作変数</span>
+<span class="n">z2</span> <span class="o">=</span> <span class="n">rv</span><span class="p">[:,</span><span class="mi">6</span><span class="p">]</span>  <span class="c1"># 操作変数</span>
 
-<span class="ne">ValueError</span>: The input matrix must be symmetric positive semidefinite.
+<span class="c1"># yの生成</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">x1</span> <span class="o">+</span> <span class="n">x2</span> <span class="o">+</span> <span class="n">x3</span> <span class="o">+</span><span class="n">w1</span> <span class="o">+</span> <span class="n">w2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">n_sample</span><span class="p">)</span>
+
+<span class="c1"># DataFrameの作成</span>
+<span class="n">var_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;x1&#39;</span><span class="p">:</span><span class="n">x1</span><span class="p">,</span><span class="s1">&#39;x2&#39;</span><span class="p">:</span><span class="n">x2</span><span class="p">,</span><span class="s1">&#39;x3&#39;</span><span class="p">:</span><span class="n">x3</span><span class="p">,</span><span class="s1">&#39;w1&#39;</span><span class="p">:</span><span class="n">w1</span><span class="p">,</span><span class="s1">&#39;w2&#39;</span><span class="p">:</span><span class="n">w2</span><span class="p">,</span><span class="s1">&#39;z1&#39;</span><span class="p">:</span><span class="n">z1</span><span class="p">,</span><span class="s1">&#39;z2&#39;</span><span class="p">:</span><span class="n">z2</span><span class="p">}</span>
+<span class="n">df_endog2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">var_dict</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1151,19 +1110,98 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>y</th>
+      <th>x1</th>
+      <th>x2</th>
+      <th>x3</th>
+      <th>w1</th>
+      <th>w2</th>
+      <th>z1</th>
+      <th>z2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-1.802084</td>
+      <td>0.021294</td>
+      <td>-0.159971</td>
+      <td>-0.061098</td>
+      <td>-0.916285</td>
+      <td>-0.989199</td>
+      <td>-0.966612</td>
+      <td>-1.258647</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2.477558</td>
+      <td>0.192975</td>
+      <td>-0.108202</td>
+      <td>0.088131</td>
+      <td>-0.665295</td>
+      <td>0.303800</td>
+      <td>-0.675684</td>
+      <td>0.358350</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-1.123277</td>
+      <td>-0.535524</td>
+      <td>0.047176</td>
+      <td>-1.421162</td>
+      <td>-0.978783</td>
+      <td>0.432792</td>
+      <td>-0.499994</td>
+      <td>0.672833</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </section>
 <section id="id12">
 <h3>最小二乗法による推定<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_0</span> <span class="o">=</span> <span class="s1">&#39;y ~ x1 + w1 + w2&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_0</span> <span class="o">=</span> <span class="s1">&#39;y ~ w1 + w2 + x3&#39;</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_0</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_endog2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+Intercept      1.0067     0.0157     64.106     0.0000      0.9760      1.0375
+w1             1.4834     0.0158     93.669     0.0000      1.4524      1.5145
+w2             1.4918     0.0155     96.402     0.0000      1.4615      1.5221
+x3             0.9959     0.0154     64.562     0.0000      0.9657      1.0261
+==============================================================================
+</pre></div>
 </div>
-<p>欠落変数<span class="math notranslate nohighlight">\(x_2\)</span>と相関がない<span class="math notranslate nohighlight">\(x_1\)</span>の係数の推定値は真の値である<code class="docutils literal notranslate"><span class="pre">1</span></code>に近い。一方，<span class="math notranslate nohighlight">\(x_2\)</span>と相関する<span class="math notranslate nohighlight">\(w_1\)</span>と<span class="math notranslate nohighlight">\(w_2\)</span>は真の値<code class="docutils literal notranslate"><span class="pre">1</span></code>から大きく外れていることが確認できる。</p>
+</div>
+</div>
+<p>欠落変数と相関がない<span class="math notranslate nohighlight">\(x_3\)</span>の係数の推定値は真の値である<code class="docutils literal notranslate"><span class="pre">1</span></code>に近い。一方，欠落変数と相関する<span class="math notranslate nohighlight">\(w_1\)</span>と<span class="math notranslate nohighlight">\(w_2\)</span>は真の値<code class="docutils literal notranslate"><span class="pre">1</span></code>から大きく外れていることが確認できる。</p>
 </section>
 <section id="id13">
 <h3>「手計算」<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h3>
@@ -1172,8 +1210,8 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <p>２つの推定式</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_1</span> <span class="o">=</span> <span class="s1">&#39;w1 ~ x1 + z1 + z2&#39;</span>
-<span class="n">formula_2</span> <span class="o">=</span> <span class="s1">&#39;w2 ~ x1 + z1 + z2&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_1</span> <span class="o">=</span> <span class="s1">&#39;w1 ~ z1 + z2 + x3&#39;</span>
+<span class="n">formula_2</span> <span class="o">=</span> <span class="s1">&#39;w2 ~ z1 + z2 + x3&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -1193,11 +1231,37 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+Intercept      0.0035     0.0060     0.5732     0.5665     -0.0084      0.0153
+x3            -0.0026     0.0059    -0.4406     0.6595     -0.0142      0.0090
+z1             0.7907     0.0061     130.19     0.0000      0.7788      0.8026
+z2            -0.0029     0.0060    -0.4882     0.6254     -0.0146      0.0088
+==============================================================================
+</pre></div>
+</div>
+</div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">z1</span></code>の係数の推定値である<span class="math notranslate nohighlight">\(\hat{\gamma}_1\)</span>の<span class="math notranslate nohighlight">\(p\)</span>値は非常に小さい。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_endog2_2</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+Intercept     -0.0057     0.0060    -0.9386     0.3479     -0.0175      0.0062
+x3            -0.0038     0.0060    -0.6299     0.5287     -0.0156      0.0080
+z1             0.0067     0.0061     1.0994     0.2716     -0.0052      0.0186
+z2             0.7983     0.0061     131.88     0.0000      0.7864      0.8101
+==============================================================================
 </pre></div>
 </div>
 </div>
@@ -1218,7 +1282,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <p>推定式を定義する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_12</span> <span class="o">=</span> <span class="s1">&#39;y ~ x1 + w1hat + w2hat&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_12</span> <span class="o">=</span> <span class="s1">&#39;y ~ w1hat + w2hat + x3&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -1230,8 +1294,21 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+Intercept      1.0021     0.0238     42.165     0.0000      0.9556      1.0487
+w1hat          0.9908     0.0303     32.720     0.0000      0.9315      1.0502
+w2hat          0.9837     0.0300     32.812     0.0000      0.9249      1.0424
+x3             0.9890     0.0236     41.957     0.0000      0.9428      1.0352
+==============================================================================
+</pre></div>
 </div>
-<p>全ての推定値が真の値である<code class="docutils literal notranslate"><span class="pre">1</span></code>に近いことが分かる。</p>
+</div>
+</div>
+<p>全ての推定値が真の値である<code class="docutils literal notranslate"><span class="pre">1</span></code>に概ね近いことが分かる。</p>
 </section>
 </section>
 <section id="id16">
@@ -1247,7 +1324,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <p>推定式を定義しよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_2</span> <span class="o">=</span> <span class="s1">&#39;y ~ 1 + x1 + [w1 + w2 ~ z1 + z2]&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_2</span> <span class="o">=</span> <span class="s1">&#39;y ~ 1 + x3 + [w1 + w2 ~ z1 + z2]&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -1259,9 +1336,21 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+Intercept      1.0021     0.0172     58.164     0.0000      0.9684      1.0359
+x3             0.9890     0.0170     58.145     0.0000      0.9557      1.0224
+w1             0.9908     0.0219     45.145     0.0000      0.9478      1.0338
+w2             0.9837     0.0218     45.210     0.0000      0.9410      1.0263
+==============================================================================
+</pre></div>
+</div>
+</div>
 </div>
 <p>手動計算の結果と同じであることが確認できる。標準誤差などは異なるが，必ず自動計算の値を確認するように！</p>
-<p>IVが１つのケースと比べて<code class="docutils literal notranslate"><span class="pre">educ</span></code>の係数自体は大きく変わってはいないが，<code class="docutils literal notranslate"><span class="pre">5%</span></code>有意水準でも係数<code class="docutils literal notranslate"><span class="pre">0</span></code>の帰無仮説を棄却できるようになっている。</p>
 </section>
 </section>
 <section id="id17">
@@ -1409,6 +1498,9 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/06e917fbdb527aecc30d7d938d38cb09fce4cba84a3fc121b2b65df6d29cbefc.png" src="_images/06e917fbdb527aecc30d7d938d38cb09fce4cba84a3fc121b2b65df6d29cbefc.png" />
+</div>
 </div>
 <ul class="simple">
 <li><p>欠落変数が発生しているため<code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定量は一致性は満たさない。</p></li>
@@ -1458,6 +1550,9 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <span class="k">pass</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/62618d588f02f2e6bc65b427b7341f0a3f2dad90b6d6bfb39e1eca66a3b651a8.png" src="_images/62618d588f02f2e6bc65b427b7341f0a3f2dad90b6d6bfb39e1eca66a3b651a8.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1510,6 +1605,9 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/32b98b4b259f71b405887b4246522785e3d1445ed2414390f371c07d2fe20d17.png" src="_images/32b98b4b259f71b405887b4246522785e3d1445ed2414390f371c07d2fe20d17.png" />
+</div>
 </div>
 <p><span class="math notranslate nohighlight">\(\text{Cov}(x,z)\)</span>が低くなると分散が大きくなり，一致性を失うことも確認できる。</p>
 </section>
@@ -1558,6 +1656,16 @@ y=\beta_0+\beta_1w+u
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span><span class="o">.</span><span class="n">wu_hausman</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Wu-Hausman test of exogeneity
+H0: All endogenous variables are exogenous
+Statistic: 2.8035
+P-value: 0.0948
+Distributed: F(1,423)
+WaldTestStatistic, id: 0x12709b4c0
 </pre></div>
 </div>
 </div>
@@ -1653,6 +1761,20 @@ y=\beta_0+\beta_1x + \beta_2w+u
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                Parameter Estimates                                 
+====================================================================================
+                  Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------------
+Intercept            0.0481     0.3923     0.1226     0.9024     -0.7207      0.8169
+I(res_2a.resids)     0.0582     0.0346     1.6810     0.0928     -0.0097      0.1260
+educ                 0.0614     0.0308     1.9932     0.0462      0.0010      0.1218
+exper                0.0442     0.0132     3.3559     0.0008      0.0184      0.0700
+expersq             -0.0009     0.0004    -2.2840     0.0224     -0.0017     -0.0001
+====================================================================================
+</pre></div>
+</div>
+</div>
 </div>
 <p><span class="math notranslate nohighlight">\(p\)</span>値は0.0928で，5%の有意水準では帰無仮説を棄却できない（内生性を棄却できない）。</p>
 </section>
@@ -1662,6 +1784,16 @@ y=\beta_0+\beta_1x + \beta_2w+u
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span><span class="o">.</span><span class="n">wooldridge_regression</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Wooldridge&#39;s regression test of exogeneity
+H0: Endogenous variables are exogenous
+Statistic: 2.8256
+P-value: 0.0928
+Distributed: chi2(1)
+WaldTestStatistic, id: 0x12721e7a0
 </pre></div>
 </div>
 </div>
@@ -1777,6 +1909,11 @@ y=\beta_0+\beta_1x+\beta_2w+u
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5386372330714875
+</pre></div>
+</div>
+</div>
 </div>
 <p>５％有意水準では帰無仮説を棄却できない。</p>
 </section>
@@ -1786,6 +1923,16 @@ y=\beta_0+\beta_1x+\beta_2w+u
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span><span class="o">.</span><span class="n">sargan</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sargan&#39;s test of overidentification
+H0: The model is not overidentified.
+Statistic: 0.3781
+P-value: 0.5386
+Distributed: chi2(1)
+WaldTestStatistic, id: 0x12721f5e0
 </pre></div>
 </div>
 </div>
@@ -1896,6 +2043,21 @@ y=\beta_0+\beta_1x+\beta_2w+u
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+Intercept      2225.7     570.52     3.9011     0.0001      1107.5      3343.9
+age           -7.8061     9.3120    -0.8383     0.4019     -26.057      10.445
+educ          -183.75     58.684    -3.1312     0.0017     -298.77     -68.733
+kidslt6       -198.15     181.64    -1.0909     0.2753     -554.17      157.86
+nwifeinc      -10.170     6.5682    -1.5483     0.1215     -23.043      2.7039
+lwage          1639.6     467.27     3.5088     0.0005      723.73      2555.4
+==============================================================================
+</pre></div>
+</div>
+</div>
 </div>
 <p><strong><code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定</strong></p>
 <div class="cell docutils container">
@@ -1907,6 +2069,21 @@ y=\beta_0+\beta_1x+\beta_2w+u
 <span class="n">res_L_ols</span> <span class="o">=</span> <span class="n">mod_L_ols</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">res_L_ols</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+Intercept      1523.8     303.43     5.0219     0.0000      929.07      2118.5
+age            0.5623     5.1039     0.1102     0.9123     -9.4411      10.566
+educ          -6.6219     17.989    -0.3681     0.7128     -41.879      28.636
+kidslt6       -328.86     100.74    -3.2643     0.0011     -526.31     -131.40
+lwage         -2.0468     54.494    -0.0376     0.9700     -108.85      104.76
+nwifeinc      -5.9185     3.6574    -1.6182     0.1056     -13.087      1.2500
+==============================================================================
 </pre></div>
 </div>
 </div>
@@ -1928,6 +2105,20 @@ y=\beta_0+\beta_1x+\beta_2w+u
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+Intercept     -0.6557     0.3358    -1.9527     0.0509     -1.3139      0.0024
+educ           0.1103     0.0154     7.1488     0.0000      0.0801      0.1406
+exper          0.0346     0.0194     1.7847     0.0743     -0.0034      0.0726
+expersq       -0.0007     0.0005    -1.5634     0.1179     -0.0016      0.0002
+hours          0.0001     0.0003     0.4974     0.6189     -0.0004      0.0006
+==============================================================================
+</pre></div>
+</div>
+</div>
 </div>
 <p><strong><code class="docutils literal notranslate"><span class="pre">OLS</span></code>推定</strong></p>
 <div class="cell docutils container">
@@ -1939,6 +2130,20 @@ y=\beta_0+\beta_1x+\beta_2w+u
 <span class="n">res_W_ols</span> <span class="o">=</span> <span class="n">mod_W_ols</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;unadjusted&#39;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">res_W_ols</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+Intercept     -0.4620     0.2027    -2.2797     0.0226     -0.8592     -0.0648
+educ           0.1062     0.0141     7.5400     0.0000      0.0786      0.1338
+exper          0.0447     0.0133     3.3590     0.0008      0.0186      0.0708
+expersq       -0.0009     0.0004    -2.1883     0.0286     -0.0016   -8.96e-05
+hours      -5.655e-05  4.353e-05    -1.2992     0.1939     -0.0001   2.876e-05
+==============================================================================
 </pre></div>
 </div>
 </div>
@@ -2115,6 +2320,9 @@ z=x^*+v
 <span class="k">pass</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4abcf7b0f9e645e39a199566ff035ff44f371f74aa1e6bdb448039a2b140a0e4.png" src="_images/4abcf7b0f9e645e39a199566ff035ff44f371f74aa1e6bdb448039a2b140a0e4.png" />
 </div>
 </div>
 <ul class="simple">
