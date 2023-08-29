@@ -425,8 +425,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1>不均一分散<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="chap-14-hetero">
+<span id="id1"></span><h1>不均一分散<a class="headerlink" href="#chap-14-hetero" title="Permalink to this heading">#</a></h1>
 <div name="html-admonition" style="font-size: 0.8em">
 <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translation" style="color:#ffffff;background-color:#008080; height:25px" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/> in English or the language of your choice.
 </div><br><div class="cell docutils container">
@@ -483,6 +483,14 @@ document.write(`
 </ul>
 <p>ここで<code class="docutils literal notranslate"><span class="pre">HC</span></code>は<code class="docutils literal notranslate"><span class="pre">H</span></code>eteroskedasticity-<code class="docutils literal notranslate"><span class="pre">C</span></code>onsistent Covariance Matrix Estimatorsの<code class="docutils literal notranslate"><span class="pre">H</span></code>と<code class="docutils literal notranslate"><span class="pre">C</span></code>。</p>
 <p>不均一分散頑健共分散行列推定を使い計算した<span class="math notranslate nohighlight">\(t\)</span>値や<span class="math notranslate nohighlight">\(F\)</span>値を<strong>頑健的<span class="math notranslate nohighlight">\(t\)</span>値</strong>，<strong>頑健的<span class="math notranslate nohighlight">\(F\)</span>値</strong>と呼ぶことにする。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">HC0</span></code>などは不均一分散に対応する推定方法である。一方で，時系列分析では残差に不均一分散と自己相関の両方が存在する場合がある。この両方の問題に頑健的な推定を不均一分散・自己相関頑健推定（Heteroskedasticity-Autocorrelation Robust Inference）と呼ぶ。以下で説明する引数<code class="docutils literal notranslate"><span class="pre">cov_type</span></code>に<code class="docutils literal notranslate"><span class="pre">HAC</span></code>を次のように指定することにより，不均一分散・自己相関頑健標準誤差を計算することができる。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HAC&#39;</span>
+</pre></div>
+</div>
+<p>ちなみに，<code class="docutils literal notranslate"><span class="pre">HC</span></code>はHeteroskedasticity Consistentの略であり，<code class="docutils literal notranslate"><span class="pre">HAC</span></code>はHeteroskedasticity-Autocorrelation Consistent`の略である。</p>
+</div>
 <hr class="docutils" />
 <p>OLS推定量の不均一分散頑健標準偏差が簡単に計算できるのであれば，通常の標準偏差を使う必要はないのではないか，という疑問が生じる。この問を関して以下の点を考える必要がある。</p>
 <ul class="simple">
@@ -507,7 +515,7 @@ document.write(`
 </ul>
 </li>
 </ul>
-<p>従って，標本の大きさが「大標本」と判断できる場合（例えば，<span class="math notranslate nohighlight">\(n=1000\)</span>）以外は通常の標準偏差と不均一分散頑健標準偏差の両方を表示することを勧める。</p>
+<p>従って，標本の大きさが「大標本」と判断できる場合（例えば，<span class="math notranslate nohighlight">\(n\geq 1000\)</span>）以外は通常の標準偏差と不均一分散頑健標準偏差の両方を表示することを勧める。</p>
 </section>
 <section id="t">
 <h2>頑健的<span class="math notranslate nohighlight">\(t\)</span>検定<a class="headerlink" href="#t" title="Permalink to this heading">#</a></h2>
