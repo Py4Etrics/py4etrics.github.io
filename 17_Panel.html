@@ -476,7 +476,8 @@ document.write(`
 <p>次式を考えよう。</p>
 <div class="math notranslate nohighlight">
 \[y_{it}= \beta_0 + a_i + \beta_1x_{it}+u_{it}\qquad i=1,2,..,n\quad t=0,1,...,T\qquad\qquad\left(\text{式１}\right)\]</div>
-<p>両辺のそれぞれの変数の時間に対しての平均を計算すると次式となる。</p>
+<p><span class="math notranslate nohighlight">\(a_i\)</span>は時間に依存せず，個体<span class="math notranslate nohighlight">\(i\)</span>特有の因子となっている。この<span class="math notranslate nohighlight">\(i\)</span>に固定された<span class="math notranslate nohighlight">\(a_i\)</span>が重要なモデルの要素なっているため固定効果モデルと呼ばれる。</p>
+<p><span class="math notranslate nohighlight">\(i\)</span>を所与として，両辺のそれぞれの変数の時間に対しての平均を計算すると次式となる。</p>
 <div class="math notranslate nohighlight">
 \[\bar{y}_i= \beta_0 + a_i + \beta_1\bar{x}_i+\bar{u}_i\qquad\qquad\left(\text{式２}\right)\]</div>
 <p>（注意）<span class="math notranslate nohighlight">\(a_i\)</span>は時間に対して不変なため，<span class="math notranslate nohighlight">\(a_i\)</span>はそのままの値を取る。</p>
@@ -1103,9 +1104,6 @@ d87            0.9250     0.0688     13.450     0.0000      0.7902      1.0599
 ==============================================================================
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
 </div>
 </div>
 <p>（結果）</p>
@@ -1127,8 +1125,8 @@ d87            0.9250     0.0688     13.450     0.0000      0.7902      1.0599
 Dep. Variable:                  lwage   R-squared:                        0.1806
 Estimator:                   PanelOLS   R-squared (Between):              0.2386
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Tue, Aug 29 2023   R-squared (Overall):              0.2361
-Time:                        05:02:32   Log-likelihood                   -1324.8
+Date:                Wed, Aug 30 2023   R-squared (Overall):              0.2361
+Time:                        01:33:06   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      83.851
 Entities:                         545   P-value                           0.0000
@@ -1146,12 +1144,21 @@ Max Obs:                       545.00
 </div>
 </div>
 </div>
-<p>この表にある<span class="math notranslate nohighlight">\(R^2\)</span>について説明する。</p>
+<p>＜この表にある<span class="math notranslate nohighlight">\(R^2\)</span>について＞</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(R^2\)</span>＝<span class="math notranslate nohighlight">\(R^2(\text{Within})\)</span>：(式３)を推定した際の<span class="math notranslate nohighlight">\(R^2\)</span>である（<span class="math notranslate nohighlight">\(\ddot{y}_i\)</span>が<span class="math notranslate nohighlight">\(\ddot{x}_i\)</span>によってどれだけ説明されたかを示す）。</p></li>
 <li><p><span class="math notranslate nohighlight">\(R^2(\text{Between})\)</span>：(式２)を推定した際の<span class="math notranslate nohighlight">\(R^2\)</span>である（<span class="math notranslate nohighlight">\(\hat{y}_i\)</span>が<span class="math notranslate nohighlight">\(\hat{x}_i\)</span>によってどれだけ説明されたかを示す）。</p></li>
 <li><p><span class="math notranslate nohighlight">\(R^2(\text{Overall})\)</span>：(式１)を推定した際の<span class="math notranslate nohighlight">\(R^2\)</span>である（<span class="math notranslate nohighlight">\({y}_i\)</span>が<span class="math notranslate nohighlight">\({x}_i\)</span>によってどれだけ説明されたかを示す）。</p></li>
 </ul>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>(式３)の回帰式には定数項はないため，上の計算で使った回帰式<code class="docutils literal notranslate"><span class="pre">formula_fe</span></code>には定数項を表す<code class="docutils literal notranslate"><span class="pre">1</span></code>は省かれている。(式３)と整合性が取れたコードとなっており，直感的にも分かりやすい。では，<code class="docutils literal notranslate"><span class="pre">formula_fe</span></code>に<code class="docutils literal notranslate"><span class="pre">1</span></code>を加えて次のように書き換えて計算するとどうなるのだろうか。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_fe</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
+<span class="s1">                      +d81+d82+d83+d84+d85+d86+d87 + EntityEffects&#39;</span>
+</pre></div>
+</div>
+<p>このコードを使うと定数項の推定値が計算されることになるが，(式３)とは整合性がないように見える。実際そうなのだが，<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>では，この場合の定数項の推定値は，(式３)の個体固有の因子である<span class="math notranslate nohighlight">\(a_i\)</span>の平均値を表す仕様になっている。<code class="docutils literal notranslate"><span class="pre">formula_fe</span></code>に<code class="docutils literal notranslate"><span class="pre">1+</span></code>が追加されても，他の変数の推定値などは変わらない。確かめてみよう！</p>
+</div>
 </section>
 <section id="timeeffects">
 <h4>TimeEffects<a class="headerlink" href="#timeeffects" title="Permalink to this heading">#</a></h4>
@@ -1170,8 +1177,8 @@ Max Obs:                       545.00
 Dep. Variable:                  lwage   R-squared:                        0.0216
 Estimator:                   PanelOLS   R-squared (Between):             -0.2717
 No. Observations:                4360   R-squared (Within):              -0.4809
-Date:                Tue, Aug 29 2023   R-squared (Overall):             -0.2808
-Time:                        05:02:32   Log-likelihood                   -1324.8
+Date:                Wed, Aug 30 2023   R-squared (Overall):             -0.2808
+Time:                        01:33:06   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      27.959
 Entities:                         545   P-value                           0.0000
@@ -1557,8 +1564,8 @@ Name: Variance Decomposition, dtype: float64
 Dep. Variable:                  lwage   R-squared:                        0.1711
 Estimator:              RandomEffects   R-squared (Between):              0.0967
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Tue, Aug 29 2023   R-squared (Overall):              0.1355
-Time:                        05:02:33   Log-likelihood                   -1609.8
+Date:                Wed, Aug 30 2023   R-squared (Overall):              0.1355
+Time:                        01:33:08   Log-likelihood                   -1609.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      69.027
 Entities:                         545   P-value                           0.0000
@@ -1632,7 +1639,7 @@ H0: Linear equality constraint is valid
 Statistic: 35.6454
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x1243a7f40
+WaldTestStatistic, id: 0x12010e020
 </pre></div>
 </div>
 </div>
@@ -1715,7 +1722,7 @@ H0: Linear equality constraint is valid
 Statistic: 26.0233
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x1243fe530
+WaldTestStatistic, id: 0x122328610
 </pre></div>
 </div>
 </div>
@@ -2042,32 +2049,32 @@ T-stats reported in parentheses
     <tr>
       <th rowspan="5" valign="top">0</th>
       <th>2000</th>
-      <td>3.646680</td>
-      <td>1.144263</td>
+      <td>1.526382</td>
+      <td>-0.042742</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2001</th>
-      <td>-0.679766</td>
-      <td>-0.756196</td>
+      <td>1.144383</td>
+      <td>-0.124399</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2002</th>
-      <td>-0.777901</td>
-      <td>-1.133805</td>
+      <td>-0.825726</td>
+      <td>-0.792109</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2003</th>
-      <td>-1.577736</td>
-      <td>-1.211214</td>
+      <td>0.415619</td>
+      <td>-0.363706</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2004</th>
-      <td>0.154930</td>
-      <td>0.297722</td>
+      <td>0.979484</td>
+      <td>-0.285576</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -2090,7 +2097,7 @@ T-stats reported in parentheses
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-X              2.0028     0.0441     45.404     0.0000      1.9161      2.0895
+X              1.9940     0.0508     39.265     0.0000      1.8942      2.0938
 ==============================================================================
 </pre></div>
 </div>
@@ -2113,10 +2120,10 @@ X              2.0028     0.0441     45.404     0.0000      1.9161      2.0895
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.9326     0.1457     13.265     0.0000      1.6463      2.2188
-X              2.8212     0.0246     114.72     0.0000      2.7729      2.8695
+Intercept      1.8754     0.1423     13.183     0.0000      1.5959      2.1549
+X              2.8182     0.0239     117.75     0.0000      2.7712      2.8652
 ==============================================================================
-theta: [0.26026636]
+theta: [0.24704347]
 </pre></div>
 </div>
 </div>
@@ -2146,9 +2153,9 @@ theta: [0.26026636]
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.0964     0.1156     9.4840     0.0000      0.8693      1.3235
-X              2.0028     0.0441     45.439     0.0000      1.9162      2.0894
-X_mean         0.9857     0.0484     20.363     0.0000      0.8906      1.0808
+Intercept      1.2121     0.1187     10.213     0.0000      0.9789      1.4453
+X              1.9940     0.0507     39.295     0.0000      1.8943      2.0937
+X_mean         0.9559     0.0547     17.482     0.0000      0.8485      1.0634
 ==============================================================================
 </pre></div>
 </div>
@@ -2170,8 +2177,8 @@ X_mean         0.9857     0.0484     20.363     0.0000      0.8906      1.0808
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.5921     0.1177     13.522     0.0000      1.3607      1.8234
-X              2.8893     0.0201     143.76     0.0000      2.8498      2.9288
+Intercept      1.6120     0.1158     13.924     0.0000      1.3846      1.8395
+X              2.8705     0.0196     146.12     0.0000      2.8319      2.9091
 ==============================================================================
 </pre></div>
 </div>
@@ -2262,7 +2269,7 @@ X              2.8893     0.0201     143.76     0.0000      2.8498      2.9288
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7aa9c1ff3455acabf0f79856f204c22d4d4d3c5650d494ef11887e862f465b79.png" src="_images/7aa9c1ff3455acabf0f79856f204c22d4d4d3c5650d494ef11887e862f465b79.png" />
+<img alt="_images/89a6d29a85552bd19197880860cb1510846f4a5c5d0babdbbe427a31442b2f88.png" src="_images/89a6d29a85552bd19197880860cb1510846f4a5c5d0babdbbe427a31442b2f88.png" />
 </div>
 </div>
 </section>
@@ -2271,19 +2278,38 @@ X              2.8893     0.0201     143.76     0.0000      2.8498      2.9288
 <h2>標準誤差の問題<a class="headerlink" href="#id19" title="Permalink to this heading">#</a></h2>
 <p>(式３)の固定効果モデルを考えよう。パネル・データの場合，次の2つの問題が発生する場合がある。</p>
 <ul class="simple">
-<li><p>残差の不均一分散</p></li>
-<li><p>固定ごとの残差の自己相関</p></li>
+<li><p>残差の不均一分散</p>
+<ul>
+<li><p>固定効果モデルは，変数の変換後に通常のOLS推定をおこなうため，残差に不均一分散が存在するかも知れない。（<a class="reference internal" href="14_Hetero.html#chap-14-hetero"><span class="std std-ref">不均一分散</span></a>を参照。）</p></li>
 </ul>
-<p>これらの問題が発生しても，基本的な仮定のもと（<a class="reference internal" href="18_Zero_Conditional_Mean.html#chap-18-gm4"><span class="std std-ref">GM仮定４が満たされない場合</span></a>を参照）でFE推定量は不偏性と一致性を満たす。しかし，係数の標準誤差は有効ではなくなり検定が無効となる。その対処方法として，<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>には主に２つの方法が用意されている。</p>
+</li>
+<li><p>残差の相関</p>
+<ul>
+<li><p>直感的に説明するために次の例を考えよう。賃金のパネル・データを作成する際に，まず複数の会社をランダムに抽出し，それらの会社から複数の労働者をランダム抽出することにより，各労働者の時系列データを収集するとしよう。</p></li>
+<li><p><strong>＜個体内での残差の相関＞</strong> 労働者Aさんを考えよう。Aさんへの今期のショックは前期のショックに影響されるかも知れないため，残差には自己相関の可能性がある。Bさんも，Cさんも，，，Zさんにも同様のことが言えるかも知れない。このタイプの相関は，<strong>個体内</strong>での期間間の残差の相関である。</p></li>
+<li><p><strong>＜個体間での残差の相関＞</strong> ある期間を考えよう。会社Firm0で働くA0さん，B0さん，C0さん，，，Z0さんは，同じ会社で働いているため共通の特徴があり，残差は相関するかも知れない。別の会社Firm1で働くA1さん，B1さん，C1さん，，，Z1さんも，同様に残差は相関する可能性がある。このタイプの相関は，期間内での<strong>個体間</strong>の残差の相関である。</p></li>
+</ul>
+</li>
+</ul>
+<p>これらの問題が発生しても，基本的な仮定の下（特に，<a class="reference internal" href="18_Zero_Conditional_Mean.html#chap-18-gm4"><span class="std std-ref">GM仮定４が満たされない場合</span></a>で詳しく検討するガウス・マルコフ定理４が満たされる場合）でFE推定量は不偏性と一致性を満たす。しかし，係数の標準誤差は有効ではなくなり検定が無効となる。その対処方法として，<code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>には主に次の２つの方法が用意されている。</p>
 <ol class="arabic simple">
-<li><p>不均一分散頑健的推定（<a class="reference internal" href="14_Hetero.html#chap-14-hetero"><span class="std std-ref">不均一分散</span></a>を参照）</p></li>
-<li><p>クラスター頑健的推定</p>
+<li><p>不均一分散頑健推定</p>
 <ul class="simple">
-<li><p>不均一分散頑健的推定を個体ごとの自己相関（個体間の相関ではない）に対応できるように拡張し，パネル・データ用に考案された推定となる。即ち，パネル・データ分析における残差の不均一分散と自己相関の両方を考慮した頑健的な推定となる。</p></li>
+<li><p>詳しくは，<a class="reference internal" href="14_Hetero.html#chap-14-hetero"><span class="std std-ref">不均一分散</span></a>を参照。</p></li>
+</ul>
+</li>
+<li><p>クラスター頑健推定</p>
+<ul class="simple">
+<li><p>クラスターとは何らかの特徴を共有する観測値がグループ化された集まりである。クラスター頑健推定では，（１）残差の不均一分散と（２）格クラスター内での残差の相関の両方を考慮した頑健推定となる。（２）には上で説明した次のパターンが挙げられる。</p>
+<ul>
+<li><p>個体<strong>内</strong>での残差の自己相関であり，時系列的な相関に該当する。</p></li>
+<li><p>個体<strong>間</strong>での残差の相関であり，クロス・セクションの相関に該当する。</p></li>
+</ul>
+</li>
 </ul>
 </li>
 </ol>
-<p>以下では，この２つの使い方を説明する。</p>
+<p>以下では，この２つの頑健推定の使い方を説明する。</p>
 <section id="id20">
 <h3>分散の確認<a class="headerlink" href="#id20" title="Permalink to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>には残差の均一分散を調べるBreusch-Pagan検定やWhite検定をおこなうメソッドは用意されていない。ここでは<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>を使いWooldridge (2016,p.253)で説明されているWhite検定に基づく検定をおこなう。次に必要な変数を作成する。</p>
