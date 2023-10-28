@@ -457,7 +457,7 @@ document.write(`
 </div><br><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">chi2</span><span class="p">,</span> <span class="n">gaussian_kde</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">uniform</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">gaussian_kde</span><span class="p">,</span> <span class="n">t</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
@@ -518,23 +518,21 @@ document.write(`
 <h3>シミュレーション：一致性<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
 <section id="id4">
 <h4>仮定<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h4>
-<p>シミュレーションを使い一致性の分布収束を確かめる。仮定１〜４には誤差項の正規性や均一性は含まれていない。この点を捉えるために，誤差項は２つの異なる分布から生成されたランダム変数の加重平均と仮定する。まず，次の正規分布</p>
+<p>シミュレーションを使い一致性の分布収束を確かめる。仮定１〜４には誤差項の正規性や均一性は含まれていない。この点を捉えるために，誤差項は２つの異なる分布から確率的に発生すると仮定する。具体的には，確率<span class="math notranslate nohighlight">\(p\)</span>で誤差項は正規分布</p>
 <div class="math notranslate nohighlight">
-\[u_N\sim\text{Normal(0,0.25)}\]</div>
-<p>のウェイトは<span class="math notranslate nohighlight">\(p\)</span>とし，次のランダム変数のウェイトは<span class="math notranslate nohighlight">\(1-p\)</span>とする。</p>
+\[u_N\sim\text{Normal(0,0.5)}\]</div>
+<p>に従い発生し，確率<span class="math notranslate nohighlight">\(1-p\)</span>で</p>
 <div class="math notranslate nohighlight">
 \[u_c=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)\]</div>
-<p>ここで，<span class="math notranslate nohighlight">\(\chi^2(1)\)</span>は自由度１のカイ二乗分布であり，<span class="math notranslate nohighlight">\(u_c\)</span>の平均は1，標準偏差は<span class="math notranslate nohighlight">\(\sqrt{2}\)</span>となる。
-誤差項の確率密度関数は２つの確率密度関数の「加重平均」</p>
-<div class="math notranslate nohighlight">
-\[
-u = pu_N+(1-p)u_c
-\]</div>
-<p>となる。</p>
+<p>が発生する。ここで，<span class="math notranslate nohighlight">\(\chi^2(1)\)</span>は自由度１のカイ二乗分布であり，平均は<span class="math notranslate nohighlight">\(1\)</span>，分散は<span class="math notranslate nohighlight">\(2\)</span>である。従って，<span class="math notranslate nohighlight">\(u_c\)</span>の平均は<span class="math notranslate nohighlight">\(0\)</span>，分散は<span class="math notranslate nohighlight">\(1\)</span>となる。</p>
 <ul class="simple">
-<li><p>正規分布の分散は0.5であり，カイ二乗分布の分散は1であるため仮定５は満たされない。（説明変数によって誤差項の分散が異なる。）</p></li>
-<li><p>明らかに仮定６も満たされない。</p></li>
-<li><p><span class="math notranslate nohighlight">\(\text{E}(u_N)=\text{E}(u_c)\)</span>であるため<span class="math notranslate nohighlight">\(\text{E}(u)=0\)</span>。</p></li>
+<li><p>両方のランダム変数の平均は<span class="math notranslate nohighlight">\(0\)</span>なので，誤差項の平均は<span class="math notranslate nohighlight">\(0\)</span>となる。</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\text{E}(u_N)=\text{E}(u_c)=\text{E}(u)=0\)</span>。</p></li>
+</ul>
+</li>
+<li><p>正規分布の分散は0.5であり，カイ二乗分布の分散は1であるため仮定５（均一分散）は満たされない。（説明変数によって誤差項の分散が異なると解釈できる。）</p></li>
+<li><p>明らかに仮定６（正規分布）も満たされない。</p></li>
 </ul>
 </section>
 <section id="id5">
@@ -572,43 +570,33 @@ u = pu_N+(1-p)u_c
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1"># (1)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c1">#1</span>
+
+    <span class="n">random_var</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1">#2</span>
+        <span class="s1">&#39;normal&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">u_sd</span><span class="p">),</span> <span class="c1">#3</span>
+        <span class="s1">&#39;chi2&#39;</span><span class="p">:(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">chisquare</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1">#4</span>
+    <span class="p">}</span>
     
-    <span class="n">p</span> <span class="o">=</span> <span class="mf">0.05</span>        <span class="c1"># (2)</span>
-    <span class="n">dist_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">u_sd</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>        <span class="c1"># (3)</span>
-    <span class="n">dist_2</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">chisquare</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># (4)</span>
-    
-    <span class="n">error</span> <span class="o">=</span> <span class="n">p</span><span class="o">*</span><span class="p">(</span><span class="n">dist_1</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">dist_2</span><span class="p">)</span>    <span class="c1"># (5)</span>
-    <span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">error</span>    <span class="c1"># (6)</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span><span class="s1">&#39;chi2&#39;</span><span class="p">]</span>   <span class="c1">#5</span>
+
+    <span class="n">choice</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">1</span><span class="o">-</span><span class="mf">0.05</span><span class="p">])</span>  <span class="c1">#6</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="n">random_var</span><span class="p">[</span><span class="n">choice</span><span class="p">]</span> <span class="c1">#7</span>
+    <span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">error</span>               <span class="c1">#8</span>
 </pre></div>
 </div>
 </div>
 </div>
 <p>＜上のコードの説明＞</p>
-<blockquote>
-<div><ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>回<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを宣言。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">dist_1</span></code>の割合</p></li>
-<li><p>正規分布に従う１つのランダム変数を生成。</p></li>
-<li><p>カイ二乗分布に従う１つのランダム変数を生成。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error</span></code>が誤差項</p></li>
-<li><p>この誤差項を<code class="docutils literal notranslate"><span class="pre">u[]</span></code>の<code class="docutils literal notranslate"><span class="pre">i</span></code>番目に代入。</p></li>
-</ol>
-</div></blockquote>
-<p>＜コメント＞<br>
-(5)では<code class="docutils literal notranslate"><span class="pre">dist_1</span></code>と<code class="docutils literal notranslate"><span class="pre">dist_2</span></code>の加重平均として<code class="docutils literal notranslate"><span class="pre">error</span></code>を生成しているが，<code class="docutils literal notranslate"><span class="pre">p</span></code>を確率として解釈し，
-<code class="docutils literal notranslate"><span class="pre">p</span></code>で<code class="docutils literal notranslate"><span class="pre">dist_1</span></code>が発生し<code class="docutils literal notranslate"><span class="pre">1-p</span></code>で<code class="docutils literal notranslate"><span class="pre">dist_2</span></code>が発生するように設定することも可能である。例えば，次のコード。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-
-    <span class="n">random_var</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;normal&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">u_sd</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-                  <span class="s1">&#39;chi2&#39;</span><span class="p">:(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">chisquare</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)}</span>
-    <span class="n">dist</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span><span class="s1">&#39;chi2&#39;</span><span class="p">]</span>
-
-    <span class="n">choice</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">1</span><span class="o">-</span><span class="mf">0.05</span><span class="p">])</span>
-    <span class="n">error</span> <span class="o">=</span> <span class="n">random_var</span><span class="p">[</span><span class="n">choice</span><span class="p">]</span>
-    <span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">error</span>
-</pre></div>
-</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">#1</span></code>：<code class="docutils literal notranslate"><span class="pre">n</span></code>回<code class="docutils literal notranslate"><span class="pre">for</span></code>ループの開始</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#2</span></code>：<code class="docutils literal notranslate"><span class="pre">random_var</span></code>は，<code class="docutils literal notranslate"><span class="pre">#3</span></code>と<code class="docutils literal notranslate"><span class="pre">#4</span></code>で生成するランダム変数を格納する辞書名</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#3</span></code>：<code class="docutils literal notranslate"><span class="pre">normal</span></code>がキーであり，値には正規分布に従い発生した１つのランダム変数を設定</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#4</span></code>：<code class="docutils literal notranslate"><span class="pre">chi2</span></code>がキーであり，値にはカイ二乗分布に従い発生した１つのランダム変数を設定</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#5</span></code>：<code class="docutils literal notranslate"><span class="pre">#3</span></code>と<code class="docutils literal notranslate"><span class="pre">#4</span></code>のキーを要素とするリスト</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#6</span></code>：<code class="docutils literal notranslate"><span class="pre">np.random.choice()</span></code>関数は，第一引数<code class="docutils literal notranslate"><span class="pre">dist</span></code>のリストから１つの要素をランダムに選び，その確率は第二引数<code class="docutils literal notranslate"><span class="pre">p=[0.05,1-0.05]</span></code>によって指定される</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#7</span></code>：<code class="docutils literal notranslate"><span class="pre">#6</span></code>で選択されたキーを使って，<code class="docutils literal notranslate"><span class="pre">#2</span></code>の<code class="docutils literal notranslate"><span class="pre">randam_var</span></code>からランダム変数を抽出し，それを誤差項として<code class="docutils literal notranslate"><span class="pre">error</span></code>に割り当てる</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#8</span></code>：<code class="docutils literal notranslate"><span class="pre">#7</span></code>の誤差項を<code class="docutils literal notranslate"><span class="pre">u[]</span></code>の<code class="docutils literal notranslate"><span class="pre">i</span></code>番目に代入</p></li>
+</ul>
 <p><code class="docutils literal notranslate"><span class="pre">u</span></code>の最初の10の値を確認してみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -617,8 +605,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.27941578, -0.2337182 , -0.44400372, -0.57980998, -0.6486381 ,
-       -0.61829539,  0.49643252, -0.67980623,  2.66162476,  0.16296558])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.65312123, -1.05423014, -0.46955038, -0.70195663, -0.6697115 ,
+       -0.69203555, -0.01997471, -0.68907772, -0.65604307,  0.02412134])
 </pre></div>
 </div>
 </div>
@@ -635,7 +623,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/fe0e010caa0a97d544d2e9b1f57c1ac05c56b129a97520321bb63560cf1fe030.png" src="_images/fe0e010caa0a97d544d2e9b1f57c1ac05c56b129a97520321bb63560cf1fe030.png" />
+<img alt="_images/bf9f32eb8cdf93fdb35e519686a6396ff924bbfa73fe8c2be26e07274f6d7476.png" src="_images/bf9f32eb8cdf93fdb35e519686a6396ff924bbfa73fe8c2be26e07274f6d7476.png" />
 </div>
 </div>
 <p>確認のために、生成された<code class="docutils literal notranslate"><span class="pre">n</span></code>個のランダム変数（誤差項）の平均を計算してみる。</p>
@@ -646,7 +634,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.006752880385976377
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.011428542409357166
 </pre></div>
 </div>
 </div>
@@ -661,7 +649,7 @@ u = pu_N+(1-p)u_c
 <div class="math notranslate nohighlight">
 \[ y=\beta_0 + \beta_1 x + u\]</div>
 </li>
-<li><p>標本の大きさ<span class="math notranslate nohighlight">\(n=5,\;10,\;100,\;500\)</span>を考える。</p></li>
+<li><p>標本の大きさ<span class="math notranslate nohighlight">\(n=30,\;100,\;250,\;500\)</span>を考える。</p></li>
 <li><p>それぞれ10,000回推定し<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>（10,000個）の分布を比べる。</p></li>
 </ul>
 <p>母集団のパラメータ</p>
@@ -758,8 +746,8 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.13004783, 0.73992176, 0.48275541, ..., 0.63237272, 0.40211118,
-       0.34880357])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.47279551,  0.46889531,  0.4662014 , ...,  0.78130204,
+        0.68171889, -0.12971091])
 </pre></div>
 </div>
 </div>
@@ -797,7 +785,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/debaaaed79c174b94af9695c8dff2f2935dcdb26d88e6eea0d4eeff3a45cbe9a.png" src="_images/debaaaed79c174b94af9695c8dff2f2935dcdb26d88e6eea0d4eeff3a45cbe9a.png" />
+<img alt="_images/6b32bcf4a65a3fff1a7251dbdcf6ee479080d290732379d1de73cc199b50620d.png" src="_images/6b32bcf4a65a3fff1a7251dbdcf6ee479080d290732379d1de73cc199b50620d.png" />
 </div>
 </div>
 <p>上のコードには同じような行が複数あり，単純な間違いの可能性が高くなる。。<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを使うとよりコンパクトに書くことが可能となり，間違いも少なくなる。</p>
@@ -829,7 +817,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/debaaaed79c174b94af9695c8dff2f2935dcdb26d88e6eea0d4eeff3a45cbe9a.png" src="_images/debaaaed79c174b94af9695c8dff2f2935dcdb26d88e6eea0d4eeff3a45cbe9a.png" />
+<img alt="_images/6b32bcf4a65a3fff1a7251dbdcf6ee479080d290732379d1de73cc199b50620d.png" src="_images/6b32bcf4a65a3fff1a7251dbdcf6ee479080d290732379d1de73cc199b50620d.png" />
 </div>
 </div>
 <p>＜コードの説明＞</p>
@@ -1034,7 +1022,7 @@ u = pu_N+(1-p)u_c
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ec1d3cbdaba94ded582eb6bbf7b51a49daaef56eea8268c5ef1bcd3327a34b58.png" src="_images/ec1d3cbdaba94ded582eb6bbf7b51a49daaef56eea8268c5ef1bcd3327a34b58.png" />
+<img alt="_images/73ac90139029a3a521fbffb19a2028feab4de51f48fa01b1a9fe36394e85b20d.png" src="_images/73ac90139029a3a521fbffb19a2028feab4de51f48fa01b1a9fe36394e85b20d.png" />
 </div>
 </div>
 <p>（結果：小標本特性）</p>
@@ -1134,7 +1122,7 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2242bb6d1b788736fa617f0f8d3e213b4c9e61ae48c7464908514c9eea59a7de.png" src="_images/2242bb6d1b788736fa617f0f8d3e213b4c9e61ae48c7464908514c9eea59a7de.png" />
+<img alt="_images/67684cacb4b257c63163011166916aeb0a125f263f76f132254a727ef59112f7.png" src="_images/67684cacb4b257c63163011166916aeb0a125f263f76f132254a727ef59112f7.png" />
 </div>
 </div>
 <p>（結果：大標本特性）</p>
@@ -1156,27 +1144,27 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_norm</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
 <span class="n">qqplot</span><span class="p">(</span><span class="n">data_norm</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">,</span> <span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">pass</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/58317c0693dc72785a496d3d0c1ed879ee23082d8cd51886e27590a25d0feccb.png" src="_images/58317c0693dc72785a496d3d0c1ed879ee23082d8cd51886e27590a25d0feccb.png" />
+<img alt="_images/ade24a954656707c427850f05fbae4c05e494885ee48de661ebcec23bdd63e2e.png" src="_images/ade24a954656707c427850f05fbae4c05e494885ee48de661ebcec23bdd63e2e.png" />
 </div>
 </div>
 <p><strong>一様分布</strong>から生成したデータの場合。45度線から乖離しているのが分かる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_uniform</span> <span class="o">=</span> <span class="n">uniform</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_uniform</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
 <span class="n">qqplot</span><span class="p">(</span><span class="n">data_uniform</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">,</span> <span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">pass</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d41eff3dcbeb7143399ae50da08e23781d80bcb58820683b68a0905bc8000d07.png" src="_images/d41eff3dcbeb7143399ae50da08e23781d80bcb58820683b68a0905bc8000d07.png" />
+<img alt="_images/ff0ce3f6caf84d9e6bbb8113d7a1686c05f925b6a116a668fa063e676d0b51ac.png" src="_images/ff0ce3f6caf84d9e6bbb8113d7a1686c05f925b6a116a668fa063e676d0b51ac.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">wooldridge</span></code>パッケージにある<code class="docutils literal notranslate"><span class="pre">wage1</span></code>のデータを使ってみる。</p>
@@ -1230,10 +1218,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.7211131220049994,
- 0.6972881346716904,
- 0.024358803792795963,
- 2.8204449260884665)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3.248703766928324,
+ 0.19703933828280082,
+ 0.14572612250430164,
+ 2.7335541899522444)
 </pre></div>
 </div>
 </div>
@@ -1256,10 +1244,10 @@ u=\frac{v-1}{\sqrt{2}},\qquad v\sim\chi^2(1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(33.28379697345584,
- 5.9226397736777244e-08,
- 0.07282640767269573,
- 1.74444931917989)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(34.63364255040112,
+ 3.015782911929231e-08,
+ 0.06770155892515227,
+ 1.7177828428477218)
 </pre></div>
 </div>
 </div>
@@ -1341,7 +1329,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=0.6232089880955385, pvalue=0.7322710885372883)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=3.4077403376132858, pvalue=0.18197787434897447)
 </pre></div>
 </div>
 </div>
@@ -1357,7 +1345,7 @@ Kurtosis:                       3.977   Cond. No.                         135.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=490.9538263264668, pvalue=2.4588451466349728e-107)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NormaltestResult(statistic=632.9490150097828, pvalue=3.6046883884361067e-138)
 </pre></div>
 </div>
 </div>
