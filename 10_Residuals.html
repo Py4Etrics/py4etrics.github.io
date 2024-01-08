@@ -466,13 +466,18 @@ document.write(`
 <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translation" style="color:#ffffff;background-color:#008080; height:25px" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/> in English or the language of your choice.
 </div><br><div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lmdiag</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+
 <span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">uniform</span>
-<span class="kn">import</span> <span class="nn">lmdiag</span>
-<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+
+<span class="c1"># 警告メッセージを非表示</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -589,8 +594,8 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>決定係数が高いケース: 0.922
-決定係数が高いケース: 0.495
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>決定係数が高いケース: 0.908
+決定係数が高いケース: 0.546
 </pre></div>
 </div>
 </div>
@@ -627,7 +632,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/59c22cfb0bfc149be4601109373951c0dd21511ce689f52b832b1e4b9b80d308.png" src="_images/59c22cfb0bfc149be4601109373951c0dd21511ce689f52b832b1e4b9b80d308.png" />
+<img alt="_images/4456999d000a229f6d3282813c089a00e14c33b3cbd0ed5a2cefb38f85600158.png" src="_images/4456999d000a229f6d3282813c089a00e14c33b3cbd0ed5a2cefb38f85600158.png" />
 </div>
 </div>
 <p>回帰直線のフィット感ははっきりと決定係数の値に現れている。</p>
@@ -660,7 +665,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/65996017aabeba15cb45da486fffdb659b0523d7ad60356ca09b958b21cc4584.png" src="_images/65996017aabeba15cb45da486fffdb659b0523d7ad60356ca09b958b21cc4584.png" />
+<img alt="_images/30b00c39c6853d1192d959034a2b784d4d1d728db389f41c236a34d6420ce44c.png" src="_images/30b00c39c6853d1192d959034a2b784d4d1d728db389f41c236a34d6420ce44c.png" />
 </div>
 </div>
 <p>ここでも決定係数の値との関係がハッキリとわかる。</p>
@@ -693,7 +698,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/eaca6a065904ec4590ed896f5b6c505fc5b6db92d815e72added9f9a2cdace5d.png" src="_images/eaca6a065904ec4590ed896f5b6c505fc5b6db92d815e72added9f9a2cdace5d.png" />
+<img alt="_images/4e37bf8fe35737feb4a0be471c35f86daf3743c9fa4846d9e753dfc0a9308d7d.png" src="_images/4e37bf8fe35737feb4a0be471c35f86daf3743c9fa4846d9e753dfc0a9308d7d.png" />
 </div>
 </div>
 <p>左右ともに散らばりの差はあまりない。もちろん，理由は平均<code class="docutils literal notranslate"><span class="pre">0</span></code>，分散<code class="docutils literal notranslate"><span class="pre">1</span></code>になるように「標準化」されているためである。</p>
@@ -742,7 +747,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b295e8d0bed6c2b72c492e2871439bc8ef095c8f0ef9d13a37acae436dfe96cc.png" src="_images/b295e8d0bed6c2b72c492e2871439bc8ef095c8f0ef9d13a37acae436dfe96cc.png" />
+<img alt="_images/c2c6f0aa0ebe079a4345acb52a89d45a86e32dd6966bbecfb4c2df4faa5127be.png" src="_images/c2c6f0aa0ebe079a4345acb52a89d45a86e32dd6966bbecfb4c2df4faa5127be.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">0</span></code>の周りに均等に分散しているのが確認できる。</p>
@@ -755,7 +760,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/72028050362e2e33db0bc10797ef863e6e00c4f1b54e6f54d52354941f113e3f.png" src="_images/72028050362e2e33db0bc10797ef863e6e00c4f1b54e6f54d52354941f113e3f.png" />
+<img alt="_images/c6be5b61f1a326ba721433193c7d8881456691d6a4380949627a1f146c10c196.png" src="_images/c6be5b61f1a326ba721433193c7d8881456691d6a4380949627a1f146c10c196.png" />
 </div>
 </div>
 <p>観測値の間隔は少し広がっているが，シミュレーションによっては<span class="math notranslate nohighlight">\(n=2000\)</span>と比べて大きな変化は見られない場合もあれば，「外れ値」が気になる場合もあるかも知れない。</p>
@@ -768,7 +773,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7108f9f169799c6e2ed57bac4a9760376c72ceb47ac6d7ab7132dc0c77f9a67a.png" src="_images/7108f9f169799c6e2ed57bac4a9760376c72ceb47ac6d7ab7132dc0c77f9a67a.png" />
+<img alt="_images/5c463395d8acb6c8659f83f9fda28fe48bde30de7d156fd6f10fb4118bfbe57a.png" src="_images/5c463395d8acb6c8659f83f9fda28fe48bde30de7d156fd6f10fb4118bfbe57a.png" />
 </div>
 </div>
 <p>さらに隙間が広くなっている。シミュレーションによっては，少し偏りがあるように見える場合も発生するため，上の例と比べると，GM仮定1,4,5に関して自信を持って判断しづらくなる。</p>
@@ -781,7 +786,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a3dcf196a8ac5f515d2e20e9d9c7878998fb28a62426183927df7772aaa94824.png" src="_images/a3dcf196a8ac5f515d2e20e9d9c7878998fb28a62426183927df7772aaa94824.png" />
+<img alt="_images/afbfbc30ac86590e85b8da77bb1e23484fe66dc50e9095ebbb8edc59d7fdb8a6.png" src="_images/afbfbc30ac86590e85b8da77bb1e23484fe66dc50e9095ebbb8edc59d7fdb8a6.png" />
 </div>
 </div>
 <p>正規分布と分かって眺めるとそう見えるかも知れないが，実際の実証分析を行う上でこの図だけでGM仮定1,4,5が満たされているかどうかを判断するのは難しい。</p>
@@ -794,7 +799,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1cf655738f80ae7686b04cea1afd7d82e4214ea1ff5a9352ae9fa64a12227bb1.png" src="_images/1cf655738f80ae7686b04cea1afd7d82e4214ea1ff5a9352ae9fa64a12227bb1.png" />
+<img alt="_images/6d6783cbd82e6309094058134a59f873c5a25b3170a4e0327b398cdb9beefcc1.png" src="_images/6d6783cbd82e6309094058134a59f873c5a25b3170a4e0327b398cdb9beefcc1.png" />
 </div>
 </div>
 <p>標本の大きさが小さい場合，観測数が<code class="docutils literal notranslate"><span class="pre">10</span></code>少なくなると図が大きく違うように見える。</p>
@@ -846,7 +851,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c7fdcdb20204ccecea365c2054c883ff1caae24b616428325e59896dcbfba3c4.png" src="_images/c7fdcdb20204ccecea365c2054c883ff1caae24b616428325e59896dcbfba3c4.png" />
+<img alt="_images/6bc317301c1f5f355c8e5a79a215173122d0c389d79462160390961fe9baf69c.png" src="_images/6bc317301c1f5f355c8e5a79a215173122d0c389d79462160390961fe9baf69c.png" />
 </div>
 </div>
 <p>回帰分析結果の「健康状態」を診断する上でこの図は最もよく使われる。この図について以下の点を覚えておこう。</p>
@@ -882,7 +887,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/bddba31d2ae81564e6050cca8bebdb4d5793bcf98f004e3f8557b85a5cb55f49.png" src="_images/bddba31d2ae81564e6050cca8bebdb4d5793bcf98f004e3f8557b85a5cb55f49.png" />
+<img alt="_images/2590a2e67ecb62043ddafc9d30bf2acac186d91159aac665d1614c82f4f4d7aa.png" src="_images/2590a2e67ecb62043ddafc9d30bf2acac186d91159aac665d1614c82f4f4d7aa.png" />
 </div>
 </div>
 </section>
@@ -914,7 +919,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d83268f2bf177806ad6e04616e845c069c188b94958dd6d4c67d71a7dd83fe48.png" src="_images/d83268f2bf177806ad6e04616e845c069c188b94958dd6d4c67d71a7dd83fe48.png" />
+<img alt="_images/ab92aadbd365cdb61867f202604b6b038c49861fd84a655edb64d63b4a3d04ec.png" src="_images/ab92aadbd365cdb61867f202604b6b038c49861fd84a655edb64d63b4a3d04ec.png" />
 </div>
 </div>
 </section>
@@ -973,7 +978,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8408977900edada5ad3c4d4ebe0e940cd35f2e5f78ebc6d5ccaa88b2cbedc2fc.png" src="_images/8408977900edada5ad3c4d4ebe0e940cd35f2e5f78ebc6d5ccaa88b2cbedc2fc.png" />
+<img alt="_images/f721da5d76757548bb4ada6903afefd996ff5f15c388bc9dbfb17e5f258d2260.png" src="_images/f721da5d76757548bb4ada6903afefd996ff5f15c388bc9dbfb17e5f258d2260.png" />
 </div>
 </div>
 </section>
@@ -988,7 +993,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f87eeb043d555fd0be39f562717a541264589b8a1748041e8bfdb53c11855673.png" src="_images/f87eeb043d555fd0be39f562717a541264589b8a1748041e8bfdb53c11855673.png" />
+<img alt="_images/d4f8dee8a21dadfe194e3cad04c79a52e26d039f0c84636b4bf7448722595b59.png" src="_images/d4f8dee8a21dadfe194e3cad04c79a52e26d039f0c84636b4bf7448722595b59.png" />
 </div>
 </div>
 </section>
@@ -1014,7 +1019,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e3bf12d1629212aebf5702e779843d2948847fcbb6f96b19b370b83324b5044f.png" src="_images/e3bf12d1629212aebf5702e779843d2948847fcbb6f96b19b370b83324b5044f.png" />
+<img alt="_images/614edf1749e13e821a571648659128b874f201c5b8918d25af8060565541ab36.png" src="_images/614edf1749e13e821a571648659128b874f201c5b8918d25af8060565541ab36.png" />
 </div>
 </div>
 </section>
@@ -1057,7 +1062,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5c0494eeadbb96a3ee483468b86a4bc9e95952b3e661b63b199ca1328734075f.png" src="_images/5c0494eeadbb96a3ee483468b86a4bc9e95952b3e661b63b199ca1328734075f.png" />
+<img alt="_images/3d5937bb46970ccb2e1ee60fade800d0b6aba5efffb2526f0b69361738e4f7bd.png" src="_images/3d5937bb46970ccb2e1ee60fade800d0b6aba5efffb2526f0b69361738e4f7bd.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1070,7 +1075,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/cfe3f15e5b20566dfe0b20417ec091c724f0cc5dd7cc0912a1cc4cdb00b038c7.png" src="_images/cfe3f15e5b20566dfe0b20417ec091c724f0cc5dd7cc0912a1cc4cdb00b038c7.png" />
+<img alt="_images/7f4eebc5b573d4f45118663d33f49260fc0fdc4312016e46855b0c5b1154959a.png" src="_images/7f4eebc5b573d4f45118663d33f49260fc0fdc4312016e46855b0c5b1154959a.png" />
 </div>
 </div>
 </section>
@@ -1110,7 +1115,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/650d871902cf1e2f1841f3b7b7fc21a9cedf24565654497ed55fb9fec97697f0.png" src="_images/650d871902cf1e2f1841f3b7b7fc21a9cedf24565654497ed55fb9fec97697f0.png" />
+<img alt="_images/8cbdc5c4cd9193712ad1da20e61a3cb1a9158d01975818b03b9534e5b3be4875.png" src="_images/8cbdc5c4cd9193712ad1da20e61a3cb1a9158d01975818b03b9534e5b3be4875.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1123,7 +1128,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a2467fdd7012882007326d201ba3271898ff7ea47c1c8e94bdb684e240610d10.png" src="_images/a2467fdd7012882007326d201ba3271898ff7ea47c1c8e94bdb684e240610d10.png" />
+<img alt="_images/311ca48a3760433dbfdf9c021d0396c596a230f62a8ff0308b0f3325cbe7147c.png" src="_images/311ca48a3760433dbfdf9c021d0396c596a230f62a8ff0308b0f3325cbe7147c.png" />
 </div>
 </div>
 </section>
@@ -1173,7 +1178,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/fbcfe6722ee1d69f9e4caf6e7a8561dabc75f0e8fe1766718d934eb234996f24.png" src="_images/fbcfe6722ee1d69f9e4caf6e7a8561dabc75f0e8fe1766718d934eb234996f24.png" />
+<img alt="_images/5db5264d383337794c4418e52b341a8e74d2d1c053240de35a53d093fc32482e.png" src="_images/5db5264d383337794c4418e52b341a8e74d2d1c053240de35a53d093fc32482e.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1186,7 +1191,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9b3b3451e55a85aea266d184f3fab345f584357016cd403828d934c090b98e3d.png" src="_images/9b3b3451e55a85aea266d184f3fab345f584357016cd403828d934c090b98e3d.png" />
+<img alt="_images/000f19e0598f8d802704ae1f1aab38763c7e66ce71d8b9d6eae8015c704f92c2.png" src="_images/000f19e0598f8d802704ae1f1aab38763c7e66ce71d8b9d6eae8015c704f92c2.png" />
 </div>
 </div>
 </section>
@@ -1239,7 +1244,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c9b4616c8dc525c3f3f86f97d8d8566d9aea28aee8ca154dc8491349f74eda5d.png" src="_images/c9b4616c8dc525c3f3f86f97d8d8566d9aea28aee8ca154dc8491349f74eda5d.png" />
+<img alt="_images/95018895d0c223da899b6d1bc7840b64318a34a35e4e8b9b15a55a71f85cfe0e.png" src="_images/95018895d0c223da899b6d1bc7840b64318a34a35e4e8b9b15a55a71f85cfe0e.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1252,7 +1257,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c79c4553986071432e771049266fcefdd24c4d8bec001cf3db03fc83a355a83d.png" src="_images/c79c4553986071432e771049266fcefdd24c4d8bec001cf3db03fc83a355a83d.png" />
+<img alt="_images/0667e0ce1a3f732ede7b377b032590964585413730e143c910d3d692fdce84b6.png" src="_images/0667e0ce1a3f732ede7b377b032590964585413730e143c910d3d692fdce84b6.png" />
 </div>
 </div>
 </section>
@@ -1461,7 +1466,7 @@ By 春山 鉄源  Tetsugen HARUYAMA
 
   <p class="copyright">
     
-      © Copyright 2020-2023（公開開始日：2020年5月4日）.
+      © Copyright 2020-2024（公開開始日：2020年5月4日）.
       <br/>
     
   </p>

@@ -480,13 +480,32 @@ document.write(`
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">py4macro</span>
 <span class="kn">import</span> <span class="nn">wooldridge</span>
+
 <span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span>
 <span class="kn">from</span> <span class="nn">pandas.plotting</span> <span class="kn">import</span> <span class="n">scatter_matrix</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">uniform</span><span class="p">,</span> <span class="n">gaussian_kde</span><span class="p">,</span> <span class="n">multivariate_normal</span>
-<span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="n">see</span>
 <span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
 <span class="kn">from</span> <span class="nn">statsmodels.stats.outliers_influence</span> <span class="kn">import</span> <span class="n">variance_inflation_factor</span> <span class="k">as</span> <span class="n">vif</span>
+
+<span class="c1"># 警告メッセージを非表示</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">py4macro</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">import</span> <span class="nn">wooldridge</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;py4macro&#39;
 </pre></div>
 </div>
 </div>
@@ -528,45 +547,6 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>name of dataset: wage1
-no of variables: 24
-no of observations: 526
-
-+----------+---------------------------------+
-| variable | label                           |
-+----------+---------------------------------+
-| wage     | average hourly earnings         |
-| educ     | years of education              |
-| exper    | years potential experience      |
-| tenure   | years with current employer     |
-| nonwhite | =1 if nonwhite                  |
-| female   | =1 if female                    |
-| married  | =1 if married                   |
-| numdep   | number of dependents            |
-| smsa     | =1 if live in SMSA              |
-| northcen | =1 if live in north central U.S |
-| south    | =1 if live in southern region   |
-| west     | =1 if live in western region    |
-| construc | =1 if work in construc. indus.  |
-| ndurman  | =1 if in nondur. manuf. indus.  |
-| trcommpu | =1 if in trans, commun, pub ut  |
-| trade    | =1 if in wholesale or retail    |
-| services | =1 if in services indus.        |
-| profserv | =1 if in prof. serv. indus.     |
-| profocc  | =1 if in profess. occupation    |
-| clerocc  | =1 if in clerical occupation    |
-| servocc  | =1 if in service occupation     |
-| lwage    | log(wage)                       |
-| expersq  | exper^2                         |
-| tenursq  | tenure^2                        |
-+----------+---------------------------------+
-
-These are data from the 1976 Current Population Survey, collected by
-Henry Farber when he and I were colleagues at MIT in 1988.
-</pre></div>
-</div>
-</div>
 </div>
 <p>被説明変数に対数賃金を使うために、新たな列<code class="docutils literal notranslate"><span class="pre">wage_log</span></code>を追加する</p>
 <div class="cell docutils container">
@@ -599,72 +579,14 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            OLS Regression Results                            
-==============================================================================
-Dep. Variable:               wage_log   R-squared:                       0.316
-Model:                            OLS   Adj. R-squared:                  0.312
-Method:                 Least Squares   F-statistic:                     80.39
-Date:                Sun, 07 Jan 2024   Prob (F-statistic):           9.13e-43
-Time:                        00:09:37   Log-Likelihood:                -313.55
-No. Observations:                 526   AIC:                             635.1
-Df Residuals:                     522   BIC:                             652.2
-Df Model:                           3                                         
-Covariance Type:            nonrobust                                         
-==============================================================================
-                 coef    std err          t      P&gt;|t|      [0.025      0.975]
-------------------------------------------------------------------------------
-Intercept      0.2844      0.104      2.729      0.007       0.080       0.489
-educ           0.0920      0.007     12.555      0.000       0.078       0.106
-tenure         0.0221      0.003      7.133      0.000       0.016       0.028
-exper          0.0041      0.002      2.391      0.017       0.001       0.008
-==============================================================================
-Omnibus:                       11.534   Durbin-Watson:                   1.769
-Prob(Omnibus):                  0.003   Jarque-Bera (JB):               20.941
-Skew:                           0.021   Prob(JB):                     2.84e-05
-Kurtosis:                       3.977   Cond. No.                         135.
-==============================================================================
-
-Notes:
-[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="id4">
 <h3>属性とメソッド<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
-<p>推定結果<code class="docutils literal notranslate"><span class="pre">res_1</span></code>の属性とメソッドは<code class="docutils literal notranslate"><span class="pre">dir()</span></code>や<code class="docutils literal notranslate"><span class="pre">see()</span></code>で確認できる。以下では<code class="docutils literal notranslate"><span class="pre">see()</span></code>を使う。</p>
+<p>推定結果<code class="docutils literal notranslate"><span class="pre">res_1</span></code>の属性とメソッドは<code class="docutils literal notranslate"><span class="pre">dir()</span></code>や<code class="docutils literal notranslate"><span class="pre">py4macro.see()</span></code>で確認できる。以下では<code class="docutils literal notranslate"><span class="pre">py4macro.see()</span></code>を使う。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">res_1</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>    &lt;                    &lt;=                   ==                   !=
-    &gt;                    &gt;=                   dir()                hash()
-    help()               repr()               str()                .HC0_se
-    .HC1_se              .HC2_se              .HC3_se              .aic
-    .bic                 .bse                 .centered_tss
-    .compare_f_test()    .compare_lm_test()
-    .compare_lr_test()                        .condition_number    .conf_int()
-    .conf_int_el()       .cov_HC0             .cov_HC1             .cov_HC2
-    .cov_HC3             .cov_kwds            .cov_params()        .cov_type
-    .df_model            .df_resid            .diagn               .eigenvals
-    .el_test()           .ess                 .f_pvalue            .f_test()
-    .fittedvalues        .fvalue              .get_influence()
-    .get_prediction()    .get_robustcov_results()
-    .info_criteria()     .initialize()        .k_constant          .llf
-    .load()              .model               .mse_model           .mse_resid
-    .mse_total           .nobs                .normalized_cov_params
-    .outlier_test()      .params              .predict()           .pvalues
-    .remove_data()       .resid               .resid_pearson       .rsquared
-    .rsquared_adj        .save()              .scale               .ssr
-    .summary()           .summary2()          .t_test()
-    .t_test_pairwise()                        .tvalues
-    .uncentered_tss      .use_t               .wald_test()
-    .wald_test_terms()                        .wresid
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">py4macro</span><span class="o">.</span><span class="n">see</span><span class="p">(</span><span class="n">res_1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -676,25 +598,11 @@ Notes:
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.284360
-educ         0.092029
-tenure       0.022067
-exper        0.004121
-dtype: float64
-</pre></div>
-</div>
-</div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">res_1</span></code>は<code class="docutils literal notranslate"><span class="pre">Series</span></code>なので、インデックスを使って<code class="docutils literal notranslate"><span class="pre">educ</span></code>の係数だけを取り出す場合は次のようにする。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_1</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0920289867692832
 </pre></div>
 </div>
 </div>
@@ -707,26 +615,11 @@ dtype: float64
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>wage         5.896103
-educ        12.562738
-tenure       5.104563
-exper       17.017110
-wage_log     1.623268
-dtype: float64
-</pre></div>
-</div>
-</div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">wm</span></code>は<code class="docutils literal notranslate"><span class="pre">Series</span></code>なので、変数の行ラベルを使い<code class="docutils literal notranslate"><span class="pre">wm['educ']</span></code>で<code class="docutils literal notranslate"><span class="pre">educ</span></code>の平均値だけを取り出すことができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wm</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12.562737642585551
 </pre></div>
 </div>
 </div>
@@ -744,12 +637,6 @@ dtype: float64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    1.623268
-dtype: float64
 </pre></div>
 </div>
 </div>
@@ -771,14 +658,6 @@ dtype: float64
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    1.531239
-1    1.623268
-2    1.715297
-dtype: float64
-</pre></div>
-</div>
-</div>
 </div>
 <p>３つの変数が平均の値を取る場合，平均賃金の対数値は1.623268であり，上の計算と同じになることが確認できる。教育年数が1年減少すると予測値は1.531239であり，教育年数が1年増えると予測値は1.715297となる。この結果を使い，教育年数が一年変化する場合の影響を計算してみよう。まず教育年数が1年減少すると場合を計算しよう。</p>
 <div class="cell docutils container">
@@ -787,21 +666,11 @@ dtype: float64
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.09202898676928317
-</pre></div>
-</div>
-</div>
 </div>
 <p>次に教育年数が1年増える場合を計算しよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">educ_return</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">educ_return</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.09202898676928317
 </pre></div>
 </div>
 </div>
@@ -829,22 +698,12 @@ dtype: float64
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0920289867692832
-</pre></div>
-</div>
-</div>
 </div>
 <p>（コメント）</p>
 <p><code class="docutils literal notranslate"><span class="pre">predict()</span></code>の引数を省略すると予測値を返す属性<code class="docutils literal notranslate"><span class="pre">.fittedvalues</span></code>と同じ値を返す。それを確かめるために次のコードを評価してみる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span> <span class="n">res_1</span><span class="o">.</span><span class="n">predict</span><span class="p">()</span> <span class="o">==</span> <span class="n">res_1</span><span class="o">.</span><span class="n">fittedvalues</span> <span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
 </pre></div>
 </div>
 </div>
@@ -890,15 +749,6 @@ dtype: float64
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.284360
-educ         0.092029
-tenure       0.022067
-exper        0.004121
-dtype: float64
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="i">
@@ -915,16 +765,6 @@ dtype: float64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_3</span><span class="o">.</span><span class="n">params</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept        0.198345
-educ             0.085349
-tenure           0.020841
-exper            0.032854
-I(exper ** 2)   -0.000661
-dtype: float64
 </pre></div>
 </div>
 </div>
@@ -953,16 +793,6 @@ dtype: float64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_4</span><span class="o">.</span><span class="n">params</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept        0.198345
-educ             0.085349
-exper            0.032854
-tenure           0.020841
-myfunc(exper)   -0.000661
-dtype: float64
 </pre></div>
 </div>
 </div>
@@ -1014,15 +844,6 @@ dtype: float64
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_1a</span> <span class="o">=</span> <span class="s1">&#39;wage ~ educ + tenure + exper&#39;</span>
 <span class="n">res_1a</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_1a</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">res_1a</span><span class="o">.</span><span class="n">params</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept   -2.872735
-educ         0.598965
-tenure       0.169269
-exper        0.022340
-dtype: float64
 </pre></div>
 </div>
 </div>
@@ -1221,11 +1042,6 @@ dtype: float64
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.19435933207482126
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1233,11 +1049,6 @@ dtype: float64
 <span class="n">n</span> <span class="o">=</span> <span class="n">res_1</span><span class="o">.</span><span class="n">nobs</span>
 <span class="n">k</span> <span class="o">=</span> <span class="n">res_1</span><span class="o">.</span><span class="n">df_model</span>
 <span class="n">SSR</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.19435933207482126
 </pre></div>
 </div>
 </div>
@@ -1251,15 +1062,6 @@ dtype: float64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_1</span><span class="o">.</span><span class="n">bse</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.104190
-educ         0.007330
-tenure       0.003094
-exper        0.001723
-dtype: float64
 </pre></div>
 </div>
 </div>
@@ -1360,22 +1162,12 @@ u_n
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(30, 3)
-</pre></div>
-</div>
-</div>
 </div>
 <p>ここでの引数<code class="docutils literal notranslate"><span class="pre">axis=1</span></code>は<code class="docutils literal notranslate"><span class="pre">c</span></code>，<code class="docutils literal notranslate"><span class="pre">x1</span></code>，<code class="docutils literal notranslate"><span class="pre">x2</span></code>を縦ベクトルとして横方向につなぎあわせることを指定している。<code class="docutils literal notranslate"><span class="pre">X</span></code>は<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の<code class="docutils literal notranslate"><span class="pre">array</span></code>であり<span class="math notranslate nohighlight">\((30\times 3)\)</span>の行列となっている。式（*）を次のコードで計算する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bhat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@X</span><span class="p">)</span><span class="o">@</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="nd">@y</span>
 <span class="n">bhat</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2.17825284, 1.84492275, 2.91933711])
 </pre></div>
 </div>
 </div>
@@ -1393,14 +1185,6 @@ u_n
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_check</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;X1&#39;</span><span class="p">:</span><span class="n">x1</span><span class="p">,</span><span class="s1">&#39;X2&#39;</span><span class="p">:</span><span class="n">x2</span><span class="p">})</span>
 <span class="n">res_check</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s1">&#39;Y ~ X1 + X2&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_check</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">res_check</span><span class="o">.</span><span class="n">params</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    2.178253
-X1           1.844923
-X2           2.919337
-dtype: float64
 </pre></div>
 </div>
 </div>
@@ -1429,21 +1213,11 @@ e = Y-X\hat{B},\qquad
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>32.00108978217408
-</pre></div>
-</div>
-</div>
 </div>
 <p>この値は<code class="docutils literal notranslate"><span class="pre">res_check</span></code>の属性<code class="docutils literal notranslate"><span class="pre">.ssr</span></code>と同じことが確認できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_check</span><span class="o">.</span><span class="n">ssr</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>32.001089782174105
 </pre></div>
 </div>
 </div>
@@ -1456,21 +1230,11 @@ e = Y-X\hat{B},\qquad
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.1852255474879287
-</pre></div>
-</div>
-</div>
 </div>
 <p>この値も<code class="docutils literal notranslate"><span class="pre">res_check</span></code>の属性<code class="docutils literal notranslate"><span class="pre">.scale</span></code>から取得できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_check</span><span class="o">.</span><span class="n">scale</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.1852255474879299
 </pre></div>
 </div>
 </div>
@@ -1490,24 +1254,11 @@ e = Y-X\hat{B},\qquad
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.67321512, 0.11394185, 0.07980655])
-</pre></div>
-</div>
-</div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>の結果と比べてみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_check</span><span class="o">.</span><span class="n">bse</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.673215
-X1           0.113942
-X2           0.079807
-dtype: float64
 </pre></div>
 </div>
 </div>
@@ -1592,13 +1343,6 @@ dtype: float64
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 0.9999433838622658 
-b1: 1.9997053290450986 
-b1: 3.000125723002757
-</pre></div>
-</div>
-</div>
 </div>
 <p>平均は真の値と全く同じではないが，十分に近い値である。即ち，不偏性が満たされている。標本数<code class="docutils literal notranslate"><span class="pre">N</span></code>を増加させるとより真の値に近づくことになる。</p>
 <p>次に、OLS推定量<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布を図示しよう。</p>
@@ -1609,9 +1353,6 @@ b1: 3.000125723002757
 <span class="k">pass</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/82b21665dce667349946e03aebe853307b71dbf243baccc15edeaaaf755a5207.png" src="_images/82b21665dce667349946e03aebe853307b71dbf243baccc15edeaaaf755a5207.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">b1</span></code>の真の値<code class="docutils literal notranslate"><span class="pre">2.0</span></code>を中心に概ね左右対象に分布していることが分かる。</p>
@@ -1627,9 +1368,6 @@ b1: 3.000125723002757
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/1c57682e4cb7a098b14107b4d3ba0378867e794ee6e0f2b90d449111418a8047.png" src="_images/1c57682e4cb7a098b14107b4d3ba0378867e794ee6e0f2b90d449111418a8047.png" />
-</div>
 </div>
 <p>２つの図を重ねる。</p>
 <p>（注意）ヒストグラムの縦軸は頻度である。一方，カーネル密度推定の場合，曲線の下の面積が１になるように縦軸が設定されている。ヒストグラムの縦軸をカーネル密度推定に合わせるために<code class="docutils literal notranslate"><span class="pre">density=True</span></code>のオプションを加える。</p>
@@ -1644,9 +1382,6 @@ b1: 3.000125723002757
 <span class="k">pass</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/ea6a4e441d83204bbd222a4a24929847bf263807302a8e4331506c7bd2469a73.png" src="_images/ea6a4e441d83204bbd222a4a24929847bf263807302a8e4331506c7bd2469a73.png" />
 </div>
 </div>
 <p>＜Give it a try!＞</p>
@@ -1700,24 +1435,11 @@ b1: 3.000125723002757
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.11277075, 1.34929556, 1.47761777])
-</pre></div>
-</div>
-</div>
 </div>
 <p>変数名と一緒に表示するために次のように<code class="docutils literal notranslate"><span class="pre">Series</span></code>として表示する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">vif_manual</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">wage1_vif</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>educ      1.112771
-tenure    1.349296
-exper     1.477618
-dtype: float64
 </pre></div>
 </div>
 </div>
@@ -1731,14 +1453,6 @@ dtype: float64
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">vif_manual</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">dataframe</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 
 <span class="n">my_vif</span><span class="p">(</span><span class="n">wage1_vif</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>educ      1.112771
-tenure    1.349296
-exper     1.477618
-dtype: float64
 </pre></div>
 </div>
 </div>
@@ -1761,13 +1475,6 @@ dtype: float64
     <span class="n">name</span> <span class="o">=</span> <span class="n">wage1_vif</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
     <span class="n">vif_val</span> <span class="o">=</span> <span class="n">vif</span><span class="p">(</span><span class="n">wage1_vif</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">i</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="w"> </span><span class="si">:</span><span class="s1"> &lt;10</span><span class="si">}{</span><span class="n">vif_val</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>educ      1.1127707502838837
-tenure    1.3492955605611774
-exper     1.4776177726317783
 </pre></div>
 </div>
 </div>
@@ -1886,20 +1593,12 @@ exper     1.4776177726317783
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/2918fe96135886bd956f3a0b855fa6b2e1557eebff7f4264362ba1305e00e5cb.png" src="_images/2918fe96135886bd956f3a0b855fa6b2e1557eebff7f4264362ba1305e00e5cb.png" />
-</div>
 </div>
 <p>多重共線性が強いと推定値の分布は，真の値（<span class="math notranslate nohighlight">\(\beta_1=\)</span>
 <code class="docutils literal notranslate"><span class="pre">2.0</span></code>）の周辺で低くなり左右に広がっている。推定値の正確性が低下することを示している。<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分散を計算してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">b1hat_weak</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">b1hat_strong</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.03890927136058568, 0.2015600609162575)
 </pre></div>
 </div>
 </div>
@@ -1972,9 +1671,6 @@ exper     1.4776177726317783
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/efb84fcdbe4dfd8d1523abc701a00d8ede72cf62d3936528ab4f70f23f60b863.png" src="_images/efb84fcdbe4dfd8d1523abc701a00d8ede72cf62d3936528ab4f70f23f60b863.png" />
-</div>
 </details>
 </div>
 <p>問5の答え：<span class="math notranslate nohighlight">\(+\)</span>を押すと答えが表示される。</p>
@@ -1989,11 +1685,6 @@ exper     1.4776177726317783
 
 <span class="c1"># 次のコードでもOK</span>
 <span class="c1"># np.array(se_x1_weak).mean(), np.array(se_x1_strong).mean()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.1918715583755845, 0.4432254115978044)
 </pre></div>
 </div>
 </div>
@@ -2016,9 +1707,6 @@ exper     1.4776177726317783
 <span class="k">pass</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/3a3ea4be5c8c8df4070a46cdff875a2154f118f397756ec4170ec4c2c98e8386.png" src="_images/3a3ea4be5c8c8df4070a46cdff875a2154f118f397756ec4170ec4c2c98e8386.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">pandas</span></code>の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>や<code class="docutils literal notranslate"><span class="pre">Series</span></code>には図を作成するメソッド<code class="docutils literal notranslate"><span class="pre">plot()</span></code>が用意されている（裏では<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>が動いている）。例えば，<code class="docutils literal notranslate"><span class="pre">wage1</span></code>にある<code class="docutils literal notranslate"><span class="pre">educ</span></code>のヒストグラムであれば次のコードで図示することができる。</p>
@@ -2047,9 +1735,6 @@ exper     1.4776177726317783
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/2aa72789b1a9d188b65c0650d542ee80808cce6146425d72341d8aed3db10984.png" src="_images/2aa72789b1a9d188b65c0650d542ee80808cce6146425d72341d8aed3db10984.png" />
-</div>
 </div>
 <p>横軸と縦軸のラベルを確認すること。対角線上はそれぞれの変数のヒストグラム，対角線以外の図は縦横のペアの変数の散布図となっており，相関度をある程度目視で確認できる。</p>
 <hr class="docutils" />
@@ -2065,9 +1750,6 @@ exper     1.4776177726317783
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/71f462794d5a38fe766d7feaceb53ed8fbeb9db78f422d62c32a20e7f7f89222.png" src="_images/71f462794d5a38fe766d7feaceb53ed8fbeb9db78f422d62c32a20e7f7f89222.png" />
-</div>
 </div>
 <p>次に相関係数を簡単に計算する方法を紹介する。<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">corr()</span></code>を使うと変数の相関係数を<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>として返す。</p>
 <div class="cell docutils container">
@@ -2077,76 +1759,6 @@ exper     1.4776177726317783
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>wage</th>
-      <th>educ</th>
-      <th>tenure</th>
-      <th>exper</th>
-      <th>wage_log</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>wage</th>
-      <td>1.000000</td>
-      <td>0.405903</td>
-      <td>0.346890</td>
-      <td>0.112903</td>
-      <td>0.937062</td>
-    </tr>
-    <tr>
-      <th>educ</th>
-      <td>0.405903</td>
-      <td>1.000000</td>
-      <td>-0.056173</td>
-      <td>-0.299542</td>
-      <td>0.431053</td>
-    </tr>
-    <tr>
-      <th>tenure</th>
-      <td>0.346890</td>
-      <td>-0.056173</td>
-      <td>1.000000</td>
-      <td>0.499291</td>
-      <td>0.325538</td>
-    </tr>
-    <tr>
-      <th>exper</th>
-      <td>0.112903</td>
-      <td>-0.299542</td>
-      <td>0.499291</td>
-      <td>1.000000</td>
-      <td>0.111373</td>
-    </tr>
-    <tr>
-      <th>wage_log</th>
-      <td>0.937062</td>
-      <td>0.431053</td>
-      <td>0.325538</td>
-      <td>0.111373</td>
-      <td>1.000000</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <p>上の図と相関係数の値を見比べて，概ねどのような関係にあるのかを確かめよう。</p>
 </section>
@@ -2160,9 +1772,6 @@ exper     1.4776177726317783
 <span class="k">pass</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/b1efb6515e5afa43473d70f3da7b5575567fffa05cc359c8e936e3b55467d731.png" src="_images/b1efb6515e5afa43473d70f3da7b5575567fffa05cc359c8e936e3b55467d731.png" />
 </div>
 </div>
 <p>赤はプラス，青はマイナスを示し，色の濃淡は絶対値に連動している。ここで使った３つのオプション（設定しなくても良い）の説明する。</p>
@@ -2182,9 +1791,6 @@ exper     1.4776177726317783
 <span class="k">pass</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/b8cbbf4920112d33cc0c2c780098fa04197662a5bd510fd334dcd5a3b4991705.png" src="_images/b8cbbf4920112d33cc0c2c780098fa04197662a5bd510fd334dcd5a3b4991705.png" />
 </div>
 </div>
 <p>図の解釈は<code class="docutils literal notranslate"><span class="pre">pandas</span></code>の場合と同じである。</p>
@@ -2330,7 +1936,7 @@ By 春山 鉄源  Tetsugen HARUYAMA
 
   <p class="copyright">
     
-      © Copyright 2020-2023（公開開始日：2020年5月4日）.
+      © Copyright 2020-2024（公開開始日：2020年5月4日）.
       <br/>
     
   </p>

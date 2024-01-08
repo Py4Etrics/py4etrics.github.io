@@ -454,14 +454,33 @@ document.write(`
 <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translation" style="color:#ffffff;background-color:#008080; height:25px" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/> in English or the language of your choice.
 </div><br><div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">py4macro</span>    <span class="c1"># 属性を調べるsee()関数が含まれる</span>
 <span class="kn">import</span> <span class="nn">wooldridge</span>  <span class="c1"># wooldridgeのデータ・パッケージ</span>
+
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>    <span class="c1"># 正規分布関数</span>
 <span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>  <span class="c1"># 回帰分析のパッケージ</span>
-<span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="n">see</span>  <span class="c1"># 属性を調べるパッケージ</span>
 <span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span>  <span class="c1"># シミュレーションの計算を高速化する</span>
+
+<span class="c1"># 警告メッセージを非表示</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">py4macro</span>    <span class="c1"># 属性を調べるsee()関数が含まれる</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">wooldridge</span>  <span class="c1"># wooldridgeのデータ・パッケージ</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>    <span class="c1"># 正規分布関数</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;py4macro&#39;
 </pre></div>
 </div>
 </div>
@@ -541,36 +560,6 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  J.M. Wooldridge (2016) Introductory Econometrics: A Modern Approach,
-  Cengage Learning, 6th edition.
-
-  401k       401ksubs    admnrev       affairs     airfare
-  alcohol    apple       approval      athlet1     athlet2
-  attend     audit       barium        beauty      benefits
-  beveridge  big9salary  bwght         bwght2      campus
-  card       catholic    cement        census2000  ceosal1
-  ceosal2    charity     consump       corn        countymurders
-  cps78_85   cps91       crime1        crime2      crime3
-  crime4     discrim     driving       earns       econmath
-  elem94_95  engin       expendshares  ezanders    ezunem
-  fair       fertil1     fertil2       fertil3     fish
-  fringe     gpa1        gpa2          gpa3        happiness
-  hprice1    hprice2     hprice3       hseinv      htv
-  infmrt     injury      intdef        intqrt      inven
-  jtrain     jtrain2     jtrain3       kielmc      lawsch85
-  loanapp    lowbrth     mathpnl       meap00_01   meap01
-  meap93     meapsingle  minwage       mlb1        mroz
-  murder     nbasal      nyse          okun        openness
-  pension    phillips    pntsprd       prison      prminwge
-  rdchem     rdtelec     recid         rental      return
-  saving     sleep75     slp75_81      smoke       traffic1
-  traffic2   twoyear     volat         vote1       vote2
-  voucher    wage1       wage2         wagepan     wageprc
-  wine
-</pre></div>
-</div>
-</div>
 </div>
 <p>この中にある<code class="docutils literal notranslate"><span class="pre">wage1</span></code>を使う。データ・セットを読み込むには、引数にデータ・セット名を文字列として入力する。返り値は<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>であり、
 回帰分析に使うために<code class="docutils literal notranslate"><span class="pre">df</span></code>に割り当てる。</p>
@@ -585,45 +574,6 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wooldridge</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;wage1&#39;</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>name of dataset: wage1
-no of variables: 24
-no of observations: 526
-
-+----------+---------------------------------+
-| variable | label                           |
-+----------+---------------------------------+
-| wage     | average hourly earnings         |
-| educ     | years of education              |
-| exper    | years potential experience      |
-| tenure   | years with current employer     |
-| nonwhite | =1 if nonwhite                  |
-| female   | =1 if female                    |
-| married  | =1 if married                   |
-| numdep   | number of dependents            |
-| smsa     | =1 if live in SMSA              |
-| northcen | =1 if live in north central U.S |
-| south    | =1 if live in southern region   |
-| west     | =1 if live in western region    |
-| construc | =1 if work in construc. indus.  |
-| ndurman  | =1 if in nondur. manuf. indus.  |
-| trcommpu | =1 if in trans, commun, pub ut  |
-| trade    | =1 if in wholesale or retail    |
-| services | =1 if in services indus.        |
-| profserv | =1 if in prof. serv. indus.     |
-| profocc  | =1 if in profess. occupation    |
-| clerocc  | =1 if in clerical occupation    |
-| servocc  | =1 if in service occupation     |
-| lwage    | log(wage)                       |
-| expersq  | exper^2                         |
-| tenursq  | tenure^2                        |
-+----------+---------------------------------+
-
-These are data from the 1976 Current Population Survey, collected by
-Henry Farber when he and I were colleagues at MIT in 1988.
 </pre></div>
 </div>
 </div>
@@ -651,66 +601,11 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>wage</th>
-      <th>educ</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>3.10</td>
-      <td>11</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>3.24</td>
-      <td>12</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3.00</td>
-      <td>11</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <p>次に<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>の特徴を確認する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-RangeIndex: 526 entries, 0 to 525
-Data columns (total 2 columns):
- #   Column  Non-Null Count  Dtype  
----  ------  --------------  -----  
- 0   wage    526 non-null    float64
- 1   educ    526 non-null    int64  
-dtypes: float64(1), int64(1)
-memory usage: 8.3 KB
 </pre></div>
 </div>
 </div>
@@ -722,73 +617,6 @@ memory usage: 8.3 KB
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>wage</th>
-      <th>educ</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>count</th>
-      <td>526.000000</td>
-      <td>526.000000</td>
-    </tr>
-    <tr>
-      <th>mean</th>
-      <td>5.896103</td>
-      <td>12.562738</td>
-    </tr>
-    <tr>
-      <th>std</th>
-      <td>3.693086</td>
-      <td>2.769022</td>
-    </tr>
-    <tr>
-      <th>min</th>
-      <td>0.530000</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>25%</th>
-      <td>3.330000</td>
-      <td>12.000000</td>
-    </tr>
-    <tr>
-      <th>50%</th>
-      <td>4.650000</td>
-      <td>12.000000</td>
-    </tr>
-    <tr>
-      <th>75%</th>
-      <td>6.880000</td>
-      <td>14.000000</td>
-    </tr>
-    <tr>
-      <th>max</th>
-      <td>24.980000</td>
-      <td>18.000000</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">.head()</span></code>，<code class="docutils literal notranslate"><span class="pre">.tail()</span></code>，<code class="docutils literal notranslate"><span class="pre">.info()</span></code>そして<code class="docutils literal notranslate"><span class="pre">.describe()</span></code>を使い<code class="docutils literal notranslate"><span class="pre">df</span></code>の情報を確認し，データのイメージ作りをすることは回帰分析に役立つだろう。</p>
 </section>
@@ -802,23 +630,12 @@ memory usage: 8.3 KB
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[13.63888436,  4.150864  ],
-       [ 4.150864  ,  7.66748506]])
-</pre></div>
-</div>
-</div>
 </div>
 <p>共分散の値を<code class="docutils literal notranslate"><span class="pre">cov_wage_edu</span></code>に割り当てる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cov_wage_educ</span> <span class="o">=</span> <span class="n">mat_wage_educ</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 <span class="n">cov_wage_educ</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.150863998572981
 </pre></div>
 </div>
 </div>
@@ -830,11 +647,6 @@ memory usage: 8.3 KB
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(13.638884363775006, 7.667485062466053)
-</pre></div>
-</div>
-</div>
 </div>
 <p>次のように計算しても同じ値となる。</p>
 <div class="cell docutils container">
@@ -842,11 +654,6 @@ memory usage: 8.3 KB
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">var_wage</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;wage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">var_educ</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">var_wage</span><span class="p">,</span> <span class="n">var_educ</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(13.638884363775007, 7.667485062466051)
 </pre></div>
 </div>
 </div>
@@ -865,11 +672,6 @@ memory usage: 8.3 KB
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b1hat</span> <span class="o">=</span> <span class="n">cov_wage_educ</span> <span class="o">/</span> <span class="n">var_educ</span>
 <span class="n">b1hat</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5413592546651745
 </pre></div>
 </div>
 </div>
@@ -898,11 +700,6 @@ memory usage: 8.3 KB
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b0hat</span> <span class="o">=</span> <span class="n">mean_wage</span> <span class="o">-</span> <span class="n">b1hat</span> <span class="o">*</span> <span class="n">mean_educ</span>
 <span class="n">b0hat</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.904851611957211
 </pre></div>
 </div>
 </div>
@@ -958,25 +755,10 @@ memory usage: 8.3 KB
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">mod</span></code>の属性を調べてみよう。</p>
+<p><code class="docutils literal notranslate"><span class="pre">dir()</span></code>もしくは<code class="docutils literal notranslate"><span class="pre">py4macro</span></code>モジュールに含まれる<code class="docutils literal notranslate"><span class="pre">see()</span></code>関数を使って，<code class="docutils literal notranslate"><span class="pre">mod</span></code>の属性を調べてみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>    &lt;                  &lt;=                 ==                 !=
-    &gt;                  &gt;=                 dir()              hash()
-    help()             repr()             str()              .data
-    .df_model          .df_resid          .endog             .endog_names
-    .exog              .exog_names        .fit()
-    .fit_regularized()                    .formula           .from_formula()
-    .get_distribution()                   .hessian()         .hessian_factor()
-    .information()     .initialize()      .k_constant        .loglike()
-    .nobs              .pinv_wexog        .predict()         .rank
-    .score()           .weights           .wendog            .wexog
-    .whiten()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">py4macro</span><span class="o">.</span><span class="n">see</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -996,34 +778,7 @@ memory usage: 8.3 KB
 <p><code class="docutils literal notranslate"><span class="pre">res</span></code>の属性を確認してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>    &lt;                    &lt;=                   ==                   !=
-    &gt;                    &gt;=                   dir()                hash()
-    help()               repr()               str()                .HC0_se
-    .HC1_se              .HC2_se              .HC3_se              .aic
-    .bic                 .bse                 .centered_tss
-    .compare_f_test()    .compare_lm_test()
-    .compare_lr_test()                        .condition_number    .conf_int()
-    .conf_int_el()       .cov_HC0             .cov_HC1             .cov_HC2
-    .cov_HC3             .cov_kwds            .cov_params()        .cov_type
-    .df_model            .df_resid            .eigenvals           .el_test()
-    .ess                 .f_pvalue            .f_test()
-    .fittedvalues        .fvalue              .get_influence()
-    .get_prediction()    .get_robustcov_results()
-    .info_criteria()     .initialize()        .k_constant          .llf
-    .load()              .model               .mse_model           .mse_resid
-    .mse_total           .nobs                .normalized_cov_params
-    .outlier_test()      .params              .predict()           .pvalues
-    .remove_data()       .resid               .resid_pearson       .rsquared
-    .rsquared_adj        .save()              .scale               .ssr
-    .summary()           .summary2()          .t_test()
-    .t_test_pairwise()                        .tvalues
-    .uncentered_tss      .use_t               .wald_test()
-    .wald_test_terms()                        .wresid
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">py4macro</span><span class="o">.</span><span class="n">see</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1035,13 +790,6 @@ memory usage: 8.3 KB
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept   -0.904852
-educ         0.541359
-dtype: float64
-</pre></div>
-</div>
-</div>
 </div>
 <p>「手計算」での計算結果と同じだと確認できる。</p>
 <p>また<code class="docutils literal notranslate"><span class="pre">wage</span></code>の予測値は<code class="docutils literal notranslate"><span class="pre">res.fittedvalues</span></code>もしくは<code class="docutils literal notranslate"><span class="pre">res.predict()</span></code>で得ることができる。<code class="docutils literal notranslate"><span class="pre">res.fittedvalues</span></code>は属性であり<code class="docutils literal notranslate"><span class="pre">res.predict()</span></code>はメソッドであるが、後者は引数がない場合は前者と同じ結果を返すことになる。</p>
@@ -1050,35 +798,6 @@ dtype: float64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            OLS Regression Results                            
-==============================================================================
-Dep. Variable:                   wage   R-squared:                       0.165
-Model:                            OLS   Adj. R-squared:                  0.163
-Method:                 Least Squares   F-statistic:                     103.4
-Date:                Sun, 07 Jan 2024   Prob (F-statistic):           2.78e-22
-Time:                        00:09:27   Log-Likelihood:                -1385.7
-No. Observations:                 526   AIC:                             2775.
-Df Residuals:                     524   BIC:                             2784.
-Df Model:                           1                                         
-Covariance Type:            nonrobust                                         
-==============================================================================
-                 coef    std err          t      P&gt;|t|      [0.025      0.975]
-------------------------------------------------------------------------------
-Intercept     -0.9049      0.685     -1.321      0.187      -2.250       0.441
-educ           0.5414      0.053     10.167      0.000       0.437       0.646
-==============================================================================
-Omnibus:                      212.554   Durbin-Watson:                   1.824
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):              807.843
-Skew:                           1.861   Prob(JB):                    3.79e-176
-Kurtosis:                       7.797   Cond. No.                         60.2
-==============================================================================
-
-Notes:
-[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
 </pre></div>
 </div>
 </div>
@@ -1094,16 +813,6 @@ Notes:
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==============================================================================
-                 coef    std err          t      P&gt;|t|      [0.025      0.975]
-------------------------------------------------------------------------------
-Intercept     -0.9049      0.685     -1.321      0.187      -2.250       0.441
-educ           0.5414      0.053     10.167      0.000       0.437       0.646
-==============================================================================
 </pre></div>
 </div>
 </div>
@@ -1210,9 +919,6 @@ educ           0.5414      0.053     10.167      0.000       0.437       0.646
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/bd8254463ca919cce4adf49045a9067e488ea297685d431ec2612761805c191a.png" src="_images/bd8254463ca919cce4adf49045a9067e488ea297685d431ec2612761805c191a.png" />
-</div>
 </div>
 </section>
 <section id="id6">
@@ -1287,11 +993,6 @@ R^2
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.16475751099205127
-</pre></div>
-</div>
-</div>
 </div>
 <p>また次のように計算することも可能である。</p>
 <div class="cell docutils container">
@@ -1303,21 +1004,11 @@ R^2
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.16475751099205116
-</pre></div>
-</div>
-</div>
 </div>
 <p>しかし「手計算」よりも<code class="docutils literal notranslate"><span class="pre">res</span></code>の属性<code class="docutils literal notranslate"><span class="pre">.rsquared</span></code>を使う方がより簡単である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">rsquared</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.16475751099205127
 </pre></div>
 </div>
 </div>
@@ -1331,21 +1022,11 @@ R^2
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.16316353677638717
-</pre></div>
-</div>
-</div>
 </div>
 <p>一方で修正済み決定係数を取得するメソッドは<code class="docutils literal notranslate"><span class="pre">.rsquared_adj</span></code>である。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">rsquared_adj</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.16316353677638717
 </pre></div>
 </div>
 </div>
@@ -1381,16 +1062,6 @@ R^2
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==============================================================================
-                 coef    std err          t      P&gt;|t|      [0.025      0.975]
-------------------------------------------------------------------------------
-Intercept      0.5838      0.097      5.998      0.000       0.393       0.775
-educ           0.0827      0.008     10.935      0.000       0.068       0.098
-==============================================================================
-</pre></div>
-</div>
-</div>
 </div>
 <p><strong>＜結果の解釈＞</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">res</span></code>は次式の推定結果である。</p>
@@ -1418,9 +1089,6 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 <span class="k">pass</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/5bfd113c1d3a475b00041aa8c6f0b0b8be0734a4a5f20b74d704ca5cb73e4398.png" src="_images/5bfd113c1d3a475b00041aa8c6f0b0b8be0734a4a5f20b74d704ca5cb73e4398.png" />
 </div>
 </div>
 </section>
@@ -1536,13 +1204,6 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.290501
-X            0.941086
-dtype: float64
-</pre></div>
-</div>
-</div>
 </div>
 <p>母集団パラメータと比べると，推定誤差が発生していることがわかる。</p>
 <div class="admonition note">
@@ -1595,13 +1256,6 @@ dtype: float64
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.297271
-X            0.952226
-dtype: float64
-</pre></div>
-</div>
-</div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">b0</span></code>，<code class="docutils literal notranslate"><span class="pre">b1</span></code>，<code class="docutils literal notranslate"><span class="pre">su</span></code>変えて計算してみよう。</p>
 <hr class="docutils" />
@@ -1633,11 +1287,6 @@ dtype: float64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_sim_manual</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.383837847367035, 0.9220061837638994)
 </pre></div>
 </div>
 </div>
@@ -1761,9 +1410,6 @@ dtype: float64
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/0f106ff7141a826912a8dcccb024d902fe55f1275e5f444c484ab46676841d85.png" src="_images/0f106ff7141a826912a8dcccb024d902fe55f1275e5f444c484ab46676841d85.png" />
-</div>
 </div>
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布を図示する。</p>
 <div class="cell docutils container">
@@ -1772,9 +1418,6 @@ dtype: float64
 <span class="k">pass</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/e8a7d2827553f30e25d7137233993a763a124827aeae087d3fdacfdd4b0c6ca9.png" src="_images/e8a7d2827553f30e25d7137233993a763a124827aeae087d3fdacfdd4b0c6ca9.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">y</span></code>の理論値を図示するが，図示の時間短縮のために<code class="docutils literal notranslate"><span class="pre">N</span></code>回のシミュレーション中の最初の<code class="docutils literal notranslate"><span class="pre">r</span></code>回の回帰線だけを表示する。</p>
@@ -1801,9 +1444,6 @@ dtype: float64
 <span class="k">pass</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/5df5bfc56d14f3670de0bcebe101a1520451ca313e08ffa523e662990efb71f6.png" src="_images/5df5bfc56d14f3670de0bcebe101a1520451ca313e08ffa523e662990efb71f6.png" />
 </div>
 </div>
 <div class="admonition- admonition">
@@ -1930,7 +1570,7 @@ By 春山 鉄源  Tetsugen HARUYAMA
 
   <p class="copyright">
     
-      © Copyright 2020-2023（公開開始日：2020年5月4日）.
+      © Copyright 2020-2024（公開開始日：2020年5月4日）.
       <br/>
     
   </p>

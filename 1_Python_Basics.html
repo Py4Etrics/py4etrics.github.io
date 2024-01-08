@@ -476,7 +476,16 @@ document.write(`
 <h1>Pythonの基礎<a class="headerlink" href="#python" title="Permalink to this heading">#</a></h1>
 <div name="html-admonition" style="font-size: 0.8em">
 <input type="button" onclick="location.href='https://translate.google.com/translate?hl=&sl=ja&tl=en&u='+window.location;" value="Google translation" style="color:#ffffff;background-color:#008080; height:25px" onmouseover="this.style.background='#99ccff'" onmouseout="this.style.background='#008080'"/> in English or the language of your choice.
-</div><br><section id="id1">
+</div><br><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 警告メッセージを非表示</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="id1">
 <h2><code class="docutils literal notranslate"><span class="pre">=</span></code>の意味と「オブジェクト」<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
 <p>変数<span class="math notranslate nohighlight">\(x\)</span>に値<code class="docutils literal notranslate"><span class="pre">10</span></code>を「代入」するには等号<code class="docutils literal notranslate"><span class="pre">=</span></code>を使う。</p>
 <div class="cell docutils container">
@@ -2146,7 +2155,7 @@ e
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">114</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">115</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">func_1</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="ne">TypeError</span>: func_1() got multiple values for argument &#39;a&#39;
@@ -2656,7 +2665,7 @@ e
 </div>
 </div>
 </div>
-<p>是非他のメソッドも試して欲しい。またオブジェクトのメソッドを調べる場合，<code class="docutils literal notranslate"><span class="pre">dir()</span></code>の出力は見にくいので<a class="reference external" href="https://pypi.org/project/see/"><code class="docutils literal notranslate"><span class="pre">see</span></code>モジュール</a>を使うのがおすすめである（モジュールについては次のセクションを参照）。もちろん，Pythonやモジュールの説明書（docs）をチェックするのも必要である。</p>
+<p>是非他のメソッドも試して欲しい。またオブジェクトのメソッドを調べる場合，<code class="docutils literal notranslate"><span class="pre">dir()</span></code>の出力は見にくいので，<code class="docutils literal notranslate"><span class="pre">py4macro</span></code>モジュールに含まれる<code class="docutils literal notranslate"><span class="pre">see()</span></code>関数を使うのがおすすめである（モジュールについては次のセクションを参照）。もちろん，Pythonやモジュールの説明書（docs）をチェックするのも必要である。</p>
 </section>
 <section id="id13">
 <h2>パッケージとモジュール<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h2>
@@ -2731,47 +2740,29 @@ e
 </div>
 <p>この読み込み方法の利点はモジュール名を省略できることである。しかし他のパッケージやモジュールと同じ関数がある場合は，後で<code class="docutils literal notranslate"><span class="pre">import</span></code>したものが優先されるので注意が必要だ。</p>
 <p><code class="docutils literal notranslate"><span class="pre">import</span></code>文はファイルの最初に書き，どのモジュールが導入されるかを明示的に示すとわかりやすいだろう。</p>
-<p>前のセクションで<code class="docutils literal notranslate"><span class="pre">dir()</span></code>を使いオブジェクトの属性を調べたが，その際<code class="docutils literal notranslate"><span class="pre">see</span></code>を使うとリストが見やすくなると説明した。それを使ってみよう。</p>
+<p>前のセクションで<code class="docutils literal notranslate"><span class="pre">dir()</span></code>を使いオブジェクトの属性を調べたが，その際<code class="docutils literal notranslate"><span class="pre">py4macro</span></code>モジュールの<code class="docutils literal notranslate"><span class="pre">see()</span></code>関数を使うとリストが見やすくなると説明した。それを使ってみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">see</span> <span class="kn">import</span> <span class="n">see</span>  <span class="c1"># seeモジュールから関数seeをインポートする</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">see</span><span class="p">(</span><span class="n">moji</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">py4macro</span><span class="o">.</span><span class="n">see</span><span class="p">(</span><span class="n">moji</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>    []                 in                 +                  *
-    %                  &lt;                  &lt;=                 ==
-    !=                 &gt;                  &gt;=                 dir()
-    hash()             help()             iter()             len()
-    repr()             str()              .capitalize()      .casefold()
-    .center()          .count()           .encode()          .endswith()
-    .expandtabs()      .find()            .format()          .format_map()
-    .index()           .isalnum()         .isalpha()         .isascii()
-    .isdecimal()       .isdigit()         .isidentifier()    .islower()
-    .isnumeric()       .isprintable()     .isspace()         .istitle()
-    .isupper()         .join()            .ljust()           .lower()
-    .lstrip()          .maketrans()       .partition()       .removeprefix()
-    .removesuffix()    .replace()         .rfind()           .rindex()
-    .rjust()           .rpartition()      .rsplit()          .rstrip()
-    .split()           .splitlines()      .startswith()      .strip()
-    .swapcase()        .title()           .translate()       .upper()
-    .zfill()
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">151</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">py4macro</span><span class="o">.</span><span class="n">see</span><span class="p">(</span><span class="n">moji</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;py4macro&#39; is not defined
 </pre></div>
 </div>
 </div>
 </div>
-<p>ダンダー・メソッドは省略され，メソッドには<code class="docutils literal notranslate"><span class="pre">()</span></code>が追加され見やすくなっている。</p>
+<p>このコードは，「<code class="docutils literal notranslate"><span class="pre">.</span></code>」を「の」と読んで，「<code class="docutils literal notranslate"><span class="pre">py4macro</span></code>の<code class="docutils literal notranslate"><span class="pre">see()</span></code>関数」と読むことができる。<code class="docutils literal notranslate"><span class="pre">see()</span></code>関数を使うと，ダンダー・メソッドは省略され，メソッドには<code class="docutils literal notranslate"><span class="pre">()</span></code>が追加され見やすくなっている。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">see</span></code>モジュールはAnacondaに含まれていないので，TerminalもしくはGit Bashで以下を実行して事前にインストールする必要がある。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install see
+<p><code class="docutils literal notranslate"><span class="pre">py4macro</span></code>モジュールはAnacondaに含まれていないので，TerminalもしくはGit Bashで以下を実行して事前にインストールする必要がある。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install py4macro
 </pre></div>
 </div>
 </div>
@@ -2785,21 +2776,11 @@ e
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>私は神戸大学の学生です。
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 様々なものからリストを返す関数</span>
 <span class="nb">list</span><span class="p">()</span>  <span class="c1"># 空のリスト</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[]
 </pre></div>
 </div>
 </div>
@@ -2811,20 +2792,10 @@ e
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>range(0, 10)
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 </pre></div>
 </div>
 </div>
@@ -2863,16 +2834,6 @@ e
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">156</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">primt</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;primt&#39; is not defined
-</pre></div>
-</div>
-</div>
 </div>
 <ul class="simple">
 <li><p>矢印（—-&gt;）でエラー箇所が示されている。</p></li>
@@ -2891,14 +2852,6 @@ e
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>  <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">157</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
-<span class="nn">    for i</span> in <span class="ni">range</span><span class="nt">(0,3)</span>
-                       <span class="o">^</span>
-<span class="ne">SyntaxError</span>: expected &#39;:&#39;
-</pre></div>
-</div>
-</div>
 </div>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">line</span> <span class="pre">3</span></code>はセル内の３行目を示している。</p></li>
@@ -2914,14 +2867,6 @@ e
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>  <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">158</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-    <span class="p">(</span><span class="mf">2.1</span> <span class="o">+</span> <span class="mf">1.5</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">10.0</span> <span class="o">+</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="mf">3.2</span>
-                                  <span class="o">^</span>
-<span class="ne">SyntaxError</span>: incomplete input
-</pre></div>
-</div>
-</div>
 </div>
 <p>この場合，<code class="docutils literal notranslate"><span class="pre">Python</span></code>はプログラマーがどこに<code class="docutils literal notranslate"><span class="pre">)</span></code>を入れようとしたかは分からない。従って，最後に<code class="docutils literal notranslate"><span class="pre">)</span></code>が入ると想定して<code class="docutils literal notranslate"><span class="pre">^</span></code>を文末に置いている。</p>
 <hr class="docutils" />
@@ -2934,11 +2879,6 @@ e
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(10, 20, 30, 40, 50, 50)
-</pre></div>
-</div>
-</div>
 </div>
 <p>＜＜コメント２＞＞<br>
 文字列を改行する場合は次の例のように<code class="docutils literal notranslate"><span class="pre">\</span></code>を使う。</p>
@@ -2946,11 +2886,6 @@ e
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;神戸大学</span><span class="se">\</span>
 <span class="s1">経済学部&#39;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;神戸大学経済学部&#39;
 </pre></div>
 </div>
 </div>
@@ -2968,16 +2903,6 @@ e
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ZeroDivisionError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">161</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
-
-<span class="ne">ZeroDivisionError</span>: division by zero
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="id22">
@@ -2986,16 +2911,6 @@ e
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">10</span> <span class="o">+</span> <span class="n">xx</span> <span class="o">*</span> <span class="mi">2</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">162</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">xx</span> <span class="o">*</span> <span class="mi">2</span>
-
-<span class="ne">NameError</span>: name &#39;xx&#39; is not defined
 </pre></div>
 </div>
 </div>
@@ -3010,16 +2925,6 @@ e
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">163</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="s1">&#39;3&#39;</span> <span class="o">+</span> <span class="mi">10</span>
-
-<span class="ne">TypeError</span>: can only concatenate str (not &quot;int&quot;) to str
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 </section>
@@ -3030,21 +2935,6 @@ e
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="nb">print</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on built-in function print in module builtins:
-
-print(...)
-    print(value, ..., sep=&#39; &#39;, end=&#39;\n&#39;, file=sys.stdout, flush=False)
-    
-    Prints the values to a stream, or to sys.stdout by default.
-    Optional keyword arguments:
-    file:  a file-like object (stream); defaults to the current sys.stdout.
-    sep:   string inserted between values, default a space.
-    end:   string appended after the last value, default a newline.
-    flush: whether to forcibly flush the stream.
 </pre></div>
 </div>
 </div>
@@ -3193,7 +3083,7 @@ By 春山 鉄源  Tetsugen HARUYAMA
 
   <p class="copyright">
     
-      © Copyright 2020-2023（公開開始日：2020年5月4日）.
+      © Copyright 2020-2024（公開開始日：2020年5月4日）.
       <br/>
     
   </p>
