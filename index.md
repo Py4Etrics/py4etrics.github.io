@@ -76,11 +76,11 @@ Stack Overflow Trends
 
 ## 本サイトで使うPythonとパッケージのバージョン
 ```{code-cell} python3
-import gapminder, linearmodels, lmdiag, matplotlib, numba, numpy, pandas, py4etrics, scipy, see, statsmodels, wooldridge
+import gapminder, linearmodels, lmdiag, matplotlib, numba, numpy, pandas, py4macro, py4etrics, scipy, statsmodels, wooldridge
 from platform import python_version
 
-packages = ['Python','gapminder','linearmodels', 'lmdiag','matplotlib', 'numba', 'numpy','pandas', 'py4etrics', 'scipy','see', 'statsmodels', 'wooldridge']
-versions = [python_version(),gapminder.__version__, linearmodels.__version__, '0.3.7', matplotlib.__version__, numba.__version__, numpy.__version__, pandas.__version__, py4etrics.__version__, scipy.__version__, see.__version__, statsmodels.__version__, wooldridge.__version__]
+packages = ['Python','gapminder','linearmodels', 'lmdiag','matplotlib', 'numba', 'numpy','pandas', 'py4macro', 'py4etrics', 'scipy', 'statsmodels', 'wooldridge']
+versions = [python_version(),gapminder.__version__, linearmodels.__version__, '0.3.7', matplotlib.__version__, numba.__version__, numpy.__version__, pandas.__version__, py4macro.__version__, py4etrics.__version__, scipy.__version__, statsmodels.__version__, wooldridge.__version__]
 
 for pack, ver in zip(packages, versions):
     print('{0:14}{1}'.format(pack,ver))
