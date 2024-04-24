@@ -90,7 +90,7 @@ for pack, ver in zip(packages, versions):
 神戸大学経済経営学会が出版した「経済学の歩き方」は初学者を対象として経済学に関する59のトピックを厳選し解説している。私が執筆した章[「Pythonによるマクロ経済分析」](https://github.com/Haruyama-KobeU/arukikata2022)はGitHub上で公開している。原稿で使ったコードとデータ作成に使ったコードも公開しているので，`Python`で何ができるかを手っ取り早く知りたい人にはオススメかも知れない。
 
 ## おまけ２
-[これを](https://www.google.co.jp/search?source=univ&tbm=isch&q=paranormal+distribution&sa=X&ved=2ahUKEwis27624czrAhXIfd4KHR9JAzgQsAR6BAgLEAE&biw=1280&bih=689)`Python`コードで書いてみた。
+[これを](https://www.google.co.jp/search?q=paranormal+distribution&sca_esv=9cc7d5058c1b09d8&source=hp&ei=7F4oZtOCEdal2roPwpevqAU&iflsig=ANes7DEAAAAAZihs_EvX1_LzUR39rva5Z5T_AvC_ivIj&ved=0ahUKEwjTqKOT2NmFAxXWklYBHcLLC1UQ4dUDCBY&uact=5&oq=paranormal+distribution&gs_lp=Egdnd3Mtd2l6IhdwYXJhbm9ybWFsIGRpc3RyaWJ1dGlvbjIHEAAYgAQYEzIHEAAYgAQYEzIHEAAYgAQYEzIHEAAYgAQYEzIGEAAYExgeMgYQABgTGB4yCBAAGBMYCBgeMggQABgTGAUYHjIIEAAYExgFGB4yCBAAGBMYBRgeSJ4uUABY1yxwA3gAkAEAmAGNAaAB3BWqAQQ3LjE5uAEDyAEA-AEBmAIdoALMFqgCCsICBhAAGAMYBMICCxAAGIAEGLEDGIMBwgINEAAYgAQYsQMYgwEYBMICBxAAGIAEGATCAgoQABiABBixAxgEwgIQEAAYAxjlAhjqAhiMAxiPAcICCBAAGIAEGLEDwgIFEAAYgATCAgkQABiABBgTGA2YAwSSBwQ3LjIyoAeEXA&sclient=gws-wiz)`Python`コードで書いてみた。
 
 ```{code-cell} ipython3
 :tags: [remove-cell]
