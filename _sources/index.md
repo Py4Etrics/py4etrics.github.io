@@ -72,7 +72,7 @@ Stack Overflow Trends
 
 > *Introductory Econometrics: A Modern Approach*, 7th ed, 2019, J.M. Wooldridge
 
-邦訳がないのが不思議なくらい有名な教科書なので，英語の勉強を兼ねて是非読んで欲しい教科書である。
+和訳がないのが不思議なくらい有名な教科書なので，英語の勉強を兼ねて是非読んで欲しい教科書である。
 
 ## 本サイトで使うPythonとパッケージのバージョン
 ```{code-cell} python3
