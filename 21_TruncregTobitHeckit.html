@@ -483,6 +483,7 @@ document.write(`
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
 <span class="kn">import</span> <span class="nn">py4macro</span>
 <span class="kn">import</span> <span class="nn">wooldridge</span>
 
@@ -491,7 +492,6 @@ document.write(`
 <span class="kn">from</span> <span class="nn">py4etrics.heckit</span> <span class="kn">import</span> <span class="n">Heckit</span>
 <span class="kn">from</span> <span class="nn">py4etrics.hetero_test</span> <span class="kn">import</span> <span class="n">het_test_probit</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
-<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
 
 <span class="c1"># 警告メッセージを非表示</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
@@ -611,7 +611,7 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_full</span> <span class="o">=</span> <span class="s1">&#39;Y ~ X&#39;</span>
 
-<span class="n">result_full</span><span class="o">=</span>  <span class="n">ols</span><span class="p">(</span><span class="n">formula_full</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">result_full</span><span class="o">=</span>  <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_full</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="n">b0_full</span><span class="p">,</span><span class="n">b1_full</span> <span class="o">=</span> <span class="n">result_full</span><span class="o">.</span><span class="n">params</span>
 
@@ -620,8 +620,8 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.977591
-X            1.092995
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.141023
+X            0.902698
 dtype: float64
 </pre></div>
 </div>
@@ -632,7 +632,7 @@ dtype: float64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_trunc</span> <span class="o">=</span> <span class="s1">&#39;Y_trunc ~ X&#39;</span>
 
-<span class="n">result_trunc</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_trunc</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">result_trunc</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_trunc</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="n">b0_trunc</span><span class="p">,</span> <span class="n">b1_trunc</span> <span class="o">=</span> <span class="n">result_trunc</span><span class="o">.</span><span class="n">params</span>
 
@@ -641,8 +641,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    2.955852
-X            0.586881
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    3.434309
+X            0.433165
 dtype: float64
 </pre></div>
 </div>
@@ -686,7 +686,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f9888431d683f5b26666d4fef0ecf13abbf4a4e873222580fa6bdd81153286a2.png" src="_images/f9888431d683f5b26666d4fef0ecf13abbf4a4e873222580fa6bdd81153286a2.png" />
+<img alt="_images/c654a7f648895737a31610b068fcf90018b9434275c1a44f842a83ecaf834b2c.png" src="_images/c654a7f648895737a31610b068fcf90018b9434275c1a44f842a83ecaf834b2c.png" />
 </div>
 </div>
 <p>＜<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>コードの説明＞</p>
@@ -854,7 +854,7 @@ variables used by the authors.
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_trunc</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + educ + abil + exper + nc + west + south + urban&#39;</span>
 
-<span class="n">res_ols</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_trunc</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">htv</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_ols</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_trunc</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">htv</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">res_ols</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
@@ -900,7 +900,7 @@ urban          0.2268      0.041      5.589      0.000       0.147       0.306
 <p>164のサンプルが取り除かれた。これにより，ランダムな標本ではなくなっていおり，GM仮定２が満たされていない。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_ols_20</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_trunc</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">htv_20</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_ols_20</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_trunc</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">htv_20</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">res_ols_20</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
@@ -1034,7 +1034,7 @@ Dep. Variable:                      y   Pseudo R-squ:                    0.000
 Model:                       Truncreg   Log-Likelihood:                 -619.9
 Method:            Maximum Likelihood   LL-Null:                        -619.9
 Date:                Sun, 21 Jul 2024   LL-Ratio:                         -0.0
-Time:                        05:17:29   LLR p-value:                       nan
+Time:                        05:29:55   LLR p-value:                       nan
 No. Observations:                1066   AIC:                            1241.8
 Df Residuals:                    1065   BIC:                            1246.7
 Df Model:                           0   Covariance Type:             nonrobust
@@ -1286,7 +1286,7 @@ Log(Sigma)    -0.3590      0.047     -7.677      0.000      -0.451      -0.267
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_star</span> <span class="o">=</span> <span class="s1">&#39;Y_star ~ X&#39;</span>
 
-<span class="n">result_star</span><span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_star</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">result_star</span><span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_star</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="n">b0_star</span><span class="p">,</span><span class="n">b1_star</span> <span class="o">=</span> <span class="n">result_star</span><span class="o">.</span><span class="n">params</span>
 
@@ -1295,8 +1295,8 @@ Log(Sigma)    -0.3590      0.047     -7.677      0.000      -0.451      -0.267
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept   -0.336348
-X            0.962308
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.369851
+X            0.937147
 dtype: float64
 </pre></div>
 </div>
@@ -1310,7 +1310,7 @@ dtype: float64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_sample</span> <span class="o">=</span> <span class="s1">&#39;Y ~ X&#39;</span>
 
-<span class="n">result_corner</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_sample</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">result_corner</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_sample</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="n">b0_corner</span><span class="p">,</span> <span class="n">b1_corner</span> <span class="o">=</span> <span class="n">result_corner</span><span class="o">.</span><span class="n">params</span>
 
@@ -1319,8 +1319,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.442493
-X            0.503114
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.657823
+X            0.443437
 dtype: float64
 </pre></div>
 </div>
@@ -1360,7 +1360,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e9a69878aa2a491ea386f320c7e01ce8fedd60f54287f9870b8697424fe4a0ea.png" src="_images/e9a69878aa2a491ea386f320c7e01ce8fedd60f54287f9870b8697424fe4a0ea.png" />
+<img alt="_images/8bc6807386c7ae99eca70d9573d5bf3c11b584e89a5863d6eedf60804506a7f8.png" src="_images/8bc6807386c7ae99eca70d9573d5bf3c11b584e89a5863d6eedf60804506a7f8.png" />
 </div>
 </div>
 <hr class="docutils" />
@@ -1918,7 +1918,7 @@ Dep. Variable:                    lwage   R-squared:                       0.156
 Model:                           Heckit   Adj. R-squared:                  0.150
 Method:                Heckman Two-Step   F-statistics:                   26.148
 Date:                  Sun, 21 Jul 2024   Prob (F-statistic):              0.000
-Time:                          05:17:31   Cov in 1st Stage:            nonrobust
+Time:                          05:29:58   Cov in 1st Stage:            nonrobust
 No. Total Obs.:                     753   Cov in 2nd Stage:                  HC1
 No. Censored Obs.:                  325                                         
 No. Uncensored Obs.:                428                                         
@@ -2036,7 +2036,7 @@ Dep. Variable:                      y   No. Observations:                  753
 Model:                         Probit   Df Residuals:                      745
 Method:                           MLE   Df Model:                            7
 Date:                Sun, 21 Jul 2024   Pseudo R-squ.:                  0.2206
-Time:                        05:17:31   Log-Likelihood:                -401.30
+Time:                        05:29:58   Log-Likelihood:                -401.30
 converged:                       True   LL-Null:                       -514.87
 Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
 ==============================================================================
@@ -2056,7 +2056,7 @@ Covariance Type:            nonrobust   LLR p-value:                 2.009e-45
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ educ + exper + expersq&#39;</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC1&#39;</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC1&#39;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>

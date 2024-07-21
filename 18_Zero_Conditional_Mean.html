@@ -476,10 +476,10 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
 
 <span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">multivariate_normal</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="n">uniform</span>
-<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
 
 <span class="c1"># 警告メッセージを非表示</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
@@ -532,7 +532,7 @@ document.write(`
     <span class="n">y</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">u</span>  <span class="c1"># 説明変数</span>
 
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>  <span class="c1"># DataFrameの作成</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLS推定</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLS推定</span>
 
     <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># 返り値の設定</span>
 </pre></div>
@@ -560,7 +560,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5ba9ee1c9ee8f37900215b65a4688885e267dfee23853413b8eade1bc30c2fc2.png" src="_images/5ba9ee1c9ee8f37900215b65a4688885e267dfee23853413b8eade1bc30c2fc2.png" />
+<img alt="_images/eefa5f587809fd3526ff2951b3fa7f409aabce5e149e600e99cc9c57e60c67d5.png" src="_images/eefa5f587809fd3526ff2951b3fa7f409aabce5e149e600e99cc9c57e60c67d5.png" />
 </div>
 </div>
 <p>共分散を計算してみよう。</p>
@@ -571,8 +571,8 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1.        , 0.02337127],
-       [0.02337127, 1.        ]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1.        , 0.18567999],
+       [0.18567999, 1.        ]])
 </pre></div>
 </div>
 </div>
@@ -591,7 +591,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e5f7acc47e8eb2241f186cd99bcb1fe76b9086f235b1c8dde1afb4a489c4e2e6.png" src="_images/e5f7acc47e8eb2241f186cd99bcb1fe76b9086f235b1c8dde1afb4a489c4e2e6.png" />
+<img alt="_images/db4709cf61bec6d641ad3ab39e53868affd4eb85210514d035a068d255885d5e.png" src="_images/db4709cf61bec6d641ad3ab39e53868affd4eb85210514d035a068d255885d5e.png" />
 </div>
 </div>
 <p>推定量が不偏性を満たしているため両方は殆ど同じである。</p>
@@ -615,7 +615,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/89f1c3f839f548b7fef826b2e82624035b1a097c002ac9a0d4afedc9d9d0cddd.png" src="_images/89f1c3f839f548b7fef826b2e82624035b1a097c002ac9a0d4afedc9d9d0cddd.png" />
+<img alt="_images/07b12782ac2a731c613b6d933e5ef2446e82d399508d65b14571948fd4ee602f.png" src="_images/07b12782ac2a731c613b6d933e5ef2446e82d399508d65b14571948fd4ee602f.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -625,8 +625,8 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1.        , 0.81615663],
-       [0.81615663, 1.        ]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1.        , 0.79509844],
+       [0.79509844, 1.        ]])
 </pre></div>
 </div>
 </div>
@@ -645,7 +645,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/74bcee236d613478146f78894283af77b3bb75ddebc6c4ef99b795974ae0128c.png" src="_images/74bcee236d613478146f78894283af77b3bb75ddebc6c4ef99b795974ae0128c.png" />
+<img alt="_images/5df99c06a89527c26f080109a5b364291804de21aa53c88c88a34b80680bf1b5.png" src="_images/5df99c06a89527c26f080109a5b364291804de21aa53c88c88a34b80680bf1b5.png" />
 </div>
 </div>
 <p>明らかに異なる。GM仮定４が満たされず，推定量の不偏性が満たされないためである。この場合，一致性も満たされない。標本の大きさ<code class="docutils literal notranslate"><span class="pre">n</span></code>を<code class="docutils literal notranslate"><span class="pre">100000</span></code>にして確かめてみる。</p>
@@ -664,7 +664,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5899a08e9366d5bc9e0995184ae62a4b9ae272f51c9b09ef0aad2657e5f664ca.png" src="_images/5899a08e9366d5bc9e0995184ae62a4b9ae272f51c9b09ef0aad2657e5f664ca.png" />
+<img alt="_images/e4323075284c892abde1742506e9ae7ad9a361c59f03a03a77f8149a1736e80b.png" src="_images/e4323075284c892abde1742506e9ae7ad9a361c59f03a03a77f8149a1736e80b.png" />
 </div>
 </div>
 <p>上から３行目に<code class="docutils literal notranslate"><span class="pre">alpha=0.1</span></code>とあるが，散布図のマーカーの透明度をしている引数であり<code class="docutils literal notranslate"><span class="pre">0~1</span></code>の値をとる。デフォルトは<code class="docutils literal notranslate"><span class="pre">1</span></code>であり，<code class="docutils literal notranslate"><span class="pre">0</span></code>は透明になる。</p>
@@ -741,15 +741,15 @@ document.write(`
 
 <span class="c1"># 推定</span>
 <span class="n">formula_omitted</span> <span class="o">=</span> <span class="s1">&#39;Y ~ X1 + X2&#39;</span>
-<span class="n">res_omitted</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_omitted</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sample</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_omitted</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_omitted</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sample</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">res_omitted</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    2.282661
-X1           2.956825
-X2           0.984222
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.905800
+X1           2.974435
+X2           1.038135
 dtype: float64
 </pre></div>
 </div>
@@ -837,7 +837,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1497f570ccda857a37d255adcde0051c380642bc7b45f4de8c7664acdb7563c6.png" src="_images/1497f570ccda857a37d255adcde0051c380642bc7b45f4de8c7664acdb7563c6.png" />
+<img alt="_images/e005f0135b2cc7bd32e92db2807945ac680ee93d8f880deaa0931761354c93c9.png" src="_images/e005f0135b2cc7bd32e92db2807945ac680ee93d8f880deaa0931761354c93c9.png" />
 </div>
 </div>
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布</p>
@@ -850,7 +850,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e4da2a4b5c5387d7fd7bfe396cd6e1f890a43fe618e1325a7387056505233e06.png" src="_images/e4da2a4b5c5387d7fd7bfe396cd6e1f890a43fe618e1325a7387056505233e06.png" />
+<img alt="_images/a962357299e163d400f4fd65361b533f09450dfa319734099af580b04d05b237.png" src="_images/a962357299e163d400f4fd65361b533f09450dfa319734099af580b04d05b237.png" />
 </div>
 </div>
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_2\)</span>の分布</p>
@@ -863,7 +863,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/91cb71c867b7a08edc45750d27b908512e9e08382d41ce3f811324f98051a23a.png" src="_images/91cb71c867b7a08edc45750d27b908512e9e08382d41ce3f811324f98051a23a.png" />
+<img alt="_images/9714d7dfd9e31ef23ab3dc39ce5bce56b8349b3d29efd7afac35a78bdf1d9367.png" src="_images/9714d7dfd9e31ef23ab3dc39ce5bce56b8349b3d29efd7afac35a78bdf1d9367.png" />
 </div>
 </div>
 </section>
@@ -922,15 +922,15 @@ dtype: float64
 
 <span class="c1"># OLS推定</span>
 <span class="n">df_sim</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>  <span class="c1"># DataFrameの作成</span>
-<span class="n">res_ols</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLS推定</span>
+<span class="n">res_ols</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLS推定</span>
 
 <span class="n">res_ols</span><span class="o">.</span><span class="n">params</span>  <span class="c1"># OLS推定量</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    3.873427
-X            0.471067
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    4.079520
+X            0.439981
 dtype: float64
 </pre></div>
 </div>
@@ -1001,7 +1001,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/aecb9ed5bb6ba3c6a01e3f485cff283ae2584d53a9c5c4321b92fd39dec9731b.png" src="_images/aecb9ed5bb6ba3c6a01e3f485cff283ae2584d53a9c5c4321b92fd39dec9731b.png" />
+<img alt="_images/fea8f7200a75282d21e144c6d05e2375fdf0478a0e9235142c48a20af1d469ff.png" src="_images/fea8f7200a75282d21e144c6d05e2375fdf0478a0e9235142c48a20af1d469ff.png" />
 </div>
 </div>
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布</p>
@@ -1014,7 +1014,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/29f0a86f0fff28dbb662c63ee7cf34ca352cdd09a129925cb5fa47683435a074.png" src="_images/29f0a86f0fff28dbb662c63ee7cf34ca352cdd09a129925cb5fa47683435a074.png" />
+<img alt="_images/7d2bc9de0436d1cf79d740bc3f5fa9e7b6818bc77adb64c98d92486e9719f51e.png" src="_images/7d2bc9de0436d1cf79d740bc3f5fa9e7b6818bc77adb64c98d92486e9719f51e.png" />
 </div>
 </div>
 </section>
@@ -1137,16 +1137,16 @@ dtype: float64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_simul</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;W&#39;</span><span class="p">:</span><span class="n">w</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">:</span><span class="n">l</span><span class="p">,</span> <span class="s1">&#39;Xd&#39;</span><span class="p">:</span><span class="n">xd</span><span class="p">})</span>  <span class="c1"># DataFrameの作成</span>
 
-<span class="n">res_ols</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s1">&#39;W ~ L + Xd&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_simul</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLS推定</span>
+<span class="n">res_ols</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;W ~ L + Xd&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_simul</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLS推定</span>
 
 <span class="n">res_ols</span><span class="o">.</span><span class="n">params</span>  <span class="c1"># OLS推定量</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.309388
-L           -0.826151
-Xd           2.547535
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.281826
+L           -0.822498
+Xd           2.552012
 dtype: float64
 </pre></div>
 </div>
@@ -1162,9 +1162,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>d0の真の値：1.5		d0の推定量：1.309388165234477
-d1の真の値：-1		d1の推定量：-0.8261508236403632
-d2の真の値：2.0		d2の推定量：2.547535392277383
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>d0の真の値：1.5		d0の推定量：1.2818257108315452
+d1の真の値：-1		d1の推定量：-0.8224980113954896
+d2の真の値：2.0		d2の推定量：2.5520123599735705
 </pre></div>
 </div>
 </div>
@@ -1254,7 +1254,7 @@ d2の真の値：2.0		d2の推定量：2.547535392277383
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4afcc652ffd49baed290e748f32e400a17f7b839058598cc98d724218160195d.png" src="_images/4afcc652ffd49baed290e748f32e400a17f7b839058598cc98d724218160195d.png" />
+<img alt="_images/4d99dda779e5ff83fb7de10ebf852b7cbb94f1457e59d737c3f22de5afad992c.png" src="_images/4d99dda779e5ff83fb7de10ebf852b7cbb94f1457e59d737c3f22de5afad992c.png" />
 </div>
 </div>
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布</p>
@@ -1267,7 +1267,7 @@ d2の真の値：2.0		d2の推定量：2.547535392277383
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8038a59e9c79cc82afdfdfe434a49b8ea4d824e455b95141c60c6d4f65a16a09.png" src="_images/8038a59e9c79cc82afdfdfe434a49b8ea4d824e455b95141c60c6d4f65a16a09.png" />
+<img alt="_images/b6b65c17ded62482bc41fb342bb9886fdc0f574fe347d8cf3c2da592dafd6762.png" src="_images/b6b65c17ded62482bc41fb342bb9886fdc0f574fe347d8cf3c2da592dafd6762.png" />
 </div>
 </div>
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_2\)</span>の分布</p>
@@ -1280,7 +1280,7 @@ d2の真の値：2.0		d2の推定量：2.547535392277383
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7a45d892e7b66d3c759e4f9f183843fc894452760b3b1e920d5fb4999c23c5cf.png" src="_images/7a45d892e7b66d3c759e4f9f183843fc894452760b3b1e920d5fb4999c23c5cf.png" />
+<img alt="_images/28486e6e0b33e58a4781fe8bf7c8a405400bb6e18b160585e9b0b1a857512ece.png" src="_images/28486e6e0b33e58a4781fe8bf7c8a405400bb6e18b160585e9b0b1a857512ece.png" />
 </div>
 </div>
 </section>
