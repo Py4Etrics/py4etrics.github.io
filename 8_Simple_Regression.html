@@ -467,10 +467,10 @@ document.write(`
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">py4macro</span>    <span class="c1"># 属性を調べるsee()関数が含まれる</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>  <span class="c1"># 回帰分析のパッケージ</span>
 <span class="kn">import</span> <span class="nn">wooldridge</span>  <span class="c1"># wooldridgeのデータ・パッケージ</span>
 
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>    <span class="c1"># 正規分布関数</span>
-<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>  <span class="c1"># 回帰分析のパッケージ</span>
 <span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span>  <span class="c1"># シミュレーションの計算を高速化する</span>
 
 <span class="c1"># 警告メッセージを非表示</span>
@@ -967,7 +967,7 @@ memory usage: 8.3 KB
 <p>まず自動計算の準備として計算の対象となるもの（インスタンスと呼ばれるオブジェクト）を生成し、ここでは”model”の省略形の変数<code class="docutils literal notranslate"><span class="pre">mod</span></code>に割り当てる（<code class="docutils literal notranslate"><span class="pre">mod</span></code>でなくとも好きな変数名でOK）。ここで第１引数は上で定義した回帰式，第２引数<code class="docutils literal notranslate"><span class="pre">data</span></code>は使用するデータをを指定する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mod</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mod</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1063,8 +1063,8 @@ dtype: float64
 Dep. Variable:                   wage   R-squared:                       0.165
 Model:                            OLS   Adj. R-squared:                  0.163
 Method:                 Least Squares   F-statistic:                     103.4
-Date:                Sat, 20 Jul 2024   Prob (F-statistic):           2.78e-22
-Time:                        04:40:54   Log-Likelihood:                -1385.7
+Date:                Sun, 21 Jul 2024   Prob (F-statistic):           2.78e-22
+Time:                        05:17:44   Log-Likelihood:                -1385.7
 No. Observations:                 526   AIC:                             2775.
 Df Residuals:                     524   BIC:                             2784.
 Df Model:                           1                                         
@@ -1374,7 +1374,7 @@ R^2
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1528,7 +1528,7 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;Y ~ X&#39;</span>
-<span class="n">res_sim</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_sim</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1541,8 +1541,8 @@ educ           0.0827      0.008     10.935      0.000       0.068       0.098
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.221523
-X            0.897737
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept   -0.852732
+X            1.425015
 dtype: float64
 </pre></div>
 </div>
@@ -1584,7 +1584,7 @@ dtype: float64
     <span class="n">df_sim</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">})</span>
     
     <span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;Y ~ X&#39;</span>
-    <span class="n">res_sim</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+    <span class="n">res_sim</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_sim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
     
     <span class="k">return</span> <span class="n">res_sim</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
@@ -1600,8 +1600,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.021441
-X            0.996815
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.458044
+X            0.916730
 dtype: float64
 </pre></div>
 </div>
@@ -1641,7 +1641,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.4942356079821195, 1.1145134932491867)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.1465489006130385, 0.9641711219077405)
 </pre></div>
 </div>
 </div>
@@ -1766,7 +1766,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/072919dbc2f66c6d4471e77c1ec158450c2674cb685988052ddc59d673101d60.png" src="_images/072919dbc2f66c6d4471e77c1ec158450c2674cb685988052ddc59d673101d60.png" />
+<img alt="_images/5068611f42308f05a550353cba3fb6162a0488ee7ba8729237469d79210f2a7c.png" src="_images/5068611f42308f05a550353cba3fb6162a0488ee7ba8729237469d79210f2a7c.png" />
 </div>
 </div>
 <p><span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布を図示する。</p>
@@ -1778,7 +1778,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/772885165c93809db734aa8c077c2218c39efc7687ba540d521d687e8bb42865.png" src="_images/772885165c93809db734aa8c077c2218c39efc7687ba540d521d687e8bb42865.png" />
+<img alt="_images/77d841e61f394f3f417cfa35ff4b7e3a812b38ed8adf8903cf19ab1bee4c1b67.png" src="_images/77d841e61f394f3f417cfa35ff4b7e3a812b38ed8adf8903cf19ab1bee4c1b67.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">y</span></code>の理論値を図示するが，図示の時間短縮のために<code class="docutils literal notranslate"><span class="pre">N</span></code>回のシミュレーション中の最初の<code class="docutils literal notranslate"><span class="pre">r</span></code>回の回帰線だけを表示する。</p>
@@ -1807,7 +1807,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/989c3f210993ce60910fe546f8cb5a15b4c67938769b338f9af66223462658ca.png" src="_images/989c3f210993ce60910fe546f8cb5a15b4c67938769b338f9af66223462658ca.png" />
+<img alt="_images/80db8d39fb6d804d5fa3433d54675408d9559ab3457069f8b5c4c59b3b926e90.png" src="_images/80db8d39fb6d804d5fa3433d54675408d9559ab3457069f8b5c4c59b3b926e90.png" />
 </div>
 </div>
 <div class="admonition- admonition">

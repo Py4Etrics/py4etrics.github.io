@@ -469,9 +469,10 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
 <span class="kn">import</span> <span class="nn">wooldridge</span>
+
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">t</span>
-<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
 
 <span class="c1"># 警告メッセージを非表示</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
@@ -593,7 +594,7 @@ Farber kindly provided these data when we were colleagues at MIT.
 <span class="s1">                   y85:educ + y85:female + </span><span class="se">\</span>
 <span class="s1">                   exper + I((exper**2)/100) + union&#39;</span>
 
-<span class="n">result</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">cps</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">cps</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -847,7 +848,7 @@ only a subset.
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;rprice ~ nearinc + y81 + nearinc:y81&#39;</span>
 
-<span class="n">result</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">kielmc</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">kielmc</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -912,7 +913,7 @@ nearinc:y81 -1.186e+04   7456.646     -1.591      0.113   -2.65e+04    2806.867
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_1</span> <span class="o">=</span> <span class="s1">&#39;np.log(rprice) ~ nearinc * y81&#39;</span>
 
-<span class="n">result_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">kielmc</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">result_1</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">kielmc</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">result_1</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
@@ -941,7 +942,7 @@ nearinc:y81    -0.0626      0.083     -0.751      0.453      -0.227       0.102
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_2</span> <span class="o">=</span> <span class="s1">&#39;np.log(rprice) ~ nearinc * y81 + age + I(age**2) + </span><span class="se">\</span>
 <span class="s1">            np.log(intst) + np.log(land) + np.log(area) + rooms + baths&#39;</span>
 
-<span class="n">result_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">kielmc</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">result_2</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">kielmc</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">result_2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
@@ -1305,7 +1306,7 @@ y_{it}= \beta_0 + \delta_0D_t + \beta_1x_{it}+e_{it}\qquad e_{it}=a_i+u_{it}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x13148e750&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x12d0d6750&gt;
 </pre></div>
 </div>
 </div>
@@ -2247,7 +2248,7 @@ Unfortunately, I do not have the list of cities.
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_1</span> <span class="o">=</span> <span class="s1">&#39;crmrte_diff ~ unem_diff&#39;</span>
 
-<span class="n">result_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_1</span><span class="p">,</span> <span class="n">crime2_diff</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">result_1</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_1</span><span class="p">,</span> <span class="n">crime2_diff</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">result_1</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
@@ -2303,7 +2304,7 @@ unem_diff      2.2180      0.878      2.527      0.015       0.449       3.987
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_ols_1</span> <span class="o">=</span> <span class="s1">&#39;crmrte ~ d87 + unem&#39;</span>
 
-<span class="n">result_ols_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_ols_1</span><span class="p">,</span> <span class="n">crime2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">result_ols_1</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_ols_1</span><span class="p">,</span> <span class="n">crime2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">result_ols_1</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
@@ -2336,7 +2337,7 @@ unem           0.4265      1.188      0.359      0.720      -1.935       2.788
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_ols_2</span> <span class="o">=</span> <span class="s1">&#39;crmrte ~ unem&#39;</span>
 
-<span class="n">result_ols_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_ols_2</span><span class="p">,</span> <span class="n">crime2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">result_ols_2</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_ols_2</span><span class="p">,</span> <span class="n">crime2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">result_ols_2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
@@ -2665,7 +2666,7 @@ Model of Crime with Panel Data,” Review of Economics and Statistics
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_2</span><span class="p">,</span> <span class="n">crime4</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_2</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_2</span><span class="p">,</span> <span class="n">crime4</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">result_2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>

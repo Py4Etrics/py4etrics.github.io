@@ -489,13 +489,13 @@ document.write(`
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
 <span class="kn">import</span> <span class="nn">py4macro</span>
 <span class="kn">import</span> <span class="nn">wooldridge</span>
 
 <span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span>
 <span class="kn">from</span> <span class="nn">pandas.plotting</span> <span class="kn">import</span> <span class="n">scatter_matrix</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">uniform</span><span class="p">,</span> <span class="n">gaussian_kde</span><span class="p">,</span> <span class="n">multivariate_normal</span>
-<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
 <span class="kn">from</span> <span class="nn">statsmodels.stats.outliers_influence</span> <span class="kn">import</span> <span class="n">variance_inflation_factor</span> <span class="k">as</span> <span class="n">vif</span>
 
 <span class="c1"># 警告メッセージを非表示</span>
@@ -601,7 +601,7 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 <p>推計結果を変数<code class="docutils literal notranslate"><span class="pre">res_1</span></code>に割り当てる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_1</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -619,8 +619,8 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 Dep. Variable:               wage_log   R-squared:                       0.316
 Model:                            OLS   Adj. R-squared:                  0.312
 Method:                 Least Squares   F-statistic:                     80.39
-Date:                Sat, 20 Jul 2024   Prob (F-statistic):           9.13e-43
-Time:                        04:40:58   Log-Likelihood:                -313.55
+Date:                Sun, 21 Jul 2024   Prob (F-statistic):           9.13e-43
+Time:                        05:17:49   Log-Likelihood:                -313.55
 No. Observations:                 526   AIC:                             635.1
 Df Residuals:                     522   BIC:                             652.2
 Df Model:                           3                                         
@@ -887,7 +887,7 @@ dtype: float64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_2</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -915,7 +915,7 @@ dtype: float64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_3</span> <span class="o">=</span> <span class="s1">&#39;np.log(wage) ~ educ + tenure + exper + I(exper**2)&#39;</span>
-<span class="n">res_3</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_3</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_3</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_3</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -953,7 +953,7 @@ dtype: float64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_4</span> <span class="o">=</span> <span class="s1">&#39;np.log(wage) ~ educ + exper + tenure + myfunc(exper)&#39;</span>
-<span class="n">res_4</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_4</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_4</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_4</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1020,7 +1020,7 @@ dtype: float64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_1a</span> <span class="o">=</span> <span class="s1">&#39;wage ~ educ + tenure + exper&#39;</span>
-<span class="n">res_1a</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula_1a</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_1a</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_1a</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">res_1a</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 </div>
@@ -1383,7 +1383,7 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.25209991, 1.8130465 , 3.05562185])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.02743064, 2.01573137, 2.93050128])
 </pre></div>
 </div>
 </div>
@@ -1399,15 +1399,15 @@ u_n
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_check</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;X1&#39;</span><span class="p">:</span><span class="n">x1</span><span class="p">,</span><span class="s1">&#39;X2&#39;</span><span class="p">:</span><span class="n">x2</span><span class="p">})</span>
-<span class="n">res_check</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s1">&#39;Y ~ X1 + X2&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_check</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_check</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;Y ~ X1 + X2&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_check</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">res_check</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.252100
-X1           1.813047
-X2           3.055622
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.027431
+X1           2.015731
+X2           2.930501
 dtype: float64
 </pre></div>
 </div>
@@ -1438,7 +1438,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15.03209535388788
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>41.52417470080709
 </pre></div>
 </div>
 </div>
@@ -1451,7 +1451,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15.032095353887875
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>41.52417470080706
 </pre></div>
 </div>
 </div>
@@ -1465,7 +1465,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5567442723662178
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.5379323963261884
 </pre></div>
 </div>
 </div>
@@ -1478,7 +1478,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5567442723662176
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.5379323963261873
 </pre></div>
 </div>
 </div>
@@ -1499,7 +1499,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.39718467, 0.06218441, 0.06115042])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.7805619 , 0.1283087 , 0.09534341])
 </pre></div>
 </div>
 </div>
@@ -1512,9 +1512,9 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.397185
-X1           0.062184
-X2           0.061150
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.780562
+X1           0.128309
+X2           0.095343
 dtype: float64
 </pre></div>
 </div>
@@ -1601,9 +1601,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 1.0022164029344198 
-b1: 1.9994888255055279 
-b1: 2.9998945029434476
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 0.9970690169977378 
+b1: 2.0003947952651435 
+b1: 3.0001789410590427
 </pre></div>
 </div>
 </div>
@@ -1619,7 +1619,7 @@ b1: 2.9998945029434476
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/87c2d143d0b0bc112890a508609aa4087c0812d262e9239f7020533a91c09fec.png" src="_images/87c2d143d0b0bc112890a508609aa4087c0812d262e9239f7020533a91c09fec.png" />
+<img alt="_images/5f3e94c2a30d6a55ea2bb71be6cb36bba6bdd861c52763ce534c6bfffb4d0912.png" src="_images/5f3e94c2a30d6a55ea2bb71be6cb36bba6bdd861c52763ce534c6bfffb4d0912.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">b1</span></code>の真の値<code class="docutils literal notranslate"><span class="pre">2.0</span></code>を中心に概ね左右対象に分布していることが分かる。</p>
@@ -1636,7 +1636,7 @@ b1: 2.9998945029434476
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/994efa20009a8f1bae057e327762ccbeac4ce5ad992e420905e7efa60b44c94b.png" src="_images/994efa20009a8f1bae057e327762ccbeac4ce5ad992e420905e7efa60b44c94b.png" />
+<img alt="_images/80af6e08c9209922099390b46a96baec368b31e12e5727b12ca2189afba0b96e.png" src="_images/80af6e08c9209922099390b46a96baec368b31e12e5727b12ca2189afba0b96e.png" />
 </div>
 </div>
 <p>２つの図を重ねる。</p>
@@ -1654,7 +1654,7 @@ b1: 2.9998945029434476
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e014310d4561e5f67183a35f3720b9df7dde7c0fe776c38d85145dee3b8b1369.png" src="_images/e014310d4561e5f67183a35f3720b9df7dde7c0fe776c38d85145dee3b8b1369.png" />
+<img alt="_images/5739a8dc92120aec7d02d331d1cd239d136f75f30e1690467a7a11e52b5689e9.png" src="_images/5739a8dc92120aec7d02d331d1cd239d136f75f30e1690467a7a11e52b5689e9.png" />
 </div>
 </div>
 <p>＜Give it a try!＞</p>
@@ -1895,7 +1895,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c40ae0b98e300c3fbefbdfa3758a1229e4bac4eae255c111af824312e6ac12f7.png" src="_images/c40ae0b98e300c3fbefbdfa3758a1229e4bac4eae255c111af824312e6ac12f7.png" />
+<img alt="_images/7af567118c4b55d02a35f89bd00dcde0788552878e4921a4e2c38f20874d462c.png" src="_images/7af567118c4b55d02a35f89bd00dcde0788552878e4921a4e2c38f20874d462c.png" />
 </div>
 </div>
 <p>多重共線性が強いと推定値の分布は，真の値（<span class="math notranslate nohighlight">\(\beta_1=\)</span>
@@ -1907,7 +1907,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.03981871865266528, 0.2064267590733114)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.03943031955513327, 0.20638835180893966)
 </pre></div>
 </div>
 </div>
@@ -1981,7 +1981,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ceb66e20242ea2887b30467498e345617ae63c3971cdc4b0530a863174af7210.png" src="_images/ceb66e20242ea2887b30467498e345617ae63c3971cdc4b0530a863174af7210.png" />
+<img alt="_images/c6088fec1253d61e9bea648ff9d1788e0aba57d7efbf547b7f097fa2b2a7dfc2.png" src="_images/c6088fec1253d61e9bea648ff9d1788e0aba57d7efbf547b7f097fa2b2a7dfc2.png" />
 </div>
 </details>
 </div>
@@ -2001,7 +2001,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19124958548381135, 0.4466880561567798)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19477163706322315, 0.4426600567374246)
 </pre></div>
 </div>
 </div>

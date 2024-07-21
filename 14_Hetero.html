@@ -481,10 +481,10 @@ document.write(`
 <span class="kn">import</span> <span class="nn">lmdiag</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
 <span class="kn">import</span> <span class="nn">wooldridge</span>
 
 <span class="kn">from</span> <span class="nn">seaborn</span> <span class="kn">import</span> <span class="n">residplot</span>
-<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
 <span class="kn">from</span> <span class="nn">statsmodels.stats.api</span> <span class="kn">import</span> <span class="n">het_breuschpagan</span><span class="p">,</span> <span class="n">het_white</span>
 <span class="kn">from</span> <span class="nn">statsmodels.stats.outliers_influence</span> <span class="kn">import</span> <span class="n">reset_ramsey</span>
 
@@ -672,7 +672,7 @@ level.
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_ols</span> <span class="o">=</span> <span class="s1">&#39;cumgpa ~ sat + hsperc + tothrs + female + black + white&#39;</span>
 
-<span class="n">mod_ols</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_ols</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">gpa3</span><span class="p">)</span>
+<span class="n">mod_ols</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">form_ols</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">gpa3</span><span class="p">)</span>
 <span class="n">res_ols</span> <span class="o">=</span> <span class="n">mod_ols</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">res_ols</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
@@ -773,7 +773,7 @@ white         -0.0587      0.120     -0.488      0.626      -0.296       0.178
 <p>OLS推定をする際，<code class="docutils literal notranslate"><span class="pre">fit()</span></code>の関数に<code class="docutils literal notranslate"><span class="pre">.get_robustcov_results()</span></code>で使った同じオプションを追加すると頑健<span class="math notranslate nohighlight">\(t\)</span>値などを直接出力できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_HC3</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_ols</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">gpa3</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC3&#39;</span><span class="p">,</span> <span class="n">use_t</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_HC3</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">form_ols</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">gpa3</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">cov_type</span><span class="o">=</span><span class="s1">&#39;HC3&#39;</span><span class="p">,</span> <span class="n">use_t</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">res_HC3</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
@@ -906,7 +906,7 @@ These are homes that sold in the Boston, MA area.
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_h</span> <span class="o">=</span> <span class="s1">&#39;price ~ lotsize + sqrft + bdrms&#39;</span>
 
-<span class="n">res_h</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_h</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">hprice1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_h</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">form_h</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">hprice1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">res_h</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
@@ -962,7 +962,7 @@ bdrms         13.8525      9.010      1.537      0.128      -4.065      31.770
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_h_log</span> <span class="o">=</span> <span class="s1">&#39;np.log(price) ~ np.log(lotsize) + np.log(sqrft) + bdrms&#39;</span>
 
-<span class="n">res_h_log</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_h_log</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">hprice1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_h_log</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">form_h_log</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">hprice1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">res_h_log</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>

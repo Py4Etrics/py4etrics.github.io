@@ -470,8 +470,8 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
 <span class="kn">import</span> <span class="nn">wooldridge</span>
-<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
 
 <span class="c1"># 警告メッセージを非表示</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
@@ -548,7 +548,7 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_const</span> <span class="o">=</span> <span class="s1">&#39;wage ~ 1&#39;</span>  <span class="c1"># 定数項だけの場合は１が必要</span>
 
-<span class="n">res_const</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_const</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_const</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">form_const</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="n">res_const</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
@@ -609,7 +609,7 @@ y=\beta_0+\beta_1D
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_const_2</span> <span class="o">=</span> <span class="s1">&#39;wage ~ female&#39;</span>
 
-<span class="n">res_const_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_const_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_const_2</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">form_const_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="n">res_const_2</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
@@ -1033,7 +1033,7 @@ dtype: float64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_const_4</span> <span class="o">=</span> <span class="s1">&#39;wage ~ marmale + singfem + marfem&#39;</span>
 
-<span class="n">res_const_4</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_const_4</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_const_4</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">form_const_4</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="n">para4</span> <span class="o">=</span> <span class="n">res_const_4</span><span class="o">.</span><span class="n">params</span>
 <span class="n">para4</span>
@@ -1172,7 +1172,7 @@ dtype: float64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_1</span> <span class="o">=</span> <span class="s1">&#39;wage ~ female + educ + exper+ tenure&#39;</span>
 
-<span class="n">res_1</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_1</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">form_1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="n">res_1</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
@@ -1219,7 +1219,7 @@ y=\left(\beta_0+\beta_1\right)+ \left(\beta_2+\beta_3\right)x + u\)</span></p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_2</span> <span class="o">=</span> <span class="s1">&#39;np.log(wage) ~ female + female:educ + educ + exper + tenure&#39;</span>
 
-<span class="n">res_2</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_2</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">form_2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1377,7 +1377,7 @@ tenure          0.0174      0.003      5.849      0.000       0.012       0.023
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_c</span> <span class="o">=</span> <span class="s1">&#39;wage ~  C(sex) + educ&#39;</span>
 
-<span class="n">res_c</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_c</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_c</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">form_c</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="n">res_c</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
@@ -1408,7 +1408,7 @@ dtype: float64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_cm</span> <span class="o">=</span> <span class="s1">&#39;wage ~  C(sex,Treatment(&quot;male&quot;)) + educ&#39;</span>
 
-<span class="n">res_cm</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_cm</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_cm</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">form_cm</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="n">res_cm</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
@@ -1428,7 +1428,7 @@ dtype: float64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_ca</span> <span class="o">=</span> <span class="s1">&#39;wage ~  female + educ&#39;</span>
 
-<span class="n">res_ca</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_ca</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_ca</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">form_ca</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="n">res_ca</span><span class="o">.</span><span class="n">params</span>
 </pre></div>
@@ -1545,7 +1545,7 @@ Name: count, dtype: int64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_p</span> <span class="o">=</span> <span class="s1">&#39;np.log(pfries) ~ prpblck + np.log(income) + C(chain)&#39;</span>
 
-<span class="n">res_p</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_p</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">discrim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_p</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">form_p</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">discrim</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">res_p</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
@@ -1796,7 +1796,7 @@ memory usage: 10.3 KB
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">form_c</span> <span class="o">=</span> <span class="s1">&#39;np.log(pfries) ~ prpblck + np.log(income) + chain&#39;</span>
 
-<span class="n">res_c</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">form_c</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_c</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_c</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">form_c</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_c</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">res_c</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>

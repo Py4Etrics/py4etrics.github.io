@@ -480,8 +480,8 @@ document.write(`
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
 
-<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">uniform</span>
 
 <span class="c1"># 警告メッセージを非表示</span>
@@ -570,7 +570,7 @@ document.write(`
     
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>  <span class="c1"># DataFrame</span>
     
-    <span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLSの計算</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLSの計算</span>
     <span class="n">u_standardized</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">get_influence</span><span class="p">()</span><span class="o">.</span><span class="n">resid_studentized_internal</span>  <span class="c1"># 標準化残差</span>
     
     <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">u_standardized</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">rsquared</span>  <span class="c1"># 返り値の設定</span>
@@ -608,8 +608,8 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>決定係数が高いケース: 0.879
-決定係数が高いケース: 0.500
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>決定係数が高いケース: 0.909
+決定係数が高いケース: 0.492
 </pre></div>
 </div>
 </div>
@@ -646,7 +646,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/460fbbb9742926f750dea819fa81378e3779175ff85702b744a8f22583bb6825.png" src="_images/460fbbb9742926f750dea819fa81378e3779175ff85702b744a8f22583bb6825.png" />
+<img alt="_images/3066b7a1a2f265988a6ec3d5c0c86087843ded1e66ac0f4c693a3ba33628265f.png" src="_images/3066b7a1a2f265988a6ec3d5c0c86087843ded1e66ac0f4c693a3ba33628265f.png" />
 </div>
 </div>
 <p>回帰直線のフィット感ははっきりと決定係数の値に現れている。</p>
@@ -679,7 +679,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/631907ae6fc83012e592302872f0b2ec4ea52a2687fb64cfad79090a2d1e091b.png" src="_images/631907ae6fc83012e592302872f0b2ec4ea52a2687fb64cfad79090a2d1e091b.png" />
+<img alt="_images/9ee53d3917b7f6b354cf2c86ac32d8346d37bae332e1ebb4164bb1900080cc7a.png" src="_images/9ee53d3917b7f6b354cf2c86ac32d8346d37bae332e1ebb4164bb1900080cc7a.png" />
 </div>
 </div>
 <p>ここでも決定係数の値との関係がハッキリとわかる。</p>
@@ -712,7 +712,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/be59c114ea5dd8bb6b7db055dc21f42681a0531c9517a85089f9c518c8ee2e64.png" src="_images/be59c114ea5dd8bb6b7db055dc21f42681a0531c9517a85089f9c518c8ee2e64.png" />
+<img alt="_images/7ec045e659db66112e6059282023f1d44f4e8c973d6189750b3cc7e005da1f78.png" src="_images/7ec045e659db66112e6059282023f1d44f4e8c973d6189750b3cc7e005da1f78.png" />
 </div>
 </div>
 <p>左右ともに散らばりの差はあまりない。もちろん，理由は平均<code class="docutils literal notranslate"><span class="pre">0</span></code>，分散<code class="docutils literal notranslate"><span class="pre">1</span></code>になるように「標準化」されているためである。</p>
@@ -761,7 +761,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/937fc7015ad28076333ea9b91614cd4d72bbabfe4475a862681d52cd2bcfbd08.png" src="_images/937fc7015ad28076333ea9b91614cd4d72bbabfe4475a862681d52cd2bcfbd08.png" />
+<img alt="_images/13550dc06e76e15dbac3e933649a04fdaf5f70d368f29488945618849a5b003d.png" src="_images/13550dc06e76e15dbac3e933649a04fdaf5f70d368f29488945618849a5b003d.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">0</span></code>の周りに均等に分散しているのが確認できる。</p>
@@ -774,7 +774,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/25a6bb2bf2aaa42395db712eab1bfcd152a4852faf887e04f43461ba272cee7b.png" src="_images/25a6bb2bf2aaa42395db712eab1bfcd152a4852faf887e04f43461ba272cee7b.png" />
+<img alt="_images/f86fe7bfa8a3ec6234e45ea8049dc9ff0720cdb076aaaefec69c850dc47e6afe.png" src="_images/f86fe7bfa8a3ec6234e45ea8049dc9ff0720cdb076aaaefec69c850dc47e6afe.png" />
 </div>
 </div>
 <p>観測値の間隔は少し広がっているが，シミュレーションによっては<span class="math notranslate nohighlight">\(n=2000\)</span>と比べて大きな変化は見られない場合もあれば，「外れ値」が気になる場合もあるかも知れない。</p>
@@ -787,7 +787,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b7c0534d55480b1c18e48e15ccb62ae7755e910dee1aaacbdf1f3e087a2a8037.png" src="_images/b7c0534d55480b1c18e48e15ccb62ae7755e910dee1aaacbdf1f3e087a2a8037.png" />
+<img alt="_images/f47a7d18e882d86faf0d0867aaefb6e0f5a6730adebab960bb12d79555b42fa3.png" src="_images/f47a7d18e882d86faf0d0867aaefb6e0f5a6730adebab960bb12d79555b42fa3.png" />
 </div>
 </div>
 <p>さらに隙間が広くなっている。シミュレーションによっては，少し偏りがあるように見える場合も発生するため，上の例と比べると，GM仮定1,4,5に関して自信を持って判断しづらくなる。</p>
@@ -800,7 +800,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/91731536dacb50d328374e62e533c0260d121a59865070b8a1e757eba731d79e.png" src="_images/91731536dacb50d328374e62e533c0260d121a59865070b8a1e757eba731d79e.png" />
+<img alt="_images/50131daf8980eeb7c6cee3deece1544cd42572c8d609c346f335ddc300050015.png" src="_images/50131daf8980eeb7c6cee3deece1544cd42572c8d609c346f335ddc300050015.png" />
 </div>
 </div>
 <p>正規分布と分かって眺めるとそう見えるかも知れないが，実際の実証分析を行う上でこの図だけでGM仮定1,4,5が満たされているかどうかを判断するのは難しい。</p>
@@ -813,7 +813,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/344e07926914ff0b3bf4f6f7dc97e22e6fdd9bd47c0e661722609cf5fa0605b2.png" src="_images/344e07926914ff0b3bf4f6f7dc97e22e6fdd9bd47c0e661722609cf5fa0605b2.png" />
+<img alt="_images/f52d4cef0fc0e2db85a4d8412ab2032f9d7585ac49c4747e11374a1eaefdebb7.png" src="_images/f52d4cef0fc0e2db85a4d8412ab2032f9d7585ac49c4747e11374a1eaefdebb7.png" />
 </div>
 </div>
 <p>標本の大きさが小さい場合，観測数が<code class="docutils literal notranslate"><span class="pre">10</span></code>少なくなると図が大きく違うように見える。</p>
@@ -835,7 +835,7 @@ document.write(`
 
 <span class="n">df_diag</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>  <span class="c1"># DataFrameの作成</span>
 
-<span class="n">res_diag</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_diag</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLS推定</span>
+<span class="n">res_diag</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_diag</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLS推定</span>
 </pre></div>
 </div>
 </div>
@@ -865,7 +865,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1629bcc36ce38d0fb00cc118b076fa94df8b84b454a5a2f0d1b049d25d23a652.png" src="_images/1629bcc36ce38d0fb00cc118b076fa94df8b84b454a5a2f0d1b049d25d23a652.png" />
+<img alt="_images/84932a5fadd4d4806a2e072f53410cedc043f66f58c6f400a029fa58d8785504.png" src="_images/84932a5fadd4d4806a2e072f53410cedc043f66f58c6f400a029fa58d8785504.png" />
 </div>
 </div>
 <p>回帰分析結果の「健康状態」を診断する上でこの図は最もよく使われる。この図について以下の点を覚えておこう。</p>
@@ -901,7 +901,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7019f9bbbac21672a74ba656504c80c8159d4ea7dd6601bbef91c09cfab75140.png" src="_images/7019f9bbbac21672a74ba656504c80c8159d4ea7dd6601bbef91c09cfab75140.png" />
+<img alt="_images/d93fb9dc03474697e3a6aae944a3aaff3000c4193a1b9dd7f4ad248521f500ca.png" src="_images/d93fb9dc03474697e3a6aae944a3aaff3000c4193a1b9dd7f4ad248521f500ca.png" />
 </div>
 </div>
 </section>
@@ -933,7 +933,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/afa71d4d5063495e6ae98a74905a297b181cba0962caf43250317321435ed8d9.png" src="_images/afa71d4d5063495e6ae98a74905a297b181cba0962caf43250317321435ed8d9.png" />
+<img alt="_images/3a6e23234fcc2671bb9cd033cf8ad244e368db89946aabe9eea7865aefcf70eb.png" src="_images/3a6e23234fcc2671bb9cd033cf8ad244e368db89946aabe9eea7865aefcf70eb.png" />
 </div>
 </div>
 </section>
@@ -992,7 +992,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0ccd86d166d6bcf6eb88aa021b8536a81e8013b0a68baef5c8b8fc541d8adf7b.png" src="_images/0ccd86d166d6bcf6eb88aa021b8536a81e8013b0a68baef5c8b8fc541d8adf7b.png" />
+<img alt="_images/1ddbd9b87372582f6748203db8711a554348f76b145a17b4c716a3e4aa875cd5.png" src="_images/1ddbd9b87372582f6748203db8711a554348f76b145a17b4c716a3e4aa875cd5.png" />
 </div>
 </div>
 </section>
@@ -1010,7 +1010,7 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 800x700 with 0 Axes&gt;
 </pre></div>
 </div>
-<img alt="_images/77dbe10a53dbb83c2c9423fddd5614bad00ccc7f16ab4035309a83917e3a455c.png" src="_images/77dbe10a53dbb83c2c9423fddd5614bad00ccc7f16ab4035309a83917e3a455c.png" />
+<img alt="_images/5f0c85ddf55b46b522a55f9251bb332363057a7734999442f6da9f5badb0199c.png" src="_images/5f0c85ddf55b46b522a55f9251bb332363057a7734999442f6da9f5badb0199c.png" />
 </div>
 </div>
 </section>
@@ -1036,7 +1036,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e6fb7c40fb8f2e74cc87d3872421272c9195fddf3a4e01eecaeb5ecb2b8d6960.png" src="_images/e6fb7c40fb8f2e74cc87d3872421272c9195fddf3a4e01eecaeb5ecb2b8d6960.png" />
+<img alt="_images/67d20cc062b6108765c21959a0a259b47f542506584922d2ac16081a28d1d212.png" src="_images/67d20cc062b6108765c21959a0a259b47f542506584922d2ac16081a28d1d212.png" />
 </div>
 </div>
 </section>
@@ -1067,7 +1067,7 @@ document.write(`
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>  <span class="c1"># DataFrame</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLSの計算</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># OLSの計算</span>
 <span class="n">resid_std</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">get_influence</span><span class="p">()</span><span class="o">.</span><span class="n">resid_studentized_internal</span>  <span class="c1"># 標準化残差</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span><span class="n">resid_std</span><span class="p">)</span>  <span class="c1"># 散布図</span>
@@ -1079,7 +1079,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6b1d458311ea067b06c91af9b1d10dc78c3b3be24fbae0582812ac6c833a0c02.png" src="_images/6b1d458311ea067b06c91af9b1d10dc78c3b3be24fbae0582812ac6c833a0c02.png" />
+<img alt="_images/4b1b0561883b950a6eadb3319c9ef99e0894d546fb2d16046d64ff58284fe0a2.png" src="_images/4b1b0561883b950a6eadb3319c9ef99e0894d546fb2d16046d64ff58284fe0a2.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1095,7 +1095,7 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 800x700 with 0 Axes&gt;
 </pre></div>
 </div>
-<img alt="_images/509ab6393cbb174d92499a41a4012c9bcf40ceaf1b7ba80d3f7a5ca251749c92.png" src="_images/509ab6393cbb174d92499a41a4012c9bcf40ceaf1b7ba80d3f7a5ca251749c92.png" />
+<img alt="_images/a25feb2c63e5d30e9f31d316ab092836db9f9fecafab51b5f0f5a99ca998b884.png" src="_images/a25feb2c63e5d30e9f31d316ab092836db9f9fecafab51b5f0f5a99ca998b884.png" />
 </div>
 </div>
 </section>
@@ -1123,7 +1123,7 @@ document.write(`
 <span class="n">y</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span><span class="mf">0.1</span><span class="o">*</span><span class="n">x2</span><span class="o">+</span> <span class="n">u</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">resid_std</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">get_influence</span><span class="p">()</span><span class="o">.</span><span class="n">resid_studentized_internal</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span><span class="n">resid_std</span><span class="p">)</span>
@@ -1135,7 +1135,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a6d6406a1aa41c88bc6c00db977c186036cb5f9e012ef6f6d9d83803b729aa48.png" src="_images/a6d6406a1aa41c88bc6c00db977c186036cb5f9e012ef6f6d9d83803b729aa48.png" />
+<img alt="_images/01ccb8ccbb1d94b78741ee66717f19fd1da63076c2e89eb8aa09d3b9adf32dd8.png" src="_images/01ccb8ccbb1d94b78741ee66717f19fd1da63076c2e89eb8aa09d3b9adf32dd8.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1151,7 +1151,7 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 800x700 with 0 Axes&gt;
 </pre></div>
 </div>
-<img alt="_images/4207eb451ae633bb8ce5780edef01030937282d5f16de8298274d0acea73428e.png" src="_images/4207eb451ae633bb8ce5780edef01030937282d5f16de8298274d0acea73428e.png" />
+<img alt="_images/8507d44ef05be7f3a57a7ab173fe0b258cb25dce61c44aaae3f961e41b3ae0f0.png" src="_images/8507d44ef05be7f3a57a7ab173fe0b258cb25dce61c44aaae3f961e41b3ae0f0.png" />
 </div>
 </div>
 </section>
@@ -1189,7 +1189,7 @@ document.write(`
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">resid_std</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">get_influence</span><span class="p">()</span><span class="o">.</span><span class="n">resid_studentized_internal</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span><span class="n">resid_std</span><span class="p">)</span>
@@ -1201,7 +1201,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/119c95e2f2d834631f492dbf6f827cbceee23f84f0957306aafb1feb272d916b.png" src="_images/119c95e2f2d834631f492dbf6f827cbceee23f84f0957306aafb1feb272d916b.png" />
+<img alt="_images/9051f3e5113714247fdf665a452a8572e939309322c8637bbda756da2c3c6e4f.png" src="_images/9051f3e5113714247fdf665a452a8572e939309322c8637bbda756da2c3c6e4f.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1217,7 +1217,7 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 800x700 with 0 Axes&gt;
 </pre></div>
 </div>
-<img alt="_images/3c888e24aef744c3b478c332ee8d22bad6a4c7607f1af070f1a2ff1dabce8b2f.png" src="_images/3c888e24aef744c3b478c332ee8d22bad6a4c7607f1af070f1a2ff1dabce8b2f.png" />
+<img alt="_images/f518ed68885dca3bbe952788399e3fef398fff554a2a5bbb3e29a1113f8d2d52.png" src="_images/f518ed68885dca3bbe952788399e3fef398fff554a2a5bbb3e29a1113f8d2d52.png" />
 </div>
 </div>
 </section>
@@ -1258,7 +1258,7 @@ document.write(`
 <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mf">0.6</span><span class="o">*</span><span class="n">u</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">resid_std</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">get_influence</span><span class="p">()</span><span class="o">.</span><span class="n">resid_studentized_internal</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span><span class="n">resid_std</span><span class="p">)</span>
@@ -1270,7 +1270,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ebf5323584afb696e0b3f0b174870a03425b6a681d6b25b3b60e0cbc71f0808c.png" src="_images/ebf5323584afb696e0b3f0b174870a03425b6a681d6b25b3b60e0cbc71f0808c.png" />
+<img alt="_images/4f49b7a54b2c4423bacabf0abba39a6e9622eaa9187e1fc136302a840995cab6.png" src="_images/4f49b7a54b2c4423bacabf0abba39a6e9622eaa9187e1fc136302a840995cab6.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1286,7 +1286,7 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 800x700 with 0 Axes&gt;
 </pre></div>
 </div>
-<img alt="_images/b72afefa68050e0400d2163e81cc32b793463b717c2010c3865e7fbe6410a706.png" src="_images/b72afefa68050e0400d2163e81cc32b793463b717c2010c3865e7fbe6410a706.png" />
+<img alt="_images/27b6de02720a709e3ca580c2e3bd85dc71ecc66d5f59a8b4bfb33debccf8ec14.png" src="_images/27b6de02720a709e3ca580c2e3bd85dc71ecc66d5f59a8b4bfb33debccf8ec14.png" />
 </div>
 </div>
 </section>
@@ -1308,10 +1308,10 @@ document.write(`
 <span class="n">df_cd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">})</span>
 
 <span class="c1"># 外れ値がない場合のOLS</span>
-<span class="n">res_no</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_cd</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">19</span><span class="p">,:])</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_no</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_cd</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">19</span><span class="p">,:])</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="c1"># 外れ値がある場合のOLS</span>
-<span class="n">res_cd</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_cd</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">res_cd</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_cd</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
