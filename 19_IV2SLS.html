@@ -16,17 +16,19 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
@@ -37,10 +39,11 @@
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/myadmonitions.css?v=372cf325" />
   
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -81,6 +84,7 @@
     <link rel="prev" title="GM仮定４が満たされない場合" href="18_Zero_Conditional_Mean.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -96,19 +100,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -116,7 +109,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -124,8 +116,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -141,7 +133,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -171,15 +164,11 @@
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Pythonの学習</span></p>
@@ -390,24 +379,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -941,8 +922,8 @@ y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3w+u
 Dep. Variable:                   educ   R-squared:                      0.2081
 Estimator:                        OLS   Adj. R-squared:                 0.2043
 No. Observations:                 428   F-statistic:                    112.45
-Date:                Tue, Oct 22 2024   P-value (F-stat)                0.0000
-Time:                        01:31:22   Distribution:                  chi2(2)
+Date:                Sat, Nov 30 2024   P-value (F-stat)                0.0000
+Time:                        02:39:32   Distribution:                  chi2(2)
 Cov. Estimator:            unadjusted                                         
                                                                               
                              Parameter Estimates                              
@@ -1192,36 +1173,36 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
   <tbody>
     <tr>
       <th>0</th>
-      <td>5.775427</td>
-      <td>0.521435</td>
-      <td>0.900466</td>
-      <td>0.020390</td>
-      <td>1.217864</td>
-      <td>1.435732</td>
-      <td>1.526092</td>
-      <td>1.394904</td>
+      <td>-0.372543</td>
+      <td>0.770751</td>
+      <td>-1.349758</td>
+      <td>0.302469</td>
+      <td>-0.552411</td>
+      <td>-0.487528</td>
+      <td>-1.192803</td>
+      <td>0.188383</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2.010266</td>
-      <td>-1.322024</td>
-      <td>1.334053</td>
-      <td>0.886169</td>
-      <td>-0.833221</td>
-      <td>1.524835</td>
-      <td>0.221481</td>
-      <td>0.553179</td>
+      <td>3.997483</td>
+      <td>-0.617540</td>
+      <td>0.599546</td>
+      <td>1.721982</td>
+      <td>0.450796</td>
+      <td>0.204950</td>
+      <td>1.161947</td>
+      <td>-0.176194</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>-2.933981</td>
-      <td>-1.127435</td>
-      <td>-0.819129</td>
-      <td>-0.717050</td>
-      <td>-1.664636</td>
-      <td>0.070801</td>
-      <td>-1.279418</td>
-      <td>0.627602</td>
+      <td>3.671907</td>
+      <td>-1.301494</td>
+      <td>1.859032</td>
+      <td>-0.305335</td>
+      <td>-0.705129</td>
+      <td>1.361658</td>
+      <td>-0.377213</td>
+      <td>0.460491</td>
     </tr>
   </tbody>
 </table>
@@ -1242,10 +1223,10 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      0.9946     0.0160     62.120     0.0000      0.9632      1.0260
-w1             1.5264     0.0159     96.065     0.0000      1.4952      1.5575
-w2             1.5020     0.0159     94.384     0.0000      1.4708      1.5332
-x3             1.0103     0.0161     62.664     0.0000      0.9787      1.0419
+Intercept      1.0174     0.0159     64.094     0.0000      0.9863      1.0485
+w1             1.5092     0.0159     95.033     0.0000      1.4780      1.5403
+w2             1.5023     0.0157     95.576     0.0000      1.4715      1.5331
+x3             1.0096     0.0158     63.784     0.0000      0.9786      1.0406
 ==============================================================================
 </pre></div>
 </div>
@@ -1286,10 +1267,10 @@ x3             1.0103     0.0161     62.664     0.0000      0.9787      1.0419
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept     -0.0028     0.0061    -0.4543     0.6496     -0.0146      0.0091
-z1             0.7887     0.0061     130.25     0.0000      0.7769      0.8006
-z2            -0.0062     0.0061    -1.0049     0.3149     -0.0182      0.0059
-x3             0.0055     0.0060     0.9174     0.3589     -0.0063      0.0173
+Intercept      0.0144     0.0059     2.4502     0.0143      0.0029      0.0260
+z1             0.7949     0.0059     134.82     0.0000      0.7833      0.8064
+z2             0.0040     0.0059     0.6751     0.4996     -0.0075      0.0154
+x3            -0.0017     0.0059    -0.2814     0.7784     -0.0132      0.0099
 ==============================================================================
 </pre></div>
 </div>
@@ -1307,10 +1288,10 @@ x3             0.0055     0.0060     0.9174     0.3589     -0.0063      0.0173
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      0.0007     0.0060     0.1117     0.9111     -0.0111      0.0124
-z1             0.0019     0.0059     0.3274     0.7434     -0.0097      0.0136
-z2             0.8094     0.0060     134.99     0.0000      0.7976      0.8211
-x3            -0.0061     0.0060    -1.0196     0.3079     -0.0179      0.0057
+Intercept      0.0059     0.0060     0.9806     0.3268     -0.0059      0.0176
+z1            -0.0035     0.0058    -0.6057     0.5447     -0.0149      0.0079
+z2             0.7881     0.0059     133.11     0.0000      0.7765      0.7997
+x3            -0.0010     0.0060    -0.1585     0.8740     -0.0127      0.0108
 ==============================================================================
 </pre></div>
 </div>
@@ -1349,10 +1330,10 @@ x3            -0.0061     0.0060    -1.0196     0.3079     -0.0179      0.0057
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      0.9976     0.0243     41.109     0.0000      0.9500      1.0452
-w1hat          0.9936     0.0307     32.348     0.0000      0.9334      1.0538
-w2hat          1.0069     0.0300     33.552     0.0000      0.9480      1.0657
-x3             1.0046     0.0247     40.725     0.0000      0.9563      1.0530
+Intercept      1.0151     0.0239     42.492     0.0000      0.9683      1.0620
+w1hat          1.0052     0.0298     33.700     0.0000      0.9468      1.0637
+w2hat          0.9743     0.0299     32.611     0.0000      0.9157      1.0328
+x3             0.9994     0.0242     41.357     0.0000      0.9520      1.0468
 ==============================================================================
 </pre></div>
 </div>
@@ -1391,10 +1372,10 @@ x3             1.0046     0.0247     40.725     0.0000      0.9563      1.0530
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      0.9976     0.0176     56.716     0.0000      0.9631      1.0321
-x3             1.0046     0.0179     56.201     0.0000      0.9696      1.0397
-w1             0.9936     0.0222     44.743     0.0000      0.9501      1.0372
-w2             1.0069     0.0217     46.294     0.0000      0.9642      1.0495
+Intercept      1.0151     0.0174     58.235     0.0000      0.9810      1.0493
+x3             0.9994     0.0176     56.942     0.0000      0.9650      1.0338
+w1             1.0052     0.0218     46.153     0.0000      0.9626      1.0479
+w2             0.9743     0.0218     44.756     0.0000      0.9316      1.0169
 ==============================================================================
 </pre></div>
 </div>
@@ -1549,7 +1530,7 @@ w2             1.0069     0.0217     46.294     0.0000      0.9642      1.0495
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/83251e27d412298f37ef430fcf02f97bd63193be4d96c81d553a3613af4f5721.png" src="_images/83251e27d412298f37ef430fcf02f97bd63193be4d96c81d553a3613af4f5721.png" />
+<img alt="_images/92600ce9e31e122e2bbe04cf75b13485593dfaf72b19e7a2bb1cf3ffee306829.png" src="_images/92600ce9e31e122e2bbe04cf75b13485593dfaf72b19e7a2bb1cf3ffee306829.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1602,7 +1583,7 @@ w2             1.0069     0.0217     46.294     0.0000      0.9642      1.0495
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/470877d69327ba3857f521e1bf76ee4fcdcdc73d771a722ff23559b6c844bf87.png" src="_images/470877d69327ba3857f521e1bf76ee4fcdcdc73d771a722ff23559b6c844bf87.png" />
+<img alt="_images/a18b67b0f595f50f1fdd9c9dd4d4e606af8d35de6bbc224ef8c2706ded7741ca.png" src="_images/a18b67b0f595f50f1fdd9c9dd4d4e606af8d35de6bbc224ef8c2706ded7741ca.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1656,7 +1637,7 @@ w2             1.0069     0.0217     46.294     0.0000      0.9642      1.0495
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/546fbf80e0394963a6a2eb57228a6a6d101ef212945cd11fa442b9113d6a31cf.png" src="_images/546fbf80e0394963a6a2eb57228a6a6d101ef212945cd11fa442b9113d6a31cf.png" />
+<img alt="_images/56e22c76fdaebb92dccccd7a2b577335d0cf6f76d025d195b4e5318695cf32f6.png" src="_images/56e22c76fdaebb92dccccd7a2b577335d0cf6f76d025d195b4e5318695cf32f6.png" />
 </div>
 </div>
 <p><span class="math notranslate nohighlight">\(\text{Cov}(x,z)\)</span>が低くなると分散が大きくなり，一致性を失うことも確認できる。</p>
@@ -1715,7 +1696,7 @@ H0: All endogenous variables are exogenous
 Statistic: 2.8035
 P-value: 0.0948
 Distributed: F(1,423)
-WaldTestStatistic, id: 0x12b4a5250
+WaldTestStatistic, id: 0x13187b020
 </pre></div>
 </div>
 </div>
@@ -1843,7 +1824,7 @@ H0: Endogenous variables are exogenous
 Statistic: 2.8256
 P-value: 0.0928
 Distributed: chi2(1)
-WaldTestStatistic, id: 0x12be8aae0
+WaldTestStatistic, id: 0x13202c800
 </pre></div>
 </div>
 </div>
@@ -1982,7 +1963,7 @@ H0: The model is not overidentified.
 Statistic: 0.3781
 P-value: 0.5386
 Distributed: chi2(1)
-WaldTestStatistic, id: 0x12be95be0
+WaldTestStatistic, id: 0x131ed6c00
 </pre></div>
 </div>
 </div>
@@ -2372,7 +2353,7 @@ z=x^*+v
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7c4f6b1b7928cc7d149bf3dc23f4bd179ebeff6316a301e0e8a8979d6653c8a7.png" src="_images/7c4f6b1b7928cc7d149bf3dc23f4bd179ebeff6316a301e0e8a8979d6653c8a7.png" />
+<img alt="_images/0de94552b5503a3bf000b7479640ea0b7bf21e370c683d53df779b1bff83b644.png" src="_images/0de94552b5503a3bf000b7479640ea0b7bf21e370c683d53df779b1bff83b644.png" />
 </div>
 </div>
 <ul class="simple">
@@ -2438,7 +2419,8 @@ z=x^*+v
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -2568,8 +2550,8 @@ By 春山 鉄源  Tetsugen HARUYAMA
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
 
   <footer class="bd-footer">
   </footer>
