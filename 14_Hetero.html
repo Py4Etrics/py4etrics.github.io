@@ -523,7 +523,7 @@
 </div>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">cov_type='HAC'</span></code>：不均一分散・自己相関頑健推定の指定</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">cov_kwds={'maxlags':</span> <span class="pre">n}</span></code>（必須）：<code class="docutils literal notranslate"><span class="pre">n</span></code>は残差のラグを示し，<code class="docutils literal notranslate"><span class="pre">n</span></code>の値に基づきパラメータの推定値の標準誤差を調整する。<code class="docutils literal notranslate"><span class="pre">n=10</span></code>とすれば<code class="docutils literal notranslate"><span class="pre">10</span></code>までのラグを考慮し計算する。標本の大きさより小さな値を設定する必要がある。<code class="docutils literal notranslate"><span class="pre">n</span></code>を決める一つのルールとして次を紹介しよう。</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">cov_kwds={'maxlags':</span> <span class="pre">n}</span></code>（必須）：<code class="docutils literal notranslate"><span class="pre">n</span></code>は残差のラグを示し，<code class="docutils literal notranslate"><span class="pre">n</span></code>の値に基づきパラメータの推定値の標準誤差を調整する。<code class="docutils literal notranslate"><span class="pre">n=10</span></code>とすれば<code class="docutils literal notranslate"><span class="pre">10</span></code>までのラグを考慮し計算する。標本の大きさより小さな値を設定する必要がある。<code class="docutils literal notranslate"><span class="pre">for</span></code>ループを使い<code class="docutils literal notranslate"><span class="pre">n</span></code>を変化させて、標準誤差がどう変化するかを確認するのも良いだろう。また、<code class="docutils literal notranslate"><span class="pre">n</span></code>を決める一つのルールとして次を紹介しよう。</p>
 <ul>
 <li><p>Newey and West (1987)が提案したルール：<code class="docutils literal notranslate"><span class="pre">N</span></code>を標本の大きさとすると、次の値の整数部分を<code class="docutils literal notranslate"><span class="pre">n</span></code>に使う。</p></li>
 </ul>
@@ -533,13 +533,10 @@
 \[
 4\left(\frac{N}{100}\right)^{2/9}の整数部分
 \]</div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>* また`for`ループを使い`n`を変化させて、標準誤差がどう変化するかを確認するのも良いだろう。
-</pre></div>
-</div>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">use_t=True</span></code>（必須ではない）：<code class="docutils literal notranslate"><span class="pre">t</span></code>検定を使うことを指定する。</p></li>
 </ul>
-<p>ちなみに，<code class="docutils literal notranslate"><span class="pre">HC</span></code>はHeteroskedasticity Consistentの略であり，<code class="docutils literal notranslate"><span class="pre">HAC</span></code>はHeteroskedasticity-Autocorrelation Consistent`の略である。</p>
+<p>ちなみに，<code class="docutils literal notranslate"><span class="pre">HC</span></code>は<code class="docutils literal notranslate"><span class="pre">H</span></code>eteroskedasticity <code class="docutils literal notranslate"><span class="pre">C</span></code>onsistentの略であり，<code class="docutils literal notranslate"><span class="pre">HAC</span></code>は<code class="docutils literal notranslate"><span class="pre">H</span></code>eteroskedasticity-<code class="docutils literal notranslate"><span class="pre">A</span></code>utocorrelation <code class="docutils literal notranslate"><span class="pre">C</span></code>onsistentの略である。</p>
 </div>
 <hr class="docutils" />
 <p>OLS推定量の不均一分散頑健標準偏差が簡単に計算できるのであれば，通常の標準偏差を使う必要はないのではないか，という疑問が生じる。この問を関して以下の点を考える必要がある。</p>
