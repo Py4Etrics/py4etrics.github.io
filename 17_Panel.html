@@ -1157,8 +1157,8 @@ d87            0.9250     0.0688     13.450     0.0000      0.7902      1.0599
 Dep. Variable:                  lwage   R-squared:                        0.1806
 Estimator:                   PanelOLS   R-squared (Between):              0.2386
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Wed, Dec 11 2024   R-squared (Overall):              0.2361
-Time:                        12:23:33   Log-likelihood                   -1324.8
+Date:                Mon, Dec 16 2024   R-squared (Overall):              0.2361
+Time:                        23:09:49   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      83.851
 Entities:                         545   P-value                           0.0000
@@ -1184,7 +1184,7 @@ Max Obs:                       545.00
 </ul>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p>(式３)の回帰式には定数項はないため，上の計算で使った回帰式<code class="docutils literal notranslate"><span class="pre">formula_fe</span></code>には定数項を表す<code class="docutils literal notranslate"><span class="pre">1</span></code>は省かれている。(式３)と整合性が取れたコードとなっており，直感的にも分かりやすい。では，<code class="docutils literal notranslate"><span class="pre">formula_fe</span></code>に<code class="docutils literal notranslate"><span class="pre">1</span></code>を加えて次のように書き換えて計算するとどうなるのだろうか。</p>
+<p>(式３)の回帰式には定数項はないため，上の計算で使った回帰式<code class="docutils literal notranslate"><span class="pre">formula_fe</span></code>には定数項を表す<code class="docutils literal notranslate"><span class="pre">1</span></code>は省かれている。(式３)と整合性が取れたコードとなっており，直観的にも分かりやすい。では，<code class="docutils literal notranslate"><span class="pre">formula_fe</span></code>に<code class="docutils literal notranslate"><span class="pre">1</span></code>を加えて次のように書き換えて計算するとどうなるのだろうか。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">formula_fe</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
 <span class="s1">                      +d81+d82+d83+d84+d85+d86+d87 + EntityEffects&#39;</span>
 </pre></div>
@@ -1209,8 +1209,8 @@ Max Obs:                       545.00
 Dep. Variable:                  lwage   R-squared:                        0.0216
 Estimator:                   PanelOLS   R-squared (Between):             -0.2717
 No. Observations:                4360   R-squared (Within):              -0.4809
-Date:                Wed, Dec 11 2024   R-squared (Overall):             -0.2808
-Time:                        12:23:33   Log-likelihood                   -1324.8
+Date:                Mon, Dec 16 2024   R-squared (Overall):             -0.2808
+Time:                        23:09:49   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      27.959
 Entities:                         545   P-value                           0.0000
@@ -1237,6 +1237,9 @@ P-value: 0.0000
 Distribution: F(551,3805)
 
 Included effects: Entity, Time
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>
@@ -1329,10 +1332,30 @@ Name: parameter, dtype: float64
 <p>ここで，</p>
 <div class="math notranslate nohighlight">
 \[e_{it}=a_i+u_{it}\]</div>
-<p>しかし，</p>
+<p>しかし，<span class="math notranslate nohighlight">\(e_{it}\)</span>と<span class="math notranslate nohighlight">\(e_{its},\;t\ne s\)</span>の共分散は</p>
 <div class="math notranslate nohighlight">
-\[\text{Corr}\left(e_{it},e_{is}\right)\neq 0,\quad t\neq s\]</div>
-<p>となることが示せる。即ち，誤差項が自己相関することになる。</p>
+\[\begin{split}
+\begin{align}
+\text{Cov}\left(e_{it},e_{is}\right)
+&amp;=\text{Cov}\left(a_i+u_{it},a_i+u_{is}\right)\\
+&amp;=\text{Cov}\left(a_i,a_i\right)+\text{Cov}\left(a_i,u_{is}\right)
++\text{Cov}\left(u_{it},a_i\right)+\text{Cov}\left(u_{it},u_{is}\right)\\
+&amp;=\text{Cov}\left(a_{i},a_{i}\right)+0+0+0\\
+&amp;=\text{Var}\left(a_{i}\right)\\
+&amp;\neq 0
+\end{align}
+\end{split}\]</div>
+<p>となる。即ち，誤差項が自己相関することになる。自己相関係数を計算してみよう。</p>
+<div class="math notranslate nohighlight">
+\[
+\rho_{e_{it}e_{is}}
+=\frac{\text{Cov}(e_{it}e_{is})}{\sqrt{\text{Var}(e_{it})\text{Var}(e_{is})}}
+=\frac{\sigma_{a}^2}{\sigma_{u}^2+\sigma_a^2}
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\sigma_{a}^2=\text{Var}(a_i)\)</span>（<span class="math notranslate nohighlight">\(a_{i}\)</span>の分散）</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma_{u}^2=\text{Var}(u_{it})\)</span>（<span class="math notranslate nohighlight">\(u_{it}\)</span>の分散）</p></li>
+</ul>
 <p>＜含意＞</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(a_i\)</span>と<span class="math notranslate nohighlight">\(x_{it}\)</span>に相関がないため次の推定方法で一致性を満たす推定量を計算できる。</p>
@@ -1342,7 +1365,11 @@ Name: parameter, dtype: float64
 </ul>
 </li>
 <li><p>時系列データを扱う場合，自己相関によりOLS推定量は効率性が低くなる。これは横断面データを扱う際の不均一分散が引き起こす問題と似ている。</p></li>
-<li><p>１階差分推定や固定効果推定を使う必要はなく，使うと効率性が低い推定量となる。</p></li>
+<li><p>１階差分推定や固定効果推定を使う必要はなく，使うと効率性が低い推定量となる。</p>
+<ul>
+<li><p>１階差分推定や固定効果推定は<span class="math notranslate nohighlight">\(\text{Cov}\left(a_ix_{it}\right)\neq 0,\quad t=1,2,...,T\)</span>の場合に使う。</p></li>
+</ul>
+</li>
 <li><p>従って，問題は次の点：</p>
 <ul>
 <li><p>より効率性が高い推定方法はどのようなものか。</p></li>
@@ -1362,8 +1389,8 @@ Name: parameter, dtype: float64
 <p>は変数の平均からの部分的な乖離であり，乖離の度合いを決める変数<span class="math notranslate nohighlight">\(\theta\)</span>は</p>
 <div class="math notranslate nohighlight">
 \[\theta = 1-\sqrt{\frac{\sigma_u^2}{\sigma_u^2+T\sigma_a^2}}\]</div>
-<p>と定義される。<span class="math notranslate nohighlight">\(\sigma_u^2\)</span>は<span class="math notranslate nohighlight">\(u_{it}\)</span>の分散，<span class="math notranslate nohighlight">\(\sigma_a^2\)</span>は<span class="math notranslate nohighlight">\(a_{i}\)</span>の分散である。</p>
-<p>（直感）</p>
+<p>と定義される。</p>
+<p>（直観）</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\sigma_a^2=0\)</span>の場合<span class="math notranslate nohighlight">\(\theta=0\)</span>となり，<span class="math notranslate nohighlight">\(a_i\)</span>は<span class="math notranslate nohighlight">\(i\)</span>に対して一定であり観察単位の異質性はないということである。その場合は，通常のOLSで推定することがベストとなる。</p></li>
 <li><p><span class="math notranslate nohighlight">\(\sigma_a^2\)</span>が増加すると<span class="math notranslate nohighlight">\(\theta\)</span>は大きくなり，より大きな平均からの乖離が必要となる。極端な場合，<span class="math notranslate nohighlight">\(\sigma_a^2\)</span>が無限大に近づくと，<span class="math notranslate nohighlight">\(\theta=1\)</span>となり<span class="math notranslate nohighlight">\(\overset{\circ}{y}=\ddot{y}\)</span>となる。即ち，固定効果モデルはランダム効果モデルの極端な場合と解釈できる。</p></li>
@@ -1377,7 +1404,7 @@ Name: parameter, dtype: float64
 <li><p>(式１)のように回帰式は線形</p></li>
 <li><p>標本のランダム抽出</p></li>
 <li><p>説明変数間の完全多重共線性は存在しない。</p></li>
-<li><p>説明変数を所与として<span class="math notranslate nohighlight">\(a_i\)</span>の平均は一定。（従って、<span class="math notranslate nohighlight">\(\text{Cov}\left(a_ix_{it}\right)= 0\)</span>。）</p></li>
+<li><p>説明変数を所与として<span class="math notranslate nohighlight">\(a_i\)</span>の平均は一定（従って、<span class="math notranslate nohighlight">\(\text{Cov}\left(a_ix_{it}\right)= 0\)</span>）。</p></li>
 </ol>
 <p>この仮定の下で，RE推定量 <span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span> は</p>
 <ul class="simple">
@@ -1596,8 +1623,8 @@ Name: Variance Decomposition, dtype: float64
 Dep. Variable:                  lwage   R-squared:                        0.1711
 Estimator:              RandomEffects   R-squared (Between):              0.0967
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Wed, Dec 11 2024   R-squared (Overall):              0.1355
-Time:                        12:23:34   Log-likelihood                   -1609.8
+Date:                Mon, Dec 16 2024   R-squared (Overall):              0.1355
+Time:                        23:09:50   Log-likelihood                   -1609.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      69.027
 Entities:                         545   P-value                           0.0000
@@ -1671,7 +1698,7 @@ H0: Linear equality constraint is valid
 Statistic: 35.6454
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x123a63350
+WaldTestStatistic, id: 0x12b72a630
 </pre></div>
 </div>
 </div>
@@ -1754,7 +1781,7 @@ H0: Linear equality constraint is valid
 Statistic: 26.0233
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x123a54b00
+WaldTestStatistic, id: 0x12b7b61b0
 </pre></div>
 </div>
 </div>
@@ -2081,32 +2108,32 @@ T-stats reported in parentheses
     <tr>
       <th rowspan="5" valign="top">0</th>
       <th>2000</th>
-      <td>-0.035046</td>
-      <td>-0.529659</td>
+      <td>-0.569360</td>
+      <td>0.295682</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2001</th>
-      <td>0.822283</td>
-      <td>-0.677885</td>
+      <td>2.766631</td>
+      <td>0.683513</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2002</th>
-      <td>-2.810463</td>
-      <td>-2.287215</td>
+      <td>0.300073</td>
+      <td>0.409613</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2003</th>
-      <td>4.742617</td>
-      <td>1.844314</td>
+      <td>1.194039</td>
+      <td>0.097371</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2004</th>
-      <td>2.238555</td>
-      <td>0.608717</td>
+      <td>3.043169</td>
+      <td>0.118076</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -2129,7 +2156,7 @@ T-stats reported in parentheses
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-X              2.0260     0.0491     41.262     0.0000      1.9294      2.1225
+X              2.0042     0.0536     37.393     0.0000      1.8988      2.1095
 ==============================================================================
 </pre></div>
 </div>
@@ -2152,10 +2179,10 @@ X              2.0260     0.0491     41.262     0.0000      1.9294      2.1225
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      2.0078     0.1440     13.938     0.0000      1.7248      2.2908
-X              2.8060     0.0243     115.35     0.0000      2.7582      2.8538
+Intercept      1.7585     0.1428     12.313     0.0000      1.4779      2.0391
+X              2.8541     0.0244     116.88     0.0000      2.8061      2.9021
 ==============================================================================
-theta: [0.30302313]
+theta: [0.23475668]
 </pre></div>
 </div>
 </div>
@@ -2185,13 +2212,10 @@ theta: [0.30302313]
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.3060     0.1214     10.758     0.0000      1.0674      1.5445
-X              2.0260     0.0491     41.294     0.0000      1.9296      2.1224
-X_mean         0.9217     0.0534     17.271     0.0000      0.8168      1.0265
+Intercept      1.1209     0.1200     9.3380     0.0000      0.8850      1.3567
+X              2.0042     0.0536     37.422     0.0000      1.8989      2.1094
+X_mean         0.9785     0.0575     17.019     0.0000      0.8656      1.0915
 ==============================================================================
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>
@@ -2212,8 +2236,8 @@ X_mean         0.9217     0.0534     17.271     0.0000      0.8168      1.0265
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.6761     0.1115     15.038     0.0000      1.4572      1.8951
-X              2.8729     0.0190     150.82     0.0000      2.8355      2.9103
+Intercept      1.5158     0.1175     12.904     0.0000      1.2850      1.7466
+X              2.9030     0.0202     143.42     0.0000      2.8633      2.9428
 ==============================================================================
 </pre></div>
 </div>
@@ -2304,7 +2328,7 @@ X              2.8729     0.0190     150.82     0.0000      2.8355      2.9103
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6cd90327855c6557197bbc41655ac06d04764d7d3a00c8cc71f7f83c1827ffa1.png" src="_images/6cd90327855c6557197bbc41655ac06d04764d7d3a00c8cc71f7f83c1827ffa1.png" />
+<img alt="_images/52ec0da94ecadc739bcc8659d29c7a581f1d4428163f2280fd87217aae5d6079.png" src="_images/52ec0da94ecadc739bcc8659d29c7a581f1d4428163f2280fd87217aae5d6079.png" />
 </div>
 </div>
 </section>
@@ -2320,7 +2344,7 @@ X              2.8729     0.0190     150.82     0.0000      2.8355      2.9103
 </li>
 <li><p>残差の相関</p>
 <ul>
-<li><p>直感的に説明するために次の例を考えよう。賃金のパネル・データを作成する際に，まず複数の会社をランダムに抽出し，それらの会社から複数の労働者をランダム抽出することにより，各労働者の時系列データを収集するとしよう。パネル・データ分析をすると次の残差の相関が発生する可能性がある。</p></li>
+<li><p>直観的に説明するために次の例を考えよう。賃金のパネル・データを作成する際に，まず複数の会社をランダムに抽出し，それらの会社から複数の労働者をランダム抽出することにより，各労働者の時系列データを収集するとしよう。パネル・データ分析をすると次の残差の相関が発生する可能性がある。</p></li>
 <li><p><strong>＜個体内での残差の相関＞</strong> 労働者Aさんを考えよう。理想的な仮定の下では，Aさんの残差は時系列的に独立となる。しかし，その仮定が満たされない場合，Aさんの残差には自己相関が存在することになる。Bさんも，Cさんも，，，Zさんにも同様のことが言える。このタイプの相関は，<strong>個体内</strong>での期間をまたがる残差の相関である。</p></li>
 <li><p><strong>＜個体間での残差の相関＞</strong> ある期間を考えよう。会社Firm0で働くA0さん，B0さん，C0さん，，，Z0さんは，同じ会社で働いているため共通の特徴があり，残差は相関するかも知れない。別の会社Firm1で働くA1さん，B1さん，C1さん，，，Z1さんも，同様に残差は相関する可能性がある。このタイプの相関は，期間内での<strong>個体間</strong>の残差の相関となる。</p></li>
 </ul>
@@ -2424,7 +2448,7 @@ F検定のp値： 0.4354339447406286
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/58413694fa8f97b9b2a138ffe49cd9f9458b44443c8f09971d5e6e551aa84687.png" src="_images/58413694fa8f97b9b2a138ffe49cd9f9458b44443c8f09971d5e6e551aa84687.png" />
+<img alt="_images/8c6d2baec9205e241023d08b98e7853997e76b73d8bcdd72f81dcc1f4113c13c.png" src="_images/8c6d2baec9205e241023d08b98e7853997e76b73d8bcdd72f81dcc1f4113c13c.png" />
 </div>
 </div>
 <p>（解説）</p>
