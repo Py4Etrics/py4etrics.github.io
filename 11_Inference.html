@@ -421,17 +421,14 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#t"><span class="math notranslate nohighlight">\(t\)</span>検定</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><span class="math notranslate nohighlight">\(t\)</span>値について</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#p"><span class="math notranslate nohighlight">\(p\)</span>値について</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tp">有意水準における<span class="math notranslate nohighlight">\(t\)</span>値と<span class="math notranslate nohighlight">\(p\)</span>値</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><span class="math notranslate nohighlight">\(t\)</span>値</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><span class="math notranslate nohighlight">\(p\)</span>値</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">回帰分析と<span class="math notranslate nohighlight">\(t\)</span>検定</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">回帰分析</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><span class="math notranslate nohighlight">\(t\)</span>値</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"><span class="math notranslate nohighlight">\(p\)</span>値</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">標準誤差</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">回帰分析と<span class="math notranslate nohighlight">\(t\)</span>検定</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">回帰分析</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">両側検定</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">片側検定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">片側検定の<span class="math notranslate nohighlight">\(p\)</span>値</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#act"><code class="docutils literal notranslate"><span class="pre">ACT</span></code>の場合</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#skipped"><code class="docutils literal notranslate"><span class="pre">skipped</span></code>の場合</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">覚え方</a></li>
@@ -672,135 +669,10 @@
 </li>
 </ul>
 </section>
-<section id="tp">
-<h3>有意水準における<span class="math notranslate nohighlight">\(t\)</span>値と<span class="math notranslate nohighlight">\(p\)</span>値<a class="headerlink" href="#tp" title="Link to this heading">#</a></h3>
-<p>ここでは次の仮定のもとで，<code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>の関数を使って<strong>有意水準</strong>での<span class="math notranslate nohighlight">\(t\)</span>値と<span class="math notranslate nohighlight">\(p\)</span>値の関係を考えてみよう。
-下の図を見ながらコードを確認すると分かりやすいだろう。</p>
-<ul class="simple">
-<li><p>有意水準：<span class="math notranslate nohighlight">\(\alpha=0.05\)</span></p></li>
-<li><p>標本の大きさ：<span class="math notranslate nohighlight">\(n=30\)</span></p></li>
-<li><p>定数項があり</p></li>
-<li><p>説明変数の数（定数項以外）：<span class="math notranslate nohighlight">\(k=5\)</span></p></li>
-</ul>
 <section id="id4">
-<h4><span class="math notranslate nohighlight">\(t\)</span>値<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
-<p>右側検定の場合の<span class="math notranslate nohighlight">\(t_c(0.05)\)</span>は次の値となる。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">0.05</span>
-<span class="n">dof</span> <span class="o">=</span> <span class="mi">30</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">1</span>
-
-<span class="n">t_right</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>  <span class="c1"># t.ppfについてはscipy.statsを参照</span>
-<span class="n">t_right</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.7108820799094278
-</pre></div>
-</div>
-</div>
-</div>
-<p>左側検定の場合の<span class="math notranslate nohighlight">\(t_c(0.05)\)</span>は次の値となる。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_left</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
-<span class="n">t_left</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-1.7108820799094282
-</pre></div>
-</div>
-</div>
-</div>
-<p>両側検定の場合の<span class="math notranslate nohighlight">\(t_c(0.05)\)</span>は、<span class="math notranslate nohighlight">\(1-a/2\)</span>を使うと次のコードとなる。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_both</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
-<span class="n">t_both</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.063898561628021
-</pre></div>
-</div>
-</div>
-</div>
-<p><span class="math notranslate nohighlight">\(a/2\)</span>を使うと次のコードで同じ値を計算できる。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">abs</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">dof</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.063898561628021
-</pre></div>
-</div>
-</div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">abs()</span></code>は絶対値を計算する関数である。</p>
-</section>
+<h3>回帰分析と<span class="math notranslate nohighlight">\(t\)</span>検定<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <section id="id5">
-<h4><span class="math notranslate nohighlight">\(p\)</span>値<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
-<p><span class="math notranslate nohighlight">\(p\)</span>値の計算の例として上の<code class="docutils literal notranslate"><span class="pre">t_right</span></code>、<code class="docutils literal notranslate"><span class="pre">t_left</span></code>、<code class="docutils literal notranslate"><span class="pre">t_both</span></code>を使ってみよう。</p>
-<p>右側検定で<span class="math notranslate nohighlight">\(t_{\hat{\beta}_j}=\)</span>
-<code class="docutils literal notranslate"><span class="pre">t_right</span></code>の場合，<span class="math notranslate nohighlight">\(p\)</span>値は次の値になる。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_right</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>   <span class="c1"># t.cdfについてはscipy.statsを参照</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.050000000000000044
-</pre></div>
-</div>
-</div>
-</div>
-<p>左側検定で<span class="math notranslate nohighlight">\(t_{\hat{\beta}_j}=\)</span>
-<code class="docutils literal notranslate"><span class="pre">t_left</span></code>の場合，<span class="math notranslate nohighlight">\(p\)</span>値は次の値になる。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_left</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.050000000000000024
-</pre></div>
-</div>
-</div>
-</div>
-<p>両側検定で<span class="math notranslate nohighlight">\(\left|t_{\hat{\beta}_j}\right|=\)</span>
-<code class="docutils literal notranslate"><span class="pre">t_both</span></code>の場合，<span class="math notranslate nohighlight">\(p\)</span>値は次の値になる。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span><span class="o">*</span><span class="p">(</span> <span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_both</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span> <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.05000000000000049
-</pre></div>
-</div>
-</div>
-</div>
-<figure class="align-center" id="id20">
-<img alt="_images/t_p_values.jpeg" src="_images/t_p_values.jpeg" />
-<figcaption>
-<p><span class="caption-number">Fig. 3 </span><span class="caption-text">上で計算した数値の図示（累積分布関数と確率密度関数は<span class="math notranslate nohighlight">\(t\)</span>分布）。</span><a class="headerlink" href="#id20" title="Link to this image">#</a></p>
-</figcaption>
-</figure>
-</section>
-</section>
-<section id="id6">
-<h3>回帰分析と<span class="math notranslate nohighlight">\(t\)</span>検定<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
-<section id="id7">
-<h4>回帰分析<a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
+<h4>回帰分析<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
 <p>次に<code class="docutils literal notranslate"><span class="pre">gpa1</span></code>のデータを使った回帰分析をおこない，係数の推定値の<span class="math notranslate nohighlight">\(t\)</span>値と<span class="math notranslate nohighlight">\(p\)</span>値を計算してみる。</p>
 <div class="cell tag_output_scroll docutils container">
 <div class="cell_input docutils container">
@@ -868,112 +740,7 @@ from a survey he took of MSU students in Fall 1994.
 </div>
 </div>
 </div>
-</section>
-<section id="id8">
-<h4>両側検定<a class="headerlink" href="#id8" title="Link to this heading">#</a></h4>
-<p><code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性<code class="docutils literal notranslate"><span class="pre">tvalues</span></code>を使い<span class="math notranslate nohighlight">\(t\)</span>値を表示してみる。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">tvalues</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    4.191039
-hsGPA        4.396260
-ACT          1.393319
-skipped     -3.196840
-dtype: float64
-</pre></div>
-</div>
-</div>
-</div>
-<p>この値を１つ１つ棄却臨界値と比べるのも手間がかかるので、次のような関数を作成し、任意の棄却臨界値に基づき両側検定を行うことも簡単にできる。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">significance_check</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    定数項がある場合のt検定をおこなう。</span>
-<span class="sd">    </span>
-<span class="sd">    引数：</span>
-<span class="sd">        res = statsmodelsによるOLS推定結果</span>
-<span class="sd">        a = 有意水準（デフォルト：0.05）</span>
-<span class="sd">    返り値：</span>
-<span class="sd">        帰無仮説を棄却する場合はTrueを返す。</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="n">dof</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">nobs</span><span class="o">-</span><span class="n">res</span><span class="o">.</span><span class="n">df_resid</span>  <span class="c1"># .df_resid = .df_model-1</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
-    
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>＜コードの説明＞</p>
-<blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code>と<code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code>で囲まれた行は関数の説明であり、<code class="docutils literal notranslate"><span class="pre">docstring</span></code>と呼ばれる。<code class="docutils literal notranslate"><span class="pre">docstring</span></code>は覚え書きのようなもので、何ヶ月後の自分が読んだり、他の人が読む場合に便利となる。また、<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>などのパッケージは数多くの関数を使っており、それらにも<code class="docutils literal notranslate"><span class="pre">docstring</span></code>が追加されているのが普通である。関数<code class="docutils literal notranslate"><span class="pre">help()</span></code>を使うと<code class="docutils literal notranslate"><span class="pre">docstring</span></code>が表示される。</p>
-</div></blockquote>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">significance_check</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function significance_check in module __main__:
-
-significance_check(res, a=0.05)
-    定数項がある場合のt検定をおこなう。
-
-    引数：
-        res = statsmodelsによるOLS推定結果
-        a = 有意水準（デフォルト：0.05）
-    返り値：
-        帰無仮説を棄却する場合はTrueを返す。
-</pre></div>
-</div>
-</div>
-</div>
-<p>次のコードでも同じ内容を確認できる。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>significance_check?
-</pre></div>
-</div>
-<p>関数を実行してみよう。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">significance_check</span><span class="p">(</span><span class="n">res_gpa</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept     True
-hsGPA         True
-ACT          False
-skipped       True
-dtype: bool
-</pre></div>
-</div>
-</div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性<code class="docutils literal notranslate"><span class="pre">pvalues</span></code>から<span class="math notranslate nohighlight">\(p\)</span>値を表示してみよう。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">pvalues</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.000050
-hsGPA        0.000022
-ACT          0.165780
-skipped      0.001725
-dtype: float64
-</pre></div>
-</div>
-</div>
-</div>
-<p><span class="math notranslate nohighlight">\(t\)</span>値と<span class="math notranslate nohighlight">\(p\)</span>値を含めて表にまとめたものを表示してみる。</p>
+<p><span class="math notranslate nohighlight">\(t\)</span>値と<span class="math notranslate nohighlight">\(p\)</span>値を含めて表にまとめたものを表示してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_gpa</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
@@ -997,10 +764,258 @@ skipped       -0.0831      0.026     -3.197      0.002      -0.135      -0.032
 <li><p><code class="docutils literal notranslate"><span class="pre">coef</span></code>: OLS推定量（<span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>）</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">std</span> <span class="pre">err</span></code>: OLS推定量の標準誤差（<span class="math notranslate nohighlight">\(\text{se}(\hat{\beta}_j)\)</span>）</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">t</span></code>: <span class="math notranslate nohighlight">\(t\)</span>値</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code>: <span class="math notranslate nohighlight">\(p\)</span>値</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code>: <span class="math notranslate nohighlight">\(p\)</span>値（両側検定）</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">[0.025</span> <span class="pre">0.975]</span></code>: 信頼区間（次の節を参照）</p></li>
 </ul>
-<p>またOLS推定量の標準誤差は属性<code class="docutils literal notranslate"><span class="pre">.bse</span></code>として取得できる。</p>
+</section>
+<section id="id6">
+<h4><span class="math notranslate nohighlight">\(t\)</span>値<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性<code class="docutils literal notranslate"><span class="pre">tvalues</span></code>を使い<span class="math notranslate nohighlight">\(t\)</span>値を表示してみる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">tvalues</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    4.191039
+hsGPA        4.396260
+ACT          1.393319
+skipped     -3.196840
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">.tvalues</span></code>は<code class="docutils literal notranslate"><span class="pre">Series</span></code>となるため，それぞれの<span class="math notranslate nohighlight">\(t\)</span>値を抽出するには２つの方法がある。例として<code class="docutils literal notranslate"><span class="pre">ACT</span></code>を考えてみよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">tvalues</span><span class="p">[</span><span class="s1">&#39;ACT&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.3933186686613994
+</pre></div>
+</div>
+</div>
+</div>
+<p>もしくは<code class="docutils literal notranslate"><span class="pre">2</span></code>番目の値となるため次のコードでもOK。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">tvalues</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.3933186686613994
+</pre></div>
+</div>
+</div>
+</div>
+<p>この値を１つ１つ棄却臨界値と比べるのも手間がかかるので、次のような関数を作成し、任意の棄却臨界値に基づき<strong>両側検定</strong>を行うことも簡単にできる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">two_tailed_test</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    定数項がある場合のt検定をおこなう。</span>
+<span class="sd">    </span>
+<span class="sd">    引数：</span>
+<span class="sd">        res = statsmodelsによるOLS推定結果</span>
+<span class="sd">        a = 有意水準（デフォルト：0.05）</span>
+<span class="sd">    返り値：</span>
+<span class="sd">        帰無仮説を棄却する場合はTrueを返す。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">dof</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">df_resid</span>  <span class="c1"># = res.nobs-定数項以外の説明変数の数-1</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dof</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">tvalues</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>＜コードの説明＞</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code>と<code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code>で囲まれた行は関数の説明であり、<code class="docutils literal notranslate"><span class="pre">docstring</span></code>と呼ばれる。<code class="docutils literal notranslate"><span class="pre">docstring</span></code>は覚え書きのようなもので、何ヶ月後の自分が読んだり、他の人が読む場合に便利となる。また、<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>などのパッケージは数多くの関数を使っており、それらにも<code class="docutils literal notranslate"><span class="pre">docstring</span></code>が追加されているのが普通である。関数<code class="docutils literal notranslate"><span class="pre">help()</span></code>を使うと<code class="docutils literal notranslate"><span class="pre">docstring</span></code>が表示される。</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">two_tailed_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function two_tailed_test in module __main__:
+
+two_tailed_test(res, a=0.05)
+    定数項がある場合のt検定をおこなう。
+
+    引数：
+        res = statsmodelsによるOLS推定結果
+        a = 有意水準（デフォルト：0.05）
+    返り値：
+        帰無仮説を棄却する場合はTrueを返す。
+</pre></div>
+</div>
+</div>
+</div>
+<p>次のコードでも同じ内容を確認できる。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>significance_check?
+</pre></div>
+</div>
+<p>関数を実行してみよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">two_tailed_test</span><span class="p">(</span><span class="n">res_gpa</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>137.0
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept     True
+hsGPA         True
+ACT          False
+skipped       True
+dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id7">
+<h4><span class="math notranslate nohighlight">\(p\)</span>値<a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性<code class="docutils literal notranslate"><span class="pre">pvalues</span></code>から<span class="math notranslate nohighlight">\(p\)</span>値を表示してみよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">pvalues</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.000050
+hsGPA        0.000022
+ACT          0.165780
+skipped      0.001725
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Series</span></code>となるため，<code class="docutils literal notranslate"><span class="pre">.tvalues</span></code>と同じ方法で値を抽出できる。</p>
+<p><span class="math notranslate nohighlight">\(t\)</span>値を使い<span class="math notranslate nohighlight">\(p\)</span>値を「手計算」してみる。まず自由度は<code class="docutils literal notranslate"><span class="pre">res_gpa</span></code>の属性<code class="docutils literal notranslate"><span class="pre">.df_resid</span></code>で抽出できる。</p>
+<blockquote>
+<div><p>自由度 ＝ 標本の大きさ ー 定数項以外の説明変数の数 ー １</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dof</span> <span class="o">=</span> <span class="n">res_gpa</span><span class="o">.</span><span class="n">df_resid</span>  <span class="c1"># 141-3-1</span>
+<span class="n">dof</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>137.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>例として<code class="docutils literal notranslate"><span class="pre">ACT</span></code>を考えてみるために<span class="math notranslate nohighlight">\(t\)</span>値を再度表示してみよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">tvalues</span><span class="p">[</span><span class="s1">&#39;ACT&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.3933186686613994
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>正の値</strong>となっている。このことを念頭に<code class="docutils literal notranslate"><span class="pre">ACT</span></code>の<span class="math notranslate nohighlight">\(p\)</span>値は次のコードで計算できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span> 
+    <span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">res_gpa</span><span class="o">.</span><span class="n">tvalues</span><span class="p">[</span><span class="s1">&#39;ACT&#39;</span><span class="p">],</span> <span class="n">dof</span><span class="p">)</span> 
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.165779901663887
+</pre></div>
+</div>
+</div>
+</div>
+<p>上にある<code class="docutils literal notranslate"><span class="pre">ACT</span></code>の<span class="math notranslate nohighlight">\(p\)</span>値と同じ値となっている。
+このコードで使った<code class="docutils literal notranslate"><span class="pre">t.cdf()</span></code>は<span class="math notranslate nohighlight">\(t\)</span>分布の累積確率分布関数であり，次の引数を指定し<code class="docutils literal notranslate"><span class="pre">0</span></code>から<code class="docutils literal notranslate"><span class="pre">1</span></code>の間の値を返す。</p>
+<ul class="simple">
+<li><p>第一引数：<span class="math notranslate nohighlight">\(t\)</span>値</p></li>
+<li><p>第二引数：自由度</p></li>
+</ul>
+<p>ここで注意点が２つある。
+第一に，<span class="math notranslate nohighlight">\(t\)</span>分布の確率密度関数は<code class="docutils literal notranslate"><span class="pre">0</span></code>を中心に左右対称であり，<span class="math notranslate nohighlight">\(t\)</span>値が正の値となるため，まず右裾を考える必要がある。
+従って，<span class="math notranslate nohighlight">\(t\)</span>値を上回る確率を計算するために<code class="docutils literal notranslate"><span class="pre">1-t.cdf()</span></code>として計算することになる。
+第二に，<strong>両側検定</strong>となるため次の計算をすることになり<code class="docutils literal notranslate"><span class="pre">2*()</span></code>となっている。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p\text{値（両側検定）}
+&amp;=\text{Pr}[T&lt;-t\text{値}]+\text{Pr}[T&gt;t\text{値}]\\
+&amp;=\text{Pr}[T&gt;t\text{値}]+\text{Pr}[T&gt;t\text{値}]\qquad\because\text{密度関数が左右対称}\\
+&amp;=2\times\text{Pr}[T&gt;t\text{値}]\\
+&amp;=2\times\left(1-\text{Pr}[T&lt;t\text{値}]\right)
+\end{aligned}
+\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(\text{Pr}[T&lt;t\text{値}]\)</span>は<span class="math notranslate nohighlight">\(t\)</span>分布の値<span class="math notranslate nohighlight">\(T\)</span>が<span class="math notranslate nohighlight">\(t\)</span>値より小さい場合の確率を表しており，<code class="docutils literal notranslate"><span class="pre">t.cdf(res_gpa.tvalues['ACT'],</span> <span class="pre">dof)</span></code>を使い計算することができる。</p>
+<p>次に<code class="docutils literal notranslate"><span class="pre">skipped</span></code>を考えてみるために<span class="math notranslate nohighlight">\(t\)</span>値を表示しよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">tvalues</span><span class="p">[</span><span class="s1">&#39;skipped&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-3.196839634746827
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>負の値</strong>となっており，次のコードで<span class="math notranslate nohighlight">\(p\)</span>値を計算できる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span> 
+    <span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">res_gpa</span><span class="o">.</span><span class="n">tvalues</span><span class="p">[</span><span class="s1">&#39;skipped&#39;</span><span class="p">],</span> <span class="n">dof</span><span class="p">)</span> 
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0017254311303822457
+</pre></div>
+</div>
+</div>
+</div>
+<p>このコードは次の計算を捉えている。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p\text{値（両側検定）}
+&amp;=\text{Pr}[T&lt;t\text{値}]+\text{Pr}[T&gt;|t\text{値}|]\\
+&amp;=\text{Pr}[T&lt;t\text{値}]+\text{Pr}[T&lt;t\text{値}]\qquad\because\text{密度関数が左右対称}\\
+&amp;=2\times\text{Pr}[T&lt;t\text{値}]
+\end{aligned}
+\end{split}\]</div>
+<p><code class="docutils literal notranslate"><span class="pre">ACT</span></code>の場合と同様に，<span class="math notranslate nohighlight">\(\text{P}[T&lt;t\text{値}]\)</span>が<code class="docutils literal notranslate"><span class="pre">t.cdf(res_gpa.tvalues['skipped'],</span> <span class="pre">dof)</span></code>に対応している。</p>
+</section>
+<section id="id8">
+<h4>標準誤差<a class="headerlink" href="#id8" title="Link to this heading">#</a></h4>
+<p>OLS推定量の標準誤差は属性<code class="docutils literal notranslate"><span class="pre">.bse</span></code>として取得できる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_gpa</span><span class="o">.</span><span class="n">bse</span>
@@ -1022,10 +1037,10 @@ dtype: float64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">*</span><span class="mi">15</span><span class="p">,</span> <span class="s1">&#39;t値&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">20</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">res_gpa</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">exog_names</span><span class="p">:</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">res_gpa</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">exog_names</span><span class="p">:</span>
 
-    <span class="n">tval</span> <span class="o">=</span> <span class="n">res_gpa</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">val</span><span class="p">]</span> <span class="o">/</span> <span class="n">res_gpa</span><span class="o">.</span><span class="n">bse</span><span class="p">[</span><span class="n">val</span><span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">val</span><span class="si">:</span><span class="s1">&lt;12</span><span class="si">}{</span><span class="n">tval</span><span class="si">:</span><span class="s1">&gt;8.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">tval</span> <span class="o">=</span> <span class="n">res_gpa</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">/</span> <span class="n">res_gpa</span><span class="o">.</span><span class="n">bse</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s1">&lt;12</span><span class="si">}{</span><span class="n">tval</span><span class="si">:</span><span class="s1">&gt;8.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1044,10 +1059,14 @@ skipped      -3.1968
 </section>
 </section>
 <section id="id9">
-<h3>片側検定<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<h3>片側検定の<span class="math notranslate nohighlight">\(p\)</span>値<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<p>両側検定の<span class="math notranslate nohighlight">\(p\)</span>値の「手計算」を思いだそう。
+コードには<code class="docutils literal notranslate"><span class="pre">2*()</span></code>とあり，左右対称である<span class="math notranslate nohighlight">\(t\)</span>分布の確率密度関数の<strong>両裾</strong>にある面積を計算するために<code class="docutils literal notranslate"><span class="pre">2</span></code>倍となっている。
+言い換えると，片側検定の場合は一方の裾の面積だけを考えれば良いので，単純に両側検定の<span class="math notranslate nohighlight">\(p\)</span>の<code class="docutils literal notranslate"><span class="pre">1/2</span></code>ということになる。
+以下では例を考える。</p>
 <section id="act">
 <h4><code class="docutils literal notranslate"><span class="pre">ACT</span></code>の場合<a class="headerlink" href="#act" title="Link to this heading">#</a></h4>
-<p>次に片側検定の方法を説明するために，<code class="docutils literal notranslate"><span class="pre">ACT</span></code>を考えてみよう。
+<p><code class="docutils literal notranslate"><span class="pre">ACT</span></code>を考えてみよう。
 <code class="docutils literal notranslate"><span class="pre">colGPA</span></code>は<code class="docutils literal notranslate"><span class="pre">ACT</span></code>と正の相関が想定されるため，右側検定の対立仮説は次が妥当だろう。</p>
 <div class="math notranslate nohighlight">
 \[H_A:\hat{\beta}_{\text{ACT}}&gt;0\]</div>
@@ -1090,8 +1109,7 @@ skipped      -3.1968
 </section>
 <section id="skipped">
 <h4><code class="docutils literal notranslate"><span class="pre">skipped</span></code>の場合<a class="headerlink" href="#skipped" title="Link to this heading">#</a></h4>
-<p>次に<code class="docutils literal notranslate"><span class="pre">skipped</span></code>を考えてみよう。
-<code class="docutils literal notranslate"><span class="pre">colGPA</span></code>は<code class="docutils literal notranslate"><span class="pre">skipped</span></code>と負の相関が想定されるため，左側検定の対立仮説は次が妥当だろう。</p>
+<p><code class="docutils literal notranslate"><span class="pre">colGPA</span></code>は<code class="docutils literal notranslate"><span class="pre">skipped</span></code>と負の相関が想定されるため，左側検定の対立仮説は次が妥当だろう。</p>
 <div class="math notranslate nohighlight">
 \[H_A:\hat{\beta}_{\text{skipped}}&lt;0\]</div>
 <p>この場合の<span class="math notranslate nohighlight">\(p\)</span>値は次のコードで計算できる。</p>
@@ -1213,7 +1231,7 @@ skipped   -0.151026 -0.015200
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/210a1da0b965f7ed6e25de92a94a81c6a670925fa7dab57b56cc771dde2ce6b8.png" src="_images/210a1da0b965f7ed6e25de92a94a81c6a670925fa7dab57b56cc771dde2ce6b8.png" />
+<img alt="_images/73a6dffb6eec810631a0c142dfda67921614883e14a2eb6cf768f830fb8a3ebd.png" src="_images/73a6dffb6eec810631a0c142dfda67921614883e14a2eb6cf768f830fb8a3ebd.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">ACT</span></code>の信頼区間に<code class="docutils literal notranslate"><span class="pre">0</span></code>が含まれることが分かる。</p>
@@ -1530,8 +1548,8 @@ Abstract of the United States.
 Dep. Variable:         np.log(salary)   R-squared:                       0.628
 Model:                            OLS   Adj. R-squared:                  0.622
 Method:                 Least Squares   F-statistic:                     117.1
-Date:                Sun, 22 Dec 2024   Prob (F-statistic):           2.94e-72
-Time:                        13:53:09   Log-Likelihood:                -385.11
+Date:                Sat, 04 Jan 2025   Prob (F-statistic):           2.94e-72
+Time:                        14:37:13   Log-Likelihood:                -385.11
 No. Observations:                 353   AIC:                             782.2
 Df Residuals:                     347   BIC:                             805.4
 Df Model:                           5                                         
@@ -1634,17 +1652,14 @@ strong multicollinearity or other numerical problems.
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#t"><span class="math notranslate nohighlight">\(t\)</span>検定</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><span class="math notranslate nohighlight">\(t\)</span>値について</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#p"><span class="math notranslate nohighlight">\(p\)</span>値について</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tp">有意水準における<span class="math notranslate nohighlight">\(t\)</span>値と<span class="math notranslate nohighlight">\(p\)</span>値</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><span class="math notranslate nohighlight">\(t\)</span>値</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><span class="math notranslate nohighlight">\(p\)</span>値</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">回帰分析と<span class="math notranslate nohighlight">\(t\)</span>検定</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">回帰分析</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><span class="math notranslate nohighlight">\(t\)</span>値</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"><span class="math notranslate nohighlight">\(p\)</span>値</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">標準誤差</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">回帰分析と<span class="math notranslate nohighlight">\(t\)</span>検定</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">回帰分析</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">両側検定</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">片側検定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">片側検定の<span class="math notranslate nohighlight">\(p\)</span>値</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#act"><code class="docutils literal notranslate"><span class="pre">ACT</span></code>の場合</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#skipped"><code class="docutils literal notranslate"><span class="pre">skipped</span></code>の場合</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">覚え方</a></li>
