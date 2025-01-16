@@ -1162,8 +1162,8 @@ d87            0.9250     0.0688     13.450     0.0000      0.7902      1.0599
 Dep. Variable:                  lwage   R-squared:                        0.1806
 Estimator:                   PanelOLS   R-squared (Between):              0.2386
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Mon, Jan 13 2025   R-squared (Overall):              0.2361
-Time:                        12:43:18   Log-likelihood                   -1324.8
+Date:                Thu, Jan 16 2025   R-squared (Overall):              0.2361
+Time:                        01:05:37   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      83.851
 Entities:                         545   P-value                           0.0000
@@ -1214,8 +1214,8 @@ Max Obs:                       545.00
 Dep. Variable:                  lwage   R-squared:                        0.0216
 Estimator:                   PanelOLS   R-squared (Between):             -0.2717
 No. Observations:                4360   R-squared (Within):              -0.4809
-Date:                Mon, Jan 13 2025   R-squared (Overall):             -0.2808
-Time:                        12:43:18   Log-likelihood                   -1324.8
+Date:                Thu, Jan 16 2025   R-squared (Overall):             -0.2808
+Time:                        01:05:37   Log-likelihood                   -1324.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      27.959
 Entities:                         545   P-value                           0.0000
@@ -1423,12 +1423,13 @@ Name: parameter, dtype: float64
 <h3>推定<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">exper</span></code>，<code class="docutils literal notranslate"><span class="pre">educ</span></code>，<code class="docutils literal notranslate"><span class="pre">black</span></code>，<code class="docutils literal notranslate"><span class="pre">hisp</span></code>を加えて回帰式を定義する。</p>
 <p>（注意）</p>
-<p>時間ダミー変数の代わりに<code class="docutils literal notranslate"><span class="pre">TimeEffects</span></code>を使わないように。入れることができますが，そのような仕様になっていません。</p>
+<p>時間ダミー変数の代わりに<code class="docutils literal notranslate"><span class="pre">TimeEffects</span></code>を使わないように。
+入れてもエラーは出ませんが，<code class="docutils literal notranslate"><span class="pre">TimeEffects</span></code>は無視されて，時間ダミーがない結果と同じになります。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_re</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
 <span class="s1">                        + exper + educ + black + hisp </span><span class="se">\</span>
-<span class="s1">                        +d81+d82+d83+d84+d85+d86+d87&#39;</span>
+<span class="s1">                        + d81 + d82 + d83 +d84 + d85 + d86 + d87&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -1611,7 +1612,7 @@ Name: Variance Decomposition, dtype: float64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_cre</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
 <span class="s1">                         + married_mean + union_mean + expersq_mean </span><span class="se">\</span>
-<span class="s1">                         +d81+d82+d83+d84+d85+d86+d87&#39;</span>
+<span class="s1">                         + d81 + d82 + d83 + d84 + d85 + d86 + d87&#39;</span>
 
 <span class="n">result_cre</span> <span class="o">=</span> <span class="n">RandomEffects</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_cre</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
@@ -1625,8 +1626,8 @@ Name: Variance Decomposition, dtype: float64
 Dep. Variable:                  lwage   R-squared:                        0.1711
 Estimator:              RandomEffects   R-squared (Between):              0.0967
 No. Observations:                4360   R-squared (Within):               0.1806
-Date:                Mon, Jan 13 2025   R-squared (Overall):              0.1355
-Time:                        12:43:19   Log-likelihood                   -1609.8
+Date:                Thu, Jan 16 2025   R-squared (Overall):              0.1355
+Time:                        01:05:38   Log-likelihood                   -1609.8
 Cov. Estimator:            Unadjusted                                           
                                         F-statistic:                      69.027
 Entities:                         545   P-value                           0.0000
@@ -1671,7 +1672,7 @@ d87              0.9250     0.0687     13.465     0.0000      0.7903      1.0597
 <p>FEモデルとREモデルのどちらが適しているかを調べることができるHausman検定というものがある。CREモデルを使うことにより，同様の検定が簡単に行える。（式６）を考えよう。</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\gamma=0\)</span>の場合，REモデルの（式５）と同じになり，REモデルが妥当ということになる。</p></li>
-<li><p><span class="math notranslate nohighlight">\(\gamma\neq 0\)</span>の場合，<span class="math notranslate nohighlight">\(a_i\)</span>と<span class="math notranslate nohighlight">\(\bar{x}_{i}\)</span>は相関することになり，これは<span class="math notranslate nohighlight">\(\text{Cov}\left(a_i,{x}_{it}\right)\neq 0\)</span>を意味し，REモデルが妥当な推定方法となる。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\gamma\neq 0\)</span>の場合，<span class="math notranslate nohighlight">\(a_i\)</span>と<span class="math notranslate nohighlight">\(\bar{x}_{i}\)</span>は相関することになり，これは<span class="math notranslate nohighlight">\(\text{Cov}\left(a_i,{x}_{it}\right)\neq 0\)</span>を意味し，FEモデルが妥当な推定方法となる。</p></li>
 </ul>
 <p>この考えを利用して，次の帰無仮説と対立仮説のもとで<span class="math notranslate nohighlight">\(\gamma\)</span>の優位性を調べる。</p>
 <ul class="simple">
@@ -1700,7 +1701,7 @@ H0: Linear equality constraint is valid
 Statistic: 35.6454
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x12d4ef2c0
+WaldTestStatistic, id: 0x119fc40b0
 </pre></div>
 </div>
 </div>
@@ -1734,7 +1735,7 @@ WaldTestStatistic, id: 0x12d4ef2c0
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula_cre2</span> <span class="o">=</span> <span class="s1">&#39;lwage ~ 1 + married + union + expersq </span><span class="se">\</span>
 <span class="s1">                          + exper + educ + black + hisp </span><span class="se">\</span>
 <span class="s1">                          + married_mean + union_mean + expersq_mean </span><span class="se">\</span>
-<span class="s1">                          +d81+d82+d83+d84+d85+d86+d87&#39;</span>
+<span class="s1">                          + d81 + d82 + d83 + d84 + d85 + d86 + d87&#39;</span>
 
 <span class="n">result_cre2</span> <span class="o">=</span> <span class="n">RandomEffects</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula_cre2</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wagepan</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
@@ -1783,7 +1784,7 @@ H0: Linear equality constraint is valid
 Statistic: 26.0233
 P-value: 0.0000
 Distributed: chi2(3)
-WaldTestStatistic, id: 0x12d46f500
+WaldTestStatistic, id: 0x119f4f890
 </pre></div>
 </div>
 </div>
@@ -2110,32 +2111,32 @@ T-stats reported in parentheses
     <tr>
       <th rowspan="5" valign="top">0</th>
       <th>2000</th>
-      <td>1.749625</td>
-      <td>-0.020622</td>
+      <td>-0.372959</td>
+      <td>-1.589685</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2001</th>
-      <td>-0.816277</td>
-      <td>-0.827480</td>
+      <td>-0.115214</td>
+      <td>-0.993170</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2002</th>
-      <td>0.936092</td>
-      <td>0.040953</td>
+      <td>1.520800</td>
+      <td>0.410693</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2003</th>
-      <td>-3.042399</td>
-      <td>-1.913724</td>
+      <td>0.605777</td>
+      <td>-0.187519</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>2004</th>
-      <td>2.678579</td>
-      <td>0.055359</td>
+      <td>-1.544454</td>
+      <td>-1.255534</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -2158,7 +2159,7 @@ T-stats reported in parentheses
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-X              2.0096     0.0467     43.056     0.0000      1.9178      2.1013
+X              1.8916     0.0513     36.870     0.0000      1.7908      1.9925
 ==============================================================================
 </pre></div>
 </div>
@@ -2181,10 +2182,12 @@ X              2.0096     0.0467     43.056     0.0000      1.9178      2.1013
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.9812     0.1456     13.604     0.0000      1.6951      2.2674
-X              2.7978     0.0244     114.52     0.0000      2.7498      2.8458
+Intercept      1.8570     0.1431     12.975     0.0000      1.5758      2.1382
+X              2.8326     0.0245     115.55     0.0000      2.7845      2.8808
 ==============================================================================
-theta: [0.30914212]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>theta: [0.19267175]
 </pre></div>
 </div>
 </div>
@@ -2214,9 +2217,9 @@ theta: [0.30914212]
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.2147     0.1201     10.114     0.0000      0.9787      1.4506
-X              2.0096     0.0466     43.089     0.0000      1.9179      2.1012
-X_mean         0.9416     0.0510     18.460     0.0000      0.8414      1.0418
+Intercept      1.1687     0.1134     10.306     0.0000      0.9459      1.3915
+X              1.8916     0.0513     36.898     0.0000      1.7909      1.9924
+X_mean         1.0801     0.0550     19.655     0.0000      0.9721      1.1880
 ==============================================================================
 </pre></div>
 </div>
@@ -2238,8 +2241,8 @@ X_mean         0.9416     0.0510     18.460     0.0000      0.8414      1.0418
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      1.6146     0.1121     14.398     0.0000      1.3943      1.8349
-X              2.8711     0.0191     150.68     0.0000      2.8337      2.9086
+Intercept      1.6384     0.1221     13.421     0.0000      1.3985      1.8782
+X              2.8768     0.0210     136.71     0.0000      2.8355      2.9182
 ==============================================================================
 </pre></div>
 </div>
@@ -2330,7 +2333,7 @@ X              2.8711     0.0191     150.68     0.0000      2.8337      2.9086
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5b2e8f3d4aa2c13760d126532e6f50b7a4a7bd41efe5c7041246cf9ff1064102.png" src="_images/5b2e8f3d4aa2c13760d126532e6f50b7a4a7bd41efe5c7041246cf9ff1064102.png" />
+<img alt="_images/8a93ce5d53ab962af1a9594ff0002080db8a6178e1eae3e18e45f1cf117055a8.png" src="_images/8a93ce5d53ab962af1a9594ff0002080db8a6178e1eae3e18e45f1cf117055a8.png" />
 </div>
 </div>
 </section>
