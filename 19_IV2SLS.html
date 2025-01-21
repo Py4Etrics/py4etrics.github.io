@@ -536,7 +536,7 @@
 <p class="admonition-title">Note</p>
 <p>内生変数とは誤差項と相関する変数を意味する。従って，被説明変数も内生変数である。しかし，以下では「内生変数」という用語を「内生的説明変数」の省略形として使うことにする。</p>
 </div>
-<p>このような場合に役に立つのが<strong>操作変数法</strong>（<code class="docutils literal notranslate"><span class="pre">I</span></code>nstrumental <code class="docutils literal notranslate"><span class="pre">V</span></code>ariable Estimation）と呼ばれる手法である。この推定法では，ある条件を満たす内生的説明変数の代わりになる<strong>操作変数</strong>（外生変数）を使うことにより，一致性を満たす推定量を得ることが可能となる。</p>
+<p>このような場合に役に立つのが<strong>操作変数法</strong>（<code class="docutils literal notranslate"><span class="pre">I</span></code>nstrumental <code class="docutils literal notranslate"><span class="pre">V</span></code>ariable Estimation）と呼ばれる手法である。この推定法では，ある条件を満たす内生変数の代わりになる<strong>操作変数</strong>（外生変数）を使うことにより，一致性を満たす推定量を得ることが可能となる。</p>
 <p>（注意点）</p>
 <ul class="simple">
 <li><p>IV推定量は<strong>一致性</strong>を満たすが，この特性を活かすためには十分に大きな標本が必要である。</p></li>
@@ -556,9 +556,9 @@ y=\beta_0+\beta_1w+u
 <p><strong>＜操作変数の３つの条件＞</strong></p>
 <p>更に，<span class="math notranslate nohighlight">\(w\)</span>に以下の条件を満たす<strong>操作変数</strong>（instruments）<span class="math notranslate nohighlight">\(z\)</span>があるとしよう。</p>
 <ol class="arabic simple">
-<li><p><span class="math notranslate nohighlight">\(z\)</span>は回帰式に含まれない（除外条件）</p></li>
-<li><p><span class="math notranslate nohighlight">\(\text{Cov}(z,w)\neq 0\)</span>（妥当性; <span class="math notranslate nohighlight">\(w\)</span>と高い相関関係がある）</p></li>
-<li><p><span class="math notranslate nohighlight">\(\text{Cov}(z,u)=0\)</span>（外生性; 回帰式の誤差項と無相関）</p></li>
+<li><p><span class="math notranslate nohighlight">\(z\)</span>は回帰式に含まれない（<strong>除外条件</strong>）</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{Cov}(z,w)\neq 0\)</span>（<strong>妥当性</strong>; <span class="math notranslate nohighlight">\(w\)</span>と高い相関関係がある）</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{Cov}(z,u)=0\)</span>（<strong>外生性</strong>; 回帰式の誤差項と無相関）</p></li>
 </ol>
 <p>この場合，操作変数法を用いて（大標本のもとで）一致性を満たす<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>を得ることが可能となる。</p>
 <hr class="docutils" />
@@ -691,7 +691,7 @@ provided the data, which he obtained from Professor Mroz.
 <p>ケース１では以下の場合を考える。</p>
 <ul class="simple">
 <li><p>被説明変数：<code class="docutils literal notranslate"><span class="pre">lwage</span></code>（既婚女性の賃金; 対数）</p></li>
-<li><p>内生的説明変数：<code class="docutils literal notranslate"><span class="pre">educ</span></code>（既婚女性の教育年数）</p></li>
+<li><p>内生変数：<code class="docutils literal notranslate"><span class="pre">educ</span></code>（既婚女性の教育年数）</p></li>
 <li><p>操作変数：<code class="docutils literal notranslate"><span class="pre">fatheduc</span></code>（父親の教育年数）</p></li>
 <li><p>外生的説明変数：なし</p></li>
 </ul>
@@ -814,7 +814,7 @@ educ           0.1086     0.0134     8.1178     0.0000      0.0824      0.1349
 </div>
 </div>
 </div>
-<p>操作変数法の推定量と大きく異なることが分かる。操作変数法と比べて<code class="docutils literal notranslate"><span class="pre">educ</span></code>の<span class="math notranslate nohighlight">\(OLS\)</span>推定量は約２倍になり，既婚女性の教育の収益率を過大評価している。<code class="docutils literal notranslate"><span class="pre">educ</span></code>と誤差項に相関性がると推測できる。</p>
+<p>操作変数法の推定量と大きく異なることが分かる。操作変数法と比べて<code class="docutils literal notranslate"><span class="pre">educ</span></code>の<span class="math notranslate nohighlight">\(OLS\)</span>推定量は約２倍になり，既婚女性の教育の収益率を過大評価している。<code class="docutils literal notranslate"><span class="pre">educ</span></code>と誤差項に相関がると推測できる。</p>
 </section>
 </section>
 <section id="iv-2sls">
@@ -826,7 +826,7 @@ educ           0.1086     0.0134     8.1178     0.0000      0.0824      0.1349
 <li><p>複数の外生変数の導入（<code class="docutils literal notranslate"><span class="pre">exper</span></code>，<code class="docutils literal notranslate"><span class="pre">expersq</span></code>）</p></li>
 <li><p>複数の操作変数の導入（<code class="docutils literal notranslate"><span class="pre">fatheduc</span></code>，<code class="docutils literal notranslate"><span class="pre">motheduc</span></code>）</p></li>
 </ul>
-<p>このように複雑化しても基本的な考え方は同じである。</p>
+<p>このように拡張しても基本的な考え方は同じである。</p>
 <div class="math notranslate nohighlight" id="equation-eq-19-4">
 <span class="eqno">(6)<a class="headerlink" href="#equation-eq-19-4" title="Link to this equation">#</a></span>\[
 y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3w+u
@@ -837,8 +837,8 @@ y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3w+u
 </ul>
 <p><span class="math notranslate nohighlight">\(w\)</span>の操作変数<span class="math notranslate nohighlight">\(z_j,\;j=1,2\)</span>は次の条件を満たす必要がある。</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\text{Cov}(z_j,w)\neq 0\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\text{Cov}(z_j,u)=0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{Cov}(z_j,w)\neq 0,\quad j=1,2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{Cov}(z_j,u)=0,\quad j=1,2\)</span></p></li>
 </ul>
 <p>＜2SLSの考え方＞</p>
 <p><strong>第１段階OLS</strong></p>
@@ -851,7 +851,7 @@ y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3w+u
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>が入る直感的な理由</p>
 <ul>
-<li><p>下で説明するように，式<a class="reference internal" href="#equation-eq-19-4">(6)</a>の<code class="docutils literal notranslate"><span class="pre">w</span></code>の代わりに式<a class="reference internal" href="#equation-eq-19-4">(6)</a>を使って計算する<code class="docutils literal notranslate"><span class="pre">w</span></code>の予測値を代わりに使うことになる。その際，式<a class="reference internal" href="#equation-eq-19-4">(6)</a>に<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>が入っていないと，<code class="docutils literal notranslate"><span class="pre">w</span></code>に元々あった<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>との関係性を除外することになる。式<a class="reference internal" href="#equation-eq-19-4">(6)</a>に<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>を入れるのは<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>との相関を考慮した<code class="docutils literal notranslate"><span class="pre">w</span></code>の予測値にするためである。</p></li>
+<li><p>下で説明するように，式<a class="reference internal" href="#equation-eq-19-4">(6)</a>の<span class="math notranslate nohighlight">\(w\)</span>の代わりに式<a class="reference internal" href="#equation-eq-19-4">(6)</a>を使って計算する予測値<span class="math notranslate nohighlight">\(\hat{w}\)</span>を代わりに使うことになる。その際，式<a class="reference internal" href="#equation-eq-19-5">(7)</a>に<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>が入っていないと，<code class="docutils literal notranslate"><span class="pre">w</span></code>に元々あった<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>との関係性を除外することになる。式<a class="reference internal" href="#equation-eq-19-5">(7)</a>に<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>を入れるのは<span class="math notranslate nohighlight">\(x_1\)</span>と<span class="math notranslate nohighlight">\(x_2\)</span>との相関を考慮した予測値<span class="math notranslate nohighlight">\(\hat{w}\)</span>を計算するためである。</p></li>
 </ul>
 </li>
 </ul>
@@ -893,7 +893,7 @@ y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3w+u
 </section>
 <section id="educ">
 <h3><code class="docutils literal notranslate"><span class="pre">educ</span></code>と操作変数の相関性チェック<a class="headerlink" href="#educ" title="Link to this heading">#</a></h3>
-<p>内生的説明変数と操作変数のOLS推定を使い，相関性の検定をおこなう。</p>
+<p>内生変数と操作変数のOLS推定を使い，相関性の検定をおこなう。</p>
 <p>上述のとおり，一般的に有効な操作変数は以下を満たす。</p>
 <ul class="simple">
 <li><p>操作変数が１つの場合</p>
@@ -924,7 +924,7 @@ Dep. Variable:                   educ   R-squared:                      0.2081
 Estimator:                        OLS   Adj. R-squared:                 0.2043
 No. Observations:                 428   F-statistic:                    112.45
 Date:                Tue, Jan 21 2025   P-value (F-stat)                0.0000
-Time:                        04:00:31   Distribution:                  chi2(2)
+Time:                        05:24:05   Distribution:                  chi2(2)
 Cov. Estimator:            unadjusted                                         
                                                                               
                              Parameter Estimates                              
@@ -1104,7 +1104,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># x1, x2, x3, w1, w2, z1, z2の平均</span>
 <span class="n">rv_mean</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
-<span class="c1"># 共分散行列　  x1, x2,x3, w1, w2, z1, z2</span>
+<span class="c1"># 共分散行列　 x1, x2,x3, w1, w2, z1, z2</span>
 <span class="n">rv_cov</span> <span class="o">=</span>  <span class="p">[[</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span> <span class="c1"># x1</span>
            <span class="p">[</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span> <span class="c1"># x2</span>
            <span class="p">[</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span> <span class="c1"># x3</span>
@@ -1135,7 +1135,7 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 </div>
 </div>
 </div>
-<p>上のコードにより，<code class="docutils literal notranslate"><span class="pre">df_endog2</span></code>にシミュレーションで使用するデータが割り当てられた。最初の3行を表示してみよう。</p>
+<p>上のコードにより，<code class="docutils literal notranslate"><span class="pre">df_endog2</span></code>にシミュレーションで使用するデータが割り当てられている。最初の3行を表示してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_endog2</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -1174,36 +1174,36 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
   <tbody>
     <tr>
       <th>0</th>
-      <td>-0.417961</td>
-      <td>0.106473</td>
-      <td>-0.331155</td>
-      <td>-1.382826</td>
-      <td>-0.256720</td>
-      <td>-0.131122</td>
-      <td>0.017155</td>
-      <td>-0.473027</td>
+      <td>2.476427</td>
+      <td>0.215837</td>
+      <td>-0.955064</td>
+      <td>1.545379</td>
+      <td>2.026516</td>
+      <td>-0.908794</td>
+      <td>1.318689</td>
+      <td>0.125465</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>3.640837</td>
-      <td>1.436852</td>
-      <td>0.807330</td>
-      <td>0.176877</td>
-      <td>1.216735</td>
-      <td>-0.155116</td>
-      <td>1.053340</td>
-      <td>0.287544</td>
+      <td>4.248690</td>
+      <td>0.157756</td>
+      <td>-0.808840</td>
+      <td>1.632523</td>
+      <td>0.995076</td>
+      <td>-1.156795</td>
+      <td>0.860488</td>
+      <td>-0.497933</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>-5.898342</td>
-      <td>-2.840978</td>
-      <td>-0.314042</td>
-      <td>-1.297543</td>
-      <td>-1.925709</td>
-      <td>-0.453863</td>
-      <td>-0.137142</td>
-      <td>-0.389296</td>
+      <td>-3.756778</td>
+      <td>-3.062758</td>
+      <td>0.792093</td>
+      <td>-1.062737</td>
+      <td>-0.254333</td>
+      <td>0.934341</td>
+      <td>0.875507</td>
+      <td>0.379126</td>
     </tr>
   </tbody>
 </table>
@@ -1224,10 +1224,10 @@ educ           0.0614     0.0313     1.9622     0.0497   7.043e-05      0.1227
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      0.9810     0.0156     62.961     0.0000      0.9504      1.0115
-w1             1.4892     0.0155     96.380     0.0000      1.4589      1.5195
-w2             1.5205     0.0157     96.589     0.0000      1.4897      1.5514
-x3             1.0094     0.0155     65.267     0.0000      0.9790      1.0397
+Intercept      1.0302     0.0158     65.194     0.0000      0.9992      1.0612
+w1             1.4999     0.0160     93.580     0.0000      1.4685      1.5314
+w2             1.5103     0.0158     95.461     0.0000      1.4793      1.5413
+x3             1.0160     0.0157     64.878     0.0000      0.9853      1.0467
 ==============================================================================
 </pre></div>
 </div>
@@ -1248,6 +1248,7 @@ x3             1.0094     0.0155     65.267     0.0000      0.9790      1.0397
 </div>
 </div>
 </div>
+<p>両方の推定式に<code class="docutils literal notranslate"><span class="pre">z1</span></code>と<code class="docutils literal notranslate"><span class="pre">z2</span></code>が入っていることに留意しよう。上述のように<code class="docutils literal notranslate"><span class="pre">x3</span></code>が両式に入る理由と同じ効果を捉えるためである。</p>
 <p>OLS推定</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1268,16 +1269,16 @@ x3             1.0094     0.0155     65.267     0.0000      0.9790      1.0397
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept     -0.0006     0.0060    -0.0920     0.9267     -0.0124      0.0113
-z1             0.8062     0.0060     135.19     0.0000      0.7945      0.8179
-z2             0.0100     0.0061     1.6403     0.1009     -0.0019      0.0219
-x3            -0.0010     0.0060    -0.1601     0.8728     -0.0127      0.0108
+Intercept     -0.0005     0.0060    -0.0841     0.9329     -0.0123      0.0113
+z1             0.8004     0.0061     132.26     0.0000      0.7885      0.8122
+z2             0.0056     0.0060     0.9282     0.3533     -0.0062      0.0174
+x3            -0.0008     0.0059    -0.1295     0.8970     -0.0124      0.0108
 ==============================================================================
 </pre></div>
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">z1</span></code>の係数の推定値である<span class="math notranslate nohighlight">\(\hat{\gamma}_1\)</span>の<span class="math notranslate nohighlight">\(p\)</span>値は非常に小さい。</p>
+<p><code class="docutils literal notranslate"><span class="pre">z1</span></code>の係数の推定値である<span class="math notranslate nohighlight">\(\hat{\gamma}_1\)</span>の<span class="math notranslate nohighlight">\(t\)</span>値<span class="math notranslate nohighlight">\(&gt;3.2\)</span>であり，<code class="docutils literal notranslate"><span class="pre">w1</span></code>の操作変数としての妥当性は満たしている。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">res_endog2_2</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
@@ -1289,16 +1290,16 @@ x3            -0.0010     0.0060    -0.1601     0.8728     -0.0127      0.0108
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      0.0020     0.0061     0.3356     0.7372     -0.0099      0.0139
-z1            -0.0104     0.0061    -1.6908     0.0909     -0.0224      0.0017
-z2             0.7914     0.0062     127.47     0.0000      0.7792      0.8036
-x3             0.0016     0.0060     0.2574     0.7969     -0.0103      0.0134
+Intercept     -0.0036     0.0060    -0.6081     0.5431     -0.0154      0.0081
+z1             0.0013     0.0060     0.2228     0.8237     -0.0105      0.0132
+z2             0.8038     0.0060     133.83     0.0000      0.7920      0.8155
+x3            -0.0013     0.0059    -0.2183     0.8272     -0.0128      0.0102
 ==============================================================================
 </pre></div>
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">z2</span></code>の係数の推定値である<span class="math notranslate nohighlight">\(\hat{\gamma}_2\)</span>の<span class="math notranslate nohighlight">\(p\)</span>値も非常に小さい。</p>
+<p><code class="docutils literal notranslate"><span class="pre">z2</span></code>の係数の推定値である<span class="math notranslate nohighlight">\(\hat{\gamma}_2\)</span>の<span class="math notranslate nohighlight">\(t\)</span>値<span class="math notranslate nohighlight">\(&gt;3.2\)</span>であり，<code class="docutils literal notranslate"><span class="pre">w2</span></code>の操作変数としての妥当性を満たしている。</p>
 <p>次に，それぞれの残差を<code class="docutils literal notranslate"><span class="pre">df_endog2</span></code>に新たな列<code class="docutils literal notranslate"><span class="pre">w1hat</span></code>と<code class="docutils literal notranslate"><span class="pre">w2hat</span></code>として追加する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1331,11 +1332,14 @@ x3             0.0016     0.0060     0.2574     0.7969     -0.0103      0.0134
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      0.9891     0.0237     41.725     0.0000      0.9426      1.0356
-w1hat          0.9990     0.0294     33.980     0.0000      0.9414      1.0567
-w2hat          1.0272     0.0303     33.872     0.0000      0.9678      1.0867
-x3             1.0202     0.0234     43.673     0.0000      0.9744      1.0660
+Intercept      1.0249     0.0240     42.660     0.0000      0.9778      1.0720
+w1hat          1.0067     0.0303     33.212     0.0000      0.9472      1.0661
+w2hat          1.0062     0.0299     33.663     0.0000      0.9477      1.0648
+x3             1.0136     0.0236     42.940     0.0000      0.9673      1.0598
 ==============================================================================
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>
@@ -1346,7 +1350,7 @@ x3             1.0202     0.0234     43.673     0.0000      0.9744      1.0660
 <section id="id16">
 <h3>自動計算<a class="headerlink" href="#id16" title="Link to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">linearmodels</span></code>の<code class="docutils literal notranslate"><span class="pre">IV2SLS</span></code>を使うが，次の書き方となる。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">被説明変数</span> <span class="o">~</span> <span class="n">定数項</span> <span class="o">+</span> <span class="n">外生変数</span> <span class="o">+</span> <span class="p">[</span><span class="n">内生変数１</span><span class="o">+</span><span class="n">内生変数２</span> <span class="o">~</span> <span class="n">操作変数１</span> <span class="o">+</span> <span class="n">操作変数２</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">被説明変数</span> <span class="o">~</span> <span class="n">定数項</span> <span class="o">+</span> <span class="n">外生変数</span> <span class="o">+</span> <span class="p">[</span><span class="n">内生変数１</span> <span class="o">+</span> <span class="n">内生変数２</span> <span class="o">~</span> <span class="n">操作変数１</span> <span class="o">+</span> <span class="n">操作変数２</span><span class="p">]</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -1373,10 +1377,10 @@ x3             1.0202     0.0234     43.673     0.0000      0.9744      1.0660
 ==============================================================================
             Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
 ------------------------------------------------------------------------------
-Intercept      0.9891     0.0170     58.042     0.0000      0.9557      1.0225
-x3             1.0202     0.0168     60.685     0.0000      0.9873      1.0532
-w1             0.9990     0.0211     47.450     0.0000      0.9578      1.0403
-w2             1.0272     0.0218     47.030     0.0000      0.9844      1.0700
+Intercept      1.0249     0.0173     59.177     0.0000      0.9910      1.0589
+x3             1.0136     0.0171     59.318     0.0000      0.9801      1.0471
+w1             1.0067     0.0220     45.740     0.0000      0.9635      1.0498
+w2             1.0062     0.0217     46.411     0.0000      0.9638      1.0487
 ==============================================================================
 </pre></div>
 </div>
@@ -1401,14 +1405,14 @@ w2             1.0272     0.0218     47.030     0.0000      0.9844      1.0700
     y=\beta_0 + \beta_1 x_1 + u
     \]</div>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">z</span></code>を<code class="docutils literal notranslate"><span class="pre">x1</span></code>操作変数とする。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">z</span></code>を<code class="docutils literal notranslate"><span class="pre">x1</span></code>の操作変数とする。</p></li>
 <li><p>２つの推定方法</p>
 <ul class="simple">
 <li><p>操作変数<code class="docutils literal notranslate"><span class="pre">z</span></code>を使いIV法による推定</p></li>
 <li><p>OLSによる推定（この場合，欠落変数バイアスが発生する）</p></li>
 </ul>
 </li>
-<li><p>標本の大きさは<span class="math notranslate nohighlight">\(1000\)</span>，標本数（ループの回数）を10000として<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布を比べる</p></li>
+<li><p>標本の大きさは<code class="docutils literal notranslate"><span class="pre">1000</span></code>，標本数（ループの回数）を<code class="docutils literal notranslate"><span class="pre">10000</span></code>として<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布を比べる</p></li>
 </ul>
 <p>標本数（ループの回数）</p>
 <div class="cell docutils container">
@@ -1433,7 +1437,7 @@ w2             1.0272     0.0218     47.030     0.0000      0.9844      1.0700
 <li><p>引数</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>：標本の大きさ</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">m</span></code>：<code class="docutils literal notranslate"><span class="pre">x1</span></code>と<code class="docutils literal notranslate"><span class="pre">z</span></code>の共分散 <span class="math notranslate nohighlight">\(\text{Cov}(x1,z)=m\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">m</span></code>：<code class="docutils literal notranslate"><span class="pre">x1</span></code>と<code class="docutils literal notranslate"><span class="pre">z</span></code>の共分散 <span class="math notranslate nohighlight">\(\text{Cov}(x_1,z)=m\)</span></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ols</span></code>（デフォルトは<code class="docutils literal notranslate"><span class="pre">False</span></code>）：OLS推定を一緒に行う場合は<code class="docutils literal notranslate"><span class="pre">True</span></code></p></li>
 </ul>
 </li>
@@ -1448,7 +1452,7 @@ w2             1.0272     0.0218     47.030     0.0000      0.9844      1.0700
 <p>計算の速度を早めるために下の関数の中では<code class="docutils literal notranslate"><span class="pre">IV2SLS</span></code>は使わず<code class="docutils literal notranslate"><span class="pre">numpy</span></code>の関数を使いIVとOLS推定値を計算している。<code class="docutils literal notranslate"><span class="pre">IV2SLS</span></code>は係数の推定値だけではなく他の多くの統計値も自動的に計算するために一回の計算に比較的に長い時間を要するためである。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">sim_iv</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">ols</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ, m=x1とｚの共分散</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">sim_iv</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">ols</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>  <span class="c1"># n=標本の大きさ, m=x1とｚの共分散</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    n: 標本の大きさ</span>
 <span class="sd">    m: 説明変数と対応する操作変数の相関性の度合い</span>
@@ -1507,7 +1511,7 @@ w2             1.0272     0.0218     47.030     0.0000      0.9844      1.0700
 <p>シミュレーションの開始</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b1hat_iv</span><span class="p">,</span> <span class="n">b1hat_ols</span> <span class="o">=</span> <span class="n">sim_iv</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mf">0.9</span><span class="p">,</span><span class="n">ols</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b1hat_iv</span><span class="p">,</span> <span class="n">b1hat_ols</span> <span class="o">=</span> <span class="n">sim_iv</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="n">ols</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1515,15 +1519,15 @@ w2             1.0272     0.0218     47.030     0.0000      0.9844      1.0700
 <p>図示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">1.3</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
 
 <span class="n">kde_model_ols</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b1hat_ols</span><span class="p">)</span>  <span class="c1"># OLS推定量のカーネル密度関数を計算</span>
 
 <span class="n">kde_model_iv</span><span class="o">=</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">b1hat_iv</span><span class="p">)</span>  <span class="c1"># IV推定量のカーネル密度関数を計算</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_ols</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="s1">&#39;g-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;OLS&#39;</span><span class="p">)</span>  <span class="c1"># OLS推定量の分布プロット</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_iv</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span><span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;IV&#39;</span><span class="p">)</span>  <span class="c1"># IV推定量の分布プロット</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">b1</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">kde_model_iv</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;IV&#39;</span><span class="p">)</span>  <span class="c1"># IV推定量の分布プロット</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">b1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Kernel Density&#39;</span><span class="p">)</span>  <span class="c1"># 縦軸のラベル</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>  <span class="c1"># 凡例</span>
 <span class="k">pass</span>
@@ -1531,7 +1535,7 @@ w2             1.0272     0.0218     47.030     0.0000      0.9844      1.0700
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a8fbf9e157c017df4004f21de5f1ec19d107e2b2afd35e62d2a7eb9cf0715046.png" src="_images/a8fbf9e157c017df4004f21de5f1ec19d107e2b2afd35e62d2a7eb9cf0715046.png" />
+<img alt="_images/f09f797fc73b4d2a144a4b329361f92dd25988101fe057a98e36f7a6a2b8f1b2.png" src="_images/f09f797fc73b4d2a144a4b329361f92dd25988101fe057a98e36f7a6a2b8f1b2.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1565,7 +1569,7 @@ w2             1.0272     0.0218     47.030     0.0000      0.9844      1.0700
 <p>図示</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 図を作成するために横軸の値を設定</span>
 
 <span class="n">b1hat_iv_n_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">b1hat_iv_30</span><span class="p">,</span> <span class="n">b1hat_iv_100</span><span class="p">,</span> <span class="n">b1hat_iv_1000</span><span class="p">]</span>
 <span class="n">color_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;g-&#39;</span><span class="p">,</span> <span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">]</span>
@@ -1576,7 +1580,7 @@ w2             1.0272     0.0218     47.030     0.0000      0.9844      1.0700
     <span class="n">b1_dist</span> <span class="o">=</span> <span class="n">kde_model_iv</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>  <span class="c1"># IV推定量のカーネル密度関数を計算</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">b1_dist</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>  <span class="c1"># IV推定量の分布プロット</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">b1</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">b1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Kernel Density&#39;</span><span class="p">)</span>  <span class="c1"># 縦軸のラベル</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>  <span class="c1"># 凡例</span>
 <span class="k">pass</span>
@@ -1584,7 +1588,7 @@ w2             1.0272     0.0218     47.030     0.0000      0.9844      1.0700
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c14d730d7e07e559d4ed5965c05669f3293b85c0edefc02184e36888383f42f3.png" src="_images/c14d730d7e07e559d4ed5965c05669f3293b85c0edefc02184e36888383f42f3.png" />
+<img alt="_images/ecab83166d3f22472f720843d85567bbfead5a0eeb1168af3985e535cc8d2db1.png" src="_images/ecab83166d3f22472f720843d85567bbfead5a0eeb1168af3985e535cc8d2db1.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1596,13 +1600,13 @@ w2             1.0272     0.0218     47.030     0.0000      0.9844      1.0700
 <h3>操作変数との相関性（弱操作変数）<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
 <p>（目的）</p>
 <ul class="simple">
-<li><p>IV推定法で必須となるのが内生的説明変数と操作変数の相関性である。相関性が高い場合は推定量の標準ごさは低くなるが，逆に相関性が低い場合は推定量の標準誤差が大きくなることを確認する。</p></li>
+<li><p>IV推定法で必須となるのが内生変数と操作変数の相関である。相関が高い場合は推定量の標準誤差は低くなるが，逆に相関が低い場合は推定量の標準誤差が大きくなることを確認する。</p></li>
 </ul>
 <p>＜シミュレーションの内容＞</p>
 <ul class="simple">
 <li><p>上と同じ設定</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">IV</span></code>法による単回帰分析のみを考える</p></li>
-<li><p>内生的説明変数と操作変数の共分散<code class="docutils literal notranslate"><span class="pre">m</span></code>を<code class="docutils literal notranslate"><span class="pre">0.1</span></code>，<code class="docutils literal notranslate"><span class="pre">0.4</span></code>，<code class="docutils literal notranslate"><span class="pre">0.8</span></code>の3つのケースを考える。</p></li>
+<li><p>内生変数と操作変数の共分散<code class="docutils literal notranslate"><span class="pre">m</span></code>を<code class="docutils literal notranslate"><span class="pre">0.1</span></code>，<code class="docutils literal notranslate"><span class="pre">0.4</span></code>，<code class="docutils literal notranslate"><span class="pre">0.8</span></code>の3つのケースを考える。</p></li>
 <li><p>標本の大きさ<span class="math notranslate nohighlight">\(2000\)</span>に固定し，それぞれ<code class="docutils literal notranslate"><span class="pre">N=10000</span></code>回推定し<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>の分布を比べる</p></li>
 </ul>
 <p>上で使った関数<code class="docutils literal notranslate"><span class="pre">sim_iv()</span></code>を使う。</p>
@@ -1638,7 +1642,7 @@ w2             1.0272     0.0218     47.030     0.0000      0.9844      1.0700
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1bd7aab357952798e93289db3bc004a02c249b637d8e5d29751d4f9bcd944e32.png" src="_images/1bd7aab357952798e93289db3bc004a02c249b637d8e5d29751d4f9bcd944e32.png" />
+<img alt="_images/e5c59254942848165e4b9f99b16f49401ea8b5d9b5f30e5cfe5783313c2125e1.png" src="_images/e5c59254942848165e4b9f99b16f49401ea8b5d9b5f30e5cfe5783313c2125e1.png" />
 </div>
 </div>
 <p><span class="math notranslate nohighlight">\(\text{Cov}(x,z)\)</span>が低くなると分散が大きくなり，一致性を失うことも確認できる。</p>
@@ -1697,7 +1701,7 @@ H0: All endogenous variables are exogenous
 Statistic: 2.8035
 P-value: 0.0948
 Distributed: F(1,423)
-WaldTestStatistic, id: 0x117b4f0e0
+WaldTestStatistic, id: 0x1264f1730
 </pre></div>
 </div>
 </div>
@@ -1706,7 +1710,7 @@ WaldTestStatistic, id: 0x117b4f0e0
 </section>
 <section id="id23">
 <h3>検定方法２<a class="headerlink" href="#id23" title="Link to this heading">#</a></h3>
-<p>まず検定方法について説明し，「考え方」については後述する。次の回帰式を考える。</p>
+<p>まず検定方法について説明し，「考え方」については後述する。次の回帰式を考えよう。</p>
 <div class="math notranslate nohighlight" id="equation-eq-19-10">
 <span class="eqno">(14)<a class="headerlink" href="#equation-eq-19-10" title="Link to this equation">#</a></span>\[
 y=\beta_0+\beta_1x + \beta_2w+u
@@ -1724,8 +1728,8 @@ y=\beta_0+\beta_1x + \beta_2w+u
 <p><strong>第２段階</strong></p>
 <ul>
 <li><p>式<a class="reference internal" href="#equation-eq-19-10">(14)</a>に<span class="math notranslate nohighlight">\(\hat{u}\)</span>を加えてOLS推定する。</p>
-<div class="math notranslate nohighlight">
-\[y=\gamma_0+\gamma_1x + \gamma_2w+\gamma_u\hat{u}+e\qquad\qquad (\text{式２})\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-19-10a">
+<span class="eqno">(15)<a class="headerlink" href="#equation-eq-19-10a" title="Link to this equation">#</a></span>\[y=\gamma_0+\gamma_1x + \gamma_2w+\gamma_u\hat{u}+e\qquad\qquad (\text{式２})\]</div>
 </li>
 <li><p>次の検定をおこなう。</p>
 <ul class="simple">
@@ -1747,9 +1751,9 @@ y=\beta_0+\beta_1x + \beta_2w+u
 <li><p><span class="math notranslate nohighlight">\(\hat{u}\)</span>：<span class="math notranslate nohighlight">\(y\)</span>のその他の部分</p></li>
 </ul>
 </li>
-<li><p><span class="math notranslate nohighlight">\(u\)</span>が<span class="math notranslate nohighlight">\(w\)</span>と相関していれば，その相関する部分が<span class="math notranslate nohighlight">\(\hat{u}\)</span>に含まれることになる。以下のようなイメージ。</p>
+<li><p><span class="math notranslate nohighlight">\(u\)</span>が<span class="math notranslate nohighlight">\(w\)</span>と相関していれば，その相関する部分が<span class="math notranslate nohighlight">\(\hat{u}\)</span>に含まれることになる。次のようなイメージ。</p>
 <div class="math notranslate nohighlight">
-\[\hat{u}=f\left(\hat{u}_w,v\right)\]</div>
+\[\hat{u}=a\hat{u}_w+bv,\qquad a,b\ne 0\]</div>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\hat{u}_w\)</span>：<span class="math notranslate nohighlight">\(w\)</span>と相関する部分</p></li>
 <li><p><span class="math notranslate nohighlight">\(v\)</span>：<span class="math notranslate nohighlight">\(w\)</span>と相関しない部分</p></li>
@@ -1758,8 +1762,8 @@ y=\beta_0+\beta_1x + \beta_2w+u
 </ul>
 <p>＜第２段階＞</p>
 <ul class="simple">
-<li><p>(式２)を推定すると，相関部分である<span class="math notranslate nohighlight">\(\hat{u}_w\)</span>を<span class="math notranslate nohighlight">\(\gamma_u\hat{u}\)</span>として取り出すことができる。</p></li>
-<li><p>もし<span class="math notranslate nohighlight">\(\gamma_u\)</span>が有意であれば，<span class="math notranslate nohighlight">\(\text{H}_0\)</span>は棄却される。<span class="math notranslate nohighlight">\(\hat{u}_w\)</span>は存在するということになり，<span class="math notranslate nohighlight">\(w\)</span>は内生変数と判断できる。</p></li>
+<li><p>式<a class="reference internal" href="#equation-eq-19-10a">(15)</a>を推定すると，相関部分である<span class="math notranslate nohighlight">\(\hat{u}_w\)</span>を<span class="math notranslate nohighlight">\(\gamma_u\hat{u}\)</span>として取り出すことができる。</p></li>
+<li><p>もし<span class="math notranslate nohighlight">\(\gamma_u\)</span>が有意であれば，<span class="math notranslate nohighlight">\(\text{H}_0\)</span>は棄却され，<span class="math notranslate nohighlight">\(\hat{u}_w\)</span>は存在するということになり<span class="math notranslate nohighlight">\(w\)</span>は内生変数と判断できる。</p></li>
 <li><p>もし<span class="math notranslate nohighlight">\(\gamma_u\)</span>が有意でなければ，<span class="math notranslate nohighlight">\(\text{H}_0\)</span>は棄却できない。<span class="math notranslate nohighlight">\(\hat{u}_w\)</span>は存在しないということになり，<span class="math notranslate nohighlight">\(w\)</span>は外生変数と判断できる。</p></li>
 </ul>
 <section id="id24">
@@ -1777,7 +1781,7 @@ y=\beta_0+\beta_1x + \beta_2w+u
 </div>
 </div>
 <p><strong>第２段階</strong></p>
-<p><code class="docutils literal notranslate"><span class="pre">res_2a</span></code>の残差を使うが，メソッド<code class="docutils literal notranslate"><span class="pre">resids</span></code>を使い取得する。すなわち，<code class="docutils literal notranslate"><span class="pre">res_2a.resids</span></code>が残差を返す。また次の点を覚えておこう。</p>
+<p><code class="docutils literal notranslate"><span class="pre">res_2a</span></code>の残差を使うが，メソッド<code class="docutils literal notranslate"><span class="pre">resids</span></code>を使い取得する。すなわち，<code class="docutils literal notranslate"><span class="pre">res_2a.resids</span></code>が残差を返す。また次の点も覚えておこう。</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">res_2a.resids</span></code>を直接回帰式に入れることはできないが，<code class="docutils literal notranslate"><span class="pre">I()</span></code>の引数とすれば可能となる。これは<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>と同じである。</p></li>
 </ul>
@@ -1825,7 +1829,7 @@ H0: Endogenous variables are exogenous
 Statistic: 2.8256
 P-value: 0.0928
 Distributed: chi2(1)
-WaldTestStatistic, id: 0x1183fe360
+WaldTestStatistic, id: 0x136163cb0
 </pre></div>
 </div>
 </div>
@@ -1840,7 +1844,7 @@ WaldTestStatistic, id: 0x1183fe360
 <h3>説明<a class="headerlink" href="#id27" title="Link to this heading">#</a></h3>
 <p>次の回帰式を考えよう。</p>
 <div class="math notranslate nohighlight" id="equation-eq-19-11">
-<span class="eqno">(15)<a class="headerlink" href="#equation-eq-19-11" title="Link to this equation">#</a></span>\[
+<span class="eqno">(16)<a class="headerlink" href="#equation-eq-19-11" title="Link to this equation">#</a></span>\[
 y=\beta_0+\beta_1x+\beta_2w+u
 \]</div>
 <ul class="simple">
@@ -1848,21 +1852,21 @@ y=\beta_0+\beta_1x+\beta_2w+u
 <li><p><span class="math notranslate nohighlight">\(w\)</span>：内生性が疑われる説明変数</p></li>
 </ul>
 <hr class="docutils" />
-<p><strong>＜ケース１：１つの内生的説明変数に１つの操作変数がある場合＞</strong></p>
+<p><strong>＜ケース１：１つの内生変数に１つの操作変数がある場合＞</strong></p>
 <ul class="simple">
-<li><p>操作変数<span class="math notranslate nohighlight">\(z\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(z\)</span>：操作変数</p></li>
 </ul>
 <p>この場合，操作変数の外生性<span class="math notranslate nohighlight">\(\text{Cov}(z,u)=0\)</span>が満たされないといけないが，これを検定できない。</p>
 <p>（理由）</p>
 <ul class="simple">
-<li><p>式<a class="reference internal" href="#equation-eq-19-11">(15)</a>の<code class="docutils literal notranslate"><span class="pre">w</span></code>は内生性が疑われるため，その式を使い計算したOLS残差<span class="math notranslate nohighlight">\(\hat{u}\)</span>は真の誤差項を捉えていない可能性がある。従って，この<span class="math notranslate nohighlight">\(\hat{u}\)</span>を使っても意味がある検定とはならない。</p></li>
-<li><p>式<a class="reference internal" href="#equation-eq-19-11">(15)</a>に<span class="math notranslate nohighlight">\(z\)</span>を使い残差を計算することも考えられるが，そもそも<span class="math notranslate nohighlight">\(z\)</span>の妥当性が分からないため，これも真の誤差項を捉えていない可能性がある。</p></li>
+<li><p>式<a class="reference internal" href="#equation-eq-19-11">(16)</a>の<code class="docutils literal notranslate"><span class="pre">w</span></code>は内生性が疑われるため，その式を使い計算したOLS残差<span class="math notranslate nohighlight">\(\hat{u}\)</span>は真の誤差項を捉えていない可能性がある。従って，この<span class="math notranslate nohighlight">\(\hat{u}\)</span>を使っても意味がある検定とはならない。</p></li>
+<li><p>式<a class="reference internal" href="#equation-eq-19-11">(16)</a>に<span class="math notranslate nohighlight">\(z\)</span>を使い残差を計算することも考えられるが，そもそも<span class="math notranslate nohighlight">\(z\)</span>の妥当性が分からないため，これも真の誤差項を捉えていない可能性がある。</p></li>
 </ul>
 <p>この場合，経済理論に基づいて操作変数の外生性を正当化できるかが問題になる。</p>
 <hr class="docutils" />
-<p><strong>＜ケース２：１つの内生的説明変数に複数の操作変数がある場合＞</strong></p>
+<p><strong>＜ケース２：１つの内生変数に複数の操作変数がある場合＞</strong></p>
 <ul class="simple">
-<li><p>例えば，２つの操作変数<span class="math notranslate nohighlight">\(z_1\)</span>と<span class="math notranslate nohighlight">\(z_2\)</span></p></li>
+<li><p>２つの操作変数<span class="math notranslate nohighlight">\(z_1\)</span>と<span class="math notranslate nohighlight">\(z_2\)</span></p></li>
 </ul>
 <p>この場合，<strong>同時</strong>に<span class="math notranslate nohighlight">\(\text{Cov}(z_1,u)=\text{Cov}(z_2,u)=0\)</span>が成立するかを検定する方法があり，その１つがSargan検定と呼ばれる。</p>
 <p>（注意）</p>
@@ -1887,7 +1891,7 @@ y=\beta_0+\beta_1x+\beta_2w+u
 <p>２段階で検定する。</p>
 <p><strong>第１段階</strong></p>
 <ul class="simple">
-<li><p>IV/2SLS推定法で推定し，残差<span class="math notranslate nohighlight">\(\hat{u}\)</span>を取得する。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IV-2SLS</span></code>推定法で推定し，残差<span class="math notranslate nohighlight">\(\hat{u}\)</span>を取得する。</p></li>
 </ul>
 <p><strong>第２段階</strong></p>
 <ul class="simple">
@@ -1895,14 +1899,14 @@ y=\beta_0+\beta_1x+\beta_2w+u
 <ul>
 <li><p><span class="math notranslate nohighlight">\(\text{H}_0:\)</span> 全ての操作変数は妥当である（<span class="math notranslate nohighlight">\(\hat{u}\)</span>は全ての操作変数と相関性がなく外生的である）。</p></li>
 <li><p><span class="math notranslate nohighlight">\(\text{H}_A:\)</span> <span class="math notranslate nohighlight">\(\text{H}_0\)</span>は成立しない（少なくとも１つの操作変数は<span class="math notranslate nohighlight">\(\hat{u}\)</span>と相関する）。</p></li>
-<li><p>上の例では，操作変数の数は<code class="docutils literal notranslate"><span class="pre">2</span></code>であり内生変数の数は<code class="docutils literal notranslate"><span class="pre">1</span></code>であるため<span class="math notranslate nohighlight">\(q=2-1=1\)</span>の過剰識別制約があると考える。</p></li>
+<li><p>上の例では，操作変数の数は<code class="docutils literal notranslate"><span class="pre">2</span></code>であり内生変数の数は<code class="docutils literal notranslate"><span class="pre">1</span></code>であるため<span class="math notranslate nohighlight">\(q=2-1=1\)</span>の<strong>過剰識別制約</strong>があると考える。</p></li>
 </ul>
 </li>
 <li><p><span class="math notranslate nohighlight">\(\hat{u}\)</span>を被説明変数として全ての外生変数と操作変数に対してOLS推定し，決定係数<span class="math notranslate nohighlight">\(R^2\)</span>を計算する。</p></li>
 <li><p><span class="math notranslate nohighlight">\(LM\)</span>統計量 <span class="math notranslate nohighlight">\(=nR^2\)</span></p>
 <ul>
 <li><p><span class="math notranslate nohighlight">\(nR^2\sim\chi(q)\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(q&gt;1\)</span>は操作変数の数と内生的説明変数の差</p></li>
+<li><p><span class="math notranslate nohighlight">\(q&gt;1\)</span>は操作変数の数と内生変数の差</p></li>
 <li><p><span class="math notranslate nohighlight">\(n\)</span>は標本の大きさ</p></li>
 </ul>
 </li>
@@ -1913,7 +1917,7 @@ y=\beta_0+\beta_1x+\beta_2w+u
 <li><p>しかしどの操作変数が内生的かは分からない。</p></li>
 </ul>
 <hr class="docutils" />
-<p>上で考えたケース２を使って確かめる。</p>
+<p>上で考えたケース２を使って確かめてみよう。</p>
 </section>
 <section id="id28">
 <h3>「手計算」<a class="headerlink" href="#id28" title="Link to this heading">#</a></h3>
@@ -1964,7 +1968,7 @@ H0: The model is not overidentified.
 Statistic: 0.3781
 P-value: 0.5386
 Distributed: chi2(1)
-WaldTestStatistic, id: 0x1183ff2c0
+WaldTestStatistic, id: 0x135c28d10
 </pre></div>
 </div>
 </div>
@@ -1979,7 +1983,7 @@ WaldTestStatistic, id: 0x1183ff2c0
 <ul>
 <li><p>供給関数</p>
 <div class="math notranslate nohighlight" id="equation-eq-19-12">
-<span class="eqno">(16)<a class="headerlink" href="#equation-eq-19-12" title="Link to this equation">#</a></span>\[
+<span class="eqno">(17)<a class="headerlink" href="#equation-eq-19-12" title="Link to this equation">#</a></span>\[
     L = s_0+s_1 W + s_2 X_s + u_s
     \]</div>
 <ul class="simple">
@@ -1990,7 +1994,7 @@ WaldTestStatistic, id: 0x1183ff2c0
 </li>
 <li><p>需要関数</p>
 <div class="math notranslate nohighlight" id="equation-eq-19-13">
-<span class="eqno">(17)<a class="headerlink" href="#equation-eq-19-13" title="Link to this equation">#</a></span>\[
+<span class="eqno">(18)<a class="headerlink" href="#equation-eq-19-13" title="Link to this equation">#</a></span>\[
     W = d_0+d_1 L + d_2 X_d + u_d
     \]</div>
 <ul class="simple">
@@ -2010,23 +2014,23 @@ WaldTestStatistic, id: 0x1183ff2c0
 <section id="id32">
 <h3><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定法の適用<a class="headerlink" href="#id32" title="Link to this heading">#</a></h3>
 <p>同時性バイアスは<code class="docutils literal notranslate"><span class="pre">IV</span></code>推定法で対処可能である。考え方は簡単である。</p>
-<p>供給曲線式<a class="reference internal" href="#equation-eq-19-12">(16)</a>の推定</p>
+<p>供給曲線式<a class="reference internal" href="#equation-eq-19-12">(17)</a>の推定</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(W\)</span>の操作変数として<span class="math notranslate nohighlight">\(X_d\)</span>を使う。<span class="math notranslate nohighlight">\(X_d\)</span>は操作変数の３つの条件を満たす。</p>
 <ul>
-<li><p>式<a class="reference internal" href="#equation-eq-19-12">(16)</a>にない</p></li>
+<li><p>式<a class="reference internal" href="#equation-eq-19-12">(17)</a>にない</p></li>
 <li><p><span class="math notranslate nohighlight">\(\text{Cov}(X_d,u_s)=0\)</span>（相関性の仮定から）</p></li>
-<li><p><span class="math notranslate nohighlight">\(\text{Cov}(X_d,W)\neq 0\)</span>（式<a class="reference internal" href="#equation-eq-19-13">(17)</a>から）</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{Cov}(X_d,W)\neq 0\)</span>（式<a class="reference internal" href="#equation-eq-19-13">(18)</a>から）</p></li>
 </ul>
 </li>
 </ul>
-<p>供給曲線式<a class="reference internal" href="#equation-eq-19-13">(17)</a>の推定</p>
+<p>供給曲線式<a class="reference internal" href="#equation-eq-19-13">(18)</a>の推定</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(L\)</span>の操作変数として<span class="math notranslate nohighlight">\(X_s\)</span>を使う。<span class="math notranslate nohighlight">\(X_s\)</span>は操作変数の３つの条件を満たす。</p>
 <ul>
-<li><p>式<a class="reference internal" href="#equation-eq-19-13">(17)</a>にない</p></li>
+<li><p>式<a class="reference internal" href="#equation-eq-19-13">(18)</a>にない</p></li>
 <li><p><span class="math notranslate nohighlight">\(\text{Cov}(X_s,u_d)=0\)</span>（相関性の仮定から）</p></li>
-<li><p><span class="math notranslate nohighlight">\(\text{Cov}(X_s,L)\neq 0\)</span>（式<a class="reference internal" href="#equation-eq-19-12">(16)</a>から）</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{Cov}(X_s,L)\neq 0\)</span>（式<a class="reference internal" href="#equation-eq-19-12">(17)</a>から）</p></li>
 </ul>
 </li>
 </ul>
@@ -2191,12 +2195,12 @@ hours      -5.655e-05  4.353e-05    -1.2992     0.1939     -0.0001   2.876e-05
 <p>ここではシミュレーションを通して，測定誤差バイアスがある場合でもIV推定法を使うことで一致性を満たす推定量を得ることが可能であることを示す。</p>
 <p>次の母集団回帰式を考えよう。</p>
 <div class="math notranslate nohighlight" id="equation-eq-19-14">
-<span class="eqno">(18)<a class="headerlink" href="#equation-eq-19-14" title="Link to this equation">#</a></span>\[
+<span class="eqno">(19)<a class="headerlink" href="#equation-eq-19-14" title="Link to this equation">#</a></span>\[
 y=\beta_0+\beta_1 x^* + \eta
 \]</div>
 <p>ここで，被説明変数<span class="math notranslate nohighlight">\(y\)</span>は正確に測定できるが，説明変数<span class="math notranslate nohighlight">\(x^*\)</span>は以下の式に従って測定される仮定する。</p>
 <div class="math notranslate nohighlight" id="equation-eq-19-15">
-<span class="eqno">(19)<a class="headerlink" href="#equation-eq-19-15" title="Link to this equation">#</a></span>\[
+<span class="eqno">(20)<a class="headerlink" href="#equation-eq-19-15" title="Link to this equation">#</a></span>\[
 x=x^*+e
 \]</div>
 <ul class="simple">
@@ -2212,7 +2216,7 @@ x=x^*+e
 <li><p>次式をOLS推定する場合，<span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>は不偏性・一致性を満たさない。</p></li>
 </ul>
 <div class="math notranslate nohighlight" id="equation-eq-19-16">
-<span class="eqno">(20)<a class="headerlink" href="#equation-eq-19-16" title="Link to this equation">#</a></span>\[
+<span class="eqno">(21)<a class="headerlink" href="#equation-eq-19-16" title="Link to this equation">#</a></span>\[
 y=\beta_0+\beta_1 x + u,\qquad u=\eta-\beta e
 \]</div>
 <p>（理由）</p>
@@ -2228,7 +2232,7 @@ y=\beta_0+\beta_1 x + u,\qquad u=\eta-\beta e
 <h3><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定法の適用<a class="headerlink" href="#id39" title="Link to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">IV</span></code>推定法での対処方法を考える。<span class="math notranslate nohighlight">\(x^*\)</span>を測定する変数<span class="math notranslate nohighlight">\(z\)</span>があるとする。</p>
 <div class="math notranslate nohighlight" id="equation-eq-19-17">
-<span class="eqno">(21)<a class="headerlink" href="#equation-eq-19-17" title="Link to this equation">#</a></span>\[
+<span class="eqno">(22)<a class="headerlink" href="#equation-eq-19-17" title="Link to this equation">#</a></span>\[
 z=x^*+v
 \]</div>
 <p><span class="math notranslate nohighlight">\(v\sim\text{iid}(0,\sigma)\)</span>は誤差であり，<span class="math notranslate nohighlight">\(\text{iid}\)</span>は独立同一分布を意味する。</p>
@@ -2255,7 +2259,7 @@ z=x^*+v
 <ul>
 <li><p>単回帰分析</p>
 <div class="math notranslate nohighlight" id="equation-eq-19-18">
-<span class="eqno">(22)<a class="headerlink" href="#equation-eq-19-18" title="Link to this equation">#</a></span>\[
+<span class="eqno">(23)<a class="headerlink" href="#equation-eq-19-18" title="Link to this equation">#</a></span>\[
     y=\beta_0 + \beta_1 x + u
     \]</div>
 </li>
@@ -2354,7 +2358,7 @@ z=x^*+v
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8bb5a67698c8ccfc43ecc1649e1fc1bc6bffc550115cb9bab8e1a297ab43e415.png" src="_images/8bb5a67698c8ccfc43ecc1649e1fc1bc6bffc550115cb9bab8e1a297ab43e415.png" />
+<img alt="_images/bf4abdb1383f7572322afc9f1016636d7b5fe586798c6cbec1c2de110a67e3d4.png" src="_images/bf4abdb1383f7572322afc9f1016636d7b5fe586798c6cbec1c2de110a67e3d4.png" />
 </div>
 </div>
 <ul class="simple">
