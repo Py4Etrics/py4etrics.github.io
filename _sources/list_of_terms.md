@@ -76,6 +76,6 @@ kernelspec:
 : $\hat{\beta}_0$, $\hat{\beta}_0$はデータを使って計算した推定量
 : $i=1,2,...n$（$n$は標本の大きさ）
 
-[統計用語の基礎知識（日本統計協会）](https://www.jstat.or.jp/basic_knowledge/)
+[統計用語の基礎知識（日本統計協会）](https://web.archive.org/web/20240226195555/http://www.jstat.or.jp/basic_knowledge/)
 
 [統計分類・用語（e-Stat）](https://www.e-stat.go.jp/classifications/terms)

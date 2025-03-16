@@ -16,22 +16,20 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
@@ -39,11 +37,10 @@
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/myadmonitions.css?v=372cf325" />
   
-  <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -84,7 +81,6 @@
     <link rel="prev" title="重回帰分析" href="9_Multiple_Regression.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -100,8 +96,19 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -109,6 +116,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -116,8 +124,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -133,8 +141,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -164,11 +171,15 @@
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Pythonの学習</span></p>
@@ -216,14 +227,9 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -384,16 +390,24 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
+  </button>
+`);
+</script>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -594,8 +608,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>決定係数が高いケース: 0.909
-決定係数が高いケース: 0.418
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>決定係数が高いケース: 0.787
+決定係数が高いケース: 0.606
 </pre></div>
 </div>
 </div>
@@ -632,7 +646,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b984bec9817d8600aba564e22a7a4a83d93bc75d1bf2a2b114b3834a51b11a25.png" src="_images/b984bec9817d8600aba564e22a7a4a83d93bc75d1bf2a2b114b3834a51b11a25.png" />
+<img alt="_images/e4f2e37e84d4a5d0bda0abe9d0754b358355ed21ed9aa24ff181c65a528786ce.png" src="_images/e4f2e37e84d4a5d0bda0abe9d0754b358355ed21ed9aa24ff181c65a528786ce.png" />
 </div>
 </div>
 <p>回帰直線のフィット感ははっきりと決定係数の値に現れている。</p>
@@ -665,7 +679,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3da93df4c937534728c338a1bdcd9b547ab7bd394379f243c1295a176b4c6cb8.png" src="_images/3da93df4c937534728c338a1bdcd9b547ab7bd394379f243c1295a176b4c6cb8.png" />
+<img alt="_images/95c621a0bbec5a2921abbb4ade0583ead0cc8d082af297a53653237347f26ad1.png" src="_images/95c621a0bbec5a2921abbb4ade0583ead0cc8d082af297a53653237347f26ad1.png" />
 </div>
 </div>
 <p>ここでも決定係数の値との関係がハッキリとわかる。</p>
@@ -698,7 +712,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/98a7588872028e3ea12946a54d1a2f60ffa05154bb1fceb34b6fd3f39ae8db28.png" src="_images/98a7588872028e3ea12946a54d1a2f60ffa05154bb1fceb34b6fd3f39ae8db28.png" />
+<img alt="_images/6ff9a48be4dba712429d0b495e2616f754a0507d262bd29705c3b6489720a052.png" src="_images/6ff9a48be4dba712429d0b495e2616f754a0507d262bd29705c3b6489720a052.png" />
 </div>
 </div>
 <p>左右ともに散らばりの差はあまりない。もちろん，理由は平均<code class="docutils literal notranslate"><span class="pre">0</span></code>，分散<code class="docutils literal notranslate"><span class="pre">1</span></code>になるように「標準化」されているためである。</p>
@@ -747,7 +761,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/357fb867bca9e7aab2e411657136b2c827d348db1669c97fe94a5ee67b841ce9.png" src="_images/357fb867bca9e7aab2e411657136b2c827d348db1669c97fe94a5ee67b841ce9.png" />
+<img alt="_images/2a50e0b0682c937cc41a66fdee3c035005f5987d0e823fd3c290db020cf0881f.png" src="_images/2a50e0b0682c937cc41a66fdee3c035005f5987d0e823fd3c290db020cf0881f.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">0</span></code>の周りに均等に分散しているのが確認できる。</p>
@@ -760,7 +774,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e9bf62227897802e2031889302a2a55a0fabae57b27387c04cbe4972bc565e7c.png" src="_images/e9bf62227897802e2031889302a2a55a0fabae57b27387c04cbe4972bc565e7c.png" />
+<img alt="_images/588d5af9c3e435f8c70658fe35b0d47297fee9a2d746be3b5ad7f6c1c8078056.png" src="_images/588d5af9c3e435f8c70658fe35b0d47297fee9a2d746be3b5ad7f6c1c8078056.png" />
 </div>
 </div>
 <p>観測値の間隔は少し広がっているが，シミュレーションによっては<span class="math notranslate nohighlight">\(n=2000\)</span>と比べて大きな変化は見られない場合もあれば，「外れ値」が気になる場合もあるかも知れない。</p>
@@ -773,7 +787,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2e8b4a7d86114c6280698163f07026377000eb4e17aa0a545da5dd7a43a75ade.png" src="_images/2e8b4a7d86114c6280698163f07026377000eb4e17aa0a545da5dd7a43a75ade.png" />
+<img alt="_images/8acd991beb32d509360b4227f5886e34d4f7d65644af192816bd91b10f788d24.png" src="_images/8acd991beb32d509360b4227f5886e34d4f7d65644af192816bd91b10f788d24.png" />
 </div>
 </div>
 <p>さらに隙間が広くなっている。シミュレーションによっては，少し偏りがあるように見える場合も発生するため，上の例と比べると，GM仮定1,4,5に関して自信を持って判断しづらくなる。</p>
@@ -786,7 +800,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/151d721cd2e291ad12c74790df01d3a71e63b1c767ad87f6f29fdb4e22953b25.png" src="_images/151d721cd2e291ad12c74790df01d3a71e63b1c767ad87f6f29fdb4e22953b25.png" />
+<img alt="_images/03b43dedab63fd4b89d4d7752d5d1000a37edecc60db2bb224e57a00589e7b5f.png" src="_images/03b43dedab63fd4b89d4d7752d5d1000a37edecc60db2bb224e57a00589e7b5f.png" />
 </div>
 </div>
 <p>正規分布と分かって眺めるとそう見えるかも知れないが，実際の実証分析を行う上でこの図だけでGM仮定1,4,5が満たされているかどうかを判断するのは難しい。</p>
@@ -799,7 +813,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d344fb4bfd5bd3bbd9bef0e28d2950afde665b835b89110ceb5ee58a6b675dca.png" src="_images/d344fb4bfd5bd3bbd9bef0e28d2950afde665b835b89110ceb5ee58a6b675dca.png" />
+<img alt="_images/d0999343494f262ef7411b4af3ac8e23a195abefa376b080666762d8441d3875.png" src="_images/d0999343494f262ef7411b4af3ac8e23a195abefa376b080666762d8441d3875.png" />
 </div>
 </div>
 <p>標本の大きさが小さい場合，観測数が<code class="docutils literal notranslate"><span class="pre">10</span></code>少なくなると図が大きく違うように見える。</p>
@@ -851,7 +865,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1ada3851adc47c0ceae8407bdb1616525df25d7f9ff653bf26224712d47e9b6a.png" src="_images/1ada3851adc47c0ceae8407bdb1616525df25d7f9ff653bf26224712d47e9b6a.png" />
+<img alt="_images/852a8be9c6bebdeb50ae815b6bba176867cdf15895abe5253d28115886212364.png" src="_images/852a8be9c6bebdeb50ae815b6bba176867cdf15895abe5253d28115886212364.png" />
 </div>
 </div>
 <p>回帰分析結果の「健康状態」を診断する上でこの図は最もよく使われる。この図について以下の点を覚えておこう。</p>
@@ -887,7 +901,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3cd351625a76eb2325c906343d18c46cef132a72b3de561771a50f74de64a90d.png" src="_images/3cd351625a76eb2325c906343d18c46cef132a72b3de561771a50f74de64a90d.png" />
+<img alt="_images/d08c69367c5d2f54da1fe3bddb30b2029eb28812bf00b409bec83bbd2efca2ee.png" src="_images/d08c69367c5d2f54da1fe3bddb30b2029eb28812bf00b409bec83bbd2efca2ee.png" />
 </div>
 </div>
 </section>
@@ -919,7 +933,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/31a3ea120c2bb1661ccba6dd27176a0bb0a25938526d06973f9f10f42472baea.png" src="_images/31a3ea120c2bb1661ccba6dd27176a0bb0a25938526d06973f9f10f42472baea.png" />
+<img alt="_images/d45053c8087ab94e440916b4148b075c0afd1bd18352068ff43b2482073f874b.png" src="_images/d45053c8087ab94e440916b4148b075c0afd1bd18352068ff43b2482073f874b.png" />
 </div>
 </div>
 </section>
@@ -978,7 +992,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/979a7c0aa07d2e6128ac5a589608c05c97e6883e056ead3a39fb62d94e80a21a.png" src="_images/979a7c0aa07d2e6128ac5a589608c05c97e6883e056ead3a39fb62d94e80a21a.png" />
+<img alt="_images/a891fa0b27162b4ae50b4e9b4ce87c5724a04c0da75b9d59107084162a6eb7cd.png" src="_images/a891fa0b27162b4ae50b4e9b4ce87c5724a04c0da75b9d59107084162a6eb7cd.png" />
 </div>
 </div>
 </section>
@@ -996,7 +1010,7 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 800x700 with 0 Axes&gt;
 </pre></div>
 </div>
-<img alt="_images/e77e2cb38dab8a3ad8b8fc3e64ad156ac2409711f37bca0e328ddd8882c371de.png" src="_images/e77e2cb38dab8a3ad8b8fc3e64ad156ac2409711f37bca0e328ddd8882c371de.png" />
+<img alt="_images/a410d34ed418efe1af84547e9a749019d2b2fb7e84af7f42b2f9406c32fddf96.png" src="_images/a410d34ed418efe1af84547e9a749019d2b2fb7e84af7f42b2f9406c32fddf96.png" />
 </div>
 </div>
 </section>
@@ -1022,7 +1036,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f69968349c4a7da536fb70dac452d3d72f4c5a25a3e8fc1c391af257bb943d99.png" src="_images/f69968349c4a7da536fb70dac452d3d72f4c5a25a3e8fc1c391af257bb943d99.png" />
+<img alt="_images/3a3c9e4ec2d653a3d8d6759d89ba0b0d307bed525a37535c46abd26537c460d0.png" src="_images/3a3c9e4ec2d653a3d8d6759d89ba0b0d307bed525a37535c46abd26537c460d0.png" />
 </div>
 </div>
 </section>
@@ -1065,7 +1079,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4ad3533b857d12e0aed91eacd62e68b35cb626a9ee4b1210de184695aac43f29.png" src="_images/4ad3533b857d12e0aed91eacd62e68b35cb626a9ee4b1210de184695aac43f29.png" />
+<img alt="_images/05d8b6dbf77e81cf1cf96838ed3c4a4197d1ee55af3814e064c4093f5f395ddc.png" src="_images/05d8b6dbf77e81cf1cf96838ed3c4a4197d1ee55af3814e064c4093f5f395ddc.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1081,7 +1095,7 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 800x700 with 0 Axes&gt;
 </pre></div>
 </div>
-<img alt="_images/0855842c7b484cfc4ed74fafd26dbde7fb705d2105dd6ae9d2168bcd0c068d82.png" src="_images/0855842c7b484cfc4ed74fafd26dbde7fb705d2105dd6ae9d2168bcd0c068d82.png" />
+<img alt="_images/ddc502b92a52abd69010f318679d7a08bafbdd5d4d91dc04f86695b413f9f40f.png" src="_images/ddc502b92a52abd69010f318679d7a08bafbdd5d4d91dc04f86695b413f9f40f.png" />
 </div>
 </div>
 </section>
@@ -1121,7 +1135,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/48cca7c47bed9f1d156dc439f33fbdfb6a4a24e5663210f0d2d6adf4bb0b064e.png" src="_images/48cca7c47bed9f1d156dc439f33fbdfb6a4a24e5663210f0d2d6adf4bb0b064e.png" />
+<img alt="_images/4708ae3cab2f407a2ba1ff353b13aeae1d0df9a173fcf3c5c627831ba30c7479.png" src="_images/4708ae3cab2f407a2ba1ff353b13aeae1d0df9a173fcf3c5c627831ba30c7479.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1137,7 +1151,7 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 800x700 with 0 Axes&gt;
 </pre></div>
 </div>
-<img alt="_images/31167ad7159e807dd737f966ed4697a20f3263dbe16305ed242277c766ca7110.png" src="_images/31167ad7159e807dd737f966ed4697a20f3263dbe16305ed242277c766ca7110.png" />
+<img alt="_images/56781602fb57c82610a1c8d2f72933d876a5b1b6822e1aa2d7bb4850ab181572.png" src="_images/56781602fb57c82610a1c8d2f72933d876a5b1b6822e1aa2d7bb4850ab181572.png" />
 </div>
 </div>
 </section>
@@ -1187,7 +1201,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/56815e88d6e6f794aa675187657067de09125ec9e678498db6e3298b32cfadd8.png" src="_images/56815e88d6e6f794aa675187657067de09125ec9e678498db6e3298b32cfadd8.png" />
+<img alt="_images/af2e3674e246b4ed4143f081c34bdf2af409bbc97a14f3af28636909b9c91733.png" src="_images/af2e3674e246b4ed4143f081c34bdf2af409bbc97a14f3af28636909b9c91733.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1203,7 +1217,7 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 800x700 with 0 Axes&gt;
 </pre></div>
 </div>
-<img alt="_images/adec8ee5ad460d83d33c08ba04f31292cb2efc99986a43f6c8665293538ce6ef.png" src="_images/adec8ee5ad460d83d33c08ba04f31292cb2efc99986a43f6c8665293538ce6ef.png" />
+<img alt="_images/b1cc47a8629f6869490ae6bcc9ebec7d0fd2274dc085883d5cebc71c1d2981e7.png" src="_images/b1cc47a8629f6869490ae6bcc9ebec7d0fd2274dc085883d5cebc71c1d2981e7.png" />
 </div>
 </div>
 </section>
@@ -1256,7 +1270,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7726eec13596d66867bbc6fa5bf8b6ea37c7f73856d875acb1c3b0d772cfd1ef.png" src="_images/7726eec13596d66867bbc6fa5bf8b6ea37c7f73856d875acb1c3b0d772cfd1ef.png" />
+<img alt="_images/09255eef8179d09a5b942cf03ba4fa7708e5438c553ca142600eed25f52e2332.png" src="_images/09255eef8179d09a5b942cf03ba4fa7708e5438c553ca142600eed25f52e2332.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">lmdiag</span></code>パッケージを使う。</p>
@@ -1272,7 +1286,7 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 800x700 with 0 Axes&gt;
 </pre></div>
 </div>
-<img alt="_images/7f8e8b6e966a1305d2b1c5555a9d70adc39b64c2432777ab9c746cf9e35459e9.png" src="_images/7f8e8b6e966a1305d2b1c5555a9d70adc39b64c2432777ab9c746cf9e35459e9.png" />
+<img alt="_images/16b9b46f537f1bcd6e4aa4fbbf010c29f57d1c6cba02f682247061c35ac5d5da.png" src="_images/16b9b46f537f1bcd6e4aa4fbbf010c29f57d1c6cba02f682247061c35ac5d5da.png" />
 </div>
 </div>
 </section>
@@ -1315,7 +1329,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1e73b25482ef68d5640693448f2da039f97539350989055d2273741aea307a05.png" src="_images/1e73b25482ef68d5640693448f2da039f97539350989055d2273741aea307a05.png" />
+<img alt="_images/f42cb473c7c55e3adffb8299680474980d6f54aae678e4212c2c21a0d62433c5.png" src="_images/f42cb473c7c55e3adffb8299680474980d6f54aae678e4212c2c21a0d62433c5.png" />
 </div>
 </div>
 <p>外れ値（赤の観測値）がない場合の回帰診断</p>
@@ -1331,7 +1345,7 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 800x700 with 0 Axes&gt;
 </pre></div>
 </div>
-<img alt="_images/dde3694e0a2ee4f96561c5fe36ba5c6641f61912e1ab46f1101277cc70adbc27.png" src="_images/dde3694e0a2ee4f96561c5fe36ba5c6641f61912e1ab46f1101277cc70adbc27.png" />
+<img alt="_images/a0aa8f3960612577c25f8fed9def64aa58001be4eefc5975cf331283d14819b5.png" src="_images/a0aa8f3960612577c25f8fed9def64aa58001be4eefc5975cf331283d14819b5.png" />
 </div>
 </div>
 <p>外れ値（赤の観測値）がある場合の回帰診断</p>
@@ -1347,7 +1361,7 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 800x700 with 0 Axes&gt;
 </pre></div>
 </div>
-<img alt="_images/6c7a30459ab38dc4c45e2cd5631dc9bf1447e044ffa6cea587a7917fbb5ecfee.png" src="_images/6c7a30459ab38dc4c45e2cd5631dc9bf1447e044ffa6cea587a7917fbb5ecfee.png" />
+<img alt="_images/e36c0e218cd04beabfad576fd862a68a4c9a6c92abfe73e2c3a923feaf3a2ac2.png" src="_images/e36c0e218cd04beabfad576fd862a68a4c9a6c92abfe73e2c3a923feaf3a2ac2.png" />
 </div>
 </div>
 <p>観測値<code class="docutils literal notranslate"><span class="pre">20</span></code>が非常に影響力が高いことが分かる。その観測値を取り出すには以下のようにする。</p>
@@ -1427,8 +1441,7 @@ Name: 20, dtype: float64
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -1515,8 +1528,8 @@ By 春山 鉄源  Tetsugen HARUYAMA
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

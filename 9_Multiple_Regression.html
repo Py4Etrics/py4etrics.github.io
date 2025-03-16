@@ -16,22 +16,20 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
@@ -39,11 +37,10 @@
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/myadmonitions.css?v=372cf325" />
   
-  <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -84,7 +81,6 @@
     <link rel="prev" title="単回帰分析" href="8_Simple_Regression.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -100,8 +96,19 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -109,6 +116,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -116,8 +124,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -133,8 +141,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -164,11 +171,15 @@
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Pythonの学習</span></p>
@@ -216,14 +227,9 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -384,16 +390,24 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
+  </button>
+`);
+</script>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -605,8 +619,8 @@ Henry Farber when he and I were colleagues at MIT in 1988.
 Dep. Variable:               wage_log   R-squared:                       0.316
 Model:                            OLS   Adj. R-squared:                  0.312
 Method:                 Least Squares   F-statistic:                     80.39
-Date:                Tue, 21 Jan 2025   Prob (F-statistic):           9.13e-43
-Time:                        05:24:42   Log-Likelihood:                -313.55
+Date:                Sun, 16 Mar 2025   Prob (F-statistic):           9.13e-43
+Time:                        10:06:38   Log-Likelihood:                -313.55
 No. Observations:                 526   AIC:                             635.1
 Df Residuals:                     522   BIC:                             652.2
 Df Model:                           3                                         
@@ -1369,7 +1383,7 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.15026442, 2.22540656, 3.01649465])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.19752067, 1.96660545, 3.02181842])
 </pre></div>
 </div>
 </div>
@@ -1391,9 +1405,9 @@ u_n
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.150264
-X1           2.225407
-X2           3.016495
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.197521
+X1           1.966605
+X2           3.021818
 dtype: float64
 </pre></div>
 </div>
@@ -1424,7 +1438,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>32.81695200059097
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>26.9213501342169
 </pre></div>
 </div>
 </div>
@@ -1437,7 +1451,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>32.81695200059096
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>26.921350134216897
 </pre></div>
 </div>
 </div>
@@ -1451,7 +1465,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.2154426666885545
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9970870420080333
 </pre></div>
 </div>
 </div>
@@ -1464,7 +1478,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.215442666688554
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9970870420080332
 </pre></div>
 </div>
 </div>
@@ -1485,7 +1499,7 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.54395358, 0.0986718 , 0.07467763])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.55696653, 0.08962455, 0.08498188])
 </pre></div>
 </div>
 </div>
@@ -1498,9 +1512,9 @@ e = Y-X\hat{B},\qquad
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.543954
-X1           0.098672
-X2           0.074678
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.556967
+X1           0.089625
+X2           0.084982
 dtype: float64
 </pre></div>
 </div>
@@ -1587,9 +1601,9 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 1.0012690856715174 
-b1: 2.0000435345918213 
-b1: 2.9998134395285043
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b0: 0.9991000060114266 
+b1: 2.0000391039924805 
+b1: 3.0003061830081896
 </pre></div>
 </div>
 </div>
@@ -1605,7 +1619,7 @@ b1: 2.9998134395285043
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/dc6807738f03e16d17ca2594b00c1862245e0a4ff2c1722728d95d5d4f0b70ef.png" src="_images/dc6807738f03e16d17ca2594b00c1862245e0a4ff2c1722728d95d5d4f0b70ef.png" />
+<img alt="_images/2817dbaeac8c4c9ee18b2b8c0e84506e10fe4ce5c024f830aabc794b9a72ed88.png" src="_images/2817dbaeac8c4c9ee18b2b8c0e84506e10fe4ce5c024f830aabc794b9a72ed88.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">b1</span></code>の真の値<code class="docutils literal notranslate"><span class="pre">2.0</span></code>を中心に概ね左右対象に分布していることが分かる。</p>
@@ -1622,7 +1636,7 @@ b1: 2.9998134395285043
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5b29d0166fac6a4c5181758554c3d692c88c320d7f61077ffd7a40acc3edbc54.png" src="_images/5b29d0166fac6a4c5181758554c3d692c88c320d7f61077ffd7a40acc3edbc54.png" />
+<img alt="_images/eeb235d0796a7770649d0b9d3a0d76bf171495c3e35a616d5b1d91ba77d69214.png" src="_images/eeb235d0796a7770649d0b9d3a0d76bf171495c3e35a616d5b1d91ba77d69214.png" />
 </div>
 </div>
 <p>２つの図を重ねる。</p>
@@ -1640,7 +1654,7 @@ b1: 2.9998134395285043
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b8dc95fd079d4f7e6d7514c0b806376fecf3d429e6586930350a2f67dc3c8817.png" src="_images/b8dc95fd079d4f7e6d7514c0b806376fecf3d429e6586930350a2f67dc3c8817.png" />
+<img alt="_images/05697748327a850bfb6ccafc8f65f70e41373cc1d781189683d788563df17fe1.png" src="_images/05697748327a850bfb6ccafc8f65f70e41373cc1d781189683d788563df17fe1.png" />
 </div>
 </div>
 <p>＜Give it a try!＞</p>
@@ -1881,7 +1895,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4c69914c9899e73e545d3ee696654dd4556f25a4d93c5bfef540e5ccc6f69377.png" src="_images/4c69914c9899e73e545d3ee696654dd4556f25a4d93c5bfef540e5ccc6f69377.png" />
+<img alt="_images/baeda4e74e6b65282c40ddc923f84e7f33194ebb3195e57496a295cfac8d7415.png" src="_images/baeda4e74e6b65282c40ddc923f84e7f33194ebb3195e57496a295cfac8d7415.png" />
 </div>
 </div>
 <p>多重共線性が強いと推定値の分布は，真の値（<span class="math notranslate nohighlight">\(\beta_1=\)</span>
@@ -1893,7 +1907,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.038240437150289464, 0.20120045839169914)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.03851454067745458, 0.20194750872294107)
 </pre></div>
 </div>
 </div>
@@ -1967,7 +1981,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5e77e366e801d5e6c25b5920c1de2f30c7c3cf5a4b7b2af702cc969ee47120ea.png" src="_images/5e77e366e801d5e6c25b5920c1de2f30c7c3cf5a4b7b2af702cc969ee47120ea.png" />
+<img alt="_images/91adec1193faa416a7622ee2b5b3ce67ec41a6347872f0c38653def237694aaa.png" src="_images/91adec1193faa416a7622ee2b5b3ce67ec41a6347872f0c38653def237694aaa.png" />
 </div>
 </details>
 </div>
@@ -1987,7 +2001,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19194830505085728, 0.44344193280552696)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.19597190866505163, 0.43952111222298906)
 </pre></div>
 </div>
 </div>
@@ -2012,7 +2026,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/29c190f88afb65096b20507de84edaf237568ab11b5bbf2857a8bad2cb7e854e.png" src="_images/29c190f88afb65096b20507de84edaf237568ab11b5bbf2857a8bad2cb7e854e.png" />
+<img alt="_images/0854c2a16a47b29a751f9a5c67f1bbfc1dfbc836fb566106d6a15e7d4b3c6721.png" src="_images/0854c2a16a47b29a751f9a5c67f1bbfc1dfbc836fb566106d6a15e7d4b3c6721.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">pandas</span></code>の<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>や<code class="docutils literal notranslate"><span class="pre">Series</span></code>には図を作成するメソッド<code class="docutils literal notranslate"><span class="pre">plot()</span></code>が用意されている（裏では<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>が動いている）。例えば，<code class="docutils literal notranslate"><span class="pre">wage1</span></code>にある<code class="docutils literal notranslate"><span class="pre">educ</span></code>のヒストグラムであれば次のコードで図示することができる。</p>
@@ -2042,7 +2056,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a4d2fed519644474b33d25f98b1ec8c2c482a0fcf14d7bdfb63510924ed63ac9.png" src="_images/a4d2fed519644474b33d25f98b1ec8c2c482a0fcf14d7bdfb63510924ed63ac9.png" />
+<img alt="_images/8f3881459244b6bd157c90caa601f126d86aac7059de1d7ca809af794a6ac1cc.png" src="_images/8f3881459244b6bd157c90caa601f126d86aac7059de1d7ca809af794a6ac1cc.png" />
 </div>
 </div>
 <p>横軸と縦軸のラベルを確認すること。対角線上はそれぞれの変数のヒストグラム，対角線以外の図は縦横のペアの変数の散布図となっており，相関度をある程度目視で確認できる。</p>
@@ -2060,7 +2074,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/df0bdf75a29e919c30cd457748770bdd2d7fc884fbcb9226bddd55d5807bd9a8.png" src="_images/df0bdf75a29e919c30cd457748770bdd2d7fc884fbcb9226bddd55d5807bd9a8.png" />
+<img alt="_images/04488b0e7d353d6d7f104e9f201b378f3ba70b6436b1fd88c93fc631ef08aad0.png" src="_images/04488b0e7d353d6d7f104e9f201b378f3ba70b6436b1fd88c93fc631ef08aad0.png" />
 </div>
 </div>
 <p>次に相関係数を簡単に計算する方法を紹介する。<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>のメソッド<code class="docutils literal notranslate"><span class="pre">corr()</span></code>を使うと変数の相関係数を<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>として返す。</p>
@@ -2156,7 +2170,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b8a47ac137b0803b4599032b95f0b25b04bda4971c95c38fee7785589193bcc1.png" src="_images/b8a47ac137b0803b4599032b95f0b25b04bda4971c95c38fee7785589193bcc1.png" />
+<img alt="_images/44868d3c2274a9dba462018fe056f473732ec958bec73b80965477d074c40fd9.png" src="_images/44868d3c2274a9dba462018fe056f473732ec958bec73b80965477d074c40fd9.png" />
 </div>
 </div>
 <p>赤はプラス，青はマイナスを示し，色の濃淡は絶対値に連動している。ここで使った３つのオプション（設定しなくても良い）の説明する。</p>
@@ -2178,7 +2192,7 @@ exper     1.4776177726317783
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5f01e51e34f590665c92e85d3d25f2ef1ea203ae8b883598e7b59f0c115583ae.png" src="_images/5f01e51e34f590665c92e85d3d25f2ef1ea203ae8b883598e7b59f0c115583ae.png" />
+<img alt="_images/769eb0d5d855ccced1c9957ee3163f0781f0d97ab9f58afcfc79029092298761.png" src="_images/769eb0d5d855ccced1c9957ee3163f0781f0d97ab9f58afcfc79029092298761.png" />
 </div>
 </div>
 <p>図の解釈は<code class="docutils literal notranslate"><span class="pre">pandas</span></code>の場合と同じである。</p>
@@ -2254,8 +2268,7 @@ exper     1.4776177726317783
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -2352,8 +2365,8 @@ By 春山 鉄源  Tetsugen HARUYAMA
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

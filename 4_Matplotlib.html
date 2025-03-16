@@ -16,22 +16,20 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
@@ -39,11 +37,10 @@
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/myadmonitions.css?v=372cf325" />
   
-  <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -82,7 +79,6 @@
     <link rel="prev" title="Pandas" href="3_Pandas.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -98,8 +94,19 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -107,6 +114,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -114,8 +122,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -131,8 +139,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -162,11 +169,15 @@
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Pythonの学習</span></p>
@@ -214,14 +225,9 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -382,16 +388,24 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
+  </button>
+`);
+</script>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -531,7 +545,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1db73f39f48d8b23dcfc77f570e42c78f288b190728252fc0831e1412833bd47.png" src="_images/1db73f39f48d8b23dcfc77f570e42c78f288b190728252fc0831e1412833bd47.png" />
+<img alt="_images/fe7496fdd5d876e8bd8b9aad0bee3db672682c76e7327f5202f3ffaea992036d.png" src="_images/fe7496fdd5d876e8bd8b9aad0bee3db672682c76e7327f5202f3ffaea992036d.png" />
 </div>
 </div>
 <ul class="simple">
@@ -575,7 +589,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9eb15e9c26b851a96d38eede2c16733570f69c0fe3e9bdb93ddae12e686234a8.png" src="_images/9eb15e9c26b851a96d38eede2c16733570f69c0fe3e9bdb93ddae12e686234a8.png" />
+<img alt="_images/a27420329bda6ab59352167169ae866cf64c939b3237b730f0d4ce83e8dc4f4a.png" src="_images/a27420329bda6ab59352167169ae866cf64c939b3237b730f0d4ce83e8dc4f4a.png" />
 </div>
 </div>
 <p>コードをみて分かるように</p>
@@ -590,7 +604,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9eb15e9c26b851a96d38eede2c16733570f69c0fe3e9bdb93ddae12e686234a8.png" src="_images/9eb15e9c26b851a96d38eede2c16733570f69c0fe3e9bdb93ddae12e686234a8.png" />
+<img alt="_images/a27420329bda6ab59352167169ae866cf64c939b3237b730f0d4ce83e8dc4f4a.png" src="_images/a27420329bda6ab59352167169ae866cf64c939b3237b730f0d4ce83e8dc4f4a.png" />
 </div>
 </div>
 <p>上の図で何をプロットしているかを分かっている場合はこれで十分だが，論文などに使う場合は不十分である。以下では「飾り付け」をする。</p>
@@ -609,7 +623,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d6f5246ba3cdb59d1b6f70041633883919272563393d99ccb362bbb5548f3db3.png" src="_images/d6f5246ba3cdb59d1b6f70041633883919272563393d99ccb362bbb5548f3db3.png" />
+<img alt="_images/93ff535962ec835b13408a90e4a8262ab42b20091c7b09c85fc86519711f8e62.png" src="_images/93ff535962ec835b13408a90e4a8262ab42b20091c7b09c85fc86519711f8e62.png" />
 </div>
 </div>
 <p>様々なオプションが用意されている</p>
@@ -723,7 +737,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ff42bb18f46090be055096becf67c992ba2e470758b17b563b195013de8d354f.png" src="_images/ff42bb18f46090be055096becf67c992ba2e470758b17b563b195013de8d354f.png" />
+<img alt="_images/7ea268a3cd2832f9f7bdc90046327c419a948d45e8b6f3284cf95c99a6943140.png" src="_images/7ea268a3cd2832f9f7bdc90046327c419a948d45e8b6f3284cf95c99a6943140.png" />
 </div>
 </div>
 <p><strong>散布図の描画</strong></p>
@@ -736,7 +750,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/81cea8c979481d8ced9c8616aaf36622b9e4d2efa5e626880b7be307053ba306.png" src="_images/81cea8c979481d8ced9c8616aaf36622b9e4d2efa5e626880b7be307053ba306.png" />
+<img alt="_images/dcfeb41c4e1eb05d61233f0372d3cd17705c5f4ec050d115c8ec1ec8d0dc318d.png" src="_images/dcfeb41c4e1eb05d61233f0372d3cd17705c5f4ec050d115c8ec1ec8d0dc318d.png" />
 </div>
 </div>
 <p>次のコードでも同じ結果となる。</p>
@@ -749,7 +763,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/81cea8c979481d8ced9c8616aaf36622b9e4d2efa5e626880b7be307053ba306.png" src="_images/81cea8c979481d8ced9c8616aaf36622b9e4d2efa5e626880b7be307053ba306.png" />
+<img alt="_images/dcfeb41c4e1eb05d61233f0372d3cd17705c5f4ec050d115c8ec1ec8d0dc318d.png" src="_images/dcfeb41c4e1eb05d61233f0372d3cd17705c5f4ec050d115c8ec1ec8d0dc318d.png" />
 </div>
 </div>
 <p>ここで指定した<code class="docutils literal notranslate"><span class="pre">'o'</span></code>は，<code class="docutils literal notranslate"><span class="pre">marker='o',</span> <span class="pre">linestyle=''</span></code>の省略形である。例えば，<code class="docutils literal notranslate"><span class="pre">'o'</span></code>の代わりに<code class="docutils literal notranslate"><span class="pre">'o-'</span></code>として表示の変化を確かめてみよう。</p>
@@ -763,7 +777,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ce5b46679ae4deb13d7f07594cdaa7fd36f8327215c1f3a1df790251c5f6c38e.png" src="_images/ce5b46679ae4deb13d7f07594cdaa7fd36f8327215c1f3a1df790251c5f6c38e.png" />
+<img alt="_images/7ed07b139e21caed90f3e543423f793673312a958e595919c33af60fd82f7487.png" src="_images/7ed07b139e21caed90f3e543423f793673312a958e595919c33af60fd82f7487.png" />
 </div>
 </div>
 <p><strong>パイチャート</strong></p>
@@ -780,7 +794,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c92ebaf7a5f65b528d9940835721bbf4b91b6198b3c7202c78995e410029dcdb.png" src="_images/c92ebaf7a5f65b528d9940835721bbf4b91b6198b3c7202c78995e410029dcdb.png" />
+<img alt="_images/13e7bbb8a2c24c46abea3d420f86e146f5af043136344026965cec9144b0750f.png" src="_images/13e7bbb8a2c24c46abea3d420f86e146f5af043136344026965cec9144b0750f.png" />
 </div>
 </div>
 <p><strong>ボックスプロット</strong></p>
@@ -794,7 +808,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ae3029426f950a81f3dea5bf5111eb3cdeadf0480306878dcb1b6b8587840fed.png" src="_images/ae3029426f950a81f3dea5bf5111eb3cdeadf0480306878dcb1b6b8587840fed.png" />
+<img alt="_images/94a982721f6707d6a4042369eee5ed6a484bce5fbe8363c750f5c842694d450b.png" src="_images/94a982721f6707d6a4042369eee5ed6a484bce5fbe8363c750f5c842694d450b.png" />
 </div>
 </div>
 </section>
@@ -848,7 +862,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/112d9f4a5968b648637a02e42b5ae1143702807f15c8f6b0311e5a059d3dba81.png" src="_images/112d9f4a5968b648637a02e42b5ae1143702807f15c8f6b0311e5a059d3dba81.png" />
+<img alt="_images/fcf5c2ebd0b935cd0bf02916381cd1e02a1810edf0da2bde42f18a8eeecc1f1d.png" src="_images/fcf5c2ebd0b935cd0bf02916381cd1e02a1810edf0da2bde42f18a8eeecc1f1d.png" />
 </div>
 </div>
 </section>
@@ -870,7 +884,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1db73f39f48d8b23dcfc77f570e42c78f288b190728252fc0831e1412833bd47.png" src="_images/1db73f39f48d8b23dcfc77f570e42c78f288b190728252fc0831e1412833bd47.png" />
+<img alt="_images/fe7496fdd5d876e8bd8b9aad0bee3db672682c76e7327f5202f3ffaea992036d.png" src="_images/fe7496fdd5d876e8bd8b9aad0bee3db672682c76e7327f5202f3ffaea992036d.png" />
 </div>
 </div>
 <p>保存できる画像ファイルの種類には以下がある。</p>
@@ -988,8 +1002,7 @@
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -1057,8 +1070,8 @@ By 春山 鉄源  Tetsugen HARUYAMA
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
