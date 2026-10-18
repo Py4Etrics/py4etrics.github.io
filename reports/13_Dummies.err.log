@@ -1,0 +1,186 @@
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/nbclient/client.py", line 1323, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+df_c.loc[:,'chain'] = df_c['chain'].replace(
+                        {1:'Berger_King',2:'KFC',3:'Roy_Rogers',4:'Wendys'})
+
+df_c.head()
+------------------
+
+
+[31m---------------------------------------------------------------------------[39m
+[31mLossySetitemError[39m                         Traceback (most recent call last)
+[36mFile [39m[32m/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/pandas/core/indexing.py:2144[39m, in [36m_iLocIndexer._setitem_single_column[39m[34m(self, loc, value, plane_indexer)[39m
+[32m   2143[39m [38;5;28;01mtry[39;00m:
+[32m-> [39m[32m2144[39m     [30;43mself[39;49m[30;43m.[39;49m[30;43mobj[39;49m[30;43m.[39;49m[30;43m_mgr[39;49m[30;43m.[39;49m[30;43mcolumn_setitem[39;49m[30;43m([39;49m
+[32m   2145[39m [30;43m        [39;49m[30;43mloc[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mplane_indexer[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mvalue[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43minplace_only[39;49m[30;43m=[39;49m[30;43;01mTrue[39;49;00m
+[32m   2146[39m [30;43m    [39;49m[30;43m)[39;49m
+[32m   2147[39m [38;5;28;01mexcept[39;00m ([38;5;167;01mValueError[39;00m, [38;5;167;01mTypeError[39;00m, LossySetitemError) [38;5;28;01mas[39;00m exc:
+[32m   2148[39m     [38;5;66;03m# If we're setting an entire column and we can't do it inplace,[39;00m
+[32m   2149[39m     [38;5;66;03m#  then we can use value's dtype (or inferred dtype)[39;00m
+[32m   2150[39m     [38;5;66;03m#  instead of object[39;00m
+
+[36mFile [39m[32m/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/pandas/core/internals/managers.py:1539[39m, in [36mBlockManager.column_setitem[39m[34m(self, loc, idx, value, inplace_only)[39m
+[32m   1538[39m [38;5;28;01mif[39;00m inplace_only:
+[32m-> [39m[32m1539[39m     [30;43mcol_mgr[39;49m[30;43m.[39;49m[30;43msetitem_inplace[39;49m[30;43m([39;49m[30;43midx[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mvalue[39;49m[30;43m)[39;49m
+[32m   1540[39m [38;5;28;01melse[39;00m:
+
+[36mFile [39m[32m/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/pandas/core/internals/managers.py:2241[39m, in [36mSingleBlockManager.setitem_inplace[39m[34m(self, indexer, value)[39m
+[32m   2238[39m [38;5;28;01mif[39;00m [38;5;28misinstance[39m(arr, np.ndarray):
+[32m   2239[39m     [38;5;66;03m# Note: checking for ndarray instead of np.dtype means we exclude[39;00m
+[32m   2240[39m     [38;5;66;03m#  dt64/td64, which do their own validation.[39;00m
+[32m-> [39m[32m2241[39m     value = [30;43mnp_can_hold_element[39;49m[30;43m([39;49m[30;43marr[39;49m[30;43m.[39;49m[30;43mdtype[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mvalue[39;49m[30;43m)[39;49m
+[32m   2243[39m [38;5;28;01mif[39;00m [38;5;28misinstance[39m(value, np.ndarray) [38;5;129;01mand[39;00m value.ndim == [32m1[39m [38;5;129;01mand[39;00m [38;5;28mlen[39m(value) == [32m1[39m:
+[32m   2244[39m     [38;5;66;03m# NumPy 1.25 deprecation: https://github.com/numpy/numpy/pull/10615[39;00m
+
+[36mFile [39m[32m/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/pandas/core/dtypes/cast.py:1725[39m, in [36mnp_can_hold_element[39m[34m(dtype, element)[39m
+[32m   1724[39m     [38;5;66;03m# Anything other than integer we cannot hold[39;00m
+[32m-> [39m[32m1725[39m     [38;5;28;01mraise[39;00m LossySetitemError
+[32m   1726[39m [38;5;28;01mif[39;00m (
+[32m   1727[39m     dtype.kind == [33m"[39m[33mu[39m[33m"[39m
+[32m   1728[39m     [38;5;129;01mand[39;00m [38;5;28misinstance[39m(element, np.ndarray)
+[32m   1729[39m     [38;5;129;01mand[39;00m element.dtype.kind == [33m"[39m[33mi[39m[33m"[39m
+[32m   1730[39m ):
+[32m   1731[39m     [38;5;66;03m# see test_where_uint64[39;00m
+
+[31mLossySetitemError[39m: 
+
+The above exception was the direct cause of the following exception:
+
+[31mTypeError[39m                                 Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[35][39m[32m, line 1[39m
+[32m----> [39m[32m1[39m df_c.loc[:,'chain'] = df_c['chain'].replace(
+[32m      2[39m                         {[32m1[39m:[33m'Berger_King'[39m,[32m2[39m:[33m'KFC'[39m,[32m3[39m:[33m'Roy_Rogers'[39m,[32m4[39m:[33m'Wendys'[39m})
+[32m      3[39m 
+[32m      4[39m df_c.head()
+
+[36mFile [39m[32m/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/pandas/core/indexing.py:938[39m, in [36m_LocationIndexer.__setitem__[39m[34m(self, key, value)[39m
+[32m    933[39m [38;5;28mself[39m._has_valid_setitem_indexer(key)
+[32m    935[39m iloc: _iLocIndexer = (
+[32m    936[39m     cast([33m"[39m[33m_iLocIndexer[39m[33m"[39m, [38;5;28mself[39m) [38;5;28;01mif[39;00m [38;5;28mself[39m.name == [33m"[39m[33miloc[39m[33m"[39m [38;5;28;01melse[39;00m [38;5;28mself[39m.obj.iloc
+[32m    937[39m )
+[32m--> [39m[32m938[39m [30;43miloc[39;49m[30;43m.[39;49m[30;43m_setitem_with_indexer[39;49m[30;43m([39;49m[30;43mindexer[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mvalue[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mself[39;49m[30;43m.[39;49m[30;43mname[39;49m[30;43m)[39;49m
+
+[36mFile [39m[32m/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/pandas/core/indexing.py:1953[39m, in [36m_iLocIndexer._setitem_with_indexer[39m[34m(self, indexer, value, name)[39m
+[32m   1950[39m [38;5;66;03m# align and set the values[39;00m
+[32m   1951[39m [38;5;28;01mif[39;00m take_split_path:
+[32m   1952[39m     [38;5;66;03m# We have to operate column-wise[39;00m
+[32m-> [39m[32m1953[39m     [30;43mself[39;49m[30;43m.[39;49m[30;43m_setitem_with_indexer_split_path[39;49m[30;43m([39;49m[30;43mindexer[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mvalue[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mname[39;49m[30;43m)[39;49m
+[32m   1954[39m [38;5;28;01melse[39;00m:
+[32m   1955[39m     [38;5;28mself[39m._setitem_single_block(indexer, value, name)
+
+[36mFile [39m[32m/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/pandas/core/indexing.py:1997[39m, in [36m_iLocIndexer._setitem_with_indexer_split_path[39m[34m(self, indexer, value, name)[39m
+[32m   1993[39m     [38;5;28mself[39m._setitem_with_indexer_2d_value(indexer, value)
+[32m   1995[39m [38;5;28;01melif[39;00m [38;5;28mlen[39m(ilocs) == [32m1[39m [38;5;129;01mand[39;00m lplane_indexer == [38;5;28mlen[39m(value) [38;5;129;01mand[39;00m [38;5;129;01mnot[39;00m is_scalar(pi):
+[32m   1996[39m     [38;5;66;03m# We are setting multiple rows in a single column.[39;00m
+[32m-> [39m[32m1997[39m     [30;43mself[39;49m[30;43m.[39;49m[30;43m_setitem_single_column[39;49m[30;43m([39;49m[30;43milocs[39;49m[30;43m[[39;49m[30;43m0[39;49m[30;43m][39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mvalue[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mpi[39;49m[30;43m)[39;49m
+[32m   1999[39m [38;5;28;01melif[39;00m [38;5;28mlen[39m(ilocs) == [32m1[39m [38;5;129;01mand[39;00m [32m0[39m != lplane_indexer != [38;5;28mlen[39m(value):
+[32m   2000[39m     [38;5;66;03m# We are trying to set N values into M entries of a single[39;00m
+[32m   2001[39m     [38;5;66;03m#  column, which is invalid for N != M[39;00m
+[32m   2002[39m     [38;5;66;03m# Exclude zero-len for e.g. boolean masking that is all-false[39;00m
+[32m   2004[39m     [38;5;28;01mif[39;00m [38;5;28mlen[39m(value) == [32m1[39m [38;5;129;01mand[39;00m [38;5;129;01mnot[39;00m is_integer(info_axis):
+[32m   2005[39m         [38;5;66;03m# This is a case like df.iloc[:3, [1]] = [0][39;00m
+[32m   2006[39m         [38;5;66;03m#  where we treat as df.iloc[:3, 1] = 0[39;00m
+
+[36mFile [39m[32m/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/pandas/core/indexing.py:2163[39m, in [36m_iLocIndexer._setitem_single_column[39m[34m(self, loc, value, plane_indexer)[39m
+[32m   2151[39m         dtype = [38;5;28mself[39m.obj.dtypes.iloc[loc]
+[32m   2152[39m         [38;5;28;01mif[39;00m dtype [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m (np.void, [38;5;28mobject[39m) [38;5;129;01mand[39;00m [38;5;129;01mnot[39;00m [38;5;28mself[39m.obj.empty:
+[32m   2153[39m             [38;5;66;03m# - Exclude np.void, as that is a special case for expansion.[39;00m
+[32m   2154[39m             [38;5;66;03m#   We want to raise for[39;00m
+[32m   (...)[39m[32m   2161[39m             [38;5;66;03m# - Exclude empty initial object with enlargement,[39;00m
+[32m   2162[39m             [38;5;66;03m#   as then there's nothing to be inconsistent with.[39;00m
+[32m-> [39m[32m2163[39m             [38;5;28;01mraise[39;00m [38;5;167;01mTypeError[39;00m(
+[32m   2164[39m                 [33mf[39m[33m"[39m[33mInvalid value [39m[33m'[39m[38;5;132;01m{[39;00mvalue[38;5;132;01m}[39;00m[33m'[39m[33m for dtype [39m[33m'[39m[38;5;132;01m{[39;00mdtype[38;5;132;01m}[39;00m[33m'[39m[33m"[39m
+[32m   2165[39m             ) [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mexc[39;00m
+[32m   2166[39m         [38;5;28mself[39m.obj.isetitem(loc, value)
+[32m   2167[39m [38;5;28;01melse[39;00m:
+[32m   2168[39m     [38;5;66;03m# set value into the column (first attempting to operate inplace, then[39;00m
+[32m   2169[39m     [38;5;66;03m#  falling back to casting if necessary)[39;00m
+
+[31mTypeError[39m: Invalid value '['Roy_Rogers' 'Berger_King' 'Berger_King' 'Roy_Rogers' 'Berger_King'
+ 'Berger_King' 'Berger_King' 'Roy_Rogers' 'Berger_King' 'Roy_Rogers' 'KFC'
+ 'Wendys' 'KFC' 'Berger_King' 'Berger_King' 'Berger_King' 'Berger_King'
+ 'Wendys' 'Berger_King' 'Roy_Rogers' 'Berger_King' 'Berger_King'
+ 'Berger_King' 'Wendys' 'Berger_King' 'Wendys' 'Roy_Rogers' 'Berger_King'
+ 'Berger_King' 'Wendys' 'Roy_Rogers' 'Berger_King' 'Roy_Rogers' 'KFC'
+ 'KFC' 'Roy_Rogers' 'Wendys' 'Roy_Rogers' 'Berger_King' 'Berger_King'
+ 'Roy_Rogers' 'Roy_Rogers' 'Berger_King' 'Roy_Rogers' 'Roy_Rogers'
+ 'Berger_King' 'Roy_Rogers' 'Berger_King' 'KFC' 'Roy_Rogers' 'Berger_King'
+ 'Berger_King' 'Roy_Rogers' 'KFC' 'Berger_King' 'Berger_King' 'Roy_Rogers'
+ 'Berger_King' 'Wendys' 'Berger_King' 'KFC' 'KFC' 'Berger_King'
+ 'Berger_King' 'KFC' 'Berger_King' 'KFC' 'Roy_Rogers' 'Roy_Rogers'
+ 'Wendys' 'Berger_King' 'KFC' 'KFC' 'Roy_Rogers' 'Wendys' 'Roy_Rogers'
+ 'Berger_King' 'Berger_King' 'Roy_Rogers' 'Wendys' 'Berger_King' 'KFC'
+ 'Roy_Rogers' 'Roy_Rogers' 'Wendys' 'Berger_King' 'Berger_King'
+ 'Berger_King' 'Berger_King' 'Berger_King' 'Roy_Rogers' 'Wendys'
+ 'Berger_King' 'Roy_Rogers' 'Roy_Rogers' 'Berger_King' 'Berger_King'
+ 'Berger_King' 'Berger_King' 'Wendys' 'Wendys' 'Berger_King' 'Berger_King'
+ 'Wendys' 'Berger_King' 'Berger_King' 'KFC' 'Roy_Rogers' 'Wendys'
+ 'Roy_Rogers' 'Berger_King' 'KFC' 'Roy_Rogers' 'Berger_King' 'Wendys'
+ 'Roy_Rogers' 'Berger_King' 'Roy_Rogers' 'Berger_King' 'Berger_King' 'KFC'
+ 'Berger_King' 'Roy_Rogers' 'Berger_King' 'Berger_King' 'KFC'
+ 'Berger_King' 'Wendys' 'Berger_King' 'Berger_King' 'Berger_King'
+ 'Berger_King' 'Wendys' 'Wendys' 'KFC' 'Roy_Rogers' 'Berger_King' 'Wendys'
+ 'Roy_Rogers' 'Berger_King' 'KFC' 'KFC' 'Wendys' 'Berger_King' 'Wendys'
+ 'KFC' 'KFC' 'KFC' 'Roy_Rogers' 'Berger_King' 'KFC' 'Berger_King'
+ 'Roy_Rogers' 'Berger_King' 'Berger_King' 'KFC' 'Berger_King'
+ 'Berger_King' 'KFC' 'KFC' 'Wendys' 'Berger_King' 'KFC' 'Roy_Rogers'
+ 'Berger_King' 'Berger_King' 'Roy_Rogers' 'Berger_King' 'Berger_King'
+ 'Roy_Rogers' 'Berger_King' 'KFC' 'Berger_King' 'Berger_King' 'Roy_Rogers'
+ 'Berger_King' 'Berger_King' 'Roy_Rogers' 'Roy_Rogers' 'Berger_King' 'KFC'
+ 'Roy_Rogers' 'Wendys' 'Roy_Rogers' 'KFC' 'Berger_King' 'Berger_King'
+ 'Wendys' 'KFC' 'Berger_King' 'Berger_King' 'KFC' 'Berger_King'
+ 'Berger_King' 'KFC' 'Wendys' 'Roy_Rogers' 'Wendys' 'Berger_King'
+ 'Roy_Rogers' 'Berger_King' 'Roy_Rogers' 'Berger_King' 'Berger_King' 'KFC'
+ 'KFC' 'Roy_Rogers' 'Berger_King' 'Roy_Rogers' 'Berger_King' 'Roy_Rogers'
+ 'Roy_Rogers' 'Roy_Rogers' 'Wendys' 'Berger_King' 'KFC' 'Berger_King'
+ 'Berger_King' 'Wendys' 'KFC' 'KFC' 'Berger_King' 'Roy_Rogers'
+ 'Berger_King' 'Roy_Rogers' 'KFC' 'Berger_King' 'KFC' 'KFC' 'Berger_King'
+ 'Roy_Rogers' 'KFC' 'Roy_Rogers' 'Wendys' 'KFC' 'KFC' 'KFC' 'Wendys'
+ 'Berger_King' 'KFC' 'Roy_Rogers' 'Berger_King' 'KFC' 'Wendys'
+ 'Roy_Rogers' 'KFC' 'Berger_King' 'Berger_King' 'Wendys' 'Roy_Rogers'
+ 'KFC' 'Berger_King' 'Wendys' 'Berger_King' 'KFC' 'KFC' 'Berger_King'
+ 'KFC' 'Wendys' 'KFC' 'Berger_King' 'Berger_King' 'Roy_Rogers' 'KFC'
+ 'Roy_Rogers' 'Roy_Rogers' 'Berger_King' 'Berger_King' 'KFC' 'Berger_King'
+ 'Roy_Rogers' 'Roy_Rogers' 'Berger_King' 'Wendys' 'Roy_Rogers'
+ 'Berger_King' 'KFC' 'Roy_Rogers' 'Berger_King' 'Roy_Rogers' 'KFC'
+ 'Berger_King' 'KFC' 'Roy_Rogers' 'Berger_King' 'Berger_King' 'Wendys'
+ 'Roy_Rogers' 'Roy_Rogers' 'KFC' 'Berger_King' 'KFC' 'Berger_King'
+ 'Roy_Rogers' 'Berger_King' 'Berger_King' 'Berger_King' 'Roy_Rogers' 'KFC'
+ 'KFC' 'Wendys' 'KFC' 'Berger_King' 'Berger_King' 'KFC' 'Berger_King'
+ 'Roy_Rogers' 'Berger_King' 'Wendys' 'Roy_Rogers' 'Roy_Rogers'
+ 'Roy_Rogers' 'Berger_King' 'Wendys' 'Berger_King' 'Roy_Rogers'
+ 'Roy_Rogers' 'Wendys' 'Wendys' 'KFC' 'Berger_King' 'Wendys' 'Berger_King'
+ 'KFC' 'Roy_Rogers' 'Berger_King' 'Wendys' 'Berger_King' 'Roy_Rogers'
+ 'KFC' 'Berger_King' 'Berger_King' 'Berger_King' 'KFC' 'Berger_King'
+ 'Wendys' 'Wendys' 'Berger_King' 'Wendys' 'KFC' 'Berger_King'
+ 'Berger_King' 'Wendys' 'Wendys' 'Berger_King' 'Berger_King' 'Wendys'
+ 'Berger_King' 'KFC' 'Wendys' 'Berger_King' 'Berger_King' 'Wendys'
+ 'Wendys' 'Berger_King' 'Wendys' 'Wendys' 'Berger_King' 'Berger_King'
+ 'KFC' 'Berger_King' 'Berger_King' 'Roy_Rogers' 'Roy_Rogers' 'Berger_King'
+ 'KFC' 'Berger_King' 'KFC' 'Berger_King' 'Roy_Rogers' 'Roy_Rogers' 'KFC'
+ 'Roy_Rogers' 'Roy_Rogers' 'Berger_King' 'Roy_Rogers' 'Roy_Rogers'
+ 'Berger_King' 'Berger_King' 'Berger_King' 'Berger_King' 'KFC'
+ 'Berger_King' 'Wendys' 'Roy_Rogers' 'Berger_King' 'Roy_Rogers' 'Wendys'
+ 'KFC' 'Berger_King' 'Roy_Rogers' 'Wendys' 'Roy_Rogers' 'KFC'
+ 'Berger_King' 'Roy_Rogers' 'Berger_King' 'Berger_King' 'Roy_Rogers'
+ 'Berger_King' 'Roy_Rogers' 'Wendys' 'Roy_Rogers' 'Berger_King' 'KFC'
+ 'Roy_Rogers' 'KFC' 'Berger_King' 'Berger_King' 'Berger_King']' for dtype 'int64'
+

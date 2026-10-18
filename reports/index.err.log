@@ -1,0 +1,51 @@
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/nbclient/client.py", line 1323, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import gapminder, linearmodels, lmdiag, matplotlib, numba, numpy, pandas, py4macro, py4etrics, scipy, statsmodels, wooldridge
+from platform import python_version
+
+packages = ['Python','gapminder','linearmodels', 'lmdiag','matplotlib', 'numba', 'numpy','pandas', 'py4macro', 'py4etrics', 'scipy', 'statsmodels', 'wooldridge']
+versions = [python_version(),gapminder.__version__, linearmodels.__version__, '0.3.7', matplotlib.__version__, numba.__version__, numpy.__version__, pandas.__version__, py4macro.__version__, py4etrics.__version__, scipy.__version__, statsmodels.__version__, wooldridge.__version__]
+
+for pack, ver in zip(packages, versions):
+    print('{0:14}{1}'.format(pack,ver))
+------------------
+
+
+[31m---------------------------------------------------------------------------[39m
+[31mModuleNotFoundError[39m                       Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[1][39m[32m, line 1[39m
+[32m----> [39m[32m1[39m [38;5;28;01mimport[39;00m gapminder, linearmodels, lmdiag, matplotlib, numba, numpy, pandas, py4macro, py4etrics, scipy, statsmodels, wooldridge
+[32m      2[39m [38;5;28;01mfrom[39;00m platform [38;5;28;01mimport[39;00m python_version
+[32m      3[39m 
+[32m      4[39m packages = [[33m'Python'[39m,[33m'gapminder'[39m,[33m'linearmodels'[39m, [33m'lmdiag'[39m,[33m'matplotlib'[39m, [33m'numba'[39m, [33m'numpy'[39m,[33m'pandas'[39m, [33m'py4macro'[39m, [33m'py4etrics'[39m, [33m'scipy'[39m, [33m'statsmodels'[39m, [33m'wooldridge'[39m]
+
+[36mFile [39m[32m/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/gapminder/__init__.py:1[39m
+[32m----> [39m[32m1[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01m.[39;00m[34;01mdata[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m _load_gapminder
+[32m      2[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01m.[39;00m[34;01mversion[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m __version__
+[32m      4[39m gapminder = _load_gapminder()
+
+[36mFile [39m[32m/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/gapminder/data.py:1[39m
+[32m----> [39m[32m1[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mpkg_resources[39;00m
+[32m      2[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mio[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m StringIO
+[32m      3[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mpandas[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[34;01mpd[39;00m
+
+[31mModuleNotFoundError[39m: No module named 'pkg_resources'
+
