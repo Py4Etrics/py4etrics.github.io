@@ -16,7 +16,7 @@ kernelspec:
 
 [春山 鉄源](https://t-haruyama.github.io)
 
-神戸大学経済学研究科
+甲南大学マネジメント創造学部
 ```
 
 <div name="html-admonition" style="font-size: 0.8em">
